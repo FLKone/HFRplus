@@ -1,0 +1,309 @@
+/*
+style='margin:0;padding:0;font-size:12;font-family:Helvetica;'
+*/
+
+* {
+	padding:0 !important;
+	margin:0 !important;
+	padding:0 !important;
+
+	/*font-size:12px !important;*/
+	font-family:Helvetica !important;
+	
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+   	-webkit-tap-highlight-color:rgba(0,0,0,0);
+	-webkit-text-size-adjust: none;
+}
+
+body {
+	width:320px;
+}
+
+.clear {
+	clear:both;
+}
+
+.hfrplusimg {
+	/*display:inline;
+	padding:5px !important;*/
+	margin:2px !important;
+	/*border: 1px solid silver;*/
+}
+
+img {
+	max-width:300px;
+}
+
+div.edited, span.signature {
+	display:none;
+}
+
+table 
+{ 
+	border: 1px solid silver;
+	padding: 4px !important;
+	width:100%;
+	max-width:230px;
+	margin-bottom:5px !important;
+}
+table p
+{
+	max-width:230px;
+	overflow-x:hidden;
+}
+
+table .s1 a {
+	font-weight:bold !important;
+	text-decoration:underline !important;
+	color:black !important;
+}
+
+
+div.masque {
+	visibility:hidden;
+}
+
+
+.message {
+	width:320px;
+	overflow:hidden;
+	/*background-color:#CCC;*/
+}
+
+.message .header {
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAXCAIAAABF+LJYAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RkNGNzExMjM4MjAyMTFERjlBNkNCMjYyRTc1MzQ4QTAiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RkNGNzExMjQ4MjAyMTFERjlBNkNCMjYyRTc1MzQ4QTAiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpGQ0Y3MTEyMTgyMDIxMURGOUE2Q0IyNjJFNzUzNDhBMCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpGQ0Y3MTEyMjgyMDIxMURGOUE2Q0IyNjJFNzUzNDhBMCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PnGVMYsAAABBSURBVHjaYiisbWXYefg00+Wb95gYGRmYGBgZmZjAmAnIZmACAyCfESTGxAiRQmJD5BiYIEwgmwHC//LmOUCAAQAukAl4m7x4uAAAAABJRU5ErkJggg==);
+	height:23px;
+	width:300px;
+	padding:0 10px !important;
+}
+
+.message .header .left {
+	font-size:15px !important;
+	line-height:23px;
+	color:white;
+	float:left;
+	font-weight:bold;
+	width:173px;
+	text-shadow: #555 0px 1px 1px;	
+}
+
+.message .header .right {
+	font-size:9px !important;
+	line-height:20px;
+	color:white;
+	float:right;
+	text-align:right;
+	width:116px;
+	font-weight:bold;	
+	margin-top:2px !important;
+	text-shadow: #555 0px 1px 1px;	
+}
+
+.message .content {
+	padding:10px 0 !important;
+}
+
+.message.touched .content {
+	background:red;
+}
+
+.message .content .left {
+	text-align:left;
+	float:left;
+	width:40px;
+	margin-left:10px !important;
+}
+
+.message .content .left img {
+	max-width:38px;
+	border:1px solid gray;
+}
+
+.message .content .right {
+	margin-right:10px !important;
+	text-align:left;
+	float:right;
+	width:250px;
+	overflow:hidden;	
+}
+.message .content .right * {
+	font-size:12px !important;	
+}
+
+.message .content .right a {
+	color:#2470d8;
+	
+}
+
+.message .content .right ol, ul
+{
+	margin:1em 0px !important;
+	padding-left:20px !important
+}
+
+.message .content .right table.code * {
+	font-size:9px !important;
+}
+
+#actualiserbtn {
+	color:#2470d8;
+	line-height:44px;
+	font-size:15px !important;
+	font-weight:bold;
+	border-top:1px solid #e0e0e0;
+	border-bottom:1px solid #e0e0e0;
+	text-align:center;
+	width:320px;
+}
+
+#actualiserbtn.loading {
+	background-image: url(loadinfo.gif);
+	background-repeat: no-repeat;
+	background-position: 99px 14px;
+	background-size: 15px;
+}
+
+#toolbarpage {
+	color:#FFF;
+	line-height:43px;
+	font-size:15px !important;
+	font-weight:bold;
+	border-top:1px solid #000;
+	text-align:center;
+	position:relative;
+	background-image: url(toolbar3.png);
+	height:43px;
+	width:320px;
+}
+#toolbarpage a{
+	color:#FFF;
+	text-decoration:none;
+}
+/*38x31*/
+#toolbarpage .button {
+	position:absolute;
+	width:39px;
+	height:30px;
+	top:7px;
+}
+
+#toolbarpage .button a {
+	width:39px;
+	height:30px;
+	display:block;
+	text-indent: -100px;
+	overflow: hidden;
+}
+
+#toolbarpage .button.begin {
+	left:6px;
+	background-image:url(buttonbeginoff.png);
+}
+#toolbarpage .button.begin.active {
+	background-image:url(buttonbeginon.png);
+}
+#toolbarpage .button.begin.hover {
+	background-image:url(buttonbeginhover.png);
+}
+#toolbarpage .button.end {
+	right:6px;
+	background-image:url(buttonendoff.png);
+}
+#toolbarpage .button.end.active {
+	background-image:url(buttonendon.png);
+}
+#toolbarpage .button.end.hover {
+	background-image:url(buttonendhover.png);
+}
+
+#toolbarpage .button2 {
+	position:absolute;
+	width:32px;
+	height:30px;
+	top:7px;
+}
+
+#toolbarpage .button2 a {
+	width:32px;
+	height:30px;
+	display:block;
+	text-indent: -100px;
+	overflow: hidden;
+}
+
+#toolbarpage .button2.begin {
+	left:55px;
+	background-image:url(buttonpreviousoff.png);
+}
+#toolbarpage .button2.begin.active {
+	background-image:url(buttonpreviouson.png);
+}
+#toolbarpage .button2.begin.hover {
+	background-image:url(buttonprevioushover.png);
+}
+#toolbarpage .button2.end {
+	right:55px;
+	background-image:url(buttonnextoff.png);
+}
+#toolbarpage .button2.end.active {
+	background-image:url(buttonnexton.png);
+}
+#toolbarpage .button2.end.hover {
+	background-image:url(buttonnexthover.png);
+}
+
+.u {
+	text-decoration:underline;
+}
+
+.smileycustom {
+	max-height:30px;
+}
+
+
+@media only screen and (orientation:landscape){
+	/* landscape styles here */
+	
+	body {
+		width:480px;
+	}
+
+	.message {
+		width:480px;
+	}
+	
+	.message .header {
+		width:460px;
+	}
+	
+	.message .content .right {
+		width:410px;
+	}
+	
+	
+	table 
+	{ 
+		max-width:410px;
+		
+	}
+	
+	table p
+	{
+		max-width:410px;
+	}
+	
+	#toolbarpage {
+		
+		width:480px;
+	}
+	
+	#actualiserbtn {
+
+		width:480px;
+	}
+
+	#actualiserbtn.loading {
+		background-position: 180px 14px;
+	}	
+}
