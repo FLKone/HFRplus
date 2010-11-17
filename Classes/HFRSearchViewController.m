@@ -3,7 +3,6 @@
 //  HFRplus
 //
 //  Created by Shasta on 04/11/10.
-//  Copyright 2010 FLK. All rights reserved.
 //
 
 #import "HFRplusAppDelegate.h"
