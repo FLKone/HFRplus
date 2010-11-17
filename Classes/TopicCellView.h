@@ -3,7 +3,6 @@
 //  HFRplus
 //
 //  Created by Shasta on 23/09/10.
-//  Copyright 2010 FLK. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
