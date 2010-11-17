@@ -2,8 +2,7 @@
 //  PageViewController.m
 //  HFRplus
 //
-//  Created by Shasta on 10/10/10.
-//  Copyright 2010 FLK. All rights reserved.
+//  Created by FLK on 10/10/10.
 //
 
 #import "PageViewController.h"

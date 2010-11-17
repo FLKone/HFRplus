@@ -2,8 +2,7 @@
 //  HFRplusAppDelegate.h
 //  HFRplus
 //
-//  Created by Lace on 18/08/10.
-//  Copyright __MyCompanyName__ 2010. All rights reserved.
+//  Created by FLK on 18/08/10.
 //
 
 #import "GANTracker.h"

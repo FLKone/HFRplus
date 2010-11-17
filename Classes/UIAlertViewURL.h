@@ -2,8 +2,7 @@
 //  UIAlertViewURL.h
 //  HFR+
 //
-//  Created by Lace on 15/08/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
+//  Created by FLK on 15/08/10.
 //
 
 #import <Foundation/Foundation.h>
