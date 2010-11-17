@@ -3,7 +3,6 @@
 //  HFRplus
 //
 //  Created by FLK on 18/08/10.
-//  Copyright __MyCompanyName__ 2010. All rights reserved.
 //
 
 #import "HFRplusAppDelegate.h"

@@ -2,8 +2,7 @@
 //  Constants.h
 //  HFR+
 //
-//  Created by Lace on 05/08/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
+//  Created by FLK on 05/08/10.
 //
 
 #import <Foundation/Foundation.h>

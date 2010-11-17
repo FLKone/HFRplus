@@ -2,8 +2,7 @@
 //  TopicsCell.m
 //  HFR+
 //
-//  Created by Lace on 03/08/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
+//  Created by FLK on 03/08/10.
 //
 
 #import "TopicsCell.h"

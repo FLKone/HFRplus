@@ -2,8 +2,7 @@
 //  TabBarController.m
 //  HFRplus
 //
-//  Created by Shasta on 17/09/10.
-//  Copyright 2010 FLK. All rights reserved.
+//  Created by FLK on 17/09/10.
 //
 
 #import "TabBarController.h"
