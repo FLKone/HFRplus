@@ -2,8 +2,7 @@
 //  QuoteMessageViewController.m
 //  HFR+
 //
-//  Created by Lace on 17/08/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
+//  Created by FLK on 17/08/10.
 //
 
 #import "HFRplusAppDelegate.h"

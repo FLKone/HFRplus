@@ -2,7 +2,7 @@
 //  EditMessageViewController.m
 //  HFRplus
 //
-//  Created by Shasta on 27/08/10.
+//  Created by FLK on 27/08/10.
 //
 
 #import "EditMessageViewController.h"

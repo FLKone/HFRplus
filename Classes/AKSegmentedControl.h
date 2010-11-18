@@ -2,7 +2,7 @@
 //  AKSegmentedControl.h
 //  HFRplus
 //
-//  Created by Shasta on 06/10/10.
+//  Created by FLK on 06/10/10.
 //
 
 #import <UIKit/UIKit.h>
