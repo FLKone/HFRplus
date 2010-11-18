@@ -2,10 +2,10 @@
 //  AddMessageViewController.m
 //  HFR+
 //
-//  Created by Lace on 16/08/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
+//  Created by FLK on 16/08/10.
 //
 
+#import "HFRplusAppDelegate.h"
 #import "AddMessageViewController.h"
 #import "ASIFormDataRequest.h"
 #import "HTMLParser.h"
@@ -21,7 +21,7 @@
 @synthesize request, loadingView;
 
 @synthesize lastSelectedRange, loaded;//navBar, 
-@synthesize segmentControler, isDragging;
+@synthesize segmentControler, isDragging, textFieldSmileys;
 
 @synthesize haveTitle, textFieldTitle;
 @synthesize haveTo, textFieldTo;
@@ -144,13 +144,13 @@
 	 self.smileysWebView.layer.cornerRadius = 10;
 	 [self.smileysWebView.layer setBorderColor: [[UIColor darkGrayColor] CGColor]];
 	 [self.smileysWebView.layer setBorderWidth: 1.0];
-	 */
-	
+		
 	 for (id subview in smileView.subviews)
 		 if ([[subview class] isSubclassOfClass: [UIScrollView class]])
 			 ((UIScrollView *)subview).bounces = NO;
 	 
-	
+	 */
+
 	/*
 	NSString *path = [[NSBundle mainBundle] pathForResource:
 					  @"commonsmile" ofType:@"plist"];
@@ -471,6 +471,7 @@
 			if (self.smileView.alpha == 0.0) {
 				self.loaded = NO;
 				[textView resignFirstResponder];
+				[textFieldSmileys resignFirstResponder];
 				NSRange newRange = textView.selectedRange;
 				newRange.length = 0;
 				textView.selectedRange = newRange;
@@ -740,15 +741,19 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-	NSLog(@"textFieldDidBeginEditing");
+	NSLog(@"textFieldDidBeginEditing %@", textField);
 	
-	[segmentControler setEnabled:NO forSegmentAtIndex:0];		
+	if (textField != textFieldSmileys) {
+		[segmentControler setEnabled:NO forSegmentAtIndex:0];
+		[textFieldSmileys setEnabled:NO];
+	}
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-	NSLog(@"textFieldDidEndEditing");
+	NSLog(@"textFieldDidEndEditing %@", textField);
 	
-	[segmentControler setEnabled:YES forSegmentAtIndex:0];		
+	[segmentControler setEnabled:YES forSegmentAtIndex:0];	
+	[textFieldSmileys setEnabled:YES];
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
 	NSLog(@"textFieldShouldReturn");
@@ -761,7 +766,43 @@
 	{
 		[self.textView becomeFirstResponder];
 	}
+	else if (textField == self.textFieldSmileys)
+	{
+		if (self.textFieldSmileys.text.length < 3) {
+			return NO;
+		}
+		else {
+			
+			if (self.smileView.alpha == 0.0) {
 
+				self.loaded = NO;
+				[textView resignFirstResponder];
+				NSRange newRange = textView.selectedRange;
+				newRange.length = 0;
+				textView.selectedRange = newRange;
+				
+				[self.smileView setHidden:NO];
+				[UIView beginAnimations:nil context:nil];
+				[UIView setAnimationDuration:0.2];		
+				[self.smileView setAlpha:1];
+				[UIView commitAnimations];
+			}
+			[textFieldSmileys resignFirstResponder];
+			//$(this).addClass('selected'); 
+			[self.smileView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"\
+			$.ajax({ url: '%@/message-smi-mp-aj.php?config=hfr.inc&findsmilies=%@',\
+			success: function(data){\
+				$('#container_ajax').html(data);\
+				$('#container_ajax img').addSwipeEvents().bind('tap', function(evt, touch) { window.location = 'oijlkajsdoihjlkjasdosmile://'+$.base64.encode(this.alt); });\
+			}\
+			\
+			});", kForumURL, self.textFieldSmileys.text]];
+		}
+
+
+
+		
+	}
 	return NO;
 
 }

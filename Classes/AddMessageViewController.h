@@ -2,8 +2,7 @@
 //  AddMessageViewController.h
 //  HFR+
 //
-//  Created by Lace on 16/08/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
+//  Created by FLK on 16/08/10.
 //
 
 #import <UIKit/UIKit.h>
@@ -32,7 +31,8 @@
 	UISegmentedControl *segmentControler;
 	
 	//UIScrollView *scrollViewer;
-	
+	UITextField *textFieldSmileys;
+
 	
 	BOOL haveTitle;
 	UITextField *textFieldTitle;
@@ -48,6 +48,7 @@
 	IBOutlet UIView *loadingView;
 	ASIHTTPRequest *request;	
 }
+
 @property (nonatomic, retain) IBOutlet UIView *loadingView;
 @property (nonatomic, assign) id <AddMessageViewControllerDelegate> delegate;
 
@@ -66,6 +67,8 @@
 @property (nonatomic, retain) IBOutlet UIWebView *smileView;
 
 @property (nonatomic, retain) IBOutlet UISegmentedControl *segmentControler;
+@property (nonatomic, retain) IBOutlet UITextField *textFieldSmileys;
+
 //@property (nonatomic, retain) IBOutlet UIScrollView *scrollViewer;
 
 
