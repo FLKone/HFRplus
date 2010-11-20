@@ -19,6 +19,36 @@ body {
 	padding-bottom:35px !important;	
 	
 }
+/*
+#container_ajax {
+	max-height:200px !important;
+	overflow-x:hidden;
+}
+*/
+
+#container_ajax img {
+	max-height:30px;
+	background-image: 	-webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.09, rgb(220,220,220)),
+		color-stop(0.47, rgb(244,244,244))
+	); 
+	border-radius:5px;	
+	padding:5px !important;
+	margin:4px 3px !important;	
+	max-height:30px;
+}
+#container_ajax img.selected {
+	background-image: 	-webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0.09, rgb(83,83,83)),
+    color-stop(0.47, rgb(127,127,127))
+); 	
+}
 
 .button {
 	float:left;

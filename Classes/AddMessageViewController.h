@@ -7,7 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class ASIHTTPRequest;
+#import "ASIHTTPRequest.h"
 
 @protocol AddMessageViewControllerDelegate;
 
@@ -46,13 +46,15 @@
 	int offsetY;
 
 	IBOutlet UIView *loadingView;
-	ASIHTTPRequest *request;	
+	ASIHTTPRequest *request;
+	ASIHTTPRequest *requestSmile;	
 }
 
 @property (nonatomic, retain) IBOutlet UIView *loadingView;
 @property (nonatomic, assign) id <AddMessageViewControllerDelegate> delegate;
 
 @property (retain, nonatomic) ASIHTTPRequest *request;
+@property (retain, nonatomic) ASIHTTPRequest *requestSmile;
 
 //bb
 @property (nonatomic, retain) IBOutlet UITextView *textView;
@@ -85,9 +87,10 @@
 -(IBAction)done;
 -(IBAction)segmentFilterAction:(id)sender;
 
+-(void)fetchSmileys;
 -(void)didSelectSmile:(NSString *)smile;
-- (void)initData;
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
+-(void)initData;
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
 -(void)setupResponder;
 
 @end

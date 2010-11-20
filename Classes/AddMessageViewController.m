@@ -18,7 +18,7 @@
 
 @implementation AddMessageViewController
 @synthesize delegate, textView, arrayInputData, formSubmit, accessoryView, smileView;
-@synthesize request, loadingView;
+@synthesize request, loadingView, requestSmile;
 
 @synthesize lastSelectedRange, loaded;//navBar, 
 @synthesize segmentControler, isDragging, textFieldSmileys;
@@ -774,7 +774,7 @@
 		else {
 			
 			if (self.smileView.alpha == 0.0) {
-
+				// BUG pas de selection ///
 				self.loaded = NO;
 				[textView resignFirstResponder];
 				NSRange newRange = textView.selectedRange;
@@ -788,25 +788,174 @@
 				[UIView commitAnimations];
 			}
 			[textFieldSmileys resignFirstResponder];
-			//$(this).addClass('selected'); 
+			[self fetchSmileys];
+			/*
 			[self.smileView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"\
 			$.ajax({ url: '%@/message-smi-mp-aj.php?config=hfr.inc&findsmilies=%@',\
 			success: function(data){\
+				$('#container').hide();\
 				$('#container_ajax').html(data);\
-				$('#container_ajax img').addSwipeEvents().bind('tap', function(evt, touch) { window.location = 'oijlkajsdoihjlkjasdosmile://'+$.base64.encode(this.alt); });\
+				$('#container_ajax img').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+$.base64.encode(this.alt); });\
 			}\
 			\
 			});", kForumURL, self.textFieldSmileys.text]];
+			 */
 		}
-
-
-
-		
 	}
 	return NO;
 
 }
 
+#pragma mark -
+#pragma mark Data lifecycle
+
+- (void)cancelFetchContent
+{
+	[request cancel];
+}
+
+- (void)fetchSmileys
+{
+	NSLog(@"fetchSmileys");
+
+	
+	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];
+	
+	[self setRequestSmile:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/message-smi-mp-aj.php?config=hfr.inc&findsmilies=%@", kForumURL, self.textFieldSmileys.text]]]];
+	[requestSmile setDelegate:self];
+	
+	[requestSmile setDidStartSelector:@selector(fetchSmileContentStarted:)];
+	[requestSmile setDidFinishSelector:@selector(fetchSmileContentComplete:)];
+	[requestSmile setDidFailSelector:@selector(fetchSmileContentFailed:)];
+	
+	
+	
+	[requestSmile startAsynchronous];
+	NSLog(@"fetchSmileys");
+
+}
+
+- (void)fetchSmileContentStarted:(ASIHTTPRequest *)theRequest
+{
+	NSLog(@"fetchContentStarted");
+}
+
+- (void)fetchSmileContentComplete:(ASIHTTPRequest *)theRequest
+{
+//	NSLog(@"%@", [theRequest responseString]);
+	
+	NSDate *thenT = [NSDate date]; // Create a current date
+
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+	NSString *diskCachePath = [[[paths objectAtIndex:0] stringByAppendingPathComponent:@"SmileCache"] retain];
+	
+	if (![[NSFileManager defaultManager] fileExistsAtPath:diskCachePath])
+	{
+		//NSLog(@"createDirectoryAtPath");
+		[[NSFileManager defaultManager] createDirectoryAtPath:diskCachePath
+								  withIntermediateDirectories:YES
+												   attributes:nil
+														error:NULL];
+	}
+	else {
+		//NSLog(@"pas createDirectoryAtPath");
+	}
+	
+	HTMLParser * myParser = [[HTMLParser alloc] initWithString:[theRequest responseString] error:NULL];
+	HTMLNode * smileNode = [myParser doc]; //Find the body tag
+	
+	NSArray * tmpImageArray =  [smileNode findChildTags:@"img"];
+	//NSLog(@"%d", [imageArray count]);
+	
+	NSFileManager *fileManager = [[NSFileManager alloc] init];
+	NSString *tempHTML = [theRequest responseString];
+
+	for (HTMLNode * imgNode in tmpImageArray) { //Loop through all the tags
+		//NSDate *thenuT = [NSDate date]; // Create a current date
+
+		NSString *filename = [[imgNode getAttributeNamed:@"src"] stringByReplacingOccurrencesOfString:@"http://forum-images.hardware.fr/" withString:@""];
+		filename = [filename stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
+		filename = [filename stringByReplacingOccurrencesOfString:@" " withString:@"-"];
+
+		//NSDate *nowuTT = [NSDate date]; // Create a current date
+		
+
+		
+		
+		NSString *key = [diskCachePath stringByAppendingPathComponent:filename];
+		
+		tempHTML = [tempHTML stringByReplacingOccurrencesOfString:[imgNode getAttributeNamed:@"src"] withString:key];
+
+		//NSLog(@"key %@", key);
+
+		if (![fileManager fileExistsAtPath:key])
+		{
+			//NSLog(@"dl %@", key);
+
+			[fileManager createFileAtPath:key contents:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [[imgNode getAttributeNamed:@"src"] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]]]] attributes:nil];					
+		}
+		
+		//NSDate *nowuT = [NSDate date]; // Create a current date
+		
+		//NSLog(@"thenuT TOPICS Parse Time elapsed Total		: %f", [nowuTT timeIntervalSinceDate:thenuT]);
+		//NSLog(@"thenuT TOPICS Parse Time elapsed Total		: %f", [nowuT timeIntervalSinceDate:thenuT]);		
+	}
+	
+	[fileManager release];
+	//NSDate *nowTT = [NSDate date]; // Create a current date
+
+	//NSLog(@"TOPICS Parse Time elapsed Total		: %f", [nowTT timeIntervalSinceDate:thenT]);
+
+	
+	tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"onclick=\"putSmiley(this.alt,this.src)\"" withString:@""];
+	//tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"http://forum-images.hardware.fr" withString:diskCachePath];
+	tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"];
+	//tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"http://forum-images.hardware.fr/" withString:diskCachePath];
+	//NSDate *nowTTT = [NSDate date]; // Create a current date
+	
+	//NSLog(@"TOPICS Parse Time elapsed Total		: %f", [nowTTT timeIntervalSinceDate:thenT]);
+	//NSLog(@"============= \n tempHTML %@", tempHTML);
+
+//<img src=\\'/Users/Shasta/Library/Application Support/iPhone Simulator/4.1/Applications/4A957681-576E-4EF2-994C-2295BF9CC442/Library/Caches/SmileCache/images-perso-knahos.gif\\' alt=\\'[:knahos]\\' title=\\'[:knahos]\\' /><img src=\\'/Users/Shasta/Library/Application Support/iPhone Simulator/4.1/Applications/4A957681-576E-4EF2-994C-2295BF9CC442/Library/Caches/SmileCache/images-perso-2-kryptos.gif\\' alt=\\'[:kryptos:2]\\' title=\\'[:kryptos:2]\\'  /><img src=\\'/Users/Shasta/Library/Application Support/iPhone Simulator/4.1/Applications/4A957681-576E-4EF2-994C-2295BF9CC442/Library/Caches/SmileCache/images-perso-crapulax.gif\\' alt=\\'[:crapulax]\\' title=\\'[:crapulax]\\' /><img src=\\'/Users/Shasta/Library/Application Support/iPhone Simulator/4.1/Applications/4A957681-576E-4EF2-994C-2295BF9CC442/Library/Caches/SmileCache/images-perso-2-lapin_vert.gif\\' alt=\\'[:lapin_vert:2]\\' title=\\'[:lapin_vert:2]\\'  /><img src=\\'/Users/Shasta/Library/Application Support/iPhone Simulator/4.1/Applications/4A957681-576E-4EF2-994C-2295BF9CC442/Library/Caches/SmileCache/images-perso-1-pierre-pat.gif\\' alt=\\'[:pierre-pat:1]\\' title=\\'[:pierre-pat:1]\\'  /><img src=\\'/Users/Shasta/Library/Application Support/iPhone Simulator/4.1/Applications/4A957681-576E-4EF2-994C-2295BF9CC442/Library/Caches/SmileCache/images-perso-4-flambi.gif\\' alt=\\'[:flambi:4]\\' title=\\'[:flambi:4]\\'  /><img src=\\'/Users/Shasta/Library/Application Support/iPhone Simulator/4.1/Applications/4A957681-576E-4EF2-994C-2295BF9CC442/Library/Caches/SmileCache/images-perso-4-mika94400.gif\\' alt=\\'[:mika94400:4]\\' title=\\'[:mika94400:4]\\'  /><img src=\\'/Users/Shasta/Library/Application Support/iPhone Simulator/4.1/Applications/4A957681-576E-4EF2-994C-2295BF9CC442/Library/Caches/SmileCache/images-perso-4-serumm.gif\\' alt=\\'[:serumm:4]\\' title=\\'[:serumm:4]\\'  /><img src=\\'/Users/Shasta/Library/Application Support/iPhone Simulator/4.1/Applications/4A957681-576E-4EF2-994C-2295BF9CC442/Library/Caches/SmileCache/images-perso-4-bastinho.gif\\' alt=\\'[:bastinho:4]\\' title=\\'[:bastinho:4]\\'  /><img src=\\'/Users/Shasta/Library/Application Support/iPhone Simulator/4.1/Applications/4A957681-576E-4EF2-994C-2295BF9CC442/Library/Caches/SmileCache/images-perso-4-babonnguida.gif\\' alt=\\'[:babonnguida:4]\\' title=\\'[:babonnguida:4]\\'  /><img src=\\'/Users/Shasta/Library/Application Support/iPhone Simulator/4.1/Applications/4A957681-576E-4EF2-994C-2295BF9CC442/Library/Caches/SmileCache/images-perso-3-pikitfleur.gif\\' alt=\\'[:pikitfleur:3]\\' title=\\'[:pikitfleur:3]\\'  /><img src=\\'/Users/Shasta/Library/Application Support/iPhone Simulator/4.1/Applications/4A957681-576E-4EF2-994C-2295BF9CC442/Library/Caches/SmileCache/images-perso-1-hunters.gif\\' alt=\\'[:hunters:1]\\' title=\\'[:hunters:1]\\'  /><img src=\\'/Users/Shasta/Library/Application Support/iPhone Simulator/4.1/Applications/4A957681-576E-4EF2-994C-2295BF9CC442/Library/Caches/SmileCache/images-perso-1-papycool52.gif\\' alt=\\'[:papycool52:1]\\' title=\\'[:papycool52:1]\\'  /><img src=\\'/Users/Shasta/Library/Application Support/iPhone Simulator/4.1/Applications/4A957681-576E-4EF2-994C-2295BF9CC442/Library/Caches/SmileCache/images-perso-buk'.gif\\' alt=\\'[:buk']\\' title=\\'[:buk']\\' /><img src=\\'/Users/Shasta/Library/Application Support/iPhone Simulator/4.1/Applications/4A957681-576E-4EF2-994C-2295BF9CC442/Library/Caches/SmileCache/images-perso-1-med-ben.gif\\' alt=\\'[:med ben:1]\\' title=\\'[:med ben:1]\\'  /><img src=\\'/Users/Shasta/Library/Application Support/iPhone Simulator/4.1/Applications/4A957681-576E-4EF2-994C-2295BF9CC442/Library/Caches/SmileCache/images-perso-2-cerveau-dawa-noel.gif\\' alt=\\'[:cerveau dawa noel:2]\\' title=\\'[:cerveau dawa noel:2]\\'  /><img src=\\'/Users/Shasta/Library/Application Support/iPhone Simulator/4.1/Applications/4A957681-576E-4EF2-994C-2295BF9CC442/Library/Caches/SmileCache/images-perso-1-perco_35.gif\\' alt=\\'[:perco_35:1]\\' title=\\'[:perco_35:1]\\'  /><img src=\\'/Users/Shasta/Library/Application Support/iPhone Simulator/4.1/Applications/4A957681-576E-4EF2-994C-2295BF9CC442/Library/Caches/SmileCache/images-perso-3-mesh.gif\\' alt=\\'[:mesh:3]\\' title=\\'[:mesh:3]\\'  /><img src=\\'/Users/Shasta/Library/Application Support/iPhone Simulator/4.1/Applications/4A957681-576E-4EF2-994C-2295BF9CC442/Library/Caches/SmileCache/images-perso-5-retarded_fed.gif\\' alt=\\'[:retarded_fed:5]\\' title=\\'[:retarded_fed:5]\\'  /><img src=\\'/Users/Shasta/Library/Application Support/iPhone Simulator/4.1/Applications/4A957681-576E-4EF2-994C-2295BF9CC442/Library/Caches/SmileCache/images-perso-3-guilletit.gif\\' alt=\\'[:guilletit:3]\\' title=\\'[:guilletit:3]\\'  /><img src=\\'/Users/Shasta/Library/Application Support/iPhone Simulator/4.1/Applications/4A957681-576E-4EF2-994C-2295BF9CC442/Library/Caches/SmileCache/images-perso-2-alexcrime.gif\\' alt=\\'[:alexcrime:2]\\' title=\\'[:alexcrime:2]\\'  /><img src=\\'/Users/Shasta/Library/Application Support/iPhone Simulator/4.1/Applications/4A957681-576E-4EF2-994C-2295BF9CC442/Library/Caches/SmileCache/images-perso-3-alexcrime.gif\\' alt=\\'[:alexcrime:3]\\' title=\\'[:alexcrime:3]\\'  /><img src=\\'/Users/Shasta/Library/Application Support/iPhone Simulator/4.1/Applications/4A957681-576E-4EF2-994C-2295BF9CC442/Library/Caches/SmileCache/images-perso-5-knahos.gif\\' alt=\\'[:knahos:5]\\' title=\\'[:knahos:5]\\'  /><img src=\\'/Users/Shasta/Library/Application Support/iPhone Simulator/4.1/Applications/4A957681-576E-4EF2-994C-2295BF9CC442/Library/Caches/SmileCache/images-perso-5-talladega.gif\\' alt=\\'[:talladega:5]\\' title=\\'[:talladega:5]\\'  /><img src=\\'/Users/Shasta/Library/Application Support/iPhone Simulator/4.1/Applications/4A957681-576E-4EF2-994C-2295BF9CC442/Library/Caches/SmileCache/images-perso-2-likid.gif\\' alt=\\'[:likid:2]\\' title=\\'[:likid:2]\\'  /><img src=\\'/Users/Shasta/Library/Application Support/iPhone Simulator/4.1/Applications/4A957681-576E-4EF2-994C-2295BF9CC442/Library/Caches/SmileCache/images-perso-1-natopsi.gif\\' alt=\\'[:natopsi:1]\\' title=\\'[:natopsi:1]\\'  /><img src=\\'/Users/Shasta/Library/Application Support/iPhone Simulator/4.1/Applications/4A957681-576E-4EF2-994C-2295BF9CC442/Library/Caches/SmileCache/images-perso-grosmalin.gif\\' alt=\\'[:grosmalin]\\' title=\\'[:grosmalin]\\' /><img src=\\'/Users/Shasta/Library/Application Support/iPhone Simulator/4.1/Applications/4A957681-576E-4EF2-994C-2295BF9CC442/Library/Caches/SmileCache/images-perso-2-benoit-tourne-toi.gif\\' alt=\\'[:benoit tourne toi:2]\\' title=\\'[:benoit tourne toi:2]\\'  />
+	
+	[self.smileView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"\
+		$('#container').hide();\
+		$('#container_ajax').html('%@');\
+		$('#container_ajax img').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+$.base64.encode(this.alt); });\
+	 ", tempHTML]];
+	
+
+	
+	
+	
+	 /*
+	[self.smileView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"\
+		$('#container').hide();\
+		$('#container_ajax').html('%@');\
+		$('#container_ajax img').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+$.base64.encode(this.alt); });\
+		", tempHTML]];
+	
+	*/
+	
+	NSDate *nowT = [NSDate date]; // Create a current date
+	
+	NSLog(@"TOPICS Parse Time elapsed Total		: %f", [nowT timeIntervalSinceDate:thenT]);
+	
+	
+	
+	[diskCachePath release];
+	
+}
+
+- (void)fetchSmileContentFailed:(ASIHTTPRequest *)theRequest
+{
+	NSLog(@"fetchContentFailed %@", [theRequest.error localizedDescription]);
+
+	//UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[theRequest.error localizedDescription]
+	//											   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
+	//[alert show];
+	//[alert release];	
+}
 
 #pragma mark -
 #pragma mark Memory
@@ -845,6 +994,10 @@
 	[request cancel];
 	[request setDelegate:nil];
 	self.request = nil;
+
+	[requestSmile cancel];
+	[requestSmile setDelegate:nil];
+	self.requestSmile = nil;
 	
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"smileyReceived" object:nil];
 	

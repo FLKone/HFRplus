@@ -10,7 +10,6 @@
 #import "QuoteMessageViewController.h"
 #import "HTMLParser.h"
 #import "Forum.h"
-#import "ASIHTTPRequest.h"
 
 
 @implementation QuoteMessageViewController
