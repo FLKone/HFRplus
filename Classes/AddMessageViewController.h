@@ -29,9 +29,12 @@
 
 	UIWebView *smileView;
 	UISegmentedControl *segmentControler;
+	UISegmentedControl *segmentControlerPage;
 	
 	//UIScrollView *scrollViewer;
 	UITextField *textFieldSmileys;
+	NSMutableArray *smileyArray;
+	int smileyPage;
 
 	
 	BOOL haveTitle;
@@ -47,7 +50,8 @@
 
 	IBOutlet UIView *loadingView;
 	ASIHTTPRequest *request;
-	ASIHTTPRequest *requestSmile;	
+	ASIHTTPRequest *requestSmile;
+	
 }
 
 @property (nonatomic, retain) IBOutlet UIView *loadingView;
@@ -69,7 +73,10 @@
 @property (nonatomic, retain) IBOutlet UIWebView *smileView;
 
 @property (nonatomic, retain) IBOutlet UISegmentedControl *segmentControler;
+@property (nonatomic, retain) IBOutlet UISegmentedControl *segmentControlerPage;
 @property (nonatomic, retain) IBOutlet UITextField *textFieldSmileys;
+@property (nonatomic, retain) NSMutableArray *smileyArray;
+@property int smileyPage;
 
 //@property (nonatomic, retain) IBOutlet UIScrollView *scrollViewer;
 
@@ -88,6 +95,7 @@
 -(IBAction)segmentFilterAction:(id)sender;
 
 -(void)fetchSmileys;
+-(void)loadSmileys:(int)page;
 -(void)didSelectSmile:(NSString *)smile;
 -(void)initData;
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;

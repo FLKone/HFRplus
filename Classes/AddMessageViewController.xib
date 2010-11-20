@@ -176,10 +176,53 @@
 									<reference ref="4"/>
 								</object>
 								<bool key="IBMomentary">YES</bool>
-								<object class="NSColor" key="IBTintColor">
+								<object class="NSColor" key="IBTintColor" id="915554500">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MC4zMzMzMzMzMzMzAA</bytes>
 								</object>
+							</object>
+							<object class="IBUISegmentedControl" id="253436295">
+								<reference key="NSNextResponder" ref="942299940"/>
+								<int key="NSvFlags">265</int>
+								<string key="NSFrame">{{165, 382}, {150, 30}}</string>
+								<reference key="NSSuperview" ref="942299940"/>
+								<bool key="IBUIOpaque">NO</bool>
+								<float key="IBUIAlpha">0.0</float>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<int key="IBSegmentControlStyle">2</int>
+								<int key="IBNumberOfSegments">3</int>
+								<object class="NSArray" key="IBSegmentTitles">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>&lt;</string>
+									<string>Annuler</string>
+									<string>&gt;</string>
+								</object>
+								<object class="NSMutableArray" key="IBSegmentWidths">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<real value="0.0"/>
+									<real value="0.0"/>
+									<real value="0.0"/>
+								</object>
+								<object class="NSMutableArray" key="IBSegmentEnabledStates">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<boolean value="NO"/>
+									<boolean value="YES"/>
+									<boolean value="NO"/>
+								</object>
+								<object class="NSMutableArray" key="IBSegmentContentOffsets">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>{0, 0}</string>
+									<string>{0, 0}</string>
+									<string>{0, 0}</string>
+								</object>
+								<object class="NSMutableArray" key="IBSegmentImages">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<reference ref="4"/>
+									<reference ref="4"/>
+									<reference ref="4"/>
+								</object>
+								<bool key="IBMomentary">YES</bool>
+								<reference key="IBTintColor" ref="915554500"/>
 							</object>
 							<object class="IBUITextField" id="187421539">
 								<reference key="NSNextResponder" ref="942299940"/>
@@ -323,6 +366,23 @@
 					</object>
 					<int key="connectionID">71</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">segmentFilterAction:</string>
+						<reference key="source" ref="253436295"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">13</int>
+					</object>
+					<int key="connectionID">73</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">segmentControlerPage</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="253436295"/>
+					</object>
+					<int key="connectionID">74</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -363,6 +423,7 @@
 							<reference ref="786071457"/>
 							<reference ref="187421539"/>
 							<reference ref="557124301"/>
+							<reference ref="253436295"/>
 						</object>
 						<reference key="parent" ref="191373211"/>
 					</object>
@@ -406,6 +467,11 @@
 						<reference key="object" ref="187421539"/>
 						<reference key="parent" ref="942299940"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">72</int>
+						<reference key="object" ref="253436295"/>
+						<reference key="parent" ref="942299940"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -420,6 +486,7 @@
 					<string>44.IBViewBoundsToFrameTransform</string>
 					<string>49.IBPluginDependency</string>
 					<string>59.IBPluginDependency</string>
+					<string>59.IBViewBoundsToFrameTransform</string>
 					<string>62.IBPluginDependency</string>
 					<string>65.IBPluginDependency</string>
 					<string>65.IBViewBoundsToFrameTransform</string>
@@ -428,6 +495,8 @@
 					<string>67.IBPluginDependency</string>
 					<string>67.IBViewBoundsToFrameTransform</string>
 					<string>69.IBPluginDependency</string>
+					<string>72.IBPluginDependency</string>
+					<string>72.IBViewBoundsToFrameTransform</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -441,6 +510,9 @@
 					</object>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">AUMlAABDvwAAA</bytes>
+					</object>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSAffineTransform">
@@ -455,6 +527,10 @@
 						<bytes key="NSTransformStruct">P4AAAL+AAABCPAAAwmgAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">AUMlAABDvwAAA</bytes>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -473,7 +549,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">71</int>
+			<int key="maxID">74</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -528,6 +604,7 @@
 							<string>delegate</string>
 							<string>loadingView</string>
 							<string>segmentControler</string>
+							<string>segmentControlerPage</string>
 							<string>smileView</string>
 							<string>textFieldSmileys</string>
 							<string>textView</string>
@@ -537,6 +614,7 @@
 							<string>UIView</string>
 							<string>id</string>
 							<string>UIView</string>
+							<string>UISegmentedControl</string>
 							<string>UISegmentedControl</string>
 							<string>UIWebView</string>
 							<string>UITextField</string>
@@ -551,6 +629,7 @@
 							<string>delegate</string>
 							<string>loadingView</string>
 							<string>segmentControler</string>
+							<string>segmentControlerPage</string>
 							<string>smileView</string>
 							<string>textFieldSmileys</string>
 							<string>textView</string>
@@ -571,6 +650,10 @@
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">segmentControler</string>
+								<string key="candidateClassName">UISegmentedControl</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">segmentControlerPage</string>
 								<string key="candidateClassName">UISegmentedControl</string>
 							</object>
 							<object class="IBToOneOutletInfo">
