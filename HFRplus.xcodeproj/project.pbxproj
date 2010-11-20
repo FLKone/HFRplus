@@ -270,6 +270,7 @@
 		CAF03C561245612800897C3B /* AccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAF03C551245612800897C3B /* AccessoryView.xib */; };
 		CAF03C6A1245680600897C3B /* ddr555.gif in Resources */ = {isa = PBXBuildFile; fileRef = CAF03C691245680600897C3B /* ddr555.gif */; };
 		CAFB776C126639AA004D8C57 /* jquery.lazyload.mini.js in Resources */ = {isa = PBXBuildFile; fileRef = CAFB776B126639AA004D8C57 /* jquery.lazyload.mini.js */; };
+		CAFCE8851298399D004E7CC0 /* loadinfo.net.gif in Resources */ = {isa = PBXBuildFile; fileRef = CAFCE8841298399D004E7CC0 /* loadinfo.net.gif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -601,6 +602,7 @@
 		CAF03C551245612800897C3B /* AccessoryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccessoryView.xib; sourceTree = "<group>"; };
 		CAF03C691245680600897C3B /* ddr555.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = ddr555.gif; sourceTree = "<group>"; };
 		CAFB776B126639AA004D8C57 /* jquery.lazyload.mini.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.lazyload.mini.js; sourceTree = "<group>"; };
+		CAFCE8841298399D004E7CC0 /* loadinfo.net.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loadinfo.net.gif; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1080,6 +1082,7 @@
 				013F0F05121E153600BEBEB1 /* bar2.png */,
 				CA17C05112242E1A007EA04E /* loadinfo@2x.gif */,
 				CA17C02812242A69007EA04E /* loadinfo.gif */,
+				CAFCE8841298399D004E7CC0 /* loadinfo.net.gif */,
 				CA17C01612241D9F007EA04E /* toolbar.png */,
 				CA17C12C12246113007EA04E /* toolbar2.png */,
 				CA17C14E12246BF9007EA04E /* beginoff.png */,
@@ -1416,6 +1419,7 @@
 				CA79581C12836B24007C4E02 /* HFRSearchViewController.xib in Resources */,
 				CA40DA1112845A360051E3A9 /* NewsViewController.xib in Resources */,
 				CA159CA71293738E00C7268C /* 24.gif in Resources */,
+				CAFCE8851298399D004E7CC0 /* loadinfo.net.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

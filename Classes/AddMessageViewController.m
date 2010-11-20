@@ -485,7 +485,7 @@
 
 			case 0:
 				NSLog(@"previous");
-				[self loadSmileys:--smileyPage];	
+				[self loadSmileys:--self.smileyPage];	
 				break;
 			case 1:
 			{
@@ -508,7 +508,7 @@
 					
 			case 2:
 				NSLog(@"next");
-				[self loadSmileys:++smileyPage];	
+				[self loadSmileys:++self.smileyPage];	
 				break;					
 			default:
 				break;
@@ -854,6 +854,9 @@
 - (void)fetchSmileContentStarted:(ASIHTTPRequest *)theRequest
 {
 	NSLog(@"fetchContentStarted");
+	
+	[self.smileView stringByEvaluatingJavaScriptFromString:@"$('#container').hide();$('#container_ajax').html('<div class=\"loading\"><img src=\"loadinfo.net.gif\" /> Recherche en cours...</div>');"];
+	
 }
 
 - (void)fetchSmileContentComplete:(ASIHTTPRequest *)theRequest
@@ -876,9 +879,8 @@
 	}
 	//NSLog(@"%@", self.smileyArray);
 	
-	self.smileyPage = 0;
-	
-	[self loadSmileys:smileyPage];	
+	[self loadSmileys:0];
+	//[self loadSmileys:smileyPage];	
 
 	NSDate *nowT = [NSDate date]; // Create a current date
 	
@@ -897,6 +899,25 @@
 
 -(void)loadSmileys:(int)page;
 {
+	
+	self.smileyPage = page;
+	
+	[self.smileView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"\
+															$('#container').hide();\
+															$('#container_ajax').html('<div class=\"loading\"><img src=\"loadinfo.net.gif\" /> Page n˚%d...</div>');\
+															", page + 1]];
+	
+	[self performSelectorInBackground:@selector(loadSmileys) withObject:nil];
+
+}	
+
+-(void)loadSmileys;
+{
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
+	int page = self.smileyPage;
+	
+
 	
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
 	NSString *diskCachePath = [[[paths objectAtIndex:0] stringByAppendingPathComponent:@"SmileCache"] retain];
@@ -942,7 +963,7 @@
 		}
 		
 		
-		tmpHTML = [tmpHTML stringByAppendingString:[NSString stringWithFormat:@"<img src=\"%@\" alt=\"%@\"/>", key, [[self.smileyArray objectAtIndex:i] objectForKey:@"code"]]];
+		tmpHTML = [tmpHTML stringByAppendingString:[NSString stringWithFormat:@"<img class=\"smile\" src=\"%@\" alt=\"%@\"/>", key, [[self.smileyArray objectAtIndex:i] objectForKey:@"code"]]];
 		
 	}
 
@@ -950,11 +971,7 @@
 
 	tmpHTML = [tmpHTML stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"];
 
-	[self.smileView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"\
-															$('#container').hide();\
-															$('#container_ajax').html('%@');\
-															$('#container_ajax img').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+$.base64.encode(this.alt); });\
-															", tmpHTML]];
+	[self performSelectorOnMainThread:@selector(showSmileResults:) withObject:tmpHTML waitUntilDone:YES];
 	
 	//Pagination
 	if (firstSmile > 0 || lastSmile < [self.smileyArray count]) {
@@ -982,7 +999,18 @@
 	
 	
 	[diskCachePath release];
+	[pool release];
+}
+
+-(void)showSmileResults:(NSString *)tmpHTML {
 	
+	NSLog(@"showSmileResults");
+	
+	[self.smileView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"\
+															$('#container').hide();\
+															$('#container_ajax').html('%@');\
+															$('#container_ajax img').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+$.base64.encode(this.alt); });\
+															", tmpHTML]];	
 }
 
 #pragma mark -

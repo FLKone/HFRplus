@@ -19,14 +19,22 @@ body {
 	padding-bottom:35px !important;	
 	
 }
-/*
-#container_ajax {
-	max-height:200px !important;
-	overflow-x:hidden;
+#container_ajax, #container {
+	text-align:center;
 }
-*/
+#container_ajax .loading img {
+	vertical-align:middle;
+}
+#container_ajax .loading {
+	color:white;
+	font-size:12px !important;
+	height:30px;
+	width:200px;
+	margin:10px auto;
+	text-align:center;
+}
 
-#container_ajax img {
+#container_ajax img.smile {
 	max-height:30px;
 	background-image: 	-webkit-gradient(
 		linear,
@@ -40,7 +48,7 @@ body {
 	margin:4px 3px !important;	
 	max-height:30px;
 }
-#container_ajax img.selected {
+#container_ajax img.smile.selected {
 	background-image: 	-webkit-gradient(
     linear,
     left bottom,
