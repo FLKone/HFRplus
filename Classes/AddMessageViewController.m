@@ -974,7 +974,7 @@
 	[self performSelectorOnMainThread:@selector(showSmileResults:) withObject:tmpHTML waitUntilDone:YES];
 	
 	//Pagination
-	if (firstSmile > 0 || lastSmile < [self.smileyArray count]) {
+	//if (firstSmile > 0 || lastSmile < [self.smileyArray count]) {
 		NSLog(@"pagination needed");
 		
 		[self.segmentControler setAlpha:0];
@@ -995,7 +995,7 @@
 		}		
 		
 		
-	}
+	//}
 	
 	
 	[diskCachePath release];
