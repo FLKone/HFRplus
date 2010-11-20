@@ -473,7 +473,17 @@
 		//Title & URL
 		HTMLNode * topicTitleNode = [topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase3" allowPartial:NO];
 
-		NSString *aTopicTitle = [[NSString alloc] initWithString:[[topicTitleNode allContents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+		NSString *aTopicAffix = [[NSString alloc] init];
+		NSString *aTopicSuffix = [[NSString alloc] init];
+		if ([[topicNode className] rangeOfString:@"ligne_sticky"].location != NSNotFound) {
+			aTopicAffix = [aTopicAffix stringByAppendingString:@"➫ "];//➥▶✚
+		}
+		
+		if ([topicTitleNode findChildWithAttribute:@"alt" matchingName:@"closed" allowPartial:NO]) {
+			aTopicSuffix = [aTopicSuffix stringByAppendingString:@" ✖"];
+		}
+		
+		NSString *aTopicTitle = [[NSString alloc] initWithFormat:@"%@%@%@", aTopicAffix, [[topicTitleNode allContents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]], aTopicSuffix];
 		[aTopic setATitle:aTopicTitle];
 		[aTopicTitle release];
 
