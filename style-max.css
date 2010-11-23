@@ -82,6 +82,17 @@ table .s1 a {
 
 }
 
+table ol, ul
+{
+	margin:1em 0px !important;
+	padding-left:20px !important
+}
+
+table.code * {
+	font-size:9px !important;
+}
+
+
 div.masque {
 	visibility:hidden;
 }

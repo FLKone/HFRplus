@@ -10,6 +10,7 @@
 #import "RegexKitLite.h"
 #import "IdentificationViewController.h"
 #import "HFRplusAppDelegate.h"
+#import "RangeOfCharacters.h"
 
 @implementation CompteViewController
 @synthesize compteView, profilBtn, loginView;
@@ -51,7 +52,8 @@
 		//NSLog(@"finish OK");
 		
 		//OK
-		[[self profilBtn] setTitle:[NSString stringWithFormat:@"Profil: %@", [[responseString stringByMatching:regularExpressionString capture:1L] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]] forState:UIControlStateNormal];
+		
+		[[self profilBtn] setTitle:[NSString stringWithFormat:@"Profil: %@", [[[responseString stringByMatching:regularExpressionString capture:1L] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByDecodingXMLEntities]] forState:UIControlStateNormal];
 		[self.compteView setHidden:NO];
 		[self.loginView setHidden:YES];
 

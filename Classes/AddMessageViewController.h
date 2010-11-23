@@ -35,6 +35,9 @@
 	UITextField *textFieldSmileys;
 	NSMutableArray *smileyArray;
 	int smileyPage;
+	UITableView *commonTableView;
+	NSMutableDictionary *usedSearchDict;
+	NSMutableArray *usedSearchSortedArray;
 
 	
 	BOOL haveTitle;
@@ -77,6 +80,9 @@
 @property (nonatomic, retain) IBOutlet UITextField *textFieldSmileys;
 @property (nonatomic, retain) NSMutableArray *smileyArray;
 @property int smileyPage;
+@property (nonatomic, retain) IBOutlet UITableView *commonTableView;
+@property (nonatomic, retain) NSMutableDictionary *usedSearchDict;
+@property (nonatomic, retain) NSMutableArray *usedSearchSortedArray;
 
 //@property (nonatomic, retain) IBOutlet UIScrollView *scrollViewer;
 

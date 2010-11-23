@@ -45,6 +45,8 @@
 	//Custom Internal Images
 	NSString *regEx2 = @"<img src=\"http://forum-images.hardware.fr/([^\"]+)\" alt=\"\\[[^\"]+\" title=\"[^\"]+\">";			
 	myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx2
+														//withString:@"<img class=\"smileycustom\" src=\"/Users/Shasta/Library/Application Support/iPhone Simulator/4.2/Applications/B6F28196-4BC4-4678-94B6-3CB2CE9747BB/Library/Caches/SmileCache/images-perso-cesar666.gif\" />"]; //
+
 														  withString:@"<img class=\"smileycustom\" src=\"http://forum-images.hardware.fr/$1\" />"]; //
 	
 	//Native Internal Images

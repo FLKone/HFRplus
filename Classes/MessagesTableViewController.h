@@ -65,6 +65,8 @@
 	NSMutableArray *arrayAction;
 	int curPostID;
 	
+	BOOL isAnimating; //to check is an animation is ON
+
 }
 
 
@@ -100,6 +102,8 @@
 
 @property (retain, nonatomic) NSMutableArray *arrayAction;
 @property int curPostID;
+
+@property BOOL isAnimating;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andUrl:(NSString *)theTopicUrl;
 - (void)answerTopic;

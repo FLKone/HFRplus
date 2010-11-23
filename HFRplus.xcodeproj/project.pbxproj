@@ -1499,7 +1499,8 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = HFRplus_Prefix.pch;
-				HEADER_SEARCH_PATHS = "/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.1.sdk/usr/include/libxml2/**";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = "/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/usr/include/libxml2/**";
 				INFOPLIST_FILE = "HFRplus-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -1508,7 +1509,7 @@
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = HFRplus;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1521,7 +1522,8 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = HFRplus_Prefix.pch;
-				HEADER_SEARCH_PATHS = "/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.1.sdk/usr/include/libxml2/**";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = "/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/usr/include/libxml2/**";
 				INFOPLIST_FILE = "HFRplus-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -1530,7 +1532,7 @@
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = HFRplus;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1594,7 +1596,8 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = HFRplus_Prefix.pch;
-				HEADER_SEARCH_PATHS = "/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.1.sdk/usr/include/libxml2/**";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = "/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/usr/include/libxml2/**";
 				INFOPLIST_FILE = "HFRplus-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -1603,7 +1606,7 @@
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = HFRplus;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1636,7 +1639,8 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = HFRplus_Prefix.pch;
-				HEADER_SEARCH_PATHS = "/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.1.sdk/usr/include/libxml2/**";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = "/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/usr/include/libxml2/**";
 				INFOPLIST_FILE = "HFRplus-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -1646,7 +1650,7 @@
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = HFRplus;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 			};

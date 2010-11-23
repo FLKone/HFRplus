@@ -34,7 +34,7 @@
 @synthesize arrayInputData;
 @synthesize aToolbar;
 
-@synthesize isFavoritesOrRead, isRedFlagged, isUnreadable;
+@synthesize isFavoritesOrRead, isRedFlagged, isUnreadable, isAnimating;
 
 @synthesize request, arrayAction, curPostID;
 
@@ -597,7 +597,8 @@
 	//NSLog(@"viewDidLoad");
 
     [super viewDidLoad];
-
+	self.isAnimating = NO;
+	
 	self.title = self.topicName;
 
 	//Gesture
@@ -640,6 +641,18 @@
 	
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+	[super viewWillDisappear:animated];
+	NSLog(@"viewWillDisappear");
+	self.isAnimating = YES;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+	NSLog(@"viewDidAppear");
+	self.isAnimating = NO;
+}
+
 -(void)answerTopic
 {
 	// Create the root view controller for the navigation controller
@@ -663,6 +676,10 @@
 	addMessageViewController.delegate = self;
 	[addMessageViewController setArrayInputData:self.arrayInputData];
 */
+	
+	if (self.isAnimating) {
+		return;
+	}
 	
 	NewMessageViewController *addMessageViewController = [[NewMessageViewController alloc]
 														   initWithNibName:@"AddMessageViewController" bundle:nil];
@@ -695,6 +712,10 @@
 
 -(void)quoteMessage:(NSString *)quoteUrl
 {
+	if (self.isAnimating) {
+		return;
+	}
+	
 	// Create the root view controller for the navigation controller
 	// The new view controller configures a Cancel and Done button for the
 	// navigation bar.
@@ -730,6 +751,9 @@
 
 -(void)editMessage:(NSString *)editUrl
 {
+	if (self.isAnimating) {
+		return;
+	}
 	// Create the root view controller for the navigation controller
 	// The new view controller configures a Cancel and Done button for the
 	// navigation bar.
@@ -932,6 +956,10 @@
 }
 
 - (void) didSelectImage:(int)index withUrl:(NSString *)selectedURL {
+	if (self.isAnimating) {
+		return;
+	}
+	
 	//On récupe les images du message:
 	//NSLog(@"%@", [[arrayData objectAtIndex:index] toHTML:index]);
 	
@@ -1242,6 +1270,62 @@
 	*/
 	//<script type='text/javascript' src='jquery.lazyload.mini.js'></script>\
 
+	//============
+	NSDate *thenT = [NSDate date]; // Create a current date
+	
+	HTMLParser * myParser = [[HTMLParser alloc] initWithString:tmpHTML error:NULL];
+	HTMLNode * smileNode = [myParser doc]; //Find the body tag
+
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+	NSString *diskCachePath = [[[paths objectAtIndex:0] stringByAppendingPathComponent:@"SmileCache"] retain];
+	
+	if (![[NSFileManager defaultManager] fileExistsAtPath:diskCachePath])
+	{
+		//NSLog(@"createDirectoryAtPath");
+		[[NSFileManager defaultManager] createDirectoryAtPath:diskCachePath
+								  withIntermediateDirectories:YES
+												   attributes:nil
+														error:NULL];
+	}
+	else {
+		//NSLog(@"pas createDirectoryAtPath");
+	}
+
+	
+	NSArray * tmpImageArray =  [smileNode findChildrenWithAttribute:@"class" matchingName:@"smileycustom" allowPartial:NO];
+	
+	NSFileManager *fileManager = [[NSFileManager alloc] init];
+
+	for (HTMLNode * imgNode in tmpImageArray) { //Loop through all the tags
+		NSString *imgUrl = [[imgNode getAttributeNamed:@"src"] stringByReplacingOccurrencesOfString:@"%20" withString:@" "];
+		//NSLog(@"imgUrl %@", imgUrl);
+
+		NSString *filename = [imgUrl stringByReplacingOccurrencesOfString:@"http://forum-images.hardware.fr/" withString:@""];
+		filename = [filename stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
+		filename = [filename stringByReplacingOccurrencesOfString:@" " withString:@"-"];
+		
+		NSString *key = [diskCachePath stringByAppendingPathComponent:filename];
+		
+		//NSLog(@"key %@", key);
+		
+		if (![fileManager fileExistsAtPath:key])
+		{
+			//NSLog(@"dl %@", key);
+			
+			[fileManager createFileAtPath:key contents:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [imgUrl stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]]]] attributes:nil];					
+		}
+
+		tmpHTML = [tmpHTML stringByReplacingOccurrencesOfString:[imgNode getAttributeNamed:@"src"] withString:key];
+		
+	}
+	[fileManager release];
+	[diskCachePath release];
+
+	NSDate *nowT = [NSDate date]; // Create a current date
+	
+	NSLog(@"SMILEYS Parse Time elapsed Total		: %f", [nowT timeIntervalSinceDate:thenT]);
+	//============	
+	
 	NSString *HTMLString = [[NSString alloc] 
 							initWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
 							<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"fr\" lang=\"fr\">\
@@ -1308,12 +1392,14 @@
 #pragma mark WebView Delegate
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-	//NSLog(@"== webViewDidStartLoad");
+	NSLog(@"== webViewDidStartLoad");
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
+	NSLog(@"== webViewDidFinishLoad");
+	
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;	
 	[self.messagesWebView setHidden:NO];
 	//NSLog(@"== webViewDidFinishLoad %@", [NSString stringWithFormat:@"window.location.hash='%@';$('img.lazy').lazyload({ placeholder : 'blank15.gif' });$('img.lazy2').lazyload({ placeholder : 'avatar_male_gray_on_light_48x48.png' });", self.stringFlagTopic]);
@@ -1393,7 +1479,7 @@
 
 	
 	[webView stringByEvaluatingJavaScriptFromString:jsString];
-	//NSLog(@"? webViewDidFinishLoad JS");
+	NSLog(@"? webViewDidFinishLoad JS");
 }
 //NSSelectorFromString([[[self arrayAction] objectAtIndex:curPostID] objectForKey:@"code"])
 - (BOOL) canPerformAction:(SEL)selector withSender:(id) sender {
@@ -1487,12 +1573,17 @@
 	if([[arrayData objectAtIndex:curMsg] urlEdit]){
 		//NSLog(@"urlEdit");
 		[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Editer", @"EditMessage", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
-		[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Répondre", @"QuoteMessage", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+		
+		if (self.navigationItem.rightBarButtonItem.enabled) {
+			[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Répondre", @"QuoteMessage", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+		}
 
 	}
 	else {
 		//NSLog(@"profil");
-		[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Répondre", @"QuoteMessage", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+		if (self.navigationItem.rightBarButtonItem.enabled) {
+			[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Répondre", @"QuoteMessage", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+		}
 		//[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Profil", @"actionProfil", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
 		
 		if([[arrayData objectAtIndex:curMsg] MPUrl]){
@@ -1506,7 +1597,7 @@
 
 	
 	//"Citer ☑"@"Citer ☒"@"Citer ☐"	
-	if([[arrayData objectAtIndex:curMsg] quoteJS]) {
+	if([[arrayData objectAtIndex:curMsg] quoteJS] && self.navigationItem.rightBarButtonItem.enabled) {
 		NSString *components = [[[arrayData objectAtIndex:curMsg] quoteJS] substringFromIndex:7];
 		components = [components stringByReplacingOccurrencesOfString:@"); return false;" withString:@""];
 		components = [components stringByReplacingOccurrencesOfString:@"'" withString:@""];
@@ -1666,6 +1757,10 @@
 	
 }
 -(void)actionMessage:(NSNumber *)curMsgN {
+	if (self.isAnimating) {
+		return;
+	}
+	
 	int curMsg = [curMsgN intValue];
 	
 	//NSLog(@"actionMessage %d = %@", curMsg, curMsgN);

@@ -26,4 +26,5 @@
 -(NSString*)decodeSpanUrlFromString;
 -(NSString*)decodeSpanUrlFromString2;
 
+- (NSString *)stringByDecodingXMLEntities;
 @end

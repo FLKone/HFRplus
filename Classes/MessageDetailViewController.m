@@ -211,6 +211,20 @@
 		[toolbarBtn setItems:[NSArray arrayWithObjects: flexItem, actionBtn, nil] animated:NO];
 	}
 	
+	if(self.parent.navigationItem.rightBarButtonItem.enabled) {
+		quoteBtn.enabled = YES;		
+	}
+	else {
+		quoteBtn.enabled = NO;	
+		if([[arrayData objectAtIndex:curMsg] urlEdit]){
+			actionBtn.enabled = NO;
+		}
+		else {
+			actionBtn.enabled = YES;
+		}
+
+	}
+
 	[flexItem release];
 	
 }
@@ -220,7 +234,7 @@
 	//NSLog(@"MDV viewDidAppear");	
 	
     [super viewDidAppear:animated];
- 
+	self.parent.isAnimating = NO;
 	
 	[self setupData];
 
@@ -409,7 +423,7 @@
 		[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Ajouter aux favoris", @"actionFavoris:", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
 	} 
 	
-	if([[arrayData objectAtIndex:curMsg] urlEdit]){
+	if([[arrayData objectAtIndex:curMsg] urlEdit] && self.parent.navigationItem.rightBarButtonItem.enabled){
 		[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Répondre", @"QuoteMessage:", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
 	}
 	else  {
@@ -420,7 +434,7 @@
 	}
 	
 	//"Citer ☑"@"Citer ☒"@"Citer ☐"	
-	if([[arrayData objectAtIndex:curMsg] quoteJS]) {
+	if([[arrayData objectAtIndex:curMsg] quoteJS] && self.parent.navigationItem.rightBarButtonItem.enabled) {
 		NSString *components = [[[arrayData objectAtIndex:curMsg] quoteJS] substringFromIndex:7];
 		components = [components stringByReplacingOccurrencesOfString:@"); return false;" withString:@""];
 		components = [components stringByReplacingOccurrencesOfString:@"'" withString:@""];

@@ -21,7 +21,7 @@
 @synthesize request, loadingView, requestSmile;
 
 @synthesize lastSelectedRange, loaded;//navBar, 
-@synthesize segmentControler, isDragging, textFieldSmileys, smileyArray, segmentControlerPage, smileyPage;
+@synthesize segmentControler, isDragging, textFieldSmileys, smileyArray, segmentControlerPage, smileyPage, commonTableView, usedSearchDict, usedSearchSortedArray;
 
 @synthesize haveTitle, textFieldTitle;
 @synthesize haveTo, textFieldTo;
@@ -49,7 +49,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
         // Custom initialization
-		//NSLog(@"initWithNibName add");
+		NSLog(@"initWithNibName add");
 		
 		self.arrayInputData = [[NSMutableDictionary alloc] init];
 		self.smileyArray = [[NSMutableArray alloc] init];
@@ -63,6 +63,24 @@
 		self.haveTo	= NO;
 		
 		self.offsetY = 0;
+		
+		self.usedSearchDict = [[NSMutableDictionary alloc] init];
+		self.usedSearchSortedArray = [[NSMutableArray alloc] init];
+		// Recherche Smileys utilises
+		NSFileManager *fileManager = [[NSFileManager alloc] init];
+		
+		NSString *directory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+		NSString *usedSmilieys = [[NSString alloc] initWithString:[directory stringByAppendingPathComponent:@"usedSmilieys.plist"]];
+		
+		if ([fileManager fileExistsAtPath:usedSmilieys]) {
+			self.usedSearchDict = [NSMutableDictionary dictionaryWithContentsOfFile:usedSmilieys];
+			self.usedSearchSortedArray = (NSMutableArray *)[[self.usedSearchDict allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+		}
+		
+		
+		[usedSmilieys release];
+		[fileManager release];
+		// Recherche Smileys utilises		
 		
 		self.title = @"Nouv. message";
     }
@@ -131,11 +149,8 @@
    // [super viewDidLoad];
 	
 	[self.smileView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"smileybase" ofType:@"html"] isDirectory:NO]]];
-
-
 		
 	self.formSubmit = @"http://forum.hardware.fr/bddpost.php";
-
 
 	 [[NSNotificationCenter defaultCenter] addObserver:self
 	 selector:@selector(smileyReceived:)
@@ -143,7 +158,10 @@
 
 	self.lastSelectedRange = NSMakeRange(NSNotFound, NSNotFound);
 	
-
+	UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 40)];
+	v.backgroundColor = [UIColor whiteColor];
+	[self.commonTableView setTableFooterView:v];
+	[v release];
 	
 	/*
 	 
@@ -156,17 +174,6 @@
 			 ((UIScrollView *)subview).bounces = NO;
 	 
 	 */
-
-	/*
-	NSString *path = [[NSBundle mainBundle] pathForResource:
-					  @"commonsmile" ofType:@"plist"];
-	
-	// Build the array from the plist  
-	self.arrayData = [[NSMutableArray alloc] initWithContentsOfFile:path];
-	
-	NSLog(@"self.arrayData count %d", [self.arrayData count]);
-	[self renderSmileys];
-	*/
 	
     // Observe keyboard hide and show notifications to resize the text view appropriately.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -327,10 +334,23 @@
 		
 		[self.textView becomeFirstResponder];
 	}
+	else if (self.commonTableView.alpha != 0) {
+		[UIView beginAnimations:nil context:nil];
+		[UIView setAnimationDuration:0.2];		
+		[self.commonTableView setAlpha:0];
+		
+		[self.segmentControler setAlpha:1];
+		[self.segmentControlerPage setAlpha:0];		
+		
+		[UIView commitAnimations];	
+		
+		[self.textView becomeFirstResponder];
+	}
 	else {
 		if ([self.textView text].length > 0) {
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Attention !" message:@"Vous allez perdre le contenu de votre message."
 														   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Confirmer", nil];
+			[alert setTag:666];
 			[alert show];
 			[alert release];
 		}
@@ -342,7 +362,7 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-	if (buttonIndex == 1) {
+	if (buttonIndex == 1 && alertView.tag == 666) {
 		[self.delegate addMessageViewControllerDidFinish:self];	
 	}
 }
@@ -458,6 +478,7 @@
 					[UIView beginAnimations:nil context:nil];
 					[UIView setAnimationDuration:0.2];		
 					[self.smileView setAlpha:1];
+					[self.commonTableView setAlpha:0];
 					
 					[self.segmentControler setAlpha:0];
 					[self.segmentControlerPage setAlpha:1];	
@@ -544,7 +565,31 @@
 }
 
 - (void) didSelectSmile:(NSString *)smile {
-	//NSLog(@"didSelectSmile");
+	NSLog(@"didSelectSmile");
+
+	//STATS RECHERCHES
+	// Recherche Smileys utilises
+	NSNumber *val;
+	if ((val = [self.usedSearchDict valueForKey:self.textFieldSmileys.text])) {
+		NSLog(@"existe %@", val);
+		[self.usedSearchDict setObject:[NSNumber numberWithInt:[val intValue]+1] forKey:self.textFieldSmileys.text];
+	}
+	else {
+		NSLog(@"nouveau");
+		[self.usedSearchDict setObject:[NSNumber numberWithInt:1] forKey:self.textFieldSmileys.text];
+		
+	}
+	
+	NSLog(@"%@", self.usedSearchDict);
+	
+	NSString *directory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+	NSString *usedSmilieys = [[NSString alloc] initWithString:[directory stringByAppendingPathComponent:@"usedSmilieys.plist"]];
+	
+	[self.usedSearchDict writeToFile:usedSmilieys atomically:YES];
+	
+	// Recherche Smileys utilises	
+	
+	
 	
 	NSMutableString *text = [textView.text mutableCopy];
 	
@@ -583,6 +628,8 @@
 	[UIView commitAnimations];	
 	
 	[self.textView becomeFirstResponder];
+	
+
 	
 }
 
@@ -691,9 +738,6 @@
     return YES;
 }
 
-
-
-
 #pragma mark -
 #pragma mark Responding to keyboard events
 
@@ -765,6 +809,33 @@
 		[segmentControler setEnabled:NO forSegmentAtIndex:0];
 		[textFieldSmileys setEnabled:NO];
 	}
+	else {
+		if (self.usedSearchDict.count > 0) {
+
+			[UIView beginAnimations:nil context:nil];
+			[UIView setAnimationDuration:0.2];		
+			[self.smileView setAlpha:0];
+			
+			[self.segmentControler setAlpha:1];
+			[self.segmentControlerPage setAlpha:0];		
+			
+			[UIView commitAnimations];
+			
+			
+			self.usedSearchSortedArray = (NSMutableArray *)[[self.usedSearchDict allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+			
+			//NSLog(@"usedSearchSortedArray %@", self.usedSearchSortedArray);
+			
+			[self.commonTableView reloadData];
+			
+			[UIView beginAnimations:nil context:nil];
+			[UIView setAnimationDuration:0.2];		
+			[self.commonTableView setAlpha:1];
+			[UIView commitAnimations];
+		}
+
+
+	}
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
@@ -787,7 +858,10 @@
 	else if (textField == self.textFieldSmileys)
 	{
 		if (self.textFieldSmileys.text.length < 3) {
-			return NO;
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Saisir 3 caractères minimum !" 
+														   delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+			[alert show];
+			[alert release];
 		}
 		else {
 			
@@ -805,6 +879,9 @@
 				[self.smileView setAlpha:1];
 				[UIView commitAnimations];
 			}
+			
+			[self.commonTableView setAlpha:0];
+			
 			[textFieldSmileys resignFirstResponder];
 			[self fetchSmileys];
 			/*
@@ -845,7 +922,8 @@
 	[requestSmile setDidStartSelector:@selector(fetchSmileContentStarted:)];
 	[requestSmile setDidFinishSelector:@selector(fetchSmileContentComplete:)];
 	[requestSmile setDidFailSelector:@selector(fetchSmileContentFailed:)];
-	
+
+	[self.smileView stringByEvaluatingJavaScriptFromString:@"$('#container').hide();$('#container_ajax').html('<div class=\"loading\"><img src=\"loadinfo.net.gif\" /> Recherche en cours...</div>');"];
 	[requestSmile startAsynchronous];
 	NSLog(@"fetchSmileys");
 
@@ -854,9 +932,6 @@
 - (void)fetchSmileContentStarted:(ASIHTTPRequest *)theRequest
 {
 	NSLog(@"fetchContentStarted");
-	
-	[self.smileView stringByEvaluatingJavaScriptFromString:@"$('#container').hide();$('#container_ajax').html('<div class=\"loading\"><img src=\"loadinfo.net.gif\" /> Recherche en cours...</div>');"];
-	
 }
 
 - (void)fetchSmileContentComplete:(ASIHTTPRequest *)theRequest
@@ -879,6 +954,17 @@
 	}
 	//NSLog(@"%@", self.smileyArray);
 	
+	if (self.smileyArray.count == 0) {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Aucun résultat !" 
+													   delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		[alert show];
+		[alert release];
+		
+		[self.textFieldSmileys becomeFirstResponder];
+		[self.smileView stringByEvaluatingJavaScriptFromString:@"$('#container').show();$('#container_ajax').html('');"];
+		return;
+	}
+	
 	[self loadSmileys:0];
 	//[self loadSmileys:smileyPage];	
 
@@ -899,7 +985,6 @@
 
 -(void)loadSmileys:(int)page;
 {
-	
 	self.smileyPage = page;
 	
 	[self.smileView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"\
@@ -914,7 +999,7 @@
 -(void)loadSmileys;
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	
+
 	int page = self.smileyPage;
 	
 
@@ -953,11 +1038,12 @@
 		
 		NSString *key = [diskCachePath stringByAppendingPathComponent:filename];
 		
-		//NSLog(@"key %@", key);
+		NSLog(@"url %@", [[self.smileyArray objectAtIndex:i] objectForKey:@"source"]);
+		NSLog(@"key %@", key);
 		
 		if (![fileManager fileExistsAtPath:key])
 		{
-			//NSLog(@"dl %@", key);
+			NSLog(@"dl %@", key);
 			
 			[fileManager createFileAtPath:key contents:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [[[self.smileyArray objectAtIndex:i] objectForKey:@"source"] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]]]] attributes:nil];					
 		}
@@ -1014,6 +1100,55 @@
 }
 
 #pragma mark -
+#pragma mark Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    // Return the number of sections.
+	//NSLog(@"NB Section %d", arrayDataID.count);
+	
+    return 1;
+}
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+	return @"Historique";
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	//NSLog(@"%@", self.usedSearchDict);
+	return self.usedSearchDict.count;
+}
+
+
+// Customize the appearance of table view cells.
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    static NSString *CellIdentifier = @"Cell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+		NSLog(@"mew cell");
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+
+		cell.accessoryType = UITableViewCellAccessoryNone;
+		//cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+
+	cell.textLabel.text = [self.usedSearchSortedArray objectAtIndex:indexPath.row];	
+    return cell;
+}
+
+
+#pragma mark -
+#pragma mark Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
+	self.textFieldSmileys.text = [self.usedSearchSortedArray objectAtIndex:indexPath.row];
+	[self textFieldShouldReturn:self.textFieldSmileys];
+	[self.commonTableView deselectRowAtIndexPath:self.commonTableView.indexPathForSelectedRow animated:NO];
+
+}
+
+#pragma mark -
 #pragma mark Memory
 
 - (void)viewDidUnload {
@@ -1037,6 +1172,8 @@
 	self.textFieldTitle = nil;
 	self.textFieldTo = nil;
 	
+	self.commonTableView = nil;
+	
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
@@ -1056,6 +1193,8 @@
 	self.requestSmile = nil;
 	
 	self.smileyArray = nil;
+	self.usedSearchDict = nil;
+	self.usedSearchSortedArray = nil;
 	
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"smileyReceived" object:nil];
 	
