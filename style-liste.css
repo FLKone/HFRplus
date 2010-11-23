@@ -72,6 +72,9 @@ div.masque {
 
 }
 
+.message.del {
+	opacity:0.5;
+}
 .anchorlink {
 	display:block;
 }

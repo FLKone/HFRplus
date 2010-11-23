@@ -107,7 +107,6 @@
 }
 
 -(void)parseData:(HTMLParser *)myParser{
-
 	
 	if ([self isCancelled]) {
 		return;
@@ -148,9 +147,20 @@
 			
 			//NSLog(@"====================================/nrawContentsOfNode messageNode : %@", rawContentsOfNode([messageNode _node], [myParser _doc]));
 
+
+			
 			HTMLNode * authorNode = [messageNode findChildWithAttribute:@"class" matchingName:@"s2" allowPartial:NO];
 			
 			LinkItem *fasTest = [[LinkItem alloc] init];
+			
+			if ([[[[messageNode parent] parent] getAttributeNamed:@"class"] isEqualToString:@"messagetabledel"]) {
+				fasTest.isDel = YES;
+			}
+			else {
+				fasTest.isDel = NO;
+			}
+
+			
 			
 			fasTest.postID = [[[messageNode firstChild] firstChild] getAttributeNamed:@"name"];
 			

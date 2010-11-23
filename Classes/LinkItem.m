@@ -13,14 +13,19 @@
 @implementation LinkItem
 
 @synthesize postID, lastPageUrl, lastPostUrl, viewed, name, url, flagUrl, typeFlag, rep, dicoHTML, messageDate, imageUrl, imageUI, textViewMsg, messageNode, messageAuteur;
-@synthesize urlQuote, urlEdit, addFlagUrl, quoteJS, MPUrl;
+@synthesize urlQuote, urlEdit, addFlagUrl, quoteJS, MPUrl, isDel;
 
 -(NSString *)toHTML:(int)index
 {
 	NSString *tempHTML = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"templatev2" ofType:@"htm"] encoding:NSUTF8StringEncoding error:NULL];
 
 	tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+	
+	if([self isDel]){
+		tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"class=\"message\"" withString:@"class=\"message del\""];
+	}
 
+	
 
 	tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"%%AUTEUR_PSEUDO%%" withString:[self name]];
 	tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"%%POSTID%%" withString:[self postID]];	

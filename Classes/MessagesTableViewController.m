@@ -51,13 +51,13 @@
 
 - (void)fetchContent
 {
-	//NSLog(@"fetchContent");
+//	NSLog(@"fetchContent");
 	
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMaxi];
-	
-	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]]]];
+
+	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[[NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]]]];
 	[request setDelegate:self];
-	
+
 	//[request setCachePolicy:ASIReloadIfDifferentCachePolicy];
 	//[request setDownloadCache:[ASIDownloadCache sharedCache]];
 	
@@ -177,6 +177,7 @@
 			
 			//NSArray *temporaryNumPagesArray = [[NSArray alloc] init];
 			NSArray *temporaryNumPagesArray = [pagesLinkNode children];
+			
 			
 			[self setFirstPageNumber:[[[temporaryNumPagesArray objectAtIndex:2] contents] intValue]];
 			
@@ -424,6 +425,13 @@
 		HTMLNode * authorNode = [messageNode findChildWithAttribute:@"class" matchingName:@"s2" allowPartial:NO];
 		
 		LinkItem *fasTest = [[LinkItem alloc] init];
+
+		if ([[[[messageNode parent] parent] getAttributeNamed:@"class"] isEqualToString:@"messagetabledel"]) {
+			fasTest.isDel = YES;
+		}
+		else {
+			fasTest.isDel = NO;
+		}
 		
 		fasTest.postID = [[[messageNode firstChild] firstChild] getAttributeNamed:@"name"];
 

@@ -23,6 +23,7 @@
 	NSString *postID;
 
 	BOOL viewed;
+	BOOL isDel;
 	
 	int rep;
 
@@ -77,6 +78,7 @@
 
 @property int rep;
 @property BOOL viewed;
+@property BOOL isDel;
 
 -(NSString *)toHTML:(int)index;
 
