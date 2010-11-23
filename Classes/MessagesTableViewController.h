@@ -67,6 +67,7 @@
 	
 	BOOL isAnimating; //to check is an animation is ON
 
+	NSDate *firstDate;
 }
 
 
@@ -75,6 +76,9 @@
 
 @property (nonatomic, retain) NSString *topicAnswerUrl;
 @property (nonatomic, retain) NSString *topicName;
+
+@property (nonatomic, retain) NSDate *firstDate;
+
 
 @property BOOL loaded;
 @property BOOL isLoading;

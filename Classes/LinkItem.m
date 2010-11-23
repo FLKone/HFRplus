@@ -45,32 +45,25 @@
 	//Custom Internal Images
 	NSString *regEx2 = @"<img src=\"http://forum-images.hardware.fr/([^\"]+)\" alt=\"\\[[^\"]+\" title=\"[^\"]+\">";			
 	myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx2
-														//withString:@"<img class=\"smileycustom\" src=\"/Users/Shasta/Library/Application Support/iPhone Simulator/4.2/Applications/B6F28196-4BC4-4678-94B6-3CB2CE9747BB/Library/Caches/SmileCache/images-perso-cesar666.gif\" />"]; //
-
-														  withString:@"<img class=\"smileycustom\" src=\"http://forum-images.hardware.fr/$1\" />"]; //
+														withString:@"<img class=\"smileycustom\" src=\"http://forum-images.hardware.fr/$1\" />"]; //
 	
 	//Native Internal Images
 	NSString *regEx0 = @"<img src=\"http://forum-images.hardware.fr/[^\"]+/([^/]+)\" alt=\"[^\"]+\" title=\"[^\"]+\">";			
 	myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx0
 														  withString:@"|NATIVE-$1-98787687687697|"];
 	
-
-	
 	//Replacing Links by HREF
 	//NSString *regEx3 = @"<a rel=\"nofollow\" href=\"([^\"]+)\" target=\"_blank\" class=\"cLink\">[^<]+</a>";			
 	//myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx3
 	//													  withString:@"$1"];			
 	
-	
 	//myRawContent = [myRawContent stringByReplacingOccurrencesOfString:@"|EXTERNAL-98787687687697|" withString:@"<img src='image.png' />"];
-
-
 	
 	//Replacing Links with IMG with custom IMG
 	NSString *regEx3 = @"<a rel=\"nofollow\" href=\"([^\"]+)\" target=\"_blank\" class=\"cLink\"><img src=\"([^\"]+)\" alt=\"[^\"]+\" title=\"[^\"]+\" style=\"[^\"]+\"></a>";			
 	myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx3
 														  withString:@"<img class=\"hfrplusimg\" title=\"%%ID%%\" src=\"121-lanscape.png\" alt=\"$2\" longdesc=\"$1\">"];	
-
+	
 	//Toyonos Images http://hfr.toyonos.info/generateurs/rofl/?s=shay&v=4&t=5
 	//NSString *regExToyo = @"<img src=\"http://hfr.toyonos.info/generateurs/([^\"]+)\" alt=\"[^\"]+\" title=\"[^\"]+\" style=\"[^\"]+\">";			
 	//myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regExToyo

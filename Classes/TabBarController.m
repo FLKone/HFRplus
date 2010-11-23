@@ -13,7 +13,7 @@
 -(void)viewDidLoad {
 	[super viewDidLoad];
 	
-	NSLog(@"viewDidLoad");
+	//NSLog(@"viewDidLoad");
 	UINavigationBar *moreNavigationBar = self.moreNavigationController.navigationBar;
 	
 	// Make the title of this page the same as the title of this app
@@ -38,7 +38,7 @@
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
-	NSLog(@"didSelectViewController %@", viewController);
+	//NSLog(@"didSelectViewController %@", viewController);
 	/*
 	if ([[NSString stringWithFormat:@"%@", [viewController class]] isEqualToString:@"UIMoreNavigationController"]) {
 		NSLog(@"UIMoreNavigationController");

@@ -669,7 +669,7 @@ static NSOperationQueue *sharedQueue = nil;
 		}
 
 		// Create a new HTTP request.
-		NSLog(@"URL %@", [self url]);
+		//NSLog(@"URL %@", [self url]);
 		request = CFHTTPMessageCreateRequest(kCFAllocatorDefault, (CFStringRef)[self requestMethod], (CFURLRef)[self url], [self useHTTPVersionOne] ? kCFHTTPVersion1_0 : kCFHTTPVersion1_1);
 		if (!request) {
 			[self failWithError:ASIUnableToCreateRequestError];

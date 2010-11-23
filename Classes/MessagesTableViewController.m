@@ -38,6 +38,8 @@
 
 @synthesize request, arrayAction, curPostID;
 
+@synthesize firstDate;
+
 #pragma mark -
 #pragma mark Data lifecycle
 
@@ -599,6 +601,8 @@
     [super viewDidLoad];
 	self.isAnimating = NO;
 	
+	self.firstDate = [NSDate date];
+	
 	self.title = self.topicName;
 
 	//Gesture
@@ -643,13 +647,13 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
 	[super viewWillDisappear:animated];
-	NSLog(@"viewWillDisappear");
+	//NSLog(@"viewWillDisappear");
 	self.isAnimating = YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
-	NSLog(@"viewDidAppear");
+	//NSLog(@"viewDidAppear");
 	self.isAnimating = NO;
 }
 
@@ -1236,10 +1240,10 @@
 // -------------------------------------------------------------------------------
 //	handleLoadedApps:notif
 // -------------------------------------------------------------------------------
+
+
 - (void)handleLoadedApps:(NSArray *)loadedItems
 {	
-	//NSLog(@"handleLoadedApps");
-
 	[self.arrayData removeAllObjects];
 	[self.arrayData addObjectsFromArray:loadedItems];
 
@@ -1270,12 +1274,12 @@
 	*/
 	//<script type='text/javascript' src='jquery.lazyload.mini.js'></script>\
 
-	//============
-	NSDate *thenT = [NSDate date]; // Create a current date
-	
+
+	//============	
+	/*
 	HTMLParser * myParser = [[HTMLParser alloc] initWithString:tmpHTML error:NULL];
 	HTMLNode * smileNode = [myParser doc]; //Find the body tag
-
+	
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
 	NSString *diskCachePath = [[[paths objectAtIndex:0] stringByAppendingPathComponent:@"SmileCache"] retain];
 	
@@ -1290,16 +1294,16 @@
 	else {
 		//NSLog(@"pas createDirectoryAtPath");
 	}
-
+	
 	
 	NSArray * tmpImageArray =  [smileNode findChildrenWithAttribute:@"class" matchingName:@"smileycustom" allowPartial:NO];
 	
 	NSFileManager *fileManager = [[NSFileManager alloc] init];
-
+	
 	for (HTMLNode * imgNode in tmpImageArray) { //Loop through all the tags
 		NSString *imgUrl = [[imgNode getAttributeNamed:@"src"] stringByReplacingOccurrencesOfString:@"%20" withString:@" "];
 		//NSLog(@"imgUrl %@", imgUrl);
-
+		
 		NSString *filename = [imgUrl stringByReplacingOccurrencesOfString:@"http://forum-images.hardware.fr/" withString:@""];
 		filename = [filename stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
 		filename = [filename stringByReplacingOccurrencesOfString:@" " withString:@"-"];
@@ -1314,17 +1318,15 @@
 			
 			[fileManager createFileAtPath:key contents:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [imgUrl stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]]]] attributes:nil];					
 		}
-
+		
 		tmpHTML = [tmpHTML stringByReplacingOccurrencesOfString:[imgNode getAttributeNamed:@"src"] withString:key];
 		
 	}
 	[fileManager release];
 	[diskCachePath release];
-
-	NSDate *nowT = [NSDate date]; // Create a current date
-	
-	NSLog(@"SMILEYS Parse Time elapsed Total		: %f", [nowT timeIntervalSinceDate:thenT]);
+*/
 	//============	
+	
 	
 	NSString *HTMLString = [[NSString alloc] 
 							initWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
@@ -1355,9 +1357,8 @@
 
 	[HTMLString release];
 	//[tmpHTML release];
-	
-	//NSLog(@"handleLoadedApps end");
 
+	
 	
 }
 - (void)handleLoadedParser:(HTMLParser *)myParser
@@ -1392,16 +1393,17 @@
 #pragma mark WebView Delegate
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-	NSLog(@"== webViewDidStartLoad");
+	//NSLog(@"== webViewDidStartLoad");
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-	NSLog(@"== webViewDidFinishLoad");
+	//NSLog(@"== webViewDidFinishLoad");
 	
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;	
 	[self.messagesWebView setHidden:NO];
+
 	//NSLog(@"== webViewDidFinishLoad %@", [NSString stringWithFormat:@"window.location.hash='%@';$('img.lazy').lazyload({ placeholder : 'blank15.gif' });$('img.lazy2').lazyload({ placeholder : 'avatar_male_gray_on_light_48x48.png' });", self.stringFlagTopic]);
 //	jsString = [jsString stringByAppendingString:@"$('img.lazy').lazyload({ placeholder : 'blank15.gif' });"];
 //	jsString = [jsString stringByAppendingString:@"$('img.lazy2').lazyload({ placeholder : 'avatar_male_gray_on_light_48x48.png' });"];
@@ -1479,7 +1481,12 @@
 
 	
 	[webView stringByEvaluatingJavaScriptFromString:jsString];
-	NSLog(@"? webViewDidFinishLoad JS");
+	//NSLog(@"? webViewDidFinishLoad JS");
+	
+	
+	NSDate *nowT = [NSDate date]; // Create a current date
+ 	NSLog(@"TOTAL Time elapsed    : %f", [nowT timeIntervalSinceDate:self.firstDate]);	
+
 }
 //NSSelectorFromString([[[self arrayAction] objectAtIndex:curPostID] objectForKey:@"code"])
 - (BOOL) canPerformAction:(SEL)selector withSender:(id) sender {

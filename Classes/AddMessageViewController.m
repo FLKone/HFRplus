@@ -569,27 +569,27 @@
 
 	//STATS RECHERCHES
 	// Recherche Smileys utilises
-	NSNumber *val;
-	if ((val = [self.usedSearchDict valueForKey:self.textFieldSmileys.text])) {
-		NSLog(@"existe %@", val);
-		[self.usedSearchDict setObject:[NSNumber numberWithInt:[val intValue]+1] forKey:self.textFieldSmileys.text];
-	}
-	else {
-		NSLog(@"nouveau");
-		[self.usedSearchDict setObject:[NSNumber numberWithInt:1] forKey:self.textFieldSmileys.text];
+	if (self.textFieldSmileys.text.length >= 3) {
+		NSNumber *val;
+		if ((val = [self.usedSearchDict valueForKey:self.textFieldSmileys.text])) {
+			NSLog(@"existe %@", val);
+			[self.usedSearchDict setObject:[NSNumber numberWithInt:[val intValue]+1] forKey:self.textFieldSmileys.text];
+		}
+		else {
+			NSLog(@"nouveau");
+			[self.usedSearchDict setObject:[NSNumber numberWithInt:1] forKey:self.textFieldSmileys.text];
+			
+		}
 		
+		NSLog(@"%@", self.usedSearchDict);
+		
+		NSString *directory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+		NSString *usedSmilieys = [[NSString alloc] initWithString:[directory stringByAppendingPathComponent:@"usedSmilieys.plist"]];
+		
+		[self.usedSearchDict writeToFile:usedSmilieys atomically:YES];
+		
+		// Recherche Smileys utilises
 	}
-	
-	NSLog(@"%@", self.usedSearchDict);
-	
-	NSString *directory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-	NSString *usedSmilieys = [[NSString alloc] initWithString:[directory stringByAppendingPathComponent:@"usedSmilieys.plist"]];
-	
-	[self.usedSearchDict writeToFile:usedSmilieys atomically:YES];
-	
-	// Recherche Smileys utilises	
-	
-	
 	
 	NSMutableString *text = [textView.text mutableCopy];
 	

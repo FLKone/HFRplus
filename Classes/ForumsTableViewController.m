@@ -124,8 +124,8 @@
 	
 	//NSLog(@"bodyNode %@", rawContentsOfNode([bodyNode _node], [myParser _doc]));	
 	
-	HTMLNode *hash_check = [bodyNode findChildWithAttribute:@"name" matchingName:@"hash_check" allowPartial:NO];
-	NSLog(@"hash_check %@", rawContentsOfNode([hash_check _node], [myParser _doc]));
+	//HTMLNode *hash_check = [bodyNode findChildWithAttribute:@"name" matchingName:@"hash_check" allowPartial:NO];
+	//NSLog(@"hash_check %@", rawContentsOfNode([hash_check _node], [myParser _doc]));
 	
 	NSArray *temporaryForumsArray = [bodyNode findChildrenWithAttribute:@"class" matchingName:@"cat" allowPartial:YES];
 

@@ -54,7 +54,7 @@ static float const kSDURLCacheDefault = 3600; // Default cache expiration delay 
 #pragma mark SDURLCache (tools)
 
 + (NSString *)cacheKeyForURL:(NSURL *)url
-{
+{	
     const char *str = [url.absoluteString UTF8String];
     unsigned char r[CC_MD5_DIGEST_LENGTH];
     CC_MD5(str, strlen(str), r);
