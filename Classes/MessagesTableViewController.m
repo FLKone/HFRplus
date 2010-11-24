@@ -55,7 +55,7 @@
 	
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMaxi];
 
-	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[[NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]]]];
+	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]]]];
 	[request setDelegate:self];
 
 	//[request setCachePolicy:ASIReloadIfDifferentCachePolicy];
@@ -93,6 +93,8 @@
     // "ownership of appListData has been transferred to the parse operation and should no longer be
     // referenced in this thread.
     //
+		
+	
     ParseMessagesOperation *parser = [[ParseMessagesOperation alloc] initWithData:[request responseData] index:0 reverse:NO delegate:self];
 	
     [queue addOperation:parser]; // this will start the "ParseOperation"
