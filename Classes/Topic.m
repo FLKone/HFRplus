@@ -2,8 +2,7 @@
 //  Topic.m
 //  HFRplus
 //
-//  Created by Lace on 19/08/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
+//  Created by FLK on 19/08/10.
 //
 
 #import "Topic.h"
@@ -28,6 +27,8 @@
 
 @synthesize aAuthorOrInter;
 
+@synthesize postID, catID;
+
 -(void)dealloc {
 	self.aTitle	= nil;
 	self.aURL	= nil;
@@ -41,7 +42,7 @@
 	self.aDateOfLastPost	= nil;
 	self.aAuthorOfLastPost	= nil;	
 	self.aAuthorOrInter	= nil;	
-
+	
 	[super dealloc];
 }
 

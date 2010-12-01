@@ -2,8 +2,7 @@
 //  Topic.h
 //  HFRplus
 //
-//  Created by Lace on 19/08/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
+//  Created by FLK on 19/08/10.
 //
 
 #import <Foundation/Foundation.h>
@@ -27,6 +26,9 @@
 	NSString *aAuthorOfLastPost;
 
 	NSString *aAuthorOrInter;
+
+	int postID;
+	int catID;
 }
 
 @property (nonatomic, retain) NSString *aTitle;
@@ -44,5 +46,9 @@
 @property (nonatomic, retain) NSString *aAuthorOfLastPost;
 
 @property (nonatomic, retain) NSString *aAuthorOrInter;
+
+@property int postID;
+@property int catID;
+
 
 @end

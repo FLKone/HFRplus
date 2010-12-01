@@ -14,6 +14,8 @@
 #import "HTMLParser.h"
 #import	"RegexKitLite.h"
 #import "ASIHTTPRequest.h"
+#import "ASIFormDataRequest.h"
+
 #import "ShakeView.h"
 
 #import "Topic.h"
@@ -210,6 +212,10 @@
 		return;
 	}
 	
+	//hash_check
+	HTMLNode *hash_check = [bodyNode findChildWithAttribute:@"name" matchingName:@"hash_check" allowPartial:NO];
+	[[HFRplusAppDelegate sharedAppDelegate] setHash_check:[hash_check getAttributeNamed:@"value"]];
+	//NSLog(@"hash_check %@", [hash_check getAttributeNamed:@"value"]);
 	
 	//Date du jour
 	NSDate *nowTopic = [[NSDate alloc] init];
@@ -222,6 +228,15 @@
 
 		Topic *aTopic = [[Topic alloc] init];
 
+		//POSTID/CATID
+		HTMLNode * catIDNode = [topicNode findChildWithAttribute:@"name" matchingName:@"valuecat" allowPartial:YES];
+		[aTopic setCatID:[[catIDNode getAttributeNamed:@"value"] intValue]];
+		
+		HTMLNode * postIDNode = [topicNode findChildWithAttribute:@"name" matchingName:@"topic" allowPartial:YES];
+		[aTopic setPostID:[[postIDNode getAttributeNamed:@"value"] intValue]];
+		
+		//NSLog(@"%d - %d", [[catIDNode getAttributeNamed:@"value"] intValue], [[postIDNode getAttributeNamed:@"value"] intValue]);
+		
 		//Title
 		HTMLNode * topicTitleNode = [topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase3" allowPartial:NO];
 		NSString *aTopicAffix = [[NSString alloc] init];
@@ -238,6 +253,8 @@
 		
 		[aTopic setATitle:aTopicTitle];
 		[aTopicTitle release];
+		
+
 		
 		//URL
 		HTMLNode * topicFlagNode = [topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase5" allowPartial:NO];
@@ -355,6 +372,12 @@
 	self.status = kComplete;
 	//NSDate *now = [NSDate date]; // Create a current date
 	//NSLog(@"FAVORITES Time elapsed: %f", [now timeIntervalSinceDate:then]);	
+	
+	
+	//NSLog(@"arrayData %@", arrayData);
+	//NSLog(@"arraySection %@", arraySection);
+	//NSLog(@"arrayDataID %@", arrayDataID);
+	//NSLog(@"arrayDataID2 %@", arrayDataID2);
 }
 -(NSString*)wordAfterString:(NSString*)searchString inString:(NSString*)selfString
 {
@@ -731,6 +754,66 @@
 			
 		}
 			
+	}
+}
+
+#pragma mark -
+#pragma mark Delete
+
+-(void)tableView:(UITableView*)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	// If row is deleted, remove it from the list.
+	if (editingStyle == UITableViewCellEditingStyleDelete)
+	{
+		
+		ASIFormDataRequest  *arequest =  
+		[[[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/modo/manageaction.php?config=hfr.inc&cat=0&type_page=forum1f&moderation=0", kForumURL]]] autorelease];
+		//delete
+
+		//NSLog(@"%@", [[HFRplusAppDelegate sharedAppDelegate] hash_check]);
+		
+		[arequest setPostValue:[[HFRplusAppDelegate sharedAppDelegate] hash_check] forKey:@"hash_check"];
+		[arequest setPostValue:@"-1" forKey:@"topic1"];
+		[arequest setPostValue:@"-1" forKey:@"topic_statusno1"];
+		[arequest setPostValue:@"message_forum_delflags" forKey:@"action_reaction"];
+		
+		[arequest setPostValue:@"forum1f" forKey:@"type_page"];
+
+		
+		int theRow = indexPath.row;
+		
+		theRow += [[arrayDataID objectForKey:[arrayDataID2 objectAtIndex:indexPath.section]] lengthB4];
+		
+		[arequest setPostValue:[NSString stringWithFormat:@"%d", [[arrayData objectAtIndex:theRow] postID]] forKey:@"topic0"];
+		[arequest setPostValue:[NSString stringWithFormat:@"%d", [[arrayData objectAtIndex:theRow] catID]] forKey:@"valuecat0"];
+		
+		[arequest setPostValue:@"hardwarefr" forKey:@"valueforum0"];
+
+		
+		//NSLog(@"%d - %d", [[arrayData objectAtIndex:theRow] postID], [[arrayData objectAtIndex:theRow] catID]);
+		
+		[arequest startSynchronous];
+
+		//NSLog(@"arequest: %@", [arequest url]);
+
+		if (arequest) {
+			if ([arequest error]) {
+				//NSLog(@"error: %@", [[arequest error] localizedDescription]);
+			}
+			else if ([arequest responseString])
+			{
+				//NSLog(@"responseString: %@", [arequest responseString]);
+				
+				[self reload];
+
+			}
+		}
+		
 	}
 }
 

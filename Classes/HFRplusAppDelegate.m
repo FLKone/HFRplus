@@ -25,6 +25,8 @@
 @synthesize isLoggedIn;
 @synthesize statusChanged;
 
+@synthesize hash_check;
+
 //@synthesize periodicMaintenanceOperation; //ioQueue, 
 
 #pragma mark -
@@ -32,6 +34,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     
+	self.hash_check = [[NSString alloc] init];
+	
 	[[GANTracker sharedTracker] startTrackerWithAccountID:@"UA-18984614-1"
 										   dispatchPeriod:kGANDispatchPeriodSec
 												 delegate:nil];
@@ -366,6 +370,8 @@
 	[forumsNavController release];
 	[favoritesNavController release];
 	[messagesNavController release];
+	
+	[hash_check release];
 	
     [window release];
     [super dealloc];

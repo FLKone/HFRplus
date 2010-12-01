@@ -26,6 +26,8 @@ static const NSInteger kGANDispatchPeriodSec = 10;
    // NSOperationQueue *ioQueue;
     NSTimer *periodicMaintenanceTimer;
     //NSOperation *periodicMaintenanceOperation;	
+	
+	NSString *hash_check;
 }
 
 //@property (nonatomic, retain) NSOperationQueue *ioQueue;
@@ -41,6 +43,8 @@ static const NSInteger kGANDispatchPeriodSec = 10;
 
 @property BOOL isLoggedIn;
 @property BOOL statusChanged;
+
+@property (nonatomic, retain) NSString *hash_check;
 
 + (HFRplusAppDelegate *)sharedAppDelegate;
 
