@@ -22,10 +22,12 @@
 	tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"\n" withString:@""];
 	
 	if([self isDel]){
-		tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"class=\"message\"" withString:@"class=\"message del\""];
+		tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"class=\"message" withString:@"class=\"message del"];
 	}
 
-	
+	if ([[self name] isEqualToString:@"Modération"]) {
+		tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"class=\"message" withString:@"class=\"message mode "];
+	}
 
 	tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"%%AUTEUR_PSEUDO%%" withString:[self name]];
 	tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"%%POSTID%%" withString:[self postID]];	

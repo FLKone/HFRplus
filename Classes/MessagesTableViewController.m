@@ -414,14 +414,21 @@
 
 	[self setupFastAnswer:bodyNode]; // Formulaire reponse rapide;
 	[self setupPageToolbar:bodyNode]; // toolbars numero de page et changement de page;
+
+	NSArray * messagesNodes = [bodyNode findChildrenWithAttribute:@"class" matchingName:@"messagetable" allowPartial:NO]; //Get all the <img alt="" />
 	
-	NSArray * messagesNodes = [bodyNode findChildrenWithAttribute:@"class" matchingName:@"message cBackCouleurTab" allowPartial:YES]; //Get all the <img alt="" />
-	
+	//NSLog(@"message %d", [messagesNodes count]);
+
 	//int i = 0; //curent obj number
 	
 	//NSLog(@"count before %d", self.arrayData.count);
-	for (HTMLNode * messageNode in messagesNodes) { //Loop through all the tags
-
+	
+	for (HTMLNode * messageNode2 in messagesNodes) { //Loop through all the tags
+		
+		//NSAutoreleasePool * pool2 = [[NSAutoreleasePool alloc] init];
+		
+		HTMLNode * messageNode = [messageNode2 firstChild];
+		
 		//NSAutoreleasePool * pool3 = [[NSAutoreleasePool alloc] init];
 		
 		HTMLNode * authorNode = [messageNode findChildWithAttribute:@"class" matchingName:@"s2" allowPartial:NO];

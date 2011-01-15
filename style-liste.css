@@ -75,6 +75,10 @@ div.masque {
 .message.del {
 	opacity:0.5;
 }
+.message.mode .content {
+	background-color: #FEE;
+}
+
 .anchorlink {
 	display:block;
 }

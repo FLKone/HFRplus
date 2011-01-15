@@ -134,18 +134,20 @@
 
 	//NSLog(@"rawContentsOfNode bodyNode : %@", rawContentsOfNode([bodyNode _node], [myParser _doc]));
 	
-	NSArray * messagesNodes = [bodyNode findChildrenWithAttribute:@"class" matchingName:@"message cBackCouleurTab" allowPartial:YES]; //Get all the <img alt="" />
+	NSArray * messagesNodes = [bodyNode findChildrenWithAttribute:@"class" matchingName:@"messagetable" allowPartial:NO]; //Get all the <img alt="" />
 
 	//NSLog(@"message %d", [messagesNodes count]);
 	
-	for (HTMLNode * messageNode in messagesNodes) { //Loop through all the tags
+	for (HTMLNode * messageNode2 in messagesNodes) { //Loop through all the tags
 		
 		//NSAutoreleasePool * pool2 = [[NSAutoreleasePool alloc] init];
+		
+		HTMLNode * messageNode = [messageNode2 firstChild];
 		
 		if (![self isCancelled]) {
 			//NSDate *then = [NSDate date]; // Create a current date
 			
-			//NSLog(@"====================================/nrawContentsOfNode messageNode : %@", rawContentsOfNode([messageNode _node], [myParser _doc]));
+			//NSLog(@"====================================/nrawContentsOfNode messageNode : %@", rawContentsOfNode([messageNode2 _node], [myParser _doc]));
 
 
 			
