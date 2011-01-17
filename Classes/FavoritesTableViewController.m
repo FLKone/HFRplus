@@ -454,8 +454,16 @@
 	[super viewDidDisappear:animated];
 	[self.view resignFirstResponder];
 
-	[(UILabel *)[[favoritesTableView cellForRowAtIndexPath:favoritesTableView.indexPathForSelectedRow].contentView viewWithTag:999] setFont:[UIFont systemFontOfSize:13]];
-	[favoritesTableView deselectRowAtIndexPath:favoritesTableView.indexPathForSelectedRow animated:NO];
+	//[(UILabel *)[[favoritesTableView cellForRowAtIndexPath:favoritesTableView.indexPathForSelectedRow].contentView viewWithTag:999] setFont:[UIFont systemFontOfSize:13]];
+
+	int theRow = [favoritesTableView.indexPathForSelectedRow row];
+	
+	theRow += [[arrayDataID objectForKey:[arrayDataID2 objectAtIndex:[favoritesTableView.indexPathForSelectedRow section]]] lengthB4];	
+	
+	[[arrayData objectAtIndex:theRow] setIsViewed:YES];
+
+	[favoritesTableView reloadData];
+	//[favoritesTableView deselectRowAtIndexPath:favoritesTableView.indexPathForSelectedRow animated:NO];
 }
 
 
@@ -600,7 +608,14 @@
 	[(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"%d messages", ([[arrayData objectAtIndex:theRow] aRepCount] + 1)]];
 	[(UILabel *)[cell.contentView viewWithTag:997] setText:[NSString stringWithFormat:@"%@ - %@", [[arrayData objectAtIndex:theRow] aAuthorOfLastPost], [[arrayData objectAtIndex:theRow] aDateOfLastPost]]];
 
-	[(UILabel *)[cell.contentView viewWithTag:999] setFont:[UIFont boldSystemFontOfSize:13]];	
+	if ([[arrayData objectAtIndex:theRow] isViewed]) {
+		[(UILabel *)[cell.contentView viewWithTag:999] setFont:[UIFont systemFontOfSize:13]];
+	}
+	else {
+		[(UILabel *)[cell.contentView viewWithTag:999] setFont:[UIFont boldSystemFontOfSize:13]];
+		
+	}	
+	//[(UILabel *)[cell.contentView viewWithTag:999] setFont:[UIFont boldSystemFontOfSize:13]];	
 	
 	/*
 	 if (cell.badgeNumber == 0) {

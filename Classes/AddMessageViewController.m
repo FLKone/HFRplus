@@ -378,8 +378,8 @@
 	//delete
 	NSString *key;
 	for (key in self.arrayInputData) {
-		//NSLog(@"POST: %@ : %@", key, [self.arrayInputData objectForKey:key]);
-		if ([key isEqualToString:@"allowvisitor"] || [key isEqualToString:@"have_sondage"]) {
+		NSLog(@"POST: %@ : %@", key, [self.arrayInputData objectForKey:key]);
+		if ([key isEqualToString:@"allowvisitor"] || [key isEqualToString:@"have_sondage"] || [key isEqualToString:@"sticky"] || [key isEqualToString:@"sticky_everywhere"]) {
 			if ([[self.arrayInputData objectForKey:key] isEqualToString:@"1"]) {
 				[arequest setPostValue:[self.arrayInputData objectForKey:key] forKey:key];
 			}

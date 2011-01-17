@@ -975,11 +975,27 @@
 
 - (void)viewDidDisappear:(BOOL)animated
 {
+	NSLog(@"viewDidDisappear %@ - %@", topicsTableView.indexPathForSelectedRow, pressedIndexPath);
     [super viewDidDisappear:animated];
 	[self.view resignFirstResponder];
 	
-	[[(TopicCellView *)[topicsTableView cellForRowAtIndexPath:topicsTableView.indexPathForSelectedRow] titleLabel]setFont:[UIFont systemFontOfSize:13]];
-	[topicsTableView deselectRowAtIndexPath:topicsTableView.indexPathForSelectedRow animated:NO];
+	//Topic *aTopic = [arrayData objectAtIndex:indexPath.row];
+
+	if (pressedIndexPath != nil) {
+		NSLog(@"pressedIndexPath");
+		
+		[[arrayData objectAtIndex:[pressedIndexPath row]] setIsViewed:YES];
+		[topicsTableView reloadData];
+	}
+	
+	if (topicsTableView.indexPathForSelectedRow != nil) {
+		NSLog(@"indexPathForSelectedRow");
+		[[arrayData objectAtIndex:[topicsTableView.indexPathForSelectedRow row]] setIsViewed:YES];
+		[topicsTableView reloadData];
+	}
+	
+	/*[[(TopicCellView *)[topicsTableView cellForRowAtIndexPath:topicsTableView.indexPathForSelectedRow] titleLabel]setFont:[UIFont systemFontOfSize:13]];
+	[topicsTableView deselectRowAtIndexPath:topicsTableView.indexPathForSelectedRow animated:NO];*/
 
 }
 
@@ -1235,6 +1251,11 @@
     NSIndexPath * indexPath = [self.topicsTableView indexPathForRowAtPoint: [[[event touchesForView: button] anyObject] locationInView: self.topicsTableView]];
     if ( indexPath == nil )
         return;
+	else {
+		pressedIndexPath = indexPath;
+	}
+
+	
 	
 	//NSLog(@"url %@", [[arrayData objectAtIndex:indexPath.row] aURLOfFlag]);
 
