@@ -154,7 +154,8 @@
 	
 	//setup the URL
 	self.messagesTableViewController.topicName = [[arrayData objectAtIndex:indexPath.row] aTitle];	
-	
+	self.messagesTableViewController.isViewed = [[arrayData objectAtIndex:indexPath.row] isViewed];	
+
 	//NSLog(@"push message liste");
 	[self.navigationController pushViewController:messagesTableViewController animated:YES];
 }
@@ -229,7 +230,8 @@
 			[label release];	
 			
 			self.messagesTableViewController.topicName = [[arrayData objectAtIndex:pressedIndexPath.row] aTitle];	
-			
+			self.messagesTableViewController.isViewed = [[arrayData objectAtIndex:pressedIndexPath.row] isViewed];	
+
 			[self.navigationController pushViewController:messagesTableViewController animated:YES];			
 			
 			//NSLog(@"url pressed last page: %@", [[arrayData objectAtIndex:pressedIndexPath.row] aURLOfLastPage]);
@@ -263,7 +265,8 @@
 			[label release];	
 			
 			self.messagesTableViewController.topicName = [[arrayData objectAtIndex:pressedIndexPath.row] aTitle];	
-			
+			self.messagesTableViewController.isViewed = [[arrayData objectAtIndex:pressedIndexPath.row] isViewed];	
+
 			[self.navigationController pushViewController:messagesTableViewController animated:YES];	
 			 
 			//NSLog(@"url pressed last post: %@", [[arrayData objectAtIndex:pressedIndexPath.row] aURL]);

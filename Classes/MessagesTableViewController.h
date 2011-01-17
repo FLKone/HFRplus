@@ -41,6 +41,8 @@
 	BOOL isUnreadable; //to check is refresh ON
 	NSString *isFavoritesOrRead; //to check is refresh ON
 
+	BOOL isViewed; //to check if isViewed (bold & +1)
+
 	
 	NSMutableArray *arrayData;
 	NSMutableArray *newArrayData;
@@ -85,6 +87,8 @@
 @property BOOL isRedFlagged;
 @property BOOL isUnreadable;
 @property (nonatomic, retain) NSString *isFavoritesOrRead;
+
+@property BOOL isViewed;
 
 @property (nonatomic, retain) NSMutableArray *arrayData;
 @property (nonatomic, retain) NSMutableArray *newArrayData;

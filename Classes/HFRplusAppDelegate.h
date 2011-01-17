@@ -49,6 +49,7 @@ static const NSInteger kGANDispatchPeriodSec = 10;
 + (HFRplusAppDelegate *)sharedAppDelegate;
 
 - (void)updateMPBadgeWithString:(NSString *)badgeValue;
+- (void)readMPBadge;
 - (void)openURL:(NSString *)stringUrl;
 
 - (void)login;

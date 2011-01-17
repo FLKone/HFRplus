@@ -475,12 +475,17 @@
 
 		NSString *aTopicAffix = [[NSString alloc] init];
 		NSString *aTopicSuffix = [[NSString alloc] init];
+
+		
 		if ([[topicNode className] rangeOfString:@"ligne_sticky"].location != NSNotFound) {
-			aTopicAffix = [aTopicAffix stringByAppendingString:@"➫ "];//➥▶✚
+			aTopicAffix = [aTopicAffix stringByAppendingString:@""];//➫ ➥▶✚
+		}
+		if ([topicTitleNode findChildWithAttribute:@"alt" matchingName:@"closed" allowPartial:NO]) {
+			aTopicAffix = [aTopicAffix stringByAppendingString:@""];
 		}
 		
-		if ([topicTitleNode findChildWithAttribute:@"alt" matchingName:@"closed" allowPartial:NO]) {
-			aTopicSuffix = [aTopicSuffix stringByAppendingString:@" ✖"];
+		if (aTopicAffix.length > 0) {
+			aTopicAffix = [aTopicAffix stringByAppendingString:@" "];
 		}
 		
 		NSString *aTopicTitle = [[NSString alloc] initWithFormat:@"%@%@%@", aTopicAffix, [[topicTitleNode allContents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]], aTopicSuffix];
@@ -973,7 +978,9 @@
     [super viewDidDisappear:animated];
 	[self.view resignFirstResponder];
 	
+	[[(TopicCellView *)[topicsTableView cellForRowAtIndexPath:topicsTableView.indexPathForSelectedRow] titleLabel]setFont:[UIFont systemFontOfSize:13]];
 	[topicsTableView deselectRowAtIndexPath:topicsTableView.indexPathForSelectedRow animated:NO];
+
 }
 
 
@@ -1143,6 +1150,7 @@
 		 
 
 	Topic *aTopic = [arrayData objectAtIndex:indexPath.row];
+
 	/*
 	[(UILabel *)[cell.contentView viewWithTag:999] setText:[aTopic aTitle]];
 	
@@ -1169,7 +1177,15 @@
 	}
 	
 	[cell.timeLabel setText:[NSString stringWithFormat:@"%@ - %@", [aTopic aAuthorOfLastPost], [aTopic aDateOfLastPost]]];
-	 
+
+	if ([aTopic isViewed]) {
+		[[cell titleLabel] setFont:[UIFont systemFontOfSize:13]];
+	}
+	else {
+		[[cell titleLabel] setFont:[UIFont boldSystemFontOfSize:13]];
+		
+	}	
+
 	//Flag
 	if ([aTopic aTypeOfFlag].length > 0) {
 		
@@ -1306,7 +1322,8 @@
 			[label release];	
 			
 			self.messagesTableViewController.topicName = [[arrayData objectAtIndex:pressedIndexPath.row] aTitle];	
-			
+			self.messagesTableViewController.isViewed = [[arrayData objectAtIndex:pressedIndexPath.row] isViewed];	
+
 			[self.navigationController pushViewController:messagesTableViewController animated:YES];			
 			//NSLog(@"url pressed last page: %@", [[arrayData objectAtIndex:pressedIndexPath.row] aURLOfLastPage]);
 			break;
@@ -1337,7 +1354,8 @@
 			[label release];	
 			
 			self.messagesTableViewController.topicName = [[arrayData objectAtIndex:pressedIndexPath.row] aTitle];	
-			
+			self.messagesTableViewController.isViewed = [[arrayData objectAtIndex:pressedIndexPath.row] isViewed];	
+
 			[self.navigationController pushViewController:messagesTableViewController animated:YES];			
 			//NSLog(@"url pressed last post: %@", [[arrayData objectAtIndex:pressedIndexPath.row] aURLOfLastPost]);
 			break;
@@ -1390,7 +1408,8 @@
 	
 	//setup the URL
 	self.messagesTableViewController.topicName = [[arrayData objectAtIndex:indexPath.row] aTitle];	
-	
+	self.messagesTableViewController.isViewed = [[arrayData objectAtIndex:indexPath.row] isViewed];	
+
 	//NSLog(@"push message liste");
 	[self.navigationController pushViewController:messagesTableViewController animated:YES];
 }

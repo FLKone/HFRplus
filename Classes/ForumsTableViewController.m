@@ -237,7 +237,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	self.title = @"Forums";
+	self.title = @"Catégories";
 
 	//Bouton Reload
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
@@ -309,7 +309,8 @@
     
     // Configure the cell...
 	cell.textLabel.text = [NSString stringWithFormat:@"%@", [[arrayData objectAtIndex:indexPath.row] aTitle], [[[arrayData objectAtIndex:indexPath.row] subCats] count]];
-
+	cell.textLabel.font = [UIFont systemFontOfSize:19];
+	
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
@@ -351,6 +352,13 @@
 	[label release];	
 */
 	//setup the URL
+	
+	self.navigationItem.backBarButtonItem =
+	[[UIBarButtonItem alloc] initWithTitle:@"Retour"
+									 style: UIBarButtonItemStyleBordered
+									target:nil
+									action:nil];
+	
 	self.topicsTableViewController.currentUrl = [[arrayData objectAtIndex:indexPath.row] aURL];	
 	self.topicsTableViewController.forumName = [[arrayData objectAtIndex:indexPath.row] aTitle];	
 	self.topicsTableViewController.pickerViewArray = [[arrayData objectAtIndex:indexPath.row] subCats];	

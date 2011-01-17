@@ -49,7 +49,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
         // Custom initialization
-		NSLog(@"initWithNibName add");
+		//NSLog(@"initWithNibName add");
 		
 		self.arrayInputData = [[NSMutableDictionary alloc] init];
 		self.smileyArray = [[NSMutableArray alloc] init];
@@ -81,6 +81,9 @@
 		[usedSmilieys release];
 		[fileManager release];
 		// Recherche Smileys utilises		
+		
+		//NSLog(@"usedSearchDict %@", self.usedSearchDict);
+		//NSLog(@"usedSearchSortedArray %@", self.usedSearchSortedArray);
 		
 		self.title = @"Nouv. message";
     }
@@ -505,12 +508,12 @@
 		switch ([(UISegmentedControl *)sender selectedSegmentIndex]) {
 
 			case 0:
-				NSLog(@"previous");
+				//NSLog(@"previous");
 				[self loadSmileys:--self.smileyPage];	
 				break;
 			case 1:
 			{
-				NSLog(@"smile");
+				//NSLog(@"smile");
 				NSString *translatable = [self.smileView stringByEvaluatingJavaScriptFromString:@"$('#container').css('display');"];
 				
 				if ([translatable isEqualToString:@"none"]) {
@@ -528,7 +531,7 @@
 			}
 					
 			case 2:
-				NSLog(@"next");
+				//NSLog(@"next");
 				[self loadSmileys:++self.smileyPage];	
 				break;					
 			default:
@@ -565,23 +568,23 @@
 }
 
 - (void) didSelectSmile:(NSString *)smile {
-	NSLog(@"didSelectSmile");
+	//NSLog(@"didSelectSmile");
 
 	//STATS RECHERCHES
 	// Recherche Smileys utilises
 	if (self.textFieldSmileys.text.length >= 3) {
 		NSNumber *val;
 		if ((val = [self.usedSearchDict valueForKey:self.textFieldSmileys.text])) {
-			NSLog(@"existe %@", val);
+			//NSLog(@"existe %@", val);
 			[self.usedSearchDict setObject:[NSNumber numberWithInt:[val intValue]+1] forKey:self.textFieldSmileys.text];
 		}
 		else {
-			NSLog(@"nouveau");
+			//NSLog(@"nouveau");
 			[self.usedSearchDict setObject:[NSNumber numberWithInt:1] forKey:self.textFieldSmileys.text];
 			
 		}
 		
-		NSLog(@"%@", self.usedSearchDict);
+		//NSLog(@"%@", self.usedSearchDict);
 		
 		NSString *directory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 		NSString *usedSmilieys = [[NSString alloc] initWithString:[directory stringByAppendingPathComponent:@"usedSmilieys.plist"]];
@@ -742,7 +745,7 @@
 #pragma mark Responding to keyboard events
 
 - (void)keyboardWillShow:(NSNotification *)notification {
-	NSLog(@"keyboardWillShow ADD %@", notification);
+	//NSLog(@"keyboardWillShow ADD %@", notification);
 
     /*
      Reduce the size of the text view so that it's not obscured by the keyboard.
@@ -779,7 +782,7 @@
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification {
-	NSLog(@"keyboardWillHide ADD");
+	//NSLog(@"keyboardWillHide ADD");
 
     NSDictionary* userInfo = [notification userInfo];
     
@@ -803,7 +806,7 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-	NSLog(@"textFieldDidBeginEditing %@", textField);
+	//NSLog(@"textFieldDidBeginEditing %@", textField);
 	
 	if (textField != textFieldSmileys) {
 		[segmentControler setEnabled:NO forSegmentAtIndex:0];
@@ -821,11 +824,8 @@
 			
 			[UIView commitAnimations];
 			
-			
-			self.usedSearchSortedArray = (NSMutableArray *)[[self.usedSearchDict allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-			
-			//NSLog(@"usedSearchSortedArray %@", self.usedSearchSortedArray);
-			
+			[self textFieldSmileChange:self.textFieldSmileys]; //on affiche les recherches
+
 			[self.commonTableView reloadData];
 			
 			[UIView beginAnimations:nil context:nil];
@@ -839,13 +839,13 @@
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-	NSLog(@"textFieldDidEndEditing %@", textField);
+	//NSLog(@"textFieldDidEndEditing %@", textField);
 	
 	[segmentControler setEnabled:YES forSegmentAtIndex:0];	
 	[textFieldSmileys setEnabled:YES];
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-	NSLog(@"textFieldShouldReturn");
+	//NSLog(@"textFieldShouldReturn");
 	
 	//[textField resignFirstResponder];
 	if (textField == self.textFieldTo) {
@@ -900,6 +900,53 @@
 	return NO;
 
 }
+/*- (BOOL)textFieldShouldClear:(UITextField *)textField
+{
+	NSLog(@"textFieldShouldClear %@", textField.text);
+
+	
+	return YES;
+
+}*/
+-(IBAction)textFieldSmileChange:(id)sender
+{
+	//NSLog(@"textFieldSmileChange %@", [(UITextField *)sender text]);
+	if ([(UITextField *)sender text].length > 0) {
+		self.usedSearchSortedArray = (NSMutableArray *)[[self.usedSearchDict allKeys] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:[NSString stringWithFormat:@"SELF contains[c] '%@'", [(UITextField *)sender text]]]];
+		[self.commonTableView reloadData];
+		//NSLog(@"usedSearchSortedArray %@", usedSearchSortedArray);		
+	}
+	else {
+		self.usedSearchSortedArray = (NSMutableArray *)[[self.usedSearchDict allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+		[self.commonTableView reloadData];
+		//NSLog(@"usedSearchSortedArray %@", usedSearchSortedArray);				
+	}
+	if (self.usedSearchSortedArray.count == 0) {
+		UILabel *labelTitle = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 480, 44)] autorelease];
+		labelTitle.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+		
+		[labelTitle setFont:[UIFont systemFontOfSize:14.0]];
+		[labelTitle setAdjustsFontSizeToFitWidth:NO];
+		[labelTitle setLineBreakMode:UILineBreakModeTailTruncation];
+		//[labelTitle setBackgroundColor:[UIColor blueColor]];
+		[labelTitle setTextAlignment:UITextAlignmentCenter];
+		[labelTitle setHighlightedTextColor:[UIColor whiteColor]];
+		[labelTitle setTag:999];
+		[labelTitle setText:@"Pas de résultats"];
+		[labelTitle setTextColor:[UIColor blackColor]];
+		[labelTitle setNumberOfLines:0];
+		//[label setOpaque:YES];
+		
+		[self.commonTableView setTableFooterView:labelTitle];		
+	}
+	else {
+		[self.commonTableView setTableFooterView:nil];
+	}
+
+	
+	
+
+}
 
 #pragma mark -
 #pragma mark Data lifecycle
@@ -911,7 +958,7 @@
 
 - (void)fetchSmileys
 {
-	NSLog(@"fetchSmileys");
+	//NSLog(@"fetchSmileys");
 
 	
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];
@@ -925,13 +972,13 @@
 
 	[self.smileView stringByEvaluatingJavaScriptFromString:@"$('#container').hide();$('#container_ajax').html('<div class=\"loading\"><img src=\"loadinfo.net.gif\" /> Recherche en cours...</div>');"];
 	[requestSmile startAsynchronous];
-	NSLog(@"fetchSmileys");
+	//NSLog(@"fetchSmileys");
 
 }
 
 - (void)fetchSmileContentStarted:(ASIHTTPRequest *)theRequest
 {
-	NSLog(@"fetchContentStarted");
+	//NSLog(@"fetchContentStarted");
 }
 
 - (void)fetchSmileContentComplete:(ASIHTTPRequest *)theRequest
@@ -939,7 +986,7 @@
 //	NSLog(@"%@", [theRequest responseString]);
 	[self.segmentControlerPage setTitle:@"Smilies" forSegmentAtIndex:1];
 
-	NSDate *thenT = [NSDate date]; // Create a current date
+	//NSDate *thenT = [NSDate date]; // Create a current date
 	
 	HTMLParser * myParser = [[HTMLParser alloc] initWithString:[theRequest responseString] error:NULL];
 	HTMLNode * smileNode = [myParser doc]; //Find the body tag
@@ -968,14 +1015,14 @@
 	[self loadSmileys:0];
 	//[self loadSmileys:smileyPage];	
 
-	NSDate *nowT = [NSDate date]; // Create a current date
+	//NSDate *nowT = [NSDate date]; // Create a current date
 	
-	NSLog(@"SMILEYS Parse Time elapsed Total		: %f", [nowT timeIntervalSinceDate:thenT]);
+	//NSLog(@"SMILEYS Parse Time elapsed Total		: %f", [nowT timeIntervalSinceDate:thenT]);
 }
 
 - (void)fetchSmileContentFailed:(ASIHTTPRequest *)theRequest
 {
-	NSLog(@"fetchContentFailed %@", [theRequest.error localizedDescription]);
+	//NSLog(@"fetchContentFailed %@", [theRequest.error localizedDescription]);
 
 	//UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[theRequest.error localizedDescription]
 	//											   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
@@ -1023,7 +1070,7 @@
 	int firstSmile = page * smilePerPage;
 	int lastSmile = MIN([self.smileyArray count], (page + 1) * smilePerPage);
 	
-	NSLog(@"%d to %d", firstSmile, lastSmile);
+	//NSLog(@"%d to %d", firstSmile, lastSmile);
 	
 	int i;
 	
@@ -1038,12 +1085,12 @@
 		
 		NSString *key = [diskCachePath stringByAppendingPathComponent:filename];
 		
-		NSLog(@"url %@", [[self.smileyArray objectAtIndex:i] objectForKey:@"source"]);
-		NSLog(@"key %@", key);
+		//NSLog(@"url %@", [[self.smileyArray objectAtIndex:i] objectForKey:@"source"]);
+		//NSLog(@"key %@", key);
 		
 		if (![fileManager fileExistsAtPath:key])
 		{
-			NSLog(@"dl %@", key);
+			//NSLog(@"dl %@", key);
 			
 			[fileManager createFileAtPath:key contents:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [[[self.smileyArray objectAtIndex:i] objectForKey:@"source"] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]]]] attributes:nil];					
 		}
@@ -1061,7 +1108,7 @@
 	
 	//Pagination
 	//if (firstSmile > 0 || lastSmile < [self.smileyArray count]) {
-		NSLog(@"pagination needed");
+		//NSLog(@"pagination needed");
 		
 		[self.segmentControler setAlpha:0];
 		[self.segmentControlerPage setAlpha:1];		
@@ -1090,7 +1137,7 @@
 
 -(void)showSmileResults:(NSString *)tmpHTML {
 	
-	NSLog(@"showSmileResults");
+	//NSLog(@"showSmileResults");
 	
 	[self.smileView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"\
 															$('#container').hide();\
@@ -1110,11 +1157,12 @@
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-	return @"Historique";
+	return @"Recherche(s)";
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	//NSLog(@"%@", self.usedSearchDict);
-	return self.usedSearchDict.count;
+
+	return self.usedSearchSortedArray.count;
 }
 
 
@@ -1125,7 +1173,7 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-		NSLog(@"mew cell");
+		//NSLog(@"mew cell");
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
 
 		cell.accessoryType = UITableViewCellAccessoryNone;

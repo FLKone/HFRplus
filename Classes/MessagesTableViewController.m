@@ -34,7 +34,7 @@
 @synthesize arrayInputData;
 @synthesize aToolbar;
 
-@synthesize isFavoritesOrRead, isRedFlagged, isUnreadable, isAnimating;
+@synthesize isFavoritesOrRead, isRedFlagged, isUnreadable, isAnimating, isViewed;
 
 @synthesize request, arrayAction, curPostID;
 
@@ -93,7 +93,15 @@
     // "ownership of appListData has been transferred to the parse operation and should no longer be
     // referenced in this thread.
     //
-		
+	
+	//MaJ de la puce MP
+	if (!self.isViewed) {
+		NSLog(@"pas lu");
+		[[HFRplusAppDelegate sharedAppDelegate] readMPBadge];
+	}
+	
+	
+	//MaJ de la puce MP
 	
     ParseMessagesOperation *parser = [[ParseMessagesOperation alloc] initWithData:[request responseData] index:0 reverse:NO delegate:self];
 	
@@ -606,6 +614,7 @@
         //NSLog(@"init %@", theTopicUrl);
 		self.currentUrl = [theTopicUrl copy];	
 		self.loaded = NO;
+		self.isViewed = YES;
 		//[self refreshData];
 
 	}

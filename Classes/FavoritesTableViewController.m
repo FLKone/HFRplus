@@ -241,13 +241,17 @@
 		HTMLNode * topicTitleNode = [topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase3" allowPartial:NO];
 		NSString *aTopicAffix = [[NSString alloc] init];
 		NSString *aTopicSuffix = [[NSString alloc] init];
+		
 		if ([[topicNode className] rangeOfString:@"ligne_sticky"].location != NSNotFound) {
-			aTopicAffix = [aTopicAffix stringByAppendingString:@"➫ "];//➥▶✚
+			aTopicAffix = [aTopicAffix stringByAppendingString:@""];//➫ ➥▶✚
+		}
+		if ([topicTitleNode findChildWithAttribute:@"alt" matchingName:@"closed" allowPartial:NO]) {
+			aTopicAffix = [aTopicAffix stringByAppendingString:@""];
 		}
 		
-		if ([topicTitleNode findChildWithAttribute:@"alt" matchingName:@"closed" allowPartial:NO]) {
-			aTopicSuffix = [aTopicSuffix stringByAppendingString:@" ✖"];
-		}
+		if (aTopicAffix.length > 0) {
+			aTopicAffix = [aTopicAffix stringByAppendingString:@" "];
+		}		
 		
 		NSString *aTopicTitle = [[NSString alloc] initWithFormat:@"%@%@%@", aTopicAffix, [[topicTitleNode allContents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]], aTopicSuffix];
 		
@@ -450,6 +454,7 @@
 	[super viewDidDisappear:animated];
 	[self.view resignFirstResponder];
 
+	[(UILabel *)[[favoritesTableView cellForRowAtIndexPath:favoritesTableView.indexPathForSelectedRow].contentView viewWithTag:999] setFont:[UIFont systemFontOfSize:13]];
 	[favoritesTableView deselectRowAtIndexPath:favoritesTableView.indexPathForSelectedRow animated:NO];
 }
 
@@ -594,6 +599,9 @@
 	[(UILabel *)[cell.contentView viewWithTag:999] setText:[[arrayData objectAtIndex:theRow] aTitle]];
 	[(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"%d messages", ([[arrayData objectAtIndex:theRow] aRepCount] + 1)]];
 	[(UILabel *)[cell.contentView viewWithTag:997] setText:[NSString stringWithFormat:@"%@ - %@", [[arrayData objectAtIndex:theRow] aAuthorOfLastPost], [[arrayData objectAtIndex:theRow] aDateOfLastPost]]];
+
+	[(UILabel *)[cell.contentView viewWithTag:999] setFont:[UIFont boldSystemFontOfSize:13]];	
+	
 	/*
 	 if (cell.badgeNumber == 0) {
 	 [(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"%d message", (cell.badgeNumber + 1)]];

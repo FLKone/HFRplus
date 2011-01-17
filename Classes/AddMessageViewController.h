@@ -99,6 +99,7 @@
 -(IBAction)cancel;
 -(IBAction)done;
 -(IBAction)segmentFilterAction:(id)sender;
+-(IBAction)textFieldSmileChange:(id)sender;
 
 -(void)fetchSmileys;
 -(void)loadSmileys:(int)page;
