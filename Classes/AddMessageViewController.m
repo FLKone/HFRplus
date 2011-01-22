@@ -921,7 +921,10 @@
 		[self.commonTableView reloadData];
 		//NSLog(@"usedSearchSortedArray %@", usedSearchSortedArray);				
 	}
+	
 	if (self.usedSearchSortedArray.count == 0) {
+		[self.commonTableView setHidden:YES];
+		/*
 		UILabel *labelTitle = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 480, 44)] autorelease];
 		labelTitle.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		
@@ -937,10 +940,13 @@
 		[labelTitle setNumberOfLines:0];
 		//[label setOpaque:YES];
 		
-		[self.commonTableView setTableFooterView:labelTitle];		
+		[self.commonTableView setTableFooterView:labelTitle];
+		 */
 	}
 	else {
-		[self.commonTableView setTableFooterView:nil];
+		[self.commonTableView setHidden:NO];
+		
+		//[self.commonTableView setTableFooterView:nil];
 	}
 
 	
@@ -1155,10 +1161,11 @@
 	
     return 1;
 }
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+/* (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
 	return @"Recherche(s)";
 }
+ */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	//NSLog(@"%@", self.usedSearchDict);
 

@@ -309,7 +309,7 @@
     
     // Configure the cell...
 	cell.textLabel.text = [NSString stringWithFormat:@"%@", [[arrayData objectAtIndex:indexPath.row] aTitle], [[[arrayData objectAtIndex:indexPath.row] subCats] count]];
-	cell.textLabel.font = [UIFont systemFontOfSize:19];
+	cell.textLabel.font = [UIFont boldSystemFontOfSize:17];
 	
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;

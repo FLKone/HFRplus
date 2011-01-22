@@ -275,7 +275,7 @@
 
 - (void)updateMPBadgeWithString:(NSString *)badgeValue;
 {
-	NSLog(@"%@ - %d", badgeValue, [badgeValue intValue]);
+	//NSLog(@"%@ - %d", badgeValue, [badgeValue intValue]);
 	
 	if ([badgeValue intValue] > 0) {
 		[[[[[self rootController] tabBar] items] objectAtIndex:2] setBadgeValue:badgeValue];

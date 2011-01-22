@@ -975,23 +975,26 @@
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-	NSLog(@"viewDidDisappear %@ - %@", topicsTableView.indexPathForSelectedRow, pressedIndexPath);
     [super viewDidDisappear:animated];
 	[self.view resignFirstResponder];
 	
 	//Topic *aTopic = [arrayData objectAtIndex:indexPath.row];
+	
+	//NSLog(@"TT viewDidDisappear %@ - %@", self.topicsTableView.indexPathForSelectedRow, self.pressedIndexPath);
 
-	if (pressedIndexPath != nil) {
-		NSLog(@"pressedIndexPath");
+	if (self.pressedIndexPath) {
+		NSLog(@"TT pressedIndexPath");
 		
-		[[arrayData objectAtIndex:[pressedIndexPath row]] setIsViewed:YES];
-		[topicsTableView reloadData];
+		[[self.arrayData objectAtIndex:[self.pressedIndexPath row]] setIsViewed:YES];
+		[self.topicsTableView reloadData];
+		
+				NSLog(@"TT pressedIndexPath2");
 	}
 	
-	if (topicsTableView.indexPathForSelectedRow != nil) {
-		NSLog(@"indexPathForSelectedRow");
-		[[arrayData objectAtIndex:[topicsTableView.indexPathForSelectedRow row]] setIsViewed:YES];
-		[topicsTableView reloadData];
+	if (self.topicsTableView.indexPathForSelectedRow) {
+		NSLog(@"TT indexPathForSelectedRow");
+		[[self.arrayData objectAtIndex:[self.topicsTableView.indexPathForSelectedRow row]] setIsViewed:YES];
+		[self.topicsTableView reloadData];
 	}
 	
 	/*[[(TopicCellView *)[topicsTableView cellForRowAtIndexPath:topicsTableView.indexPathForSelectedRow] titleLabel]setFont:[UIFont systemFontOfSize:13]];
@@ -1248,16 +1251,18 @@
 
 - (void) accessoryButtonTapped: (UIControl *) button withEvent: (UIEvent *) event
 {
+	
     NSIndexPath * indexPath = [self.topicsTableView indexPathForRowAtPoint: [[[event touchesForView: button] anyObject] locationInView: self.topicsTableView]];
     if ( indexPath == nil )
         return;
 	else {
-		pressedIndexPath = indexPath;
+		[self setPressedIndexPath:[indexPath retain]];
+		//self.pressedIndexPath = [indexPath autorelease];
 	}
 
 	
 	
-	//NSLog(@"url %@", [[arrayData objectAtIndex:indexPath.row] aURLOfFlag]);
+	//NSLog(@"url %@", [[arrayData objectAtIndex:self.pressedIndexPath.row] aURLOfFlag]);
 
 	//if (self.messagesTableViewController == nil) {
 	MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[arrayData objectAtIndex:indexPath.row] aURLOfFlag]];
@@ -1285,10 +1290,14 @@
 	[label release];	
 	
 	//setup the URL
+
 	self.messagesTableViewController.topicName = [[arrayData objectAtIndex:indexPath.row] aTitle];	
+	self.messagesTableViewController.isViewed = [[arrayData objectAtIndex:pressedIndexPath.row] isViewed];	
 
 	[self.navigationController pushViewController:messagesTableViewController animated:YES];
-	}
+
+
+}
 
 -(void)handleLongPress:(UILongPressGestureRecognizer*)longPressRecognizer {
 	if (longPressRecognizer.state == UIGestureRecognizerStateBegan) {

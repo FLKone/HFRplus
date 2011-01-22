@@ -451,18 +451,21 @@
 
 
 - (void)viewDidDisappear:(BOOL)animated {
+	NSLog(@"FT viewDidDisappear %@", self.favoritesTableView.indexPathForSelectedRow);
+
 	[super viewDidDisappear:animated];
 	[self.view resignFirstResponder];
 
 	//[(UILabel *)[[favoritesTableView cellForRowAtIndexPath:favoritesTableView.indexPathForSelectedRow].contentView viewWithTag:999] setFont:[UIFont systemFontOfSize:13]];
+	if (self.favoritesTableView.indexPathForSelectedRow) {
+		NSLog(@"FT viewDidDisappear NEXT");
 
-	int theRow = [favoritesTableView.indexPathForSelectedRow row];
-	
-	theRow += [[arrayDataID objectForKey:[arrayDataID2 objectAtIndex:[favoritesTableView.indexPathForSelectedRow section]]] lengthB4];	
-	
-	[[arrayData objectAtIndex:theRow] setIsViewed:YES];
-
-	[favoritesTableView reloadData];
+		int theRow = [self.favoritesTableView.indexPathForSelectedRow row];
+		theRow += [[self.arrayDataID objectForKey:[self.arrayDataID2 objectAtIndex:[self.favoritesTableView.indexPathForSelectedRow section]]] lengthB4];	
+		
+		[[self.arrayData objectAtIndex:theRow] setIsViewed:YES];
+		[self.favoritesTableView reloadData];
+	}
 	//[favoritesTableView deselectRowAtIndexPath:favoritesTableView.indexPathForSelectedRow animated:NO];
 }
 
