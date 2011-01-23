@@ -24,7 +24,8 @@
 	label.textAlignment = UITextAlignmentCenter;
 	label.textColor =[UIColor whiteColor];
 	//label.text= @"HFR+ 1.1 (1.1.0.7)";
-	label.text= [NSString stringWithFormat:@"HFR+ (%@)", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];	
+	label.text= [NSString stringWithFormat:@"HFR+ %@ (%@)", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];	
+	//label.text= [NSString stringWithFormat:@"HFR+ (%@)", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];	
 	moreNavigationBar.topItem.titleView = label;		
 	[label release];
 	 

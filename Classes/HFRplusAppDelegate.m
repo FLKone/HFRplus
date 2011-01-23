@@ -13,6 +13,7 @@
 
 #import "SDURLCache.h"
 
+#import "MKStoreManager.h"
 
 @implementation HFRplusAppDelegate
 
@@ -34,7 +35,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     
+	
+	
 	self.hash_check = [[NSString alloc] init];
+	
+	[MKStoreManager sharedManager];
 	
 	[[GANTracker sharedTracker] startTrackerWithAccountID:@"UA-18984614-1"
 										   dispatchPeriod:kGANDispatchPeriodSec
@@ -66,7 +71,7 @@
 	// Override point for customization after application launch.
 	
 	rootController.customizableViewControllers = nil;
-	
+
 	[window addSubview:rootController.view];
     [window makeKeyAndVisible];
 
