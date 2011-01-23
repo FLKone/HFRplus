@@ -71,7 +71,7 @@
 	[super viewDidAppear:animated];
 	
 	if ([stories count] == 0) {
-		NSString * path = @"http://www.hardware.fr/backend/news.xml";
+		NSString * path = @"http://www.google.com/cse?cx=005221696873136977783%3Agnqtncc8bu8&client=google-csbe&output=xml_no_dtd&q=iphone";
 		[self parseXMLFileAtURL:path];
 	}
 	
@@ -124,9 +124,9 @@
 }
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict{			
-    //NSLog(@"found this element: %@", elementName);
+    NSLog(@"found this element: %@", elementName);
 	currentElement = [elementName copy];
-	if ([elementName isEqualToString:@"item"]) {
+	if ([elementName isEqualToString:@"R"]) {
 		// clear out our story item caches...
 		item = [[NSMutableDictionary alloc] init];
 		currentTitle = [[NSMutableString alloc] init];
@@ -139,7 +139,7 @@
 
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName{     
 	//NSLog(@"ended element: %@", elementName);
-	if ([elementName isEqualToString:@"item"]) {
+	if ([elementName isEqualToString:@"R"]) {
 		// save values to an item, then store that item into the array...
 		[item setObject:currentTitle forKey:@"title"];
 		[item setObject:currentLink forKey:@"link"];
@@ -155,11 +155,11 @@
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string{
 	//NSLog(@"found characters: %@", string);
 	// save the characters for the current item...
-	if ([currentElement isEqualToString:@"title"]) {
+	if ([currentElement isEqualToString:@"T"]) {
 		[currentTitle appendString:string];
-	} else if ([currentElement isEqualToString:@"link"]) {
+	} else if ([currentElement isEqualToString:@"UE"]) {
 		[currentLink appendString:string];
-	} else if ([currentElement isEqualToString:@"description"]) {
+	} else if ([currentElement isEqualToString:@"S"]) {
 		[currentSummary appendString:string];
 	} else if ([currentElement isEqualToString:@"pubDate"]) {
 		[currentDate appendString:string];

@@ -10,9 +10,10 @@
 #import "HFRSearchViewController.h"
 #import "ASIFormDataRequest.h"
 #import "HTMLParser.h"
+#import "RegexKitLite.h"
 
 @implementation HFRSearchViewController
-@synthesize tableData;
+@synthesize stories;
 @synthesize request;
 
 @synthesize disableViewOverlay, loadingView;
@@ -43,200 +44,42 @@
 
 - (void)fetchContent
 {
-	//NSLog(@"searchBar.text %@", self.theSearchBar.text);
-	
-	self.status = kIdle;
-	[ASIFormDataRequest setDefaultTimeOutSeconds:kTimeoutMini];
-	
-	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", kForumURL]]]];
-	[request setDelegate:self];
-	
-	[request setDidStartSelector:@selector(onefetchContentStarted:)];
-	[request setDidFinishSelector:@selector(onefetchContentComplete:)];
-	[request setDidFailSelector:@selector(onefetchContentFailed:)];
-	
-	[request startAsynchronous];
-	
-	/*
-	[self setRequest:[ASIFormDataRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", kForumURL]]]];
-	[request setDelegate:self];
-
-	[request setPostValue:@"1" forKey:@"recherches"];
-	[request setPostValue:@"1" forKey:@"searchtype"];
-	[request setPostValue:@"3" forKey:@"titre"];
-	[request setPostValue:@"200" forKey:@"resSearch"];
-	[request setPostValue:@"1" forKey:@"orderSearch"];
-	[request setPostValue:@"hardwarefr.inc" forKey:@"config"];
-	[request setPostValue:@"" forKey:@"hash_check"];
-	[request setPostValue:@"2" forKey:@"x"];
-	[request setPostValue:@"14" forKey:@"y"];
-
-	[request setPostValue:@"test" forKey:@"search"];
-	
-	[request setDidStartSelector:@selector(fetchContentStarted:)];
-	[request setDidFinishSelector:@selector(fetchContentComplete:)];
-	[request setDidFailSelector:@selector(fetchContentFailed:)];
-	
-	NSLog(@"%@", request.url);
-	
-	[request startAsynchronous];*/
-}
-
-- (void)onefetchContentStarted:(ASIHTTPRequest *)theRequest
-{
-	//NSLog(@"onefetchContentStarted");
+	[self.stories removeAllObjects];
 	
 	[self.maintenanceView setHidden:YES];
 	[self.theTableView setHidden:YES];
 	[self.loadingView setHidden:NO];
-}
-- (void)onefetchContentFailed:(ASIHTTPRequest *)theRequest
-{
-	[self.loadingView setHidden:YES];
-	
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[theRequest.error localizedDescription]
-												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
-	[alert setTag:111];
-	[alert show];
-	[alert release];
-}
-- (void)onefetchContentComplete:(ASIHTTPRequest *)theRequest
-{
-	//NSLog(@"onefetchContentComplete");
-	
-	HTMLParser * myParser = [[HTMLParser alloc] initWithData:[theRequest responseData] error:NULL];
-	HTMLNode * bodyNode = [myParser body];
-	
-	//NSLog(@"bodyNode %@", rawContentsOfNode([bodyNode _node], [myParser _doc]));	
-	
-	HTMLNode *hash_check = [bodyNode findChildWithAttribute:@"name" matchingName:@"hash_check" allowPartial:NO];
-	
-	if ([[[bodyNode firstChild] tagName] isEqualToString:@"p"]) {
-		self.status = kMaintenance;
-		self.statusMessage = [[[bodyNode firstChild] contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-		[myParser release];
 		
-		[self.maintenanceView setText:self.statusMessage];
-		[self.maintenanceView setHidden:NO];
-		[self.theTableView setHidden:YES];		
-		return;
-	}
-	
-	[self.loadingView setHidden:YES];
-	
+    //you must then convert the path to a proper NSURL or it won't work
+    NSURL *xmlURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.google.com/cse?cx=005221696873136977783:gnqtncc8bu8&client=google-csbe&output=xml_no_dtd&q=%@", [self.theSearchBar.text stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]]];
 
-	[self setRequest:[ASIFormDataRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/forum1.php", kForumURL]]]];
-	[request setDelegate:self];
+	NSLog(@"xmlURL %@", xmlURL);
+
 	
-	[request setPostValue:@"1" forKey:@"recherches"];
-	[request setPostValue:@"1" forKey:@"searchtype"];
-	[request setPostValue:@"3" forKey:@"titre"];
-	[request setPostValue:@"200" forKey:@"resSearch"];
-	[request setPostValue:@"1" forKey:@"orderSearch"];
-	[request setPostValue:@"hardwarefr.inc" forKey:@"config"];
-	[request setPostValue:[hash_check getAttributeNamed:@"value"] forKey:@"hash_check"];
-	[request setPostValue:@"2" forKey:@"x"];
-	[request setPostValue:@"14" forKey:@"y"];
+    // here, for some reason you have to use NSClassFromString when trying to alloc NSXMLParser, otherwise you will get an object not found error
+    // this may be necessary only for the toolchain
+    rssParser = [[NSXMLParser alloc] initWithContentsOfURL:xmlURL];
 	
-	[request setPostValue:self.theSearchBar.text forKey:@"search"];
+    // Set self as the delegate of the parser so that it will receive the parser delegate methods callbacks.
+    [rssParser setDelegate:self];
 	
-	[request setDidStartSelector:@selector(fetchContentStarted:)];
-	[request setDidFailSelector:@selector(fetchContentFailed:)];
+    // Depending on the XML document you're parsing, you may want to enable these features of NSXMLParser.
+    [rssParser setShouldProcessNamespaces:NO];
+    [rssParser setShouldReportNamespacePrefixes:NO];
+    [rssParser setShouldResolveExternalEntities:NO];
 	
+    [rssParser parse];
 	
-	[request startAsynchronous];
 
 	
 }
-
-- (void)fetchContentStarted:(ASIHTTPRequest *)theRequest
-{
-	//NSLog(@"fetchContentStarted");
-	
-	[self.maintenanceView setHidden:YES];
-	[self.theTableView setHidden:YES];
-	[self.loadingView setHidden:NO];
-}
-
-- (void)fetchContentFailed:(ASIHTTPRequest *)theRequest
-{
-	if (theRequest.responseStatusCode == 302) {
-		NSString *url = [[NSString alloc] initWithFormat:@"%@%@", kForumURL, [[theRequest responseHeaders] objectForKey:@"Location"]];
-		//NSLog(@"url %@", url);
-
-		//NSString *url = [NSString stringWithFormat:@"%@%@", kForumURL, [[theRequest responseHeaders] objectForKey:@"Location"]];
-		self.status = kIdle;
-		
-		//NSLog(@"URLWithString %@", [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]]);
-		
-		//|1*hfr|16*hfr|15*hfr|23*hfr|2*hfr|25*hfr|3*hfr|14*hfr|5*hfr|4*hfr|22*hfr|21*hfr|11*hfr|10*hfr|26*hfr|12*hfr|6*hfr|8*hfr|9*hfr|13*hfr|24*hfr|
-
-		[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]]]];
-		[request setDelegate:self];
-		[request setDidStartSelector:@selector(fetchContentStarted:)];
-		[request setDidFinishSelector:@selector(fetchContentComplete:)];
-		[request setDidFailSelector:@selector(fetchContentFailed:)];
-		//NSLog(@"%@", url);
-		
-		[request startAsynchronous];
-
-	}
-	else {
-		[self.loadingView setHidden:YES];
-		
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[theRequest.error localizedDescription]
-													   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
-		[alert show];
-		[alert release];
-	}
-	
-	
-}
-
-- (void)fetchContentComplete:(ASIHTTPRequest *)theRequest
-{
-	[self.tableData removeAllObjects];
-	[self.theTableView reloadData];
-	
-	NSLog(@"fetchContentComplete %@", [theRequest responseString]);
-	
-	
-	
-	//[self loadDataInTableView:[request responseData]];
-	
-	[self.loadingView setHidden:YES];
-	
-	switch (self.status) {
-		case kMaintenance:
-		case kNoResults:
-			[self.maintenanceView setText:self.statusMessage];
-			[self.maintenanceView setHidden:NO];
-			[self.theTableView setHidden:YES];
-			break;
-		default:
-			[self.theTableView reloadData];			
-			[self.theTableView setHidden:NO];			
-			break;
-	}
-	
-}
-
-
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-	if (buttonIndex == 1) {
-		[self fetchContent];
-	}
-}
-
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
 	self.title = @"Recherche";
-    self.tableData =[[NSMutableArray alloc]init];
+    self.stories =[[NSMutableArray alloc]init];
     self.disableViewOverlay = [[UIView alloc]
 							   initWithFrame:CGRectMake(0.0f,44.0f,320.0f,416.0f)];
     self.disableViewOverlay.backgroundColor=[UIColor blackColor];
@@ -353,30 +196,103 @@
 }
 
 
+
+- (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
+	NSString * errorString = [NSString stringWithFormat:@"Unable to download story feed from web site (Error code %i )", [parseError code]];
+	NSLog(@"error parsing XML: %@", errorString);
+	
+	UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:@"Error loading content" message:errorString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+	[errorAlert show];
+}
+
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict{			
+    //NSLog(@"found this element: %@", elementName);
+	currentElement = [elementName copy];
+	if ([elementName isEqualToString:@"R"]) {
+		// clear out our story item caches...
+		item = [[NSMutableDictionary alloc] init];
+		currentTitle = [[NSMutableString alloc] init];
+		currentDate = [[NSMutableString alloc] init];
+		currentSummary = [[NSMutableString alloc] init];
+		currentLink = [[NSMutableString alloc] init];
+	}
+	
+}
+
+- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName{     
+	//NSLog(@"ended element: %@", elementName);
+	if ([elementName isEqualToString:@"R"]) {
+		// save values to an item, then store that item into the array...
+		[item setObject:currentTitle forKey:@"title"];
+		[item setObject:currentLink forKey:@"link"];
+		[item setObject:currentSummary forKey:@"summary"];
+		[item setObject:currentDate forKey:@"date"];
+		
+		[stories addObject:[item copy]];
+		NSLog(@"adding story: %@", currentTitle);
+	}
+	
+}
+
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string{
+	//NSLog(@"found characters: %@", string);
+	// save the characters for the current item...
+	if ([currentElement isEqualToString:@"T"]) {
+		[currentTitle appendString:string];
+	} else if ([currentElement isEqualToString:@"UE"]) {
+		[currentLink appendString:string];
+	} else if ([currentElement isEqualToString:@"S"]) {
+		[currentSummary appendString:string];
+	} else if ([currentElement isEqualToString:@"pubDate"]) {
+		[currentDate appendString:string];
+	}
+	
+}
+
+- (void)parserDidEndDocument:(NSXMLParser *)parser {
+	
+	NSLog(@"all done!");
+	NSLog(@"stories array has %d items", [stories count]);
+	
+	[self.maintenanceView setHidden:YES];
+	[self.theTableView setHidden:NO];
+	[self.loadingView setHidden:YES];	
+	
+	[theTableView reloadData];
+}
+
+
 #pragma mark -
 #pragma mark UITableViewDataSource Methods
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+	return 1;
+}
+
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [tableData count];
+	return [stories count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView
-         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *MyIdentifier = @"SearchResult";
-    UITableViewCell *cell = [tableView
-							 dequeueReusableCellWithIdentifier:MyIdentifier];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] 
-				 initWithStyle:UITableViewCellStyleDefault 
-				 reuseIdentifier:MyIdentifier] autorelease];
-    }
+	static NSString *MyIdentifier = @"MyIdentifier";
 	
-    //id *data = [self.tableData objectAtIndex:indexPath.row];
-    //cell.textLabel.text = data.name;
-    return cell;
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+	if (cell == nil) {
+		cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:MyIdentifier] autorelease];
+	}
+	
+	// Set up the cell
+	int storyIndex = [indexPath indexAtPosition: [indexPath length] - 1];
+	NSString *pattern = @"<(.|\n)*?>";
+	[cell setText:[(NSString *)[[stories objectAtIndex: storyIndex] objectForKey: @"title"] stringByReplacingOccurrencesOfRegex:pattern
+																									withString:@""]];
+	
+	
+	
+	return cell;
 }
-
 
 - (void)viewDidUnload {
     [super viewDidUnload];
@@ -388,7 +304,7 @@
 - (void)dealloc {
 	[theTableView release], theTableView = nil;
     [theSearchBar release], theSearchBar = nil;
-    [tableData dealloc];	
+    [stories dealloc];	
 	[disableViewOverlay dealloc];
 
     [super dealloc];
