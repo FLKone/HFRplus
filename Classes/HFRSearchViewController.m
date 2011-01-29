@@ -11,13 +11,17 @@
 #import "ASIFormDataRequest.h"
 #import "HTMLParser.h"
 #import "RegexKitLite.h"
+#import "TopicSearchCellView.h"
+#import "MessagesTableViewController.h"
+#import "RangeOfCharacters.h"
+
 
 @implementation HFRSearchViewController
 @synthesize stories;
 @synthesize request;
 
 @synthesize disableViewOverlay, loadingView;
-@synthesize status, statusMessage, maintenanceView;
+@synthesize status, statusMessage, maintenanceView, messagesTableViewController, tmpCell;
 
 @synthesize theSearchBar;
 @synthesize theTableView;
@@ -93,10 +97,44 @@
 	[self.maintenanceView setText:@"Aucun résultat"];
 }
 
+
+- (void) viewWillAppear:(BOOL)animated
+{
+	[self.navigationController setNavigationBarHidden:YES animated:animated];
+    [super viewWillAppear:animated];
+		
+	if (self.messagesTableViewController) {
+		//NSLog(@"viewWillAppear Topics Table View Dealloc MTV");
+		
+		self.messagesTableViewController = nil;
+	}
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+    [super viewWillDisappear:animated];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 	
 	//[self.theSearchBar becomeFirstResponder];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+	
+	if (self.theTableView.indexPathForSelectedRow) {
+		NSLog(@"SEARCH indexPathForSelectedRow");
+		//[[self.arrayData objectAtIndex:[self.topicsTableView.indexPathForSelectedRow row]] setIsViewed:YES];
+		[self.theTableView reloadData];
+	}
+	
+	/*[[(TopicCellView *)[topicsTableView cellForRowAtIndexPath:topicsTableView.indexPathForSelectedRow] titleLabel]setFont:[UIFont systemFontOfSize:13]];
+	 [topicsTableView deselectRowAtIndexPath:topicsTableView.indexPathForSelectedRow animated:NO];*/
+	
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
@@ -200,6 +238,7 @@
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
 	NSString * errorString = [NSString stringWithFormat:@"Unable to download story feed from web site (Error code %i )", [parseError code]];
 	NSLog(@"error parsing XML: %@", errorString);
+	NSLog(@"ERROR XML: %@", parseError);
 	
 	UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:@"Error loading content" message:errorString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 	[errorAlert show];
@@ -223,13 +262,48 @@
 	//NSLog(@"ended element: %@", elementName);
 	if ([elementName isEqualToString:@"R"]) {
 		// save values to an item, then store that item into the array...
-		[item setObject:currentTitle forKey:@"title"];
-		[item setObject:currentLink forKey:@"link"];
-		[item setObject:currentSummary forKey:@"summary"];
+		
+		NSString *pattern = @"<(.|\n)*?>";
+
+		currentTitle = (NSMutableString *)[currentTitle stringByDecodingXMLEntities];
+		[item setObject:[[currentTitle stringByReplacingOccurrencesOfString:@"amp;" withString:@""] stringByReplacingOccurrencesOfRegex:pattern withString:@""] forKey:@"title"];
+		//[item setObject:currentTitle forKey:@"title"];
+		
+		[item setObject:[currentLink stringByReplacingOccurrencesOfString:kForumURL withString:@""] forKey:@"link"];
+
+		currentSummary = (NSMutableString *)[currentSummary stringByDecodingXMLEntities];
+		[item setObject:[[currentSummary stringByReplacingOccurrencesOfString:@"amp;" withString:@""] stringByReplacingOccurrencesOfRegex:pattern withString:@""] forKey:@"summary"];
+		//[item setObject:currentSummary forKey:@"summary"];
+		
 		[item setObject:currentDate forKey:@"date"];
 		
+
+		
+		//On check si y'a page=2323
+		NSString *currentUrl = [[item valueForKey:@"link"] copy];
+		int pageNumber;
+		
+		NSString *regexString  = @".*page=([^&]+).*";
+		NSRange   matchedRange;// = NSMakeRange(NSNotFound, 0UL);
+		NSRange   searchRange = NSMakeRange(0, currentUrl.length);
+		NSError  *error2        = NULL;
+		
+		matchedRange = [currentUrl rangeOfRegex:regexString options:RKLNoOptions inRange:searchRange capture:1L error:&error2];
+		
+		if (matchedRange.location == NSNotFound) {
+			NSRange rangeNumPage =  [currentUrl rangeOfCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] options:NSBackwardsSearch];
+			pageNumber = [[currentUrl substringWithRange:rangeNumPage] intValue];
+		}
+		else {
+			pageNumber = [[currentUrl substringWithRange:matchedRange] intValue];
+			
+		}
+		//On check si y'a page=2323
+		
+		
+		[item setObject:[NSString stringWithFormat:@"p. %d", pageNumber] forKey:@"page"];
+		
 		[stories addObject:[item copy]];
-		NSLog(@"adding story: %@", currentTitle);
 	}
 	
 }
@@ -252,11 +326,38 @@
 - (void)parserDidEndDocument:(NSXMLParser *)parser {
 	
 	NSLog(@"all done!");
-	NSLog(@"stories array has %d items", [stories count]);
+	//NSLog(@"stories array has %d items", [stories count]);
 	
-	[self.maintenanceView setHidden:YES];
-	[self.theTableView setHidden:NO];
-	[self.loadingView setHidden:YES];	
+	//NSLog(@"stories %@", stories);
+	NSMutableArray *tmArr = [[NSMutableArray alloc] init];
+	
+	for (NSDictionary *story in stories) {
+		if ([[story valueForKey:@"link"] rangeOfString:@"/liste_sujet"].location != NSNotFound) {
+			[tmArr addObject:story];
+			
+		}
+	}
+	
+	for (NSDictionary *story in tmArr) {
+	
+		[stories removeObject:story];
+	}
+	
+	//NSLog(@"stories array has %d items", [stories count]);
+
+	if ([stories count] == 0) {
+		[self.maintenanceView setText:@"Aucun résultat"];
+		[self.maintenanceView setHidden:NO];
+		[self.theTableView setHidden:YES];
+		[self.loadingView setHidden:YES];
+	}
+	else {
+		[self.maintenanceView setHidden:YES];
+		[self.theTableView setHidden:NO];
+		[self.loadingView setHidden:YES];
+	}
+
+	
 	
 	[theTableView reloadData];
 }
@@ -275,23 +376,97 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+	static NSString *CellIdentifier = @"TopicSearchCellView";
+    
+    TopicSearchCellView *cell = (TopicSearchCellView *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	
+    if (cell == nil)
+    {
+		
+        [[NSBundle mainBundle] loadNibNamed:@"TopicSearchCellView" owner:self options:nil];
+        cell = tmpCell;
+		cell.accessoryType = UITableViewCellAccessoryNone;
+		cell.selectionStyle = UITableViewCellSelectionStyleBlue;	
+			
+        self.tmpCell = nil;
+		
+	}
+	
+	/*
 	static NSString *MyIdentifier = @"MyIdentifier";
 	
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
 	if (cell == nil) {
 		cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:MyIdentifier] autorelease];
 	}
+	*/
 	
-	// Set up the cell
+	
+	
 	int storyIndex = [indexPath indexAtPosition: [indexPath length] - 1];
-	NSString *pattern = @"<(.|\n)*?>";
-	[cell setText:[(NSString *)[[stories objectAtIndex: storyIndex] objectForKey: @"title"] stringByReplacingOccurrencesOfRegex:pattern
-																									withString:@""]];
+	[cell.titleLabel setText:[[stories objectAtIndex: storyIndex] objectForKey: @"title"]];
+	[cell.msgLabel setText:[[stories objectAtIndex: storyIndex] objectForKey: @"summary"]];
+	[cell.timeLabel setText:[[stories objectAtIndex: storyIndex] objectForKey: @"page"]];
+
+	// Set up the cell
+
+//	[cell setText:[(NSString *)[[stories objectAtIndex: storyIndex] objectForKey: @"title"] stringByReplacingOccurrencesOfRegex:pattern
+//																									withString:@""]];
 	
 	
 	
 	return cell;
+}
+
+#pragma mark -
+#pragma mark Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Navigation logic may go here. Create and push another view controller.
+	
+	//NSLog(@"did Select row Topics table views: %d", indexPath.row);
+	int storyIndex = [indexPath indexAtPosition: [indexPath length] - 1];		
+	
+	//if (self.messagesTableViewController == nil) {
+	MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[stories objectAtIndex: storyIndex] objectForKey: @"link"]];
+	self.messagesTableViewController = aView;
+	[aView release];
+	//}
+	
+	
+	
+	
+	//NSLog(@"%@", self.navigationController.navigationBar);
+	
+	
+	UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+	label.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
+	//label.frame = CGRectMake(0, 0, 500, self.navigationController.navigationBar.frame.size.height - 4);
+	label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight; // 
+	
+	[label setFont:[UIFont boldSystemFontOfSize:14.0]];
+	[label setAdjustsFontSizeToFitWidth:YES];
+	[label setBackgroundColor:[UIColor clearColor]];
+	[label setTextAlignment:UITextAlignmentCenter];
+	[label setLineBreakMode:UILineBreakModeMiddleTruncation];
+	label.shadowColor = [UIColor darkGrayColor];
+	label.shadowOffset = CGSizeMake(0.0, -1.0);
+	[label setTextColor:[UIColor whiteColor]];
+	[label setNumberOfLines:0];
+	
+	[label setText:[[stories objectAtIndex: storyIndex] objectForKey: @"title"]];
+	
+	[messagesTableViewController.navigationItem setTitleView:label];
+	[label release];	
+	
+	
+	//setup the URL
+	self.messagesTableViewController.topicName = [[stories objectAtIndex: storyIndex] objectForKey: @"title"];	
+	self.messagesTableViewController.isViewed = NO;	
+	
+	//NSLog(@"push message liste");
+	[self.navigationController pushViewController:messagesTableViewController animated:YES];
 }
 
 - (void)viewDidUnload {

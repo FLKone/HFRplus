@@ -7,7 +7,8 @@
 
 #import <UIKit/UIKit.h>
 @class ASIFormDataRequest;
-
+@class MessagesTableViewController;
+@class TopicSearchCellView;
 
 @interface HFRSearchViewController : UIViewController <UISearchBarDelegate, UITableViewDataSource, NSXMLParserDelegate> {
 	UIView *disableViewOverlay;
@@ -21,6 +22,10 @@
 	ASIFormDataRequest *request;
 	STATUS status;
 	NSString *statusMessage;
+	
+	MessagesTableViewController *messagesTableViewController;
+	TopicSearchCellView *tmpCell;
+
 	
 	
 	NSXMLParser * rssParser;
@@ -50,6 +55,9 @@
 @property (retain, nonatomic) ASIFormDataRequest *request;
 @property STATUS status;
 @property (nonatomic, retain) NSString *statusMessage;
+
+@property (nonatomic, retain) MessagesTableViewController *messagesTableViewController;
+@property (nonatomic, assign) IBOutlet TopicSearchCellView *tmpCell;
 
 - (void)searchBar:(UISearchBar *)searchBar activate:(BOOL) active;
 

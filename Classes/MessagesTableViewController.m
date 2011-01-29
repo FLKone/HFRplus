@@ -54,7 +54,8 @@
 //	NSLog(@"fetchContent");
 	
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMaxi];
-
+	NSLog(@"URL %@", [NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]);
+	
 	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]]]];
 	[request setDelegate:self];
 

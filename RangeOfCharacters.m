@@ -7,6 +7,7 @@
 //
 
 #import "RangeOfCharacters.h"
+#import "RegexKitLite.h"
 
 @implementation NSString (RangeOfCharacters)
 -(NSRange)rangeOfCharactersFromSet:(NSCharacterSet*)aSet {
@@ -232,4 +233,24 @@ FoundMember:
 finish:
     return result;
 }
+
+
+-(NSString*) decodeHtmlUnicodeCharacters: (NSString*) html {
+	NSString* result = [html copy];
+	NSArray* matches = [result arrayOfCaptureComponentsMatchedByRegex: @"\\&#([\\d]+);"];
+	
+	if (![matches count]) 
+		return result;
+	
+	for (int i=0; i<[matches count]; i++) {
+		NSArray* array = [matches objectAtIndex: i];
+		NSString* charCode = [array objectAtIndex: 1];
+		int code = [charCode intValue];
+		NSString* character = [NSString stringWithFormat:@"%C", code];
+		result = [result stringByReplacingOccurrencesOfString: [array objectAtIndex: 0]
+												   withString: character];      
+	}   
+	return result; 
+}
+
 @end

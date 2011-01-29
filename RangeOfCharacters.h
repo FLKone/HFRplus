@@ -27,4 +27,8 @@
 -(NSString*)decodeSpanUrlFromString2;
 
 - (NSString *)stringByDecodingXMLEntities;
+
+-(NSString*) decodeHtmlUnicodeCharacters: (NSString*) html;
+
+
 @end
