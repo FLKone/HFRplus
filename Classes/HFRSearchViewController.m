@@ -55,7 +55,11 @@
 	[self.loadingView setHidden:NO];
 		
     //you must then convert the path to a proper NSURL or it won't work
-    NSURL *xmlURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.google.com/cse?cx=005221696873136977783:gnqtncc8bu8&client=google-csbe&output=xml_no_dtd&q=%@", [self.theSearchBar.text stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]]];
+	
+	NSString *result = (NSString *) CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)self.theSearchBar.text, NULL, CFSTR(":/?#[]@!$&’()*+,;="), kCFStringEncodingUTF8);
+
+	
+    NSURL *xmlURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.google.com/cse?cx=005221696873136977783:gnqtncc8bu8&client=google-csbe&output=xml_no_dtd&num=20&q=%@", result]];
 
 	NSLog(@"xmlURL %@", xmlURL);
 
@@ -71,7 +75,7 @@
     [rssParser setShouldProcessNamespaces:NO];
     [rssParser setShouldReportNamespacePrefixes:NO];
     [rssParser setShouldResolveExternalEntities:NO];
-	
+	NSLog(@"OK");
     [rssParser parse];
 	
 

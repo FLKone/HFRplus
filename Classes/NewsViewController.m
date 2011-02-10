@@ -70,10 +70,10 @@
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
 	
-	if ([stories count] == 0) {
-		NSString * path = @"http://www.google.com/cse?cx=005221696873136977783%3Agnqtncc8bu8&client=google-csbe&output=xml_no_dtd&q=iphone";
-		[self parseXMLFileAtURL:path];
-	}
+	//if ([stories count] == 0) {
+	//	NSString * path = @"http://www.google.com/cse?cx=005221696873136977783%3Agnqtncc8bu8&client=google-csbe&output=xml_no_dtd&q=iphone";
+	//	[self parseXMLFileAtURL:path];
+	//}
 	
 	cellSize = CGSizeMake([newsTable bounds].size.width, 60);
 }
