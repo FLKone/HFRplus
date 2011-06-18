@@ -119,7 +119,7 @@
 		return;
 	}
 
-	//NSLog(@"connexion");
+	NSLog(@"connexion");
 	ASIFormDataRequest  *request =  
 	[[[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:@"http://www.hardware.fr/membres/login_l.php"]] autorelease];
     [request setPostValue:pseudoField.text forKey:@"pseudo"];
@@ -129,9 +129,11 @@
 	
 	if (request) {
 		if ([request error]) {
-			//[responseView setText:[[request error] localizedDescription]];
+			//NSLog(@"localizedDescription %@", [[request error] localizedDescription]);
+			//NSLog(@"responseString %@", [request responseString]);
 		} else if ([request responseString]) {
-			
+			//NSLog(@"responseString %@", [request responseString]);
+
 			//[responseView setText:[request responseString]];
 
 			NSString *regExError = @".*<p class=\"error\">Le pseudo ou mot de passe saisi n'est pas valide.</p>.*";
@@ -140,18 +142,24 @@
 			
 			if (isRegExError) {
 				//KO
+				NSLog(@"connexion KO");
+
 				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Le pseudo que vous avez saisi n'a pas été trouvé ou votre mot de passe est incorrect.\nVeuillez réessayer."
 															   delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 				[alert show];	
 				[alert release];
 			}
 			else {
+				NSLog(@"connexion OK");
+
 				NSString *regularExpressionString = @".*<p>Bienvenue <b>[^<]+</b> sur votre compte personnel.</p>.*";			
 				NSPredicate *regExPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regularExpressionString];
 				BOOL myStringMatchesRegEx = [regExPredicate evaluateWithObject:[request responseString]];
 				
 				if (myStringMatchesRegEx) {
 					//OK
+					NSLog(@"connexion OK finish");
+
 					[self finishOK];
 				}
 			}

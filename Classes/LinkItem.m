@@ -8,7 +8,7 @@
 
 #import "LinkItem.h"
 #import "RegexKitLite.h"
-
+#import "HFRplusAppDelegate.h"
 
 @implementation LinkItem
 
@@ -44,9 +44,9 @@
 
 	NSString *myRawContent = [[self dicoHTML] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
-	NSString *regExQuoteTitle = @"<a href=\"[^\"]+\" class=\"Topic\">([^<]+)</a>";			
-	myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regExQuoteTitle
-														  withString:@"$1"];
+	//NSString *regExQuoteTitle = @"<a href=\"[^\"]+\" class=\"Topic\">([^<]+)</a>";			
+	//myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regExQuoteTitle
+	//													  withString:@"$1"];
 	
 	
 	//Custom Internal Images
@@ -66,23 +66,83 @@
 	
 	//myRawContent = [myRawContent stringByReplacingOccurrencesOfString:@"|EXTERNAL-98787687687697|" withString:@"<img src='image.png' />"];
 	
-	//Replacing Links with IMG with custom IMG
-	NSString *regEx3 = @"<a rel=\"nofollow\" href=\"([^\"]+)\" target=\"_blank\" class=\"cLink\"><img src=\"([^\"]+)\" alt=\"[^\"]+\" title=\"[^\"]+\" style=\"[^\"]+\"></a>";			
-	myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx3
-														  withString:@"<img class=\"hfrplusimg\" title=\"%%ID%%\" src=\"121-lanscape.png\" alt=\"$2\" longdesc=\"$1\">"];	
 	
 	//Toyonos Images http://hfr.toyonos.info/generateurs/rofl/?s=shay&v=4&t=5
 	//NSString *regExToyo = @"<img src=\"http://hfr.toyonos.info/generateurs/([^\"]+)\" alt=\"[^\"]+\" title=\"[^\"]+\" style=\"[^\"]+\">";			
 	//myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regExToyo
-	//													  withString:@"<img src=\"http://hfr.toyonos.info/generateurs/$1\">"];	
+	//													  withString:@"<img src=\"http://hfr.toyonos.info/generateurs/$1\">"];
 	
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSString *display = [defaults stringForKey:@"display_images"];
 	
-	//External Images			
-	NSString *regEx = @"<img src=\"([^\"]+)\" alt=\"[^\"]+\" title=\"[^\"]+\" style=\"[^\"]+\">";			
-	myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx
-														  withString:@"<img class=\"hfrplusimg\" title=\"%%ID%%\" src=\"121-lanscape.png\" alt=\"$1\" longdesc=\"\">"];	
+    //NSLog(@"display %@", display);
+    
+	if ([display isEqualToString:@"no"]) {
+        
+		//Replacing Links with IMG with custom IMG
+		NSString *regEx3 = @"<a rel=\"nofollow\" href=\"([^\"]+)\" target=\"_blank\" class=\"cLink\"><img src=\"([^\"]+)\" alt=\"[^\"]+\" title=\"[^\"]+\" onload=\"[^\"]+\" style=\"[^\"]+\"></a>";			
+		myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx3
+															  withString:@"<img class=\"hfrplusimg\" title=\"%%ID%%\" src=\"121-lanscape.png\" alt=\"$2\" longdesc=\"$1\">"];
+		
+		//External Images			
+		NSString *regEx = @"<img src=\"([^\"]+)\" alt=\"[^\"]+\" title=\"[^\"]+\" onload=\"[^\"]+\" style=\"[^\"]+\">";			
+		myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx
+															  withString:@"<img class=\"hfrplusimg\" title=\"%%ID%%\" src=\"121-lanscape.png\" alt=\"$1\" longdesc=\"\">"];	
+		
+		
+	} else if ([display isEqualToString:@"yes"]) {
+		NSString *regEx3 = @"<a rel=\"nofollow\" href=\"([^\"]+)\" target=\"_blank\" class=\"cLink\"><img src=\"([^\"]+)\" alt=\"[^\"]+\" title=\"[^\"]+\" onload=\"[^\"]+\" style=\"[^\"]+\"></a>";			
+		myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx3
+															  withString:@"<img class=\"hfrplusimg\" title=\"%%ID%%\" src=\"$2\" alt=\"$2\" longdesc=\"$1\">"];
+		
+		//External Images			
+		NSString *regEx = @"<img src=\"([^\"]+)\" alt=\"[^\"]+\" title=\"[^\"]+\" onload=\"[^\"]+\" style=\"[^\"]+\">";			
+		myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx
+															  withString:@"<img class=\"hfrplusimg\" title=\"%%ID%%\" src=\"$1\" alt=\"$1\" longdesc=\"\">"];	
+	} else if ([display isEqualToString:@"wifi"]) {
+        
+        NetworkStatus netStatus = [[[HFRplusAppDelegate sharedAppDelegate] internetReach] currentReachabilityStatus];
+        switch (netStatus)
+        {
+            case NotReachable:
+            case ReachableViaWWAN:
+            {
+                //NSLog( @"Reachable WWAN");
+                //Replacing Links with IMG with custom IMG
+                NSString *regEx3 = @"<a rel=\"nofollow\" href=\"([^\"]+)\" target=\"_blank\" class=\"cLink\"><img src=\"([^\"]+)\" alt=\"[^\"]+\" title=\"[^\"]+\" onload=\"[^\"]+\" style=\"[^\"]+\"></a>";			
+                myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx3
+                                                                      withString:@"<img class=\"hfrplusimg\" title=\"%%ID%%\" src=\"121-lanscape.png\" alt=\"$2\" longdesc=\"$1\">"];
+                
+                //External Images			
+                NSString *regEx = @"<img src=\"([^\"]+)\" alt=\"[^\"]+\" title=\"[^\"]+\" onload=\"[^\"]+\" style=\"[^\"]+\">";			
+                myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx
+                                                                      withString:@"<img class=\"hfrplusimg\" title=\"%%ID%%\" src=\"121-lanscape.png\" alt=\"$1\" longdesc=\"\">"];	                
+                break;
+            }
+            case ReachableViaWiFi:
+            {
+               // NSLog( @"Reachable WiFi");
+                NSString *regEx3 = @"<a rel=\"nofollow\" href=\"([^\"]+)\" target=\"_blank\" class=\"cLink\"><img src=\"([^\"]+)\" alt=\"[^\"]+\" title=\"[^\"]+\" onload=\"[^\"]+\" style=\"[^\"]+\"></a>";			
+                myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx3
+                                                                      withString:@"<img class=\"hfrplusimg\" title=\"%%ID%%\" src=\"$2\" alt=\"$2\" longdesc=\"$1\">"];
+                
+                //External Images			
+                NSString *regEx = @"<img src=\"([^\"]+)\" alt=\"[^\"]+\" title=\"[^\"]+\" onload=\"[^\"]+\" style=\"[^\"]+\">";			
+                myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx
+                                                                      withString:@"<img class=\"hfrplusimg\" title=\"%%ID%%\" src=\"$1\" alt=\"$1\" longdesc=\"\">"];	
+                
+                break;
+            }
+        }
+
+        
+    }
+	
 	
 
+	
+	
+	
 	//Replace Internal Images with Bundle://
 	NSString *regEx4 = @"\\|NATIVE-([^-]+)-98787687687697\\|";			
 	myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx4

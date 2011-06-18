@@ -26,12 +26,21 @@
 @synthesize isLoggedIn;
 @synthesize statusChanged;
 
-@synthesize hash_check;
+@synthesize hash_check, internetReach;
 
 //@synthesize periodicMaintenanceOperation; //ioQueue, 
 
 #pragma mark -
 #pragma mark Application lifecycle
+
+//Called by Reachability whenever status changes.
+- (void) reachabilityChanged: (NSNotification* )note
+{
+    NSLog(@"reachabilityChanged:");
+    
+	Reachability* curReach = [note object];
+	NSParameterAssert([curReach isKindOfClass: [Reachability class]]);
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     
@@ -55,21 +64,30 @@
 	SDURLCache *urlCache = [[SDURLCache alloc] initWithMemoryCapacity:1024*1024*1   // 1MB mem cache
 														 diskCapacity:1024*1024*50 // 5MB disk cache
 															 diskPath:[SDURLCache defaultCachePath]];
-	
+		
 	//NSLog(@"defaultCachePath %@", [SDURLCache defaultCachePath]);
 	
 	[NSURLCache setSharedURLCache:urlCache];
 	[urlCache release];
 	
 	NSString *enabled = [[NSUserDefaults standardUserDefaults] stringForKey:@"landscape_mode"];
-	
-	if(!enabled) {
+    NSString *img = [[NSUserDefaults standardUserDefaults] stringForKey:@"display_images"];
+    NSString *tab = [[NSUserDefaults standardUserDefaults] stringForKey:@"default_tab"];
+
+	if(!enabled || !img || !tab) {
         [self registerDefaultsFromSettingsBundle];
-        enabled = [[NSUserDefaults standardUserDefaults] stringForKey:@"landscape_mode"];
     }
-	
+	enabled = [[NSUserDefaults standardUserDefaults] stringForKey:@"landscape_mode"];
+    img = [[NSUserDefaults standardUserDefaults] stringForKey:@"display_images"];
+    tab = [[NSUserDefaults standardUserDefaults] stringForKey:@"default_tab"];
+    
 	// Override point for customization after application launch.
 	
+    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(reachabilityChanged:) name: kReachabilityChangedNotification object: nil];
+
+    internetReach = [[Reachability reachabilityForInternetConnection] retain];
+	[internetReach startNotifier];
+    
 	rootController.customizableViewControllers = nil;
 
 	[window addSubview:rootController.view];
@@ -81,7 +99,7 @@
 															   userInfo:nil
 																repeats:YES] retain];
 	
-	return YES;
+    return YES;
 }
 
 - (void)registerDefaultsFromSettingsBundle {
@@ -310,7 +328,7 @@
 
 - (void)openURL:(NSString *)stringUrl
 {
-	//NSLog(@"stringUrl %@ - %d", stringUrl, [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:stringUrl]]);
+	//NSLog(@"stringUrl %@", stringUrl);
 	
 	NSString *msg = [NSString stringWithFormat:@"Vous allez quitter HFR+ et être redirigé vers:\n %@\n", stringUrl];
 	

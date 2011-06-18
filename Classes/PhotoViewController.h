@@ -31,6 +31,8 @@
 	BOOL loaded;
 	BOOL isRotate;
 	BOOL isToolbarScrolling;
+    
+    int selectedIndex;
 
 }
 @property (nonatomic, assign) id <PhotoViewControllerDelegate> delegate;
@@ -46,6 +48,8 @@
 @property BOOL loaded;
 @property BOOL isRotate;
 @property BOOL isToolbarScrolling;
+
+@property int selectedIndex;
 
 -(IBAction)cancel;
 

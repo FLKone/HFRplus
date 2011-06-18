@@ -12,6 +12,8 @@ static const NSInteger kGANDispatchPeriodSec = 10;
 #import "Constants.h"
 #import "TabBarController.h"
 
+#import "Reachability.h"
+
 @interface HFRplusAppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;
 	TabBarController *rootController;	
@@ -28,6 +30,8 @@ static const NSInteger kGANDispatchPeriodSec = 10;
     //NSOperation *periodicMaintenanceOperation;	
 	
 	NSString *hash_check;
+    
+    Reachability* internetReach;
 }
 
 //@property (nonatomic, retain) NSOperationQueue *ioQueue;
@@ -45,6 +49,8 @@ static const NSInteger kGANDispatchPeriodSec = 10;
 @property BOOL statusChanged;
 
 @property (nonatomic, retain) NSString *hash_check;
+
+@property (nonatomic, retain) Reachability *internetReach;
 
 + (HFRplusAppDelegate *)sharedAppDelegate;
 

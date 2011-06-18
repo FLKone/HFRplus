@@ -19,7 +19,7 @@
 @implementation PhotoViewController
 @synthesize delegate;
 @synthesize pagingScrollView, navigationBar, imageURL, imageData, __count, visibleIndex, loaded, isRotate, bottomBar;//, imageView
-@synthesize isToolbarScrolling;
+@synthesize isToolbarScrolling, selectedIndex;
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
  - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -80,7 +80,11 @@
     visiblePages  = [[NSMutableSet alloc] init];
 	
 	[self tilePages];
-	[self updateBars];
+
+    CGRect pagingScrollViewFrame2 = pagingScrollView.frame;
+    [pagingScrollView setContentOffset:CGPointMake((pagingScrollViewFrame2.size.width * selectedIndex), 0.0) animated:NO];
+    
+    [self updateBars];
 
 }
 

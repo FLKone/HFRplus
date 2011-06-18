@@ -47,6 +47,7 @@
 	NSMutableArray *arrayData;
 	NSMutableArray *newArrayData;
 	
+    MessagesTableViewController *messagesTableViewController;
 	MessageDetailViewController *detailViewController;
 	
 	//Gesture
@@ -94,6 +95,7 @@
 @property (nonatomic, retain) NSMutableArray *newArrayData;
 
 @property (nonatomic, retain) MessageDetailViewController *detailViewController;
+@property (nonatomic, retain) MessagesTableViewController *messagesTableViewController;
 
 @property (nonatomic, retain) UISwipeGestureRecognizer *swipeLeftRecognizer;
 @property (nonatomic, retain) UISwipeGestureRecognizer *swipeRightRecognizer;

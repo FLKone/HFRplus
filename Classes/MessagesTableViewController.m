@@ -25,7 +25,7 @@
 #import <CommonCrypto/CommonDigest.h>
 
 @implementation MessagesTableViewController
-@synthesize loaded, isLoading, topicName, topicAnswerUrl, loadingView, messagesWebView, arrayData, newArrayData, detailViewController;
+@synthesize loaded, isLoading, topicName, topicAnswerUrl, loadingView, messagesWebView, arrayData, newArrayData, detailViewController, messagesTableViewController;
 @synthesize swipeLeftRecognizer, swipeRightRecognizer;
 
 @synthesize queue; //v3
@@ -176,7 +176,17 @@
 -(void)setupPageToolbar:(HTMLNode *)bodyNode;
 {
 	//NSLog(@"setupPageToolbar");
-	
+    //Titre
+	HTMLNode *titleNode = [[bodyNode findChildWithAttribute:@"class" matchingName:@"fondForum2Title" allowPartial:YES] findChildTag:@"h3"]; //Get all the <img alt="" />
+	if ([titleNode allContents] && self.topicName.length == 0) {
+		//NSLog(@"setupPageToolbar titleNode %@", [titleNode allContents]);
+		self.topicName = [titleNode allContents];
+		[(UILabel *)[self navigationItem].titleView setText:[NSString stringWithFormat:@"%@ — %d", self.topicName, self.pageNumber]];
+		//[self navigationItem].titleView.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
+	}
+    //Titre
+    
+    
 	HTMLNode * pagesTrNode = [bodyNode findChildWithAttribute:@"class" matchingName:@"fondForum2PagesHaut" allowPartial:YES];
 	
 	if(pagesTrNode)
@@ -391,7 +401,7 @@
 	//Titre
 	HTMLNode *titleNode = [[bodyNode findChildWithAttribute:@"class" matchingName:@"fondForum2Title" allowPartial:YES] findChildTag:@"h3"]; //Get all the <img alt="" />
 	if ([titleNode allContents]) {
-		//NSLog(@"titleNode %@", [titleNode allContents]);
+		NSLog(@"titleNode %@", [titleNode allContents]);
 		self.topicName = [titleNode allContents];
 		[(UILabel *)[self navigationItem].titleView setText:[NSString stringWithFormat:@"%@ — %d", self.topicName, self.pageNumber]];
 		//[self navigationItem].titleView.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
@@ -837,6 +847,7 @@
 	
 	
 	if(self.detailViewController) self.detailViewController = nil;
+	if(self.messagesTableViewController) self.messagesTableViewController = nil;
  
 }
 
@@ -993,23 +1004,27 @@
 	
 	//On récupe les images du message:
 	//NSLog(@"%@", [[arrayData objectAtIndex:index] toHTML:index]);
+	NSLog(@"selectedURL %@", selectedURL);
 	
 	HTMLParser * myParser = [[HTMLParser alloc] initWithString:[[arrayData objectAtIndex:index] toHTML:index] error:NULL];
 	HTMLNode * msgNode = [myParser doc]; //Find the body tag
 
 	NSArray * tmpImageArray =  [msgNode findChildrenWithAttribute:@"class" matchingName:@"hfrplusimg" allowPartial:NO];
-	//NSLog(@"%d", [imageArray count]);
+	//NSLog(@"%d", [tmpImageArray count]);
 	
 	NSMutableArray * imageArray = [[NSMutableArray alloc] init];
-	
+	int selectedIndex = 0;
+    
 	for (HTMLNode * imgNode in tmpImageArray) { //Loop through all the tags
-		//NSLog(@"alt %@", [imgNode getAttributeNamed:@"alt"]);
+		//NSLog(@"======\nalt %@", [imgNode getAttributeNamed:@"alt"]);
 		//NSLog(@"longdesc %@", [imgNode getAttributeNamed:@"longdesc"]);		
 		[imageArray addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[imgNode getAttributeNamed:@"alt"], [imgNode getAttributeNamed:@"longdesc"], nil]  forKeys:[NSArray arrayWithObjects:@"alt", @"longdesc", nil]]];
-			
+        if ([selectedURL isEqualToString:[imgNode getAttributeNamed:@"alt"]]) {
+            selectedIndex = [imageArray count] - 1;
+        }
 	}
 	
-	
+	//NSLog(@"selectedIndex %d", selectedIndex);
 	// Create the root view controller for the navigation controller
 	// The new view controller configures a Cancel and Done button for the
 	// navigation bar.
@@ -1022,6 +1037,7 @@
 	photoViewController.delegate = self;
 	[photoViewController setImageURL:selectedURL];
 	[photoViewController setImageData:imageArray];
+	[photoViewController setSelectedIndex:selectedIndex];
 	[imageArray release];
 	[self presentModalViewController:photoViewController animated:YES];
 	
@@ -1502,9 +1518,9 @@
 	}
 	
 	
-	//NSLog(@"stringFlagTopic %@", self.stringFlagTopic);
+	NSLog(@"stringFlagTopic %@", self.stringFlagTopic);
 
-	jsString = [jsString stringByAppendingString:[NSString stringWithFormat:@"window.location.hash='%@';", self.stringFlagTopic]];
+	jsString = [jsString stringByAppendingString:[NSString stringWithFormat:@"window.location.hash='';window.location.hash='%@';", self.stringFlagTopic]];
 
 	
 	[webView stringByEvaluatingJavaScriptFromString:jsString];
@@ -1538,10 +1554,69 @@
 	//NSLog(@"expected:%d, got:%d | url:%@", UIWebViewNavigationTypeLinkClicked, navigationType, [aRequest.URL absoluteString]);
 	
 	if (navigationType == UIWebViewNavigationTypeLinkClicked) {
+                    
 		if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdoauto"]) {
 			[self goToPage:[[aRequest.URL absoluteString] lastPathComponent]];
 			return NO;
 		}
+		else if ([[aRequest.URL scheme] isEqualToString:@"file"]) {
+            
+            if ([[[aRequest.URL pathComponents] objectAtIndex:0] isEqualToString:@"/"] && ([[[aRequest.URL pathComponents] objectAtIndex:1] isEqualToString:@"forum2.php"] || [[[aRequest.URL pathComponents] objectAtIndex:1] isEqualToString:@"hfr"])) {
+                NSLog(@"pas la meme page / topic");
+                // Navigation logic may go here. Create and push another view controller.
+                
+                //NSLog(@"did Select row Topics table views: %d", indexPath.row);
+                
+                //if (self.messagesTableViewController == nil) {
+                MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[aRequest.URL absoluteString] stringByReplacingOccurrencesOfString:@"file://" withString:@""]];
+                self.messagesTableViewController = aView;
+                [aView release];
+                //}
+                
+                
+                
+                
+                //NSLog(@"%@", self.navigationController.navigationBar);
+                
+                
+                UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+                label.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
+                //label.frame = CGRectMake(0, 0, 500, self.navigationController.navigationBar.frame.size.height - 4);
+                label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight; // 
+                
+                [label setFont:[UIFont boldSystemFontOfSize:14.0]];
+                [label setAdjustsFontSizeToFitWidth:YES];
+                [label setBackgroundColor:[UIColor clearColor]];
+                [label setTextAlignment:UITextAlignmentCenter];
+                [label setLineBreakMode:UILineBreakModeMiddleTruncation];
+                label.shadowColor = [UIColor darkGrayColor];
+                label.shadowOffset = CGSizeMake(0.0, -1.0);
+                [label setTextColor:[UIColor whiteColor]];
+                [label setNumberOfLines:0];
+                
+                [label setText:@""];
+                
+                [messagesTableViewController.navigationItem setTitleView:label];
+                [label release];	
+                
+                
+                //setup the URL
+                self.messagesTableViewController.topicName = @"";	
+                self.messagesTableViewController.isViewed = YES;	
+                
+                //NSLog(@"push message liste");
+                [self.navigationController pushViewController:messagesTableViewController animated:YES];  
+            }
+            
+
+            
+           // NSLog(@"clicked [[aRequest.URL absoluteString] %@", [aRequest.URL absoluteString]);
+          //  NSLog(@"clicked [[aRequest.URL pathComponents] %@", [aRequest.URL pathComponents]);
+          //  NSLog(@"clicked [[aRequest.URL path] %@", [aRequest.URL path]);
+          //  NSLog(@"clicked [[aRequest.URL lastPathComponent] %@", [aRequest.URL lastPathComponent]);
+            
+			return NO;
+		}        
 		else {
 			NSURL *url = aRequest.URL;
 			NSString *urlString = url.absoluteString;

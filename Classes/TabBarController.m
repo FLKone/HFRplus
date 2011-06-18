@@ -13,7 +13,20 @@
 -(void)viewDidLoad {
 	[super viewDidLoad];
 	
-	//NSLog(@"viewDidLoad");
+	NSLog(@"TBC viewDidLoad");
+    
+    
+    
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSString *tab = [defaults stringForKey:@"default_tab"];
+    
+	if (tab) {
+		[self setSelectedIndex:[tab intValue]];
+	} else {
+		//return (interfaceOrientation == UIInterfaceOrientationPortrait);
+	}
+    
 	UINavigationBar *moreNavigationBar = self.moreNavigationController.navigationBar;
 	
 	// Make the title of this page the same as the title of this app
@@ -34,7 +47,7 @@
 	//moreNavigationBar.topItem.leftBarButtonItem = segmentBarItem;
 	
 	//[segmentBarItem release];
-
+     
 }
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController

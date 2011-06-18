@@ -55,3 +55,8 @@
 #toolbarpage .button2.end.hover {
 	background-image:url(buttonnexthover@2x.png);
 }
+
+.message .content .right div.edited a {
+	background-image:url(08-chat@2x.png) !important; 
+    background-size: 24px 22px;	
+}
