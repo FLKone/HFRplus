@@ -700,7 +700,7 @@
     [super viewDidLoad];
 	self.title = forumName;
 	//NSLog(@"viewDidLoad %@ - %@", [[UIDevice currentDevice] systemName], [[UIDevice currentDevice] systemVersion]);
-
+    
 	//Gesture
 	UIGestureRecognizer *recognizer;
 	
@@ -1024,7 +1024,6 @@
 
 #pragma mark -
 #pragma mark Gestures
-
 -(void) shakeHappened:(ShakeView*)view
 {
 	//NSLog(@"shakeHappened");

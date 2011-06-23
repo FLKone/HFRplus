@@ -30,6 +30,7 @@
 @interface MessagesTableViewController : PageViewController <UIActionSheetDelegate, ParseMessagesOperationDelegate, AddMessageViewControllerDelegate, PhotoViewControllerDelegate, UIScrollViewDelegate> {
 	UIWebView *messagesWebView;
 	UIView *loadingView;
+	UIView *overview;
 	
 	NSString *topicName;
 	
@@ -53,7 +54,8 @@
 	//Gesture
 	UISwipeGestureRecognizer *swipeLeftRecognizer;
 	UISwipeGestureRecognizer *swipeRightRecognizer;
-		
+    UISwipeGestureRecognizer *singledualTap;
+    
 	//V3
 	// the queue to run our "ParseOperation"
     NSOperationQueue		*queue;
@@ -76,6 +78,7 @@
 
 @property (nonatomic, retain) IBOutlet UIWebView *messagesWebView;
 @property (nonatomic, retain) IBOutlet UIView *loadingView;
+@property (nonatomic, retain) IBOutlet UIView *overview;
 
 @property (nonatomic, retain) NSString *topicAnswerUrl;
 @property (nonatomic, retain) NSString *topicName;
@@ -99,6 +102,7 @@
 
 @property (nonatomic, retain) UISwipeGestureRecognizer *swipeLeftRecognizer;
 @property (nonatomic, retain) UISwipeGestureRecognizer *swipeRightRecognizer;
+@property (nonatomic, retain) UISwipeGestureRecognizer *singledualTap;
 
 @property (nonatomic, retain) NSOperationQueue *queue; //v3
 

@@ -15,6 +15,8 @@
 @synthesize postID, lastPageUrl, lastPostUrl, viewed, name, url, flagUrl, typeFlag, rep, dicoHTML, messageDate, imageUrl, imageUI, textViewMsg, messageNode, messageAuteur;
 @synthesize urlQuote, urlEdit, addFlagUrl, quoteJS, MPUrl, isDel;
 
+@synthesize quotedNB, quotedLINK, editedTime;
+
 -(NSString *)toHTML:(int)index
 {
 	NSString *tempHTML = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"templatev2" ofType:@"htm"] encoding:NSUTF8StringEncoding error:NULL];
@@ -151,6 +153,13 @@
 	
 	//NSLog(@"--------------\n%@", myRawContent);
 	
+    if (self.quotedNB) {
+        myRawContent = [myRawContent stringByAppendingString:[NSString stringWithFormat:@"<a class=\"quotedhfrlink\" href=\"%@\">%@</a>", self.quotedLINK, self.quotedNB]];
+    }
+    if (self.editedTime) {
+        myRawContent = [myRawContent stringByAppendingString:[NSString stringWithFormat:@"<p class=\"editedhfrlink\">édité par %@</p>", self.editedTime]];
+    }
+    
 	tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"%%MESSAGE_CONTENT%%" withString:myRawContent];
 	
 	tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"%%ID%%" withString:[NSString stringWithFormat:@"%d", index]];
@@ -209,6 +218,10 @@
 	self.quoteJS = nil;
 	self.MPUrl = nil;
 	
+    self.quotedNB = nil;
+    self.quotedLINK = nil;
+    self.editedTime = nil;
+
 	[super dealloc];
 	
 }

@@ -234,6 +234,23 @@
 				fasTest.messageDate = @"";
 			}
 			
+            //edit citation
+			HTMLNode * editedNode = [messageNode findChildWithAttribute:@"class" matchingName:@"edited" allowPartial:NO];
+            if ([editedNode allContents]) {
+                NSString *regularExpressionString = @".*Message cité ([^<]+) fois.*";
+                fasTest.quotedNB = [[[[editedNode allContents] stringByMatching:regularExpressionString capture:1L] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByDecodingXMLEntities];
+                if (fasTest.quotedNB) {
+                    fasTest.quotedLINK = [[editedNode findChildTag:@"a"] getAttributeNamed:@"href"];
+                }
+                
+                NSString *regularExpressionString2 = @".*Message édité par ([^<]+).*";
+                fasTest.editedTime = [[[[editedNode allContents] stringByMatching:regularExpressionString2 capture:1L] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByDecodingXMLEntities];
+                
+                //NSLog(@"editedTime = %@", fasTest.editedTime);
+                //NSLog(@"quotedLINK = %@", fasTest.quotedLINK);
+            }
+
+            
 			/*NSString *regularExpressionString = @"oijlkajsdoihjlkjasdoimbrows://[^/]+/(.*)";
 			stringByMatching:regularExpressionString capture:1L]
 			NSPredicate *regExErrorPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regExError];

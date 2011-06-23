@@ -14,6 +14,8 @@
 #import "SDURLCache.h"
 
 #import "MKStoreManager.h"
+#import "BrowserViewController.h"
+
 
 @implementation HFRplusAppDelegate
 
@@ -73,13 +75,15 @@
 	NSString *enabled = [[NSUserDefaults standardUserDefaults] stringForKey:@"landscape_mode"];
     NSString *img = [[NSUserDefaults standardUserDefaults] stringForKey:@"display_images"];
     NSString *tab = [[NSUserDefaults standardUserDefaults] stringForKey:@"default_tab"];
+    NSString *web = [[NSUserDefaults standardUserDefaults] stringForKey:@"default_web"];
 
-	if(!enabled || !img || !tab) {
+	if(!enabled || !img || !tab || !web) {
         [self registerDefaultsFromSettingsBundle];
     }
 	enabled = [[NSUserDefaults standardUserDefaults] stringForKey:@"landscape_mode"];
     img = [[NSUserDefaults standardUserDefaults] stringForKey:@"display_images"];
     tab = [[NSUserDefaults standardUserDefaults] stringForKey:@"default_tab"];
+    web = [[NSUserDefaults standardUserDefaults] stringForKey:@"default_web"];
     
 	// Override point for customization after application launch.
 	
@@ -329,21 +333,43 @@
 - (void)openURL:(NSString *)stringUrl
 {
 	//NSLog(@"stringUrl %@", stringUrl);
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSString *web = [defaults stringForKey:@"default_web"];
 	
-	NSString *msg = [NSString stringWithFormat:@"Vous allez quitter HFR+ et être redirigé vers:\n %@\n", stringUrl];
-	
-	UIAlertViewURL *alert = [[UIAlertViewURL alloc] initWithTitle:@"Attention !" message:msg
-														 delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Confirmer", nil];
-	[alert setStringURL:stringUrl];
-	
-	[alert show];
-	[alert release];
+    //NSLog(@"display %@", display);
+    
+	if ([web isEqualToString:@"safari"]) {
+        NSString *msg = [NSString stringWithFormat:@"Vous allez quitter HFR+ et être redirigé vers:\n %@\n", stringUrl];
+        
+        UIAlertViewURL *alert = [[UIAlertViewURL alloc] initWithTitle:@"Attention !" message:msg
+                                                             delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Confirmer", nil];
+        [alert setStringURL:stringUrl];
+        
+        [alert show];
+        [alert release];  
+    }
+    else {
+        BrowserViewController *browserViewController = [[BrowserViewController alloc]
+                                                    initWithNibName:@"BrowserViewController" bundle:nil];
+        browserViewController.delegate = self.rootController;
+        NSLog(@"OK %@", stringUrl);
+        
+        [self.rootController presentModalViewController:browserViewController animated:YES];
+        [browserViewController.myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:stringUrl]]];
+
+        // The navigation controller is now owned by the current view controller
+        // and the root view controller is owned by the navigation controller,
+        // so both objects should be released to prevent over-retention.
+        [browserViewController release];
+    }
+    
+
 }
 
 - (void)alertView:(UIAlertViewURL *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
 	if (buttonIndex == 1) {
-		//NSLog(@"OK %@", [alertView stringURL]);
+		NSLog(@"OK %@", [alertView stringURL]);
 		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:[alertView stringURL]]];
 	}
 }

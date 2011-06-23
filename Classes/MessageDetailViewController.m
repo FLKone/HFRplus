@@ -21,7 +21,7 @@
 @implementation MessageDetailViewController
 @synthesize messageView, messageAuthor, messageDate, authorAvatar, messageTitle, messageTitleString;
 @synthesize pageNumber, curMsg, arrayData;
-@synthesize parent, defaultTintColor;
+@synthesize parent, defaultTintColor, messagesTableViewController;
 @synthesize toolbarBtn, quoteBtn, editBtn, actionBtn, arrayAction;
 
 // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -103,12 +103,12 @@
 	NSString *HTMLString = [NSString stringWithFormat:@"<html><head><link type='text/css' rel='stylesheet' href='style-max.css' />\
 							<meta name='viewport' content='width=320, initial-scale=1.0' />\
 							</head><body><div class='bunselected' id='qsdoiqjsdkjhqkjhqsdqdilkjqsd2'>%@</div></body></html><script type='text/javascript'>\
-							function HLtxt() { alert('lol'); var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bselected'; } function UHLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bunselected'; } function swap_spoiler_states(obj){var div=obj.getElementsByTagName('div');if(div[0]){if(div[0].style.visibility==\"visible\"){div[0].style.visibility='hidden';}else if(div[0].style.visibility==\"hidden\"||!div[0].style.visibility){div[0].style.visibility='visible';}}} </script>", 	
+							function HLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bselected'; } function UHLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bunselected'; } function swap_spoiler_states(obj){var div=obj.getElementsByTagName('div');if(div[0]){if(div[0].style.visibility==\"visible\"){div[0].style.visibility='hidden';}else if(div[0].style.visibility==\"hidden\"||!div[0].style.visibility){div[0].style.visibility='visible';}}} </script>", 	
 							[[arrayData objectAtIndex:curMsg] dicoHTML]];
 
 	HTMLString = [HTMLString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-	HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"href=\"/forum2.php?" withString:@"href=\"http://forum.hardware.fr/forum2.php?"];
-	HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"href=\"/hfr/" withString:@"href=\"http://forum.hardware.fr/hfr/"];
+	//HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"href=\"/forum2.php?" withString:@"href=\"http://forum.hardware.fr/forum2.php?"];
+	//HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"href=\"/hfr/" withString:@"href=\"http://forum.hardware.fr/hfr/"];
 	
 	//Custom Internal Images
 	NSString *regEx2 = @"<img src=\"http://forum-images.hardware.fr/([^\"]+)\" alt=\"\\[[^\"]+\" title=\"[^\"]+\">";			
@@ -357,22 +357,80 @@
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
 }
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-	//NSLog(@"expected:%d, got:%d", UIWebViewNavigationTypeLinkClicked, navigationType);
-	if (navigationType == UIWebViewNavigationTypeLinkClicked) {
-		NSURL *url = request.URL;
-		NSString *urlString = url.absoluteString;
-		
-		[[HFRplusAppDelegate sharedAppDelegate] openURL:urlString];
-		/*
-		NSURL *url = request.URL;
-		NSString *urlString = url.absoluteString;
-		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
-		 */
-		return NO;
-	}
-	
-	return YES;
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)aRequest navigationType:(UIWebViewNavigationType)navigationType {
+    //NSLog(@"expected:%d, got:%d | url:%@", UIWebViewNavigationTypeLinkClicked, navigationType, [aRequest.URL absoluteString]);
+
+    if (navigationType == UIWebViewNavigationTypeLinkClicked) {
+        
+        if ([[aRequest.URL scheme] isEqualToString:@"file"]) {
+            
+            if ([[[aRequest.URL pathComponents] objectAtIndex:0] isEqualToString:@"/"] && ([[[aRequest.URL pathComponents] objectAtIndex:1] isEqualToString:@"forum2.php"] || [[[aRequest.URL pathComponents] objectAtIndex:1] isEqualToString:@"hfr"])) {
+                NSLog(@"pas la meme page / topic");
+                // Navigation logic may go here. Create and push another view controller.
+                
+                //NSLog(@"did Select row Topics table views: %d", indexPath.row);
+                
+                //if (self.messagesTableViewController == nil) {
+                MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[aRequest.URL absoluteString] stringByReplacingOccurrencesOfString:@"file://" withString:@""]];
+                self.messagesTableViewController = aView;
+                [aView release];
+                //}
+                
+                
+                
+                
+                //NSLog(@"%@", self.navigationController.navigationBar);
+                
+                
+                UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+                label.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
+                //label.frame = CGRectMake(0, 0, 500, self.navigationController.navigationBar.frame.size.height - 4);
+                label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight; // 
+                
+                [label setFont:[UIFont boldSystemFontOfSize:14.0]];
+                [label setAdjustsFontSizeToFitWidth:YES];
+                [label setBackgroundColor:[UIColor clearColor]];
+                [label setTextAlignment:UITextAlignmentCenter];
+                [label setLineBreakMode:UILineBreakModeMiddleTruncation];
+                label.shadowColor = [UIColor darkGrayColor];
+                label.shadowOffset = CGSizeMake(0.0, -1.0);
+                [label setTextColor:[UIColor whiteColor]];
+                [label setNumberOfLines:0];
+                
+                [label setText:@""];
+                
+                [messagesTableViewController.navigationItem setTitleView:label];
+                [label release];	
+                
+                
+                //setup the URL
+                self.messagesTableViewController.topicName = @"";	
+                self.messagesTableViewController.isViewed = YES;	
+                
+                //NSLog(@"push message liste");
+                [self.navigationController pushViewController:messagesTableViewController animated:YES];  
+            }
+            
+            
+            
+            // NSLog(@"clicked [[aRequest.URL absoluteString] %@", [aRequest.URL absoluteString]);
+            //  NSLog(@"clicked [[aRequest.URL pathComponents] %@", [aRequest.URL pathComponents]);
+            //  NSLog(@"clicked [[aRequest.URL path] %@", [aRequest.URL path]);
+            //  NSLog(@"clicked [[aRequest.URL lastPathComponent] %@", [aRequest.URL lastPathComponent]);
+            
+            return NO;
+        }        
+        else {
+            NSURL *url = aRequest.URL;
+            NSString *urlString = url.absoluteString;
+            
+            [[HFRplusAppDelegate sharedAppDelegate] openURL:urlString];
+            return NO;
+        }
+        
+    }
+
+    return YES;
 }
 
 - (IBAction)segmentAction:(id)sender

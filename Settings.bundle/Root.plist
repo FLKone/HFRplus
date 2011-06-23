@@ -5,6 +5,12 @@
 	<key>PreferenceSpecifiers</key>
 	<array>
 		<dict>
+			<key>Title</key>
+			<string>Général</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
 			<key>DefaultValue</key>
 			<string>none</string>
 			<key>Key</key>
@@ -25,6 +31,34 @@
 				<string>galerie_message</string>
 				<string>all</string>
 			</array>
+		</dict>
+		<dict>
+			<key>DefaultValue</key>
+			<string>0</string>
+			<key>Key</key>
+			<string>default_tab</string>
+			<key>Title</key>
+			<string>Onglet par defaut</string>
+			<key>Titles</key>
+			<array>
+				<string>Catégories</string>
+				<string>Vos Sujets</string>
+				<string>Messages</string>
+			</array>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Values</key>
+			<array>
+				<string>0</string>
+				<string>1</string>
+				<string>2</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Title</key>
+			<string>Liste des messages</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
 		</dict>
 		<dict>
 			<key>DefaultValue</key>
@@ -50,24 +84,22 @@
 		</dict>
 		<dict>
 			<key>DefaultValue</key>
-			<string>0</string>
+			<string>safari</string>
 			<key>Key</key>
-			<string>default_tab</string>
+			<string>default_web</string>
 			<key>Title</key>
-			<string>Onglet par defaut</string>
+			<string>Ouvrir les liens</string>
 			<key>Titles</key>
 			<array>
-				<string>Catégories</string>
-				<string>Vos Sujets</string>
-				<string>Messages</string>
+				<string>dans Safari</string>
+				<string>dans un navigateur interne</string>
 			</array>
 			<key>Type</key>
 			<string>PSMultiValueSpecifier</string>
 			<key>Values</key>
 			<array>
-				<string>0</string>
-				<string>1</string>
-				<string>2</string>
+				<string>safari</string>
+				<string>internal</string>
 			</array>
 		</dict>
 	</array>

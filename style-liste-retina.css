@@ -56,7 +56,7 @@
 	background-image:url(buttonnexthover@2x.png);
 }
 
-.message .content .right div.edited a {
+.message .content .right a.quotedhfrlink {
 	background-image:url(08-chat@2x.png) !important; 
     background-size: 24px 22px;	
 }

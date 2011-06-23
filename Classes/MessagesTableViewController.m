@@ -26,7 +26,7 @@
 
 @implementation MessagesTableViewController
 @synthesize loaded, isLoading, topicName, topicAnswerUrl, loadingView, messagesWebView, arrayData, newArrayData, detailViewController, messagesTableViewController;
-@synthesize swipeLeftRecognizer, swipeRightRecognizer;
+@synthesize swipeLeftRecognizer, swipeRightRecognizer, singledualTap, overview;
 
 @synthesize queue; //v3
 @synthesize stringFlagTopic;
@@ -182,6 +182,7 @@
 		//NSLog(@"setupPageToolbar titleNode %@", [titleNode allContents]);
 		self.topicName = [titleNode allContents];
 		[(UILabel *)[self navigationItem].titleView setText:[NSString stringWithFormat:@"%@ — %d", self.topicName, self.pageNumber]];
+        self.title = self.topicName;
 		//[self navigationItem].titleView.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
 	}
     //Titre
@@ -526,6 +527,25 @@
 			fasTest.messageDate = @"";
 		}
 		
+        //edit citation
+        HTMLNode * editedNode = [messageNode findChildWithAttribute:@"class" matchingName:@"edited" allowPartial:NO];
+        if ([editedNode allContents]) {
+            NSString *regularExpressionString = @".*Message cité ([^<]+) fois.*";
+            fasTest.quotedNB = [[[[editedNode allContents] stringByMatching:regularExpressionString capture:1L] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByDecodingXMLEntities];
+            if (fasTest.quotedNB) {
+                fasTest.quotedLINK = [[editedNode findChildTag:@"a"] getAttributeNamed:@"href"];
+            }
+            
+            NSString *regularExpressionString2 = @".*Message édité par ([^<]+).*";
+            fasTest.editedTime = [[[[editedNode allContents] stringByMatching:regularExpressionString2 capture:1L] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByDecodingXMLEntities];
+            
+            //NSLog(@"editedTime = %@", fasTest.editedTime);
+            //NSLog(@"quotedLINK = %@", fasTest.quotedLINK);
+        }
+        
+        
+        
+        
 		fasTest.imageUrl = nil;
 		fasTest.imageUI = nil;
 
@@ -642,9 +662,16 @@
 	
 	self.title = self.topicName;
 
+    singledualTap = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)] autorelease];
+	singledualTap.numberOfTouchesRequired = 2;
+    singledualTap.direction = UISwipeGestureRecognizerDirectionUp;
+    singledualTap.cancelsTouchesInView = YES;
+    
+	[self.view addGestureRecognizer: singledualTap];
+    
 	//Gesture
 	UIGestureRecognizer *recognizer;
-	
+
 	//De Gauche à droite
 	recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeToRight:)];
 	self.swipeRightRecognizer = (UISwipeGestureRecognizer *)recognizer;
@@ -667,6 +694,10 @@
 
 	[(ShakeView*)self.view setShakeDelegate:self];
 	
+    
+
+    
+    
 	self.arrayAction = [[NSMutableArray alloc] init];
 	self.arrayData = [[NSMutableArray alloc] init];
 	self.newArrayData = [[NSMutableArray alloc] init];
@@ -1050,6 +1081,10 @@
 
 #pragma mark -
 #pragma mark Gestures
+
+- (void)handleDoubleTap:(UISwipeGestureRecognizer *)recognizer {
+	NSLog(@"recognizer= %@", recognizer);
+}
 
 -(void) shakeHappened:(ShakeView*)view
 {
@@ -1628,6 +1663,7 @@
 	}
 	else if (navigationType == UIWebViewNavigationTypeOther) {
 		if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdodetails"]) {
+            NSLog(@"details ==========");
 			[self didSelectMessage:[[[aRequest.URL absoluteString] lastPathComponent] intValue]];
 			return NO;
 		}
@@ -2089,6 +2125,10 @@
 	self.swipeLeftRecognizer = nil;
 	self.swipeRightRecognizer = nil;
 	
+    
+    //[self.view removeGestureRecognizer:self.singledualTap];
+	//self.singledualTap = nil;
+    
 	self.stringFlagTopic = nil;
 	self.arrayInputData = nil;
 		

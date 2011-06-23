@@ -156,6 +156,8 @@
 		CA20FA3512F15CA700EC1771 /* TopicSearchCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA20FA3312F15CA700EC1771 /* TopicSearchCellView.m */; };
 		CA20FA3612F15CA700EC1771 /* TopicSearchCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA20FA3412F15CA700EC1771 /* TopicSearchCellView.xib */; };
 		CA228CF0125CFD4500DDCD2E /* MessageDetailViewControllerv2.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA228CEF125CFD4500DDCD2E /* MessageDetailViewControllerv2.xib */; };
+		CA26862513ADE01100AC5511 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA26862313ADE01100AC5511 /* BrowserViewController.m */; };
+		CA26862613ADE01100AC5511 /* BrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA26862413ADE01100AC5511 /* BrowserViewController.xib */; };
 		CA34780B12EB557500D1BA2A /* PayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA34780912EB557500D1BA2A /* PayViewController.m */; };
 		CA34780C12EB557500D1BA2A /* PayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA34780A12EB557500D1BA2A /* PayViewController.xib */; };
 		CA3B127E12422F2A0068E1A2 /* jquery.js in Resources */ = {isa = PBXBuildFile; fileRef = CA3B127D12422F2A0068E1A2 /* jquery.js */; };
@@ -475,6 +477,9 @@
 		CA20FA3312F15CA700EC1771 /* TopicSearchCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopicSearchCellView.m; sourceTree = "<group>"; };
 		CA20FA3412F15CA700EC1771 /* TopicSearchCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TopicSearchCellView.xib; sourceTree = "<group>"; };
 		CA228CEF125CFD4500DDCD2E /* MessageDetailViewControllerv2.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageDetailViewControllerv2.xib; sourceTree = "<group>"; };
+		CA26862213ADE01100AC5511 /* BrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserViewController.h; sourceTree = "<group>"; };
+		CA26862313ADE01100AC5511 /* BrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserViewController.m; sourceTree = "<group>"; };
+		CA26862413ADE01100AC5511 /* BrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserViewController.xib; sourceTree = "<group>"; };
 		CA34780812EB557500D1BA2A /* PayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayViewController.h; sourceTree = "<group>"; };
 		CA34780912EB557500D1BA2A /* PayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayViewController.m; sourceTree = "<group>"; };
 		CA34780A12EB557500D1BA2A /* PayViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PayViewController.xib; sourceTree = "<group>"; };
@@ -1051,6 +1056,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				CA26861C13ADD94100AC5511 /* webBrowser */,
 				01BF8A0C121D7450007624B6 /* Common */,
 				01BF8A0F121D7469007624B6 /* Forums */,
 				0140ABA6121E011D001C35C4 /* Favorites */,
@@ -1184,6 +1190,16 @@
 				CA77CDDD1260F1D600271D62 /* buttonendon@2x.png */,
 			);
 			name = img;
+			sourceTree = "<group>";
+		};
+		CA26861C13ADD94100AC5511 /* webBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				CA26862213ADE01100AC5511 /* BrowserViewController.h */,
+				CA26862313ADE01100AC5511 /* BrowserViewController.m */,
+				CA26862413ADE01100AC5511 /* BrowserViewController.xib */,
+			);
+			name = webBrowser;
 			sourceTree = "<group>";
 		};
 		CA34781112EB56DC00D1BA2A /* inApp */ = {
@@ -1518,6 +1534,7 @@
 				CA20FA3612F15CA700EC1771 /* TopicSearchCellView.xib in Resources */,
 				CA192D1312F477EB00537A87 /* 44-shoebox.png in Resources */,
 				CA192D1412F477EB00537A87 /* 44-shoebox@2x.png in Resources */,
+				CA26862613ADE01100AC5511 /* BrowserViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1587,6 +1604,7 @@
 				CA9DD4A013A3BDB9005B69EC /* ASIInputStream.m in Sources */,
 				CA9DD4A113A3BDB9005B69EC /* ASINetworkQueue.m in Sources */,
 				CA9DD4A413A3BDD8005B69EC /* Reachability.m in Sources */,
+				CA26862513ADE01100AC5511 /* BrowserViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

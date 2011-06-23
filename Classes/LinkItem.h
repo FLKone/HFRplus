@@ -45,6 +45,10 @@
 	NSString *addFlagUrl;
 	NSString *quoteJS;
 	NSString *MPUrl;
+
+    NSString *quotedNB;
+    NSString *quotedLINK;
+    NSString *editedTime;
 }
 
 @property (nonatomic, retain) NSString *name;
@@ -75,6 +79,10 @@
 @property (nonatomic, retain) NSString *addFlagUrl;
 @property (nonatomic, retain) NSString *quoteJS;
 @property (nonatomic, retain) NSString *MPUrl;
+
+@property (nonatomic, retain) NSString *quotedNB;
+@property (nonatomic, retain) NSString *quotedLINK;
+@property (nonatomic, retain) NSString *editedTime;
 
 @property int rep;
 @property BOOL viewed;

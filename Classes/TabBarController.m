@@ -60,6 +60,12 @@
 	*/
 }
 
+- (void)browserViewControllerDidFinish:(BrowserViewController *)controller {
+    // NSLog(@"photoViewControllerDidFinish");
+    
+	[self dismissModalViewControllerAnimated:YES];
+}
+
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
 	

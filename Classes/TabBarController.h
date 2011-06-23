@@ -6,9 +6,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BrowserViewController.h"
 
-
-@interface TabBarController : UITabBarController {
+@interface TabBarController : UITabBarController <BrowserViewControllerDelegate> {
 
 }
 

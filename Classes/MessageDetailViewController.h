@@ -26,7 +26,8 @@
 	int curMsg;
 	
 	MessagesTableViewController *parent;
-	
+    MessagesTableViewController *messagesTableViewController;
+
 	UIColor *defaultTintColor;
 
 	UIToolbar *toolbarBtn;
@@ -54,6 +55,7 @@
 @property (nonatomic, retain) NSMutableArray *arrayData;
 
 @property (nonatomic, assign) MessagesTableViewController *parent;
+@property (nonatomic, retain) MessagesTableViewController *messagesTableViewController;
 
 @property (nonatomic, retain) UIColor *defaultTintColor;
 
