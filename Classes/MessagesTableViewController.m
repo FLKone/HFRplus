@@ -1866,7 +1866,7 @@
 	if (request) {
 		
 		if ([aRequest error]) {
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hmmm..." message:[[request error] localizedDescription]
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hmmm" message:[[request error] localizedDescription]
 														   delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 			[alert show];	
 			[alert release];
