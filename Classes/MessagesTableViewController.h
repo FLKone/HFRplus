@@ -17,6 +17,8 @@
 //#import "EditFormView.h"
 //#import "QuoteFormView.h"
 
+#import "OptionsTopicViewController.h"
+
 #import "QuoteMessageViewController.h"
 #import "EditMessageViewController.h"
 #import "NewMessageViewController.h"
@@ -85,7 +87,6 @@
 
 @property (nonatomic, retain) NSDate *firstDate;
 
-
 @property BOOL loaded;
 @property BOOL isLoading;
 @property BOOL isRedFlagged;
@@ -120,6 +121,7 @@
 @property BOOL isAnimating;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andUrl:(NSString *)theTopicUrl;
+- (void)optionsTopic;
 - (void)answerTopic;
 - (void)quoteMessage:(NSString *)quoteUrl;
 - (void)editMessage:(NSString *)editUrl;

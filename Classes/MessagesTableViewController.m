@@ -10,6 +10,7 @@
 
 #import "MessagesTableViewController.h"
 #import "MessageDetailViewController.h"
+#import "TopicsTableViewController.h"
 
 #import "RegexKitLite.h"
 #import "HTMLParser.h"
@@ -686,7 +687,7 @@
 	//-- Gesture
 
 	//Bouton Repondre message
-	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(answerTopic)];
+	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(optionsTopic)];
     segmentBarItem.enabled = NO;
 	
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
@@ -725,6 +726,167 @@
 	self.isAnimating = NO;
 }
 
+-(void)optionsTopic
+{	
+    UIActionSheet *styleAlert;
+    
+    if (self.isUnreadable) {
+        styleAlert = [[UIActionSheet alloc] initWithTitle:nil
+                                                                delegate:self cancelButtonTitle:@"Annuler"
+                                                  destructiveButtonTitle:nil
+                                                       otherButtonTitles:@"Répondre", @"Première page", @"Dernière page", @"Marquer comme non lu", nil,
+                                     nil];
+    }
+    else {
+        styleAlert = [[UIActionSheet alloc] initWithTitle:nil
+                                                                delegate:self cancelButtonTitle:@"Annuler"
+                                                  destructiveButtonTitle:nil
+                                                       otherButtonTitles:@"Répondre", @"Première page", @"Dernière page", nil,
+                                     nil];
+    }
+    
+    // use the same style as the nav bar
+    styleAlert.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+    
+    [styleAlert showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
+    [styleAlert release];    
+    
+    
+    /*
+    OptionsTopicViewController *optionsTopicViewController = [[OptionsTopicViewController alloc]
+                                                              initWithNibName:@"OptionsTopicViewController" bundle:nil];
+    
+	actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:nil cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+	[actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+
+    CGRect pageFrame;
+    pageFrame.origin.x = 0;
+    pageFrame.origin.y = 0;
+    pageFrame.size.height = 209;
+    pageFrame.size.width = 320;
+    
+    [[optionsTopicViewController view] setFrame:pageFrame];
+    
+	[actionSheet addSubview:optionsTopicViewController.view];
+    
+	UISegmentedControl *closeButton = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:@"Retour"]];
+	closeButton.momentary = YES; 
+	closeButton.frame = CGRectMake(10, 7.0f, 55.0f, 30.0f);
+	closeButton.segmentedControlStyle = UISegmentedControlStyleBar;
+	closeButton.tintColor = [UIColor blackColor];
+	[closeButton addTarget:self action:@selector(dismissActionSheet) forControlEvents:UIControlEventValueChanged];
+	[actionSheet addSubview:closeButton];
+	[closeButton release];
+
+
+    
+    
+  
+    
+	[actionSheet showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
+    
+	CGRect curFrame = [[actionSheet viewWithTag:546] frame];
+	curFrame.origin.x =  self.view.frame.size.width - curFrame.size.width - 10;
+	[[actionSheet viewWithTag:546] setFrame:curFrame];
+	
+	[UIView beginAnimations:nil context:nil];
+    [actionSheet setFrame:CGRectMake(0, [[[HFRplusAppDelegate sharedAppDelegate] rootController] tabBar].frame.size.height + self.view.frame.size.height + self.navigationController.navigationBar.frame.size.height + 20 - optionsTopicViewController.view.frame.size.height - 44,
+									 self.view.frame.size.width, optionsTopicViewController.view.frame.size.height + 44)];
+	
+    [actionSheet setBounds:CGRectMake(0, 0,
+                                      self.view.frame.size.width, optionsTopicViewController.view.frame.size.height + 44)];
+    
+    [UIView commitAnimations];     
+	
+    */
+
+
+    //optionsTopicViewController.delegate = self;
+    
+  
+    
+   // NSLog(@"pageFrame %f %f - %f %f", optionsTopicViewController.view.frame.origin.x, optionsTopicViewController.view.frame.origin.y,
+	//	  optionsTopicViewController.view.frame.size.width, optionsTopicViewController.view.frame.size.height);
+    
+    
+    //[self.view insertSubview:optionsTopicViewController.view aboveSubview:self.view];
+    
+
+	
+	// Create the navigation controller and present it modally.	
+    //optionsTopicViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+    //optionsTopicViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    //optionsTopicViewController.hidesBottomBarWhenPushed = NO;
+    
+    //[self presentModalViewController:optionsTopicViewController animated:YES];
+	
+	//[optionsTopicViewController release];
+    
+}
+
+- (void)actionSheet:(UIActionSheet *)modalView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"buttonindex %d", buttonIndex);
+    
+	switch (buttonIndex)
+	{
+		case 0:
+		{
+            [self answerTopic];
+			break;
+		}
+		case 1:
+		{
+            [self firstPage:nil];
+			break;
+			
+		}
+		case 2:
+		{
+            [self lastPage:nil];
+			break;
+			
+		}   
+		case 3:
+		{
+            if (self.isUnreadable) {
+                ASIHTTPRequest  *delrequest =  
+                [[[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, self.isFavoritesOrRead]]] autorelease];
+                //delete
+                
+                [delrequest startSynchronous];
+                
+                //NSLog(@"arequest: %@", [arequest url]);
+                
+                if (delrequest) {
+                    if ([delrequest error]) {
+                        //NSLog(@"error: %@", [[arequest error] localizedDescription]);
+                    }
+                    else if ([delrequest responseString])
+                    {
+                        //NSLog(@"responseString: %@", [arequest responseString]);
+                        
+                        //[self reload];
+                        [[[HFRplusAppDelegate sharedAppDelegate] messagesNavController] popViewControllerAnimated:YES];
+                        [(TopicsTableViewController *)[[[HFRplusAppDelegate sharedAppDelegate] messagesNavController] visibleViewController] fetchContent];
+                    }
+                }
+                //NSLog(@"nonlu %@", self.isFavoritesOrRead);
+            }
+			break;
+			
+		}             
+			
+	}
+}
+
+- (void)optionsTopicViewControllerDidFinish:(OptionsTopicViewController *)controller {
+    NSLog(@"optionsTopicViewControllerDidFinish");
+	
+	//[self dismissModalViewControllerAnimated:YES];
+    [self answerTopic];
+}
+
 -(void)answerTopic
 {
 	// Create the root view controller for the navigation controller
@@ -749,10 +911,12 @@
 	[addMessageViewController setArrayInputData:self.arrayInputData];
 */
 	
-	if (self.isAnimating) {
-		return;
+	while (self.isAnimating) {
+        NSLog(@"isAnimating");
+		//return;
 	}
-	
+    NSLog(@"isOK");
+
 	NewMessageViewController *addMessageViewController = [[NewMessageViewController alloc]
 														   initWithNibName:@"AddMessageViewController" bundle:nil];
 	addMessageViewController.delegate = self;
@@ -1144,6 +1308,8 @@
 		if ([FlagNode findChildWithAttribute:@"src" matchingName:@"flagn0.gif" allowPartial:YES]) {
 			self.isRedFlagged = YES;
 		}
+        
+        NSLog(@"FlagNode %d", self.isRedFlagged);
 	}
 	else {
 		HTMLNode * ReadNode = [bodyNode findChildWithAttribute:@"href" matchingName:@"nonlu" allowPartial:YES];
@@ -1154,6 +1320,9 @@
 		else {
 			self.isFavoritesOrRead =  @"";	
 		}
+        
+        NSLog(@"!FlagNode %@", self.isFavoritesOrRead);
+        NSLog(@"!FlagNode %d", self.isUnreadable);
 	}
 }
 //--form to fast answer	
@@ -1838,18 +2007,18 @@
 	
 	//NSLog(@"oijlkajsdoihjlkjasdopopup");	
 }
-
+/*
 - (void)actionSheet:(UIActionSheet *)modalView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-	
+	NSLog(@"MTV clickedButtonAtIndex %d %d", buttonIndex, curPostID);
 	if (buttonIndex < [self.arrayAction count]) {
-		//NSLog(@"clickedButtonAtIndex %d %d", buttonIndex, curPostID);
+		
 		
 		[self performSelector:NSSelectorFromString([[self.arrayAction objectAtIndex:buttonIndex] objectForKey:@"code"]) withObject:[NSNumber numberWithInt:curPostID]];
 	}
 	
 }
-
+*/
 #pragma mark -
 #pragma mark sharedMenuController management
 

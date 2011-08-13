@@ -195,15 +195,15 @@
 	[self fetchContent];	
 }
 -(void)firstPage:(id)sender {
-	//NSLog(@"firstPage self.firstPageUrl %@", self.firstPageUrl);
+	NSLog(@"firstPage self.firstPageUrl %@", self.firstPageUrl);
 	
-	self.currentUrl = self.firstPageUrl;
+	if(self.firstPageUrl.length > 0) self.currentUrl = self.firstPageUrl;
 	[self fetchContent];
 }
 -(void)lastPage:(id)sender {
-	//NSLog(@"lastPage self.lastPageUrl %@", self.lastPageUrl);
+	NSLog(@"lastPage self.lastPageUrl %@", self.lastPageUrl);
 	
-	self.currentUrl = self.lastPageUrl;
+	if(self.lastPageUrl.length > 0) self.currentUrl = self.lastPageUrl;
 	[self fetchContent];	
 }
 

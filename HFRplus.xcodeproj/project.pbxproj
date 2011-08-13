@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -228,6 +228,8 @@
 		CA81D28D12281D5800AC6ADA /* EditMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA81D28C12281D5800AC6ADA /* EditMessageViewController.m */; };
 		CA88EA8E124D75CA00E53E54 /* commonsmile.plist in Resources */ = {isa = PBXBuildFile; fileRef = CA88EA8D124D75CA00E53E54 /* commonsmile.plist */; };
 		CA8DDC9C12EB30AC00635441 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8DDC9B12EB30AC00635441 /* StoreKit.framework */; };
+		CA94528C13F5F6F900913D63 /* OptionsTopicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA94528913F5F6F900913D63 /* OptionsTopicViewController.xib */; };
+		CA94528D13F5F6F900913D63 /* OptionsTopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA94528A13F5F6F900913D63 /* OptionsTopicViewController.m */; };
 		CA9BCD681239410F00B4F2D1 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = CA9BCD671239410F00B4F2D1 /* loading.gif */; };
 		CA9DD49A13A3BDB9005B69EC /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CA9DD48713A3BDB9005B69EC /* ASIAuthenticationDialog.m */; };
 		CA9DD49B13A3BDB9005B69EC /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = CA9DD48A13A3BDB9005B69EC /* ASIDataCompressor.m */; };
@@ -564,6 +566,9 @@
 		CA81D28C12281D5800AC6ADA /* EditMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditMessageViewController.m; sourceTree = "<group>"; };
 		CA88EA8D124D75CA00E53E54 /* commonsmile.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = commonsmile.plist; sourceTree = "<group>"; };
 		CA8DDC9B12EB30AC00635441 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		CA94528913F5F6F900913D63 /* OptionsTopicViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OptionsTopicViewController.xib; sourceTree = "<group>"; };
+		CA94528A13F5F6F900913D63 /* OptionsTopicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionsTopicViewController.m; sourceTree = "<group>"; };
+		CA94528B13F5F6F900913D63 /* OptionsTopicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsTopicViewController.h; sourceTree = "<group>"; };
 		CA9BCD671239410F00B4F2D1 /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
 		CA9DD48613A3BDB9005B69EC /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		CA9DD48713A3BDB9005B69EC /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
@@ -696,6 +701,9 @@
 				CA228CEF125CFD4500DDCD2E /* MessageDetailViewControllerv2.xib */,
 				CAB9B3A51263E5FC00731127 /* HFRMenuItem.h */,
 				CAB9B3A61263E5FC00731127 /* HFRMenuItem.m */,
+				CA94528B13F5F6F900913D63 /* OptionsTopicViewController.h */,
+				CA94528A13F5F6F900913D63 /* OptionsTopicViewController.m */,
+				CA94528913F5F6F900913D63 /* OptionsTopicViewController.xib */,
 			);
 			name = Messages;
 			sourceTree = "<group>";
@@ -1299,8 +1307,11 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0410;
+			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "HFRplus" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -1535,6 +1546,7 @@
 				CA192D1312F477EB00537A87 /* 44-shoebox.png in Resources */,
 				CA192D1412F477EB00537A87 /* 44-shoebox@2x.png in Resources */,
 				CA26862613ADE01100AC5511 /* BrowserViewController.xib in Resources */,
+				CA94528C13F5F6F900913D63 /* OptionsTopicViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1605,6 +1617,7 @@
 				CA9DD4A113A3BDB9005B69EC /* ASINetworkQueue.m in Sources */,
 				CA9DD4A413A3BDD8005B69EC /* Reachability.m in Sources */,
 				CA26862513ADE01100AC5511 /* BrowserViewController.m in Sources */,
+				CA94528D13F5F6F900913D63 /* OptionsTopicViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1671,7 +1684,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1.3;
 				MACH_O_TYPE = mh_execute;
-				PREBINDING = NO;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1687,7 +1699,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1.3;
 				MACH_O_TYPE = mh_execute;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PREBINDING = NO;
 				SDKROOT = iphoneos;
 			};
 			name = Release;
@@ -1704,7 +1715,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1.3;
 				MACH_O_TYPE = mh_execute;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DD9C922C-ADC7-43C5-BA49-7D3528416F98";
 				SDKROOT = iphoneos;
 			};
@@ -1746,7 +1756,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1.3;
 				MACH_O_TYPE = mh_execute;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C28DFA8E-2AA1-423D-A7A5-C10930047551";
 				SDKROOT = iphoneos;
 			};
