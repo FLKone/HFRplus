@@ -975,6 +975,11 @@
 
 		self.messagesTableViewController = nil;
 	}
+    
+    if (self.pressedIndexPath) 
+    {
+		self.pressedIndexPath = nil;
+    }    
 }
 
 - (void)viewDidDisappear:(BOOL)animated

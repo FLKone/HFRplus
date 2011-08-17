@@ -48,7 +48,7 @@
 		[labelMsg setTextAlignment:UITextAlignmentLeft];
 		[labelMsg setHighlightedTextColor:[UIColor whiteColor]];
 		[labelMsg setTag:998];
-		[labelMsg setTextColor:[UIColor darkGrayColor]];
+		[labelMsg setTextColor:[UIColor grayColor]];
 		[labelMsg setNumberOfLines:0];
 		//[label setOpaque:YES];
 		

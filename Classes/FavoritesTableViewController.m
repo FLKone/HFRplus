@@ -548,6 +548,11 @@
 		
 		self.messagesTableViewController = nil;
 	}
+    
+    if (self.pressedIndexPath) 
+    {
+		self.pressedIndexPath = nil;
+    }
 }
 
 
