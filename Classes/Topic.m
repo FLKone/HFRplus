@@ -27,6 +27,8 @@
 
 @synthesize aAuthorOrInter;
 
+@synthesize maxTopicPage, curTopicPage;
+
 @synthesize postID, catID;
 
 -(void)dealloc {

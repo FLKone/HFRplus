@@ -26,7 +26,10 @@
 	NSString *aAuthorOfLastPost;
 
 	NSString *aAuthorOrInter;
-
+    
+    int maxTopicPage;
+    int curTopicPage;
+    
 	int postID;
 	int catID;
 }
@@ -46,6 +49,9 @@
 @property (nonatomic, retain) NSString *aAuthorOfLastPost;
 
 @property (nonatomic, retain) NSString *aAuthorOrInter;
+
+@property int maxTopicPage;
+@property int curTopicPage;
 
 @property int postID;
 @property int catID;

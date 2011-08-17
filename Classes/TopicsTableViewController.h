@@ -113,4 +113,6 @@
 - (void)fetchContentComplete:(ASIHTTPRequest *)theRequest;
 - (void)fetchContentFailed:(ASIHTTPRequest *)theRequest;
 
+- (void)chooseTopicPage;
+
 @end

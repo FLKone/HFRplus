@@ -29,7 +29,7 @@
 
 @synthesize request;
 
-@synthesize status, statusMessage, maintenanceView;
+@synthesize status, statusMessage, maintenanceView, pageNumberField;
 
 #pragma mark -
 #pragma mark Data lifecycle
@@ -122,7 +122,83 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-	if (buttonIndex == 1) {
+	if (buttonIndex == 1 && alertView.tag == 669) {
+        int theRow = pressedIndexPath.row;
+        
+        theRow += [[arrayDataID objectForKey:[arrayDataID2 objectAtIndex:pressedIndexPath.section]] lengthB4];
+        
+        NSLog(@"goto topic page %d", [[pageNumberField text] intValue]);
+        NSString * newUrl = [[NSString alloc] initWithString:[[arrayData objectAtIndex:theRow] aURL]];
+        
+        NSLog(@"newUrl %@", newUrl);
+        
+        //On remplace le numéro de page dans le titre
+        int number = [[pageNumberField text] intValue];
+        NSString *regexString  = @".*page=([^&]+).*";
+        NSRange   matchedRange = NSMakeRange(NSNotFound, 0UL);
+        NSRange   searchRange = NSMakeRange(0, newUrl.length);
+        NSError  *error2        = NULL;
+        //int numPage;
+        
+        matchedRange = [newUrl rangeOfRegex:regexString options:RKLNoOptions inRange:searchRange capture:1L error:&error2];
+        
+        if (matchedRange.location == NSNotFound) {
+            NSRange rangeNumPage =  [newUrl rangeOfCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] options:NSBackwardsSearch];
+            //NSLog(@"New URL %@", [newUrl stringByReplacingCharactersInRange:rangeNumPage withString:[NSString stringWithFormat:@"%d", number]]);
+            newUrl = [newUrl stringByReplacingCharactersInRange:rangeNumPage withString:[NSString stringWithFormat:@"%d", number]];
+            //self.pageNumber = [[self.forumUrl substringWithRange:rangeNumPage] intValue];
+        }
+        else {
+            //NSLog(@"New URL %@", [newUrl stringByReplacingCharactersInRange:matchedRange withString:[NSString stringWithFormat:@"%d", number]]);
+            newUrl = [newUrl stringByReplacingCharactersInRange:matchedRange withString:[NSString stringWithFormat:@"%d", number]];
+            //self.pageNumber = [[self.forumUrl substringWithRange:matchedRange] intValue];
+            
+        }
+        
+        //newUrl = [newUrl stringByReplacingOccurrencesOfString:@"_1.htm" withString:[NSString stringWithFormat:@"_%d.htm", [[pageNumberField text] intValue]]];
+        //newUrl = [newUrl stringByReplacingOccurrencesOfString:@"page=1&" withString:[NSString stringWithFormat:@"page=%d&", [[pageNumberField text] intValue]]];
+        
+        NSLog(@"newUrl %@", newUrl);
+        
+        //if (self.messagesTableViewController == nil) {
+		MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:newUrl];
+		self.messagesTableViewController = aView;
+		[aView release];
+        //}
+        
+        
+        
+        //NSLog(@"%@", self.navigationController.navigationBar);
+        
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+        label.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
+        //label.frame = CGRectMake(0, 0, 500, self.navigationController.navigationBar.frame.size.height - 4);
+        label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight; // 
+        
+        [label setFont:[UIFont boldSystemFontOfSize:14.0]];
+        [label setAdjustsFontSizeToFitWidth:YES];
+        [label setBackgroundColor:[UIColor clearColor]];
+        [label setTextAlignment:UITextAlignmentCenter];
+        [label setLineBreakMode:UILineBreakModeMiddleTruncation];
+        label.shadowColor = [UIColor darkGrayColor];
+        label.shadowOffset = CGSizeMake(0.0, -1.0);
+        [label setTextColor:[UIColor whiteColor]];
+        [label setNumberOfLines:0];
+        
+        [label setText:[[arrayData objectAtIndex:theRow] aTitle]];
+        
+        [messagesTableViewController.navigationItem setTitleView:label];
+        [label release];	
+        
+        //setup the URL
+        self.messagesTableViewController.topicName = [[arrayData objectAtIndex:theRow] aTitle];	
+        
+        //NSLog(@"push message liste");
+        [self.navigationController pushViewController:messagesTableViewController animated:YES];
+        
+    }    
+	else if (buttonIndex == 1) {
 		[self fetchContent];
 	}
 }
@@ -300,12 +376,37 @@
 			NSString *aURLOfLastPage = [[NSString alloc] initWithString:[topicLastPageNode getAttributeNamed:@"href"]];
 			[aTopic setAURLOfLastPage:aURLOfLastPage];
 			[aURLOfLastPage release];
+            [aTopic setMaxTopicPage:[[topicLastPageNode contents] intValue]];            
 		}
 		else {
 			[aTopic setAURLOfLastPage:[aTopic aURL]];
+            [aTopic setMaxTopicPage:1];            
 		}
 		
-		
+        
+        //Current page if flag
+        int pageNumber;
+        NSString *regexString  = @".*page=([^&]+).*";
+        NSRange   matchedRange;// = NSMakeRange(NSNotFound, 0UL);
+        NSRange   searchRange = NSMakeRange(0, aTopic.aURL.length);
+        NSError  *error2        = NULL;
+        
+        matchedRange = [aTopic.aURL rangeOfRegex:regexString options:RKLNoOptions inRange:searchRange capture:1L error:&error2];
+        
+        if (matchedRange.location == NSNotFound) {
+            NSRange rangeNumPage =  [aTopic.aURL rangeOfCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] options:NSBackwardsSearch];
+            pageNumber = [[aTopic.aURL substringWithRange:rangeNumPage] intValue];
+        }
+        else {
+            pageNumber = [[aTopic.aURL substringWithRange:matchedRange] intValue];
+            
+        }
+        
+        [aTopic setCurTopicPage:pageNumber];            
+        //NSLog(@"pageNumber %d/%d", aTopic.curTopicPage, aTopic.maxTopicPage);
+
+        //--- Current page if flag
+        
 		[arrayData addObject:aTopic];
 
 		[aTopic release];
@@ -466,6 +567,16 @@
 		[[self.arrayData objectAtIndex:theRow] setIsViewed:YES];
 		[self.favoritesTableView reloadData];
 	}
+    else if (pressedIndexPath) 
+    {
+		int theRow = [self.pressedIndexPath row];
+		theRow += [[self.arrayDataID objectForKey:[self.arrayDataID2 objectAtIndex:[self.pressedIndexPath section]]] lengthB4];	
+		
+		[[self.arrayData objectAtIndex:theRow] setIsViewed:YES];
+		[self.favoritesTableView reloadData];
+    }
+    NSLog(@"pressedIndexPath %@", pressedIndexPath);
+    
 	//[favoritesTableView deselectRowAtIndexPath:favoritesTableView.indexPathForSelectedRow animated:NO];
 }
 
@@ -608,8 +719,11 @@
 	
     // Configure the cell...
 	[(UILabel *)[cell.contentView viewWithTag:999] setText:[[arrayData objectAtIndex:theRow] aTitle]];
-	[(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"%d messages", ([[arrayData objectAtIndex:theRow] aRepCount] + 1)]];
-	[(UILabel *)[cell.contentView viewWithTag:997] setText:[NSString stringWithFormat:@"%@ - %@", [[arrayData objectAtIndex:theRow] aAuthorOfLastPost], [[arrayData objectAtIndex:theRow] aDateOfLastPost]]];
+	//[(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"%d messages", ([[arrayData objectAtIndex:theRow] aRepCount] + 1)]];
+	[(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"⚑ %d/%d", [[arrayData objectAtIndex:theRow] curTopicPage], [[arrayData objectAtIndex:theRow] maxTopicPage] ]];
+	
+    
+    [(UILabel *)[cell.contentView viewWithTag:997] setText:[NSString stringWithFormat:@"%@ - %@", [[arrayData objectAtIndex:theRow] aAuthorOfLastPost], [[arrayData objectAtIndex:theRow] aDateOfLastPost]]];
 
 	if ([[arrayData objectAtIndex:theRow] isViewed]) {
 		[(UILabel *)[cell.contentView viewWithTag:999] setFont:[UIFont systemFontOfSize:13]];
@@ -688,7 +802,7 @@
 		UIActionSheet *styleAlert = [[UIActionSheet alloc] initWithTitle:@"Aller à..."
 																delegate:self cancelButtonTitle:@"Annuler"
 												  destructiveButtonTitle:nil
-													   otherButtonTitles:	@"la dernière page", @"la dernière réponse",
+													   otherButtonTitles:	@"la dernière page", @"la dernière réponse", @"la page numéro...",
 									 nil,
 									 nil];
 		
@@ -772,14 +886,134 @@
 			[label release];	
 			
 			self.messagesTableViewController.topicName = [[arrayData objectAtIndex:theRow] aTitle];	
-			
+
 			[self.navigationController pushViewController:messagesTableViewController animated:YES];	
 
 			//NSLog(@"url pressed last post: %@", [[arrayData objectAtIndex:pressedIndexPath.row] lastPostUrl]);
 			break;
 			
 		}
+		case 2:
+		{
+			NSLog(@"page numero");
+            [self chooseTopicPage];
+			break;
 			
+		}
+        default:
+        {
+            NSLog(@"default");
+            self.pressedIndexPath = nil;
+            break;
+        }
+			
+	}
+}
+
+#pragma mark -
+#pragma mark chooseTopicPage
+
+-(void)chooseTopicPage {
+    NSLog(@"chooseTopicPage");
+
+    int theRow = pressedIndexPath.row;
+    
+    theRow += [[arrayDataID objectForKey:[arrayDataID2 objectAtIndex:pressedIndexPath.section]] lengthB4];
+
+    
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Aller à la page" message:[NSString stringWithFormat:@"\n\n(numéro entre 1 et %d)\n", [[arrayData objectAtIndex:theRow] maxTopicPage]]
+												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"OK", nil];
+	
+	pageNumberField = [[UITextField alloc] initWithFrame:CGRectZero];
+	[pageNumberField setBackgroundColor:[UIColor whiteColor]];
+	[pageNumberField setPlaceholder:@"numéro de la page"];
+	pageNumberField.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+	[pageNumberField setBackground:[UIImage imageNamed:@"bginput"]];
+	
+	//[pageNumberField textRectForBounds:CGRectMake(5.0, 5.0, 258.0, 28.0)];
+	
+	
+	[pageNumberField.layer setBorderColor: [[UIColor blackColor] CGColor]];
+	[pageNumberField.layer setBorderWidth: 1.0];
+	
+	pageNumberField.font = [UIFont systemFontOfSize:15];
+	pageNumberField.textAlignment = UITextAlignmentCenter;
+	pageNumberField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+	pageNumberField.keyboardAppearance = UIKeyboardAppearanceAlert;
+	pageNumberField.keyboardType = UIKeyboardTypeNumberPad;
+	pageNumberField.delegate = self;
+	[pageNumberField addTarget:self action:@selector(textFieldTopicDidChange:) forControlEvents:UIControlEventEditingChanged];
+	
+	[alert setTag:669];
+	[alert addSubview:pageNumberField];
+    
+	
+	[alert show];
+    
+	UILabel* tmpLbl = [alert.subviews objectAtIndex:1];
+	pageNumberField.frame = CGRectMake(12.0, tmpLbl.frame.origin.y + 30, 260.0, 30.0);
+	//[pageNumberField textRectForBounds:CGRectMake(5.0, 5.0, 258.0, 28.0)];
+	
+	//NSLog(@"alert.frame %f %f %f %f", alert.frame.origin.x, alert.frame.origin.y, alert.frame.size.width, alert.frame.size.height);
+	
+	[alert release];
+}
+
+-(void)textFieldTopicDidChange:(id)sender {
+	//NSLog(@"textFieldDidChange %d %@", [[(UITextField *)sender text] intValue], sender);	
+	
+    int theRow = pressedIndexPath.row;
+    
+    theRow += [[arrayDataID objectForKey:[arrayDataID2 objectAtIndex:pressedIndexPath.section]] lengthB4];
+
+	if ([[(UITextField *)sender text] length] > 0) {
+		int val; 
+		if ([[NSScanner scannerWithString:[(UITextField *)sender text]] scanInt:&val]) {
+			//NSLog(@"int %d %@ %@", val, [(UITextField *)sender text], [NSString stringWithFormat:@"%d", val]);
+			
+			if (![[(UITextField *)sender text] isEqualToString:[NSString stringWithFormat:@"%d", val]]) {
+				//NSLog(@"pas int");
+				[sender setText:[NSString stringWithFormat:@"%d", val]];
+			}
+			else if ([[(UITextField *)sender text] intValue] < 1) {
+				//NSLog(@"ERROR WAS %d", [[(UITextField *)sender text] intValue]);
+				[sender setText:[NSString stringWithFormat:@"%d", 1]];
+				//NSLog(@"ERROR NOW %d", [[(UITextField *)sender text] intValue]);
+				
+			}
+			else if ([[(UITextField *)sender text] intValue] > [[arrayData objectAtIndex:theRow] maxTopicPage]) {
+				//NSLog(@"ERROR WAS %d", [[(UITextField *)sender text] intValue]);
+				[sender setText:[NSString stringWithFormat:@"%d", [[arrayData objectAtIndex:theRow] maxTopicPage]]];
+				//NSLog(@"ERROR NOW %d", [[(UITextField *)sender text] intValue]);
+				
+			}	
+			else {
+				//NSLog(@"OK");
+			}
+		}
+		else {
+			[sender setText:@""];
+		}
+		
+		
+	}
+}
+
+- (void)didPresentAlertView:(UIAlertView *)alertView
+{    
+	//NSLog(@"didPresentAlertView PT %@", alertView);
+	
+	if (([alertView tag] == 669)) {
+		[pageNumberField becomeFirstResponder];
+	}
+}
+
+- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
+{    
+	NSLog(@"willDismissWithButtonIndex PT %@", alertView);
+	if (([alertView tag] == 669)) {
+		[self.pageNumberField resignFirstResponder];
+		self.pageNumberField = nil;
 	}
 }
 

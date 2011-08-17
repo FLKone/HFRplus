@@ -584,17 +584,21 @@
 								  , [maDate substringWithRange:NSMakeRange(8, 2)]]];
 		}
 
-		//URL of Last Page
+		//URL of Last Page & maxPage
 		HTMLNode * topicLastPageNode = [[topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase4" allowPartial:NO] findChildTag:@"a"];
 		if (topicLastPageNode) {
 			NSString *aURLOfLastPage = [[NSString alloc] initWithString:[topicLastPageNode getAttributeNamed:@"href"]];
 			[aTopic setAURLOfLastPage:aURLOfLastPage];
 			[aURLOfLastPage release];
+            [aTopic setMaxTopicPage:[[topicLastPageNode contents] intValue]];
+
 		}
 		else {
 			[aTopic setAURLOfLastPage:[aTopic aURL]];
+            [aTopic setMaxTopicPage:1];
+            
 		}
-
+        
 		[self.arrayData addObject:aTopic];
 
 		[aTopic release];		
@@ -1308,7 +1312,7 @@
 		UIActionSheet *styleAlert = [[UIActionSheet alloc] initWithTitle:@"Aller à..."
 																delegate:self cancelButtonTitle:@"Annuler"
 												  destructiveButtonTitle:nil
-													   otherButtonTitles:	@"la dernière page", @"la dernière réponse",
+													   otherButtonTitles:	@"la dernière page", @"la dernière réponse", @"la page numéro...",
 									 nil,
 									 nil];
 		
@@ -1390,9 +1394,177 @@
 			break;
 			
 		}
+		case 2:
+		{
+			NSLog(@"page numero");
+            [self chooseTopicPage];
+			break;
+			
+		}
 			
 	}
 }
+
+
+#pragma mark -
+#pragma mark chooseTopicPage
+
+-(void)chooseTopicPage {
+    NSLog(@"chooseTopicPage");
+    
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Aller à la page" message:[NSString stringWithFormat:@"\n\n(numéro entre 1 et %d)\n", [[arrayData objectAtIndex:pressedIndexPath.row] maxTopicPage]]
+												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"OK", nil];
+	
+	pageNumberField = [[UITextField alloc] initWithFrame:CGRectZero];
+	[pageNumberField setBackgroundColor:[UIColor whiteColor]];
+	[pageNumberField setPlaceholder:@"numéro de la page"];
+	pageNumberField.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+	[pageNumberField setBackground:[UIImage imageNamed:@"bginput"]];
+	
+	//[pageNumberField textRectForBounds:CGRectMake(5.0, 5.0, 258.0, 28.0)];
+	
+	
+	[pageNumberField.layer setBorderColor: [[UIColor blackColor] CGColor]];
+	[pageNumberField.layer setBorderWidth: 1.0];
+	
+	pageNumberField.font = [UIFont systemFontOfSize:15];
+	pageNumberField.textAlignment = UITextAlignmentCenter;
+	pageNumberField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+	pageNumberField.keyboardAppearance = UIKeyboardAppearanceAlert;
+	pageNumberField.keyboardType = UIKeyboardTypeNumberPad;
+	pageNumberField.delegate = self;
+	[pageNumberField addTarget:self action:@selector(textFieldTopicDidChange:) forControlEvents:UIControlEventEditingChanged];
+	
+	[alert setTag:669];
+	[alert addSubview:pageNumberField];
+    
+	
+	[alert show];
+    
+	UILabel* tmpLbl = [alert.subviews objectAtIndex:1];
+	pageNumberField.frame = CGRectMake(12.0, tmpLbl.frame.origin.y + 30, 260.0, 30.0);
+	//[pageNumberField textRectForBounds:CGRectMake(5.0, 5.0, 258.0, 28.0)];
+	
+	//NSLog(@"alert.frame %f %f %f %f", alert.frame.origin.x, alert.frame.origin.y, alert.frame.size.width, alert.frame.size.height);
+	
+	[alert release];
+}
+
+-(void)textFieldTopicDidChange:(id)sender {
+	//NSLog(@"textFieldDidChange %d %@", [[(UITextField *)sender text] intValue], sender);	
+	
+	
+	if ([[(UITextField *)sender text] length] > 0) {
+		int val; 
+		if ([[NSScanner scannerWithString:[(UITextField *)sender text]] scanInt:&val]) {
+			//NSLog(@"int %d %@ %@", val, [(UITextField *)sender text], [NSString stringWithFormat:@"%d", val]);
+			
+			if (![[(UITextField *)sender text] isEqualToString:[NSString stringWithFormat:@"%d", val]]) {
+				//NSLog(@"pas int");
+				[sender setText:[NSString stringWithFormat:@"%d", val]];
+			}
+			else if ([[(UITextField *)sender text] intValue] < 1) {
+				//NSLog(@"ERROR WAS %d", [[(UITextField *)sender text] intValue]);
+				[sender setText:[NSString stringWithFormat:@"%d", 1]];
+				//NSLog(@"ERROR NOW %d", [[(UITextField *)sender text] intValue]);
+				
+			}
+			else if ([[(UITextField *)sender text] intValue] > [[arrayData objectAtIndex:pressedIndexPath.row] maxTopicPage]) {
+				//NSLog(@"ERROR WAS %d", [[(UITextField *)sender text] intValue]);
+				[sender setText:[NSString stringWithFormat:@"%d", [[arrayData objectAtIndex:pressedIndexPath.row] maxTopicPage]]];
+				//NSLog(@"ERROR NOW %d", [[(UITextField *)sender text] intValue]);
+				
+			}	
+			else {
+				//NSLog(@"OK");
+			}
+		}
+		else {
+			[sender setText:@""];
+		}
+		
+		
+	}
+}
+
+- (void)didPresentAlertView:(UIAlertView *)alertView
+{
+	[super didPresentAlertView:alertView];
+    
+	//NSLog(@"didPresentAlertView PT %@", alertView);
+	
+	if (([alertView tag] == 669)) {
+		[pageNumberField becomeFirstResponder];
+	}
+}
+
+- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    [super alertView:alertView willDismissWithButtonIndex:buttonIndex];
+    
+	//NSLog(@"willDismissWithButtonIndex PT %@", alertView);
+	if (([alertView tag] == 669)) {
+		[self.pageNumberField resignFirstResponder];
+		self.pageNumberField = nil;
+	}
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    [super alertView:alertView clickedButtonAtIndex:buttonIndex];
+	
+	if (buttonIndex == 1 && alertView.tag == 669) {
+        NSLog(@"goto topic page %d", [[pageNumberField text] intValue]);
+        NSString * newUrl = [[NSString alloc] initWithString:[[arrayData objectAtIndex:pressedIndexPath.row] aURL]];
+       
+        NSLog(@"newUrl %@", newUrl);
+
+        newUrl = [newUrl stringByReplacingOccurrencesOfString:@"_1.htm" withString:[NSString stringWithFormat:@"_%d.htm", [[pageNumberField text] intValue]]];
+        newUrl = [newUrl stringByReplacingOccurrencesOfString:@"page=1&" withString:[NSString stringWithFormat:@"page=%d&", [[pageNumberField text] intValue]]];
+        
+        NSLog(@"newUrl %@", newUrl);
+
+        //if (self.messagesTableViewController == nil) {
+		MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:newUrl];
+		self.messagesTableViewController = aView;
+		[aView release];
+        //}
+        
+        
+        
+        //NSLog(@"%@", self.navigationController.navigationBar);
+        
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+        label.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
+        //label.frame = CGRectMake(0, 0, 500, self.navigationController.navigationBar.frame.size.height - 4);
+        label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight; // 
+        
+        [label setFont:[UIFont boldSystemFontOfSize:14.0]];
+        [label setAdjustsFontSizeToFitWidth:YES];
+        [label setBackgroundColor:[UIColor clearColor]];
+        [label setTextAlignment:UITextAlignmentCenter];
+        [label setLineBreakMode:UILineBreakModeMiddleTruncation];
+        label.shadowColor = [UIColor darkGrayColor];
+        label.shadowOffset = CGSizeMake(0.0, -1.0);
+        [label setTextColor:[UIColor whiteColor]];
+        [label setNumberOfLines:0];
+        
+        [label setText:[[arrayData objectAtIndex:pressedIndexPath.row] aTitle]];
+        
+        [messagesTableViewController.navigationItem setTitleView:label];
+        [label release];	
+
+        //setup the URL
+        self.messagesTableViewController.topicName = [[arrayData objectAtIndex:pressedIndexPath.row] aTitle];	
+        self.messagesTableViewController.isViewed = [[arrayData objectAtIndex:pressedIndexPath.row] isViewed];	
+        
+        //NSLog(@"push message liste");
+        [self.navigationController pushViewController:messagesTableViewController animated:YES];
+    
+    }
+}
+
 
 #pragma mark -
 #pragma mark Table view delegate
@@ -1434,7 +1606,6 @@
 	[messagesTableViewController.navigationItem setTitleView:label];
 	[label release];	
 
-	
 	//setup the URL
 	self.messagesTableViewController.topicName = [[arrayData objectAtIndex:indexPath.row] aTitle];	
 	self.messagesTableViewController.isViewed = [[arrayData objectAtIndex:indexPath.row] isViewed];	

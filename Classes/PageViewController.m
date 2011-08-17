@@ -43,7 +43,7 @@
 -(void)choosePage{
 	//NSLog(@"choosePage");
 	
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Aller à la page" message:[NSString stringWithFormat:@"(numéro entre %d et %d)\n\n\n", [self firstPageNumber], [self lastPageNumber]]
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Aller à la page" message:[NSString stringWithFormat:@"\n\n(numéro entre %d et %d)\n", [self firstPageNumber], [self lastPageNumber]]
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"OK", nil];
 	
 	pageNumberField = [[UITextField alloc] initWithFrame:CGRectZero];
@@ -254,7 +254,7 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-	//NSLog(@"clickedButtonAtIndex PT %@", alertView);
+	NSLog(@"clickedButtonAtIndex PT %@", alertView);
 	
 	if (buttonIndex == 1 && alertView.tag == 667) {
 		[self fetchContent];

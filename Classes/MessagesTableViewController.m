@@ -1880,10 +1880,6 @@
 	int curMsg = [curMsgN intValue];
 	int ypos = [posN intValue];
 	
-	
-
-	
-	
 	if([[arrayData objectAtIndex:curMsg] urlEdit]){
 		//NSLog(@"urlEdit");
 		[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Editer", @"EditMessage", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];

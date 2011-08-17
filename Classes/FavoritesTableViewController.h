@@ -11,7 +11,7 @@
 @class MessagesTableViewController;
 @class ASIHTTPRequest;
 
-@interface FavoritesTableViewController : UIViewController <UIActionSheetDelegate, UITableViewDelegate, UITableViewDataSource> {
+@interface FavoritesTableViewController : UIViewController <UIActionSheetDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIAlertViewDelegate> {
 	UITableView *favoritesTableView;
 	UIView *loadingView;
 	
@@ -30,6 +30,8 @@
 	STATUS status;
 	NSString *statusMessage;
 	IBOutlet UILabel *maintenanceView;	
+    
+    UITextField *pageNumberField;
 }
 
 @property (nonatomic, retain) IBOutlet UITableView *favoritesTableView;
@@ -56,4 +58,8 @@
 -(void)reset;
 -(void)reload:(BOOL)shake;
 -(void)reload;
+
+@property (nonatomic, retain) UITextField *pageNumberField;
+- (void)chooseTopicPage;
+
 @end

@@ -1,4 +1,4 @@
-    //
+//
 //  MPViewController.m
 //  HFR+
 //
@@ -169,7 +169,7 @@
 		UIActionSheet *styleAlert = [[UIActionSheet alloc] initWithTitle:@"Aller à..."
 																delegate:self cancelButtonTitle:@"Annuler"
 												  destructiveButtonTitle:nil
-													   otherButtonTitles:	@"la dernière page", @"la première page",
+													   otherButtonTitles:	@"la dernière page", @"la première page", @"la page numéro...",
 									 nil,
 									 nil];
 		
@@ -274,6 +274,11 @@
 			break;
 			
 		}
+        default:
+        {
+            [super actionSheet:modalView clickedButtonAtIndex:buttonIndex];
+            break;
+        }
 			
 	}
 }
