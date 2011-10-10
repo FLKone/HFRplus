@@ -97,7 +97,6 @@
 		01BF87DA121C45B9007624B6 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01BF87D9121C45B9007624B6 /* CFNetwork.framework */; };
 		01BF87ED121C45DE007624B6 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01BF87EC121C45DE007624B6 /* MobileCoreServices.framework */; };
 		01BF87EF121C45DE007624B6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01BF87EE121C45DE007624B6 /* SystemConfiguration.framework */; };
-		01BF882A121C45FC007624B6 /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 01BF8829121C45FC007624B6 /* libz.1.2.3.dylib */; };
 		01BF8843121C48D5007624B6 /* InfosViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01BF8842121C48D5007624B6 /* InfosViewController.xib */; };
 		01BF886C121C4B1D007624B6 /* style-aide.css in Resources */ = {isa = PBXBuildFile; fileRef = 01BF8869121C4B1D007624B6 /* style-aide.css */; };
 		01BF886D121C4B1D007624B6 /* aide.html in Resources */ = {isa = PBXBuildFile; fileRef = 01BF886A121C4B1D007624B6 /* aide.html */; };
@@ -282,6 +281,7 @@
 		CABEF20F1240F12500DDB9A9 /* multipleflag0.gif in Resources */ = {isa = PBXBuildFile; fileRef = CABEF20B1240F12500DDB9A9 /* multipleflag0.gif */; };
 		CABEF2101240F12500DDB9A9 /* multipleflag1.gif in Resources */ = {isa = PBXBuildFile; fileRef = CABEF20C1240F12500DDB9A9 /* multipleflag1.gif */; };
 		CABEF2111240F12500DDB9A9 /* multiplefavoris.gif in Resources */ = {isa = PBXBuildFile; fileRef = CABEF20D1240F12500DDB9A9 /* multiplefavoris.gif */; };
+		CAC0D9CF143CE4B800E53A63 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CAC0D9CE143CE4B800E53A63 /* libz.1.2.5.dylib */; };
 		CADCBB95127A07AD00419AE6 /* 60-signpost.png in Resources */ = {isa = PBXBuildFile; fileRef = CADCBB94127A07AD00419AE6 /* 60-signpost.png */; };
 		CADCBB99127A081B00419AE6 /* 06-magnifying-glass.png in Resources */ = {isa = PBXBuildFile; fileRef = CADCBB98127A081B00419AE6 /* 06-magnifying-glass.png */; };
 		CADCBBDB127A134200419AE6 /* 19-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = CADCBBD9127A134200419AE6 /* 19-gear.png */; };
@@ -645,6 +645,7 @@
 		CABEF20B1240F12500DDB9A9 /* multipleflag0.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = multipleflag0.gif; sourceTree = "<group>"; };
 		CABEF20C1240F12500DDB9A9 /* multipleflag1.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = multipleflag1.gif; sourceTree = "<group>"; };
 		CABEF20D1240F12500DDB9A9 /* multiplefavoris.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = multiplefavoris.gif; sourceTree = "<group>"; };
+		CAC0D9CE143CE4B800E53A63 /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		CADCBB94127A07AD00419AE6 /* 60-signpost.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "60-signpost.png"; sourceTree = "<group>"; };
 		CADCBB98127A081B00419AE6 /* 06-magnifying-glass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "06-magnifying-glass.png"; sourceTree = "<group>"; };
 		CADCBBD9127A134200419AE6 /* 19-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "19-gear.png"; sourceTree = "<group>"; };
@@ -664,13 +665,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAC0D9CF143CE4B800E53A63 /* libz.1.2.5.dylib in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
 				01BF87DA121C45B9007624B6 /* CFNetwork.framework in Frameworks */,
 				01BF87ED121C45DE007624B6 /* MobileCoreServices.framework in Frameworks */,
 				01BF87EF121C45DE007624B6 /* SystemConfiguration.framework in Frameworks */,
-				01BF882A121C45FC007624B6 /* libz.1.2.3.dylib in Frameworks */,
 				01BF8A30121D7750007624B6 /* libxml2.2.7.3.dylib in Frameworks */,
 				013F0DB5121E0E8700BEBEB1 /* QuartzCore.framework in Frameworks */,
 				CABBC39A125E97E500BCA6C8 /* libGoogleAnalytics.a in Frameworks */,
@@ -1086,6 +1087,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				CAC0D9CE143CE4B800E53A63 /* libz.1.2.5.dylib */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -1308,7 +1310,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0410;
+				LastUpgradeCheck = 0420;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "HFRplus" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1635,7 +1637,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = HFRplus_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = "/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/usr/include/libxml2/**";
+				HEADER_SEARCH_PATHS = "/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/usr/include/libxml2/**";
 				INFOPLIST_FILE = "HFRplus-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -1658,7 +1660,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = HFRplus_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = "/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/usr/include/libxml2/**";
+				HEADER_SEARCH_PATHS = "/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/usr/include/libxml2/**";
 				INFOPLIST_FILE = "HFRplus-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -1729,7 +1731,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = HFRplus_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = "/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/usr/include/libxml2/**";
+				HEADER_SEARCH_PATHS = "/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/usr/include/libxml2/**";
 				INFOPLIST_FILE = "HFRplus-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -1771,7 +1773,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = HFRplus_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = "/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/usr/include/libxml2/**";
+				HEADER_SEARCH_PATHS = "/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/usr/include/libxml2/**";
 				INFOPLIST_FILE = "HFRplus-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = (

@@ -912,7 +912,8 @@
 {
 	//NSLog(@"textFieldSmileChange %@", [(UITextField *)sender text]);
 	if ([(UITextField *)sender text].length > 0) {
-		self.usedSearchSortedArray = (NSMutableArray *)[[self.usedSearchDict allKeys] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:[NSString stringWithFormat:@"SELF contains[c] '%@'", [(UITextField *)sender text]]]];
+        //NSLog(@"text: %@", [[(UITextField *)sender text] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]);
+		self.usedSearchSortedArray = (NSMutableArray *)[[self.usedSearchDict allKeys] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:[NSString stringWithFormat:@"SELF contains[c] '%@'", [[(UITextField *)sender text] stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"]]]];
 		[self.commonTableView reloadData];
 		//NSLog(@"usedSearchSortedArray %@", usedSearchSortedArray);		
 	}

@@ -56,7 +56,7 @@
 
 - (void)fetchContent
 {
-	//NSLog(@"fetchContent %@", [NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]);
+	NSLog(@"fetchContent %@", [NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]);
 	self.status = kIdle;
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];
 
@@ -863,9 +863,8 @@
 	self.imageForBlueFlag = [UIImage imageNamed:@"flagblue2"];
 	
 	
-	//[self fetchContent];
 	self.forumBaseURL = self.currentUrl;
-	
+
 	[(UISegmentedControl *)[self.navigationItem.titleView.subviews objectAtIndex:0] setSelectedSegmentIndex:0];
 	
 	if([self isKindOfClass:[HFRMPViewController class]]) [(UISegmentedControl *)self.navigationItem.titleView setHidden:YES];
@@ -906,7 +905,10 @@
 	[actionSheet addSubview:confirmButton];
 	[confirmButton release];
 	
-	
+	if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"5.0")) {
+        self.currentUrl = self.forumBaseURL;
+        [self fetchContent];
+    }
 }
 
 - (void)segmentFilterAction

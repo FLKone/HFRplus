@@ -62,6 +62,14 @@
 		//NSLog(@"error GA", error);
 	}
 	
+    error = nil;
+    if (![[GANTracker sharedTracker] trackEvent:@"iphone"
+                                         action:@"version"
+                                          label:[[UIDevice currentDevice] systemVersion]
+                                          value:-1
+                                      withError:&error]) {
+        // Handle error here
+    }    
 	
 	SDURLCache *urlCache = [[SDURLCache alloc] initWithMemoryCapacity:1024*1024*1   // 1MB mem cache
 														 diskCapacity:1024*1024*50 // 5MB disk cache
