@@ -153,7 +153,7 @@
 	
 	[self.smileView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"smileybase" ofType:@"html"] isDirectory:NO]]];
 		
-	self.formSubmit = @"http://forum.hardware.fr/bddpost.php";
+	self.formSubmit = [NSString stringWithFormat:@"%@/bddpost.php", kForumURL];
 
 	 [[NSNotificationCenter defaultCenter] addObserver:self
 	 selector:@selector(smileyReceived:)

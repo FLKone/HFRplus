@@ -920,7 +920,7 @@
 	NewMessageViewController *addMessageViewController = [[NewMessageViewController alloc]
 														   initWithNibName:@"AddMessageViewController" bundle:nil];
 	addMessageViewController.delegate = self;
-	[addMessageViewController setUrlQuote:[NSString stringWithFormat:@"http://forum.hardware.fr%@", topicAnswerUrl]];
+	[addMessageViewController setUrlQuote:[NSString stringWithFormat:@"%@%@", kForumURL, topicAnswerUrl]];
 	addMessageViewController.title = @"Nouv. Réponse";
 	
 	
@@ -2079,7 +2079,7 @@
 	NewMessageViewController *editMessageViewController = [[NewMessageViewController alloc]
 														   initWithNibName:@"AddMessageViewController" bundle:nil];
 	editMessageViewController.delegate = self;
-	[editMessageViewController setUrlQuote:[NSString stringWithFormat:@"http://forum.hardware.fr%@", [[arrayData objectAtIndex:curMsg] MPUrl]]];
+	[editMessageViewController setUrlQuote:[NSString stringWithFormat:@"%@%@", kForumURL, [[arrayData objectAtIndex:curMsg] MPUrl]]];
 	editMessageViewController.title = @"Nouv. Message";
 	// Create the navigation controller and present it modally.
 	UINavigationController *navigationController = [[UINavigationController alloc]
@@ -2199,14 +2199,14 @@
 	int curMsg = [curMsgN intValue];
 	
 	[self setEditFlagTopic:[[arrayData objectAtIndex:curMsg] postID]];
-	[self editMessage:[NSString stringWithFormat:@"http://forum.hardware.fr%@", [[[arrayData objectAtIndex:curMsg] urlEdit] decodeSpanUrlFromString]]];
+	[self editMessage:[NSString stringWithFormat:@"%@%@", kForumURL, [[[arrayData objectAtIndex:curMsg] urlEdit] decodeSpanUrlFromString]]];
 	
 }
 
 -(void)QuoteMessage:(NSNumber *)curMsgN {
 	int curMsg = [curMsgN intValue];
 	
-	[self quoteMessage:[NSString stringWithFormat:@"http://forum.hardware.fr%@", [[[arrayData objectAtIndex:curMsg] urlQuote] decodeSpanUrlFromString]]];
+	[self quoteMessage:[NSString stringWithFormat:@"%@%@", kForumURL, [[[arrayData objectAtIndex:curMsg] urlQuote] decodeSpanUrlFromString]]];
 }
 
 

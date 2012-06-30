@@ -78,6 +78,7 @@
 	switch (self.status) {
 		case kMaintenance:
 		case kNoResults:
+		case kNoAuth:            
 			[self.maintenanceView setText:self.statusMessage];
 			[self.maintenanceView setHidden:NO];
 			[self.forumsTableView setHidden:YES];

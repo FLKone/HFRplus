@@ -304,11 +304,14 @@
 	
 	[super fetchContentComplete:theRequest];
 
+    NSLog(@"%d", self.status);
+    
 	switch (self.status) {
 		case kMaintenance:
-		case kNoResults:
+		case kNoAuth:
 			[self.navigationItem.leftBarButtonItem setEnabled:NO];	
 			break;
+		case kNoResults:            
 		default:	
 			[self.navigationItem.leftBarButtonItem setEnabled:YES];	
 			break;

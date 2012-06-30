@@ -99,6 +99,7 @@
 	switch (self.status) {
 		case kMaintenance:
 		case kNoResults:
+		case kNoAuth:            
 			[self.maintenanceView setText:self.statusMessage];
 			[self.maintenanceView setHidden:NO];
 			[self.topicsTableView setHidden:YES];
@@ -154,7 +155,7 @@
 			return;
 		}
 		
-		self.status = kNoResults;
+		self.status = kNoAuth;
 		self.statusMessage = [[[bodyNode findChildWithAttribute:@"class" matchingName:@"hop" allowPartial:NO] contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 		[myParser release];
 		return;		
@@ -651,7 +652,7 @@
 	NewMessageViewController *editMessageViewController = [[NewMessageViewController alloc]
 															initWithNibName:@"AddMessageViewController" bundle:nil];
 	editMessageViewController.delegate = self;
-	[editMessageViewController setUrlQuote:[NSString stringWithFormat:@"http://forum.hardware.fr%@", forumNewTopicUrl]];
+	[editMessageViewController setUrlQuote:[NSString stringWithFormat:@"%@%@", kForumURL, forumNewTopicUrl]];
 	editMessageViewController.title = [self newTopicTitle];
 	// Create the navigation controller and present it modally.
 	UINavigationController *navigationController = [[UINavigationController alloc]

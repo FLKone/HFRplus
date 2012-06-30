@@ -89,6 +89,7 @@
 	switch (self.status) {
 		case kMaintenance:
 		case kNoResults:
+		case kNoAuth:            
 			[self.maintenanceView setText:self.statusMessage];
 			[self.maintenanceView setHidden:NO];
 			[self.favoritesTableView setHidden:YES];
@@ -252,7 +253,7 @@
 		}
 		
 		NSLog(@"id");
-		self.status = kNoResults;
+		self.status = kNoAuth;
 		self.statusMessage = [[[bodyNode findChildWithAttribute:@"class" matchingName:@"hop" allowPartial:NO] contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 		[myParser release];
 		return;		

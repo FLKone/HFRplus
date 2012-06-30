@@ -441,7 +441,7 @@
 	
 	//NSLog(@"self.formSubmit %@", self.formSubmit);
 
-	NSString *newSubmitForm = [[NSString alloc] initWithFormat:@"http://forum.hardware.fr%@", [fastAnswerNode getAttributeNamed:@"action"]];
+	NSString *newSubmitForm = [[NSString alloc] initWithFormat:@"%@%@", kForumURL, [fastAnswerNode getAttributeNamed:@"action"]];
 	[self setFormSubmit:newSubmitForm];
 	[newSubmitForm release];
 	

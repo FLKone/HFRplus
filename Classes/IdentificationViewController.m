@@ -118,54 +118,44 @@
 	if (passField.text.length == 0 || pseudoField.text.length == 0) {
 		return;
 	}
-
-	NSLog(@"connexion");
+    
+	//NSLog(@"connexion");
 	ASIFormDataRequest  *request =  
-	[[[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:@"http://www.hardware.fr/membres/login_l.php"]] autorelease];
+	[[[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:@"http://www.hardware.fr/membres/popupLogin.php"]] autorelease];
     [request setPostValue:pseudoField.text forKey:@"pseudo"];
     [request setPostValue:passField.text forKey:@"pwd"];
+    [request setPostValue:@"send" forKey:@"action"];
+    
     [request setPostValue:@"Se connecter" forKey:@"login"];
 	[request startSynchronous];
 	
 	if (request) {
+        
+        
 		if ([request error]) {
 			//NSLog(@"localizedDescription %@", [[request error] localizedDescription]);
 			//NSLog(@"responseString %@", [request responseString]);
 		} else if ([request responseString]) {
 			//NSLog(@"responseString %@", [request responseString]);
-
-			//[responseView setText:[request responseString]];
-
-			NSString *regExError = @".*<p class=\"error\">Le pseudo ou mot de passe saisi n'est pas valide.</p>.*";
-			NSPredicate *regExErrorPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regExError];
-			BOOL isRegExError = [regExErrorPredicate evaluateWithObject:[request responseString]];
-			
-			if (isRegExError) {
+            
+			if ([[request responseString] length] == 0) {
 				//KO
-				NSLog(@"connexion KO");
-
+				//NSLog(@"connexion KO");
+                
 				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Le pseudo que vous avez saisi n'a pas été trouvé ou votre mot de passe est incorrect.\nVeuillez réessayer."
 															   delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 				[alert show];	
 				[alert release];
 			}
 			else {
-				NSLog(@"connexion OK");
-
-				NSString *regularExpressionString = @".*<p>Bienvenue <b>[^<]+</b> sur votre compte personnel.</p>.*";			
-				NSPredicate *regExPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regularExpressionString];
-				BOOL myStringMatchesRegEx = [regExPredicate evaluateWithObject:[request responseString]];
-				
-				if (myStringMatchesRegEx) {
-					//OK
-					NSLog(@"connexion OK finish");
-
-					[self finishOK];
-				}
+				//NSLog(@"connexion OK");
+                
+				[self finishOK];
 			}
 		}
 	}	
 }
+
 - (void)finishOK {
 	[self.delegate identificationViewControllerDidFinishOK:self];	
 }

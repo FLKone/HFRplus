@@ -28,7 +28,7 @@
 
 - (void)checkLogin {
 	//NSLog(@"checkLogin");
-	NSURL *url = [NSURL URLWithString:@"http://forum.hardware.fr/user/editprofil.php?config=hfr.inc"];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/editprofil.php?config=hfr.inc", kForumURL]];
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
 	[request setDelegate:self];
 	[request setUseCookiePersistence:YES];
@@ -140,7 +140,7 @@
 }
 
 - (IBAction)goToProfil {
-	[[HFRplusAppDelegate sharedAppDelegate] openURL:[NSString stringWithString:@"http://forum.hardware.fr/user/editprofil.php"]];
+	[[HFRplusAppDelegate sharedAppDelegate] openURL:[NSString stringWithString:[NSString stringWithFormat:@"%@/user/editprofil.php", kForumURL]]];
 }
 
 - (void)viewDidUnload {

@@ -461,13 +461,13 @@
 
 -(void)QuoteMessage
 {
-	[parent quoteMessage:[NSString stringWithFormat:@"http://forum.hardware.fr%@", [[[arrayData objectAtIndex:curMsg] urlQuote] decodeSpanUrlFromString] ]];
+	[parent quoteMessage:[NSString stringWithFormat:@"%@%@", kForumURL, [[[arrayData objectAtIndex:curMsg] urlQuote] decodeSpanUrlFromString] ]];
 }
 
 -(void)EditMessage
 {
 	[parent setEditFlagTopic:[[arrayData objectAtIndex:curMsg] postID]];
-	[parent editMessage:[NSString stringWithFormat:@"http://forum.hardware.fr%@", [[[arrayData objectAtIndex:curMsg] urlEdit] decodeSpanUrlFromString] ]];
+	[parent editMessage:[NSString stringWithFormat:@"%@%@", kForumURL, [[[arrayData objectAtIndex:curMsg] urlEdit] decodeSpanUrlFromString] ]];
 
 }
 

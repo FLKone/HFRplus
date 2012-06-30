@@ -11,10 +11,11 @@ typedef enum {
 	kIdle,
 	kMaintenance,
 	kNoResults,
+    kNoAuth,
 	kComplete
 } STATUS;
 
-#define kForumURL				@"http://forum.hardware.fr"
+#define kForumURL				@"http://forumdev.hardware.fr" // @"http://forum.hardware.fr"
 
 #define kTimeoutMini		30
 #define kTimeoutMaxi		60
