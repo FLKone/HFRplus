@@ -15,7 +15,7 @@ typedef enum {
 	kComplete
 } STATUS;
 
-#define kForumURL				@"http://forumdev.hardware.fr" // @"http://forum.hardware.fr"
+#define kForumURL				@"http://forum.hardware.fr" // @"http://forum.hardware.fr"
 
 #define kTimeoutMini		30
 #define kTimeoutMaxi		60

@@ -2,7 +2,7 @@
 //  TopicCellView.m
 //  HFRplus
 //
-//  Created by Shasta on 23/09/10.
+//  Created by FLK on 23/09/10.
 //
 
 #import "TopicSearchCellView.h"

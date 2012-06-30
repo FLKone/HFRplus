@@ -2,7 +2,7 @@
 //  HFRSearchViewController.m
 //  HFRplus
 //
-//  Created by Shasta on 04/11/10.
+//  Created by FLK on 04/11/10.
 //
 
 #import "HFRplusAppDelegate.h"

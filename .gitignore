@@ -4,7 +4,6 @@ build/*
 *.mode1v3
 *.xcodeproj/*.xcworkspace/*
 *.xcodeproj/*.perspectivev3
-*.xcodeproj/xcuserdata/*
 
 # old skool
 .svn

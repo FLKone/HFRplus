@@ -2,7 +2,7 @@
 //  UIImageViewCustom.h
 //  HFRplus
 //
-//  Created by Shasta on 17/09/10.
+//  Created by FLK on 17/09/10.
 //
 @class ImageScrollView;
 

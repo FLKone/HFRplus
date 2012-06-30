@@ -2,7 +2,7 @@
 //  CompteViewController.h
 //  HFR+
 //
-//  Created by Shasta on 12/08/10.
+//  Created by FLK on 12/08/10.
 //
 
 #import <UIKit/UIKit.h>

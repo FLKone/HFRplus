@@ -2,7 +2,7 @@
 //  UIImageViewCustom.m
 //  HFRplus
 //
-//  Created by Shasta on 17/09/10.
+//  Created by FLK on 17/09/10.
 //
 
 #import "UIImageViewCustom.h"

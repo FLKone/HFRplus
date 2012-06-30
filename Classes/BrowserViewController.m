@@ -2,8 +2,7 @@
 //  BrowserViewController.m
 //  HFRplus
 //
-//  Created by Shasta on 19/06/11.
-//  Copyright 2011 FLK. All rights reserved.
+//  Created by FLK on 19/06/11.
 //
 
 #import "BrowserViewController.h"

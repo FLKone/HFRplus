@@ -2,8 +2,7 @@
 //  PayViewController.m
 //  HFRplus
 //
-//  Created by Shasta on 22/01/11.
-//  Copyright 2011 FLK. All rights reserved.
+//  Created by FLK on 22/01/11.
 //
 
 #import "PayViewController.h"
