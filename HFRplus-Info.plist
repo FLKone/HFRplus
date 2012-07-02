@@ -6,15 +6,14 @@
 	<string>fr_FR</string>
 	<key>CFBundleDisplayName</key>
 	<string>HFR+</string>
-	<key>CFBundleDocumentTypes</key>
-	<array/>
 	<key>CFBundleExecutable</key>
 	<string>HFRplus</string>
 	<key>CFBundleIconFiles</key>
 	<array>
-		<string>icon.png</string>
-		<string>icon-ipad.png</string>
-		<string>icon-i4.png</string>
+		<string>Icon-72</string>
+		<string>Icon-Small-50</string>
+		<string>Icon-Small</string>
+		<string>Icon</string>
 	</array>
 	<key>CFBundleIdentifier</key>
 	<string>hfrplus</string>
@@ -28,16 +27,16 @@
 	<string>1.5</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	<key>CFBundleURLTypes</key>
-	<array/>
 	<key>CFBundleVersion</key>
-	<string>1.5.0.3</string>
+	<string>1.5.0.4</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSMainNibFile</key>
 	<string>MainWindow</string>
 	<key>UIInterfaceOrientation</key>
 	<string>UIInterfaceOrientationPortrait</string>
+	<key>UIPrerenderedIcon</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -45,9 +44,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>UTExportedTypeDeclarations</key>
-	<array/>
-	<key>UTImportedTypeDeclarations</key>
-	<array/>
 </dict>
 </plist>

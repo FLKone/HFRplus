@@ -94,7 +94,7 @@
     web = [[NSUserDefaults standardUserDefaults] stringForKey:@"default_web"];
     
 	// Override point for customization after application launch.
-	
+	    
     [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(reachabilityChanged:) name: kReachabilityChangedNotification object: nil];
 
     internetReach = [[Reachability reachabilityForInternetConnection] retain];
