@@ -1302,7 +1302,7 @@
 		CGPoint longPressLocation = [longPressRecognizer locationInView:self.topicsTableView];
 		pressedIndexPath = [[self.topicsTableView indexPathForRowAtPoint:longPressLocation] copy];
 		
-		NSLog(@"pressedIndexPath %d -- %d", pressedIndexPath.row, pressedIndexPath.section);
+		NSLog(@"pressedIndexPath %d -- %d -- %@", pressedIndexPath.row, pressedIndexPath.section, [[arrayData objectAtIndex:pressedIndexPath.row] aTitle]);
 		
 		UIActionSheet *styleAlert = [[UIActionSheet alloc] initWithTitle:@"Aller à..."
 																delegate:self cancelButtonTitle:@"Annuler"
@@ -1314,11 +1314,15 @@
 		// use the same style as the nav bar
 		styleAlert.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
 		
-//        [actionSheet showFromBarButtonItem:sender animated:YES]
-        CGRect origFrame = CGRectMake( longPressLocation.x, longPressLocation.y + 60 - self.topicsTableView.contentOffset.y, 0 ,0 );
+        CGPoint longPressLocation2 = [longPressRecognizer locationInView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view]];
+
         
+        CGRect origFrame = CGRectMake( longPressLocation2.x, longPressLocation2.y + 20, 0 ,0 );
+
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
             [styleAlert showFromRect:origFrame inView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view] animated:YES];
+        }
         else    
             [styleAlert showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
 		//
