@@ -22,7 +22,7 @@
 @synthesize messageView, messageAuthor, messageDate, authorAvatar, messageTitle, messageTitleString;
 @synthesize pageNumber, curMsg, arrayData;
 @synthesize parent, defaultTintColor, messagesTableViewController;
-@synthesize toolbarBtn, quoteBtn, editBtn, actionBtn, arrayAction;
+@synthesize toolbarBtn, quoteBtn, editBtn, actionBtn, arrayAction, styleAlert;
 
 // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 
@@ -35,7 +35,7 @@
 		
 		self.actionBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
 																  target:self 
-																  action:@selector(ActionList)];
+                                                                       action:@selector(ActionList:)];
 		self.actionBtn.style = UIBarButtonItemStyleBordered;
 		
 		
@@ -219,7 +219,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-	
+	self.styleAlert = [[UIActionSheet alloc] init];
 	
 	// "Segmented" control to the right
 	
@@ -300,6 +300,7 @@
 	self.actionBtn = nil;
 	self.arrayAction = nil;
 	
+    self.styleAlert = nil;
 	
 	self.messageTitleString = nil;
 	self.arrayData = nil;
@@ -406,7 +407,7 @@
 
 }
 
--(void)ActionList{
+-(void)ActionList:(id)sender {
 	//NSLog(@"ActionList %@", [NSDate date]);
 
 	//Btn Quote & Edit
@@ -448,8 +449,32 @@
 		
 	}
 	
-	
-	UIActionSheet *styleAlert = [[UIActionSheet alloc] init];
+    NSLog(@"sA %@", self.styleAlert);
+    
+    /*
+    
+	if (self.styleAlert != nil) {
+        NSLog(@"deja la");
+        [self.styleAlert dismissWithClickedButtonIndex:self.arrayAction.count animated:YES];
+        [self.styleAlert release];
+        self.styleAlert = nil;
+        return;
+    }
+    else {
+        NSLog(@"new la");       
+    }
+    
+    */
+    
+    if ([styleAlert isVisible]) {
+        [styleAlert dismissWithClickedButtonIndex:self.arrayAction.count animated:YES];
+        return;
+    }
+    else {
+        [styleAlert release];
+        styleAlert = [[UIActionSheet alloc] init];
+    }
+    
 	for (id tmpAction in self.arrayAction) {
 		[styleAlert addButtonWithTitle:[tmpAction valueForKey:@"title"]];
 	}	
@@ -461,9 +486,16 @@
 
 	styleAlert.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
 	
-	[styleAlert showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
-	//[styleAlert showFromTabBar:[[[HFRplusAppDelegate sharedAppDelegate] rootController] tabBar]];
-	[styleAlert release];	
+
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) { 
+        [styleAlert showFromBarButtonItem:sender animated:YES];
+    }
+    else {
+        UIBarButtonItem *Ubbi = (UIBarButtonItem *)sender;
+        [styleAlert showFromRect:Ubbi.customView.frame inView:[[HFRplusAppDelegate sharedAppDelegate] window] animated:YES];
+    }
+    
 }
 
 - (void)actionSheet:(UIActionSheet *)modalView clickedButtonAtIndex:(NSInteger)buttonIndex

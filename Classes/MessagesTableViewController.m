@@ -33,7 +33,7 @@
 @synthesize stringFlagTopic;
 @synthesize editFlagTopic;
 @synthesize arrayInputData;
-@synthesize aToolbar;
+@synthesize aToolbar, styleAlert;
 
 @synthesize isFavoritesOrRead, isRedFlagged, isUnreadable, isAnimating, isViewed;
 
@@ -774,7 +774,7 @@
 
 -(void)optionsTopic:(id)sender
 {	
-    UIActionSheet *styleAlert;
+    //UIActionSheet *styleAlert;
 
     NSMutableArray *optionsList = [NSMutableArray arrayWithObjects:@"Première page", @"Dernière page", nil];
 
@@ -786,11 +786,18 @@
         [optionsList addObject:@"Marquer comme non lu"];
     }    
     
-    styleAlert = [[UIActionSheet alloc] initWithTitle:nil
-                                             delegate:self cancelButtonTitle:nil
-                               destructiveButtonTitle:nil
-                                    otherButtonTitles:nil,
-                  nil];
+    if ([styleAlert isVisible]) {
+        [styleAlert dismissWithClickedButtonIndex:self.arrayAction.count animated:YES];
+        return;
+    }
+    else {
+        [styleAlert release];
+        styleAlert = [[UIActionSheet alloc] init];
+    }
+    
+	styleAlert.delegate = self;
+    
+	styleAlert.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
     
     for( NSString *option in optionsList)  
         [styleAlert addButtonWithTitle:option]; 
@@ -804,7 +811,7 @@
     [styleAlert showFromBarButtonItem:sender animated:YES];
     
     //[styleAlert showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
-    [styleAlert release];    
+    //[styleAlert release];    
     
 }
 
@@ -910,6 +917,8 @@
 	// Create the navigation controller and present it modally.
 	UINavigationController *navigationController = [[UINavigationController alloc]
 													initWithRootViewController:addMessageViewController];
+    
+    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
 	[self presentModalViewController:navigationController animated:YES];
 	
 	// The navigation controller is now owned by the current view controller
@@ -958,6 +967,8 @@
 	// Create the navigation controller and present it modally.
 	UINavigationController *navigationController = [[UINavigationController alloc]
 													initWithRootViewController:quoteMessageViewController];
+    
+    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
 	[self presentModalViewController:navigationController animated:YES];
 	
 	// The navigation controller is now owned by the current view controller
@@ -996,6 +1007,8 @@
 	// Create the navigation controller and present it modally.
 	UINavigationController *navigationController = [[UINavigationController alloc]
 													initWithRootViewController:editMessageViewController];
+    
+    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
 	[self presentModalViewController:navigationController animated:YES];
 	
 	// The navigation controller is now owned by the current view controller
@@ -1206,6 +1219,7 @@
 	[photoViewController setImageData:imageArray];
 	[photoViewController setSelectedIndex:selectedIndex];
 	[imageArray release];
+    
 	[self presentModalViewController:photoViewController animated:YES];
 	
 	// The navigation controller is now owned by the current view controller
@@ -2034,6 +2048,8 @@
 	// Create the navigation controller and present it modally.
 	UINavigationController *navigationController = [[UINavigationController alloc]
 													initWithRootViewController:editMessageViewController];
+    
+    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
 	[self presentModalViewController:navigationController animated:YES];
 	
 	// The navigation controller is now owned by the current view controller
@@ -2240,6 +2256,8 @@
 	self.swipeLeftRecognizer = nil;
 	self.swipeRightRecognizer = nil;
 	
+    
+    self.styleAlert = nil;
     
     //[self.view removeGestureRecognizer:self.singledualTap];
 	//self.singledualTap = nil;

@@ -35,7 +35,9 @@
 	UIBarButtonItem *editBtn;
 	UIBarButtonItem *actionBtn;	
 	NSMutableArray *arrayAction;
-
+    
+    UIActionSheet *styleAlert;
+    
 }
 
 @property (nonatomic, retain) IBOutlet UIWebView *messageView;
@@ -49,6 +51,8 @@
 @property (nonatomic, retain) UIBarButtonItem *editBtn;
 @property (nonatomic, retain) UIBarButtonItem *actionBtn;
 @property (nonatomic, retain) NSMutableArray *arrayAction;
+
+@property (nonatomic, retain) UIActionSheet *styleAlert;
 
 @property (nonatomic, retain) NSString *messageTitleString;
 
@@ -65,6 +69,6 @@
 //- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andContent:(LinkItem *)myItem;
 -(void)QuoteMessage;
 -(void)EditMessage;
--(void)ActionList;
+-(void)ActionList:(id)sender;
 	
 @end

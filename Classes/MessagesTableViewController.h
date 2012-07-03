@@ -75,6 +75,8 @@
 	BOOL isAnimating; //to check is an animation is ON
 
 	NSDate *firstDate;
+    
+    UIActionSheet *styleAlert;    
 }
 
 
@@ -104,6 +106,8 @@
 @property (nonatomic, retain) UISwipeGestureRecognizer *swipeLeftRecognizer;
 @property (nonatomic, retain) UISwipeGestureRecognizer *swipeRightRecognizer;
 @property (nonatomic, retain) UISwipeGestureRecognizer *singledualTap;
+
+@property (nonatomic, retain) UIActionSheet *styleAlert;
 
 @property (nonatomic, retain) NSOperationQueue *queue; //v3
 
