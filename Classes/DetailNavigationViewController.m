@@ -42,10 +42,12 @@
 {
     [[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] popOver] dismissPopoverAnimated:YES];
     
-    UINavigationItem *navItem = [[[[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] viewControllers] objectAtIndex:0] navigationItem];
-    SplitViewController *mySplit = [[HFRplusAppDelegate sharedAppDelegate] splitViewController];
-    
-    [navItem setLeftBarButtonItem:[mySplit mybarButtonItem] animated:YES];
+    if ([[UIDevice currentDevice] orientation] == UIInterfaceOrientationPortrait || [[UIDevice currentDevice] orientation] == UIInterfaceOrientationPortraitUpsideDown) {
+        UINavigationItem *navItem = [[[[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] viewControllers] objectAtIndex:0] navigationItem];
+        SplitViewController *mySplit = [[HFRplusAppDelegate sharedAppDelegate] splitViewController];
+        
+        [navItem setLeftBarButtonItem:[mySplit mybarButtonItem] animated:YES];
+    }
 
     if ([viewController isKindOfClass:[MessagesTableViewController class]]) {
         [navigationController setNavigationBarHidden:FALSE animated:animated];
