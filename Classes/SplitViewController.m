@@ -30,7 +30,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    if ([self respondsToSelector:@selector(setPresentsWithGesture)]) {
+    if ([self respondsToSelector:@selector(setPresentsWithGesture:)]) {
         [self setPresentsWithGesture:NO];
     }
     
