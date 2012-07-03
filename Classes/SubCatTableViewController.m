@@ -15,7 +15,7 @@
 
 @implementation SubCatTableViewController
 
-@synthesize arrayData, suPicker;
+@synthesize arrayData, suPicker, notification;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -48,6 +48,7 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -140,7 +141,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [suPicker selectRow:indexPath.row inComponent:0 animated:NO];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"SubCatSelected" object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:notification object:self];
     
     // Navigation logic may go here. Create and push another view controller.
     /*
