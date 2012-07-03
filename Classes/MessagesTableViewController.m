@@ -727,7 +727,7 @@
 	//-- Gesture
 
 	//Bouton Repondre message
-	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(optionsTopic)];
+	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(optionsTopic:)];
     segmentBarItem.enabled = NO;
 	
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
@@ -766,7 +766,7 @@
 	self.isAnimating = NO;
 }
 
--(void)optionsTopic
+-(void)optionsTopic:(id)sender
 {	
     UIActionSheet *styleAlert;
     
@@ -788,86 +788,16 @@
     // use the same style as the nav bar
     styleAlert.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
     
-    [styleAlert showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
+    [styleAlert showFromBarButtonItem:sender animated:YES];
+    
+    //[styleAlert showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
     [styleAlert release];    
     
-    
-    /*
-    OptionsTopicViewController *optionsTopicViewController = [[OptionsTopicViewController alloc]
-                                                              initWithNibName:@"OptionsTopicViewController" bundle:nil];
-    
-	actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:nil cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
-	[actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
-
-    CGRect pageFrame;
-    pageFrame.origin.x = 0;
-    pageFrame.origin.y = 0;
-    pageFrame.size.height = 209;
-    pageFrame.size.width = 320;
-    
-    [[optionsTopicViewController view] setFrame:pageFrame];
-    
-	[actionSheet addSubview:optionsTopicViewController.view];
-    
-	UISegmentedControl *closeButton = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:@"Retour"]];
-	closeButton.momentary = YES; 
-	closeButton.frame = CGRectMake(10, 7.0f, 55.0f, 30.0f);
-	closeButton.segmentedControlStyle = UISegmentedControlStyleBar;
-	closeButton.tintColor = [UIColor blackColor];
-	[closeButton addTarget:self action:@selector(dismissActionSheet) forControlEvents:UIControlEventValueChanged];
-	[actionSheet addSubview:closeButton];
-	[closeButton release];
-
-
-    
-    
-  
-    
-	[actionSheet showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
-    
-	CGRect curFrame = [[actionSheet viewWithTag:546] frame];
-	curFrame.origin.x =  self.view.frame.size.width - curFrame.size.width - 10;
-	[[actionSheet viewWithTag:546] setFrame:curFrame];
-	
-	[UIView beginAnimations:nil context:nil];
-    [actionSheet setFrame:CGRectMake(0, [[[HFRplusAppDelegate sharedAppDelegate] rootController] tabBar].frame.size.height + self.view.frame.size.height + self.navigationController.navigationBar.frame.size.height + 20 - optionsTopicViewController.view.frame.size.height - 44,
-									 self.view.frame.size.width, optionsTopicViewController.view.frame.size.height + 44)];
-	
-    [actionSheet setBounds:CGRectMake(0, 0,
-                                      self.view.frame.size.width, optionsTopicViewController.view.frame.size.height + 44)];
-    
-    [UIView commitAnimations];     
-	
-    */
-
-
-    //optionsTopicViewController.delegate = self;
-    
-  
-    
-   // NSLog(@"pageFrame %f %f - %f %f", optionsTopicViewController.view.frame.origin.x, optionsTopicViewController.view.frame.origin.y,
-	//	  optionsTopicViewController.view.frame.size.width, optionsTopicViewController.view.frame.size.height);
-    
-    
-    //[self.view insertSubview:optionsTopicViewController.view aboveSubview:self.view];
-    
-
-	
-	// Create the navigation controller and present it modally.	
-    //optionsTopicViewController.modalPresentationStyle = UIModalPresentationFullScreen;
-    //optionsTopicViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    //optionsTopicViewController.hidesBottomBarWhenPushed = NO;
-    
-    //[self presentModalViewController:optionsTopicViewController animated:YES];
-	
-	//[optionsTopicViewController release];
     
 }
 
 - (void)actionSheet:(UIActionSheet *)modalView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    NSLog(@"buttonindex %d", buttonIndex);
-    
+{    
 	switch (buttonIndex)
 	{
 		case 0:

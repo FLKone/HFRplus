@@ -121,7 +121,7 @@
 @property BOOL isAnimating;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andUrl:(NSString *)theTopicUrl;
-- (void)optionsTopic;
+- (void)optionsTopic:(id)sender;
 - (void)answerTopic;
 - (void)quoteMessage:(NSString *)quoteUrl;
 - (void)editMessage:(NSString *)editUrl;

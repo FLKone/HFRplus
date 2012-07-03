@@ -1407,7 +1407,6 @@
 	
 	//[pageNumberField textRectForBounds:CGRectMake(5.0, 5.0, 258.0, 28.0)];
 	
-	
 	[pageNumberField.layer setBorderColor: [[UIColor blackColor] CGColor]];
 	[pageNumberField.layer setBorderWidth: 1.0];
 	
