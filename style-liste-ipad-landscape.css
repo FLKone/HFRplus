@@ -46,3 +46,7 @@ table p
 .message .header .leftdate {
 	width:380px;
 }
+
+.message .content .right * {
+	font-size:13px !important;	
+}
