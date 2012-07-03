@@ -1316,7 +1316,7 @@
 		styleAlert.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
 		
         CGPoint longPressLocation2 = [longPressRecognizer locationInView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view]];
-        CGRect origFrame = CGRectMake( longPressLocation2.x, longPressLocation2.y + 20, 0, 0);
+        CGRect origFrame = CGRectMake( longPressLocation2.x, longPressLocation2.y, 0, 0);
 
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         {
@@ -1662,12 +1662,18 @@
         subCatTableViewController.suPicker = myPickerView;
         subCatTableViewController.arrayData = pickerViewArray;
         
-        
         self.popover = [[[UIPopoverController alloc] initWithContentViewController:subCatTableViewController] autorelease];
         
-        
+        //CGPoint senderPoint = [sender locationInView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view]];
         CGRect origFrame = [self.navigationController navigationBar].frame;
         origFrame.origin.x += 80;
+        
+        //NSLog(@"showPicker %d", [[UIDevice currentDevice] orientation]);
+
+        if (SYSTEM_VERSION_LESS_THAN(@"5.0") && ([[UIDevice currentDevice] orientation] == UIInterfaceOrientationPortrait || [[UIDevice currentDevice] orientation] == UIInterfaceOrientationPortraitUpsideDown)) {
+            origFrame.origin.x += 20;
+            origFrame.origin.y += 60;
+        }
         
         [_popover presentPopoverFromRect:origFrame inView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view] permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];        
      
