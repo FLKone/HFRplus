@@ -7,6 +7,7 @@
 
 #import "DetailNavigationViewController.h"
 #import "MessagesTableViewController.h"
+#import "SplitViewController.h"
 
 @interface DetailNavigationViewController ()
 
@@ -27,6 +28,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    [[self topViewController] setTitle:@"HFR+"];
 }
 
 - (void)viewDidUnload
@@ -37,6 +40,13 @@
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
+    [[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] popOver] dismissPopoverAnimated:YES];
+    
+    UINavigationItem *navItem = [[[[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] viewControllers] objectAtIndex:0] navigationItem];
+    SplitViewController *mySplit = [[HFRplusAppDelegate sharedAppDelegate] splitViewController];
+    
+    [navItem setLeftBarButtonItem:[mySplit mybarButtonItem] animated:YES];
+
     if ([viewController isKindOfClass:[MessagesTableViewController class]]) {
         [navigationController setNavigationBarHidden:FALSE animated:animated];
     }

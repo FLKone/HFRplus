@@ -2314,7 +2314,5 @@
 	
 }
 
-#pragma mark Split View Delegate
-
 @end
 

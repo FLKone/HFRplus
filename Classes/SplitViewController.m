@@ -14,6 +14,7 @@
 @end
 
 @implementation SplitViewController
+@synthesize popOver, mybarButtonItem;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,6 +29,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    [self setPresentsWithGesture:NO];
 }
 
 - (void)viewDidUnload
@@ -51,29 +54,28 @@
 
 #pragma mark Split View Delegate
 
-- (void)splitViewController: (UISplitViewController*)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem*)barButtonItem forPopoverController: (UIPopoverController*)pc {
+- (void)splitViewController: (SplitViewController *)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem*)barButtonItem forPopoverController: (UIPopoverController*)pc {
     barButtonItem.title = @"Menu";    
     
     UINavigationItem *navItem = [[[[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] viewControllers] objectAtIndex:0] navigationItem];
-//    [navItem setTitle:@"TEST"];
-    //SLog(@"%@", [navItem title]);
-    
-//    UINavigationItem *navItem = [[[self viewControllers] objectAtIndex:1] navigationItem];
+
     [navItem setLeftBarButtonItem:barButtonItem animated:YES];
     
     
+
     
-    
-    //self.popover = pc;
+    svc.popOver = pc;
+    svc.mybarButtonItem = barButtonItem;
+
 }
 
-- (void)splitViewController: (UISplitViewController*)svc willShowViewController:(UIViewController *)aViewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem {    
-    
+- (void)splitViewController: (SplitViewController *)svc willShowViewController:(UIViewController *)aViewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem {    
+   
     
     UINavigationItem *navItem = [[[[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] viewControllers] objectAtIndex:0] navigationItem];
     [navItem setLeftBarButtonItem:nil animated:YES];
     
-    //self.popover = nil;
+    svc.popOver = nil;
     
 }
 
