@@ -28,6 +28,8 @@
 @synthesize haveCategory, textFieldCat;
 @synthesize offsetY;
 
+@synthesize popover = _popover;
+
 /*
 
 - (BOOL)canPerformAction: (SEL)action withSender: (id)sender {

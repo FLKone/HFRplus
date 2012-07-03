@@ -10,6 +10,7 @@
 #import "QuoteMessageViewController.h"
 #import "HTMLParser.h"
 #import "Forum.h"
+#import "SubCatTableViewController.h"
 
 
 @implementation QuoteMessageViewController
@@ -105,7 +106,10 @@
 */
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(loadSubCat) name:@"CatSelected" object:nil];
+    
 	[self fetchContent];
 }
 
@@ -237,6 +241,12 @@
 	
 
 	//EDITOR
+	float offsetforiPad = 0;
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) { 
+        offsetforiPad += 220;
+    }
+    
 	float originY = 0;
 	
 	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 0)];
@@ -251,7 +261,8 @@
 		titleLabel.userInteractionEnabled = NO;
 		titleLabel.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 		
-		textFieldTo = [[UITextField alloc] initWithFrame:CGRectMake(38, originY, 265, 43)];
+		textFieldTo = [[UITextField alloc] initWithFrame:CGRectMake(38, originY, 265 + offsetforiPad, 43)];
+        textFieldTo.tag = 1;
 		textFieldTo.backgroundColor = [UIColor whiteColor];
 		textFieldTo.font = [UIFont systemFontOfSize:15];
 		textFieldTo.delegate = self;
@@ -263,7 +274,7 @@
 
 		originY += textFieldTo.frame.size.height;
 		
-		UIView* separator = [[[UIView alloc] initWithFrame:CGRectMake(0, originY, 320, 1)] autorelease];
+		UIView* separator = [[[UIView alloc] initWithFrame:CGRectMake(0, originY, 320 + offsetforiPad, 1)] autorelease];
 		separator.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
 		separator.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		
@@ -287,7 +298,8 @@
 		titleLabel.userInteractionEnabled = NO;
 		titleLabel.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 		
-		textFieldTitle = [[UITextField alloc] initWithFrame:CGRectMake(58, originY, 245, 43)];
+		textFieldTitle = [[UITextField alloc] initWithFrame:CGRectMake(58, originY, 245 + offsetforiPad, 43)];
+        textFieldTitle.tag = 2;        
 		textFieldTitle.backgroundColor = [UIColor whiteColor];
 		textFieldTitle.font = [UIFont systemFontOfSize:15];
 		textFieldTitle.delegate = self;
@@ -301,7 +313,7 @@
 
 		originY += textFieldTitle.frame.size.height;
 		
-		UIView* separator = [[[UIView alloc] initWithFrame:CGRectMake(0, originY, 320, 1)] autorelease];
+		UIView* separator = [[[UIView alloc] initWithFrame:CGRectMake(0, originY, 320 + offsetforiPad, 1)] autorelease];
 		separator.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
 		separator.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		
@@ -329,7 +341,7 @@
 		titleLabel.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 		
 		catButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-		catButton.frame = CGRectMake(88, originY + 5, 215, 33);
+		catButton.frame = CGRectMake(88, originY + 5, 215 + offsetforiPad, 33);
 		
 		int row = 0;
 		for(Forum *aForum in pickerViewArray){
@@ -341,7 +353,7 @@
 		}
 		[catButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
 		[catButton setContentEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 15)];
-		[catButton addTarget:self action:@selector(showPicker) forControlEvents:UIControlEventTouchUpInside];
+		[catButton addTarget:self action:@selector(showPicker:) forControlEvents:UIControlEventTouchUpInside];
 		catButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
 		
@@ -359,7 +371,7 @@
 
 		originY += textFieldCat.frame.size.height;
 		
-		UIView* separator = [[[UIView alloc] initWithFrame:CGRectMake(0, originY, 320, 1)] autorelease];
+		UIView* separator = [[[UIView alloc] initWithFrame:CGRectMake(0, originY, 320 + offsetforiPad, 1)] autorelease];
 		separator.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
 		separator.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		
@@ -416,6 +428,8 @@
 
 	headerView.frame = CGRectMake(headerView.frame.origin.x, originY * -1.0f, headerView.frame.size.width, originY);
 	[self.textView addSubview:headerView];
+    textView.tag = 3;        
+
 	[headerView release];
 	
 
@@ -464,6 +478,8 @@
 
 -(void)loadSubCat
 {
+    [_popover dismissPopoverAnimated:YES];
+    
 	[catButton setTitle:[[pickerViewArray objectAtIndex:[myPickerView selectedRowInComponent:0]] aTitle] forState:UIControlStateNormal];
 	[textFieldCat setText:[[pickerViewArray objectAtIndex:[myPickerView selectedRowInComponent:0]] aID]];
 	
@@ -555,28 +571,40 @@
 	[actionSheet dismissWithClickedButtonIndex:0 animated:YES];
 }
 
--(void)showPicker{
+-(void)showPicker:(id)sender{
 	
-	
-	CGSize pickerSize = [myPickerView sizeThatFits:CGSizeZero];
-	myPickerView.frame = [self pickerFrameWithSize:pickerSize];
-	
-	
-	[actionSheet showInView:self.view];
-	
-	CGRect curFrame = [[actionSheet viewWithTag:546] frame];
-	curFrame.origin.x =  self.view.frame.size.width - curFrame.size.width - 10;
-	[[actionSheet viewWithTag:546] setFrame:curFrame];
-	
-	[UIView beginAnimations:nil context:nil];
-    [actionSheet setFrame:CGRectMake(0, self.view.frame.size.height - myPickerView.frame.size.height - 44,
-									 self.view.frame.size.width, myPickerView.frame.size.height + 44)];
-	
-    [actionSheet setBounds:CGRectMake(0, 0,
-									  self.view.frame.size.width, myPickerView.frame.size.height + 44)];
-	
-    [UIView commitAnimations]; 
-	//NSLog(@"actionSheet %f %f %f %f", actionSheet.frame.origin.x, actionSheet.frame.origin.y, actionSheet.frame.size.width, actionSheet.frame.size.height);
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        //NSLog(@"TT %@", [[pickerViewArray objectAtIndex:[myPickerView selectedRowInComponent:0]] aTitle]);
+        
+        SubCatTableViewController *subCatTableViewController = [[[SubCatTableViewController alloc] initWithStyle:UITableViewStylePlain] autorelease];
+        subCatTableViewController.suPicker = myPickerView;
+        subCatTableViewController.arrayData = pickerViewArray;
+        subCatTableViewController.notification = @"CatSelected";
+
+        self.popover = [[[UIPopoverController alloc] initWithContentViewController:subCatTableViewController] autorelease];
+        
+        [_popover presentPopoverFromRect:[(UIButton *)sender frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];        
+        
+    } else {
+        CGSize pickerSize = [myPickerView sizeThatFits:CGSizeZero];
+        myPickerView.frame = [self pickerFrameWithSize:pickerSize];
+        
+        
+        [actionSheet showInView:self.view];
+        
+        CGRect curFrame = [[actionSheet viewWithTag:546] frame];
+        curFrame.origin.x =  self.view.frame.size.width - curFrame.size.width - 10;
+        [[actionSheet viewWithTag:546] setFrame:curFrame];
+        
+        [UIView beginAnimations:nil context:nil];
+        [actionSheet setFrame:CGRectMake(0, self.view.frame.size.height - myPickerView.frame.size.height - 44,
+                                         self.view.frame.size.width, myPickerView.frame.size.height + 44)];
+        
+        [actionSheet setBounds:CGRectMake(0, 0,
+                                          self.view.frame.size.width, myPickerView.frame.size.height + 44)];
+        
+        [UIView commitAnimations]; 
+    }
 
 }
 
@@ -605,6 +633,9 @@
 	self.actionSheet = nil;
 	self.pickerViewArray = nil;
 	
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CatSelected" object:nil];
+
+    
     [super dealloc];
 }
 

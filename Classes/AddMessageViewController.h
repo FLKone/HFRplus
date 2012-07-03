@@ -55,6 +55,7 @@
 	ASIHTTPRequest *request;
 	ASIHTTPRequest *requestSmile;
 	
+    id _popover;    
 }
 
 @property (nonatomic, retain) IBOutlet UIView *loadingView;
@@ -85,6 +86,7 @@
 @property (nonatomic, retain) NSMutableArray *usedSearchSortedArray;
 
 //@property (nonatomic, retain) IBOutlet UIScrollView *scrollViewer;
+@property (nonatomic, retain) id popover;
 
 
 @property (nonatomic, retain) NSMutableDictionary *arrayInputData;

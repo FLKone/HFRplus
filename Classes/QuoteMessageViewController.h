@@ -24,7 +24,7 @@
 @property (nonatomic, retain) UIActionSheet *actionSheet;
 @property (nonatomic, retain) UIButton *catButton;
 
--(void)showPicker;
+-(void)showPicker:(id)sender;
 - (CGRect)pickerFrameWithSize:(CGSize)size;
 -(void)dismissActionSheet;
 
