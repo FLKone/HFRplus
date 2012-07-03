@@ -40,6 +40,7 @@
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
+
     [[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] popOver] dismissPopoverAnimated:YES];
     
     if ([[UIDevice currentDevice] orientation] == UIInterfaceOrientationPortrait || [[UIDevice currentDevice] orientation] == UIInterfaceOrientationPortraitUpsideDown) {

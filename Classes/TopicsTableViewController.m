@@ -658,6 +658,8 @@
 	// Create the navigation controller and present it modally.
 	UINavigationController *navigationController = [[UINavigationController alloc]
 													initWithRootViewController:editMessageViewController];
+    
+    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
 	[self presentModalViewController:navigationController animated:YES];
 	
 	// The navigation controller is now owned by the current view controller
@@ -1324,6 +1326,9 @@
         }
         else    
             [styleAlert showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
+        
+        
+        [styleAlert release];
 
 	}
 }
@@ -1661,21 +1666,19 @@
         SubCatTableViewController *subCatTableViewController = [[[SubCatTableViewController alloc] initWithStyle:UITableViewStylePlain] autorelease];
         subCatTableViewController.suPicker = myPickerView;
         subCatTableViewController.arrayData = pickerViewArray;
+        subCatTableViewController.notification = @"SubCatSelected";
         
         self.popover = [[[UIPopoverController alloc] initWithContentViewController:subCatTableViewController] autorelease];
         
         //CGPoint senderPoint = [sender locationInView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view]];
-        CGRect origFrame = [self.navigationController navigationBar].frame;
-        origFrame.origin.x += 80;
+        CGRect origFrame = [(UISegmentedControl *)sender frame];
+        //origFrame.origin.x += 80;
         
-        //NSLog(@"showPicker %d", [[UIDevice currentDevice] orientation]);
-
-        if (SYSTEM_VERSION_LESS_THAN(@"5.0") && ([[UIDevice currentDevice] orientation] == UIInterfaceOrientationPortrait || [[UIDevice currentDevice] orientation] == UIInterfaceOrientationPortraitUpsideDown)) {
-            origFrame.origin.x += 20;
-            origFrame.origin.y += 60;
-        }
         
-        [_popover presentPopoverFromRect:origFrame inView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view] permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];        
+        origFrame.origin.x += 75;
+        origFrame.origin.y += 10;
+        
+        [_popover presentPopoverFromRect:origFrame inView:[[self navigationController] view] permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];        
      
     } else {
         CGSize pickerSize = [myPickerView sizeThatFits:CGSizeZero];
@@ -1698,7 +1701,6 @@
     }
     
 
-	//NSLog(@"actionSheet %f %f %f %f", actionSheet.frame.origin.x, actionSheet.frame.origin.y, actionSheet.frame.size.width, actionSheet.frame.size.height);
 
 }
 
