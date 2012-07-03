@@ -632,7 +632,8 @@
 	//form to fast answer
 	[self setupFastAnswer:bodyNode];
 
-	if(topicAnswerUrl.length > 0) self.navigationItem.rightBarButtonItem.enabled = YES;
+	//if(topicAnswerUrl.length > 0) 
+    self.navigationItem.rightBarButtonItem.enabled = YES;
 	//-	
 
 	
@@ -769,21 +770,28 @@
 -(void)optionsTopic:(id)sender
 {	
     UIActionSheet *styleAlert;
+
+    NSMutableArray *optionsList = [NSMutableArray arrayWithObjects:@"Première page", @"Dernière page", nil];
+
+	if(topicAnswerUrl.length > 0) {
+        [optionsList addObject:@"Répondre"];
+    }
     
     if (self.isUnreadable) {
-        styleAlert = [[UIActionSheet alloc] initWithTitle:nil
-                                                                delegate:self cancelButtonTitle:@"Annuler"
-                                                  destructiveButtonTitle:nil
-                                                       otherButtonTitles:@"Répondre", @"Première page", @"Dernière page", @"Marquer comme non lu", nil,
-                                     nil];
-    }
-    else {
-        styleAlert = [[UIActionSheet alloc] initWithTitle:nil
-                                                                delegate:self cancelButtonTitle:@"Annuler"
-                                                  destructiveButtonTitle:nil
-                                                       otherButtonTitles:@"Répondre", @"Première page", @"Dernière page", nil,
-                                     nil];
-    }
+        [optionsList addObject:@"Marquer comme non lu"];
+    }    
+    
+    styleAlert = [[UIActionSheet alloc] initWithTitle:nil
+                                             delegate:self cancelButtonTitle:nil
+                               destructiveButtonTitle:nil
+                                    otherButtonTitles:nil,
+                  nil];
+    
+    for( NSString *option in optionsList)  
+        [styleAlert addButtonWithTitle:option]; 
+
+    [styleAlert addButtonWithTitle:@"Annuler"]; 
+    styleAlert.cancelButtonIndex = styleAlert.numberOfButtons-1;
     
     // use the same style as the nav bar
     styleAlert.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
@@ -793,7 +801,6 @@
     //[styleAlert showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
     [styleAlert release];    
     
-    
 }
 
 - (void)actionSheet:(UIActionSheet *)modalView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -802,20 +809,21 @@
 	{
 		case 0:
 		{
-            [self answerTopic];
+            [self firstPage:nil];
 			break;
 		}
 		case 1:
 		{
-            [self firstPage:nil];
+            [self lastPage:nil];
 			break;
 			
 		}
 		case 2:
 		{
-            [self lastPage:nil];
+            if(topicAnswerUrl.length > 0) {
+                [self answerTopic];
+            }
 			break;
-			
 		}   
 		case 3:
 		{
