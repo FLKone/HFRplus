@@ -1067,8 +1067,16 @@
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
-	//NSLog(@"shouldAutorotateToInterfaceOrientation");
-	return YES;
+	// Get user preference
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSString *enabled = [defaults stringForKey:@"landscape_mode"];
+    
+	if ([enabled isEqualToString:@"all"]) {
+		return YES;
+	} else {
+		return (interfaceOrientation == UIInterfaceOrientationPortrait);
+	}
+
 }
 
 -(void)searchNewMessages {
