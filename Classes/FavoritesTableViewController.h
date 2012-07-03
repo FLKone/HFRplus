@@ -59,6 +59,8 @@
 -(void)reload:(BOOL)shake;
 -(void)reload;
 
+- (void)pushTopic;
+
 @property (nonatomic, retain) UITextField *pageNumberField;
 - (void)chooseTopicPage;
 

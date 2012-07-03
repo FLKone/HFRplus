@@ -172,31 +172,11 @@
         //NSLog(@"%@", self.navigationController.navigationBar);
         
         
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-        label.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
-        //label.frame = CGRectMake(0, 0, 500, self.navigationController.navigationBar.frame.size.height - 4);
-        label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight; // 
-        
-        [label setFont:[UIFont boldSystemFontOfSize:14.0]];
-        [label setAdjustsFontSizeToFitWidth:YES];
-        [label setBackgroundColor:[UIColor clearColor]];
-        [label setTextAlignment:UITextAlignmentCenter];
-        [label setLineBreakMode:UILineBreakModeMiddleTruncation];
-        label.shadowColor = [UIColor darkGrayColor];
-        label.shadowOffset = CGSizeMake(0.0, -1.0);
-        [label setTextColor:[UIColor whiteColor]];
-        [label setNumberOfLines:0];
-        
-        [label setText:[[arrayData objectAtIndex:theRow] aTitle]];
-        
-        [messagesTableViewController.navigationItem setTitleView:label];
-        [label release];	
-        
         //setup the URL
         self.messagesTableViewController.topicName = [[arrayData objectAtIndex:theRow] aTitle];	
         
         //NSLog(@"push message liste");
-        [self.navigationController pushViewController:messagesTableViewController animated:YES];
+        [self pushTopic];
         
     }    
 	else if (buttonIndex == 1) {
@@ -770,31 +750,12 @@
 	MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[arrayData objectAtIndex:theRow] aURL]];
 	self.messagesTableViewController = aView;
 	[aView release];
-
-	UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-	label.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
-	label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-	
-	[label setFont:[UIFont boldSystemFontOfSize:13.0]];
-	[label setAdjustsFontSizeToFitWidth:YES];
-	[label setBackgroundColor:[UIColor clearColor]];
-	[label setTextAlignment:UITextAlignmentCenter];
-	[label setLineBreakMode:UILineBreakModeMiddleTruncation];
-	label.shadowColor = [UIColor darkGrayColor];
-	label.shadowOffset = CGSizeMake(0.0, -1.0);
-	[label setTextColor:[UIColor whiteColor]];
-	[label setNumberOfLines:0];
-	
-	[label setText:[[arrayData objectAtIndex:theRow] aTitle]];
-	
-	[messagesTableViewController.navigationItem setTitleView:label];
-	[label release];	
 	
 	//setup the URL
 	self.messagesTableViewController.topicName = [[arrayData objectAtIndex:theRow] aTitle];	
 	
 	//NSLog(@"push message liste");
-	[self.navigationController pushViewController:messagesTableViewController animated:YES];
+	 [self pushTopic];
 	
 }
 
@@ -815,7 +776,17 @@
 		// use the same style as the nav bar
 		styleAlert.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
 		
-		[styleAlert showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
+        CGPoint longPressLocation2 = [longPressRecognizer locationInView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view]];
+        CGRect origFrame = CGRectMake( longPressLocation2.x, longPressLocation2.y, 0, 0);
+        
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            [styleAlert showFromRect:origFrame inView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view] animated:YES];
+        }
+        else    
+            [styleAlert showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
+        
+        
 		[styleAlert release];
 		
 	}
@@ -835,29 +806,9 @@
 			self.messagesTableViewController = aView;
 			[aView release];
 			
-			UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-			label.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
-			label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-			
-			[label setFont:[UIFont boldSystemFontOfSize:13.0]];
-			[label setAdjustsFontSizeToFitWidth:YES];
-			[label setBackgroundColor:[UIColor clearColor]];
-			[label setTextAlignment:UITextAlignmentCenter];
-			[label setLineBreakMode:UILineBreakModeMiddleTruncation];
-			label.shadowColor = [UIColor darkGrayColor];
-			label.shadowOffset = CGSizeMake(0.0, -1.0);
-			[label setTextColor:[UIColor whiteColor]];
-			[label setNumberOfLines:0];
-			
-			
-			[label setText:[[arrayData objectAtIndex:theRow] aTitle]];
-			
-			[messagesTableViewController.navigationItem setTitleView:label];
-			[label release];	
-			
 			self.messagesTableViewController.topicName = [[arrayData objectAtIndex:theRow] aTitle];	
 			
-			[self.navigationController pushViewController:messagesTableViewController animated:YES];	
+			 [self pushTopic];	
 
 			//NSLog(@"url pressed last page: %@", [[arrayData objectAtIndex:theRow] lastPageUrl]);
 			break;
@@ -871,29 +822,11 @@
 			MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[arrayData objectAtIndex:theRow] aURLOfLastPost]];
 			self.messagesTableViewController = aView;
 			[aView release];
-			
-			UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-			label.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
-			label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-			
-			[label setFont:[UIFont boldSystemFontOfSize:13.0]];
-			[label setAdjustsFontSizeToFitWidth:YES];
-			[label setBackgroundColor:[UIColor clearColor]];
-			[label setTextAlignment:UITextAlignmentCenter];
-			[label setLineBreakMode:UILineBreakModeMiddleTruncation];
-			label.shadowColor = [UIColor darkGrayColor];
-			label.shadowOffset = CGSizeMake(0.0, -1.0);
-			[label setTextColor:[UIColor whiteColor]];
-			[label setNumberOfLines:0];
-			
-			[label setText:[[arrayData objectAtIndex:theRow] aTitle]];
-			
-			[messagesTableViewController.navigationItem setTitleView:label];
-			[label release];	
+				
 			
 			self.messagesTableViewController.topicName = [[arrayData objectAtIndex:theRow] aTitle];	
 
-			[self.navigationController pushViewController:messagesTableViewController animated:YES];	
+			 [self pushTopic];	
 
 			//NSLog(@"url pressed last post: %@", [[arrayData objectAtIndex:pressedIndexPath.row] lastPostUrl]);
 			break;
@@ -916,6 +849,22 @@
 	}
 }
 
+- (void)pushTopic {
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        [self.navigationController pushViewController:messagesTableViewController animated:YES];
+    }
+    else {
+        [[[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] viewControllers] objectAtIndex:1] popToRootViewControllerAnimated:NO];
+        
+        [[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] setViewControllers:[NSMutableArray arrayWithObjects:messagesTableViewController, nil] animated:YES];
+        
+        //        [[HFRplusAppDelegate sharedAppDelegate] setDetailNavigationController:messagesTableViewController];
+        
+    }    
+    
+}
+
 #pragma mark -
 #pragma mark chooseTopicPage
 
@@ -933,7 +882,7 @@
 	pageNumberField = [[UITextField alloc] initWithFrame:CGRectZero];
 	[pageNumberField setBackgroundColor:[UIColor whiteColor]];
 	[pageNumberField setPlaceholder:@"numéro de la page"];
-	pageNumberField.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+	//pageNumberField.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
 	[pageNumberField setBackground:[UIImage imageNamed:@"bginput"]];
 	
 	//[pageNumberField textRectForBounds:CGRectMake(5.0, 5.0, 258.0, 28.0)];
@@ -956,12 +905,17 @@
 	
 	[alert show];
     
-	UILabel* tmpLbl = [alert.subviews objectAtIndex:1];
-	pageNumberField.frame = CGRectMake(12.0, tmpLbl.frame.origin.y + 30, 260.0, 30.0);
-	//[pageNumberField textRectForBounds:CGRectMake(5.0, 5.0, 258.0, 28.0)];
-	
-	//NSLog(@"alert.frame %f %f %f %f", alert.frame.origin.x, alert.frame.origin.y, alert.frame.size.width, alert.frame.size.height);
-	
+	//pageNumberField.frame = CGRectMake(12.0, , 260.0, 30.0);
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        UILabel* tmpLbl = [alert.subviews objectAtIndex:1];
+        pageNumberField.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+        pageNumberField.frame = CGRectMake(12.0, tmpLbl.frame.origin.y + tmpLbl.frame.size.height + 10, 260.0, 30.0);
+    }
+    else {
+        pageNumberField.frame = CGRectMake(12.0, 50.0, 260.0, 30.0);
+    }
+    
 	[alert release];
 }
 
