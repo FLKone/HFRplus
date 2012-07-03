@@ -1301,9 +1301,7 @@
 	if (longPressRecognizer.state == UIGestureRecognizerStateBegan) {
 		CGPoint longPressLocation = [longPressRecognizer locationInView:self.topicsTableView];
 		pressedIndexPath = [[self.topicsTableView indexPathForRowAtPoint:longPressLocation] copy];
-		
-		NSLog(@"pressedIndexPath %d -- %d -- %@", pressedIndexPath.row, pressedIndexPath.section, [[arrayData objectAtIndex:pressedIndexPath.row] aTitle]);
-		
+				
 		UIActionSheet *styleAlert = [[UIActionSheet alloc] initWithTitle:@"Aller à..."
 																delegate:self cancelButtonTitle:@"Annuler"
 												  destructiveButtonTitle:nil
@@ -1315,9 +1313,7 @@
 		styleAlert.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
 		
         CGPoint longPressLocation2 = [longPressRecognizer locationInView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view]];
-
-        
-        CGRect origFrame = CGRectMake( longPressLocation2.x, longPressLocation2.y + 20, 0 ,0 );
+        CGRect origFrame = CGRectMake( longPressLocation2.x, longPressLocation2.y + 20, 0, 0);
 
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         {
@@ -1325,9 +1321,7 @@
         }
         else    
             [styleAlert showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
-		//
-//		[styleAlert release];
-		
+
 	}
 }
 
@@ -1395,6 +1389,10 @@
 
 -(void)chooseTopicPage {
     NSLog(@"chooseTopicPage");
+
+
+    
+    
     
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Aller à la page" message:[NSString stringWithFormat:@"\n\n(numéro entre 1 et %d)\n", [[arrayData objectAtIndex:pressedIndexPath.row] maxTopicPage]]
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"OK", nil];
@@ -1402,7 +1400,9 @@
 	pageNumberField = [[UITextField alloc] initWithFrame:CGRectZero];
 	[pageNumberField setBackgroundColor:[UIColor whiteColor]];
 	[pageNumberField setPlaceholder:@"numéro de la page"];
-	pageNumberField.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+	//pageNumberField.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;    
+
+    
 	[pageNumberField setBackground:[UIImage imageNamed:@"bginput"]];
 	
 	//[pageNumberField textRectForBounds:CGRectMake(5.0, 5.0, 258.0, 28.0)];
@@ -1425,13 +1425,20 @@
 	
 	[alert show];
     
-	UILabel* tmpLbl = [alert.subviews objectAtIndex:1];
-	pageNumberField.frame = CGRectMake(12.0, tmpLbl.frame.origin.y + 30, 260.0, 30.0);
-	//[pageNumberField textRectForBounds:CGRectMake(5.0, 5.0, 258.0, 28.0)];
-	
-	//NSLog(@"alert.frame %f %f %f %f", alert.frame.origin.x, alert.frame.origin.y, alert.frame.size.width, alert.frame.size.height);
+
+	//pageNumberField.frame = CGRectMake(12.0, , 260.0, 30.0);
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        UILabel* tmpLbl = [alert.subviews objectAtIndex:1];
+        pageNumberField.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+        pageNumberField.frame = CGRectMake(12.0, tmpLbl.frame.origin.y + tmpLbl.frame.size.height + 10, 260.0, 30.0);
+    }
+    else {
+        pageNumberField.frame = CGRectMake(12.0, 50.0, 260.0, 30.0);
+    }
 	
 	[alert release];
+     
 }
 
 -(void)textFieldTopicDidChange:(id)sender {
