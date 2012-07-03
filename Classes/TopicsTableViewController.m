@@ -1231,12 +1231,15 @@
 
 		if([[aTopic aTypeOfFlag] isEqualToString:@"red"]) {
 			[button setBackgroundImage:imageForRedFlag forState:UIControlStateNormal];
+			[button setBackgroundImage:imageForRedFlag forState:UIControlStateHighlighted];
 		}
 		else if ([[aTopic aTypeOfFlag] isEqualToString:@"blue"]) {
 			[button setBackgroundImage:imageForBlueFlag forState:UIControlStateNormal];
+			[button setBackgroundImage:imageForBlueFlag forState:UIControlStateHighlighted];
 		}
 		else if ([[aTopic aTypeOfFlag] isEqualToString:@"yellow"]) {
 			[button setBackgroundImage:imageForYellowFlag forState:UIControlStateNormal];
+			[button setBackgroundImage:imageForYellowFlag forState:UIControlStateHighlighted];
 		}
 
 		// set the button's target to this table view controller so we can interpret touch events and map that to a NSIndexSet

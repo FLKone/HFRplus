@@ -448,23 +448,6 @@
 		}
 		
 	}
-	
-    NSLog(@"sA %@", self.styleAlert);
-    
-    /*
-    
-	if (self.styleAlert != nil) {
-        NSLog(@"deja la");
-        [self.styleAlert dismissWithClickedButtonIndex:self.arrayAction.count animated:YES];
-        [self.styleAlert release];
-        self.styleAlert = nil;
-        return;
-    }
-    else {
-        NSLog(@"new la");       
-    }
-    
-    */
     
     if ([styleAlert isVisible]) {
         [styleAlert dismissWithClickedButtonIndex:self.arrayAction.count animated:YES];
@@ -486,8 +469,6 @@
 
 	styleAlert.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
 	
-
-    
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) { 
         [styleAlert showFromBarButtonItem:sender animated:YES];
     }
