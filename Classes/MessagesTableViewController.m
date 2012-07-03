@@ -436,6 +436,11 @@
 	}
 	//MP
 
+	//Answer Topic URL
+	HTMLNode * topicAnswerNode = [bodyNode findChildWithAttribute:@"id" matchingName:@"repondre_form" allowPartial:NO];
+	topicAnswerUrl = [[NSString alloc] init];
+	topicAnswerUrl = [[[topicAnswerNode findChildTag:@"a"] getAttributeNamed:@"href"] retain];
+    
 	[self setupFastAnswer:bodyNode]; // Formulaire reponse rapide;
 	[self setupPageToolbar:bodyNode]; // toolbars numero de page et changement de page;
 
