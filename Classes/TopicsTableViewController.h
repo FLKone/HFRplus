@@ -57,6 +57,8 @@
 	STATUS status;
 	NSString *statusMessage;
 	IBOutlet UILabel *maintenanceView;
+    
+    id _popover;
 	
 }
 
@@ -99,12 +101,13 @@
 @property (nonatomic, retain) NSString *statusMessage;
 @property (nonatomic, retain) IBOutlet UILabel *maintenanceView;
 
+@property (nonatomic, retain) id popover;
 
 -(void)loadDataInTableView:(NSData *)contentData;
 -(void)reset;
 -(void)shakeHappened:(ShakeView*)view;
 
--(void)showPicker;
+-(void)showPicker:(id)sender;
 - (CGRect)pickerFrameWithSize:(CGSize)size;
 -(void)dismissActionSheet;
 -(void)segmentFilterAction;
@@ -114,5 +117,7 @@
 - (void)fetchContentFailed:(ASIHTTPRequest *)theRequest;
 
 - (void)chooseTopicPage;
+
+- (void)pushTopic;
 
 @end

@@ -1,0 +1,48 @@
+body {
+    width:703px;
+}
+
+.message {
+    width:703px;
+}
+
+.message .header {
+    width:683px;
+}
+
+.message .content .right {
+    width:683px;
+}
+
+table 
+{ 
+    max-width:680px;
+    
+}
+
+table p
+{
+    max-width:683px;
+}
+
+#toolbarpage {
+    
+    width:703px;
+}
+
+#actualiserbtn {
+    
+    width:703px;
+}
+
+#actualiserbtn.loading {
+    background-position: 320px 14px;
+}
+
+.message .header .left {
+	width:380px;
+}
+
+.message .header .leftdate {
+	width:380px;
+}

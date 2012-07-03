@@ -170,6 +170,8 @@
 	//On check si y'a page=2323
 
 	[(UILabel *)[self navigationItem].titleView setText:[NSString stringWithFormat:@"%@ — %d", self.topicName, self.pageNumber]];
+	self.title = [NSString stringWithFormat:@"%@ — %d", self.topicName, self.pageNumber];
+    
 	//[self navigationItem].titleView.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
 	
 }
@@ -183,7 +185,8 @@
 		//NSLog(@"setupPageToolbar titleNode %@", [titleNode allContents]);
 		self.topicName = [titleNode allContents];
 		[(UILabel *)[self navigationItem].titleView setText:[NSString stringWithFormat:@"%@ — %d", self.topicName, self.pageNumber]];
-        self.title = self.topicName;
+        self.title = [NSString stringWithFormat:@"%@ — %d", self.topicName, self.pageNumber];
+
 		//[self navigationItem].titleView.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
 	}
     //Titre
@@ -661,8 +664,45 @@
 	
 	self.firstDate = [NSDate date];
 	
-	self.title = self.topicName;
+	self.title = self.topicName;  
+        
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+    
+    label.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
+    
+    label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight; // 
+    
+    [label setAdjustsFontSizeToFitWidth:YES];
+    [label setBackgroundColor:[UIColor clearColor]];
+    [label setTextAlignment:UITextAlignmentCenter];
+    [label setLineBreakMode:UILineBreakModeMiddleTruncation];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        [label setTextColor:[UIColor whiteColor]];
+        label.shadowColor = [UIColor darkGrayColor];
+        [label setFont:[UIFont boldSystemFontOfSize:13.0]];
+        label.shadowOffset = CGSizeMake(0.0, -1.0);
 
+        
+    }
+    else {
+        [label setTextColor:[UIColor colorWithRed:113/255.f green:120/255.f blue:128/255.f alpha:1.00]];
+        label.shadowColor = [UIColor whiteColor];
+        [label setFont:[UIFont boldSystemFontOfSize:19.0]];
+        label.shadowOffset = CGSizeMake(0.0, 1.0);
+
+    }
+
+    label.shadowOffset = CGSizeMake(0.0, -1.0);
+
+    [label setNumberOfLines:0];
+    
+    [label setText:self.topicName];
+    
+    [self.navigationItem setTitleView:label];
+    [label release];
+    
+    
     singledualTap = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)] autorelease];
 	singledualTap.numberOfTouchesRequired = 2;
     singledualTap.direction = UISwipeGestureRecognizerDirectionUp;
@@ -1126,54 +1166,43 @@
 		
 		
 		///===
-		UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-		label.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
-		label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-		
-		[label setFont:[UIFont boldSystemFontOfSize:16.0]];
-		[label setAdjustsFontSizeToFitWidth:YES];
-		[label setBackgroundColor:[UIColor clearColor]];
-		[label setTextAlignment:UITextAlignmentCenter];
-		[label setLineBreakMode:UILineBreakModeMiddleTruncation];
-		label.shadowColor = [UIColor darkGrayColor];
-		label.shadowOffset = CGSizeMake(0.0, -1.0);
-		[label setTextColor:[UIColor whiteColor]];
-		[label setNumberOfLines:0];
-		
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+        
+        label.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
+        //label.frame = CGRectMake(0, 0, 500, self.navigationBar.frame.size.height - 4);
+        
+        label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight; // 
+        
+        [label setAdjustsFontSizeToFitWidth:YES];
+        [label setBackgroundColor:[UIColor clearColor]];
+        [label setTextAlignment:UITextAlignmentCenter];
+        [label setLineBreakMode:UILineBreakModeMiddleTruncation];
+        
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            [label setTextColor:[UIColor whiteColor]];
+            label.shadowColor = [UIColor darkGrayColor];
+            [label setFont:[UIFont boldSystemFontOfSize:13.0]];
+            label.shadowOffset = CGSizeMake(0.0, -1.0);
+            
+            
+        }
+        else {
+            [label setTextColor:[UIColor colorWithRed:113/255.f green:120/255.f blue:128/255.f alpha:1.00]];
+            label.shadowColor = [UIColor whiteColor];
+            [label setFont:[UIFont boldSystemFontOfSize:19.0]];
+            label.shadowOffset = CGSizeMake(0.0, 1.0);
+            
+        }
+        
+        label.shadowOffset = CGSizeMake(0.0, -1.0);
+        
+        [label setNumberOfLines:0];
+        
 		[label setText:[NSString stringWithFormat:@"Page: %d — %d/%d", self.pageNumber, index + 1, arrayData.count]];
-		
+        
 		[self.detailViewController.navigationItem setTitleView:label];
-		[label release];
-		
-		
+        [label release];
 		///===
-		
-		/*
-		 UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 230, 44)];
-		 
-		 
-		 UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 230, 44)];
-		 [label setFont:[UIFont boldSystemFontOfSize:15.0]];
-		 [label setAdjustsFontSizeToFitWidth:YES];
-		 [label setBackgroundColor:[UIColor redColor]];
-		 [label setTextAlignment:UITextAlignmentCenter];
-		 [label setLineBreakMode:UILineBreakModeMiddleTruncation];
-		 [label setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
-
-		 label.shadowColor = [UIColor darkGrayColor];
-		 label.shadowOffset = CGSizeMake(0.0, -1.0);
-		
-		 [label setTextColor:[UIColor whiteColor]];
-		 [label setNumberOfLines:0];
-		 [label setTag:666];
-		 [label setText:[NSString stringWithFormat:@"Page: %d — %d/%d", self.pageNumber, index + 1, arrayData.count]];
-		 
-		 [titleView insertSubview:label atIndex:1];
-		 [label release];	
-		 
-		 [self.detailViewController.navigationItem setTitleView:titleView];
-		 [titleView release];	
-		 */
 		
 		 //setup the URL
 		 //detailViewController.topicName = [[arrayData objectAtIndex:indexPath.row] name];	
@@ -1402,18 +1431,20 @@
 		}	
 		
 		NSString *HTMLString = [[NSString alloc] 
-								initWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
-								<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"fr\" lang=\"fr\">\
-								<head>\
-								<script type='text/javascript' src='jquery.js'></script>\
-								<script type='text/javascript' src='jquery.doubletap.js'></script>\
-								<script type='text/javascript' src='jquery.base64.js'></script>\
-								<script type='text/javascript' src='jquery.lazyload.mini.js'></script>\
-								<meta name='viewport' content='width=device-width, user-scalable=no initial-scale=1.0' />\
-								<link type='text/css' rel='stylesheet' href='style-liste.css'/>\
-								<link type='text/css' rel='stylesheet' href='style-liste-retina.css' media='only screen and (-webkit-min-device-pixel-ratio: 2)'/>\
-								</head><body>\
-								<div class='bunselected' id='qsdoiqjsdkjhqkjhqsdqdilkjqsd2'>%@</div><div id='endofpage'></div><div id='endofpagetoolbar'></div><a name='bas'></a><script type='text/javascript'> function HLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bselected'; } function UHLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bunselected'; } function swap_spoiler_states(obj){var div=obj.getElementsByTagName('div');if(div[0]){if(div[0].style.visibility==\"visible\"){div[0].style.visibility='visible';}else if(div[0].style.visibility==\"hidden\"||!div[0].style.visibility){div[0].style.visibility='visible';}}} </script></body></html>", tmpHTML];
+                                initWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
+                                <html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"fr\" lang=\"fr\">\
+                                <head>\
+                                <script type='text/javascript' src='jquery.js'></script>\
+                                <script type='text/javascript' src='jquery.doubletap.js'></script>\
+                                <script type='text/javascript' src='jquery.base64.js'></script>\
+                                <script type='text/javascript' src='jquery.lazyload.mini.js'></script>\
+                                <meta name='viewport' content='initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0' />\
+                                <link type='text/css' rel='stylesheet' href='style-liste.css'/>\
+                                <link type='text/css' rel='stylesheet' href='style-liste-retina.css' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\
+                                <link type='text/css' rel='stylesheet' href='style-liste-ipad-portrait.css' media='all and (min-width: 767px)'/>\
+                                <link type='text/css' rel='stylesheet' href='style-liste-ipad-landscape.css' media='all and (min-width: 700px) and (max-width: 750px)'/>\
+                                </head><body>\
+                                <div class='bunselected' id='qsdoiqjsdkjhqkjhqsdqdilkjqsd2'>%@</div><div id='endofpage'></div><div id='endofpagetoolbar'></div><a name='bas'></a><script type='text/javascript'> function HLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bselected'; } function UHLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bunselected'; } function swap_spoiler_states(obj){var div=obj.getElementsByTagName('div');if(div[0]){if(div[0].style.visibility==\"visible\"){div[0].style.visibility='visible';}else if(div[0].style.visibility==\"hidden\"||!div[0].style.visibility){div[0].style.visibility='visible';}}} </script></body></html>", tmpHTML];
 		
 		NSString *path = [[NSBundle mainBundle] bundlePath];
 		NSURL *baseURL = [NSURL fileURLWithPath:path];
@@ -1576,17 +1607,20 @@
 	
 	
 	NSString *HTMLString = [[NSString alloc] 
-							initWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
-							<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"fr\" lang=\"fr\">\
-							<head>\
-							<script type='text/javascript' src='jquery.js'></script>\
-							<script type='text/javascript' src='jquery.doubletap.js'></script>\
-							<script type='text/javascript' src='jquery.base64.js'></script>\
-							<meta name='viewport' content='width=device-width, user-scalable=no initial-scale=1.0' />\
-							<link type='text/css' rel='stylesheet' href='style-liste.css'/>\
-							<link type='text/css' rel='stylesheet' href='style-liste-retina.css' media='only screen and (-webkit-min-device-pixel-ratio: 2)'/>\
-							</head><body>\
-							<div class='bunselected' id='qsdoiqjsdkjhqkjhqsdqdilkjqsd2'>%@</div><div id='endofpage'></div><div id='endofpagetoolbar'></div><a name='bas'></a><script type='text/javascript'> function HLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bselected'; } function UHLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bunselected'; } function swap_spoiler_states(obj){var div=obj.getElementsByTagName('div');if(div[0]){if(div[0].style.visibility==\"visible\"){div[0].style.visibility='visible';}else if(div[0].style.visibility==\"hidden\"||!div[0].style.visibility){div[0].style.visibility='visible';}}} </script></body></html>", tmpHTML];
+                            initWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
+                            <html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"fr\" lang=\"fr\">\
+                            <head>\
+                            <script type='text/javascript' src='jquery.js'></script>\
+                            <script type='text/javascript' src='jquery.doubletap.js'></script>\
+                            <script type='text/javascript' src='jquery.base64.js'></script>\
+                            <script type='text/javascript' src='jquery.lazyload.mini.js'></script>\
+                            <meta name='viewport' content='initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0' />\
+                            <link type='text/css' rel='stylesheet' href='style-liste.css'/>\
+                            <link type='text/css' rel='stylesheet' href='style-liste-retina.css' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\
+                            <link type='text/css' rel='stylesheet' href='style-liste-ipad-portrait.css' media='all and (min-width: 767px)'/>\
+                            <link type='text/css' rel='stylesheet' href='style-liste-ipad-landscape.css' media='all and (min-width: 700px) and (max-width: 750px)'/>\
+                            </head><body>\
+                            <div class='bunselected' id='qsdoiqjsdkjhqkjhqsdqdilkjqsd2'>%@</div><div id='endofpage'></div><div id='endofpagetoolbar'></div><a name='bas'></a><script type='text/javascript'> function HLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bselected'; } function UHLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bunselected'; } function swap_spoiler_states(obj){var div=obj.getElementsByTagName('div');if(div[0]){if(div[0].style.visibility==\"visible\"){div[0].style.visibility='visible';}else if(div[0].style.visibility==\"hidden\"||!div[0].style.visibility){div[0].style.visibility='visible';}}} </script></body></html>", tmpHTML];
 	
 	NSString *path = [[NSBundle mainBundle] bundlePath];
 	NSURL *baseURL = [NSURL fileURLWithPath:path];
@@ -1766,7 +1800,7 @@
 		else if ([[aRequest.URL scheme] isEqualToString:@"file"]) {
             
             if ([[[aRequest.URL pathComponents] objectAtIndex:0] isEqualToString:@"/"] && ([[[aRequest.URL pathComponents] objectAtIndex:1] isEqualToString:@"forum2.php"] || [[[aRequest.URL pathComponents] objectAtIndex:1] isEqualToString:@"hfr"])) {
-                NSLog(@"pas la meme page / topic");
+                //NSLog(@"pas la meme page / topic");
                 // Navigation logic may go here. Create and push another view controller.
                 
                 //NSLog(@"did Select row Topics table views: %d", indexPath.row);
@@ -1776,33 +1810,6 @@
                 self.messagesTableViewController = aView;
                 [aView release];
                 //}
-                
-                
-                
-                
-                //NSLog(@"%@", self.navigationController.navigationBar);
-                
-                
-                UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-                label.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
-                //label.frame = CGRectMake(0, 0, 500, self.navigationController.navigationBar.frame.size.height - 4);
-                label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight; // 
-                
-                [label setFont:[UIFont boldSystemFontOfSize:14.0]];
-                [label setAdjustsFontSizeToFitWidth:YES];
-                [label setBackgroundColor:[UIColor clearColor]];
-                [label setTextAlignment:UITextAlignmentCenter];
-                [label setLineBreakMode:UILineBreakModeMiddleTruncation];
-                label.shadowColor = [UIColor darkGrayColor];
-                label.shadowOffset = CGSizeMake(0.0, -1.0);
-                [label setTextColor:[UIColor whiteColor]];
-                [label setNumberOfLines:0];
-                
-                [label setText:@""];
-                
-                [messagesTableViewController.navigationItem setTitleView:label];
-                [label release];	
-                
                 
                 //setup the URL
                 self.messagesTableViewController.topicName = @"";	
@@ -1832,7 +1839,7 @@
 	}
 	else if (navigationType == UIWebViewNavigationTypeOther) {
 		if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdodetails"]) {
-            NSLog(@"details ==========");
+            //NSLog(@"details ==========");
 			[self didSelectMessage:[[[aRequest.URL absoluteString] lastPathComponent] intValue]];
 			return NO;
 		}
@@ -2306,6 +2313,8 @@
     [super dealloc];
 	
 }
+
+#pragma mark Split View Delegate
 
 @end
 

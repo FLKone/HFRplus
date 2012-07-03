@@ -29,7 +29,7 @@
 @class MessageDetailViewController;
 @class ASIHTTPRequest;
 
-@interface MessagesTableViewController : PageViewController <UIActionSheetDelegate, ParseMessagesOperationDelegate, AddMessageViewControllerDelegate, PhotoViewControllerDelegate, UIScrollViewDelegate> {
+@interface MessagesTableViewController : PageViewController <UIActionSheetDelegate, ParseMessagesOperationDelegate, AddMessageViewControllerDelegate, PhotoViewControllerDelegate, UIScrollViewDelegate, UISplitViewControllerDelegate> {
 	UIWebView *messagesWebView;
 	UIView *loadingView;
 	UIView *overview;

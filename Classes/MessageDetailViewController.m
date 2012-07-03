@@ -62,11 +62,15 @@
 	UISegmentedControl *segmentedControl = (UISegmentedControl *)self.navigationItem.rightBarButtonItem.customView;
 	
 	// Before we show this view make sure the segmentedControl matches the nav bar style
-	if (self.navigationController.navigationBar.barStyle == UIBarStyleBlackTranslucent ||
-		self.navigationController.navigationBar.barStyle == UIBarStyleBlackOpaque)
-		segmentedControl.tintColor = [UIColor darkGrayColor];
-	else
-		segmentedControl.tintColor = defaultTintColor;
+	//if (self.navigationController.navigationBar.barStyle == UIBarStyleBlackTranslucent ||
+	//	self.navigationController.navigationBar.barStyle == UIBarStyleBlackOpaque)
+	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        segmentedControl.tintColor = defaultTintColor;
+    }
+    else {
+        segmentedControl.tintColor = [UIColor colorWithRed:144/255.f green:152/255.f blue:159/255.f alpha:0.51];
+
+    }
 }
 
 -(void)setupData
@@ -125,7 +129,6 @@
 	HTMLString = [HTMLString stringByReplacingOccurrencesOfRegex:regEx4
 														  withString:@"<img src='$1' />"];
 	
-	
 	//NSLog(@"HTMLString: %@", HTMLString);
 	
 	NSString *path = [[NSBundle mainBundle] bundlePath];
@@ -148,30 +151,7 @@
 
 	
 	if ([[arrayData objectAtIndex:curMsg] imageUI]) {
-		/*
-		NSMutableURLRequest  *theRequest=[NSMutableURLRequest 
-										  requestWithURL:[NSURL URLWithString:[[arrayData objectAtIndex:curMsg] imageUI]]
-										  cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10.0];
-		
 
-		NSData *serverData = [NSURLConnection sendSynchronousRequest:theRequest
-										   returningResponse:NULL error:NULL];
-		
-		//NSString *serverDataString = [[[NSString alloc] initWithData:serverData
-		//													encoding:NSUTF8StringEncoding] retain];
-		
-		//NSLog(@"Data: %@",serverDataString);
-		
-		
-		
-		
-		//NSData* imageData = [[NSData alloc]initWithContentsOfURL:[NSURL URLWithString:[[arrayData objectAtIndex:curMsg] imageUrl]]];
-		
-		UIImage* image = [[UIImage alloc] initWithData:serverData];
-		[authorAvatar setImage:image];
-		//[imageData release];
-		[image release];	
-		*/
 		[authorAvatar setImage:[UIImage imageWithContentsOfFile:[[arrayData objectAtIndex:curMsg] imageUI]]];
 
 		
@@ -179,19 +159,6 @@
 	else {
 		[authorAvatar setImage:[UIImage imageNamed:@"avatar_male_gray_on_light_48x48.png"]];
 	}
-
-	
-	//[authorAvatar setImageWithURL:[NSURL URLWithString:[[arrayData objectAtIndex:curMsg] imageUrl]]
-	//			  placeholderImage:[UIImage imageNamed:@"avatar_male_gray_on_light_48x48.png"]];
-	
-
-
-	
-	
-	//NSLog(@"linkQuoteUnCrypted : %@", [[arrayData objectAtIndex:curMsg] urlQuote]);
-	//NSLog(@"linkEditUnCrypted : %@", [[arrayData objectAtIndex:curMsg] urlEdit]);
-	
-	
 	
 	//Btn Quote & Edit
 	[self.arrayAction removeAllObjects];
@@ -377,32 +344,6 @@
                 //}
                 
                 
-                
-                
-                //NSLog(@"%@", self.navigationController.navigationBar);
-                
-                
-                UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-                label.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
-                //label.frame = CGRectMake(0, 0, 500, self.navigationController.navigationBar.frame.size.height - 4);
-                label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight; // 
-                
-                [label setFont:[UIFont boldSystemFontOfSize:14.0]];
-                [label setAdjustsFontSizeToFitWidth:YES];
-                [label setBackgroundColor:[UIColor clearColor]];
-                [label setTextAlignment:UITextAlignmentCenter];
-                [label setLineBreakMode:UILineBreakModeMiddleTruncation];
-                label.shadowColor = [UIColor darkGrayColor];
-                label.shadowOffset = CGSizeMake(0.0, -1.0);
-                [label setTextColor:[UIColor whiteColor]];
-                [label setNumberOfLines:0];
-                
-                [label setText:@""];
-                
-                [messagesTableViewController.navigationItem setTitleView:label];
-                [label release];	
-                
-                
                 //setup the URL
                 self.messagesTableViewController.topicName = @"";	
                 self.messagesTableViewController.isViewed = YES;	
@@ -411,13 +352,7 @@
                 [self.navigationController pushViewController:messagesTableViewController animated:YES];  
             }
             
-            
-            
-            // NSLog(@"clicked [[aRequest.URL absoluteString] %@", [aRequest.URL absoluteString]);
-            //  NSLog(@"clicked [[aRequest.URL pathComponents] %@", [aRequest.URL pathComponents]);
-            //  NSLog(@"clicked [[aRequest.URL path] %@", [aRequest.URL path]);
-            //  NSLog(@"clicked [[aRequest.URL lastPathComponent] %@", [aRequest.URL lastPathComponent]);
-            
+
             return NO;
         }        
         else {

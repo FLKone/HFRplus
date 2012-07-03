@@ -21,6 +21,9 @@
 
 @synthesize window;
 @synthesize rootController;
+@synthesize splitViewController;
+@synthesize detailNavigationController;
+
 @synthesize forumsNavController;
 @synthesize favoritesNavController;
 @synthesize messagesNavController;
@@ -102,7 +105,16 @@
     
 	rootController.customizableViewControllers = nil;
 
-	[window addSubview:rootController.view];
+    // Start up window
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) { 
+        [splitViewController view].backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bgbigiPad"]];
+
+        UIView *view = [splitViewController view];
+        [window addSubview:view];
+    } else {
+        [window addSubview:rootController.view];	
+    }
+    	
     [window makeKeyAndVisible];
 
 	periodicMaintenanceTimer = [[NSTimer scheduledTimerWithTimeInterval:60*10
@@ -439,6 +451,8 @@
 	[[GANTracker sharedTracker] stopTracker];
 	
 	[rootController release];
+    self.splitViewController = nil;
+    
 	[forumsNavController release];
 	[favoritesNavController release];
 	[messagesNavController release];

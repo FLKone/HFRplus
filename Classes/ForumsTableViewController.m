@@ -67,7 +67,7 @@
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
     [segmentBarItem release];
-	
+    
 	[self.arrayData removeAllObjects];
 	[self.forumsTableView reloadData];
 	

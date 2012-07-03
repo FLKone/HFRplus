@@ -21,7 +21,7 @@
 #import "TopicCellView.h"
 #import "Topic.h"
 
-
+#import "SubCatTableViewController.h"
 
 
 @implementation TopicsTableViewController
@@ -45,6 +45,7 @@
 @synthesize tmpCell;
 @synthesize status, statusMessage, maintenanceView;
 
+@synthesize popover = _popover;
 
 #pragma mark -
 #pragma mark Data lifecycle
@@ -669,7 +670,8 @@
 
 -(void)loadSubCat
 {
-	//NSLog(@"loadSubCat");
+    [_popover dismissPopoverAnimated:YES];
+    
 	//NSLog(@"curName %@", self.forumName);
 	
 	//NSLog(@"newName %@", [[pickerViewArray objectAtIndex:[myPickerView selectedRowInComponent:0]] aTitle]);
@@ -706,6 +708,9 @@
 	self.title = forumName;
 	//NSLog(@"viewDidLoad %@ - %@", [[UIDevice currentDevice] systemName], [[UIDevice currentDevice] systemVersion]);
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(loadSubCat) name:@"SubCatSelected" object:nil];
+        
 	//Gesture
 	UIGestureRecognizer *recognizer;
 	
@@ -957,7 +962,7 @@
 	switch (segmentedControl.selectedSegmentIndex) {
 		case 0:
 			//NSLog(@"segmentCatAction");
-			[self showPicker];
+			[self showPicker:sender];
 			break;		
 		default:
 			break;
@@ -1281,31 +1286,13 @@
 	[aView release];
 	//}
 	
-	UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-	label.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
-	label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-	
-	[label setFont:[UIFont boldSystemFontOfSize:13.0]];
-	[label setAdjustsFontSizeToFitWidth:YES];
-	[label setBackgroundColor:[UIColor clearColor]];
-	[label setTextAlignment:UITextAlignmentCenter];
-	[label setLineBreakMode:UILineBreakModeMiddleTruncation];
-	label.shadowColor = [UIColor darkGrayColor];
-	label.shadowOffset = CGSizeMake(0.0, -1.0);
-	[label setTextColor:[UIColor whiteColor]];
-	[label setNumberOfLines:0];
-	
-	[label setText:[[arrayData objectAtIndex:indexPath.row] aTitle]];
-	
-	[messagesTableViewController.navigationItem setTitleView:label];
-	[label release];	
-	
 	//setup the URL
 
 	self.messagesTableViewController.topicName = [[arrayData objectAtIndex:indexPath.row] aTitle];	
 	self.messagesTableViewController.isViewed = [[arrayData objectAtIndex:pressedIndexPath.row] isViewed];	
 
-	[self.navigationController pushViewController:messagesTableViewController animated:YES];
+	[self pushTopic];
+    //[self.navigationController pushViewController:messagesTableViewController animated:YES];
 
 
 }
@@ -1315,7 +1302,7 @@
 		CGPoint longPressLocation = [longPressRecognizer locationInView:self.topicsTableView];
 		pressedIndexPath = [[self.topicsTableView indexPathForRowAtPoint:longPressLocation] copy];
 		
-		//NSLog(@"pressedIndexPath %d -- %d", pressedIndexPath.row, pressedIndexPath.section);
+		NSLog(@"pressedIndexPath %d -- %d", pressedIndexPath.row, pressedIndexPath.section);
 		
 		UIActionSheet *styleAlert = [[UIActionSheet alloc] initWithTitle:@"Aller à..."
 																delegate:self cancelButtonTitle:@"Annuler"
@@ -1327,8 +1314,15 @@
 		// use the same style as the nav bar
 		styleAlert.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
 		
-		[styleAlert showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
-		[styleAlert release];
+//        [actionSheet showFromBarButtonItem:sender animated:YES]
+        CGRect origFrame = CGRectMake( longPressLocation.x, longPressLocation.y + 60 - self.topicsTableView.contentOffset.y, 0 ,0 );
+        
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+            [styleAlert showFromRect:origFrame inView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view] animated:YES];
+        else    
+            [styleAlert showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
+		//
+//		[styleAlert release];
 		
 	}
 }
@@ -1342,30 +1336,12 @@
 			MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[arrayData objectAtIndex:pressedIndexPath.row] aURLOfLastPage]];
 			self.messagesTableViewController = aView;
 			[aView release];
-
-			UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-			label.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
-			label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-			
-			[label setFont:[UIFont boldSystemFontOfSize:13.0]];
-			[label setAdjustsFontSizeToFitWidth:YES];
-			[label setBackgroundColor:[UIColor clearColor]];
-			[label setTextAlignment:UITextAlignmentCenter];
-			[label setLineBreakMode:UILineBreakModeMiddleTruncation];
-			label.shadowColor = [UIColor darkGrayColor];
-			label.shadowOffset = CGSizeMake(0.0, -1.0);
-			[label setTextColor:[UIColor whiteColor]];
-			[label setNumberOfLines:0];
-			
-			[label setText:[[arrayData objectAtIndex:pressedIndexPath.row] aTitle]];
-			
-			[messagesTableViewController.navigationItem setTitleView:label];
-			[label release];	
 			
 			self.messagesTableViewController.topicName = [[arrayData objectAtIndex:pressedIndexPath.row] aTitle];	
 			self.messagesTableViewController.isViewed = [[arrayData objectAtIndex:pressedIndexPath.row] isViewed];	
 
-			[self.navigationController pushViewController:messagesTableViewController animated:YES];			
+            [self pushTopic];
+            //[self.navigationController pushViewController:messagesTableViewController animated:YES];			
 			//NSLog(@"url pressed last page: %@", [[arrayData objectAtIndex:pressedIndexPath.row] aURLOfLastPage]);
 			break;
 		}
@@ -1375,29 +1351,10 @@
 			self.messagesTableViewController = aView;
 			[aView release];
 			
-			UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-			label.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
-			label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-			
-			[label setFont:[UIFont boldSystemFontOfSize:13.0]];
-			[label setAdjustsFontSizeToFitWidth:YES];
-			[label setBackgroundColor:[UIColor clearColor]];
-			[label setTextAlignment:UITextAlignmentCenter];
-			[label setLineBreakMode:UILineBreakModeMiddleTruncation];
-			label.shadowColor = [UIColor darkGrayColor];
-			label.shadowOffset = CGSizeMake(0.0, -1.0);
-			[label setTextColor:[UIColor whiteColor]];
-			[label setNumberOfLines:0];
-			
-			[label setText:[[arrayData objectAtIndex:pressedIndexPath.row] aTitle]];
-			
-			[messagesTableViewController.navigationItem setTitleView:label];
-			[label release];	
-			
 			self.messagesTableViewController.topicName = [[arrayData objectAtIndex:pressedIndexPath.row] aTitle];	
 			self.messagesTableViewController.isViewed = [[arrayData objectAtIndex:pressedIndexPath.row] isViewed];	
 
-			[self.navigationController pushViewController:messagesTableViewController animated:YES];			
+            [self pushTopic];
 			//NSLog(@"url pressed last post: %@", [[arrayData objectAtIndex:pressedIndexPath.row] aURLOfLastPost]);
 			break;
 			
@@ -1413,6 +1370,21 @@
 	}
 }
 
+- (void)pushTopic {
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        [self.navigationController pushViewController:messagesTableViewController animated:YES];
+    }
+    else {
+        [[[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] viewControllers] objectAtIndex:1] popToRootViewControllerAnimated:NO];
+        
+        [[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] setViewControllers:[NSMutableArray arrayWithObjects:messagesTableViewController, nil] animated:YES];
+        
+//        [[HFRplusAppDelegate sharedAppDelegate] setDetailNavigationController:messagesTableViewController];
+        
+    }    
+    
+}
 
 #pragma mark -
 #pragma mark chooseTopicPage
@@ -1542,33 +1514,13 @@
         
         //NSLog(@"%@", self.navigationController.navigationBar);
         
-        
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-        label.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
-        //label.frame = CGRectMake(0, 0, 500, self.navigationController.navigationBar.frame.size.height - 4);
-        label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight; // 
-        
-        [label setFont:[UIFont boldSystemFontOfSize:14.0]];
-        [label setAdjustsFontSizeToFitWidth:YES];
-        [label setBackgroundColor:[UIColor clearColor]];
-        [label setTextAlignment:UITextAlignmentCenter];
-        [label setLineBreakMode:UILineBreakModeMiddleTruncation];
-        label.shadowColor = [UIColor darkGrayColor];
-        label.shadowOffset = CGSizeMake(0.0, -1.0);
-        [label setTextColor:[UIColor whiteColor]];
-        [label setNumberOfLines:0];
-        
-        [label setText:[[arrayData objectAtIndex:pressedIndexPath.row] aTitle]];
-        
-        [messagesTableViewController.navigationItem setTitleView:label];
-        [label release];	
 
         //setup the URL
         self.messagesTableViewController.topicName = [[arrayData objectAtIndex:pressedIndexPath.row] aTitle];	
         self.messagesTableViewController.isViewed = [[arrayData objectAtIndex:pressedIndexPath.row] isViewed];	
         
-        //NSLog(@"push message liste");
-        [self.navigationController pushViewController:messagesTableViewController animated:YES];
+        [self pushTopic];
+        //[self.navigationController pushViewController:messagesTableViewController animated:YES];
     
     }
 }
@@ -1588,38 +1540,17 @@
 		[aView release];
 	//}
 	
-
-	
-	
 	//NSLog(@"%@", self.navigationController.navigationBar);
-
-	
-	UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-	label.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
-	//label.frame = CGRectMake(0, 0, 500, self.navigationController.navigationBar.frame.size.height - 4);
-	label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight; // 
-
-	[label setFont:[UIFont boldSystemFontOfSize:14.0]];
-	[label setAdjustsFontSizeToFitWidth:YES];
-	[label setBackgroundColor:[UIColor clearColor]];
-	[label setTextAlignment:UITextAlignmentCenter];
-	[label setLineBreakMode:UILineBreakModeMiddleTruncation];
-	label.shadowColor = [UIColor darkGrayColor];
-	label.shadowOffset = CGSizeMake(0.0, -1.0);
-	[label setTextColor:[UIColor whiteColor]];
-	[label setNumberOfLines:0];
-	
-	[label setText:[[arrayData objectAtIndex:indexPath.row] aTitle]];
-	
-	[messagesTableViewController.navigationItem setTitleView:label];
-	[label release];	
+    NSLog(@"b4 %@", self.navigationController);
 
 	//setup the URL
-	self.messagesTableViewController.topicName = [[arrayData objectAtIndex:indexPath.row] aTitle];	
+    
+    [self.messagesTableViewController setTopicName:[[arrayData objectAtIndex:indexPath.row] aTitle]];
 	self.messagesTableViewController.isViewed = [[arrayData objectAtIndex:indexPath.row] isViewed];	
-
-	//NSLog(@"push message liste");
-	[self.navigationController pushViewController:messagesTableViewController animated:YES];
+    
+    NSLog(@"pushTopic");
+    [self pushTopic];
+	//[self.navigationController pushViewController:messagesTableViewController animated:YES];
 }
 
 #pragma mark -
@@ -1634,7 +1565,7 @@
 		//			  [pickerViewArray objectAtIndex:[pickerView selectedRowInComponent:0]],
 		//			  [pickerView selectedRowInComponent:1]];
 		
-		//NSLog(@"%@", [pickerViewArray objectAtIndex:[pickerView selectedRowInComponent:0]]);
+		NSLog(@"%@", [pickerViewArray objectAtIndex:[pickerView selectedRowInComponent:0]]);
 	}
 }
 
@@ -1687,6 +1618,7 @@
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
+    NSLog(@"NOC");
 	return 1;
 }
 
@@ -1708,27 +1640,45 @@
 	[actionSheet dismissWithClickedButtonIndex:0 animated:YES];
 }
 
--(void)showPicker{
+-(void)showPicker:(id)sender {
 
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        //NSLog(@"TT %@", [[pickerViewArray objectAtIndex:[myPickerView selectedRowInComponent:0]] aTitle]);
+        
+        SubCatTableViewController *subCatTableViewController = [[[SubCatTableViewController alloc] initWithStyle:UITableViewStylePlain] autorelease];
+        subCatTableViewController.suPicker = myPickerView;
+        subCatTableViewController.arrayData = pickerViewArray;
+        
+        
+        self.popover = [[[UIPopoverController alloc] initWithContentViewController:subCatTableViewController] autorelease];
+        
+        
+        CGRect origFrame = [self.navigationController navigationBar].frame;
+        origFrame.origin.x += 80;
+        
+        [_popover presentPopoverFromRect:origFrame inView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view] permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];        
+     
+    } else {
+        CGSize pickerSize = [myPickerView sizeThatFits:CGSizeZero];
+        myPickerView.frame = [self pickerFrameWithSize:pickerSize];
+        
+        [actionSheet showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
+        
+        CGRect curFrame = [[actionSheet viewWithTag:546] frame];
+        curFrame.origin.x =  self.view.frame.size.width - curFrame.size.width - 10;
+        [[actionSheet viewWithTag:546] setFrame:curFrame];
+        
+        [UIView beginAnimations:nil context:nil];
+        [actionSheet setFrame:CGRectMake(0, [[[HFRplusAppDelegate sharedAppDelegate] rootController] tabBar].frame.size.height + self.view.frame.size.height + self.navigationController.navigationBar.frame.size.height + 20 - myPickerView.frame.size.height - 44,
+                                         self.view.frame.size.width, myPickerView.frame.size.height + 44)];
+        
+        [actionSheet setBounds:CGRectMake(0, 0,
+                                          self.view.frame.size.width, myPickerView.frame.size.height + 44)];
+        
+        [UIView commitAnimations]; 
+    }
+    
 
-	CGSize pickerSize = [myPickerView sizeThatFits:CGSizeZero];
-	myPickerView.frame = [self pickerFrameWithSize:pickerSize];
-	
-	
-	[actionSheet showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
-
-	CGRect curFrame = [[actionSheet viewWithTag:546] frame];
-	curFrame.origin.x =  self.view.frame.size.width - curFrame.size.width - 10;
-	[[actionSheet viewWithTag:546] setFrame:curFrame];
-	
-	[UIView beginAnimations:nil context:nil];
-    [actionSheet setFrame:CGRectMake(0, [[[HFRplusAppDelegate sharedAppDelegate] rootController] tabBar].frame.size.height + self.view.frame.size.height + self.navigationController.navigationBar.frame.size.height + 20 - myPickerView.frame.size.height - 44,
-									 self.view.frame.size.width, myPickerView.frame.size.height + 44)];
-	
-    [actionSheet setBounds:CGRectMake(0, 0,
-									 self.view.frame.size.width, myPickerView.frame.size.height + 44)];
-
-    [UIView commitAnimations]; 
 	//NSLog(@"actionSheet %f %f %f %f", actionSheet.frame.origin.x, actionSheet.frame.origin.y, actionSheet.frame.size.width, actionSheet.frame.size.height);
 
 }
@@ -1763,6 +1713,8 @@
 	//NSLog(@"dealloc Topics Table View");
 	
 	[self viewDidUnload];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"SubCatSelected" object:nil];
 
 	[request cancel];
 	[request setDelegate:nil];

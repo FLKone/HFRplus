@@ -6,6 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "UITableViewController+Ext.h"
 
 typedef enum {
 	kIdle,
