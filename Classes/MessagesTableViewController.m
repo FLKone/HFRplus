@@ -1220,8 +1220,14 @@
 	//selectedURL = [selectedURL stringByReplacingOccurrencesOfString:@"http://hfr-rehost.net/preview/" withString:@"http://hfr-rehost.net/"];
 	selectedURL = [selectedURL stringByReplacingOccurrencesOfString:@"http://hfr-rehost.net/thumb/" withString:@"http://hfr-rehost.net/preview/"];
 
-	PhotoViewController *photoViewController = [[PhotoViewController alloc]
-												initWithNibName:@"PhotoViewController" bundle:nil];
+    
+    PhotoViewController *photoViewController;
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        photoViewController = [[PhotoViewController alloc] initWithNibName:@"PhotoViewController-iPad" bundle:nil];        
+    else
+        photoViewController = [[PhotoViewController alloc] initWithNibName:@"PhotoViewController" bundle:nil];
+    
 	photoViewController.delegate = self;
 	[photoViewController setImageURL:selectedURL];
 	[photoViewController setImageData:imageArray];
