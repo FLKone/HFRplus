@@ -14,9 +14,11 @@ static const NSInteger kGANDispatchPeriodSec = 10;
 #import "SplitViewController.h"
 #import "DetailNavigationViewController.h"
 
+#import "IASKAppSettingsViewController.h"
+
 #import "Reachability.h"
 
-@interface HFRplusAppDelegate : NSObject <UIApplicationDelegate> {
+@interface HFRplusAppDelegate : NSObject <IASKSettingsDelegate, UIApplicationDelegate> {
     UIWindow *window;
 	TabBarController *rootController;	
 	SplitViewController *splitViewController;

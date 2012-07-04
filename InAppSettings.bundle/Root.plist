@@ -20,7 +20,7 @@
 			<key>Titles</key>
 			<array>
 				<string>Désactivé</string>
-				<string>Editeur et Photos uniquement</string>
+				<string>Editeur et Photos</string>
 				<string>Activé</string>
 			</array>
 			<key>Type</key>
@@ -70,7 +70,7 @@
 			<key>Titles</key>
 			<array>
 				<string>Jamais</string>
-				<string>Wifi uniquement</string>
+				<string>Wifi</string>
 				<string>Toujours</string>
 			</array>
 			<key>Type</key>
@@ -84,21 +84,23 @@
 		</dict>
 		<dict>
 			<key>DefaultValue</key>
-			<string>safari</string>
+			<string>http</string>
 			<key>Key</key>
 			<string>default_web</string>
 			<key>Title</key>
 			<string>Ouvrir les liens</string>
 			<key>Titles</key>
 			<array>
-				<string>dans Safari</string>
-				<string>dans un navigateur interne</string>
+				<string>Safari</string>
+				<string>Google Chrome</string>
+				<string>Navigateur interne</string>
 			</array>
 			<key>Type</key>
 			<string>PSMultiValueSpecifier</string>
 			<key>Values</key>
 			<array>
-				<string>safari</string>
+				<string>http</string>
+				<string>googlechrome</string>
 				<string>internal</string>
 			</array>
 		</dict>

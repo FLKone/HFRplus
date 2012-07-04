@@ -127,7 +127,11 @@
 }
 
 - (void)registerDefaultsFromSettingsBundle {
-    NSString *settingsBundle = [[NSBundle mainBundle] pathForResource:@"Settings" ofType:@"bundle"];
+    
+    NSString *settingsBundle = [[NSBundle mainBundle] pathForResource:@"InAppSettings" ofType:@"bundle"];
+    
+    NSLog(@"settings %@", settingsBundle);
+    
     if(!settingsBundle) {
         //NSLog(@"Could not find Settings.bundle");
         return;
@@ -358,7 +362,22 @@
 	
     //NSLog(@"display %@", display);
     
-	if ([web isEqualToString:@"safari"]) {
+	if ([web isEqualToString:@"internal"]) {
+        BrowserViewController *browserViewController = [[BrowserViewController alloc]
+                                                        initWithNibName:@"BrowserViewController" bundle:nil];
+        browserViewController.delegate = self.rootController;
+        NSLog(@"OK %@", stringUrl);
+        
+        [self.rootController presentModalViewController:browserViewController animated:YES];
+        [browserViewController.myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:stringUrl]]];
+        
+        // The navigation controller is now owned by the current view controller
+        // and the root view controller is owned by the navigation controller,
+        // so both objects should be released to prevent over-retention.
+        [browserViewController release];
+        
+    }
+    else {
         NSString *msg = [NSString stringWithFormat:@"Vous allez quitter HFR+ et être redirigé vers:\n %@\n", stringUrl];
         
         UIAlertViewURL *alert = [[UIAlertViewURL alloc] initWithTitle:@"Attention !" message:msg
@@ -368,20 +387,6 @@
         [alert show];
         [alert release];  
     }
-    else {
-        BrowserViewController *browserViewController = [[BrowserViewController alloc]
-                                                    initWithNibName:@"BrowserViewController" bundle:nil];
-        browserViewController.delegate = self.rootController;
-        NSLog(@"OK %@", stringUrl);
-        
-        [self.rootController presentModalViewController:browserViewController animated:YES];
-        [browserViewController.myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:stringUrl]]];
-
-        // The navigation controller is now owned by the current view controller
-        // and the root view controller is owned by the navigation controller,
-        // so both objects should be released to prevent over-retention.
-        [browserViewController release];
-    }
     
 
 }
@@ -390,7 +395,26 @@
 {
 	if (buttonIndex == 1) {
 		NSLog(@"OK %@", [alertView stringURL]);
-		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:[alertView stringURL]]];
+        
+        NSURL *tURLbase = [NSURL URLWithString:[alertView stringURL]];
+        NSURL *tURL = [NSURL URLWithString:[alertView stringURL]];
+
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSString *web = [defaults stringForKey:@"default_web"];
+        
+        if ([web isEqualToString:@"googlechrome"]) {
+            //tURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@", web, [alertView stringURL]]];
+            tURL = [[NSURL alloc] initWithScheme:web host:[tURLbase host] path:[tURLbase path]];// - (id)initWithScheme:(NSString *)scheme host:(NSString *)host path:(NSString *)path
+
+        }
+        NSLog(@"OK %@", tURL);
+        if ([[UIApplication sharedApplication] canOpenURL:tURL]) {
+            [[UIApplication sharedApplication] openURL:tURL];
+        }
+        else {
+            [[UIApplication sharedApplication] openURL:tURLbase];
+        }
+		
 	}
 }
 
@@ -429,7 +453,13 @@
 	NSLog(@"checkLogin");
 }
 
-
+#pragma mark -
+#pragma mark IASKAppSettingsViewControllerDelegate protocol
+- (void)settingsViewControllerDidEnd:(IASKAppSettingsViewController*)sender {
+    NSLog(@"settingsViewControllerDidEnd");
+	
+	// your code here to reconfigure the app for changed settings
+}
 
 #pragma mark -
 #pragma mark Memory management
