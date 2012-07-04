@@ -6,6 +6,7 @@
 //
 
 #import "CreditsViewController.h"
+#import "HFRplusAppDelegate.h"
 
 
 @implementation CreditsViewController
@@ -81,7 +82,7 @@
 	if (navigationType == UIWebViewNavigationTypeLinkClicked) {
 		NSURL *url = request.URL;
 		NSString *urlString = url.absoluteString;
-		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
+        [[HFRplusAppDelegate sharedAppDelegate] openURL:urlString];
 		return NO;
 	}
 	
