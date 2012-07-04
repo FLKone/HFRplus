@@ -130,7 +130,7 @@
     
     NSString *settingsBundle = [[NSBundle mainBundle] pathForResource:@"InAppSettings" ofType:@"bundle"];
     
-    NSLog(@"settings %@", settingsBundle);
+    //NSLog(@"settings %@", settingsBundle);
     
     if(!settingsBundle) {
         //NSLog(@"Could not find Settings.bundle");

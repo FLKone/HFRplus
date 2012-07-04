@@ -1,9 +1,8 @@
 //
 //  parseMessagesOperation.m
-//  HFR+
+//  HFRplus
 //
-//  Created by Lace on 06/08/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
+//  Created by FLK on 06/08/10.
 //
 
 #import "Constants.h"

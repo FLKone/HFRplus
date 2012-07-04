@@ -1,6 +1,6 @@
     //
 //  QuoteMessageViewController.m
-//  HFR+
+//  HFRplus
 //
 //  Created by FLK on 17/08/10.
 //

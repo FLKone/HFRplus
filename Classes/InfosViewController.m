@@ -1,6 +1,6 @@
 //
 //  InfosViewController.m
-//  HFR+
+//  HFRplus
 //
 //  Created by FLK on 23/07/10.
 //

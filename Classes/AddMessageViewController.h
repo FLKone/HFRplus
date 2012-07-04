@@ -1,6 +1,6 @@
 //
 //  AddMessageViewController.h
-//  HFR+
+//  HFRplus
 //
 //  Created by FLK on 16/08/10.
 //

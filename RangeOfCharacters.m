@@ -1,9 +1,8 @@
 //
 //  RangeOfCharacters.m
-//  HFR+
+//  HFRplus
 //
-//  Created by Lace on 14/07/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
+//  Created by FLK on 14/07/10.
 //
 
 #import "RangeOfCharacters.h"

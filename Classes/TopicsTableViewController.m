@@ -1,9 +1,8 @@
 //
 //  TopicsTableViewController.m
-//  HFR+
+//  HFRplus
 //
-//  Created by Lace on 06/07/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
+//  Created by FLK on 06/07/10.
 //
 
 #import "HFRplusAppDelegate.h"

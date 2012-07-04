@@ -1,6 +1,6 @@
 //
 //  CompteViewController.m
-//  HFR+
+//  HFRplus
 //
 //  Created by FLK on 12/08/10.
 //

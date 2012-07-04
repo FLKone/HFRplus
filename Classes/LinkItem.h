@@ -1,9 +1,8 @@
 //
 //  Favorite.h
-//  HFR+
+//  HFRplus
 //
-//  Created by Lace on 04/07/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
+//  Created by FLK on 04/07/10.
 //
 
 #import <Foundation/Foundation.h>

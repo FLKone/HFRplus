@@ -1,6 +1,6 @@
 //
 //  Constants.h
-//  HFR+
+//  HFRplus
 //
 //  Created by FLK on 05/08/10.
 //

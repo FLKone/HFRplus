@@ -1,6 +1,6 @@
 //
 //  TopicsCell.m
-//  HFR+
+//  HFRplus
 //
 //  Created by FLK on 03/08/10.
 //

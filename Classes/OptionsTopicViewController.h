@@ -2,8 +2,7 @@
 //  OptionsTopicViewController.h
 //  HFRplus
 //
-//  Created by Lace on 11/08/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Created by FLK on 11/08/11.
 //
 
 #import <UIKit/UIKit.h>

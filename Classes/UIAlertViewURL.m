@@ -1,6 +1,6 @@
 //
 //  UIAlertViewURL.m
-//  HFR+
+//  HFRplus
 //
 //  Created by FLK on 15/08/10.
 //

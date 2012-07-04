@@ -1,6 +1,6 @@
 //
 //  ForumsTableViewController.m
-//  HFR+
+//  HFRplus
 //
 //  Created by FLK on 06/07/10.
 //
