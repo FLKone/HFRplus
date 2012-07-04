@@ -115,6 +115,8 @@
 	// Create the navigation controller and present it modally.
 	UINavigationController *navigationController = [[UINavigationController alloc]
 													initWithRootViewController:identificationController];
+    
+    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
 	[self presentModalViewController:navigationController animated:YES];
 	[self.loginView setHidden:YES];
 	
