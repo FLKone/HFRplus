@@ -89,7 +89,7 @@
 	self.title = @"Recherche";
     self.stories =[[NSMutableArray alloc]init];
     self.disableViewOverlay = [[UIView alloc]
-							   initWithFrame:CGRectMake(0.0f,44.0f,320.0f,416.0f)];
+							   initWithFrame:CGRectMake(0.0f,44.0f,320.0f,1000.0f)];
     self.disableViewOverlay.backgroundColor=[UIColor blackColor];
     self.disableViewOverlay.alpha = 0;
 	
@@ -287,6 +287,8 @@
 		NSString *currentUrl = [[item valueForKey:@"link"] copy];
 		int pageNumber;
 		
+        NSLog(@"currentUrl %@", currentUrl);
+        
 		NSString *regexString  = @".*page=([^&]+).*";
 		NSRange   matchedRange;// = NSMakeRange(NSNotFound, 0UL);
 		NSRange   searchRange = NSMakeRange(0, currentUrl.length);
@@ -296,6 +298,11 @@
 		
 		if (matchedRange.location == NSNotFound) {
 			NSRange rangeNumPage =  [currentUrl rangeOfCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] options:NSBackwardsSearch];
+            
+            if (rangeNumPage.location == NSNotFound) {
+                return;
+            }
+            
 			pageNumber = [[currentUrl substringWithRange:rangeNumPage] intValue];
 		}
 		else {
@@ -306,7 +313,7 @@
 		
 		
 		[item setObject:[NSString stringWithFormat:@"p. %d", pageNumber] forKey:@"page"];
-		
+		/**/
 		[stories addObject:[item copy]];
 	}
 	
@@ -444,33 +451,24 @@
 	//NSLog(@"%@", self.navigationController.navigationBar);
 	
 	
-	UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-	label.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
-	//label.frame = CGRectMake(0, 0, 500, self.navigationController.navigationBar.frame.size.height - 4);
-	label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight; // 
-	
-	[label setFont:[UIFont boldSystemFontOfSize:14.0]];
-	[label setAdjustsFontSizeToFitWidth:YES];
-	[label setBackgroundColor:[UIColor clearColor]];
-	[label setTextAlignment:UITextAlignmentCenter];
-	[label setLineBreakMode:UILineBreakModeMiddleTruncation];
-	label.shadowColor = [UIColor darkGrayColor];
-	label.shadowOffset = CGSizeMake(0.0, -1.0);
-	[label setTextColor:[UIColor whiteColor]];
-	[label setNumberOfLines:0];
-	
-	[label setText:[[stories objectAtIndex: storyIndex] objectForKey: @"title"]];
-	
-	[messagesTableViewController.navigationItem setTitleView:label];
-	[label release];	
 	
 	
 	//setup the URL
 	self.messagesTableViewController.topicName = [[stories objectAtIndex: storyIndex] objectForKey: @"title"];	
 	self.messagesTableViewController.isViewed = NO;	
 	
-	//NSLog(@"push message liste");
-	[self.navigationController pushViewController:messagesTableViewController animated:YES];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        [self.navigationController pushViewController:messagesTableViewController animated:YES];
+    }
+    else {
+        [[[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] viewControllers] objectAtIndex:1] popToRootViewControllerAnimated:NO];
+        
+        [[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] setViewControllers:[NSMutableArray arrayWithObjects:messagesTableViewController, nil] animated:YES];
+        
+        //        [[HFRplusAppDelegate sharedAppDelegate] setDetailNavigationController:messagesTableViewController];
+        
+    } 
+    
 }
 
 - (void)viewDidUnload {
