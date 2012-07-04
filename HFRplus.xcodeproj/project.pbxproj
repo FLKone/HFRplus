@@ -128,6 +128,7 @@
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		CA0B9C09125F6724003CE58D /* 71-compass.png in Resources */ = {isa = PBXBuildFile; fileRef = CA0B9C08125F6724003CE58D /* 71-compass.png */; };
+		CA10706E15A4BFB1002E6C19 /* PhotoViewController-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA10706D15A4BFB1002E6C19 /* PhotoViewController-iPad.xib */; };
 		CA159CA71293738E00C7268C /* 24.gif in Resources */ = {isa = PBXBuildFile; fileRef = CA159CA61293738E00C7268C /* 24.gif */; };
 		CA17B98B122312B1007EA04E /* style-liste.css in Resources */ = {isa = PBXBuildFile; fileRef = CA17B98A122312B1007EA04E /* style-liste.css */; };
 		CA17B99312231368007EA04E /* template.htm in Resources */ = {isa = PBXBuildFile; fileRef = CA17B99212231368007EA04E /* template.htm */; };
@@ -465,6 +466,7 @@
 		32CA4F630368D1EE00C91783 /* HFRplus_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFRplus_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* HFRplus-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HFRplus-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		CA0B9C08125F6724003CE58D /* 71-compass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "71-compass.png"; sourceTree = "<group>"; };
+		CA10706D15A4BFB1002E6C19 /* PhotoViewController-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "PhotoViewController-iPad.xib"; sourceTree = "<group>"; };
 		CA159CA61293738E00C7268C /* 24.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 24.gif; sourceTree = "<group>"; };
 		CA17B98A122312B1007EA04E /* style-liste.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "style-liste.css"; sourceTree = "<group>"; };
 		CA17B99212231368007EA04E /* template.htm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = template.htm; sourceTree = "<group>"; };
@@ -1313,6 +1315,7 @@
 				CA9E82761243650F000EE882 /* PhotoViewController.h */,
 				CA9E82771243650F000EE882 /* PhotoViewController.m */,
 				CA9E82781243650F000EE882 /* PhotoViewController.xib */,
+				CA10706D15A4BFB1002E6C19 /* PhotoViewController-iPad.xib */,
 				CA9E837012437AEF000EE882 /* ImageScrollView.h */,
 				CA9E837112437AEF000EE882 /* ImageScrollView.m */,
 				CA9E851B1243A0E1000EE882 /* UIImageViewCustom.h */,
@@ -1627,6 +1630,7 @@
 				CA7E25F715A2015000721F6D /* bgbigiPad.png in Resources */,
 				CA7E25FA15A2445800721F6D /* style-liste-ipad-portrait.css in Resources */,
 				CA7E25FB15A2445800721F6D /* style-liste-ipad-landscape.css in Resources */,
+				CA10706E15A4BFB1002E6C19 /* PhotoViewController-iPad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

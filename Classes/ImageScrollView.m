@@ -88,6 +88,9 @@
     CGSize boundsSize = self.bounds.size;
     CGRect frameToCenter = imageView.frame;
     
+    //NSLog(@"1 layoutSubviews BEGIN bounds.size %f - %f", self.bounds.size.width, self.bounds.size.height);
+
+    
     // center horizontally
     if (frameToCenter.size.width < boundsSize.width)
         frameToCenter.origin.x = (boundsSize.width - frameToCenter.size.width) / 2;
@@ -99,9 +102,16 @@
         frameToCenter.origin.y = (boundsSize.height - frameToCenter.size.height) / 2;
     else
         frameToCenter.origin.y = 0;
-    
+
+	//NSLog(@"frameToCenter.size %f - %f", frameToCenter.size.width, frameToCenter.size.height);
+	//NSLog(@"frameToCenter.origin %f - %f", frameToCenter.origin.x, frameToCenter.origin.y);    
+
+    //frameToCenter.origin.y = 468.500000;
+    //frameToCenter.origin.x = 270.500000;
+     
     imageView.frame = frameToCenter;
     
+   // NSLog(@"1 layoutSubviews END bounds.size %f - %f", self.bounds.size.width, self.bounds.size.height);    
 }
 
 
@@ -120,9 +130,11 @@
 
 - (void)displayImage:(NSString *)image
 {
+    //NSLog(@"2 displayImage BEGIN bounds.size %f - %f", self.bounds.size.width, self.bounds.size.height);
+    
 	//NSLog(@"displayImage %@", image);
 	image = [image stringByReplacingOccurrencesOfString:@"http://hfr-rehost.net/thumb/" withString:@"http://hfr-rehost.net/preview/"];
-
+    
     // clear the previous imageView
     [imageView removeFromSuperview];
     [imageView release];
@@ -145,19 +157,27 @@
 	[(UIImageViewCustom *)imageView setImageWithURL:[NSURL URLWithString:image]
 				 placeholderImage:[UIImage imageNamed:@"photoDefault.png"]];
 		
+    //imageView.backgroundColor = [UIColor blueColor];
+    
     [self addSubview:imageView];
     
 	//NSLog(@"imageView.frame.size %f - %f", imageView.frame.size.width, imageView.frame.size.height);
+	//NSLog(@"imageView.frame.origin %f - %f", imageView.frame.origin.x, imageView.frame.origin.y);
 
     //[self configureForImageSize:imageView.frame.size];
+    
+   // NSLog(@"2 displayImage END bounds.size %f - %f", self.bounds.size.width, self.bounds.size.height);
+    
 }
 
 - (void)configureForImageSize:(CGSize)imageSize 
 {
+    //NSLog(@"3 configureForImageSize BEGIN bounds.size %f - %f", self.bounds.size.width, self.bounds.size.height);
+    
     CGSize boundsSize = [self bounds].size;
     
 	//NSLog(@"imageSize %f - %f", imageSize.width, imageSize.height);
-	//NSLog(@"boundsSize %f - %f", boundsSize.width, boundsSize.height);
+   // NSLog(@"boundsSize %f - %f", boundsSize.width, boundsSize.height);
 	
     // set up our content size and min/max zoomscale
     CGFloat xScale = boundsSize.width / imageSize.width;    // the scale needed to perfectly fit the image width-wise
@@ -183,11 +203,14 @@
     }	
 
 	//NSLog(@"AT %f - %f", maxScale, minScale);
+	//NSLog(@"contentSize %f - %f", imageSize.width, imageSize.height);
 	
     self.contentSize = imageSize;
     self.maximumZoomScale = 3;
     self.minimumZoomScale = minScale;
     self.zoomScale = minScale;  // start out with the content fully visible
+    
+    //NSLog(@"3 configureForImageSize END bounds.size %f - %f", self.bounds.size.width, self.bounds.size.height);    
 }
 
 @end

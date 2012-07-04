@@ -33,7 +33,7 @@
  */
 
 - (void)loadView 
-{    
+{        
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(imageDownloaderPhotos:)
 												 name:@"imageDownloadedPhotos" object:nil];
@@ -60,6 +60,8 @@
 	//[pagingScrollView.layer setBorderColor: [[UIColor yellowColor] CGColor]];
 	//[pagingScrollView.layer setBorderWidth: 1.0];
 	
+    //pagingScrollView.backgroundColor = [UIColor redColor];
+    
     pagingScrollView.pagingEnabled = YES;
 	
 	pagingScrollView.clipsToBounds = NO;
@@ -85,6 +87,7 @@
     [pagingScrollView setContentOffset:CGPointMake((pagingScrollViewFrame2.size.width * selectedIndex), 0.0) animated:NO];
     
     [self updateBars];
+    
 
 }
 
@@ -114,6 +117,10 @@
 
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    
+
+
+    
     // Return YES for supported orientations
 	// Get user preference
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -128,6 +135,9 @@
 }
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
+  
+
+    
 	isRotate = YES;
 	
 	visibleIndex = [[visiblePages anyObject] index];
@@ -143,11 +153,15 @@
 	}
 
 	loaded = YES;
-	
+  
+    
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
+
+
+    
     pagingScrollView.contentSize = CGSizeMake(pagingScrollView.frame.size.width * [self imageCount],
                                               pagingScrollView.frame.size.height);
 	
@@ -171,6 +185,7 @@
 	//}	
 	//NSLog(@"rotate End");
 	isRotate = NO;
+      
 }	
 
 - (void)cancel {
@@ -359,6 +374,7 @@
 
 - (void)tilePages 
 {
+
 	//NSLog(@"tilePages");
 	
     // Calculate which pages are visible
@@ -407,6 +423,7 @@
             [visiblePages addObject:page];
         }
     } 
+
 }
 
 - (ImageScrollView *)dequeueRecycledPage
@@ -435,6 +452,9 @@
 {
 	//NSLog(@"configurePage %d", index);
 	
+    //NSLog(@"4 configurePage BEGIN bounds.size %f - %f", page.bounds.size.width, page.bounds.size.height);    
+    
+    
     page.index = index;
     page.frame = [self frameForPageAtIndex:index];
 	
@@ -445,24 +465,34 @@
 	//	  page.frame.size.width, page.frame.size.height);
     
     [page displayImage:[self imageAtIndex:index]];
+    
+    //NSLog(@"4 configurePage END bounds.size %f - %f", page.bounds.size.width, page.bounds.size.height);    
+    
 }
 
 - (void)reconfigurePage:(ImageScrollView *)page forIndex:(NSUInteger)index
 {
 	//NSLog(@"reconfigurePage %d", index);
-	
+
+
     page.index = index;
 	
 	CGRect pagingScrollViewFrame = pagingScrollView.frame;
 	
+    
     CGRect pageFrame = pagingScrollViewFrame;
+    
+    
     pageFrame.size.width -= (2 * PADDING);
     pageFrame.origin.x = (pagingScrollViewFrame.size.width * index) + PADDING;
     //pageFrame.origin.x = 0;
 	
 	
+
     page.frame = pageFrame;
 	
+
+    
 	//NSLog(@"self.view.frame %f %f - %f %f",	self.view.frame.origin.x, self.view.frame.origin.y,
 	//	  self.view.frame.size.width, self.view.frame.size.height);
     
@@ -470,6 +500,8 @@
 	//	  page.frame.size.width, page.frame.size.height);
     
     [page displayImage:[self imageAtIndex:index]];
+    
+    
 }
 
 
@@ -505,10 +537,13 @@
 #pragma mark  Frame calculations
 
 - (CGRect)frameForPagingScrollView {
+    
+
     CGRect frame = [[UIScreen mainScreen] bounds];
 	
     frame.origin.x -= PADDING;
     frame.size.width += (2 * PADDING);
+    
     return frame;
 }
 
@@ -516,7 +551,9 @@
     //CGRect pagingScrollViewFrame = [self frameForPagingScrollView];
 	
 	CGRect pagingScrollViewFrame = pagingScrollView.frame;
-	
+
+	//NSLog(@"pagingScrollViewFrame %d %f %f - %f %f", index, pagingScrollViewFrame.origin.x, pagingScrollViewFrame.origin.y,
+	//	  pagingScrollViewFrame.size.width, pagingScrollViewFrame.size.height);	
 	
     CGRect pageFrame = pagingScrollViewFrame;
     pageFrame.size.width -= (2 * PADDING);
