@@ -2,8 +2,7 @@
 //  InfosViewController.m
 //  HFR+
 //
-//  Created by Lace on 23/07/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
+//  Created by FLK on 23/07/10.
 //
 
 #import "InfosViewController.h"
@@ -11,16 +10,14 @@
 #import "IdentificationViewController.h"
 #import	"AideViewController.h"
 #import "CreditsViewController.h"
+#import "HFRplusAppDelegate.h"
 
 @implementation InfosViewController
 
-@synthesize menuList, infosTableView, lastViewController;
-
-static NSArray *pageNames = nil;
+@synthesize menuList, lastViewController;
 
 - (void)dealloc
 {
-    [infosTableView release];
 	[menuList release];
 	if(lastViewController) [lastViewController release];
 	
@@ -29,7 +26,7 @@ static NSArray *pageNames = nil;
 
 - (void)viewDidLoad
 {
-	self.title = @"Infos";
+	self.title = [NSString stringWithFormat:@"HFR+ %@ (%@)", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
 	
 	// Make the title of this page the same as the title of this app
 	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 400, 44)];
@@ -40,30 +37,33 @@ static NSArray *pageNames = nil;
 	label.textColor =[UIColor whiteColor];
 	//label.text= @"HFR+ 1.1 (1.1.0.7)";
 	label.text= [NSString stringWithFormat:@"HFR+ %@ (%@)", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];	
-	self.navigationItem.titleView = label;		
+	//self.navigationItem.titleView = label;		
 	[label release];
 	
+    [self hideEmptySeparators];
+    
 	self.menuList = [NSMutableArray array];
-
-    if (!pageNames)
-	{
-		pageNames = [[NSArray alloc] initWithObjects:@"Compte", @"Aide", @"Credits", nil];
-    }
 	
-    for (NSString *pageName in pageNames)
-	{
-		[self.menuList addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:
-								  pageName, kTitleKey,
-								  nil]];
-	}
-
-	
-	[self.infosTableView reloadData];
+    [self.menuList addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Mon Compte", @"CompteViewController", @"CompteViewController", @"111-user", nil]
+                                                                forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];
+                        
+    [self.menuList addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Aide", @"AideViewController", @"AideViewController", @"113-navigation", nil]
+                                                                forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];
+    
+    [self.menuList addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Crédits", @"CreditsViewController", @"CreditsViewController", @"122-stats", nil]
+                                                                forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];
+    
+    [self.menuList addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Faire un don", @"PayViewController", @"PayViewController", @"119-piggy-bank", nil]
+                                                                forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];    
+    
+    [self.menuList addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Réglages", @"IASKAppSettingsViewController", @"IASKAppSettingsView", @"20-gear2", nil]
+                                                                forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];   
+    
+    [self.tableView reloadData];
 }
 
 - (void)viewDidUnload
 {
-	self.infosTableView = nil;
 	self.menuList = nil;
 	
 	[super viewDidUnload];
@@ -75,7 +75,7 @@ static NSArray *pageNames = nil;
 	
 	[super viewWillAppear:animated];
 	
-	[self.infosTableView deselectRowAtIndexPath:self.infosTableView.indexPathForSelectedRow animated:NO];
+	[self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:NO];
 
 	if(lastViewController) [lastViewController release];
 	[self setLastViewController:nil];
@@ -120,7 +120,13 @@ static NSArray *pageNames = nil;
 	// get the view controller's info dictionary based on the indexPath's row
     NSDictionary *dataDictionary = [menuList objectAtIndex:indexPath.row];
     cell.textLabel.text = [dataDictionary valueForKey:kTitleKey];
+    
+    UIImage* theImage = [UIImage imageNamed:[dataDictionary valueForKey:kImageKey]];
+    cell.imageView.image = theImage;
+    
 	return cell;
+    
+    
 }
 
 
@@ -142,20 +148,25 @@ static NSArray *pageNames = nil;
     }
 	*/
 	
-	NSString *viewControllerName = [[pageNames objectAtIndex:indexPath.row] stringByAppendingString:@"ViewController"];
-	UIViewController *targetViewController = [[NSClassFromString(viewControllerName) alloc] initWithNibName:viewControllerName bundle:nil];
+    NSMutableDictionary *rowData = [self.menuList objectAtIndex:indexPath.row];
+
+    UIViewController *targetViewController = [[NSClassFromString([rowData valueForKey:kViewControllerKey]) alloc] initWithNibName:[rowData valueForKey:kXibKey] bundle:nil];
+    [targetViewController awakeFromNib];
+    
 	[self setLastViewController:targetViewController];
-	
-	//[targetViewController release];
-	/*
-	self.navigationItem.backBarButtonItem =
-	[[UIBarButtonItem alloc] initWithTitle:@"Retour"
-									 style: UIBarButtonItemStyleBordered
-									target:nil
-									action:nil];
-	*/
-	
-    [self.navigationController pushViewController:targetViewController animated:YES];
+
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        [self.navigationController pushViewController:targetViewController animated:YES];
+    }
+    else {	
+        [[[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] viewControllers] objectAtIndex:1] popToRootViewControllerAnimated:NO];
+    
+        [[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] setViewControllers:[NSMutableArray arrayWithObjects:targetViewController, nil] animated:YES];
+    }
+    
+    
+    //[self.navigationController pushViewController:targetViewController animated:YES];
 }
 
 

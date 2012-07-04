@@ -88,7 +88,7 @@
 		NSArray *cookies = [cookShared cookies];
 		
 		for (NSHTTPCookie *aCookie in cookies) {
-			NSLog(@"%@", aCookie);
+			//NSLog(@"%@", aCookie);
 			
 			[cookShared deleteCookie:aCookie];
 		}
