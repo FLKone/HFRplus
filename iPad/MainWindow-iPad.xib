@@ -61,7 +61,6 @@
 				<string key="NSFrameSize">{768, 1024}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">1</int>
 					<bytes key="NSRGB">MSAxIDEAA</bytes>
@@ -415,6 +414,38 @@
 						<reference key="destination" ref="154388811"/>
 					</object>
 					<int key="connectionID">329</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">forumsNavController</string>
+						<reference key="source" ref="664661524"/>
+						<reference key="destination" ref="745327455"/>
+					</object>
+					<int key="connectionID">330</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">favoritesNavController</string>
+						<reference key="source" ref="664661524"/>
+						<reference key="destination" ref="926124500"/>
+					</object>
+					<int key="connectionID">331</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">messagesNavController</string>
+						<reference key="source" ref="664661524"/>
+						<reference key="destination" ref="604238161"/>
+					</object>
+					<int key="connectionID">332</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">searchNavController</string>
+						<reference key="source" ref="664661524"/>
+						<reference key="destination" ref="1051666675"/>
+					</object>
+					<int key="connectionID">333</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -863,7 +894,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">329</int>
+			<int key="maxID">333</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1051,6 +1082,7 @@
 							<string>forumsNavController</string>
 							<string>messagesNavController</string>
 							<string>rootController</string>
+							<string>searchNavController</string>
 							<string>splitViewController</string>
 							<string>window</string>
 						</object>
@@ -1061,6 +1093,7 @@
 							<string>UINavigationController</string>
 							<string>UINavigationController</string>
 							<string>TabBarController</string>
+							<string>UINavigationController</string>
 							<string>SplitViewController</string>
 							<string>UIWindow</string>
 						</object>
@@ -1074,6 +1107,7 @@
 							<string>forumsNavController</string>
 							<string>messagesNavController</string>
 							<string>rootController</string>
+							<string>searchNavController</string>
 							<string>splitViewController</string>
 							<string>window</string>
 						</object>
@@ -1100,6 +1134,10 @@
 								<string key="candidateClassName">TabBarController</string>
 							</object>
 							<object class="IBToOneOutletInfo">
+								<string key="name">searchNavController</string>
+								<string key="candidateClassName">UINavigationController</string>
+							</object>
+							<object class="IBToOneOutletInfo">
 								<string key="name">splitViewController</string>
 								<string key="candidateClassName">SplitViewController</string>
 							</object>
@@ -1116,18 +1154,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">InfosViewController</string>
-					<string key="superclassName">UIViewController</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">infosTableView</string>
-						<string key="NS.object.0">UITableView</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">infosTableView</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">infosTableView</string>
-							<string key="candidateClassName">UITableView</string>
-						</object>
-					</object>
+					<string key="superclassName">UITableViewController</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/InfosViewController.h</string>
