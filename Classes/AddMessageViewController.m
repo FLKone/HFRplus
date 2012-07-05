@@ -462,7 +462,7 @@
                     if ([[[urlArray objectAtIndex:0] objectAtIndex:1] length] > 0) {
                         //NSLog(@"On doit refresh sur #");
                         [self setRefreshAnchor:[[urlArray objectAtIndex:0] objectAtIndex:1]];
-                        NSLog(@"refreshAnchor %@", self.refreshAnchor);
+                        //NSLog(@"refreshAnchor %@", self.refreshAnchor);
                     }
                     
                 }
