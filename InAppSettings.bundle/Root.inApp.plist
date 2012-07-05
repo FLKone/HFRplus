@@ -104,8 +104,20 @@
 				<string>internal</string>
 			</array>
 		</dict>
+		<dict>
+			<key>Title</key>
+			<string>Maintenance</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>IASKButtonSpecifier</string>
+			<key>Title</key>
+			<string>Vider le cache</string>
+			<key>Key</key>
+			<string>EmptyCacheButton</string>
+		</dict>
 	</array>
-	<key>StringsTable</key>
-	<string>Root</string>
 </dict>
 </plist>
