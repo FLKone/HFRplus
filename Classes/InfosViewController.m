@@ -56,7 +56,7 @@
     [self.menuList addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Faire un don", @"PayViewController", @"PayViewController", @"119-piggy-bank", nil]
                                                                 forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];    
     
-    [self.menuList addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Réglages", @"IASKAppSettingsViewController", @"IASKAppSettingsView", @"20-gear2", nil]
+    [self.menuList addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Réglages", @"SettingsViewController", @"IASKAppSettingsView", @"20-gear2", nil]
                                                                 forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];   
     
     [self.tableView reloadData];
@@ -96,7 +96,6 @@
 	//    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-
 #pragma mark -
 #pragma mark UITableViewDataSource
 
@@ -129,7 +128,6 @@
     
 }
 
-
 #pragma mark -
 #pragma mark UITableViewDelegate
 
@@ -154,19 +152,8 @@
     [targetViewController awakeFromNib];
     
 	[self setLastViewController:targetViewController];
-
+    [self.navigationController pushViewController:targetViewController animated:YES];
     
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        [self.navigationController pushViewController:targetViewController animated:YES];
-    }
-    else {	
-        [[[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] viewControllers] objectAtIndex:1] popToRootViewControllerAnimated:NO];
-    
-        [[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] setViewControllers:[NSMutableArray arrayWithObjects:targetViewController, nil] animated:YES];
-    }
-    
-    
-    //[self.navigationController pushViewController:targetViewController animated:YES];
 }
 
 
