@@ -2089,7 +2089,7 @@
 				CA17C244122486A1007EA04E /* Distribution AdHoc */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "Distribution AppStore";
 		};
 		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "HFRplus" */ = {
 			isa = XCConfigurationList;
@@ -2100,7 +2100,7 @@
 				CA17C243122486A1007EA04E /* Distribution AdHoc */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "Distribution AppStore";
 		};
 /* End XCConfigurationList section */
 	};

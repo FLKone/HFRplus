@@ -467,6 +467,7 @@
 	
 
 	for (HTMLNode * topicNode in temporaryTopicsArray) { //Loop through all the tags
+        
 		NSAutoreleasePool * pool2 = [[NSAutoreleasePool alloc] init];
 
 		Topic *aTopic = [[Topic alloc] init];
@@ -488,7 +489,7 @@
 		if (aTopicAffix.length > 0) {
 			aTopicAffix = [aTopicAffix stringByAppendingString:@" "];
 		}
-		
+
 		NSString *aTopicTitle = [[NSString alloc] initWithFormat:@"%@%@%@", aTopicAffix, [[topicTitleNode allContents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]], aTopicSuffix];
 		[aTopic setATitle:aTopicTitle];
 		[aTopicTitle release];
@@ -545,30 +546,38 @@
 
 		}
 
+
 		//aAuthorOrInter
 		HTMLNode * interNode = [topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase6" allowPartial:YES];	
-		if ([interNode findChildTag:@"a"]) {
-			NSString *aAuthorOrInter = [[NSString alloc] initWithString:[[interNode findChildTag:@"a"] contents]];
+                
+		if ([[interNode findChildTag:@"a"] contents]) {
+			NSString *aAuthorOrInter = [[NSString alloc] initWithFormat:@"%@", [[interNode findChildTag:@"a"] contents]];
+            [aTopic setAAuthorOrInter:aAuthorOrInter];
+			[aAuthorOrInter release];
+		}
+		else if ([[interNode findChildTag:@"span"] contents]) {
+			NSString *aAuthorOrInter = [[NSString alloc] initWithFormat:@"%@", [[interNode findChildTag:@"span"] contents]];
 			[aTopic setAAuthorOrInter:aAuthorOrInter];
 			[aAuthorOrInter release];
 		}
-		else if ([interNode findChildTag:@"span"]) {
-			NSString *aAuthorOrInter = [[NSString alloc] initWithString:[[interNode findChildTag:@"span"] contents]];
-			[aTopic setAAuthorOrInter:aAuthorOrInter];
-			[aAuthorOrInter release];
-		}
-
 		else {
 			[aTopic setAAuthorOrInter:@""];
 		}
 
 
+
 		//Author & Url of Last Post & Date
 		HTMLNode * lastRepNode = [topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase9" allowPartial:YES];		
 		HTMLNode * linkLastRepNode = [lastRepNode firstChild];
-		NSString *aAuthorOfLastPost = [[NSString alloc] initWithString:[[linkLastRepNode findChildTag:@"b"] contents]];
-		[aTopic setAAuthorOfLastPost:aAuthorOfLastPost];
-		[aAuthorOfLastPost release];
+        
+        if ([[linkLastRepNode findChildTag:@"b"] contents]) {
+            NSString *aAuthorOfLastPost = [[NSString alloc] initWithFormat:@"%@", [[linkLastRepNode findChildTag:@"b"] contents]];
+            [aTopic setAAuthorOfLastPost:aAuthorOfLastPost];
+            [aAuthorOfLastPost release];
+        }
+		else {
+			[aTopic setAAuthorOfLastPost:@""];
+		}
 		
 		NSString *aURLOfLastPost = [[NSString alloc] initWithString:[linkLastRepNode getAttributeNamed:@"href"]];
 		[aTopic setAURLOfLastPost:aURLOfLastPost];
