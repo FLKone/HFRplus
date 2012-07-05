@@ -729,9 +729,9 @@
 	[self.view becomeFirstResponder];
 
 	if (self.topicsTableViewController) {
-		//NSLog(@"viewWillAppear Forums Table View RELEASE");
+		//NSLog(@"viewWillAppear Forums Table View RELEASE %@", topicsTableViewController);
 
-		self.topicsTableViewController = nil;
+		//self.topicsTableViewController = nil;
 	}
 }
 
@@ -790,12 +790,16 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
 	//NSLog(@"did Select row forum table views");
-
+    
+    self.topicsTableViewController = nil;
+    
 	if (self.topicsTableViewController == nil) {
 		TopicsTableViewController *aView = [[TopicsTableViewController alloc] initWithNibName:@"TopicsTableViewController" bundle:nil];
 		self.topicsTableViewController = aView;
 		[aView release];
 	}
+    
+    
 /*	
 	self.navigationItem.backBarButtonItem =
 	[[UIBarButtonItem alloc] initWithTitle:@"Forums"
