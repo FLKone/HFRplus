@@ -47,7 +47,7 @@
 
 	
 	NSMutableArray *arrayData;
-	NSMutableArray *newArrayData;
+	NSMutableArray *updatedArrayData;
 	
     MessagesTableViewController *messagesTableViewController;
 	MessageDetailViewController *detailViewController;
@@ -97,7 +97,7 @@
 @property BOOL isViewed;
 
 @property (nonatomic, retain) NSMutableArray *arrayData;
-@property (nonatomic, retain) NSMutableArray *newArrayData;
+@property (nonatomic, retain) NSMutableArray *updatedArrayData;
 
 @property (nonatomic, retain) MessageDetailViewController *detailViewController;
 @property (nonatomic, retain) MessagesTableViewController *messagesTableViewController;

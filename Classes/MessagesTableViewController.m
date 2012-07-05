@@ -25,7 +25,7 @@
 #import <CommonCrypto/CommonDigest.h>
 
 @implementation MessagesTableViewController
-@synthesize loaded, isLoading, topicName, topicAnswerUrl, loadingView, messagesWebView, arrayData, newArrayData, detailViewController, messagesTableViewController;
+@synthesize loaded, isLoading, topicName, topicAnswerUrl, loadingView, messagesWebView, arrayData, updatedArrayData, detailViewController, messagesTableViewController;
 @synthesize swipeLeftRecognizer, swipeRightRecognizer, singledualTap, overview;
 
 @synthesize queue; //v3
@@ -367,7 +367,7 @@
 	[self.view removeGestureRecognizer:swipeRightRecognizer];
 	[self.view removeGestureRecognizer:swipeLeftRecognizer];
 
-	[self.newArrayData removeAllObjects];
+	[self.updatedArrayData removeAllObjects];
 	//int countArrayDataBefore = arrayData.count;
 	
 	[self setupScrollAndPage];
@@ -586,7 +586,7 @@
 					
 		//NSLog(@"La on ajoute dude");
 
-		[self.newArrayData addObject:fasTest];
+		[self.updatedArrayData addObject:fasTest];
 		
 		[fasTest release];
 	
@@ -746,7 +746,7 @@
     
 	self.arrayAction = [[NSMutableArray alloc] init];
 	self.arrayData = [[NSMutableArray alloc] init];
-	self.newArrayData = [[NSMutableArray alloc] init];
+	self.updatedArrayData = [[NSMutableArray alloc] init];
 	self.arrayInputData = [[NSMutableDictionary alloc] init];
 	self.editFlagTopic = [[NSString	alloc] init];
 	self.isFavoritesOrRead = [[NSString	alloc] init];
@@ -1378,8 +1378,8 @@
 		[self setEditFlagTopic:nil];
 	}
 	else {
-		if (self.newArrayData.count > self.arrayData.count) {
-			self.stringFlagTopic = [[self.newArrayData objectAtIndex:self.arrayData.count] postID]; //si il y a plus de messages après l'update, on flag sur le premier nouveau
+		if (self.updatedArrayData.count > self.arrayData.count) {
+			self.stringFlagTopic = [[self.updatedArrayData objectAtIndex:self.arrayData.count] postID]; //si il y a plus de messages après l'update, on flag sur le premier nouveau
 		}
 		else {
 			self.stringFlagTopic = @"#bas"; // sinon on flag en bas de la liste.
@@ -1390,8 +1390,8 @@
 
 
 		[self.arrayData removeAllObjects];
-		[self.arrayData addObjectsFromArray:self.newArrayData];
-		[self.newArrayData removeAllObjects];
+		[self.arrayData addObjectsFromArray:self.updatedArrayData];
+		[self.updatedArrayData removeAllObjects];
 		
 		NSString *tmpHTML = [[[NSString alloc] initWithString:@""] autorelease];
 		
@@ -2262,7 +2262,7 @@
 	
 	//[self.arrayData removeAllObjects];
 	[self.arrayData release], self.arrayData = nil;
-	[self.newArrayData release], self.newArrayData = nil;
+	[self.updatedArrayData release], self.updatedArrayData = nil;
 	
 	if(self.detailViewController) self.detailViewController = nil;
 	
