@@ -27,6 +27,7 @@
 @synthesize forumsNavController;
 @synthesize favoritesNavController;
 @synthesize messagesNavController;
+@synthesize searchNavController;
 
 @synthesize isLoggedIn;
 @synthesize statusChanged;
@@ -66,13 +67,24 @@
 	}
 	
     error = nil;
-    if (![[GANTracker sharedTracker] trackEvent:@"iphone"
-                                         action:@"version"
+    if (![[GANTracker sharedTracker] trackEvent:@"user iOS"
+                                         action:[[UIDevice currentDevice] systemVersion]
+                                          label:nil
+                                          value:-1
+                                      withError:&error]) {
+        // Handle error here
+        NSLog(@"error 1");
+    }    
+        
+    error = nil;
+    if (![[GANTracker sharedTracker] trackEvent:@"user iDevice"
+                                         action:[[UIDevice currentDevice] model]
                                           label:[[UIDevice currentDevice] systemVersion]
                                           value:-1
                                       withError:&error]) {
         // Handle error here
-    }    
+        NSLog(@"error 2");
+    }        
 	
 	SDURLCache *urlCache = [[SDURLCache alloc] initWithMemoryCapacity:1024*1024*1   // 1MB mem cache
 														 diskCapacity:1024*1024*50 // 5MB disk cache
@@ -129,21 +141,19 @@
 - (void)registerDefaultsFromSettingsBundle {
     
     NSString *settingsBundle = [[NSBundle mainBundle] pathForResource:@"InAppSettings" ofType:@"bundle"];
-    
-    //NSLog(@"settings %@", settingsBundle);
-    
+        
     if(!settingsBundle) {
         //NSLog(@"Could not find Settings.bundle");
         return;
     }
 	
-    NSDictionary *settings = [NSDictionary dictionaryWithContentsOfFile:[settingsBundle stringByAppendingPathComponent:@"Root.plist"]];
+    NSDictionary *settings = [NSDictionary dictionaryWithContentsOfFile:[settingsBundle stringByAppendingPathComponent:@"Root.inApp.plist"]];
     NSArray *preferences = [settings objectForKey:@"PreferenceSpecifiers"];
 	
     NSMutableDictionary *defaultsToRegister = [[NSMutableDictionary alloc] initWithCapacity:[preferences count]];
     for(NSDictionary *prefSpecification in preferences) {
         NSString *key = [prefSpecification objectForKey:@"Key"];
-        if(key) {
+        if(key && [prefSpecification objectForKey:@"DefaultValue"]) {
             [defaultsToRegister setObject:[prefSpecification objectForKey:@"DefaultValue"] forKey:key];
         }
     }
@@ -433,12 +443,10 @@
 		
 		[self setStatusChanged:YES];
 		[self updateMPBadgeWithString:nil]; //reset MP Badge
-		[forumsNavController popToRootViewControllerAnimated:NO];
 		
-		[favoritesNavController popToRootViewControllerAnimated:NO];
+        [self resetApp];
+        
 		[(FavoritesTableViewController *)[favoritesNavController visibleViewController] reset];
-		
-		[messagesNavController popToRootViewControllerAnimated:NO];
 		[(HFRMPViewController *)[messagesNavController visibleViewController] reset];
  
 	}
@@ -446,19 +454,29 @@
 	[self setIsLoggedIn:NO];	
 }
 
+- (void)resetApp {
+    NSLog(@"resetApp");
+    
+    [forumsNavController popToRootViewControllerAnimated:NO];
+    [favoritesNavController popToRootViewControllerAnimated:NO];
+    [messagesNavController popToRootViewControllerAnimated:NO];
+    [searchNavController popToRootViewControllerAnimated:NO];
+    
+    
+    //[[[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] viewControllers] objectAtIndex:1] popToRootViewControllerAnimated:NO];
+    
+    UIViewController * uivc = [[[UIViewController alloc] init] autorelease];
+    uivc.title = @"HFR+";
+    
+    [[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] setViewControllers:[NSMutableArray arrayWithObjects: uivc, nil] animated:NO];
+
+}
+
 #pragma mark -
 #pragma mark login management
 
 - (void)checkLogin {
 	NSLog(@"checkLogin");
-}
-
-#pragma mark -
-#pragma mark IASKAppSettingsViewControllerDelegate protocol
-- (void)settingsViewControllerDidEnd:(IASKAppSettingsViewController*)sender {
-    NSLog(@"settingsViewControllerDidEnd");
-	
-	// your code here to reconfigure the app for changed settings
 }
 
 #pragma mark -

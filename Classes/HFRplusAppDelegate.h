@@ -18,7 +18,7 @@ static const NSInteger kGANDispatchPeriodSec = 10;
 
 #import "Reachability.h"
 
-@interface HFRplusAppDelegate : NSObject <IASKSettingsDelegate, UIApplicationDelegate> {
+@interface HFRplusAppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;
 	TabBarController *rootController;	
 	SplitViewController *splitViewController;
@@ -27,7 +27,8 @@ static const NSInteger kGANDispatchPeriodSec = 10;
 	UINavigationController *forumsNavController;
 	UINavigationController *favoritesNavController;
 	UINavigationController *messagesNavController;
-
+    UINavigationController *searchNavController;
+    
 	BOOL isLoggedIn;
 	BOOL statusChanged;	
 	
@@ -52,6 +53,7 @@ static const NSInteger kGANDispatchPeriodSec = 10;
 @property (nonatomic, retain) IBOutlet UINavigationController *forumsNavController;
 @property (nonatomic, retain) IBOutlet UINavigationController *favoritesNavController;
 @property (nonatomic, retain) IBOutlet UINavigationController *messagesNavController;
+@property (nonatomic, retain) IBOutlet UINavigationController *searchNavController;
 
 @property BOOL isLoggedIn;
 @property BOOL statusChanged;
@@ -69,6 +71,8 @@ static const NSInteger kGANDispatchPeriodSec = 10;
 - (void)login;
 - (void)checkLogin;
 - (void)logout;
+
+- (void)resetApp;
 
 - (void)registerDefaultsFromSettingsBundle;
 @end
