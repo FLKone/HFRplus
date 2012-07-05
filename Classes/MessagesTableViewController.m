@@ -54,7 +54,7 @@
 //	NSLog(@"fetchContent");
 	
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMaxi];
-	NSLog(@"URL %@", [NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]);
+	//NSLog(@"URL %@", [NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]);
 	
 	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]]]];
 	[request setDelegate:self];
@@ -97,7 +97,7 @@
 	
 	//MaJ de la puce MP
 	if (!self.isViewed) {
-		NSLog(@"pas lu");
+		//NSLog(@"pas lu");
 		[[HFRplusAppDelegate sharedAppDelegate] readMPBadge];
 	}
 	
@@ -136,19 +136,21 @@
 	NSRange rangeFlagPage;
 	rangeFlagPage =  [[self currentUrl] rangeOfString:@"#" options:NSBackwardsSearch];
 	
-		
+    
+    if (self.stringFlagTopic.length == 0) {
+        if (!(rangeFlagPage.location == NSNotFound)) {
+            self.stringFlagTopic = [[self currentUrl] substringFromIndex:rangeFlagPage.location];
+        }
+        else {
+            self.stringFlagTopic = @"";
+        }
+    }
+    
 	if (!(rangeFlagPage.location == NSNotFound)) {
-		self.stringFlagTopic = [[self currentUrl] substringFromIndex:rangeFlagPage.location];
-
 		self.currentUrl = [[self currentUrl] substringToIndex:rangeFlagPage.location];
-		//NSLog(@"stringFlagTopic = %@", stringFlagTopic);
-		
-	}
-	else {
-		self.stringFlagTopic = @"";
-
-	}	
+    }    
 	//--
+
 
 	//On check si y'a page=2323
 	NSString *regexString  = @".*page=([^&]+).*";
@@ -405,7 +407,7 @@
 	//Titre
 	HTMLNode *titleNode = [[bodyNode findChildWithAttribute:@"class" matchingName:@"fondForum2Title" allowPartial:YES] findChildTag:@"h3"]; //Get all the <img alt="" />
 	if ([titleNode allContents]) {
-		NSLog(@"titleNode %@", [titleNode allContents]);
+		//NSLog(@"titleNode %@", [titleNode allContents]);
 		self.topicName = [titleNode allContents];
 		[(UILabel *)[self navigationItem].titleView setText:[NSString stringWithFormat:@"%@ — %d", self.topicName, self.pageNumber]];
 		//[self navigationItem].titleView.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
@@ -749,11 +751,14 @@
 	self.updatedArrayData = [[NSMutableArray alloc] init];
 	self.arrayInputData = [[NSMutableDictionary alloc] init];
 	self.editFlagTopic = [[NSString	alloc] init];
+	self.stringFlagTopic = [[NSString	alloc] init];
+
 	self.isFavoritesOrRead = [[NSString	alloc] init];
 	self.isUnreadable = NO;
 	self.curPostID = -1;
 	
 	[self setEditFlagTopic:nil];
+	[self setStringFlagTopic:@""];
 
 	[self fetchContent];
 	
@@ -870,7 +875,7 @@
 }
 
 - (void)optionsTopicViewControllerDidFinish:(OptionsTopicViewController *)controller {
-    NSLog(@"optionsTopicViewControllerDidFinish");
+    //NSLog(@"optionsTopicViewControllerDidFinish");
 	
 	//[self dismissModalViewControllerAnimated:YES];
     [self answerTopic];
@@ -901,10 +906,10 @@
 */
 	
 	while (self.isAnimating) {
-        NSLog(@"isAnimating");
+        //NSLog(@"isAnimating");
 		//return;
 	}
-    NSLog(@"isOK");
+    //NSLog(@"isOK");
 
 	NewMessageViewController *addMessageViewController = [[NewMessageViewController alloc]
 														   initWithNibName:@"AddMessageViewController" bundle:nil];
@@ -1191,7 +1196,7 @@
 	
 	//On récupe les images du message:
 	//NSLog(@"%@", [[arrayData objectAtIndex:index] toHTML:index]);
-	NSLog(@"selectedURL %@", selectedURL);
+	//NSLog(@"selectedURL %@", selectedURL);
 	
 	HTMLParser * myParser = [[HTMLParser alloc] initWithString:[[arrayData objectAtIndex:index] toHTML:index] error:NULL];
 	HTMLNode * msgNode = [myParser doc]; //Find the body tag
@@ -1351,6 +1356,11 @@
 	//}
 	self.curPostID = -1;
 	
+    [self setStringFlagTopic:[[controller refreshAnchor] copy]];
+    
+    //NSLog(@"addMessageViewControllerDidFinishOK stringFlagTopic %@", self.stringFlagTopic);
+    
+    
 	[self searchNewMessages];
 	[self.navigationController popToViewController:self animated:NO];
 
@@ -1373,17 +1383,26 @@
 	
 	//NSLog(@"editFlagTopic %@", self.editFlagTopic);
 
+    //NSLog(@"messagesDataReceived stringFlagTopic %@", self.stringFlagTopic);
+
+    
 	if (!(self.editFlagTopic == nil)) { // On check si on vient pas d'edit un message
 		self.stringFlagTopic = self.editFlagTopic; //si oui on flag sur l'ID en question
 		[self setEditFlagTopic:nil];
 	}
 	else {
-		if (self.updatedArrayData.count > self.arrayData.count) {
-			self.stringFlagTopic = [[self.updatedArrayData objectAtIndex:self.arrayData.count] postID]; //si il y a plus de messages après l'update, on flag sur le premier nouveau
-		}
-		else {
-			self.stringFlagTopic = @"#bas"; // sinon on flag en bas de la liste.
-		}
+        
+        if (self.stringFlagTopic.length > 0) {
+            
+        }
+        else {
+            if (self.updatedArrayData.count > self.arrayData.count) {
+                self.stringFlagTopic = [[self.updatedArrayData objectAtIndex:self.arrayData.count] postID]; //si il y a plus de messages après l'update, on flag sur le premier nouveau
+            }
+            else {
+                self.stringFlagTopic = @"#bas"; // sinon on flag en bas de la liste.
+            }
+        }
 	}
 
 	//NSLog(@"stringFlagTopic %@", self.stringFlagTopic);
@@ -1726,10 +1745,11 @@
 	}
 	
 	
-	NSLog(@"stringFlagTopic %@", self.stringFlagTopic);
+	//NSLog(@"stringFlagTopic %@", self.stringFlagTopic);
 
 	jsString = [jsString stringByAppendingString:[NSString stringWithFormat:@"window.location.hash='';window.location.hash='%@';", self.stringFlagTopic]];
 
+    self.stringFlagTopic = @"";
 	
 	[webView stringByEvaluatingJavaScriptFromString:jsString];
 	//NSLog(@"? webViewDidFinishLoad JS");
