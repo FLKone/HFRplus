@@ -28,7 +28,7 @@
 @synthesize haveCategory, textFieldCat;
 @synthesize offsetY;
 
-@synthesize popover = _popover;
+@synthesize popover = _popover, refreshAnchor;
 
 /*
 
@@ -56,7 +56,8 @@
 		self.arrayInputData = [[NSMutableDictionary alloc] init];
 		self.smileyArray = [[NSMutableArray alloc] init];
 		self.formSubmit = [[NSString alloc] init];
-		
+		self.refreshAnchor = [[NSString alloc] init];
+        
 		self.loaded = NO;
 		self.isDragging = NO;
 		
@@ -423,7 +424,6 @@
 			
 			HTMLNode * messagesNode = [bodyNode findChildWithAttribute:@"class" matchingName:@"hop" allowPartial:NO]; //Get all the <img alt="" />
 			
-			//NSLog(@"responseString: %@", [arequest responseString]);
 			
 			if ([messagesNode findChildTag:@"a"] || [messagesNode findChildTag:@"input"]) {
 				UIAlertView *alertKKO = [[UIAlertView alloc] initWithTitle:nil message:[[messagesNode contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
@@ -447,7 +447,26 @@
 
 				
 				[alertOK release];
-				
+
+                //NSLog(@"responseString %@", [arequest responseString]);
+                
+                // On regarde si on doit pas positionner le scroll sur un topic
+                NSArray * urlArray = [[arequest responseString] arrayOfCaptureComponentsMatchedByRegex:@"<meta http-equiv=\"Refresh\" content=\"[^#]+([^\"]*)\" />"];
+                
+                [self setRefreshAnchor:@""];
+                
+                //NSLog(@"%d", urlArray.count);
+                if (urlArray.count > 0) {
+                    //NSLog(@"%@", [[urlArray objectAtIndex:0] objectAtIndex:0]);
+                    
+                    if ([[[urlArray objectAtIndex:0] objectAtIndex:1] length] > 0) {
+                        //NSLog(@"On doit refresh sur #");
+                        [self setRefreshAnchor:[[urlArray objectAtIndex:0] objectAtIndex:1]];
+                        NSLog(@"refreshAnchor %@", self.refreshAnchor);
+                    }
+                    
+                }
+
 				[self.delegate addMessageViewControllerDidFinishOK:self];	
 
 			}
@@ -1218,6 +1237,7 @@
     self.textView = nil;
 	
     self.formSubmit = nil;
+    self.refreshAnchor = nil;
 	self.accessoryView = nil;
 	
 	[self.smileView stopLoading];

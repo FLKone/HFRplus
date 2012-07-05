@@ -56,6 +56,8 @@
 	ASIHTTPRequest *requestSmile;
 	
     id _popover;    
+	NSString *refreshAnchor;
+    
 }
 
 @property (nonatomic, retain) IBOutlet UIView *loadingView;
@@ -87,6 +89,7 @@
 
 //@property (nonatomic, retain) IBOutlet UIScrollView *scrollViewer;
 @property (nonatomic, retain) id popover;
+@property (nonatomic, retain) NSString *refreshAnchor;
 
 
 @property (nonatomic, retain) NSMutableDictionary *arrayInputData;
