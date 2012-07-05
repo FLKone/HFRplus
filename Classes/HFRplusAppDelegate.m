@@ -455,7 +455,7 @@
 }
 
 - (void)resetApp {
-    NSLog(@"resetApp");
+    //NSLog(@"resetApp");
     
     [forumsNavController popToRootViewControllerAnimated:NO];
     [favoritesNavController popToRootViewControllerAnimated:NO];
