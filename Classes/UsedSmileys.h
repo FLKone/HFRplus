@@ -11,4 +11,6 @@
 
 @property (strong) NSMutableDictionary *usedSmileys;
 
+-(void)notify;
+
 @end

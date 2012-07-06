@@ -11,6 +11,10 @@
 
 @synthesize usedSmileys;
 
+-(void)notify {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"docsModified" object:self];
+}
+
 // Called whenever the application reads data from the file system
 - (BOOL)loadFromContents:(id)contents ofType:(NSString *)typeName 
                    error:(NSError **)outError
@@ -28,7 +32,7 @@
     [unarchiver release];
     [data release];
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"docsModified" object:self];
+    [self notify];
     
     return YES;    
 }
