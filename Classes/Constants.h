@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import "UITableViewController+Ext.h"
+#import "NSDictionary+Merging.h"
 
 typedef enum {
 	kIdle,
