@@ -14,6 +14,7 @@
 #import "RegexKitLite.h"
 
 //#import "SmileFormController.h"
+#import "UsedSmileys.h"
 
 
 @implementation AddMessageViewController
@@ -75,17 +76,28 @@
 		NSString *directory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 		NSString *usedSmilieys = [[NSString alloc] initWithString:[directory stringByAppendingPathComponent:@"usedSmilieys.plist"]];
 		
-		if ([fileManager fileExistsAtPath:usedSmilieys]) {
+        if ([[HFRplusAppDelegate sharedAppDelegate] docSmiley].usedSmileys.count > 0) {
+            //NSLog(@"== From iCloud");
+            self.usedSearchDict = [[HFRplusAppDelegate sharedAppDelegate] docSmiley].usedSmileys;
+        }
+        else if ([fileManager fileExistsAtPath:usedSmilieys]) {
+            //NSLog(@"== From Local");            
 			self.usedSearchDict = [NSMutableDictionary dictionaryWithContentsOfFile:usedSmilieys];
-			self.usedSearchSortedArray = (NSMutableArray *)[[self.usedSearchDict allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+            
+            [[HFRplusAppDelegate sharedAppDelegate] docSmiley].usedSmileys = self.usedSearchDict;
+            [[[HFRplusAppDelegate sharedAppDelegate] docSmiley] updateChangeCount:UIDocumentChangeDone];
 		}
+        
+        if (self.usedSearchDict.count > 0) {
+            self.usedSearchSortedArray = (NSMutableArray *)[[self.usedSearchDict allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+        }
 		
 		
 		[usedSmilieys release];
 		[fileManager release];
 		// Recherche Smileys utilises		
 		
-		//NSLog(@"usedSearchDict %@", self.usedSearchDict);
+		//NSLog(@"usedSearchDict AT LAUNCH %@", self.usedSearchDict);
 		//NSLog(@"usedSearchSortedArray %@", self.usedSearchSortedArray);
 		
 		self.title = @"Nouv. message";
@@ -185,6 +197,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 	
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(docDidUpdate:) name:@"docsModified" object:nil];
+    
+
 	
 	// On rajoute les menus pour le style
     UIMenuItem *textBoldItem = [[[UIMenuItem alloc] initWithTitle:@"B" action:@selector(textBold:)] autorelease];
@@ -206,6 +221,16 @@
 	[segmentControler setEnabled:NO forSegmentAtIndex:1];		
 	//[segmentControler setEnabled:NO forSegmentAtIndex:2];		
 
+}
+
+- (void)docDidUpdate:(NSNotification *)notification {
+    
+    //NSLog(@"queryDidUpdate %@", [notification description]);
+    
+    self.usedSearchDict = [[HFRplusAppDelegate sharedAppDelegate] docSmiley].usedSmileys;
+    
+    [self textFieldSmileChange:self.textFieldSmileys];
+    
 }
 
 #pragma mark -
@@ -612,6 +637,15 @@
 		
 		[self.usedSearchDict writeToFile:usedSmilieys atomically:YES];
 		
+        
+        //iCloud sauvegarde sur iCloud des smileys
+        //NSLog(@"//iCloud sauvegarde sur iCloud des smileys");
+        [[HFRplusAppDelegate sharedAppDelegate] docSmiley].usedSmileys = self.usedSearchDict;
+        //NSLog(@"//iCloud b4 update");
+        [[[HFRplusAppDelegate sharedAppDelegate] docSmiley] updateChangeCount:UIDocumentChangeDone];
+        //NSLog(@"//iCloud");
+        
+        //NSLog(@"usedSearchDict AFTER SAVE %@", self.usedSearchDict);
 		// Recherche Smileys utilises
 	}
 	
@@ -829,6 +863,8 @@
 {
 	//NSLog(@"textFieldDidBeginEditing %@", textField);
 	
+    //NSLog(@"textFieldDidBeginEditing BEGIN %@", self.usedSearchDict);
+    
 	if (textField != textFieldSmileys) {
 		[segmentControler setEnabled:NO forSegmentAtIndex:0];
 		[textFieldSmileys setEnabled:NO];

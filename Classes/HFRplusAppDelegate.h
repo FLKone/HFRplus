@@ -18,6 +18,9 @@ static const NSInteger kGANDispatchPeriodSec = 10;
 
 #import "Reachability.h"
 
+#import "UsedSmileys.h"
+
+
 @interface HFRplusAppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;
 	TabBarController *rootController;	
@@ -39,11 +42,17 @@ static const NSInteger kGANDispatchPeriodSec = 10;
 	NSString *hash_check;
     
     Reachability* internetReach;
+
+    UsedSmileys * docSmiley;
+
 }
 
 //@property (nonatomic, retain) NSOperationQueue *ioQueue;
 //@property (retain) NSOperation *periodicMaintenanceOperation;
 - (void)periodicMaintenance;
+
+@property (strong) UsedSmileys * docSmiley;
+@property (strong) id query;
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet TabBarController *rootController;

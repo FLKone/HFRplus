@@ -34,7 +34,102 @@
 
 @synthesize hash_check, internetReach;
 
+@synthesize docSmiley;
+@synthesize query = _query;
+
 //@synthesize periodicMaintenanceOperation; //ioQueue, 
+
+#pragma mark -
+#pragma mark iCloud Docs
+- (void)loadData:(id)query {
+    
+    if ([query resultCount] == 1) {
+        
+        id item = [query resultAtIndex:0];
+        NSURL *url = [item valueForAttribute:NSMetadataItemURLKey];
+        NSLog(@"URL %@", url);
+        UsedSmileys *doc = [[UsedSmileys alloc] initWithFileURL:url];
+        self.docSmiley = doc;
+        [self.docSmiley openWithCompletionHandler:^(BOOL success) {
+            if (success) {                
+                NSLog(@"iCloud document opened");                    
+            } else {                
+                NSLog(@"failed opening document from iCloud");                
+            }
+        }];
+        
+	} 
+    else {
+        
+        NSURL *ubiq = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
+        NSURL *ubiquitousPackage = [[ubiq URLByAppendingPathComponent:@"Documents"] URLByAppendingPathComponent:kFILENAMESmiley];
+        
+        UsedSmileys *doc = [[UsedSmileys alloc] initWithFileURL:ubiquitousPackage];
+        self.docSmiley = doc;
+        
+        [doc saveToURL:[doc fileURL] forSaveOperation:UIDocumentSaveForCreating completionHandler:^(BOOL success) {            
+            if (success) {
+                [doc openWithCompletionHandler:^(BOOL success) {
+                    
+                    NSLog(@"new document opened from iCloud");
+                    
+                }];                
+            }
+        }];
+    }
+    
+}
+
+- (void)queryDidFinishGathering:(NSNotification *)notification {
+    
+    Class cls = NSClassFromString (@"NSMetadataQuery");
+    if (cls)
+    {
+        id query = [notification object];
+        [query disableUpdates];
+        [query stopQuery];
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self 
+                                                        name:NSMetadataQueryDidFinishGatheringNotification
+                                                      object:query];
+        
+        //_query = nil;
+        
+        [self loadData:query];
+    }
+    
+    
+    
+}
+
+- (void)loadDocument {
+    
+    Class cls = NSClassFromString (@"NSMetadataQuery");
+    if (cls)
+    {
+        id query;
+        
+        query = [[cls alloc] init];
+        _query = query;
+        [query setSearchScopes:[NSArray arrayWithObject:NSMetadataQueryUbiquitousDocumentsScope]];
+        NSPredicate *pred = [NSPredicate predicateWithFormat: @"%K == %@", NSMetadataItemFSNameKey, kFILENAMESmiley];
+        [query setPredicate:pred];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(queryDidFinishGathering:) name:NSMetadataQueryDidFinishGatheringNotification object:query];
+        
+        [query startQuery];
+    } 
+}
+
+- (void)updateWithUbiquityContainer:(id)container {
+    if (container) {
+        NSLog(@"iCloud access at %@", container);
+        // TODO: Load document... 
+        [self loadDocument];
+    } else {
+        NSLog(@"No iCloud access");
+    } 
+}
 
 #pragma mark -
 #pragma mark Application lifecycle
@@ -49,8 +144,22 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
+        
+    dispatch_queue_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
-	
+    dispatch_async(globalQueue, ^{
+        
+        if ([[NSFileManager defaultManager] respondsToSelector:@selector(URLForUbiquityContainerIdentifier:)] ) {
+            NSURL *ubiq = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self updateWithUbiquityContainer:ubiq];
+            });
+        }        
+        
+
+    });
+
 	
 	self.hash_check = [[NSString alloc] init];
 	
@@ -498,6 +607,9 @@
 	
 	[[GANTracker sharedTracker] stopTracker];
 	
+    
+    [docSmiley release];
+    
 	[rootController release];
     self.splitViewController = nil;
     
