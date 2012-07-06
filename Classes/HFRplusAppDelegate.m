@@ -41,6 +41,104 @@
 
 #pragma mark -
 #pragma mark iCloud Docs
+-(void)documentStateChanged {
+    UIDocumentState state = self.docSmiley.documentState;
+
+    if (state & UIDocumentStateEditingDisabled) {
+        //NSLog(@"UIDocumentStateEditingDisabled");
+    }
+    if (state & UIDocumentStateInConflict) {
+        //NSLog(@"UIDocumentStateInConflict");
+        
+        //NSError *error;    
+        //NSLog(@"== Content of current version");
+        NSURL *curURL = [[NSFileVersion currentVersionOfItemAtURL:self.docSmiley.fileURL] URL];
+        
+        NSData *data;
+        NSKeyedUnarchiver *unarchiver;
+        
+        data = [[NSMutableData alloc] initWithContentsOfURL:curURL];
+        unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+        
+        NSMutableDictionary *baseDic = [unarchiver decodeObjectForKey: @"usedSmileys"];
+        
+        //NSLog(@"BEFORE %@", baseDic);
+        
+        NSArray *oArray = [NSFileVersion unresolvedConflictVersionsOfItemAtURL:self.docSmiley.fileURL];
+        
+        //NSLog(@"== Conflict versions %d", oArray.count);
+        
+        NSEnumerator *enumerator = [oArray objectEnumerator];
+        
+        id object;
+        while (object = [enumerator nextObject]) {
+            //NSLog(@"==");
+                  
+            data = [[NSMutableData alloc] initWithContentsOfURL:[object URL]];
+            unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+            NSMutableDictionary *newDic = [unarchiver decodeObjectForKey: @"usedSmileys"];
+
+            //NSLog(@"%@", newDic);
+
+            baseDic = [baseDic dictionaryByMergingAndAddingDictionary:newDic];
+
+            [object setResolved:YES];
+        }
+        
+        //NSLog(@"== Final Dictionnary %@", baseDic);
+
+        [self.docSmiley setUsedSmileys:baseDic];
+        [self.docSmiley updateChangeCount:UIDocumentChangeDone];
+                
+        [NSFileVersion removeOtherVersionsOfItemAtURL:self.docSmiley.fileURL error:NULL];
+        [[NSFileVersion currentVersionOfItemAtURL:self.docSmiley.fileURL] setResolved:YES];
+
+        [self.docSmiley notify];
+        
+/*        
+        NSURL *curURL2 = [[NSFileVersion currentVersionOfItemAtURL:self.docSmiley.fileURL] URL];
+        
+        NSData *data2;
+        NSKeyedUnarchiver *unarchiver2;
+        
+        data2 = [[NSMutableData alloc] initWithContentsOfURL:curURL2];
+        unarchiver2 = [[NSKeyedUnarchiver alloc] initForReadingWithData:data2];
+        
+        NSMutableDictionary *baseDic2 = [unarchiver2 decodeObjectForKey: @"usedSmileys"];
+        
+        NSLog(@"== AFTER %@", baseDic2);
+        
+        NSArray *oArray2 = [NSFileVersion otherVersionsOfItemAtURL:self.docSmiley.fileURL];
+        
+        NSLog(@"== AFTER Conflict versions %d", oArray2.count);
+
+        if ([baseDic isEqualToDictionary:baseDic2]) {
+            NSLog(@"The two dictionaries are equal.");
+            
+        }
+             
+        //NSLog(@"%@", [unarchiver decodeObjectForKey: @"usedSmileys"]);
+        
+        */
+/*        
+        if (![NSFileVersion removeOtherVersionsOfItemAtURL:self.docSmiley.fileURL error:&error])    
+        {    
+            
+            
+            
+            NSLog(@"Error removing other document versions: %@",  error.localizedFailureReason);    
+            return;    
+        }    
+ */
+        
+    }
+    else {
+        NSLog(@"documentStateChanged OK");
+
+    }
+}
+
+
 - (void)loadData:(id)query {
     
     if ([query resultCount] == 1) {
@@ -77,6 +175,10 @@
             }
         }];
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(documentStateChanged)
+                                                 name:UIDocumentStateChangedNotification object:self.docSmiley];
     
 }
 

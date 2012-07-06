@@ -221,6 +221,7 @@
 		CA40DA1012845A360051E3A9 /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA40DA0E12845A360051E3A9 /* NewsViewController.m */; };
 		CA40DA1112845A360051E3A9 /* NewsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA40DA0F12845A360051E3A9 /* NewsViewController.xib */; };
 		CA5B8C2E15A72606009CE613 /* UsedSmileys.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5B8C2D15A72606009CE613 /* UsedSmileys.m */; };
+		CA5B8C3515A78A2A009CE613 /* NSDictionary+Merging.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5B8C3415A78A2A009CE613 /* NSDictionary+Merging.m */; };
 		CA65AD5912663F92005921B1 /* blank15.gif in Resources */ = {isa = PBXBuildFile; fileRef = CA65AD5812663F92005921B1 /* blank15.gif */; };
 		CA77CD4E1260A66E00271D62 /* arrowend.png in Resources */ = {isa = PBXBuildFile; fileRef = CA77CD4C1260A66E00271D62 /* arrowend.png */; };
 		CA77CD4F1260A66E00271D62 /* arrowend@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA77CD4D1260A66E00271D62 /* arrowend@2x.png */; };
@@ -613,6 +614,8 @@
 		CA40DA0F12845A360051E3A9 /* NewsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsViewController.xib; sourceTree = "<group>"; };
 		CA5B8C2C15A72606009CE613 /* UsedSmileys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsedSmileys.h; sourceTree = "<group>"; };
 		CA5B8C2D15A72606009CE613 /* UsedSmileys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UsedSmileys.m; sourceTree = "<group>"; };
+		CA5B8C3315A78A2A009CE613 /* NSDictionary+Merging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Merging.h"; sourceTree = "<group>"; };
+		CA5B8C3415A78A2A009CE613 /* NSDictionary+Merging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Merging.m"; sourceTree = "<group>"; };
 		CA65AD5812663F92005921B1 /* blank15.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = blank15.gif; sourceTree = "<group>"; };
 		CA77CD4C1260A66E00271D62 /* arrowend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowend.png; sourceTree = "<group>"; };
 		CA77CD4D1260A66E00271D62 /* arrowend@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowend@2x.png"; sourceTree = "<group>"; };
@@ -1242,6 +1245,8 @@
 				01BF8A80121D8051007624B6 /* RangeOfCharacters.m */,
 				CA7E260515A2567800721F6D /* UITableViewController+Ext.h */,
 				CA7E260615A2567800721F6D /* UITableViewController+Ext.m */,
+				CA5B8C3315A78A2A009CE613 /* NSDictionary+Merging.h */,
+				CA5B8C3415A78A2A009CE613 /* NSDictionary+Merging.m */,
 				CA3B155D1242C11A0068E1A2 /* NSData+Base64.h */,
 				CA3B155E1242C11A0068E1A2 /* NSData+Base64.m */,
 				CA17C1D112247BA9007EA04E /* ShakeView.h */,
@@ -1908,6 +1913,7 @@
 				CA1070AC15A4CEA5002E6C19 /* IASKTextField.m in Sources */,
 				CA1070C915A5F408002E6C19 /* SettingsViewController.m in Sources */,
 				CA5B8C2E15A72606009CE613 /* UsedSmileys.m in Sources */,
+				CA5B8C3515A78A2A009CE613 /* NSDictionary+Merging.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

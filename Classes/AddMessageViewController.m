@@ -225,10 +225,11 @@
 
 - (void)docDidUpdate:(NSNotification *)notification {
     
-    //NSLog(@"queryDidUpdate %@", [notification description]);
     
     self.usedSearchDict = [[HFRplusAppDelegate sharedAppDelegate] docSmiley].usedSmileys;
     
+    //NSLog(@"queryDidUpdate %@", self.usedSearchDict);
+
     [self textFieldSmileChange:self.textFieldSmileys];
     
 }
