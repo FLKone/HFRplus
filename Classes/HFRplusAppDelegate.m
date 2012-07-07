@@ -3,7 +3,7 @@
 //  HFRplus
 //
 //  Created by FLK on 18/08/10.
-//  update Branch
+//  updated Branch
 //
 
 #import "HFRplusAppDelegate.h"
