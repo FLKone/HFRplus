@@ -180,6 +180,7 @@
 		CA20FA3512F15CA700EC1771 /* TopicSearchCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA20FA3312F15CA700EC1771 /* TopicSearchCellView.m */; };
 		CA20FA3612F15CA700EC1771 /* TopicSearchCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA20FA3412F15CA700EC1771 /* TopicSearchCellView.xib */; };
 		CA228CF0125CFD4500DDCD2E /* MessageDetailViewControllerv2.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA228CEF125CFD4500DDCD2E /* MessageDetailViewControllerv2.xib */; };
+		CA2384A915A86501004F9345 /* InAppSettings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CA2384A815A86501004F9345 /* InAppSettings.bundle */; };
 		CA25DA84159F929900F6D675 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = CA25DA7C159F929900F6D675 /* Icon-72.png */; };
 		CA25DA85159F929900F6D675 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA25DA7D159F929900F6D675 /* Icon-72@2x.png */; };
 		CA25DA86159F929900F6D675 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = CA25DA7E159F929900F6D675 /* Icon-Small-50.png */; };
@@ -303,7 +304,6 @@
 		CAA1AFCD125BF3AE009C80E3 /* arrowforward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA1AFCB125BF3AE009C80E3 /* arrowforward@2x.png */; };
 		CAA1AFCE125BF3AE009C80E3 /* arrowback@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA1AFCC125BF3AE009C80E3 /* arrowback@2x.png */; };
 		CAA1B092125C0A53009C80E3 /* AKSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1B091125C0A53009C80E3 /* AKSegmentedControl.m */; };
-		CAA3A31712491FBE00F8E7B2 /* InAppSettings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CAA3A31612491FBE00F8E7B2 /* InAppSettings.bundle */; };
 		CAAA5EBA126CD2B7005B1C3E /* SDURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = CAAA5EB8126CD2B7005B1C3E /* SDURLCache.m */; };
 		CAADE5281269D2E900E19F00 /* templatev2.htm in Resources */ = {isa = PBXBuildFile; fileRef = CAADE5271269D2E900E19F00 /* templatev2.htm */; };
 		CAADE5451269DA9000E19F00 /* style-liste2.css in Resources */ = {isa = PBXBuildFile; fileRef = CAADE5441269DA9000E19F00 /* style-liste2.css */; };
@@ -566,6 +566,7 @@
 		CA20FA3312F15CA700EC1771 /* TopicSearchCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TopicSearchCellView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CA20FA3412F15CA700EC1771 /* TopicSearchCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TopicSearchCellView.xib; sourceTree = "<group>"; };
 		CA228CEF125CFD4500DDCD2E /* MessageDetailViewControllerv2.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageDetailViewControllerv2.xib; sourceTree = "<group>"; };
+		CA2384A815A86501004F9345 /* InAppSettings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = InAppSettings.bundle; sourceTree = "<group>"; };
 		CA25DA7C159F929900F6D675 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		CA25DA7D159F929900F6D675 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
 		CA25DA7E159F929900F6D675 /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
@@ -730,7 +731,6 @@
 		CAA1AFCC125BF3AE009C80E3 /* arrowback@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowback@2x.png"; sourceTree = "<group>"; };
 		CAA1B090125C0A53009C80E3 /* AKSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKSegmentedControl.h; sourceTree = "<group>"; };
 		CAA1B091125C0A53009C80E3 /* AKSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKSegmentedControl.m; sourceTree = "<group>"; };
-		CAA3A31612491FBE00F8E7B2 /* InAppSettings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = InAppSettings.bundle; sourceTree = "<group>"; };
 		CAAA5EB8126CD2B7005B1C3E /* SDURLCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDURLCache.m; sourceTree = "<group>"; };
 		CAAA5EB9126CD2B7005B1C3E /* SDURLCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDURLCache.h; sourceTree = "<group>"; };
 		CAADE5271269D2E900E19F00 /* templatev2.htm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = templatev2.htm; sourceTree = "<group>"; };
@@ -1266,9 +1266,9 @@
 				CA10706F15A4CD1B002E6C19 /* gfx */,
 				01BF8868121C4B1D007624B6 /* html */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
+				CA2384A815A86501004F9345 /* InAppSettings.bundle */,
 				CAC593C115A63F5100913CFB /* HFRplus.entitlements */,
 				8D1107310486CEB800E47090 /* HFRplus-Info.plist */,
-				CAA3A31612491FBE00F8E7B2 /* InAppSettings.bundle */,
 				CA1070C115A4DA1E002E6C19 /* Localizable.strings */,
 			);
 			name = Resources;
@@ -1714,7 +1714,6 @@
 				CAF038AF1244F6FE00897C3B /* compose.png in Resources */,
 				CAF03C561245612800897C3B /* AccessoryView.xib in Resources */,
 				CAF03C6A1245680600897C3B /* ddr555.gif in Resources */,
-				CAA3A31712491FBE00F8E7B2 /* InAppSettings.bundle in Resources */,
 				CAB1627A124B9F9A00D12569 /* TopicCellView.xib in Resources */,
 				CAB163DD124BE13C00D12569 /* icon_smile_face.png in Resources */,
 				CAB165D6124C182D00D12569 /* style-smile.css in Resources */,
@@ -1821,6 +1820,7 @@
 				CA1070BB15A4D83F002E6C19 /* 20-gear2.png in Resources */,
 				CA1070BC15A4D83F002E6C19 /* 20-gear2@2x.png in Resources */,
 				CA1070BF15A4DA1E002E6C19 /* Localizable.strings in Resources */,
+				CA2384A915A86501004F9345 /* InAppSettings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

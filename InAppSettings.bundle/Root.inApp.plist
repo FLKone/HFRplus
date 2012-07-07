@@ -12,7 +12,7 @@
 		</dict>
 		<dict>
 			<key>DefaultValue</key>
-			<string>none</string>
+			<string>all</string>
 			<key>Key</key>
 			<string>landscape_mode</string>
 			<key>Title</key>
