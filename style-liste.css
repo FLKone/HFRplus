@@ -293,8 +293,10 @@ background:-webkit-gradient(
 	background-image: url(toolbar3.png);
 	height:43px;
 	width:320px;
+	text-shadow: rgba(0, 0, 0, 0.246094) 0px -1px 1px;
+    
 }
-#toolbarpage a{
+#toolbarpage a {
 	color:#FFF;
 	text-decoration:none;
 }
