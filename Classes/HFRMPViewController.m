@@ -37,7 +37,7 @@
 	//NSLog(@"vdl MP");
 	
 	self.forumName = @"Messages";
-	self.currentUrl = @"/forum1.php?config=hfr.inc&cat=prive&page=1";
+	self.forumBaseURL = @"/forum1.php?config=hfr.inc&cat=prive&page=1";
 		
     [super viewDidLoad];
 
