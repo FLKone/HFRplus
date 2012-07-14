@@ -788,7 +788,7 @@
 
     BOOL actionsmesages_answer      = [defaults boolForKey:@"actionsmesages_answer"];
     if(actionsmesages_answer && topicAnswerUrl.length > 0) 
-        [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Répondre", @"answerTopic", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+        [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Répondre", @"answerTopic:", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
     
     BOOL actionsmesages_firstpage   = [defaults boolForKey:@"actionsmesages_firstpage"];
     if(actionsmesages_firstpage) 
@@ -870,12 +870,16 @@
 
 - (void)actionSheet:(UIActionSheet *)modalView clickedButtonAtIndex:(NSInteger)buttonIndex
 {    
-    //NSLog(@"clickedButtonAtIndex %d", buttonIndex);
+    NSLog(@"clickedButtonAtIndex %d", buttonIndex);
 
     if (buttonIndex < self.arrayActionsMessages.count) {
-        //NSLog(@"action %@", [self.arrayActionsMessages objectAtIndex:buttonIndex]);
+        NSLog(@"action %@", [self.arrayActionsMessages objectAtIndex:buttonIndex]);
         if ([self respondsToSelector:NSSelectorFromString([[self.arrayActionsMessages objectAtIndex:buttonIndex] objectForKey:@"code"])]) 
         {
+            [self performSelector:NSSelectorFromString([[self.arrayActionsMessages objectAtIndex:buttonIndex] objectForKey:@"code"])];
+        }
+        else {
+            NSLog(@"CRASH not respondsToSelector %@", [[self.arrayActionsMessages objectAtIndex:buttonIndex] objectForKey:@"code"]);
             [self performSelector:NSSelectorFromString([[self.arrayActionsMessages objectAtIndex:buttonIndex] objectForKey:@"code"])];
         }
     }
