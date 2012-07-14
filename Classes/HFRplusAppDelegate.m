@@ -270,7 +270,7 @@
 	
 	[MKStoreManager sharedManager];
 	
-	[[GANTracker sharedTracker] startTrackerWithAccountID:@"UA-18984614-1"
+	[[GANTracker sharedTracker] startTrackerWithAccountID:kGoogleAnalyticsAPI
 										   dispatchPeriod:kGANDispatchPeriodSec
 												 delegate:nil];
 	NSError *error;

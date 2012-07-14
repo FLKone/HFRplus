@@ -851,7 +851,7 @@
 -(void)reload:(BOOL)shake
 {
 	if (!shake) {
-		[[GANTracker sharedTracker] startTrackerWithAccountID:@"UA-18984614-1"
+		[[GANTracker sharedTracker] startTrackerWithAccountID:kGoogleAnalyticsAPI
 											   dispatchPeriod:kGANDispatchPeriodSec
 													 delegate:nil];
 		NSError *error;
@@ -872,7 +872,7 @@
 {
 	if (![request inProgress]) {
 		
-		[[GANTracker sharedTracker] startTrackerWithAccountID:@"UA-18984614-1"
+		[[GANTracker sharedTracker] startTrackerWithAccountID:kGoogleAnalyticsAPI
 											   dispatchPeriod:kGANDispatchPeriodSec
 													 delegate:nil];
 		NSError *error;
