@@ -247,6 +247,7 @@
 		CA5B8C2E15A72606009CE613 /* UsedSmileys.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5B8C2D15A72606009CE613 /* UsedSmileys.m */; };
 		CA5B8C3515A78A2A009CE613 /* NSDictionary+Merging.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5B8C3415A78A2A009CE613 /* NSDictionary+Merging.m */; };
 		CA65AD5912663F92005921B1 /* blank15.gif in Resources */ = {isa = PBXBuildFile; fileRef = CA65AD5812663F92005921B1 /* blank15.gif */; };
+		CA730DAA15B1E46900FB7FF1 /* jquery-1.7.2.min.js in Resources */ = {isa = PBXBuildFile; fileRef = CA730DA715B1D9B600FB7FF1 /* jquery-1.7.2.min.js */; };
 		CA77CD4E1260A66E00271D62 /* arrowend.png in Resources */ = {isa = PBXBuildFile; fileRef = CA77CD4C1260A66E00271D62 /* arrowend.png */; };
 		CA77CD4F1260A66E00271D62 /* arrowend@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA77CD4D1260A66E00271D62 /* arrowend@2x.png */; };
 		CA77CD6E1260A90300271D62 /* arrowbegin.png in Resources */ = {isa = PBXBuildFile; fileRef = CA77CD6C1260A90300271D62 /* arrowbegin.png */; };
@@ -680,6 +681,7 @@
 		CA5B8C3315A78A2A009CE613 /* NSDictionary+Merging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Merging.h"; sourceTree = "<group>"; };
 		CA5B8C3415A78A2A009CE613 /* NSDictionary+Merging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Merging.m"; sourceTree = "<group>"; };
 		CA65AD5812663F92005921B1 /* blank15.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = blank15.gif; sourceTree = "<group>"; };
+		CA730DA715B1D9B600FB7FF1 /* jquery-1.7.2.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-1.7.2.min.js"; sourceTree = "<group>"; };
 		CA77CD4C1260A66E00271D62 /* arrowend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowend.png; sourceTree = "<group>"; };
 		CA77CD4D1260A66E00271D62 /* arrowend@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowend@2x.png"; sourceTree = "<group>"; };
 		CA77CD6C1260A90300271D62 /* arrowbegin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowbegin.png; sourceTree = "<group>"; };
@@ -1107,6 +1109,7 @@
 		01BF8868121C4B1D007624B6 /* html */ = {
 			isa = PBXGroup;
 			children = (
+				CA730DA715B1D9B600FB7FF1 /* jquery-1.7.2.min.js */,
 				CA159D411295D9D700C7268C /* img */,
 				CA3B127D12422F2A0068E1A2 /* jquery.js */,
 				CA3B13DC124280F20068E1A2 /* jquery.doubletap.js */,
@@ -1693,6 +1696,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA730DAA15B1E46900FB7FF1 /* jquery-1.7.2.min.js in Resources */,
 				CAFB776C126639AA004D8C57 /* jquery.lazyload.mini.js in Resources */,
 				CA3B14FD1242BAB90068E1A2 /* jquery.base64.js in Resources */,
 				CA17BB8A1223397D007EA04E /* xui.js in Resources */,

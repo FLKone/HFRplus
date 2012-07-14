@@ -7,38 +7,20 @@
 	<key>PreferenceSpecifiers</key>
 	<array>
 		<dict>
+			<key>FooterText</key>
+			<string>Certaines actions peuvent ne pas s&apos;afficher, même si elles sont activées ici.</string>
 			<key>Title</key>
-			<string>Unexisting lookup entry</string>
-			<key>Key</key>
-			<string>title_non_existing_lookup_entry</string>
-			<key>DefaultValue</key>
-			<integer>3</integer>
-			<key>Type</key>
-			<string>PSTitleValueSpecifier</string>
-			<key>Values</key>
-			<array>
-				<integer>1</integer>
-				<integer>2</integer>
-			</array>
-			<key>Titles</key>
-			<array>
-				<string>One</string>
-				<string>Two</string>
-			</array>
-		</dict>
-		<dict>
+			<string></string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
-			<key>Title</key>
-			<string>Toggles</string>
 		</dict>
 		<dict>
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>Boolean Toggle</string>
+			<string>Répondre</string>
 			<key>Key</key>
-			<string>toggle_boolean</string>
+			<string>actionsmesages_answer</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
@@ -46,43 +28,71 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>String Toogle</string>
+			<string>Première page</string>
 			<key>Key</key>
-			<string>toogle_string</string>
+			<string>actionsmesages_firstpage</string>
 			<key>DefaultValue</key>
-			<string>foo</string>
-			<key>TrueValue</key>
-			<string>foo</string>
-			<key>FalseValue</key>
-			<string>bar</string>
+			<true/>
 		</dict>
 		<dict>
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>Number Toggle</string>
+			<string>Dernière page</string>
 			<key>Key</key>
-			<string>toogle_number</string>
+			<string>actionsmesages_lastpage</string>
 			<key>DefaultValue</key>
-			<integer>1</integer>
-			<key>TrueValue</key>
-			<integer>1</integer>
-			<key>FalseValue</key>
-			<integer>0</integer>
+			<true/>
 		</dict>
 		<dict>
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>String Toogle (false)</string>
+			<string>Dernière réponse</string>
 			<key>Key</key>
-			<string>toogle_string_false</string>
+			<string>actionsmesages_lastanswer</string>
 			<key>DefaultValue</key>
-			<string>bar</string>
-			<key>TrueValue</key>
-			<string>foo</string>
-			<key>FalseValue</key>
-			<string>bar</string>
+			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Page numéro...</string>
+			<key>Key</key>
+			<string>actionsmesages_pagenumber</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Haut de page</string>
+			<key>Key</key>
+			<string>actionsmesages_toppage</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Bas de page</string>
+			<key>Key</key>
+			<string>actionsmesages_bottompage</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Marquer comme non lu</string>
+			<key>Key</key>
+			<string>actionsmesages_unread</string>
+			<key>DefaultValue</key>
+			<true/>
 		</dict>
 	</array>
 </dict>

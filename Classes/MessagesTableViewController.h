@@ -72,6 +72,8 @@
 	NSMutableArray *arrayAction;
 	int curPostID;
 	
+    NSMutableArray *arrayActionsMessages;
+
 	BOOL isAnimating; //to check is an animation is ON
 
 	NSDate *firstDate;
@@ -124,11 +126,19 @@
 
 @property BOOL isAnimating;
 
+@property (retain, nonatomic) NSMutableArray *arrayActionsMessages;
+
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andUrl:(NSString *)theTopicUrl;
 - (void)optionsTopic:(id)sender;
 - (void)answerTopic;
 - (void)quoteMessage:(NSString *)quoteUrl;
 - (void)editMessage:(NSString *)editUrl;
+
+-(void)markUnread;
+-(void)goToPagePosition:(NSString *)position;
+-(void)goToPagePositionTop;
+-(void)goToPagePositionBottom;
 
 -(void)addDataInTableView;
 -(void)loadDataInTableView:(HTMLParser *)myParser;

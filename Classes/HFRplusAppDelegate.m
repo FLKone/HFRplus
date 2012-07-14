@@ -371,7 +371,17 @@
             [defaultsToRegister setObject:[prefSpecification objectForKey:@"DefaultValue"] forKey:key];
         }
     }
+
+    NSDictionary *settings2 = [NSDictionary dictionaryWithContentsOfFile:[settingsBundle stringByAppendingPathComponent:@"ActionsMessages.plist"]];
+    NSArray *preferences2 = [settings2 objectForKey:@"PreferenceSpecifiers"];
 	
+    for(NSDictionary *prefSpecification in preferences2) {
+        NSString *key = [prefSpecification objectForKey:@"Key"];
+        if(key && [prefSpecification objectForKey:@"DefaultValue"]) {
+            [defaultsToRegister setObject:[prefSpecification objectForKey:@"DefaultValue"] forKey:key];
+        }
+    }	
+    
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultsToRegister];
     [defaultsToRegister release];
 }

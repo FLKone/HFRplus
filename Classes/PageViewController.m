@@ -194,6 +194,12 @@
 	self.currentUrl = self.previousPageUrl;
 	[self fetchContent];	
 }
+-(void)firstPage {
+    [self firstPage:nil];
+}
+-(void)lastPage {
+    [self lastPage:nil];
+}
 -(void)firstPage:(id)sender {
 	NSLog(@"firstPage self.firstPageUrl %@", self.firstPageUrl);
 	
@@ -204,6 +210,12 @@
 	NSLog(@"lastPage self.lastPageUrl %@", self.lastPageUrl);
 	
 	if(self.lastPageUrl.length > 0) self.currentUrl = self.lastPageUrl;
+	[self fetchContent];	
+}
+-(void)lastAnswer {
+	NSLog(@"lastAnswer %@", self.lastPageUrl);
+	
+	if(self.lastPageUrl.length > 0) self.currentUrl = [NSString stringWithFormat:@"%@#bas", self.lastPageUrl];
 	[self fetchContent];	
 }
 
@@ -254,8 +266,10 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-	NSLog(@"clickedButtonAtIndex PT %@", alertView);
+	//NSLog(@"clickedButtonAtIndex PT %@", alertView);
 	
+    
+    
 	if (buttonIndex == 1 && alertView.tag == 667) {
 		[self fetchContent];
 	}

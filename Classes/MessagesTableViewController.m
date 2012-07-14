@@ -26,7 +26,7 @@
 
 @implementation MessagesTableViewController
 @synthesize loaded, isLoading, topicName, topicAnswerUrl, loadingView, messagesWebView, arrayData, updatedArrayData, detailViewController, messagesTableViewController;
-@synthesize swipeLeftRecognizer, swipeRightRecognizer, singledualTap, overview;
+@synthesize swipeLeftRecognizer, swipeRightRecognizer, singledualTap, overview, arrayActionsMessages;
 
 @synthesize queue; //v3
 @synthesize stringFlagTopic;
@@ -51,7 +51,7 @@
 
 - (void)fetchContent
 {
-//	NSLog(@"fetchContent");
+    //NSLog(@"fetchContent");
 	
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMaxi];
 	//NSLog(@"URL %@", [NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]);
@@ -749,6 +749,8 @@
     
     
 	self.arrayAction = [[NSMutableArray alloc] init];
+	self.arrayActionsMessages = [[NSMutableArray alloc] init];
+    
 	self.arrayData = [[NSMutableArray alloc] init];
 	self.updatedArrayData = [[NSMutableArray alloc] init];
 	self.arrayInputData = [[NSMutableDictionary alloc] init];
@@ -780,9 +782,49 @@
 
 -(void)optionsTopic:(id)sender
 {	
+    [self.arrayActionsMessages removeAllObjects];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+    BOOL actionsmesages_answer      = [defaults boolForKey:@"actionsmesages_answer"];
+    if(actionsmesages_answer && topicAnswerUrl.length > 0) 
+        [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Répondre", @"answerTopic", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+    
+    BOOL actionsmesages_firstpage   = [defaults boolForKey:@"actionsmesages_firstpage"];
+    if(actionsmesages_firstpage) 
+        [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Première page", @"firstPage", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+    
+    BOOL actionsmesages_lastpage    = [defaults boolForKey:@"actionsmesages_lastpage"];
+    if(actionsmesages_lastpage) 
+        [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Dernière page", @"lastPage", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+    
+    BOOL actionsmesages_lastanswer  = [defaults boolForKey:@"actionsmesages_lastanswer"];
+    if(actionsmesages_lastanswer) 
+        [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Dernière réponse", @"lastAnswer", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+    
+    BOOL actionsmesages_pagenumber  = [defaults boolForKey:@"actionsmesages_pagenumber"];
+    if(actionsmesages_pagenumber) 
+        [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Page Numéro...", @"choosePage", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+    
+    BOOL actionsmesages_toppage     = [defaults boolForKey:@"actionsmesages_toppage"];
+    if(actionsmesages_toppage) 
+        [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Haut de la page", @"goToPagePositionTop", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+    
+    BOOL actionsmesages_bottompage  = [defaults boolForKey:@"actionsmesages_bottompage"];
+    if(actionsmesages_bottompage) 
+        [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Bas de la page", @"goToPagePositionBottom", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+    
+    BOOL actionsmesages_unread      = [defaults boolForKey:@"actionsmesages_unread"];
+    if(actionsmesages_unread && self.isUnreadable) 
+        [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Marquer comme non lu", @"markUnread", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+    
+    if (self.arrayActionsMessages.count == 0) {
+        return;
+    }
     //UIActionSheet *styleAlert;
 
-    NSMutableArray *optionsList = [NSMutableArray arrayWithObjects:@"Première page", @"Dernière page", nil];
+
+    /*NSMutableArray *optionsList = [NSMutableArray arrayWithObjects:@"Première page", @"Dernière page", nil];
 
 	if(topicAnswerUrl.length > 0) {
         [optionsList addObject:@"Répondre"];
@@ -790,10 +832,12 @@
     
     if (self.isUnreadable) {
         [optionsList addObject:@"Marquer comme non lu"];
-    }    
+    } 
     
+    
+     */
     if ([styleAlert isVisible]) {
-        [styleAlert dismissWithClickedButtonIndex:self.arrayAction.count animated:YES];
+        [styleAlert dismissWithClickedButtonIndex:styleAlert.numberOfButtons-1 animated:YES];
         return;
     }
     else {
@@ -801,12 +845,15 @@
         styleAlert = [[UIActionSheet alloc] init];
     }
     
+    
+    
+    //styleAlert = [[UIActionSheet alloc] init];
 	styleAlert.delegate = self;
     
 	styleAlert.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
     
-    for( NSString *option in optionsList)  
-        [styleAlert addButtonWithTitle:option]; 
+    for( NSDictionary *dico in arrayActionsMessages)  
+        [styleAlert addButtonWithTitle:[dico valueForKey:@"title"]]; 
 
     [styleAlert addButtonWithTitle:@"Annuler"]; 
     styleAlert.cancelButtonIndex = styleAlert.numberOfButtons-1;
@@ -823,57 +870,16 @@
 
 - (void)actionSheet:(UIActionSheet *)modalView clickedButtonAtIndex:(NSInteger)buttonIndex
 {    
-	switch (buttonIndex)
-	{
-		case 0:
-		{
-            [self firstPage:nil];
-			break;
-		}
-		case 1:
-		{
-            [self lastPage:nil];
-			break;
-			
-		}
-		case 2:
-		{
-            if(topicAnswerUrl.length > 0) {
-                [self answerTopic];
-            }
-			break;
-		}   
-		case 3:
-		{
-            if (self.isUnreadable) {
-                ASIHTTPRequest  *delrequest =  
-                [[[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, self.isFavoritesOrRead]]] autorelease];
-                //delete
-                
-                [delrequest startSynchronous];
-                
-                //NSLog(@"arequest: %@", [arequest url]);
-                
-                if (delrequest) {
-                    if ([delrequest error]) {
-                        //NSLog(@"error: %@", [[arequest error] localizedDescription]);
-                    }
-                    else if ([delrequest responseString])
-                    {
-                        //NSLog(@"responseString: %@", [arequest responseString]);
-                        
-                        //[self reload];
-                        [[[HFRplusAppDelegate sharedAppDelegate] messagesNavController] popViewControllerAnimated:YES];
-                        [(TopicsTableViewController *)[[[HFRplusAppDelegate sharedAppDelegate] messagesNavController] visibleViewController] fetchContent];
-                    }
-                }
-                //NSLog(@"nonlu %@", self.isFavoritesOrRead);
-            }
-			break;
-			
-		}             
-			
-	}
+    //NSLog(@"clickedButtonAtIndex %d", buttonIndex);
+
+    if (buttonIndex < self.arrayActionsMessages.count) {
+        //NSLog(@"action %@", [self.arrayActionsMessages objectAtIndex:buttonIndex]);
+        if ([self respondsToSelector:NSSelectorFromString([[self.arrayActionsMessages objectAtIndex:buttonIndex] objectForKey:@"code"])]) 
+        {
+            [self performSelector:NSSelectorFromString([[self.arrayActionsMessages objectAtIndex:buttonIndex] objectForKey:@"code"])];
+        }
+    }
+
 }
 
 - (void)optionsTopicViewControllerDidFinish:(OptionsTopicViewController *)controller {
@@ -881,6 +887,52 @@
 	
 	//[self dismissModalViewControllerAnimated:YES];
     [self answerTopic];
+}
+
+-(void)markUnread {
+    ASIHTTPRequest  *delrequest =  
+    [[[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, self.isFavoritesOrRead]]] autorelease];
+    //delete
+    
+    [delrequest startSynchronous];
+    
+    //NSLog(@"arequest: %@", [arequest url]);
+    
+    if (delrequest) {
+        if ([delrequest error]) {
+            //NSLog(@"error: %@", [[arequest error] localizedDescription]);
+        }
+        else if ([delrequest responseString])
+        {
+            //NSLog(@"responseString: %@", [arequest responseString]);
+            
+            //[self reload];
+            [[[HFRplusAppDelegate sharedAppDelegate] messagesNavController] popViewControllerAnimated:YES];
+            [(TopicsTableViewController *)[[[HFRplusAppDelegate sharedAppDelegate] messagesNavController] visibleViewController] fetchContent];
+        }
+    }
+    //NSLog(@"nonlu %@", self.isFavoritesOrRead);
+}
+
+-(void)goToPagePosition:(NSString *)position{
+    NSString *script;
+    
+    if ([position isEqualToString:@"top"])
+        script = @"$('html, body').animate({scrollTop:0}, 'slow');";
+    else if ([position isEqualToString:@"bottom"])
+        script = @"$('html, body').animate({scrollTop:$('body').attr('scrollHeight')}, 'slow');";
+    else {
+        script = @"";
+    }
+
+    [self.messagesWebView stringByEvaluatingJavaScriptFromString:script];
+}
+    
+-(void)goToPagePositionTop{
+    [self goToPagePosition:@"top"];
+}
+-(void)goToPagePositionBottom{
+    [self goToPagePosition:@"bottom"];    
 }
 
 -(void)answerTopic
@@ -2343,7 +2395,8 @@
 	
 	self.isFavoritesOrRead = nil;
 	self.arrayAction = nil;
-
+    self.arrayActionsMessages = nil;
+    
     [super dealloc];
 	
 }
