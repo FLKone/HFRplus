@@ -803,7 +803,7 @@
         [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Dernière réponse", @"lastAnswer", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
     
     BOOL actionsmesages_pagenumber  = [defaults boolForKey:@"actionsmesages_pagenumber"];
-    if(actionsmesages_pagenumber) 
+    if(actionsmesages_pagenumber && ([self lastPageNumber] > [self firstPageNumber])) 
         [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Page Numéro...", @"choosePage", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
     
     BOOL actionsmesages_toppage     = [defaults boolForKey:@"actionsmesages_toppage"];
