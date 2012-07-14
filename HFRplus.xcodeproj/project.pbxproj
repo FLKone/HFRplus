@@ -221,6 +221,10 @@
 		CA3BB15812EC2CAC00F7DF7B /* 122-stats@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA3BB15612EC2CAC00F7DF7B /* 122-stats@2x.png */; };
 		CA40DA1012845A360051E3A9 /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA40DA0E12845A360051E3A9 /* NewsViewController.m */; };
 		CA40DA1112845A360051E3A9 /* NewsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA40DA0F12845A360051E3A9 /* NewsViewController.xib */; };
+		CA4CE81015B1856F0039FC3B /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA4CE80C15B1856F0039FC3B /* libTestFlight.a */; };
+		CA4CE81115B1856F0039FC3B /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = CA4CE80D15B1856F0039FC3B /* README.txt */; };
+		CA4CE81215B1856F0039FC3B /* release_notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = CA4CE80E15B1856F0039FC3B /* release_notes.txt */; };
+		CA4CE81515B185CA0039FC3B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CA4CE81415B185CA0039FC3B /* libz.dylib */; };
 		CA5B8C2E15A72606009CE613 /* UsedSmileys.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5B8C2D15A72606009CE613 /* UsedSmileys.m */; };
 		CA5B8C3515A78A2A009CE613 /* NSDictionary+Merging.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5B8C3415A78A2A009CE613 /* NSDictionary+Merging.m */; };
 		CA65AD5912663F92005921B1 /* blank15.gif in Resources */ = {isa = PBXBuildFile; fileRef = CA65AD5812663F92005921B1 /* blank15.gif */; };
@@ -328,7 +332,6 @@
 		CABEF20F1240F12500DDB9A9 /* multipleflag0.gif in Resources */ = {isa = PBXBuildFile; fileRef = CABEF20B1240F12500DDB9A9 /* multipleflag0.gif */; };
 		CABEF2101240F12500DDB9A9 /* multipleflag1.gif in Resources */ = {isa = PBXBuildFile; fileRef = CABEF20C1240F12500DDB9A9 /* multipleflag1.gif */; };
 		CABEF2111240F12500DDB9A9 /* multiplefavoris.gif in Resources */ = {isa = PBXBuildFile; fileRef = CABEF20D1240F12500DDB9A9 /* multiplefavoris.gif */; };
-		CAC0D9CF143CE4B800E53A63 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CAC0D9CE143CE4B800E53A63 /* libz.1.2.5.dylib */; };
 		CADCBB95127A07AD00419AE6 /* 60-signpost.png in Resources */ = {isa = PBXBuildFile; fileRef = CADCBB94127A07AD00419AE6 /* 60-signpost.png */; };
 		CADCBB99127A081B00419AE6 /* 06-magnifying-glass.png in Resources */ = {isa = PBXBuildFile; fileRef = CADCBB98127A081B00419AE6 /* 06-magnifying-glass.png */; };
 		CAE1D2F1125A8DD20067715B /* smileybase.html in Resources */ = {isa = PBXBuildFile; fileRef = CAE1D2F0125A8DD20067715B /* smileybase.html */; };
@@ -613,6 +616,12 @@
 		CA40DA0D12845A360051E3A9 /* NewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsViewController.h; sourceTree = "<group>"; };
 		CA40DA0E12845A360051E3A9 /* NewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsViewController.m; sourceTree = "<group>"; };
 		CA40DA0F12845A360051E3A9 /* NewsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsViewController.xib; sourceTree = "<group>"; };
+		CA4CE80C15B1856F0039FC3B /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		CA4CE80D15B1856F0039FC3B /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		CA4CE80E15B1856F0039FC3B /* release_notes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.txt; sourceTree = "<group>"; };
+		CA4CE80F15B1856F0039FC3B /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
+		CA4CE81415B185CA0039FC3B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		CA4CE81615B18F840039FC3B /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		CA5B8C2C15A72606009CE613 /* UsedSmileys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsedSmileys.h; sourceTree = "<group>"; };
 		CA5B8C2D15A72606009CE613 /* UsedSmileys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UsedSmileys.m; sourceTree = "<group>"; };
 		CA5B8C3315A78A2A009CE613 /* NSDictionary+Merging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Merging.h"; sourceTree = "<group>"; };
@@ -760,7 +769,6 @@
 		CABEF20B1240F12500DDB9A9 /* multipleflag0.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = multipleflag0.gif; sourceTree = "<group>"; };
 		CABEF20C1240F12500DDB9A9 /* multipleflag1.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = multipleflag1.gif; sourceTree = "<group>"; };
 		CABEF20D1240F12500DDB9A9 /* multiplefavoris.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = multiplefavoris.gif; sourceTree = "<group>"; };
-		CAC0D9CE143CE4B800E53A63 /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		CAC593C115A63F5100913CFB /* HFRplus.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = HFRplus.entitlements; sourceTree = "<group>"; };
 		CADCBB94127A07AD00419AE6 /* 60-signpost.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "60-signpost.png"; sourceTree = "<group>"; };
 		CADCBB98127A081B00419AE6 /* 06-magnifying-glass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "06-magnifying-glass.png"; sourceTree = "<group>"; };
@@ -780,9 +788,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA4CE81515B185CA0039FC3B /* libz.dylib in Frameworks */,
 				CA1070B415A4CEFE002E6C19 /* MessageUI.framework in Frameworks */,
 				CA37D50D15A1BD5F002C72C6 /* libsqlite3.dylib in Frameworks */,
-				CAC0D9CF143CE4B800E53A63 /* libz.1.2.5.dylib in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
@@ -794,6 +802,7 @@
 				CABBC39A125E97E500BCA6C8 /* libGoogleAnalytics.a in Frameworks */,
 				CA18B161126245AB008B8466 /* AssetsLibrary.framework in Frameworks */,
 				CA8DDC9C12EB30AC00635441 /* StoreKit.framework in Frameworks */,
+				CA4CE81015B1856F0039FC3B /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1109,6 +1118,7 @@
 				01BF8C4A121DBB09007624B6 /* UIAlertViewURL.h */,
 				01BF8C4B121DBB09007624B6 /* UIAlertViewURL.m */,
 				01BF8A3A121D7785007624B6 /* Constants.h */,
+				CA4CE81615B18F840039FC3B /* Config.h */,
 				CA7E25EF15A1F4AA00721F6D /* DetailNavigationViewController.h */,
 				CA7E25F015A1F4AA00721F6D /* DetailNavigationViewController.m */,
 				CA7E25E115A1D17500721F6D /* SplitViewController.h */,
@@ -1232,6 +1242,7 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				CA4CE80B15B1856F0039FC3B /* TestFlight */,
 				CA10707415A4CEA5002E6C19 /* InAppSettingsKit */,
 				CA3BB08312EC0DB900F7DF7B /* MK */,
 				CABBC394125E97D500BCA6C8 /* GA */,
@@ -1277,8 +1288,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CA4CE81415B185CA0039FC3B /* libz.dylib */,
 				CA37D50C15A1BD5F002C72C6 /* libsqlite3.dylib */,
-				CAC0D9CE143CE4B800E53A63 /* libz.1.2.5.dylib */,
 				01BF8A2F121D7750007624B6 /* libxml2.2.7.3.dylib */,
 				CA1070B315A4CEFD002E6C19 /* MessageUI.framework */,
 				01BF87EC121C45DE007624B6 /* MobileCoreServices.framework */,
@@ -1469,6 +1480,17 @@
 				CA3BB07F12EC0DB000F7DF7B /* MKStoreObserver.h */,
 			);
 			name = MK;
+			sourceTree = "<group>";
+		};
+		CA4CE80B15B1856F0039FC3B /* TestFlight */ = {
+			isa = PBXGroup;
+			children = (
+				CA4CE80C15B1856F0039FC3B /* libTestFlight.a */,
+				CA4CE80D15B1856F0039FC3B /* README.txt */,
+				CA4CE80E15B1856F0039FC3B /* release_notes.txt */,
+				CA4CE80F15B1856F0039FC3B /* TestFlight.h */,
+			);
+			path = TestFlight;
 			sourceTree = "<group>";
 		};
 		CA5B8C2615A6F26E009CE613 /* iCloud */ = {
@@ -1821,6 +1843,8 @@
 				CA1070BC15A4D83F002E6C19 /* 20-gear2@2x.png in Resources */,
 				CA1070BF15A4DA1E002E6C19 /* Localizable.strings in Resources */,
 				CA2384A915A86501004F9345 /* InAppSettings.bundle in Resources */,
+				CA4CE81115B1856F0039FC3B /* README.txt in Resources */,
+				CA4CE81215B1856F0039FC3B /* release_notes.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1949,6 +1973,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/TestFlight\"",
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = HFRplus;
@@ -1972,6 +1997,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/TestFlight\"",
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = HFRplus;
@@ -2052,6 +2078,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/TestFlight\"",
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = HFRplus;
@@ -2096,10 +2123,11 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/TestFlight\"",
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = HFRplus;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "ECF0BE14-992A-4124-9FB2-628E010798B3";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0A17CD1D-CD7C-4756-85AE-7BAD5E91EBE9";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
