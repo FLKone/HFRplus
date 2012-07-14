@@ -602,7 +602,7 @@
         
     }
     else {
-        NSString *msg = [NSString stringWithFormat:@"Vous allez quitter HFR+ et être redirigé vers:\n %@\n", stringUrl];
+        NSString *msg = [NSString stringWithFormat:@"Vous allez quitter HFR+ et être redirigé vers :\n %@\n", stringUrl];
         
         UIAlertViewURL *alert = [[UIAlertViewURL alloc] initWithTitle:@"Attention !" message:msg
                                                              delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Confirmer", nil];
@@ -627,10 +627,12 @@
         NSString *web = [defaults stringForKey:@"default_web"];
         
         if ([web isEqualToString:@"googlechrome"]) {
-            //tURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@", web, [alertView stringURL]]];
-            tURL = [[NSURL alloc] initWithScheme:web host:[tURLbase host] path:[tURLbase path]];// - (id)initWithScheme:(NSString *)scheme host:(NSString *)host path:(NSString *)path
+            tURL = [NSURL URLWithString:[[tURLbase absoluteString] stringByReplacingOccurrencesOfString:[tURLbase scheme] withString:web]];
+            
+            //tURL = [[NSURL alloc] initWithScheme:web host:[tURLbase host] path:[tURLbase path]];// - (id)initWithScheme:(NSString *)scheme host:(NSString *)host path:(NSString *)path
 
         }
+        
         NSLog(@"OK %@", tURL);
         if ([[UIApplication sharedApplication] canOpenURL:tURL]) {
             [[UIApplication sharedApplication] openURL:tURL];
