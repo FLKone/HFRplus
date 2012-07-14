@@ -23,6 +23,7 @@
 #import "NewMessageViewController.h"
 
 #import "PhotoViewController.h"
+#import "MWPhotoBrowser.h"
 
 @class HTMLNode;
 @class MessageDetailViewController;

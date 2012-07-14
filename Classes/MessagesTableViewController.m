@@ -1210,10 +1210,25 @@
 	for (HTMLNode * imgNode in tmpImageArray) { //Loop through all the tags
 		//NSLog(@"======\nalt %@", [imgNode getAttributeNamed:@"alt"]);
 		//NSLog(@"longdesc %@", [imgNode getAttributeNamed:@"longdesc"]);		
+        
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+            [imageArray addObject:[MWPhoto photoWithURL:[NSURL URLWithString:[[imgNode getAttributeNamed:@"alt"] stringByReplacingOccurrencesOfString:@"http://hfr-rehost.net/thumb/" withString:@"http://hfr-rehost.net/"]]]];
+        else
+            [imageArray addObject:[MWPhoto photoWithURL:[NSURL URLWithString:[[imgNode getAttributeNamed:@"alt"] stringByReplacingOccurrencesOfString:@"http://hfr-rehost.net/thumb/" withString:@"http://hfr-rehost.net/preview/"]]]];
+            
+            
+        if ([selectedURL isEqualToString:[imgNode getAttributeNamed:@"alt"]]) {
+            selectedIndex = [imageArray count] - 1;
+        }
+        
+        /*
+        
 		[imageArray addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[imgNode getAttributeNamed:@"alt"], [imgNode getAttributeNamed:@"longdesc"], nil]  forKeys:[NSArray arrayWithObjects:@"alt", @"longdesc", nil]]];
         if ([selectedURL isEqualToString:[imgNode getAttributeNamed:@"alt"]]) {
             selectedIndex = [imageArray count] - 1;
         }
+         */
+        
 	}
 	
 	//NSLog(@"selectedIndex %d", selectedIndex);
@@ -1222,7 +1237,9 @@
 	// navigation bar.
 	
 	//selectedURL = [selectedURL stringByReplacingOccurrencesOfString:@"http://hfr-rehost.net/preview/" withString:@"http://hfr-rehost.net/"];
-	selectedURL = [selectedURL stringByReplacingOccurrencesOfString:@"http://hfr-rehost.net/thumb/" withString:@"http://hfr-rehost.net/preview/"];
+	
+    /*
+    selectedURL = [selectedURL stringByReplacingOccurrencesOfString:@"http://hfr-rehost.net/thumb/" withString:@"http://hfr-rehost.net/preview/"];
 
     
     PhotoViewController *photoViewController;
@@ -1244,6 +1261,27 @@
 	// and the root view controller is owned by the navigation controller,
 	// so both objects should be released to prevent over-retention.
 	[photoViewController release];
+    */
+    
+    // Create & present browser
+    MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithPhotos:imageArray];
+    // Set options
+    browser.wantsFullScreenLayout = YES; // Decide if you want the photo browser full screen, i.e. whether the status bar is affected (defaults to YES)
+    browser.displayActionButton = YES; // Show action button to save, copy or email photos (defaults to NO)
+    [browser setInitialPageIndex:selectedIndex]; // Example: allows second image to be presented first
+    // Present
+
+    
+    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:browser];
+    nc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self presentModalViewController:nc animated:YES];
+    [nc release];    
+    
+    
+    //[self.navigationController pushViewController:browser animated:YES];
+    
+    [browser release];
+    [imageArray release];
 	[myParser release];
 }
 

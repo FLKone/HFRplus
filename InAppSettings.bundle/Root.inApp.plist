@@ -61,6 +61,14 @@
 			<string>PSGroupSpecifier</string>
 		</dict>
 		<dict>
+			<key>File</key>
+			<string>ActionsMessages</string>
+			<key>Title</key>
+			<string>Actions</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
 			<key>DefaultValue</key>
 			<string>no</string>
 			<key>Key</key>

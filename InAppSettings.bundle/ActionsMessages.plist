@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>StringsTable</key>
+	<string>Root</string>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+			<key>Title</key>
+			<string>Unexisting lookup entry</string>
+			<key>Key</key>
+			<string>title_non_existing_lookup_entry</string>
+			<key>DefaultValue</key>
+			<integer>3</integer>
+			<key>Type</key>
+			<string>PSTitleValueSpecifier</string>
+			<key>Values</key>
+			<array>
+				<integer>1</integer>
+				<integer>2</integer>
+			</array>
+			<key>Titles</key>
+			<array>
+				<string>One</string>
+				<string>Two</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Toggles</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Boolean Toggle</string>
+			<key>Key</key>
+			<string>toggle_boolean</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>String Toogle</string>
+			<key>Key</key>
+			<string>toogle_string</string>
+			<key>DefaultValue</key>
+			<string>foo</string>
+			<key>TrueValue</key>
+			<string>foo</string>
+			<key>FalseValue</key>
+			<string>bar</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Number Toggle</string>
+			<key>Key</key>
+			<string>toogle_number</string>
+			<key>DefaultValue</key>
+			<integer>1</integer>
+			<key>TrueValue</key>
+			<integer>1</integer>
+			<key>FalseValue</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>String Toogle (false)</string>
+			<key>Key</key>
+			<string>toogle_string_false</string>
+			<key>DefaultValue</key>
+			<string>bar</string>
+			<key>TrueValue</key>
+			<string>foo</string>
+			<key>FalseValue</key>
+			<string>bar</string>
+		</dict>
+	</array>
+</dict>
+</plist>
