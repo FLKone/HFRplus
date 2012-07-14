@@ -832,7 +832,7 @@
 									target:nil
 									action:nil];
 	
-	self.topicsTableViewController.currentUrl = [[arrayData objectAtIndex:indexPath.row] aURL];	
+	self.topicsTableViewController.forumBaseURL = [[arrayData objectAtIndex:indexPath.row] aURL];	
 	self.topicsTableViewController.forumName = [[arrayData objectAtIndex:indexPath.row] aTitle];	
 	self.topicsTableViewController.pickerViewArray = [[arrayData objectAtIndex:indexPath.row] subCats];	
 
