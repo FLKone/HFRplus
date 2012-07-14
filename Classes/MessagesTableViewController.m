@@ -120,6 +120,8 @@
 	
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[theRequest.error localizedDescription]
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
+    
+    [alert setTag:667];
 	[alert show];
 	[alert release];	
 }
