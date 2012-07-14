@@ -56,7 +56,7 @@
 
 - (void)fetchContent
 {
-	NSLog(@"fetchContent %@", [NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]);
+	//NSLog(@"fetchContent %@", [NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]);
 	self.status = kIdle;
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];
 
@@ -786,6 +786,8 @@
 											 [UIImage imageNamed:@"icon_list_bullets.png"],
 											 nil]];
 	
+    [segmentedControl2 setUserInteractionEnabled:NO];
+    
 	[segmentedControl2 addTarget:self action:@selector(segmentCatAction:) forControlEvents:UIControlEventValueChanged];
 	segmentedControl2.segmentedControlStyle = UISegmentedControlStyleBar;
 	segmentedControl2.momentary = YES;
@@ -887,7 +889,8 @@
 }
 
 - (void)goFlag {
-    
+    [(UISegmentedControl *)[self.navigationItem.titleView.subviews objectAtIndex:0] setUserInteractionEnabled:NO];
+
 	switch (self.selectedFlagIndex) {
 		case 0:
 			self.currentUrl = self.forumBaseURL;
@@ -913,8 +916,6 @@
 
 - (void)segmentFilterAction
 {
-	[(UISegmentedControl *)[self.navigationItem.titleView.subviews objectAtIndex:0] setUserInteractionEnabled:NO];
-	
 	switch ([(UISegmentedControl *)[self.navigationItem.titleView.subviews objectAtIndex:0] selectedSegmentIndex]) {
 		case 0:
             self.selectedFlagIndex = 0;
