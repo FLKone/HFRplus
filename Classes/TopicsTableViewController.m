@@ -773,6 +773,8 @@
 											 [UIImage imageNamed:@"multipleflag0.gif"],												 
 											 nil]];
 
+    [segmentedControl setUserInteractionEnabled:NO];
+
 	[segmentedControl addTarget:self action:@selector(segmentFilterAction) forControlEvents:UIControlEventValueChanged];
 	segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
 
@@ -785,7 +787,6 @@
 											 [UIImage imageNamed:@"icon_list_bullets.png"],
 											 nil]];
 	
-    [segmentedControl2 setUserInteractionEnabled:NO];
     
 	[segmentedControl2 addTarget:self action:@selector(segmentCatAction:) forControlEvents:UIControlEventValueChanged];
 	segmentedControl2.segmentedControlStyle = UISegmentedControlStyleBar;
