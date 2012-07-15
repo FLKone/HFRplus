@@ -1290,7 +1290,7 @@
 -(void)handleLongPress:(UILongPressGestureRecognizer*)longPressRecognizer {
 	if (longPressRecognizer.state == UIGestureRecognizerStateBegan) {
 		CGPoint longPressLocation = [longPressRecognizer locationInView:self.topicsTableView];
-		pressedIndexPath = [[self.topicsTableView indexPathForRowAtPoint:longPressLocation] copy];
+		self.pressedIndexPath = [[self.topicsTableView indexPathForRowAtPoint:longPressLocation] copy];
 				
 		UIActionSheet *styleAlert = [[UIActionSheet alloc] initWithTitle:@"Aller à..."
 																delegate:self cancelButtonTitle:@"Annuler"
