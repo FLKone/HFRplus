@@ -121,6 +121,7 @@
 
 - (void)chooseTopicPage;
 
+- (void)setTopicViewed;
 - (void)pushTopic;
 
 @end

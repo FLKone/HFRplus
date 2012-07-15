@@ -986,20 +986,7 @@
 	
 	//NSLog(@"TT viewDidDisappear %@ - %@", self.topicsTableView.indexPathForSelectedRow, self.pressedIndexPath);
 
-	if (self.pressedIndexPath) {
-		NSLog(@"TT pressedIndexPath");
-		
-		[[self.arrayData objectAtIndex:[self.pressedIndexPath row]] setIsViewed:YES];
-		[self.topicsTableView reloadData];
-		
-				NSLog(@"TT pressedIndexPath2");
-	}
-	
-	if (self.topicsTableView.indexPathForSelectedRow) {
-		NSLog(@"TT indexPathForSelectedRow");
-		[[self.arrayData objectAtIndex:[self.topicsTableView.indexPathForSelectedRow row]] setIsViewed:YES];
-		[self.topicsTableView reloadData];
-	}
+
 	
 	/*[[(TopicCellView *)[topicsTableView cellForRowAtIndexPath:topicsTableView.indexPathForSelectedRow] titleLabel]setFont:[UIFont systemFontOfSize:13]];
 	[topicsTableView deselectRowAtIndexPath:topicsTableView.indexPathForSelectedRow animated:NO];*/
@@ -1373,7 +1360,35 @@
         
 //        [[HFRplusAppDelegate sharedAppDelegate] setDetailNavigationController:messagesTableViewController];
         
-    }    
+    }   
+    
+    [self setTopicViewed];
+    
+}
+
+-(void)setTopicViewed {
+    //NSLog(@"setTopicViewed");
+
+	if (self.pressedIndexPath && self.arrayData.count > 0) {
+		NSLog(@"TT pressedIndexPath");
+		
+		[[self.arrayData objectAtIndex:[self.pressedIndexPath row]] setIsViewed:YES];
+        
+        NSArray* rowsToReload = [NSArray arrayWithObjects:self.pressedIndexPath, nil];
+        [self.topicsTableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
+        
+        //[self.topicsTableView reloadData];
+	}
+	else if (self.topicsTableView.indexPathForSelectedRow && self.arrayData.count > 0) {
+		NSLog(@"TT indexPathForSelectedRow");
+        
+		[[self.arrayData objectAtIndex:[self.topicsTableView.indexPathForSelectedRow row]] setIsViewed:YES];
+        
+        NSArray* rowsToReload = [NSArray arrayWithObjects:self.topicsTableView.indexPathForSelectedRow, nil];
+        [self.topicsTableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
+        
+		//[self.topicsTableView reloadData];
+	}
     
 }
 
