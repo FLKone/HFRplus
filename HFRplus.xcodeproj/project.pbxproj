@@ -189,8 +189,8 @@
 		CA25DA89159F929900F6D675 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA25DA81159F929900F6D675 /* Icon-Small@2x.png */; };
 		CA25DA8A159F929900F6D675 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CA25DA82159F929900F6D675 /* Icon.png */; };
 		CA25DA8B159F929900F6D675 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA25DA83159F929900F6D675 /* Icon@2x.png */; };
-		CA25DA8E159F92A300F6D675 /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = CA25DA8C159F92A300F6D675 /* iTunesArtwork.png */; };
-		CA25DA8F159F92A300F6D675 /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA25DA8D159F92A300F6D675 /* iTunesArtwork@2x.png */; };
+		CA25DA8E159F92A300F6D675 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = CA25DA8C159F92A300F6D675 /* iTunesArtwork */; };
+		CA25DA8F159F92A300F6D675 /* iTunesArtwork@2x in Resources */ = {isa = PBXBuildFile; fileRef = CA25DA8D159F92A300F6D675 /* iTunesArtwork@2x */; };
 		CA26862513ADE01100AC5511 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA26862313ADE01100AC5511 /* BrowserViewController.m */; };
 		CA26862613ADE01100AC5511 /* BrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA26862413ADE01100AC5511 /* BrowserViewController.xib */; };
 		CA34780B12EB557500D1BA2A /* PayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA34780912EB557500D1BA2A /* PayViewController.m */; };
@@ -594,8 +594,8 @@
 		CA25DA81159F929900F6D675 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
 		CA25DA82159F929900F6D675 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		CA25DA83159F929900F6D675 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
-		CA25DA8C159F92A300F6D675 /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
-		CA25DA8D159F92A300F6D675 /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork@2x.png"; sourceTree = "<group>"; };
+		CA25DA8C159F92A300F6D675 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
+		CA25DA8D159F92A300F6D675 /* iTunesArtwork@2x */ = {isa = PBXFileReference; lastKnownFileType = file; path = "iTunesArtwork@2x"; sourceTree = "<group>"; };
 		CA26862213ADE01100AC5511 /* BrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BrowserViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CA26862313ADE01100AC5511 /* BrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BrowserViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CA26862413ADE01100AC5511 /* BrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserViewController.xib; sourceTree = "<group>"; };
@@ -1347,8 +1347,8 @@
 				CA25DA81159F929900F6D675 /* Icon-Small@2x.png */,
 				CA25DA82159F929900F6D675 /* Icon.png */,
 				CA25DA83159F929900F6D675 /* Icon@2x.png */,
-				CA25DA8C159F92A300F6D675 /* iTunesArtwork.png */,
-				CA25DA8D159F92A300F6D675 /* iTunesArtwork@2x.png */,
+				CA25DA8C159F92A300F6D675 /* iTunesArtwork */,
+				CA25DA8D159F92A300F6D675 /* iTunesArtwork@2x */,
 			);
 			name = gfx;
 			sourceTree = "<group>";
@@ -1912,8 +1912,8 @@
 				CA25DA89159F929900F6D675 /* Icon-Small@2x.png in Resources */,
 				CA25DA8A159F929900F6D675 /* Icon.png in Resources */,
 				CA25DA8B159F929900F6D675 /* Icon@2x.png in Resources */,
-				CA25DA8E159F92A300F6D675 /* iTunesArtwork.png in Resources */,
-				CA25DA8F159F92A300F6D675 /* iTunesArtwork@2x.png in Resources */,
+				CA25DA8E159F92A300F6D675 /* iTunesArtwork in Resources */,
+				CA25DA8F159F92A300F6D675 /* iTunesArtwork@2x in Resources */,
 				CA37D50B15A1BD19002C72C6 /* MainWindow-iPad.xib in Resources */,
 				CA7E25F415A2010A00721F6D /* bgiPad.png in Resources */,
 				CA7E25F515A2010A00721F6D /* bgiPad@2x.png in Resources */,
