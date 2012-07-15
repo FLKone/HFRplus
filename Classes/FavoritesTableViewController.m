@@ -537,30 +537,13 @@
 
 
 - (void)viewDidDisappear:(BOOL)animated {
-	NSLog(@"FT viewDidDisappear %@", self.favoritesTableView.indexPathForSelectedRow);
+	//NSLog(@"FT viewDidDisappear %@", self.favoritesTableView.indexPathForSelectedRow);
 
 	[super viewDidDisappear:animated];
 	[self.view resignFirstResponder];
 
 	//[(UILabel *)[[favoritesTableView cellForRowAtIndexPath:favoritesTableView.indexPathForSelectedRow].contentView viewWithTag:999] setFont:[UIFont systemFontOfSize:13]];
-	if (self.favoritesTableView.indexPathForSelectedRow) {
-		NSLog(@"FT viewDidDisappear NEXT");
 
-		int theRow = [self.favoritesTableView.indexPathForSelectedRow row];
-		theRow += [[self.arrayDataID objectForKey:[self.arrayDataID2 objectAtIndex:[self.favoritesTableView.indexPathForSelectedRow section]]] lengthB4];	
-		
-		[[self.arrayData objectAtIndex:theRow] setIsViewed:YES];
-		[self.favoritesTableView reloadData];
-	}
-    else if (pressedIndexPath) 
-    {
-		int theRow = [self.pressedIndexPath row];
-		theRow += [[self.arrayDataID objectForKey:[self.arrayDataID2 objectAtIndex:[self.pressedIndexPath section]]] lengthB4];	
-		
-		[[self.arrayData objectAtIndex:theRow] setIsViewed:YES];
-		[self.favoritesTableView reloadData];
-    }
-    NSLog(@"pressedIndexPath %@", pressedIndexPath);
     
 	//[favoritesTableView deselectRowAtIndexPath:favoritesTableView.indexPathForSelectedRow animated:NO];
 }
@@ -846,6 +829,7 @@
         }
 			
 	}
+  
 }
 
 - (void)pushTopic {
@@ -861,6 +845,43 @@
         //        [[HFRplusAppDelegate sharedAppDelegate] setDetailNavigationController:messagesTableViewController];
         
     }    
+    
+    [self setTopicViewed];
+    
+    
+}
+
+-(void)setTopicViewed {
+    //NSLog(@"setTopicViewed");
+    
+	if (self.favoritesTableView.indexPathForSelectedRow && self.arrayDataID2.count > 0) {
+		//NSLog(@"FT viewDidDisappear indexPathForSelectedRow");
+        
+		int theRow = [self.favoritesTableView.indexPathForSelectedRow row];
+		theRow += [[self.arrayDataID objectForKey:[self.arrayDataID2 objectAtIndex:[self.favoritesTableView.indexPathForSelectedRow section]]] lengthB4];	
+		
+        [[self.arrayData objectAtIndex:theRow] setIsViewed:YES];
+
+        NSArray* rowsToReload = [NSArray arrayWithObjects:self.favoritesTableView.indexPathForSelectedRow, nil];
+        [self.favoritesTableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
+        
+		//[self.favoritesTableView reloadData];
+	}
+    else if (pressedIndexPath && self.arrayDataID2.count > 0) 
+    {
+		//NSLog(@"FT viewDidDisappear pressedIndexPath");
+
+		int theRow = [self.pressedIndexPath row];
+		theRow += [[self.arrayDataID objectForKey:[self.arrayDataID2 objectAtIndex:[self.pressedIndexPath section]]] lengthB4];	
+		
+		[[self.arrayData objectAtIndex:theRow] setIsViewed:YES];
+		
+        NSArray* rowsToReload = [NSArray arrayWithObjects:self.pressedIndexPath, nil];
+        [self.favoritesTableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
+
+        //[self.favoritesTableView reloadData];
+    }
+    //NSLog(@"pressedIndexPath %@", pressedIndexPath);
     
 }
 
