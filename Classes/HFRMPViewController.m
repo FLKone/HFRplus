@@ -143,8 +143,7 @@
 -(void)handleLongPress:(UILongPressGestureRecognizer*)longPressRecognizer {
 	if (longPressRecognizer.state == UIGestureRecognizerStateBegan) {
 		CGPoint longPressLocation = [longPressRecognizer locationInView:self.topicsTableView];
-		pressedIndexPath = [[self.topicsTableView indexPathForRowAtPoint:longPressLocation] copy];
-		
+		self.pressedIndexPath = [[self.topicsTableView indexPathForRowAtPoint:longPressLocation] copy];
 		
 		UIActionSheet *styleAlert = [[UIActionSheet alloc] initWithTitle:@"Aller à..."
 																delegate:self cancelButtonTitle:@"Annuler"
@@ -156,7 +155,17 @@
 		// use the same style as the nav bar
 		styleAlert.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
 		
-		[styleAlert showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
+        CGPoint longPressLocation2 = [longPressRecognizer locationInView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view]];
+        CGRect origFrame = CGRectMake( longPressLocation2.x, longPressLocation2.y, 0, 0);
+        
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            [styleAlert showFromRect:origFrame inView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view] animated:YES];
+        }
+        else    
+            [styleAlert showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
+        
+        
 		[styleAlert release];
 		
 	}
@@ -205,7 +214,6 @@
 			MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[arrayData objectAtIndex:pressedIndexPath.row] aURL]];
 			self.messagesTableViewController = aView;
 			[aView release];
-			
 			
 			self.messagesTableViewController.topicName = [[arrayData objectAtIndex:pressedIndexPath.row] aTitle];	
 			self.messagesTableViewController.isViewed = [[arrayData objectAtIndex:pressedIndexPath.row] isViewed];	
