@@ -190,29 +190,10 @@
 			self.messagesTableViewController = aView;
 			[aView release];
 			
-			UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-			label.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
-			label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-			
-			[label setFont:[UIFont boldSystemFontOfSize:13.0]];
-			[label setAdjustsFontSizeToFitWidth:YES];
-			[label setBackgroundColor:[UIColor clearColor]];
-			[label setTextAlignment:UITextAlignmentCenter];
-			[label setLineBreakMode:UILineBreakModeMiddleTruncation];
-			label.shadowColor = [UIColor darkGrayColor];
-			label.shadowOffset = CGSizeMake(0.0, -1.0);
-			[label setTextColor:[UIColor whiteColor]];
-			[label setNumberOfLines:0];
-			
-			[label setText:[[arrayData objectAtIndex:pressedIndexPath.row] aTitle]];
-			
-			[messagesTableViewController.navigationItem setTitleView:label];
-			[label release];	
-			
 			self.messagesTableViewController.topicName = [[arrayData objectAtIndex:pressedIndexPath.row] aTitle];	
 			self.messagesTableViewController.isViewed = [[arrayData objectAtIndex:pressedIndexPath.row] isViewed];	
 
-			[self.navigationController pushViewController:messagesTableViewController animated:YES];			
+			[self pushTopic];
 			
 			//NSLog(@"url pressed last page: %@", [[arrayData objectAtIndex:pressedIndexPath.row] aURLOfLastPage]);
 			 
@@ -225,29 +206,11 @@
 			self.messagesTableViewController = aView;
 			[aView release];
 			
-			UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-			label.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
-			label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-			
-			[label setFont:[UIFont boldSystemFontOfSize:13.0]];
-			[label setAdjustsFontSizeToFitWidth:YES];
-			[label setBackgroundColor:[UIColor clearColor]];
-			[label setTextAlignment:UITextAlignmentCenter];
-			[label setLineBreakMode:UILineBreakModeMiddleTruncation];
-			label.shadowColor = [UIColor darkGrayColor];
-			label.shadowOffset = CGSizeMake(0.0, -1.0);
-			[label setTextColor:[UIColor whiteColor]];
-			[label setNumberOfLines:0];
-			
-			[label setText:[[arrayData objectAtIndex:pressedIndexPath.row] aTitle]];
-			
-			[messagesTableViewController.navigationItem setTitleView:label];
-			[label release];	
 			
 			self.messagesTableViewController.topicName = [[arrayData objectAtIndex:pressedIndexPath.row] aTitle];	
 			self.messagesTableViewController.isViewed = [[arrayData objectAtIndex:pressedIndexPath.row] isViewed];	
 
-			[self.navigationController pushViewController:messagesTableViewController animated:YES];	
+			[self pushTopic];
 			 
 			//NSLog(@"url pressed last post: %@", [[arrayData objectAtIndex:pressedIndexPath.row] aURL]);
 			 
