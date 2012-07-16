@@ -140,11 +140,14 @@
 -(void)goToPagePositionTop;
 -(void)goToPagePositionBottom;
 
--(void)addDataInTableView;
 -(void)loadDataInTableView:(HTMLParser *)myParser;
 
 -(void)setupFastAnswer:(HTMLNode *)bodyNode;
 -(void)setupPageToolbar:(HTMLNode *)bodyNode;
+
+-(void)searchNewMessages:(int)from;
+-(void)searchNewMessages;
+-(void)fetchContentinBackground:(id)from;
 
 -(BOOL) canBeFavorite;
 -(void) EcrireCookie:(NSString *)nom withVal:(NSString *)valeur;

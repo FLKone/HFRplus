@@ -51,11 +51,10 @@
 
 - (void)fetchContent
 {
-    //NSLog(@"fetchContent");
-	
+    //self.firstDate = [NSDate date];
+    
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMaxi];
-	//NSLog(@"URL %@", [NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]);
-	
+
 	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]]]];
 	[request setDelegate:self];
 
@@ -69,8 +68,11 @@
 	[self.view removeGestureRecognizer:swipeLeftRecognizer];
 	[self.view removeGestureRecognizer:swipeRightRecognizer];
 	
-	[self.messagesWebView setHidden:YES];
-	[self.loadingView setHidden:NO];
+	if ([NSThread isMainThread]) {
+        [self.messagesWebView setHidden:YES];
+    }
+	
+    [self.loadingView setHidden:NO];
 
 
 	[request startAsynchronous];
@@ -367,241 +369,6 @@
 	//--Pages
 }
 
--(void)addDataInTableView {
-	[self.view removeGestureRecognizer:swipeRightRecognizer];
-	[self.view removeGestureRecognizer:swipeLeftRecognizer];
-
-	[self.updatedArrayData removeAllObjects];
-	//int countArrayDataBefore = arrayData.count;
-	
-	[self setupScrollAndPage];
-	
-	
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-	NSString *diskCachePath = [[[paths objectAtIndex:0] stringByAppendingPathComponent:@"ImageCache"] retain];
-	
-	if (![[NSFileManager defaultManager] fileExistsAtPath:diskCachePath])
-	{
-		//NSLog(@"createDirectoryAtPath");
-		[[NSFileManager defaultManager] createDirectoryAtPath:diskCachePath
-								  withIntermediateDirectories:YES
-												   attributes:nil
-														error:NULL];
-	}
-	else {
-		//NSLog(@"pas createDirectoryAtPath");
-	}
-	
-	
-	//NSLog(@"url %@", [NSString stringWithFormat:@"http://forum.hardware.fr%@", [self topicUrl]]);
-	NSError * error = nil;
-	
-	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;	
-	[self setIsLoading:YES];
-	HTMLParser * myParser = [[HTMLParser alloc] initWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]] error:&error];
-	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-	[self setIsLoading:NO];
-	
-	//NSLog(@"error %@", error);
-	
-	HTMLNode * bodyNode = [myParser body]; //Find the body tag
-
-	//Titre
-	HTMLNode *titleNode = [[bodyNode findChildWithAttribute:@"class" matchingName:@"fondForum2Title" allowPartial:YES] findChildTag:@"h3"]; //Get all the <img alt="" />
-	if ([titleNode allContents]) {
-		//NSLog(@"titleNode %@", [titleNode allContents]);
-		self.topicName = [titleNode allContents];
-		[(UILabel *)[self navigationItem].titleView setText:[NSString stringWithFormat:@"%@ — %d", self.topicName, self.pageNumber]];
-		//[self navigationItem].titleView.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
-		
-	}
-
-	
-	//Titre
-	
-	//MP
-	BOOL needToUpdateMP = NO;
-	HTMLNode *MPNode = [bodyNode findChildOfClass:@"none"]; //Get links for cat	
-	NSArray *temporaryMPArray = [MPNode findChildTags:@"td"];
-	//NSLog(@"temporaryMPArray count %d", temporaryMPArray.count);
-	
-	if (temporaryMPArray.count == 3) {
-		//NSLog(@"MPNode allContents %@", [[temporaryMPArray objectAtIndex:1] allContents]);
-		
-		NSString *regExMP = @"[^.0-9]+([0-9]{1,})[^.0-9]+";			
-		NSString *myMPNumber = [[[temporaryMPArray objectAtIndex:1] allContents] stringByReplacingOccurrencesOfRegex:regExMP
-																										  withString:@"$1"];
-		
-		[[HFRplusAppDelegate sharedAppDelegate] updateMPBadgeWithString:myMPNumber];
-	}
-	else {
-		needToUpdateMP = YES;
-	}
-	//MP
-
-	//Answer Topic URL
-	HTMLNode * topicAnswerNode = [bodyNode findChildWithAttribute:@"id" matchingName:@"repondre_form" allowPartial:NO];
-	topicAnswerUrl = [[NSString alloc] init];
-	topicAnswerUrl = [[[topicAnswerNode findChildTag:@"a"] getAttributeNamed:@"href"] retain];
-    
-	[self setupFastAnswer:bodyNode]; // Formulaire reponse rapide;
-	[self setupPageToolbar:bodyNode]; // toolbars numero de page et changement de page;
-
-	NSArray * messagesNodes = [bodyNode findChildrenWithAttribute:@"class" matchingName:@"messagetable" allowPartial:NO]; //Get all the <img alt="" />
-	
-	//NSLog(@"message %d", [messagesNodes count]);
-
-	//int i = 0; //curent obj number
-	
-	//NSLog(@"count before %d", self.arrayData.count);
-	
-	for (HTMLNode * messageNode2 in messagesNodes) { //Loop through all the tags
-		
-		//NSAutoreleasePool * pool2 = [[NSAutoreleasePool alloc] init];
-		
-		HTMLNode * messageNode = [messageNode2 firstChild];
-		
-		//NSAutoreleasePool * pool3 = [[NSAutoreleasePool alloc] init];
-		
-		HTMLNode * authorNode = [messageNode findChildWithAttribute:@"class" matchingName:@"s2" allowPartial:NO];
-		
-		LinkItem *fasTest = [[LinkItem alloc] init];
-
-		if ([[[[messageNode parent] parent] getAttributeNamed:@"class"] isEqualToString:@"messagetabledel"]) {
-			fasTest.isDel = YES;
-		}
-		else {
-			fasTest.isDel = NO;
-		}
-		
-		fasTest.postID = [[[messageNode firstChild] firstChild] getAttributeNamed:@"name"];
-
-		fasTest.name = [authorNode allContents];
-		fasTest.name = [fasTest.name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-
-		if ([fasTest.name isEqualToString:@"Publicité"]) {
-			[fasTest release];
-			//[pool3 drain];
-			continue;
-		}
-		
-		//i++;
-		
-		//NSLog(@"i = %d -- count = %d", i, countArrayDataBefore);
-
-		//if (countArrayDataBefore >= i) {
-		//	[fasTest release];
-		//	[pool3 drain];
-		//	continue;
-		//}
-
-		HTMLNode * avatarNode = [messageNode findChildWithAttribute:@"class" matchingName:@"avatar_center" allowPartial:NO];
-		HTMLNode * contentNode = [messageNode findChildWithAttribute:@"id" matchingName:@"para" allowPartial:YES];
-
-		/* OLD SLOW
-		 HTMLNode * quoteNode = [[messageNode findChildWithAttribute:@"alt" matchingName:@"answer" allowPartial:NO] parent];
-		 NSString *linkQuoteUnCrypted = [[quoteNode className] decodeSpanUrlFromString];
-		 
-		 HTMLNode * editNode = [[messageNode findChildWithAttribute:@"alt" matchingName:@"edit" allowPartial:NO] parent];
-		 NSString *linkEditUnCrypted = [[editNode className] decodeSpanUrlFromString];
-		 
-		 fasTest.urlQuote = linkQuoteUnCrypted;
-		 fasTest.urlEdit = linkEditUnCrypted;
-		 */
-		// NEW FAST
-		HTMLNode * quoteNode = [[messageNode findChildWithAttribute:@"alt" matchingName:@"answer" allowPartial:NO] parent];
-		fasTest.urlQuote = [quoteNode className];
-		
-		HTMLNode * editNode = [[messageNode findChildWithAttribute:@"alt" matchingName:@"edit" allowPartial:NO] parent];
-		fasTest.urlEdit = [editNode className];		
-
-		HTMLNode * addFlagNode = [messageNode findChildWithAttribute:@"href" matchingName:@"addflag" allowPartial:YES];
-		fasTest.addFlagUrl = [addFlagNode getAttributeNamed:@"href"];
-
-		HTMLNode * quoteJSNode = [messageNode findChildWithAttribute:@"onclick" matchingName:@"quoter('hardwarefr'" allowPartial:YES];
-		fasTest.quoteJS = [quoteJSNode getAttributeNamed:@"onclick"];
-
-		HTMLNode * MPNode = [messageNode findChildWithAttribute:@"href" matchingName:@"/message.php?config=hfr.inc&cat=prive&sond=&p=1&subcat=&dest=" allowPartial:YES];
-		fasTest.MPUrl = [MPNode getAttributeNamed:@"href"];
-		
-		fasTest.dicoHTML = rawContentsOfNode([contentNode _node], [myParser _doc]);
-		
-		//fasTest.messageNode = contentNode;
-		
-		HTMLNode * dateNode = [messageNode findChildWithAttribute:@"class" matchingName:@"toolbar" allowPartial:NO];
-		if ([dateNode allContents]) {
-			
-			//fasTest.messageDate = [[[NSString stringWithFormat:@"%@", [dateNode allContents]] stringByReplacingOccurrencesOfString:@"Posté le " withString:@""] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];	
-			NSString *regularExpressionString = @".*([0-9]{2})-([0-9]{2})-([0-9]{4}).*([0-9]{2}):([0-9]{2}):([0-9]{2}).*";
-			fasTest.messageDate = [[dateNode allContents] stringByReplacingOccurrencesOfRegex:regularExpressionString withString:@"$1-$2-$3 $4:$5:$6"];
-		}
-		else {
-			fasTest.messageDate = @"";
-		}
-		
-        //edit citation
-        HTMLNode * editedNode = [messageNode findChildWithAttribute:@"class" matchingName:@"edited" allowPartial:NO];
-        if ([editedNode allContents]) {
-            NSString *regularExpressionString = @".*Message cité ([^<]+) fois.*";
-            fasTest.quotedNB = [[[[editedNode allContents] stringByMatching:regularExpressionString capture:1L] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByDecodingXMLEntities];
-            if (fasTest.quotedNB) {
-                fasTest.quotedLINK = [[editedNode findChildTag:@"a"] getAttributeNamed:@"href"];
-            }
-            
-            NSString *regularExpressionString2 = @".*Message édité par ([^<]+).*";
-            fasTest.editedTime = [[[[editedNode allContents] stringByMatching:regularExpressionString2 capture:1L] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByDecodingXMLEntities];
-            
-            //NSLog(@"editedTime = %@", fasTest.editedTime);
-            //NSLog(@"quotedLINK = %@", fasTest.quotedLINK);
-        }
-        
-        
-        
-        
-		fasTest.imageUrl = nil;
-		fasTest.imageUI = nil;
-
-		if ([[avatarNode firstChild] getAttributeNamed:@"src"]) {
-			/*fasTest.imageUrl = [[avatarNode firstChild] getAttributeNamed:@"src"];*/
-			
-			
-			 NSFileManager *fileManager = [[NSFileManager alloc] init];
-			 
-			 fasTest.imageUrl = [[avatarNode firstChild] getAttributeNamed:@"src"];
-			 
-			 //Dl
-			 const char *str = [fasTest.imageUrl UTF8String];
-			 unsigned char r[CC_MD5_DIGEST_LENGTH];
-			 CC_MD5(str, strlen(str), r);
-			 NSString *filename = [NSString stringWithFormat:@"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
-			 r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8], r[9], r[10], r[11], r[12], r[13], r[14], r[15]];
-			 
-			 NSString *key = [diskCachePath stringByAppendingPathComponent:filename];
-			 
-			 if (![fileManager fileExistsAtPath:key])
-			 {
-			 [fileManager createFileAtPath:key contents:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", fasTest.imageUrl]]] attributes:nil];					
-			 }
-			 
-			 fasTest.imageUI = key;
-			 [fileManager release];
-			 
-		}
-					
-		//NSLog(@"La on ajoute dude");
-
-		[self.updatedArrayData addObject:fasTest];
-		
-		[fasTest release];
-	
-		//[pool3 drain];
-	}	
-	//NSLog(@"count after %d", self.arrayData.count);
-
-	[myParser release];
-	[diskCachePath release];
-}
-
 -(void)loadDataInTableView:(HTMLParser *)myParser
 {
 	[self setupScrollAndPage];
@@ -670,9 +437,7 @@
 
     [super viewDidLoad];
 	self.isAnimating = NO;
-	
-	self.firstDate = [NSDate date];
-	
+
 	self.title = self.topicName;  
         
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -1141,35 +906,6 @@
 
 }
 
--(void)searchNewMessages {
-	//NSLog(@"searchNewMessages %@", self);
-	if (![self.messagesWebView isLoading]) {	
-		// Register for the notification
-		[[NSNotificationCenter defaultCenter] removeObserver:self];
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(messagesDataReceived:)
-													 name:@"WebServiceCallCompleted" object:nil];
-		//NSIndexPath* selection = [self.messagesTableView indexPathForSelectedRow];
-		
-		// Unhide the spinner, and start animating it.
-		//[[[self loadMoreCell] activityIndicator] startAnimating];
-		
-		// Start the connection...
-		//[NSThread detachNewThreadSelector:@selector(messagesDataStarted:) toTarget:self withObject:nil];
-		[self.messagesWebView stringByEvaluatingJavaScriptFromString:@"$('#actualiserbtn').addClass('loading');"];
-		
-		[self performSelectorInBackground:@selector(messagesDataStarted:) withObject:nil];
-		
-		// Disable user interaction if/when the loading/search results view appears.
-		//[self.messagesTableView setUserInteractionEnabled:NO];
-		
-		// Unhighlight the load more button after it has been tapped.
-		//if (selection)
-		//[self.messagesTableView deselectRowAtIndexPath:selection animated:YES];
-		
-	}	
-}
-
 - (void)didSelectMessage:(int)index
 {
 	{
@@ -1344,6 +1080,52 @@
 }
 
 #pragma mark -
+#pragma mark searchNewMessages
+
+-(void)searchNewMessages:(int)from {
+    
+	if (![self.messagesWebView isLoading]) {	
+		[self.messagesWebView stringByEvaluatingJavaScriptFromString:@"$('#actualiserbtn').addClass('loading');"];
+		[self performSelectorInBackground:@selector(fetchContentinBackground:) withObject:[NSNumber numberWithInt:from]];
+	}    
+}
+
+-(void)searchNewMessages {
+	
+	[self searchNewMessages:kNewMessageFromUnkwn];
+    
+}
+
+- (void)fetchContentinBackground:(id)from {
+    
+    
+	NSAutoreleasePool * pool2;
+    
+    pool2 = [[NSAutoreleasePool alloc] init];
+
+    int intfrom = [from intValue];
+    
+    switch (intfrom) {
+        case kNewMessageFromShake:
+            [self setStringFlagTopic:[[self.arrayData lastObject] postID]]; // on flag sur le dernier message pour bien positionner après le rechargement.
+            break;
+        case kNewMessageFromUpdate:
+            [self setStringFlagTopic:[[self.arrayData lastObject] postID]]; // on flag sur le dernier message pour bien positionner après le rechargement.
+            break;
+        case kNewMessageFromEditor:
+            // le flag est mis à jour depuis l'editeur.
+            break;
+        default:
+            [self setStringFlagTopic:[[self.arrayData lastObject] postID]]; // on flag sur le dernier message pour bien positionner après le rechargement.
+            break;
+    }
+    
+	[self fetchContent];
+	
+	[pool2 drain];
+}
+
+#pragma mark -
 #pragma mark Gestures
 
 - (void)handleDoubleTap:(UISwipeGestureRecognizer *)recognizer {
@@ -1352,9 +1134,14 @@
 
 -(void) shakeHappened:(ShakeView*)view
 {
+    //NSLog(@"shake");
 	if (![request inProgress] && !self.isLoading) {
-		[self searchNewMessages];
+        //NSLog(@"shake OK");
+		[self searchNewMessages:kNewMessageFromShake];
 	}
+    else {
+        //NSLog(@"shake KO");
+    }
 }
 
 - (void)handleSwipeToLeft:(UISwipeGestureRecognizer *)recognizer {
@@ -1409,7 +1196,7 @@
 			self.isRedFlagged = YES;
 		}
         
-        NSLog(@"FlagNode %d", self.isRedFlagged);
+        //NSLog(@"FlagNode %d", self.isRedFlagged);
 	}
 	else {
 		HTMLNode * ReadNode = [bodyNode findChildWithAttribute:@"href" matchingName:@"nonlu" allowPartial:YES];
@@ -1421,8 +1208,8 @@
 			self.isFavoritesOrRead =  @"";	
 		}
         
-        NSLog(@"!FlagNode %@", self.isFavoritesOrRead);
-        NSLog(@"!FlagNode %d", self.isUnreadable);
+        //NSLog(@"!FlagNode %@", self.isFavoritesOrRead);
+        //NSLog(@"!FlagNode %d", self.isUnreadable);
 	}
 }
 //--form to fast answer	
@@ -1459,7 +1246,7 @@
     //NSLog(@"addMessageViewControllerDidFinishOK stringFlagTopic %@", self.stringFlagTopic);
     
     
-	[self searchNewMessages];
+	[self searchNewMessages:kNewMessageFromEditor];
 	[self.navigationController popToViewController:self animated:NO];
 
 
@@ -1467,145 +1254,10 @@
 
 #pragma mark -
 #pragma mark Parse Operation Delegate
-- (void)addDataToList:(NSString *)mystring {
-	//NSLog(@"addDataToList");
-	//'bottom'
-	//[self.messagesWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"$('#qsdoiqjsdkjhqkjhqsdqdilkjqsd2').html( 'bottom', '%@');x$('#actualiserbtn').removeClass('loading');", mystring]];
-}
-
-- (void)messagesDataReceived:(id)object {
-	
-	//NSLog(@"messagesDataReceived self %@", self);
-	//NSLog(@"messagesDataReceived object %@", [object object]);
-	if (!(self == [object object])) return;
-	
-	//NSLog(@"editFlagTopic %@", self.editFlagTopic);
-
-    //NSLog(@"messagesDataReceived stringFlagTopic %@", self.stringFlagTopic);
-
-    
-	if (!(self.editFlagTopic == nil)) { // On check si on vient pas d'edit un message
-		self.stringFlagTopic = self.editFlagTopic; //si oui on flag sur l'ID en question
-		[self setEditFlagTopic:nil];
-	}
-	else {
-        
-        if (self.stringFlagTopic.length > 0) {
-            
-        }
-        else {
-            if (self.updatedArrayData.count > self.arrayData.count) {
-                self.stringFlagTopic = [[self.updatedArrayData objectAtIndex:self.arrayData.count] postID]; //si il y a plus de messages après l'update, on flag sur le premier nouveau
-            }
-            else {
-                self.stringFlagTopic = @"#bas"; // sinon on flag en bas de la liste.
-            }
-        }
-	}
-
-	//NSLog(@"stringFlagTopic %@", self.stringFlagTopic);
-
-
-		[self.arrayData removeAllObjects];
-		[self.arrayData addObjectsFromArray:self.updatedArrayData];
-		[self.updatedArrayData removeAllObjects];
-		
-		NSString *tmpHTML = [[[NSString alloc] initWithString:@""] autorelease];
-		
-		int i;
-		for (i = 0; i < [self.arrayData count]; i++) { //Loop through all the tags
-			tmpHTML = [tmpHTML stringByAppendingString:[[self.arrayData objectAtIndex:i] toHTML:i]];
-		}	
-		
-		NSString *HTMLString = [[NSString alloc] 
-                                initWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
-                                <html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"fr\" lang=\"fr\">\
-                                <head>\
-                                <script type='text/javascript' src='jquery.js'></script>\
-                                <script type='text/javascript' src='jquery.doubletap.js'></script>\
-                                <script type='text/javascript' src='jquery.base64.js'></script>\
-                                <script type='text/javascript' src='jquery.lazyload.mini.js'></script>\
-                                <meta name='viewport' content='initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0' />\
-                                <link type='text/css' rel='stylesheet' href='style-liste.css'/>\
-                                <link type='text/css' rel='stylesheet' href='style-liste-retina.css' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\
-                                <link type='text/css' rel='stylesheet' href='style-liste-ipad-portrait.css' media='all and (min-width: 767px)'/>\
-                                <link type='text/css' rel='stylesheet' href='style-liste-ipad-landscape.css' media='all and (min-width: 700px) and (max-width: 750px)'/>\
-                                </head><body>\
-                                <div class='bunselected' id='qsdoiqjsdkjhqkjhqsdqdilkjqsd2'>%@</div><div id='endofpage'></div><div id='endofpagetoolbar'></div><a name='bas'></a><script type='text/javascript'> function HLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bselected'; } function UHLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bunselected'; } function swap_spoiler_states(obj){var div=obj.getElementsByTagName('div');if(div[0]){if(div[0].style.visibility==\"visible\"){div[0].style.visibility='visible';}else if(div[0].style.visibility==\"hidden\"||!div[0].style.visibility){div[0].style.visibility='visible';}}} </script></body></html>", tmpHTML];
-		
-		NSString *path = [[NSBundle mainBundle] bundlePath];
-		NSURL *baseURL = [NSURL fileURLWithPath:path];
-		
-		//NSLog(@"======================================================================================================");
-		//NSLog(@"HTMLString %@", HTMLString);
-		//NSLog(@"======================================================================================================");
-		//NSLog(@"baseURL %@", baseURL);
-		//NSLog(@"======================================================================================================");
-		
-		[self.messagesWebView loadHTMLString:HTMLString baseURL:baseURL];
-		
-		[self.messagesWebView setUserInteractionEnabled:YES];	
-		
-		[HTMLString release];
-	//[tmpHTML release];
-	//}
-	//else {
-	//	NSLog(@"messagesDataReceived KEUD");
-	//}
-	/*
-	//[[[self loadMoreCell] activityIndicator] stopAnimating];
-	
-	int previousCount = self.arrayData.count;
-	
-	[self.arrayData addObjectsFromArray:self.newArrayData];
-	
-	NSString *tmpHTML = [[NSString alloc] initWithString:@""];
-	
-	int i;
-	for (i = previousCount; i < [self.arrayData count]; i++) { //Loop through all the tags
-		tmpHTML = [tmpHTML stringByAppendingString:[[self.arrayData objectAtIndex:i] toHTML:i]];
-	}	
-
-	tmpHTML = [tmpHTML stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"];
-	
-	NSLog(@"tmpHTML: %@", tmpHTML);
-
-	NSLog(@"======================================================================");
-	NSLog(@"======================================================================");
-
-	NSLog(@"JS: %@", [NSString stringWithFormat:@"x$('#qsdoiqjsdkjhqkjhqsdqdilkjqsd2').html( 'bottom', '%@');", tmpHTML]);
-	
-	[self performSelectorOnMainThread:@selector(addDataToList:) withObject:tmpHTML waitUntilDone:YES];	
-
-	
-	//[self.messagesWebView stringByEvaluatingJavaScriptFromString:@"x$('.message').click(function(e){ window.location = 'oijlkajsdoihjlkjasdodetails://'+this.id; });"];
-	 */
-}
-
-- (void)messagesDataStarted:(id)object {
-	//NSLog(@"messagesDataStarted %@", self);
-
-	NSAutoreleasePool * pool2;
-    
-    pool2 = [[NSAutoreleasePool alloc] init];
-	
-	[self addDataInTableView];
-	//NSLog(@"messagesDataStarted OK");
-
-	[self performSelectorOnMainThread:@selector(pushNotification:) withObject:[NSNotification notificationWithName:@"WebServiceCallCompleted" object:self] waitUntilDone:YES];
-	
-	[pool2 drain];
-}
-
-- (void)pushNotification:(NSNotification *)aNotification
-{
-	[[NSNotificationCenter defaultCenter] postNotification:aNotification];
-}
 
 // -------------------------------------------------------------------------------
 //	handleLoadedApps:notif
 // -------------------------------------------------------------------------------
-
 
 - (void)handleLoadedApps:(NSArray *)loadedItems
 {	
@@ -1619,79 +1271,6 @@
 	for (i = 0; i < [self.arrayData count]; i++) { //Loop through all the tags
 		tmpHTML = [tmpHTML stringByAppendingString:[[self.arrayData objectAtIndex:i] toHTML:i]];
 	}	
-
-	//NSLog(@"handleLoadedApps OK");
-
-	// Init the disk cache
-	/*
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-	NSString *diskCachePath = [[[paths objectAtIndex:0] stringByAppendingPathComponent:@"ImageCache"] retain];
-	
-	if (![[NSFileManager defaultManager] fileExistsAtPath:diskCachePath])
-	{
-		[[NSFileManager defaultManager] createDirectoryAtPath:diskCachePath
-								  withIntermediateDirectories:YES
-												   attributes:nil
-														error:NULL];
-	}
-	
-	NSLog(@"diskCachePath %@", diskCachePath);
-	*/
-	//<script type='text/javascript' src='jquery.lazyload.mini.js'></script>\
-
-
-	//============	
-	/*
-	HTMLParser * myParser = [[HTMLParser alloc] initWithString:tmpHTML error:NULL];
-	HTMLNode * smileNode = [myParser doc]; //Find the body tag
-	
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-	NSString *diskCachePath = [[[paths objectAtIndex:0] stringByAppendingPathComponent:@"SmileCache"] retain];
-	
-	if (![[NSFileManager defaultManager] fileExistsAtPath:diskCachePath])
-	{
-		//NSLog(@"createDirectoryAtPath");
-		[[NSFileManager defaultManager] createDirectoryAtPath:diskCachePath
-								  withIntermediateDirectories:YES
-												   attributes:nil
-														error:NULL];
-	}
-	else {
-		//NSLog(@"pas createDirectoryAtPath");
-	}
-	
-	
-	NSArray * tmpImageArray =  [smileNode findChildrenWithAttribute:@"class" matchingName:@"smileycustom" allowPartial:NO];
-	
-	NSFileManager *fileManager = [[NSFileManager alloc] init];
-	
-	for (HTMLNode * imgNode in tmpImageArray) { //Loop through all the tags
-		NSString *imgUrl = [[imgNode getAttributeNamed:@"src"] stringByReplacingOccurrencesOfString:@"%20" withString:@" "];
-		//NSLog(@"imgUrl %@", imgUrl);
-		
-		NSString *filename = [imgUrl stringByReplacingOccurrencesOfString:@"http://forum-images.hardware.fr/" withString:@""];
-		filename = [filename stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
-		filename = [filename stringByReplacingOccurrencesOfString:@" " withString:@"-"];
-		
-		NSString *key = [diskCachePath stringByAppendingPathComponent:filename];
-		
-		//NSLog(@"key %@", key);
-		
-		if (![fileManager fileExistsAtPath:key])
-		{
-			//NSLog(@"dl %@", key);
-			
-			[fileManager createFileAtPath:key contents:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [imgUrl stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]]]] attributes:nil];					
-		}
-		
-		tmpHTML = [tmpHTML stringByReplacingOccurrencesOfString:[imgNode getAttributeNamed:@"src"] withString:key];
-		
-	}
-	[fileManager release];
-	[diskCachePath release];
-*/
-	//============	
-	
 	
 	NSString *HTMLString = [[NSString alloc] 
                             initWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
@@ -1852,9 +1431,8 @@
 	[webView stringByEvaluatingJavaScriptFromString:jsString];
 	//NSLog(@"? webViewDidFinishLoad JS");
 	
-	
-	NSDate *nowT = [NSDate date]; // Create a current date
- 	NSLog(@"TOTAL Time elapsed    : %f", [nowT timeIntervalSinceDate:self.firstDate]);	
+	//NSDate *nowT = [NSDate date]; // Create a current date
+ 	//NSLog(@"TOTAL Time elapsed    : %f", [nowT timeIntervalSinceDate:self.firstDate]);	
 
 }
 //NSSelectorFromString([[[self arrayAction] objectAtIndex:curPostID] objectForKey:@"code"])
@@ -1932,7 +1510,7 @@
 			return NO;
 		}
 		else if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdorefresh"]) {
-			[self searchNewMessages];
+			[self searchNewMessages:kNewMessageFromUpdate];
 			return NO;
 		}
 		else if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdopopup"]) {
@@ -2306,7 +1884,6 @@
 	[self quoteMessage:[NSString stringWithFormat:@"%@%@", kForumURL, [[[arrayData objectAtIndex:curMsg] urlQuote] decodeSpanUrlFromString]]];
 }
 
-
 -(void)actionFavoris {
 	[self actionFavoris:[NSNumber numberWithInt:curPostID]];
 	
@@ -2359,7 +1936,6 @@
 	
 	
 }
-
 
 - (void)dealloc {
 	//NSLog(@"dealloc Messages Table View");
