@@ -1438,7 +1438,8 @@
 	//NSLog(@"addMessageViewControllerDidFinishOK");
 	
 	[self dismissModalViewControllerAnimated:YES];
-	//if (self.curPostID >= 0 && self.curPostID < self.arrayData.count) {
+	
+    if (self.arrayData.count > 0) {
 		//NSLog(@"curid %d", self.curPostID);
 		NSString *components = [[[self.arrayData objectAtIndex:0] quoteJS] substringFromIndex:7];
 		components = [components stringByReplacingOccurrencesOfString:@"); return false;" withString:@""];
@@ -1449,7 +1450,8 @@
 		NSString *nameCookie = [NSString stringWithFormat:@"quotes%@-%@-%@", [quoteComponents objectAtIndex:0], [quoteComponents objectAtIndex:1], [quoteComponents objectAtIndex:2]];
 		
 		[self EffaceCookie:nameCookie];
-	//}
+	}
+    
 	self.curPostID = -1;
 	
     [self setStringFlagTopic:[[controller refreshAnchor] copy]];
