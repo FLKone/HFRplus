@@ -63,6 +63,21 @@
 
 #pragma mark Split View Delegate
 
+-(void)splitViewController:(UISplitViewController *)svc popoverController:(UIPopoverController *)pc willPresentViewController:(UITabBarController *)aViewController
+{
+    if (aViewController.view.frame.size.width > 320) {
+        
+        aViewController.view.frame = CGRectMake(0, 0, 320, self.view.frame.size.height);
+        
+        NSInteger selected = [aViewController selectedIndex];
+        
+        [aViewController setSelectedIndex:4]; // bugfix select dernière puis reselectionne le bon.
+        [aViewController setSelectedIndex:selected];
+        
+    }
+
+}
+
 - (void)splitViewController: (SplitViewController *)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem*)barButtonItem forPopoverController: (UIPopoverController*)pc {
     
     barButtonItem.title = @"Menu";    
