@@ -327,7 +327,6 @@
 		CAA1B092125C0A53009C80E3 /* AKSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1B091125C0A53009C80E3 /* AKSegmentedControl.m */; };
 		CAAA5EBA126CD2B7005B1C3E /* SDURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = CAAA5EB8126CD2B7005B1C3E /* SDURLCache.m */; };
 		CAADE5281269D2E900E19F00 /* templatev2.htm in Resources */ = {isa = PBXBuildFile; fileRef = CAADE5271269D2E900E19F00 /* templatev2.htm */; };
-		CAADE5451269DA9000E19F00 /* style-liste2.css in Resources */ = {isa = PBXBuildFile; fileRef = CAADE5441269DA9000E19F00 /* style-liste2.css */; };
 		CAADE5841269DF6300E19F00 /* grayButton.png in Resources */ = {isa = PBXBuildFile; fileRef = CAADE5831269DF6300E19F00 /* grayButton.png */; };
 		CAADE6461269ED1800E19F00 /* alert-overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = CAADE6451269ED1800E19F00 /* alert-overlay.png */; };
 		CAAFAFDC125E2A58001B90EC /* NewMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAAFAFDB125E2A58001B90EC /* NewMessageViewController.m */; };
@@ -789,7 +788,6 @@
 		CAAA5EB8126CD2B7005B1C3E /* SDURLCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDURLCache.m; sourceTree = "<group>"; };
 		CAAA5EB9126CD2B7005B1C3E /* SDURLCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDURLCache.h; sourceTree = "<group>"; };
 		CAADE5271269D2E900E19F00 /* templatev2.htm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = templatev2.htm; sourceTree = "<group>"; };
-		CAADE5441269DA9000E19F00 /* style-liste2.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "style-liste2.css"; sourceTree = "<group>"; };
 		CAADE5831269DF6300E19F00 /* grayButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayButton.png; sourceTree = "<group>"; };
 		CAADE6451269ED1800E19F00 /* alert-overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "alert-overlay.png"; sourceTree = "<group>"; };
 		CAAFAFDA125E2A58001B90EC /* NewMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewMessageViewController.h; sourceTree = "<group>"; };
@@ -1128,7 +1126,6 @@
 				CA7E25F915A2445800721F6D /* style-liste-ipad-landscape.css */,
 				CAADE6451269ED1800E19F00 /* alert-overlay.png */,
 				CAADE5831269DF6300E19F00 /* grayButton.png */,
-				CAADE5441269DA9000E19F00 /* style-liste2.css */,
 				CA18B20D12626D47008B8466 /* hfr.js */,
 				CA17B99212231368007EA04E /* template.htm */,
 				CAE1D2F0125A8DD20067715B /* smileybase.html */,
@@ -1877,7 +1874,6 @@
 				CA65AD5912663F92005921B1 /* blank15.gif in Resources */,
 				CA7A982112677F2E00E7FD73 /* link.png in Resources */,
 				CAADE5281269D2E900E19F00 /* templatev2.htm in Resources */,
-				CAADE5451269DA9000E19F00 /* style-liste2.css in Resources */,
 				CAADE5841269DF6300E19F00 /* grayButton.png in Resources */,
 				CAADE6461269ED1800E19F00 /* alert-overlay.png in Resources */,
 				CADCBB95127A07AD00419AE6 /* 60-signpost.png in Resources */,
