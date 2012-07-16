@@ -408,12 +408,14 @@
 	[self setupFastAnswer:bodyNode];
 
 	//if(topicAnswerUrl.length > 0) 
-    self.navigationItem.rightBarButtonItem.enabled = YES;
 	//-	
 
 	
 	//--Pages	
 	[self setupPageToolbar:bodyNode];
+
+    
+    self.navigationItem.rightBarButtonItem.enabled = YES;
 
 	
 }
