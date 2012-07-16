@@ -450,4 +450,8 @@ background:-webkit-gradient(
 	#actualiserbtn.loading {
 		background-position: 180px 14px;
 	}	
+    
+    img {
+        max-width:460px;
+    }
 }
