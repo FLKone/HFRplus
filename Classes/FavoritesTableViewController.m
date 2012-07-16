@@ -127,10 +127,10 @@
         
         theRow += [[arrayDataID objectForKey:[arrayDataID2 objectAtIndex:pressedIndexPath.section]] lengthB4];
         
-        NSLog(@"goto topic page %d", [[pageNumberField text] intValue]);
+        //NSLog(@"goto topic page %d", [[pageNumberField text] intValue]);
         NSString * newUrl = [[NSString alloc] initWithString:[[arrayData objectAtIndex:theRow] aURL]];
         
-        NSLog(@"newUrl %@", newUrl);
+        //NSLog(@"newUrl %@", newUrl);
         
         //On remplace le numéro de page dans le titre
         int number = [[pageNumberField text] intValue];
@@ -158,8 +158,11 @@
         //newUrl = [newUrl stringByReplacingOccurrencesOfString:@"_1.htm" withString:[NSString stringWithFormat:@"_%d.htm", [[pageNumberField text] intValue]]];
         //newUrl = [newUrl stringByReplacingOccurrencesOfString:@"page=1&" withString:[NSString stringWithFormat:@"page=%d&", [[pageNumberField text] intValue]]];
         
-        NSLog(@"newUrl %@", newUrl);
         
+        newUrl = [newUrl stringByRemovingAnchor];
+
+        //NSLog(@"newUrl %@", newUrl);
+
         //if (self.messagesTableViewController == nil) {
 		MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:newUrl];
 		self.messagesTableViewController = aView;

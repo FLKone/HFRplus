@@ -146,6 +146,8 @@
 		
 	}	
 	
+    newUrl = [newUrl stringByRemovingAnchor];
+    
 	self.currentUrl = newUrl;
 	[self fetchContent];
 }

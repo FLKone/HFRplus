@@ -1517,6 +1517,8 @@
         
         //NSLog(@"newUrl %@", newUrl);
 
+        newUrl = [newUrl stringByRemovingAnchor];
+        
         //if (self.messagesTableViewController == nil) {
 		MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:newUrl];
 		self.messagesTableViewController = aView;
