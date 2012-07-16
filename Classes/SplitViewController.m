@@ -21,9 +21,14 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        NSLog(@"initWithNibName");
+        
+        self.mybarButtonItem = [[UIBarButtonItem alloc] init];
+
     }
     return self;
 }
+
 
 - (void)viewDidLoad
 {
@@ -38,6 +43,7 @@
 
 - (void)viewDidUnload
 {
+    
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -58,23 +64,21 @@
 #pragma mark Split View Delegate
 
 - (void)splitViewController: (SplitViewController *)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem*)barButtonItem forPopoverController: (UIPopoverController*)pc {
+    
     barButtonItem.title = @"Menu";    
     
     UINavigationItem *navItem = [[[[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] viewControllers] objectAtIndex:0] navigationItem];
 
     [navItem setLeftBarButtonItem:barButtonItem animated:YES];
     
-    
-
-    
     svc.popOver = pc;
-    svc.mybarButtonItem = barButtonItem;
+    [svc setMybarButtonItem:barButtonItem];
+
 
 }
 
 - (void)splitViewController: (SplitViewController *)svc willShowViewController:(UIViewController *)aViewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem {    
    
-    
     UINavigationItem *navItem = [[[[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] viewControllers] objectAtIndex:0] navigationItem];
     [navItem setLeftBarButtonItem:nil animated:YES];
     
