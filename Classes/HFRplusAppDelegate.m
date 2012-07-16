@@ -299,6 +299,7 @@
         NSLog(@"error 2");
     }        
 	
+    /*
 	SDURLCache *urlCache = [[SDURLCache alloc] initWithMemoryCapacity:1024*1024*1   // 1MB mem cache
 														 diskCapacity:1024*1024*50 // 5MB disk cache
 															 diskPath:[SDURLCache defaultCachePath]];
@@ -307,7 +308,8 @@
 	
 	[NSURLCache setSharedURLCache:urlCache];
 	[urlCache release];
-	
+	*/
+    
 	NSString *enabled = [[NSUserDefaults standardUserDefaults] stringForKey:@"landscape_mode"];
     NSString *img = [[NSUserDefaults standardUserDefaults] stringForKey:@"display_images"];
     NSString *tab = [[NSUserDefaults standardUserDefaults] stringForKey:@"default_tab"];
