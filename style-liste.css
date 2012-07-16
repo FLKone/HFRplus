@@ -407,8 +407,8 @@ background:-webkit-gradient(
     clear:both;
 }
 
-@media only screen and (orientation:landscape){
-	 landscape styles here */
+@media only screen and (orientation:landscape) {
+	 /* landscape styles here */
 	
 	body {
 		width:480px;
