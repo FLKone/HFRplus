@@ -25,6 +25,11 @@ table p
     max-width:748px;
 }
 
+table p img
+{
+    max-width:728px;
+}
+
 #toolbarpage {
     
     width:768px;

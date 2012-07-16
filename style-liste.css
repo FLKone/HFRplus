@@ -55,6 +55,11 @@ table p
 	overflow-x:hidden;
 }
 
+table p img
+{
+	max-width:280px;
+}
+
 table .s1 a {
 	font-weight:bold !important;
 	text-decoration:underline !important;
@@ -426,17 +431,33 @@ background:-webkit-gradient(
 		width:460px;
 	}
 
+    img {
+        max-width:460px;
+    }
+    
 	table 
 	{ 
 		max-width:460px;
 		
 	}
+
 	
 	table p
 	{
 		max-width:460px;
 	}
 	
+
+    
+    table p img
+    {
+        max-width:440px;
+    }
+    
+    
+    
+    
+    
 	#toolbarpage {
 		
 		width:480px;
@@ -450,8 +471,5 @@ background:-webkit-gradient(
 	#actualiserbtn.loading {
 		background-position: 180px 14px;
 	}	
-    
-    img {
-        max-width:460px;
-    }
+
 }
