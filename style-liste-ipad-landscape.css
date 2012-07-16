@@ -50,3 +50,7 @@ table p
 .message .content .right * {
 	font-size:13px !important;	
 }
+
+img {
+    max-width:683px;
+}
