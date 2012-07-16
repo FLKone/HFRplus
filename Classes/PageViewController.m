@@ -183,13 +183,11 @@
 }
 
 -(void)nextPage:(id)sender {
-	//NSLog(@"nextPage self.nextPageUrl %@", self.nextPageUrl);
 	
 	self.currentUrl = self.nextPageUrl;
 	[self fetchContent];	
 }
 -(void)previousPage:(id)sender {
-	//NSLog(@"previousPage self.previousPageUrl %@", self.previousPageUrl);
 	
 	self.currentUrl = self.previousPageUrl;
 	[self fetchContent];	
@@ -201,19 +199,16 @@
     [self lastPage:nil];
 }
 -(void)firstPage:(id)sender {
-	NSLog(@"firstPage self.firstPageUrl %@", self.firstPageUrl);
 	
 	if(self.firstPageUrl.length > 0) self.currentUrl = self.firstPageUrl;
 	[self fetchContent];
 }
 -(void)lastPage:(id)sender {
-	NSLog(@"lastPage self.lastPageUrl %@", self.lastPageUrl);
 	
 	if(self.lastPageUrl.length > 0) self.currentUrl = self.lastPageUrl;
 	[self fetchContent];	
 }
 -(void)lastAnswer {
-	NSLog(@"lastAnswer %@", self.lastPageUrl);
 	
 	if(self.lastPageUrl.length > 0) self.currentUrl = [NSString stringWithFormat:@"%@#bas", self.lastPageUrl];
 	[self fetchContent];	
