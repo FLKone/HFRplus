@@ -136,7 +136,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
         // Custom initialization
-		NSLog(@"initWithNibName TTVC");
+		//NSLog(@"initWithNibName TTVC");
 		
         self.selectedFlagIndex = 0;
         
@@ -728,7 +728,7 @@
     [super viewDidLoad];
 	self.title = forumName;
     
-    NSLog(@"viewDidLoad %d", selectedFlagIndex);
+    //NSLog(@"viewDidLoad %d", selectedFlagIndex);
     
           
 	//NSLog(@"viewDidLoad %@ - %@", [[UIDevice currentDevice] systemName], [[UIDevice currentDevice] systemVersion]);
@@ -1559,14 +1559,14 @@
 	//}
 	
 	//NSLog(@"%@", self.navigationController.navigationBar);
-    NSLog(@"b4 %@", self.navigationController);
+    //NSLog(@"b4 %@", self.navigationController);
 
 	//setup the URL
     
     [self.messagesTableViewController setTopicName:[[arrayData objectAtIndex:indexPath.row] aTitle]];
 	self.messagesTableViewController.isViewed = [[arrayData objectAtIndex:indexPath.row] isViewed];	
     
-    NSLog(@"pushTopic");
+    //NSLog(@"pushTopic");
     [self pushTopic];
 	//[self.navigationController pushViewController:messagesTableViewController animated:YES];
 }
