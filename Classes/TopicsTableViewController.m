@@ -1396,11 +1396,7 @@
 #pragma mark chooseTopicPage
 
 -(void)chooseTopicPage {
-    NSLog(@"chooseTopicPage");
-
-
-    
-    
+    //NSLog(@"chooseTopicPage Topics");
     
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Aller à la page" message:[NSString stringWithFormat:@"\n\n(numéro entre 1 et %d)\n", [[arrayData objectAtIndex:pressedIndexPath.row] maxTopicPage]]
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"OK", nil];
@@ -1432,8 +1428,6 @@
 	
 	[alert show];
     
-
-	//pageNumberField.frame = CGRectMake(12.0, , 260.0, 30.0);
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
         UILabel* tmpLbl = [alert.subviews objectAtIndex:1];
@@ -1501,6 +1495,7 @@
     [super alertView:alertView willDismissWithButtonIndex:buttonIndex];
     
 	//NSLog(@"willDismissWithButtonIndex PT %@", alertView);
+    
 	if (([alertView tag] == 669)) {
 		[self.pageNumberField resignFirstResponder];
 		self.pageNumberField = nil;
@@ -1512,15 +1507,15 @@
     [super alertView:alertView clickedButtonAtIndex:buttonIndex];
 	
 	if (buttonIndex == 1 && alertView.tag == 669) {
-        NSLog(@"goto topic page %d", [[pageNumberField text] intValue]);
+        //NSLog(@"goto topic page %d", [[pageNumberField text] intValue]);
         NSString * newUrl = [[NSString alloc] initWithString:[[arrayData objectAtIndex:pressedIndexPath.row] aURL]];
        
-        NSLog(@"newUrl %@", newUrl);
+        //NSLog(@"newUrl %@", newUrl);
 
         newUrl = [newUrl stringByReplacingOccurrencesOfString:@"_1.htm" withString:[NSString stringWithFormat:@"_%d.htm", [[pageNumberField text] intValue]]];
         newUrl = [newUrl stringByReplacingOccurrencesOfString:@"page=1&" withString:[NSString stringWithFormat:@"page=%d&", [[pageNumberField text] intValue]]];
         
-        NSLog(@"newUrl %@", newUrl);
+        //NSLog(@"newUrl %@", newUrl);
 
         //if (self.messagesTableViewController == nil) {
 		MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:newUrl];

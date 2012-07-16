@@ -887,7 +887,7 @@
 #pragma mark chooseTopicPage
 
 -(void)chooseTopicPage {
-    NSLog(@"chooseTopicPage");
+    //NSLog(@"chooseTopicPage Favs");
 
     int theRow = pressedIndexPath.row;
     
@@ -923,7 +923,6 @@
 	
 	[alert show];
     
-	//pageNumberField.frame = CGRectMake(12.0, , 260.0, 30.0);
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
         UILabel* tmpLbl = [alert.subviews objectAtIndex:1];
@@ -988,7 +987,8 @@
 
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
 {    
-	NSLog(@"willDismissWithButtonIndex PT %@", alertView);
+	//NSLog(@"willDismissWithButtonIndex PT %@", alertView);
+    
 	if (([alertView tag] == 669)) {
 		[self.pageNumberField resignFirstResponder];
 		self.pageNumberField = nil;
