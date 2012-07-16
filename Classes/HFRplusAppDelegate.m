@@ -336,6 +336,9 @@
         [splitViewController view].backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bgbigiPad"]];
 
         UIView *view = [splitViewController view];
+        
+        splitViewController.delegate = splitViewController;
+        
         [window addSubview:view];
     } else {
         [window addSubview:rootController.view];	
