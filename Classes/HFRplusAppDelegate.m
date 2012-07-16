@@ -227,6 +227,7 @@
 - (void)updateWithUbiquityContainer:(id)container {
     if (container) {
         NSLog(@"iCloud access at %@", container);
+        // TODO: Load document... 
         [self loadDocument];
     } else {
         NSLog(@"No iCloud access");
@@ -334,9 +335,10 @@
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) { 
         [splitViewController view].backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bgbigiPad"]];
 
-        [window setRootViewController:splitViewController];
+        UIView *view = [splitViewController view];
+        [window addSubview:view];
     } else {
-        [window setRootViewController:rootController];
+        [window addSubview:rootController.view];	
     }
     	
     [window makeKeyAndVisible];
