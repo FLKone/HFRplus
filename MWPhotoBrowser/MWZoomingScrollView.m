@@ -98,7 +98,7 @@
 	if (_photo && _photoImageView.image == nil) {
 		
 		// Reset
-		self.maximumZoomScale = 1;
+		self.maximumZoomScale = 3;
 		self.minimumZoomScale = 1;
 		self.zoomScale = 1;
 		self.contentSize = CGSizeMake(0, 0);
@@ -145,7 +145,7 @@
 - (void)setMaxMinZoomScalesForCurrentBounds {
 	
 	// Reset
-	self.maximumZoomScale = 1;
+	self.maximumZoomScale = 3;
 	self.minimumZoomScale = 1;
 	self.zoomScale = 1;
 	
@@ -168,15 +168,19 @@
 	}
     
 	// Calculate Max
-	CGFloat maxScale = 2.0; // Allow double scale
+	//CGFloat maxScale = 2.0; // Allow double scale
     // on high resolution screens we have double the pixel density, so we will be seeing every pixel if we limit the
     // maximum zoom scale to 0.5.
-	if ([UIScreen instancesRespondToSelector:@selector(scale)]) {
-		maxScale = maxScale / [[UIScreen mainScreen] scale];
-	}
+	//if ([UIScreen instancesRespondToSelector:@selector(scale)]) {
+    //    NSLog(@"scale");
+	//	maxScale = maxScale / [[UIScreen mainScreen] scale];
+	//}
 	
 	// Set
-	self.maximumZoomScale = maxScale;
+    
+    //NSLog(@"scale %f", [[UIScreen mainScreen] scale]);
+    
+	//self.maximumZoomScale = maxScale;
 	self.minimumZoomScale = minScale;
 	self.zoomScale = minScale;
 	
