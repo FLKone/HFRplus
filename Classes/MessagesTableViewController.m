@@ -469,8 +469,6 @@
 
     }
 
-    label.shadowOffset = CGSizeMake(0.0, -1.0);
-
     [label setNumberOfLines:0];
     
     [label setText:self.topicName];
