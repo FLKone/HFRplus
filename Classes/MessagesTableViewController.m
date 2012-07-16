@@ -1376,21 +1376,21 @@
 		NSString *buttonPrevious, *buttonNext;		
 		
 		if ([(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:0] isEnabled]) {
-			buttonBegin = [NSString stringWithString:@"<div class=\"button begin active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://begin\">begin</a></div>"];
-			buttonPrevious = [NSString stringWithString:@"<div class=\"button2 begin active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://previous\">previous</a></div>"];
+			buttonBegin = @"<div class=\"button begin active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://begin\">begin</a></div>";
+			buttonPrevious = @"<div class=\"button2 begin active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://previous\">previous</a></div>";
 		}
 		else {
-			buttonBegin = [NSString stringWithString:@"<div class=\"button begin\"></div>"];
-			buttonPrevious = [NSString stringWithString:@"<div class=\"button2 begin\"></div>"];
+			buttonBegin = @"<div class=\"button begin\"></div>";
+			buttonPrevious = @"<div class=\"button2 begin\"></div>";
 		}
 
 		if ([(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:4] isEnabled]) {
-			buttonEnd = [NSString stringWithString:@"<div class=\"button end active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://end\">end</a></div>"];
-			buttonNext = [NSString stringWithString:@"<div class=\"button2 end active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://next\">next</a></div>"];
+			buttonEnd = @"<div class=\"button end active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://end\">end</a></div>";
+			buttonNext = @"<div class=\"button2 end active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://next\">next</a></div>";
 		}
 		else {
-			buttonEnd = [NSString stringWithString:@"<div class=\"button end\"></div>"];
-			buttonNext = [NSString stringWithString:@"<div class=\"button2 end\"></div>"];
+			buttonEnd = @"<div class=\"button end\"></div>";
+			buttonNext = @"<div class=\"button2 end\"></div>";
 		}
 		
 		
