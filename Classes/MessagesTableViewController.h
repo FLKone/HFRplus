@@ -56,7 +56,6 @@
 	//Gesture
 	UISwipeGestureRecognizer *swipeLeftRecognizer;
 	UISwipeGestureRecognizer *swipeRightRecognizer;
-    UISwipeGestureRecognizer *singledualTap;
     
 	//V3
 	// the queue to run our "ParseOperation"
@@ -107,7 +106,6 @@
 
 @property (nonatomic, retain) UISwipeGestureRecognizer *swipeLeftRecognizer;
 @property (nonatomic, retain) UISwipeGestureRecognizer *swipeRightRecognizer;
-@property (nonatomic, retain) UISwipeGestureRecognizer *singledualTap;
 
 @property (nonatomic, retain) UIActionSheet *styleAlert;
 

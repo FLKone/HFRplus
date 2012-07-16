@@ -26,7 +26,7 @@
 
 @implementation MessagesTableViewController
 @synthesize loaded, isLoading, topicName, topicAnswerUrl, loadingView, messagesWebView, arrayData, updatedArrayData, detailViewController, messagesTableViewController;
-@synthesize swipeLeftRecognizer, swipeRightRecognizer, singledualTap, overview, arrayActionsMessages;
+@synthesize swipeLeftRecognizer, swipeRightRecognizer, overview, arrayActionsMessages;
 
 @synthesize queue; //v3
 @synthesize stringFlagTopic;
@@ -475,14 +475,6 @@
     
     [self.navigationItem setTitleView:label];
     [label release];
-    
-    
-    singledualTap = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)] autorelease];
-	singledualTap.numberOfTouchesRequired = 2;
-    singledualTap.direction = UISwipeGestureRecognizerDirectionUp;
-    singledualTap.cancelsTouchesInView = YES;
-    
-	[self.view addGestureRecognizer: singledualTap];
     
 	//Gesture
 	UIGestureRecognizer *recognizer;
@@ -1127,10 +1119,6 @@
 
 #pragma mark -
 #pragma mark Gestures
-
-- (void)handleDoubleTap:(UISwipeGestureRecognizer *)recognizer {
-	NSLog(@"recognizer= %@", recognizer);
-}
 
 -(void) shakeHappened:(ShakeView*)view
 {
@@ -1965,9 +1953,6 @@
 	
     
     self.styleAlert = nil;
-    
-    //[self.view removeGestureRecognizer:self.singledualTap];
-	//self.singledualTap = nil;
     
 	self.stringFlagTopic = nil;
 	self.arrayInputData = nil;
