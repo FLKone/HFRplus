@@ -1370,7 +1370,7 @@
     //NSLog(@"setTopicViewed");
 
 	if (self.pressedIndexPath && self.arrayData.count > 0) {
-		NSLog(@"TT pressedIndexPath");
+		//NSLog(@"TT pressedIndexPath");
 		
 		[[self.arrayData objectAtIndex:[self.pressedIndexPath row]] setIsViewed:YES];
         
@@ -1380,7 +1380,7 @@
         //[self.topicsTableView reloadData];
 	}
 	else if (self.topicsTableView.indexPathForSelectedRow && self.arrayData.count > 0) {
-		NSLog(@"TT indexPathForSelectedRow");
+		//NSLog(@"TT indexPathForSelectedRow");
         
 		[[self.arrayData objectAtIndex:[self.topicsTableView.indexPathForSelectedRow row]] setIsViewed:YES];
         

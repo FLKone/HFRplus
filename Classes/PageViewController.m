@@ -42,7 +42,7 @@
 }
 
 -(void)choosePage {
-	NSLog(@"choosePage");
+	//NSLog(@"choosePage");
 	
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Aller à la page" message:[NSString stringWithFormat:@"\n\n(numéro entre %d et %d)\n", [self firstPageNumber], [self lastPageNumber]]
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"OK", nil];

@@ -426,7 +426,7 @@
 
 - (void)periodicMaintenance
 {
-	NSLog(@"periodicMaintenance");
+	//NSLog(@"periodicMaintenance");
 	
 
 	
@@ -442,7 +442,7 @@
     
     pool2 = [[NSAutoreleasePool alloc] init];
 	
-	NSLog(@"periodicMaintenanceBack");
+	//NSLog(@"periodicMaintenanceBack");
 
     // If another same maintenance operation is already sceduled, cancel it so this new operation will be executed after other
     // operations of the queue, so we can group more work together
@@ -537,7 +537,7 @@
         self.periodicMaintenanceOperation = [[[NSInvocationOperation alloc] initWithTarget:self selector:@selector(balanceDiskUsage) object:nil] autorelease];
         [ioQueue addOperation:periodicMaintenanceOperation];
     }*/
-	NSLog(@"end");
+	//NSLog(@"end");
 	[pool2 drain];
 
 }
