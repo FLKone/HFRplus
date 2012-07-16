@@ -19,7 +19,7 @@ typedef enum {
 	kComplete
 } STATUS;
 
-#define kForumURL				@"http://forum.hardware.fr" // @"http://forum.hardware.fr" iPad TEST
+#define kForumURL				@"http://forum.hardware.fr"
 
 #define kTimeoutMini		30
 #define kTimeoutMaxi		60
@@ -39,3 +39,8 @@ typedef enum {
 #define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
 
 #define kFILENAMESmiley @"docs.hfr"
+
+#define kNewMessageFromUpdate   1
+#define kNewMessageFromShake    2
+#define kNewMessageFromEditor   3
+#define kNewMessageFromUnkwn    4

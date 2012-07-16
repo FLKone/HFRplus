@@ -255,7 +255,7 @@
 	
 	[super fetchContentComplete:theRequest];
 
-    NSLog(@"%d", self.status);
+    //NSLog(@"%d", self.status);
     
 	switch (self.status) {
 		case kMaintenance:
