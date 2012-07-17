@@ -1249,6 +1249,8 @@
 
 - (void)handleLoadedApps:(NSArray *)loadedItems
 {	
+    NSLog(@"BEGIN");
+    
 	[self.arrayData removeAllObjects];
 	[self.arrayData addObjectsFromArray:loadedItems];
 
@@ -1294,11 +1296,13 @@
 	//[tmpHTML release];
 
 	
-	
+    NSLog(@"END");
 }
 - (void)handleLoadedParser:(HTMLParser *)myParser
 {
+    NSLog(@"BEGIN");
 	[self loadDataInTableView:myParser];
+    NSLog(@"END");
 }	
 
 // -------------------------------------------------------------------------------
@@ -1306,21 +1310,21 @@
 // -------------------------------------------------------------------------------
 - (void)didStartParsing:(HTMLParser *)myParser
 {
-	//NSLog(@"didStartParsing");
-
+    NSLog(@"BEGIN");
     [self performSelectorOnMainThread:@selector(handleLoadedParser:) withObject:myParser waitUntilDone:NO];
+    NSLog(@"END");
 }
 
 - (void)didFinishParsing:(NSArray *)appList
 {
-	//NSLog(@"didFinishParsing");
-
+    NSLog(@"BEGIN");
+    
     [self performSelectorOnMainThread:@selector(handleLoadedApps:) withObject:appList waitUntilDone:NO];
 	//NSLog(@"didFinishParsing 0");
 
     [self.queue release], self.queue = nil;
 	
-	//NSLog(@"didFinishParsing end");
+    NSLog(@"END");
 
 }
 
