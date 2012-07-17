@@ -137,7 +137,7 @@
 	
 	NSArray * messagesNodes = [bodyNode findChildrenWithAttribute:@"class" matchingName:@"messagetable" allowPartial:NO]; //Get all the <img alt="" />
 
-	//NSLog(@"message %d", [messagesNodes count]);
+	NSLog(@"message %d", [messagesNodes count]);
 	
 	for (HTMLNode * messageNode2 in messagesNodes) { //Loop through all the tags
 		
@@ -172,7 +172,7 @@
 			//fasTest.name = [[fasTest.name componentsSeparatedByCharactersInSet:[[NSCharacterSet letterCharacterSet] invertedSet]] componentsJoinedByString:@""];
 
 			//NSLog(@"name %@", fasTest.name);
-			//NSLog(@"postID %@", fasTest.postID);
+			NSLog(@"postID %@", fasTest.postID);
 			
 			if ([fasTest.name isEqualToString:@"Publicité"]) {
 				[fasTest release];

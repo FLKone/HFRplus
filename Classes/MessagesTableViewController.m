@@ -55,6 +55,8 @@
     
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMaxi];
 
+    NSLog(@"URL %@", [self currentUrl]);
+    
 	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]]]];
 	[request setDelegate:self];
 
@@ -81,13 +83,13 @@
 - (void)fetchContentStarted:(ASIHTTPRequest *)theRequest
 {
 	//--
-	//NSLog(@"fetchContentStarted");
+	NSLog(@"fetchContentStarted");
 
 }
 
 - (void)fetchContentComplete:(ASIHTTPRequest *)theRequest
 {
-	//NSLog(@"fetchContentComplete Message");
+	NSLog(@"fetchContentComplete");
 	
 	// create the queue to run our ParseOperation
     self.queue = [[NSOperationQueue alloc] init];
@@ -1332,14 +1334,18 @@
 #pragma mark WebView Delegate
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
+    NSLog(@"BEGIN");
 	//NSLog(@"== webViewDidStartLoad");
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+
+    NSLog(@"END");    
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-	//NSLog(@"== webViewDidFinishLoad");
+    NSLog(@"BEGIN");
 	
+
 
 	//NSLog(@"== webViewDidFinishLoad %@", [NSString stringWithFormat:@"window.location.hash='%@';$('img.lazy').lazyload({ placeholder : 'blank15.gif' });$('img.lazy2').lazyload({ placeholder : 'avatar_male_gray_on_light_48x48.png' });", self.stringFlagTopic]);
 //	jsString = [jsString stringByAppendingString:@"$('img.lazy').lazyload({ placeholder : 'blank15.gif' });"];
@@ -1422,9 +1428,15 @@
 	//NSLog(@"? webViewDidFinishLoad JS");
 	
 	//NSDate *nowT = [NSDate date]; // Create a current date
- 	//NSLog(@"TOTAL Time elapsed    : %f", [nowT timeIntervalSinceDate:self.firstDate]);	
+ 	//NSLog(@"TOTAL Time elapsed    : %f", [nowT timeIntervalSinceDate:self.firstDate]);
+
+    
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 	[self.messagesWebView setHidden:NO];
+    
+    
+    NSLog(@"END");
+    
 
 }
 //NSSelectorFromString([[[self arrayAction] objectAtIndex:curPostID] objectForKey:@"code"])
