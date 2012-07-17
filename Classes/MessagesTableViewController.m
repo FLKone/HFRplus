@@ -1340,8 +1340,6 @@
 {
 	//NSLog(@"== webViewDidFinishLoad");
 	
-	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;	
-	[self.messagesWebView setHidden:NO];
 
 	//NSLog(@"== webViewDidFinishLoad %@", [NSString stringWithFormat:@"window.location.hash='%@';$('img.lazy').lazyload({ placeholder : 'blank15.gif' });$('img.lazy2').lazyload({ placeholder : 'avatar_male_gray_on_light_48x48.png' });", self.stringFlagTopic]);
 //	jsString = [jsString stringByAppendingString:@"$('img.lazy').lazyload({ placeholder : 'blank15.gif' });"];
@@ -1425,6 +1423,8 @@
 	
 	//NSDate *nowT = [NSDate date]; // Create a current date
  	//NSLog(@"TOTAL Time elapsed    : %f", [nowT timeIntervalSinceDate:self.firstDate]);	
+	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+	[self.messagesWebView setHidden:NO];
 
 }
 //NSSelectorFromString([[[self arrayAction] objectAtIndex:curPostID] objectForKey:@"code"])
