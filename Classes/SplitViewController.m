@@ -47,6 +47,27 @@
     // Release any retained subviews of the main view.
 }
 
+/* for iOS6 support
+- (NSUInteger)supportedInterfaceOrientations
+{
+	if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"landscape_mode"] isEqualToString:@"all"]) {
+        NSLog(@"All");
+        
+		return UIInterfaceOrientationMaskAll;
+	} else {
+        NSLog(@"Portrait");
+        
+		return UIInterfaceOrientationMaskPortrait;
+	}
+}
+
+ 
+- (BOOL)shouldAutorotate
+{
+    return YES;
+}
+*/
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
 	// Get user preference

@@ -329,6 +329,21 @@
 	[self.view endEditing:YES];
 
 }
+/* for iOS6 support
+- (NSUInteger)supportedInterfaceOrientations
+{
+	if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"landscape_mode"] isEqualToString:@"all"]) {
+		return UIInterfaceOrientationMaskAll;
+	} else {
+		return UIInterfaceOrientationMaskPortrait;
+	}
+}
+
+- (BOOL)shouldAutorotate
+{
+    return YES;
+}
+*/
 
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

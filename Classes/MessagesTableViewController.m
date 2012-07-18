@@ -725,27 +725,6 @@
 
 -(void)answerTopic
 {
-	// Create the root view controller for the navigation controller
-	// The new view controller configures a Cancel and Done button for the
-	// navigation bar.
-	
-	/*
-	FormViewController *formViewController = [[FormViewController alloc]
-														  initWithNibName:@"FormViewController" bundle:nil];
-	
-	[[formViewController.viewControllers objectAtIndex:0] setDelegate:self];
-	[[formViewController.viewControllers objectAtIndex:0] setArrayInputData:self.arrayInputData];
-
-	[self presentModalViewController:formViewController animated:YES];
-
-	[formViewController release];
-
-
-	AddMessageViewController *addMessageViewController = [[AddMessageViewController alloc]
-															  initWithNibName:@"AddMessageViewController" bundle:nil];
-	addMessageViewController.delegate = self;
-	[addMessageViewController setArrayInputData:self.arrayInputData];
-*/
 	
 	while (self.isAnimating) {
         //NSLog(@"isAnimating");
@@ -761,7 +740,7 @@
 	
 	
 	// Create the navigation controller and present it modally.
-	UINavigationController *navigationController = [[UINavigationController alloc]
+	HFRNavigationController *navigationController = [[HFRNavigationController alloc]
 													initWithRootViewController:addMessageViewController];
     
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
@@ -811,7 +790,7 @@
 	[quoteMessageViewController setUrlQuote:quoteUrl];
 	
 	// Create the navigation controller and present it modally.
-	UINavigationController *navigationController = [[UINavigationController alloc]
+	HFRNavigationController *navigationController = [[HFRNavigationController alloc]
 													initWithRootViewController:quoteMessageViewController];
     
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
@@ -851,7 +830,7 @@
 	[editMessageViewController setUrlQuote:editUrl];
 	
 	// Create the navigation controller and present it modally.
-	UINavigationController *navigationController = [[UINavigationController alloc]
+	HFRNavigationController *navigationController = [[HFRNavigationController alloc]
 													initWithRootViewController:editMessageViewController];
     
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
@@ -1085,7 +1064,7 @@
     // Present
 
     
-    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:browser];
+    HFRNavigationController *nc = [[HFRNavigationController alloc] initWithRootViewController:browser];
     nc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self presentModalViewController:nc animated:YES];
     [nc release];    
@@ -1784,7 +1763,7 @@
 	[editMessageViewController setUrlQuote:[NSString stringWithFormat:@"%@%@", kForumURL, [[arrayData objectAtIndex:curMsg] MPUrl]]];
 	editMessageViewController.title = @"Nouv. Message";
 	// Create the navigation controller and present it modally.
-	UINavigationController *navigationController = [[UINavigationController alloc]
+	HFRNavigationController *navigationController = [[HFRNavigationController alloc]
 													initWithRootViewController:editMessageViewController];
     
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
@@ -2010,4 +1989,3 @@
 }
 
 @end
-

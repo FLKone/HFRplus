@@ -675,9 +675,9 @@
 	[editMessageViewController setUrlQuote:[NSString stringWithFormat:@"%@%@", kForumURL, forumNewTopicUrl]];
 	editMessageViewController.title = [self newTopicTitle];
 	// Create the navigation controller and present it modally.
-	UINavigationController *navigationController = [[UINavigationController alloc]
+	HFRNavigationController *navigationController = [[HFRNavigationController alloc]
 													initWithRootViewController:editMessageViewController];
-    
+
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
 	[self presentModalViewController:navigationController animated:YES];
 	

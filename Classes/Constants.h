@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 #import "UITableViewController+Ext.h"
 #import "NSDictionary+Merging.h"
+#import "HFRNavigationController.h"
 
 #define NSLog(__FORMAT__, ...) TFLog((@"%s [Line %d] " __FORMAT__), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 
