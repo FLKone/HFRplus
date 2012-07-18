@@ -113,7 +113,7 @@
 		return;
 	}
 	
-	//NSDate *thenT = [NSDate date]; // Create a current date
+	NSDate *thenT = [NSDate date]; // Create a current date
 
 
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
@@ -137,7 +137,7 @@
 	
 	NSArray * messagesNodes = [bodyNode findChildrenWithAttribute:@"class" matchingName:@"messagetable" allowPartial:NO]; //Get all the <img alt="" />
 
-	NSLog(@"message %d", [messagesNodes count]);
+	NSLog(@"%f message %d", [thenT timeIntervalSinceNow] * -1000.0, [messagesNodes count]);
 	
 	for (HTMLNode * messageNode2 in messagesNodes) { //Loop through all the tags
 		
@@ -171,7 +171,7 @@
 			fasTest.name = [fasTest.name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 			//fasTest.name = [[fasTest.name componentsSeparatedByCharactersInSet:[[NSCharacterSet letterCharacterSet] invertedSet]] componentsJoinedByString:@""];
 
-			NSLog(@"name %@\t\tpostID %@", fasTest.name, fasTest.postID);
+			NSLog(@"%f name %@\tpostID %@", [thenT timeIntervalSinceNow] * -1000.0, fasTest.name, fasTest.postID);
 			
 			if ([fasTest.name isEqualToString:@"Publicité"]) {
 				[fasTest release];
@@ -261,7 +261,7 @@
 
 			//NSDate *then4 = [NSDate date]; // Create a current date
 
-            NSLog(@"BEFORE AVAT");
+            NSLog(@"%f BEFORE AVAT", [thenT timeIntervalSinceNow] * -1000.0);
             
 			if ([[avatarNode firstChild] getAttributeNamed:@"src"]) {
 				/*fasTest.imageUrl = [[avatarNode firstChild] getAttributeNamed:@"src"];*/
@@ -290,7 +290,7 @@
 				
 			}
 
-            NSLog(@"AFTER AVAT");            
+            NSLog(@"%f AFTER AVAT", [thenT timeIntervalSinceNow] * -1000.0);            
 			
 			if ([self isCancelled]) {
 				[fasTest release];

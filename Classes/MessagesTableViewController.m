@@ -43,6 +43,28 @@
 #pragma mark -
 #pragma mark Data lifecycle
 
+- (void)setProgress:(float)newProgress{
+	NSLog(@"Progress %f%", newProgress*100);
+}
+
+-(void)request:(ASIHTTPRequest *)request didReceiveBytes:(long long)bytes
+{
+    //NSLog(@"bytes: %llu", bytes);
+    
+	NSString *connectionType;
+	if ([ASIHTTPRequest isNetworkReachableViaWWAN]) {
+		connectionType = @"Using WWAN";
+	} else {
+		connectionType = @"Not using WWAN";
+	}
+	NSString *throttling = @"Throttling OFF";
+	if ([ASIHTTPRequest isBandwidthThrottled]) {
+		throttling = @"Throttling ON";
+	}
+    
+	NSLog(@"%@", [NSString stringWithFormat:@"%@ / %luKB per second / %@",connectionType, [ASIHTTPRequest averageBandwidthUsedPerSecond]/1024,throttling]);    
+    
+}
 
 - (void)cancelFetchContent
 {
@@ -59,10 +81,13 @@
     
 	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]]]];
 	[request setDelegate:self];
-
+    [request setShowAccurateProgress:YES];
+    
 	//[request setCachePolicy:ASIReloadIfDifferentCachePolicy];
 	//[request setDownloadCache:[ASIDownloadCache sharedCache]];
 	
+    [request setDownloadProgressDelegate:self];
+    
 	[request setDidStartSelector:@selector(fetchContentStarted:)];
 	[request setDidFinishSelector:@selector(fetchContentComplete:)];
 	[request setDidFailSelector:@selector(fetchContentFailed:)];
