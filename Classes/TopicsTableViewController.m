@@ -649,7 +649,7 @@
 
 -(void)reset
 {
-	NSLog(@"TOPIC RESET");
+	//NSLog(@"TOPIC RESET");
 	//[self viewDidUnload];
 	[self.arrayData removeAllObjects];
 	
@@ -1339,7 +1339,7 @@
 		}
 		case 2:
 		{
-			NSLog(@"page numero");
+			//NSLog(@"page numero");
             [self chooseTopicPage];
 			break;
 			
@@ -1580,7 +1580,7 @@
 		//			  [pickerViewArray objectAtIndex:[pickerView selectedRowInComponent:0]],
 		//			  [pickerView selectedRowInComponent:1]];
 		
-		NSLog(@"%@", [pickerViewArray objectAtIndex:[pickerView selectedRowInComponent:0]]);
+		//NSLog(@"%@", [pickerViewArray objectAtIndex:[pickerView selectedRowInComponent:0]]);
 	}
 }
 
@@ -1633,7 +1633,7 @@
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
-    NSLog(@"NOC");
+    //NSLog(@"NOC");
 	return 1;
 }
 

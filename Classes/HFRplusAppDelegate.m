@@ -17,7 +17,6 @@
 #import "MKStoreManager.h"
 #import "BrowserViewController.h"
 
-
 @implementation HFRplusAppDelegate
 
 @synthesize window;
@@ -146,7 +145,7 @@
         
         id item = [query resultAtIndex:0];
         NSURL *url = [item valueForAttribute:NSMetadataItemURLKey];
-        NSLog(@"URL %@", url);
+        //NSLog(@"URL %@", url);
         UsedSmileys *doc = [[UsedSmileys alloc] initWithFileURL:url];
         self.docSmiley = doc;
         [self.docSmiley openWithCompletionHandler:^(BOOL success) {
@@ -226,7 +225,7 @@
 
 - (void)updateWithUbiquityContainer:(id)container {
     if (container) {
-        NSLog(@"iCloud access at %@", container);
+        //NSLog(@"iCloud access at %@", container);
         [self loadDocument];
     } else {
         NSLog(@"No iCloud access");
@@ -246,8 +245,13 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
-        
+
+    NSLog(@"didFinishLaunchingWithOptions");
+
+    
     [TestFlight takeOff:kTestFlightAPI];
+    
+   
     
     dispatch_queue_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
@@ -549,6 +553,9 @@
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
+    
+    NSLog(@"applicationDidBecomeActive");
+
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -602,7 +609,6 @@
         BrowserViewController *browserViewController = [[BrowserViewController alloc]
                                                         initWithNibName:@"BrowserViewController" bundle:nil];
         browserViewController.delegate = self.rootController;
-        NSLog(@"OK %@", stringUrl);
         
         [self.rootController presentModalViewController:browserViewController animated:YES];
         [browserViewController.myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:stringUrl]]];
@@ -630,7 +636,6 @@
 - (void)alertView:(UIAlertViewURL *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
 	if (buttonIndex == 1) {
-		NSLog(@"OK %@", [alertView stringURL]);
         
         NSURL *tURLbase = [NSURL URLWithString:[alertView stringURL]];
         NSURL *tURL = [NSURL URLWithString:[alertView stringURL]];
@@ -645,7 +650,6 @@
 
         }
         
-        NSLog(@"OK %@", tURL);
         if ([[UIApplication sharedApplication] canOpenURL:tURL]) {
             [[UIApplication sharedApplication] openURL:tURL];
         }

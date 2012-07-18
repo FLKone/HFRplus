@@ -171,8 +171,7 @@
 			fasTest.name = [fasTest.name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 			//fasTest.name = [[fasTest.name componentsSeparatedByCharactersInSet:[[NSCharacterSet letterCharacterSet] invertedSet]] componentsJoinedByString:@""];
 
-			//NSLog(@"name %@", fasTest.name);
-			NSLog(@"postID %@", fasTest.postID);
+			NSLog(@"name %@\t\tpostID %@", fasTest.name, fasTest.postID);
 			
 			if ([fasTest.name isEqualToString:@"Publicité"]) {
 				[fasTest release];
@@ -262,6 +261,8 @@
 
 			//NSDate *then4 = [NSDate date]; // Create a current date
 
+            NSLog(@"BEFORE AVAT");
+            
 			if ([[avatarNode firstChild] getAttributeNamed:@"src"]) {
 				/*fasTest.imageUrl = [[avatarNode firstChild] getAttributeNamed:@"src"];*/
 
@@ -289,6 +290,7 @@
 				
 			}
 
+            NSLog(@"AFTER AVAT");            
 			
 			if ([self isCancelled]) {
 				[fasTest release];
