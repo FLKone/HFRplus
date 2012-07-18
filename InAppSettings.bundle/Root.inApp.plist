@@ -126,6 +126,20 @@
 			<key>Key</key>
 			<string>EmptyCacheButton</string>
 		</dict>
+		<dict>
+			<key>Title</key>
+			<string>Debug</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>IASKButtonSpecifier</string>
+			<key>Title</key>
+			<string>CHECKPOINT</string>
+			<key>Key</key>
+			<string>SetCheckpoint</string>
+		</dict>
 	</array>
 </dict>
 </plist>
