@@ -13,7 +13,7 @@
 -(void)viewDidLoad {
 	[super viewDidLoad];
 	
-	NSLog(@"TBC viewDidLoad");
+	//NSLog(@"TBC viewDidLoad");
     
     
     

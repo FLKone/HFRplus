@@ -127,10 +127,10 @@
         
         theRow += [[arrayDataID objectForKey:[arrayDataID2 objectAtIndex:pressedIndexPath.section]] lengthB4];
         
-        NSLog(@"goto topic page %d", [[pageNumberField text] intValue]);
+        //NSLog(@"goto topic page %d", [[pageNumberField text] intValue]);
         NSString * newUrl = [[NSString alloc] initWithString:[[arrayData objectAtIndex:theRow] aURL]];
         
-        NSLog(@"newUrl %@", newUrl);
+        //NSLog(@"newUrl %@", newUrl);
         
         //On remplace le numéro de page dans le titre
         int number = [[pageNumberField text] intValue];
@@ -158,8 +158,11 @@
         //newUrl = [newUrl stringByReplacingOccurrencesOfString:@"_1.htm" withString:[NSString stringWithFormat:@"_%d.htm", [[pageNumberField text] intValue]]];
         //newUrl = [newUrl stringByReplacingOccurrencesOfString:@"page=1&" withString:[NSString stringWithFormat:@"page=%d&", [[pageNumberField text] intValue]]];
         
-        NSLog(@"newUrl %@", newUrl);
         
+        newUrl = [newUrl stringByRemovingAnchor];
+
+        //NSLog(@"newUrl %@", newUrl);
+
         //if (self.messagesTableViewController == nil) {
 		MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:newUrl];
 		self.messagesTableViewController = aView;
@@ -537,30 +540,13 @@
 
 
 - (void)viewDidDisappear:(BOOL)animated {
-	NSLog(@"FT viewDidDisappear %@", self.favoritesTableView.indexPathForSelectedRow);
+	//NSLog(@"FT viewDidDisappear %@", self.favoritesTableView.indexPathForSelectedRow);
 
 	[super viewDidDisappear:animated];
 	[self.view resignFirstResponder];
 
 	//[(UILabel *)[[favoritesTableView cellForRowAtIndexPath:favoritesTableView.indexPathForSelectedRow].contentView viewWithTag:999] setFont:[UIFont systemFontOfSize:13]];
-	if (self.favoritesTableView.indexPathForSelectedRow) {
-		NSLog(@"FT viewDidDisappear NEXT");
 
-		int theRow = [self.favoritesTableView.indexPathForSelectedRow row];
-		theRow += [[self.arrayDataID objectForKey:[self.arrayDataID2 objectAtIndex:[self.favoritesTableView.indexPathForSelectedRow section]]] lengthB4];	
-		
-		[[self.arrayData objectAtIndex:theRow] setIsViewed:YES];
-		[self.favoritesTableView reloadData];
-	}
-    else if (pressedIndexPath) 
-    {
-		int theRow = [self.pressedIndexPath row];
-		theRow += [[self.arrayDataID objectForKey:[self.arrayDataID2 objectAtIndex:[self.pressedIndexPath section]]] lengthB4];	
-		
-		[[self.arrayData objectAtIndex:theRow] setIsViewed:YES];
-		[self.favoritesTableView reloadData];
-    }
-    NSLog(@"pressedIndexPath %@", pressedIndexPath);
     
 	//[favoritesTableView deselectRowAtIndexPath:favoritesTableView.indexPathForSelectedRow animated:NO];
 }
@@ -762,9 +748,7 @@
 	if (longPressRecognizer.state == UIGestureRecognizerStateBegan) {
 		CGPoint longPressLocation = [longPressRecognizer locationInView:self.favoritesTableView];
 		self.pressedIndexPath = [[self.favoritesTableView indexPathForRowAtPoint:longPressLocation] copy];
-		
-		//NSLog(@"pressedIndexPath %d -- %d", pressedIndexPath.row, pressedIndexPath.section);
-		
+				
 		UIActionSheet *styleAlert = [[UIActionSheet alloc] initWithTitle:@"Aller à..."
 																delegate:self cancelButtonTitle:@"Annuler"
 												  destructiveButtonTitle:nil
@@ -846,6 +830,7 @@
         }
 			
 	}
+  
 }
 
 - (void)pushTopic {
@@ -862,13 +847,50 @@
         
     }    
     
+    [self setTopicViewed];
+    
+    
+}
+
+-(void)setTopicViewed {
+    //NSLog(@"setTopicViewed");
+    
+	if (self.favoritesTableView.indexPathForSelectedRow && self.arrayDataID2.count > 0) {
+		//NSLog(@"FT viewDidDisappear indexPathForSelectedRow");
+        
+		int theRow = [self.favoritesTableView.indexPathForSelectedRow row];
+		theRow += [[self.arrayDataID objectForKey:[self.arrayDataID2 objectAtIndex:[self.favoritesTableView.indexPathForSelectedRow section]]] lengthB4];	
+		
+        [[self.arrayData objectAtIndex:theRow] setIsViewed:YES];
+
+        NSArray* rowsToReload = [NSArray arrayWithObjects:self.favoritesTableView.indexPathForSelectedRow, nil];
+        [self.favoritesTableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
+        
+		//[self.favoritesTableView reloadData];
+	}
+    else if (pressedIndexPath && self.arrayDataID2.count > 0) 
+    {
+		//NSLog(@"FT viewDidDisappear pressedIndexPath");
+
+		int theRow = [self.pressedIndexPath row];
+		theRow += [[self.arrayDataID objectForKey:[self.arrayDataID2 objectAtIndex:[self.pressedIndexPath section]]] lengthB4];	
+		
+		[[self.arrayData objectAtIndex:theRow] setIsViewed:YES];
+		
+        NSArray* rowsToReload = [NSArray arrayWithObjects:self.pressedIndexPath, nil];
+        [self.favoritesTableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
+
+        //[self.favoritesTableView reloadData];
+    }
+    //NSLog(@"pressedIndexPath %@", pressedIndexPath);
+    
 }
 
 #pragma mark -
 #pragma mark chooseTopicPage
 
 -(void)chooseTopicPage {
-    NSLog(@"chooseTopicPage");
+    //NSLog(@"chooseTopicPage Favs");
 
     int theRow = pressedIndexPath.row;
     
@@ -904,7 +926,6 @@
 	
 	[alert show];
     
-	//pageNumberField.frame = CGRectMake(12.0, , 260.0, 30.0);
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
         UILabel* tmpLbl = [alert.subviews objectAtIndex:1];
@@ -969,7 +990,8 @@
 
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
 {    
-	NSLog(@"willDismissWithButtonIndex PT %@", alertView);
+	//NSLog(@"willDismissWithButtonIndex PT %@", alertView);
+    
 	if (([alertView tag] == 669)) {
 		[self.pageNumberField resignFirstResponder];
 		self.pageNumberField = nil;
@@ -1047,7 +1069,7 @@
 -(void)reload:(BOOL)shake
 {
 	if (!shake) {
-		[[GANTracker sharedTracker] startTrackerWithAccountID:@"UA-18984614-1"
+		[[GANTracker sharedTracker] startTrackerWithAccountID:kGoogleAnalyticsAPI
 											   dispatchPeriod:kGANDispatchPeriodSec
 													 delegate:nil];
 		NSError *error;
@@ -1070,7 +1092,7 @@
 {
 	if (![request inProgress]) {
 		
-		[[GANTracker sharedTracker] startTrackerWithAccountID:@"UA-18984614-1"
+		[[GANTracker sharedTracker] startTrackerWithAccountID:kGoogleAnalyticsAPI
 											   dispatchPeriod:kGANDispatchPeriodSec
 													 delegate:nil];
 		NSError *error;

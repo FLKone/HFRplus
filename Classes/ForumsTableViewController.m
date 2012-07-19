@@ -832,7 +832,7 @@
 									target:nil
 									action:nil];
 	
-	self.topicsTableViewController.currentUrl = [[arrayData objectAtIndex:indexPath.row] aURL];	
+	self.topicsTableViewController.forumBaseURL = [[arrayData objectAtIndex:indexPath.row] aURL];	
 	self.topicsTableViewController.forumName = [[arrayData objectAtIndex:indexPath.row] aTitle];	
 	self.topicsTableViewController.pickerViewArray = [[arrayData objectAtIndex:indexPath.row] subCats];	
 
@@ -851,7 +851,7 @@
 -(void)reload:(BOOL)shake
 {
 	if (!shake) {
-		[[GANTracker sharedTracker] startTrackerWithAccountID:@"UA-18984614-1"
+		[[GANTracker sharedTracker] startTrackerWithAccountID:kGoogleAnalyticsAPI
 											   dispatchPeriod:kGANDispatchPeriodSec
 													 delegate:nil];
 		NSError *error;
@@ -872,7 +872,7 @@
 {
 	if (![request inProgress]) {
 		
-		[[GANTracker sharedTracker] startTrackerWithAccountID:@"UA-18984614-1"
+		[[GANTracker sharedTracker] startTrackerWithAccountID:kGoogleAnalyticsAPI
 											   dispatchPeriod:kGANDispatchPeriodSec
 													 delegate:nil];
 		NSError *error;

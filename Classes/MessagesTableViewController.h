@@ -23,6 +23,7 @@
 #import "NewMessageViewController.h"
 
 #import "PhotoViewController.h"
+#import "MWPhotoBrowser.h"
 
 @class HTMLNode;
 @class MessageDetailViewController;
@@ -55,7 +56,6 @@
 	//Gesture
 	UISwipeGestureRecognizer *swipeLeftRecognizer;
 	UISwipeGestureRecognizer *swipeRightRecognizer;
-    UISwipeGestureRecognizer *singledualTap;
     
 	//V3
 	// the queue to run our "ParseOperation"
@@ -71,6 +71,8 @@
 	NSMutableArray *arrayAction;
 	int curPostID;
 	
+    NSMutableArray *arrayActionsMessages;
+
 	BOOL isAnimating; //to check is an animation is ON
 
 	NSDate *firstDate;
@@ -104,7 +106,6 @@
 
 @property (nonatomic, retain) UISwipeGestureRecognizer *swipeLeftRecognizer;
 @property (nonatomic, retain) UISwipeGestureRecognizer *swipeRightRecognizer;
-@property (nonatomic, retain) UISwipeGestureRecognizer *singledualTap;
 
 @property (nonatomic, retain) UIActionSheet *styleAlert;
 
@@ -123,17 +124,28 @@
 
 @property BOOL isAnimating;
 
+@property (retain, nonatomic) NSMutableArray *arrayActionsMessages;
+
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andUrl:(NSString *)theTopicUrl;
 - (void)optionsTopic:(id)sender;
 - (void)answerTopic;
 - (void)quoteMessage:(NSString *)quoteUrl;
 - (void)editMessage:(NSString *)editUrl;
 
--(void)addDataInTableView;
+-(void)markUnread;
+-(void)goToPagePosition:(NSString *)position;
+-(void)goToPagePositionTop;
+-(void)goToPagePositionBottom;
+
 -(void)loadDataInTableView:(HTMLParser *)myParser;
 
 -(void)setupFastAnswer:(HTMLNode *)bodyNode;
 -(void)setupPageToolbar:(HTMLNode *)bodyNode;
+
+-(void)searchNewMessages:(int)from;
+-(void)searchNewMessages;
+-(void)fetchContentinBackground:(id)from;
 
 -(BOOL) canBeFavorite;
 -(void) EcrireCookie:(NSString *)nom withVal:(NSString *)valeur;

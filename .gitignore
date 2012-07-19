@@ -11,3 +11,5 @@ build/*
 # osx noise
 .DS_Store
 profile
+
+Classes/Config.h

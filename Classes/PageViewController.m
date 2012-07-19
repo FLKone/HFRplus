@@ -1,10 +1,11 @@
-    //
+//
 //  PageViewController.m
 //  HFRplus
 //
 //  Created by FLK on 10/10/10.
 //
 
+#import "HFRplusAppDelegate.h"
 #import "PageViewController.h"
 
 
@@ -40,7 +41,7 @@
 	
 }
 
--(void)choosePage{
+-(void)choosePage {
 	//NSLog(@"choosePage");
 	
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Aller à la page" message:[NSString stringWithFormat:@"\n\n(numéro entre %d et %d)\n", [self firstPageNumber], [self lastPageNumber]]
@@ -49,7 +50,7 @@
 	pageNumberField = [[UITextField alloc] initWithFrame:CGRectZero];
 	[pageNumberField setBackgroundColor:[UIColor whiteColor]];
 	[pageNumberField setPlaceholder:@"numéro de la page"];
-	pageNumberField.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+	//pageNumberField.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
 	[pageNumberField setBackground:[UIImage imageNamed:@"bginput"]];
 	
 	//[pageNumberField textRectForBounds:CGRectMake(5.0, 5.0, 258.0, 28.0)];
@@ -72,11 +73,15 @@
 	
 	[alert show];
 
-	UILabel* tmpLbl = [alert.subviews objectAtIndex:1];
-	pageNumberField.frame = CGRectMake(12.0, tmpLbl.frame.origin.y + 30, 260.0, 30.0);
-	//[pageNumberField textRectForBounds:CGRectMake(5.0, 5.0, 258.0, 28.0)];
-	
-	//NSLog(@"alert.frame %f %f %f %f", alert.frame.origin.x, alert.frame.origin.y, alert.frame.size.width, alert.frame.size.height);
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        UILabel* tmpLbl = [alert.subviews objectAtIndex:1];
+        pageNumberField.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+        pageNumberField.frame = CGRectMake(12.0, tmpLbl.frame.origin.y + tmpLbl.frame.size.height + 10, 260.0, 30.0);
+    }
+    else {
+        pageNumberField.frame = CGRectMake(12.0, 50.0, 260.0, 30.0);
+    }
 	
 	[alert release];
 	
@@ -141,6 +146,8 @@
 		
 	}	
 	
+    newUrl = [newUrl stringByRemovingAnchor];
+    
 	self.currentUrl = newUrl;
 	[self fetchContent];
 }
@@ -183,27 +190,34 @@
 }
 
 -(void)nextPage:(id)sender {
-	//NSLog(@"nextPage self.nextPageUrl %@", self.nextPageUrl);
 	
 	self.currentUrl = self.nextPageUrl;
 	[self fetchContent];	
 }
 -(void)previousPage:(id)sender {
-	//NSLog(@"previousPage self.previousPageUrl %@", self.previousPageUrl);
 	
 	self.currentUrl = self.previousPageUrl;
 	[self fetchContent];	
 }
+-(void)firstPage {
+    [self firstPage:nil];
+}
+-(void)lastPage {
+    [self lastPage:nil];
+}
 -(void)firstPage:(id)sender {
-	NSLog(@"firstPage self.firstPageUrl %@", self.firstPageUrl);
 	
 	if(self.firstPageUrl.length > 0) self.currentUrl = self.firstPageUrl;
 	[self fetchContent];
 }
 -(void)lastPage:(id)sender {
-	NSLog(@"lastPage self.lastPageUrl %@", self.lastPageUrl);
 	
 	if(self.lastPageUrl.length > 0) self.currentUrl = self.lastPageUrl;
+	[self fetchContent];	
+}
+-(void)lastAnswer {
+	
+	if(self.lastPageUrl.length > 0) self.currentUrl = [NSString stringWithFormat:@"%@#bas", self.lastPageUrl];
 	[self fetchContent];	
 }
 
@@ -227,7 +241,6 @@
 
 - (void)didPresentAlertView:(UIAlertView *)alertView
 {
-	
 	//NSLog(@"didPresentAlertView PT %@", alertView);
 	
 	if (([alertView tag] == 666)) {
@@ -246,6 +259,7 @@
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
 	//NSLog(@"willDismissWithButtonIndex PT %@", alertView);
+    
 	if (([alertView tag] == 668)) {
 		[self.pageNumberField resignFirstResponder];
 		self.pageNumberField = nil;
@@ -254,8 +268,10 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-	NSLog(@"clickedButtonAtIndex PT %@", alertView);
+	//NSLog(@"clickedButtonAtIndex PT %@", alertView);
 	
+    
+    
 	if (buttonIndex == 1 && alertView.tag == 667) {
 		[self fetchContent];
 	}

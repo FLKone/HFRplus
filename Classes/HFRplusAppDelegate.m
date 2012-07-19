@@ -3,6 +3,7 @@
 //  HFRplus
 //
 //  Created by FLK on 18/08/10.
+//  updated Branch
 //
 
 #import "HFRplusAppDelegate.h"
@@ -226,7 +227,6 @@
 - (void)updateWithUbiquityContainer:(id)container {
     if (container) {
         NSLog(@"iCloud access at %@", container);
-        // TODO: Load document... 
         [self loadDocument];
     } else {
         NSLog(@"No iCloud access");
@@ -247,6 +247,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
         
+    [TestFlight takeOff:kTestFlightAPI];
+    
     dispatch_queue_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
     dispatch_async(globalQueue, ^{
@@ -267,7 +269,7 @@
 	
 	[MKStoreManager sharedManager];
 	
-	[[GANTracker sharedTracker] startTrackerWithAccountID:@"UA-18984614-1"
+	[[GANTracker sharedTracker] startTrackerWithAccountID:kGoogleAnalyticsAPI
 										   dispatchPeriod:kGANDispatchPeriodSec
 												 delegate:nil];
 	NSError *error;
@@ -297,6 +299,7 @@
         NSLog(@"error 2");
     }        
 	
+    /*
 	SDURLCache *urlCache = [[SDURLCache alloc] initWithMemoryCapacity:1024*1024*1   // 1MB mem cache
 														 diskCapacity:1024*1024*50 // 5MB disk cache
 															 diskPath:[SDURLCache defaultCachePath]];
@@ -305,7 +308,8 @@
 	
 	[NSURLCache setSharedURLCache:urlCache];
 	[urlCache release];
-	
+	*/
+    
 	NSString *enabled = [[NSUserDefaults standardUserDefaults] stringForKey:@"landscape_mode"];
     NSString *img = [[NSUserDefaults standardUserDefaults] stringForKey:@"display_images"];
     NSString *tab = [[NSUserDefaults standardUserDefaults] stringForKey:@"default_tab"];
@@ -332,10 +336,11 @@
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) { 
         [splitViewController view].backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bgbigiPad"]];
 
-        UIView *view = [splitViewController view];
-        [window addSubview:view];
+        splitViewController.delegate = splitViewController;
+        [window setRootViewController:splitViewController];
+
     } else {
-        [window addSubview:rootController.view];	
+        [window setRootViewController:rootController];
     }
     	
     [window makeKeyAndVisible];
@@ -368,7 +373,17 @@
             [defaultsToRegister setObject:[prefSpecification objectForKey:@"DefaultValue"] forKey:key];
         }
     }
+
+    NSDictionary *settings2 = [NSDictionary dictionaryWithContentsOfFile:[settingsBundle stringByAppendingPathComponent:@"ActionsMessages.plist"]];
+    NSArray *preferences2 = [settings2 objectForKey:@"PreferenceSpecifiers"];
 	
+    for(NSDictionary *prefSpecification in preferences2) {
+        NSString *key = [prefSpecification objectForKey:@"Key"];
+        if(key && [prefSpecification objectForKey:@"DefaultValue"]) {
+            [defaultsToRegister setObject:[prefSpecification objectForKey:@"DefaultValue"] forKey:key];
+        }
+    }	
+    
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultsToRegister];
     [defaultsToRegister release];
 }
@@ -413,7 +428,7 @@
 
 - (void)periodicMaintenance
 {
-	NSLog(@"periodicMaintenance");
+	//NSLog(@"periodicMaintenance");
 	
 
 	
@@ -429,7 +444,7 @@
     
     pool2 = [[NSAutoreleasePool alloc] init];
 	
-	NSLog(@"periodicMaintenanceBack");
+	//NSLog(@"periodicMaintenanceBack");
 
     // If another same maintenance operation is already sceduled, cancel it so this new operation will be executed after other
     // operations of the queue, so we can group more work together
@@ -524,7 +539,7 @@
         self.periodicMaintenanceOperation = [[[NSInvocationOperation alloc] initWithTarget:self selector:@selector(balanceDiskUsage) object:nil] autorelease];
         [ioQueue addOperation:periodicMaintenanceOperation];
     }*/
-	NSLog(@"end");
+	//NSLog(@"end");
 	[pool2 drain];
 
 }
@@ -599,7 +614,7 @@
         
     }
     else {
-        NSString *msg = [NSString stringWithFormat:@"Vous allez quitter HFR+ et être redirigé vers:\n %@\n", stringUrl];
+        NSString *msg = [NSString stringWithFormat:@"Vous allez quitter HFR+ et être redirigé vers :\n %@\n", stringUrl];
         
         UIAlertViewURL *alert = [[UIAlertViewURL alloc] initWithTitle:@"Attention !" message:msg
                                                              delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Confirmer", nil];
@@ -624,10 +639,12 @@
         NSString *web = [defaults stringForKey:@"default_web"];
         
         if ([web isEqualToString:@"googlechrome"]) {
-            //tURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@", web, [alertView stringURL]]];
-            tURL = [[NSURL alloc] initWithScheme:web host:[tURLbase host] path:[tURLbase path]];// - (id)initWithScheme:(NSString *)scheme host:(NSString *)host path:(NSString *)path
+            tURL = [NSURL URLWithString:[[tURLbase absoluteString] stringByReplacingOccurrencesOfString:[tURLbase scheme] withString:web]];
+            
+            //tURL = [[NSURL alloc] initWithScheme:web host:[tURLbase host] path:[tURLbase path]];// - (id)initWithScheme:(NSString *)scheme host:(NSString *)host path:(NSString *)path
 
         }
+        
         NSLog(@"OK %@", tURL);
         if ([[UIApplication sharedApplication] canOpenURL:tURL]) {
             [[UIApplication sharedApplication] openURL:tURL];

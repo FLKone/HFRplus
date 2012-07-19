@@ -25,6 +25,11 @@ table p
     max-width:748px;
 }
 
+table p img
+{
+    max-width:728px;
+}
+
 #toolbarpage {
     
     width:768px;
@@ -49,4 +54,8 @@ table p
 
 .message .content .right * {
 	font-size:13px !important;	
+}
+
+img {
+    max-width:748px;
 }

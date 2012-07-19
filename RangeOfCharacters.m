@@ -252,4 +252,27 @@ finish:
 	return result; 
 }
 
+-(NSString*)stringByRemovingAnchor {
+    
+    NSString *regexString  = @".*#([^&]+).*";
+    NSRange   matchedRange = NSMakeRange(NSNotFound, 0UL);
+    NSRange   searchRange = NSMakeRange(0, self.length);
+    NSError  *error2        = NULL;
+    //int numPage;
+    
+    matchedRange = [self rangeOfRegex:regexString options:RKLNoOptions inRange:searchRange capture:1L error:&error2];
+    
+    if (matchedRange.location == NSNotFound) {
+
+    }
+    else {
+        self = [self substringToIndex:(matchedRange.location - 1)];
+    }
+
+    
+    
+    return self;
+    
+}
+
 @end
