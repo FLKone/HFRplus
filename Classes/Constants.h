@@ -24,6 +24,7 @@ typedef enum {
 
 #define kTimeoutMini		30
 #define kTimeoutMaxi		60
+#define kTimeoutAvatar      10
 
 #define MAX_HEIGHT 1200.0f 
 #define MAX_CELL_CONTENT 300.0f

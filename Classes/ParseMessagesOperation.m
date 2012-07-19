@@ -285,7 +285,7 @@
                 if (tmpURL.length > 0) { // si on a pas, on check si on a une URL
                     NSLog(@"on DL");                                    
 					//async dl 
-                    NSURLRequest *aRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:tmpURL] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10];
+                    NSURLRequest *aRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:tmpURL] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:kTimeoutAvatar];
                     
                     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:aRequest];
                     
