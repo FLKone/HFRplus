@@ -58,6 +58,8 @@
 	IBOutlet UILabel *maintenanceView;
     
     id _popover;
+    
+    int selectedFlagIndex;
 	
 }
 
@@ -97,6 +99,8 @@
 @property (nonatomic, retain) UIImage *imageForBlueFlag;
 
 @property STATUS status;
+@property int selectedFlagIndex;
+
 @property (nonatomic, retain) NSString *statusMessage;
 @property (nonatomic, retain) IBOutlet UILabel *maintenanceView;
 
@@ -117,6 +121,7 @@
 
 - (void)chooseTopicPage;
 
+- (void)setTopicViewed;
 - (void)pushTopic;
 
 @end

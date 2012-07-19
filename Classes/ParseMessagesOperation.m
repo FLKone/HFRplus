@@ -48,7 +48,6 @@
 // -------------------------------------------------------------------------------
 - (void)dealloc
 {
-	//NSLog(@"dealloc pmo");
 
     [dataToParse release];
     [workingEntry release];
@@ -79,7 +78,10 @@
 	{
 		[self.delegate didStartParsing:myParser];		
 	}
-
+    else {
+		//NSLog(@"main canceled before");		
+	}
+    
 	[self parseData:myParser];
 
 	
@@ -91,7 +93,7 @@
 		//NSLog(@"OK2");
     }
     else {
-		//NSLog(@"Canceled");
+		//NSLog(@"main canceled after");		
 	}
 
     self.workingArray = nil;
@@ -111,7 +113,7 @@
 		return;
 	}
 	
-	NSDate *thenT = [NSDate date]; // Create a current date
+	//NSDate *thenT = [NSDate date]; // Create a current date
 
 
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
@@ -319,9 +321,9 @@
 		//break;
 	}
 
-	NSDate *nowT = [NSDate date]; // Create a current date
+	//NSDate *nowT = [NSDate date]; // Create a current date
 
-	NSLog(@"TOPICS Parse Time elapsed Total		: %f", [nowT timeIntervalSinceDate:thenT]);
+	//NSLog(@"TOPICS Parse Time elapsed Total		: %f", [nowT timeIntervalSinceDate:thenT]);
 
 	
 	

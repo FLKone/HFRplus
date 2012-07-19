@@ -16,7 +16,6 @@
 #import "MessagesTableViewController.h"
 #import "HFRMPViewController.h"
 
-//#import "TopicsCell.h"
 #import "TopicCellView.h"
 #import "Topic.h"
 
@@ -42,7 +41,7 @@
 
 
 @synthesize tmpCell;
-@synthesize status, statusMessage, maintenanceView;
+@synthesize status, statusMessage, maintenanceView, selectedFlagIndex;
 
 @synthesize popover = _popover;
 
@@ -56,7 +55,7 @@
 
 - (void)fetchContent
 {
-	NSLog(@"fetchContent %@", [NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]);
+	//NSLog(@"fetchContent %@", [NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]);
 	self.status = kIdle;
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];
 
@@ -132,6 +131,18 @@
 
 #pragma mark -
 #pragma mark View lifecycle
+
+// The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
+        // Custom initialization
+		//NSLog(@"initWithNibName TTVC");
+		
+        self.selectedFlagIndex = 0;
+        
+    }
+    return self;
+}
 
 -(void)loadDataInTableView:(NSData *)contentData
 {
@@ -716,6 +727,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	self.title = forumName;
+    
+    //NSLog(@"viewDidLoad %d", selectedFlagIndex);
+    
+          
 	//NSLog(@"viewDidLoad %@ - %@", [[UIDevice currentDevice] systemName], [[UIDevice currentDevice] systemVersion]);
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -746,30 +761,6 @@
 
 	//Filtres
 	// "Segmented" control to the right
-	/*imageWithCGImage:scale:orientation:
-	UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:
-											[NSArray arrayWithObjects:
-											 [UIImage imageWithCGImage:[[UIImage imageNamed:@"flagyellow"] CGImage] scale:1.2 orientation:UIImageOrientationUp],
-											 [UIImage imageWithCGImage:[[UIImage imageNamed:@"flagblue2"] CGImage] scale:1.2 orientation:UIImageOrientationUp],
-											 [UIImage imageWithCGImage:[[UIImage imageNamed:@"flagred"] CGImage] scale:1.2 orientation:UIImageOrientationUp],
-											 nil]];
-	 
-	 UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:
-	 [NSArray arrayWithObjects:
-	 @"Favoris",
-	 @"Participé",
-	 @"Lu",
-	 nil]];	 
-	
-	if (self.navigationController.navigationBar.frame.size.height == 44) {
-		//int minus = 14
-	}
-	else {
-		//NSLog(@"32");
-	}
-
-	*/
-	
 	//Title View
 	self.navigationItem.titleView = [[UIView alloc] init];//WithFrame:CGRectMake(0, 0, 120, self.navigationController.navigationBar.frame.size.height - 14)];
 	
@@ -781,6 +772,8 @@
 											 [UIImage imageNamed:@"multipleflag1.gif"],
 											 [UIImage imageNamed:@"multipleflag0.gif"],												 
 											 nil]];
+
+    [segmentedControl setUserInteractionEnabled:NO];
 
 	[segmentedControl addTarget:self action:@selector(segmentFilterAction) forControlEvents:UIControlEventValueChanged];
 	segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
@@ -794,6 +787,7 @@
 											 [UIImage imageNamed:@"icon_list_bullets.png"],
 											 nil]];
 	
+    
 	[segmentedControl2 addTarget:self action:@selector(segmentCatAction:) forControlEvents:UIControlEventValueChanged];
 	segmentedControl2.segmentedControlStyle = UISegmentedControlStyleBar;
 	segmentedControl2.momentary = YES;
@@ -822,41 +816,6 @@
 	[segmentedControl2 release];
 	[segmentedControl release];
 
-	//[self.navigationItem.titleView sizeToFit];
-									 
-									 
-	//[(UISegmentedControl *)self.navigationItem.titleView setWidth:70.0 forSegmentAtIndex:0];
-	//[(UISegmentedControl *)self.navigationItem.titleView setWidth:80.0 forSegmentAtIndex:1];
-	//[(UISegmentedControl *)self.navigationItem.titleView setWidth:40.0 forSegmentAtIndex:2];
-
-	//[(UISegmentedControl *)self.navigationItem.titleView setEnabled:NO forSegmentAtIndex:1];
-	//[(UISegmentedControl *)self.navigationItem.titleView setEnabled:NO forSegmentAtIndex:2];
-
-	
-	//Bouton Nouveau message
-	/*
-	UISegmentedControl *segmentedControl2 = [[UISegmentedControl alloc] initWithItems:
-											[NSArray arrayWithObjects:
-											 [UIImage imageNamed:@"44-shoebox.png"],
-											 [UIImage imageNamed:@"compose.png"],
-											 nil]];
-	
-	[segmentedControl2 addTarget:self action:@selector(segmentFilterAction:) forControlEvents:UIControlEventValueChanged];
-	
-	segmentedControl2.segmentedControlStyle = UISegmentedControlStyleBar;
-	segmentedControl2.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-	
-	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithCustomView:segmentedControl2];
-	
-    [segmentedControl2 release];
-	
-	self.navigationItem.rightBarButtonItem = segmentBarItem;
-	self.navigationItem.rightBarButtonItem.customView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-	
-	[segmentBarItem release];
-*/
-	
-	
 	
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(newTopic)];
     segmentBarItem.enabled = NO;
@@ -879,9 +838,8 @@
 	self.imageForBlueFlag = [UIImage imageNamed:@"flagblue2"];
 	
 	
-	self.forumBaseURL = self.currentUrl;
+	//self.forumBaseURL = self.currentUrl;
 
-	[(UISegmentedControl *)[self.navigationItem.titleView.subviews objectAtIndex:0] setSelectedSegmentIndex:0];
 	
 	if([self isKindOfClass:[HFRMPViewController class]]) [(UISegmentedControl *)self.navigationItem.titleView setHidden:YES];
 
@@ -921,43 +879,62 @@
 	[actionSheet addSubview:confirmButton];
 	[confirmButton release];
 	
+    [(UISegmentedControl *)[self.navigationItem.titleView.subviews objectAtIndex:0] setSelectedSegmentIndex:self.selectedFlagIndex];
+
+    // Fix iOS 5 : setSelectedSegmentIndex not working.
 	if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"5.0")) {
-        self.currentUrl = self.forumBaseURL;
-        [self fetchContent];
+        [self goFlag];
     }
+    
+}
+
+- (void)goFlag {
+    [(UISegmentedControl *)[self.navigationItem.titleView.subviews objectAtIndex:0] setUserInteractionEnabled:NO];
+
+	switch (self.selectedFlagIndex) {
+		case 0:
+			self.currentUrl = self.forumBaseURL;
+			break;
+		case 1:
+			self.currentUrl = self.forumFavorisURL;   
+			break;			
+		case 2:
+			self.currentUrl = self.forumFlag1URL;
+			break;
+		case 3:
+			self.currentUrl = self.forumFlag0URL;  
+			break;			
+		default:
+			self.currentUrl = self.forumBaseURL;  
+			break;
+	}
+    
+    
+	[self fetchContent];
+
 }
 
 - (void)segmentFilterAction
 {
-	
-	// The segmented control was clicked, handle it here 
-
-	//NSLog(@"Segment clicked: %d", [(UISegmentedControl *)[self.navigationItem.titleView.subviews objectAtIndex:0] selectedSegmentIndex]);
-
-	[(UISegmentedControl *)[self.navigationItem.titleView.subviews objectAtIndex:0] setUserInteractionEnabled:NO];
-	
 	switch ([(UISegmentedControl *)[self.navigationItem.titleView.subviews objectAtIndex:0] selectedSegmentIndex]) {
 		case 0:
-			//NSLog(@"forumBaseURL %@", self.forumBaseURL);
-			self.currentUrl = self.forumBaseURL;
+            self.selectedFlagIndex = 0;
 			break;
 		case 1:
-			//NSLog(@"forumFavorisURL %@", self.forumFavorisURL);
-			self.currentUrl = self.forumFavorisURL;
+            self.selectedFlagIndex = 1;            
 			break;			
 		case 2:
-			//NSLog(@"forumFlag1URL %@", self.forumFlag1URL);
-			self.currentUrl = self.forumFlag1URL;
+            self.selectedFlagIndex = 2;            
 			break;
 		case 3:
-			//NSLog(@"forumFlag0URL %@", self.forumFlag0URL);
-			self.currentUrl = self.forumFlag0URL;
+            self.selectedFlagIndex = 3;            
 			break;			
 		default:
-			self.currentUrl = self.forumBaseURL;
+            self.selectedFlagIndex = 0;            
 			break;
 	}
-	[self fetchContent];
+    
+	[self goFlag];
 
 
 }
@@ -1009,20 +986,7 @@
 	
 	//NSLog(@"TT viewDidDisappear %@ - %@", self.topicsTableView.indexPathForSelectedRow, self.pressedIndexPath);
 
-	if (self.pressedIndexPath) {
-		NSLog(@"TT pressedIndexPath");
-		
-		[[self.arrayData objectAtIndex:[self.pressedIndexPath row]] setIsViewed:YES];
-		[self.topicsTableView reloadData];
-		
-				NSLog(@"TT pressedIndexPath2");
-	}
-	
-	if (self.topicsTableView.indexPathForSelectedRow) {
-		NSLog(@"TT indexPathForSelectedRow");
-		[[self.arrayData objectAtIndex:[self.topicsTableView.indexPathForSelectedRow row]] setIsViewed:YES];
-		[self.topicsTableView reloadData];
-	}
+
 	
 	/*[[(TopicCellView *)[topicsTableView cellForRowAtIndexPath:topicsTableView.indexPathForSelectedRow] titleLabel]setFont:[UIFont systemFontOfSize:13]];
 	[topicsTableView deselectRowAtIndexPath:topicsTableView.indexPathForSelectedRow animated:NO];*/
@@ -1313,7 +1277,7 @@
 -(void)handleLongPress:(UILongPressGestureRecognizer*)longPressRecognizer {
 	if (longPressRecognizer.state == UIGestureRecognizerStateBegan) {
 		CGPoint longPressLocation = [longPressRecognizer locationInView:self.topicsTableView];
-		pressedIndexPath = [[self.topicsTableView indexPathForRowAtPoint:longPressLocation] copy];
+		self.pressedIndexPath = [[self.topicsTableView indexPathForRowAtPoint:longPressLocation] copy];
 				
 		UIActionSheet *styleAlert = [[UIActionSheet alloc] initWithTitle:@"Aller à..."
 																delegate:self cancelButtonTitle:@"Annuler"
@@ -1396,7 +1360,35 @@
         
 //        [[HFRplusAppDelegate sharedAppDelegate] setDetailNavigationController:messagesTableViewController];
         
-    }    
+    }   
+    
+    [self setTopicViewed];
+    
+}
+
+-(void)setTopicViewed {
+    //NSLog(@"setTopicViewed");
+
+	if (self.pressedIndexPath && self.arrayData.count > 0) {
+		//NSLog(@"TT pressedIndexPath");
+		
+		[[self.arrayData objectAtIndex:[self.pressedIndexPath row]] setIsViewed:YES];
+        
+        NSArray* rowsToReload = [NSArray arrayWithObjects:self.pressedIndexPath, nil];
+        [self.topicsTableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
+        
+        //[self.topicsTableView reloadData];
+	}
+	else if (self.topicsTableView.indexPathForSelectedRow && self.arrayData.count > 0) {
+		//NSLog(@"TT indexPathForSelectedRow");
+        
+		[[self.arrayData objectAtIndex:[self.topicsTableView.indexPathForSelectedRow row]] setIsViewed:YES];
+        
+        NSArray* rowsToReload = [NSArray arrayWithObjects:self.topicsTableView.indexPathForSelectedRow, nil];
+        [self.topicsTableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
+        
+		//[self.topicsTableView reloadData];
+	}
     
 }
 
@@ -1404,11 +1396,7 @@
 #pragma mark chooseTopicPage
 
 -(void)chooseTopicPage {
-    NSLog(@"chooseTopicPage");
-
-
-    
-    
+    //NSLog(@"chooseTopicPage Topics");
     
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Aller à la page" message:[NSString stringWithFormat:@"\n\n(numéro entre 1 et %d)\n", [[arrayData objectAtIndex:pressedIndexPath.row] maxTopicPage]]
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"OK", nil];
@@ -1440,8 +1428,6 @@
 	
 	[alert show];
     
-
-	//pageNumberField.frame = CGRectMake(12.0, , 260.0, 30.0);
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
         UILabel* tmpLbl = [alert.subviews objectAtIndex:1];
@@ -1509,6 +1495,7 @@
     [super alertView:alertView willDismissWithButtonIndex:buttonIndex];
     
 	//NSLog(@"willDismissWithButtonIndex PT %@", alertView);
+    
 	if (([alertView tag] == 669)) {
 		[self.pageNumberField resignFirstResponder];
 		self.pageNumberField = nil;
@@ -1520,16 +1507,18 @@
     [super alertView:alertView clickedButtonAtIndex:buttonIndex];
 	
 	if (buttonIndex == 1 && alertView.tag == 669) {
-        NSLog(@"goto topic page %d", [[pageNumberField text] intValue]);
+        //NSLog(@"goto topic page %d", [[pageNumberField text] intValue]);
         NSString * newUrl = [[NSString alloc] initWithString:[[arrayData objectAtIndex:pressedIndexPath.row] aURL]];
        
-        NSLog(@"newUrl %@", newUrl);
+        //NSLog(@"newUrl %@", newUrl);
 
         newUrl = [newUrl stringByReplacingOccurrencesOfString:@"_1.htm" withString:[NSString stringWithFormat:@"_%d.htm", [[pageNumberField text] intValue]]];
         newUrl = [newUrl stringByReplacingOccurrencesOfString:@"page=1&" withString:[NSString stringWithFormat:@"page=%d&", [[pageNumberField text] intValue]]];
         
-        NSLog(@"newUrl %@", newUrl);
+        //NSLog(@"newUrl %@", newUrl);
 
+        newUrl = [newUrl stringByRemovingAnchor];
+        
         //if (self.messagesTableViewController == nil) {
 		MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:newUrl];
 		self.messagesTableViewController = aView;
@@ -1567,14 +1556,14 @@
 	//}
 	
 	//NSLog(@"%@", self.navigationController.navigationBar);
-    NSLog(@"b4 %@", self.navigationController);
+    //NSLog(@"b4 %@", self.navigationController);
 
 	//setup the URL
     
     [self.messagesTableViewController setTopicName:[[arrayData objectAtIndex:indexPath.row] aTitle]];
 	self.messagesTableViewController.isViewed = [[arrayData objectAtIndex:indexPath.row] isViewed];	
     
-    NSLog(@"pushTopic");
+    //NSLog(@"pushTopic");
     [self pushTopic];
 	//[self.navigationController pushViewController:messagesTableViewController animated:YES];
 }
