@@ -1,6 +1,9 @@
+<img src="http://a252.phobos.apple.com/us/r1000/119/Purple/v4/d1/89/07/d18907cd-3fd2-a828-cbcd-1c9ffeb4e6d0/mza_7454098853510851857.170x170-75.png" alt="HFR+" title="HFR+" style="display:block; margin: 10px auto 30px auto;" class="center">
+
 HFR+
 =========================
-Client Mobile pour le forum hardware.fr
+Application iPhone pour le forum hardware.fr
+
 
 RoadMap
 -------------------------
@@ -25,3 +28,18 @@ RoadMap
     <td>1.6.2</td><td>Fonctionnalités avancées</td><td>tbd</td>
   </tr>
 </table>
+
+
+Utilisation du code Source
+-------------------------
+
+Pour pouvoir compiler la branche Update, il est nécessaire de créer le fichier suivant :
+
+``` objective-c
+//
+//  Config.h
+//
+
+#define kTestFlightAPI                  @"TestFlight API Key"
+#define kGoogleAnalyticsAPI             @"Google Analytics API Key"
+```
