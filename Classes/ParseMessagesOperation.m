@@ -178,10 +178,6 @@
 				//[pool2 drain];
 				continue;
 			}
-			
-			
-
-			
 
 			HTMLNode * avatarNode = [messageNode findChildWithAttribute:@"class" matchingName:@"avatar_center" allowPartial:NO];
 			HTMLNode * contentNode = [messageNode findChildWithAttribute:@"id" matchingName:@"para" allowPartial:YES];
@@ -268,7 +264,8 @@
 
 				
 				NSFileManager *fileManager = [[NSFileManager alloc] init];
-
+                NSLog(@"%f av alloc", [thenT timeIntervalSinceNow] * -1000.0);
+                
 				fasTest.imageUrl = [[avatarNode firstChild] getAttributeNamed:@"src"];
 
 				//Dl
@@ -277,17 +274,19 @@
 				CC_MD5(str, strlen(str), r);
 				NSString *filename = [NSString stringWithFormat:@"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
 									  r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8], r[9], r[10], r[11], r[12], r[13], r[14], r[15]];
+                NSLog(@"%f av hash", [thenT timeIntervalSinceNow] * -1000.0);
 				
 				NSString *key = [diskCachePath stringByAppendingPathComponent:filename];
 				
 				if (![fileManager fileExistsAtPath:key])
 				{
 					[fileManager createFileAtPath:key contents:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", fasTest.imageUrl]]] attributes:nil];					
+                    NSLog(@"%f av dl", [thenT timeIntervalSinceNow] * -1000.0);                    
 				}
 				
 				fasTest.imageUI = key;
 				[fileManager release];
-				
+                NSLog(@"%f av release", [thenT timeIntervalSinceNow] * -1000.0);                    				
 			}
 
             NSLog(@"%f AFTER AVAT", [thenT timeIntervalSinceNow] * -1000.0);            
