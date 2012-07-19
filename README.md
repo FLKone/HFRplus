@@ -16,7 +16,7 @@ Roadmap
     <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=4&page=1&sort=created&state=open">1.5.5</a></td><td>Fonctionnalités</td><td>Été 2012</td>
   </tr>
   <tr>
-    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=1&page=1&sort=created&state=open">1.5.6</a></td><td>UI</td><td>Été 2012</td>
+    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=10&page=1&sort=created&state=open">1.5.6</a></td><td>UI</td><td>Été 2012</td>
   </tr>
  <tr>
     <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=3&page=1&sort=created&state=open">1.6</a></td><td>Compatibilité</td><td>Automne 2012</td>
