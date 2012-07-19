@@ -37,7 +37,7 @@ Pour pouvoir compiler la branche Update, il est nécessaire de créer le fichier
 
 ``` objective-c
 //
-//  Config.h
+//  Classes/Config.h
 //
 
 #define kTestFlightAPI                  @"TestFlight API Key"
