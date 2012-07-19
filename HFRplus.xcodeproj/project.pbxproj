@@ -231,6 +231,7 @@
 		CA45B5F815B848EC00380CA0 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = CA45B5EC15B848EC00380CA0 /* AFURLConnectionOperation.m */; };
 		CA45B5F915B848EC00380CA0 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = CA45B5EE15B848EC00380CA0 /* AFXMLRequestOperation.m */; };
 		CA45B5FA15B848EC00380CA0 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = CA45B5F015B848EC00380CA0 /* UIImageView+AFNetworking.m */; };
+		CA45B60915B89F4F00380CA0 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = CA45B60815B89F4E00380CA0 /* README.md */; };
 		CA4AA6DD15B2553C00E53A1F /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA4AA6DC15B2553C00E53A1F /* CoreText.framework */; };
 		CA4CE81015B1856F0039FC3B /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA4CE80C15B1856F0039FC3B /* libTestFlight.a */; };
 		CA4CE81115B1856F0039FC3B /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = CA4CE80D15B1856F0039FC3B /* README.txt */; };
@@ -663,6 +664,7 @@
 		CA45B5EE15B848EC00380CA0 /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
 		CA45B5EF15B848EC00380CA0 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		CA45B5F015B848EC00380CA0 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
+		CA45B60815B89F4E00380CA0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		CA4AA6DC15B2553C00E53A1F /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		CA4CE80C15B1856F0039FC3B /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
 		CA4CE80D15B1856F0039FC3B /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
@@ -1296,6 +1298,7 @@
 				CA37D50915A1BD18002C72C6 /* iPad */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				CA45B60815B89F4E00380CA0 /* README.md */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -1991,6 +1994,7 @@
 				CA4CE88715B1B2760039FC3B /* README.md in Resources */,
 				CA4CE89015B1B2760039FC3B /* README.mdown in Resources */,
 				CA4CE8A415B1B36F0039FC3B /* MWPhotoBrowser.bundle in Resources */,
+				CA45B60915B89F4F00380CA0 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
