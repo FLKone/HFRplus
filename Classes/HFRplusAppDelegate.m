@@ -300,20 +300,8 @@
         // Handle error here
         NSLog(@"error 2");
     }        
-
-    #warning bug
-	NSString *enabled = [[NSUserDefaults standardUserDefaults] stringForKey:@"landscape_mode"];
-    NSString *img = [[NSUserDefaults standardUserDefaults] stringForKey:@"display_images"];
-    NSString *tab = [[NSUserDefaults standardUserDefaults] stringForKey:@"default_tab"];
-    NSString *web = [[NSUserDefaults standardUserDefaults] stringForKey:@"default_web"];
-
-	if(!enabled || !img || !tab || !web) {
-        [self registerDefaultsFromSettingsBundle];
-    }
-	enabled = [[NSUserDefaults standardUserDefaults] stringForKey:@"landscape_mode"];
-    img = [[NSUserDefaults standardUserDefaults] stringForKey:@"display_images"];
-    tab = [[NSUserDefaults standardUserDefaults] stringForKey:@"default_tab"];
-    web = [[NSUserDefaults standardUserDefaults] stringForKey:@"default_web"];
+    
+    [self registerDefaultsFromSettingsBundle];
     
 	// Override point for customization after application launch.
 	    
@@ -361,6 +349,7 @@
     NSMutableDictionary *defaultsToRegister = [[NSMutableDictionary alloc] initWithCapacity:[preferences count]];
     for(NSDictionary *prefSpecification in preferences) {
         NSString *key = [prefSpecification objectForKey:@"Key"];
+        
         if(key && [prefSpecification objectForKey:@"DefaultValue"]) {
             [defaultsToRegister setObject:[prefSpecification objectForKey:@"DefaultValue"] forKey:key];
         }
@@ -371,12 +360,13 @@
 	
     for(NSDictionary *prefSpecification in preferences2) {
         NSString *key = [prefSpecification objectForKey:@"Key"];
+        
         if(key && [prefSpecification objectForKey:@"DefaultValue"]) {
             [defaultsToRegister setObject:[prefSpecification objectForKey:@"DefaultValue"] forKey:key];
         }
     }	
     
-    [[NSUserDefaults standardUserDefaults] registerDefaults:defaultsToRegister];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:defaultsToRegister];    
     [defaultsToRegister release];
 }
 
