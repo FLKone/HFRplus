@@ -43,3 +43,16 @@ Pour pouvoir compiler la branche Update, il est nécessaire de créer le fichier
 #define kTestFlightAPI                  @"TestFlight API Key"
 #define kGoogleAnalyticsAPI             @"Google Analytics API Key"
 ```
+
+
+Crédits
+-------------------------
+
+* [AFNetworking](https://github.com/AFNetworking/AFNetworking)
+* [MWPhotoBrowser](https://github.com/mwaterfall/MWPhotoBrowser)
+* [SDWebImage](https://github.com/rs/SDWebImage)
+* [MBProgressHUD](https://github.com/jdg/MBProgressHUD)
+* [InAppSettingKit](https://github.com/futuretap/InAppSettingsKit)
+* [MKStoreKit](https://github.com/MugunthKumar/MKStoreKit)
+* [ASIHTTPRequest](https://github.com/pokeb/asi-http-request)
+* [Objective-C-HMTL-Parser](https://github.com/zootreeves/Objective-C-HMTL-Parser)
