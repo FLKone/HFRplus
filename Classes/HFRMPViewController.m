@@ -37,7 +37,7 @@
 	//NSLog(@"vdl MP");
 	
 	self.forumName = @"Messages";
-	self.currentUrl = @"/forum1.php?config=hfr.inc&cat=prive&page=1";
+	self.forumBaseURL = @"/forum1.php?config=hfr.inc&cat=prive&page=1";
 		
     [super viewDidLoad];
 
@@ -143,8 +143,7 @@
 -(void)handleLongPress:(UILongPressGestureRecognizer*)longPressRecognizer {
 	if (longPressRecognizer.state == UIGestureRecognizerStateBegan) {
 		CGPoint longPressLocation = [longPressRecognizer locationInView:self.topicsTableView];
-		pressedIndexPath = [[self.topicsTableView indexPathForRowAtPoint:longPressLocation] copy];
-		
+		self.pressedIndexPath = [[self.topicsTableView indexPathForRowAtPoint:longPressLocation] copy];
 		
 		UIActionSheet *styleAlert = [[UIActionSheet alloc] initWithTitle:@"Aller à..."
 																delegate:self cancelButtonTitle:@"Annuler"
@@ -156,7 +155,17 @@
 		// use the same style as the nav bar
 		styleAlert.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
 		
-		[styleAlert showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
+        CGPoint longPressLocation2 = [longPressRecognizer locationInView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view]];
+        CGRect origFrame = CGRectMake( longPressLocation2.x, longPressLocation2.y, 0, 0);
+        
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            [styleAlert showFromRect:origFrame inView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view] animated:YES];
+        }
+        else    
+            [styleAlert showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
+        
+        
 		[styleAlert release];
 		
 	}
@@ -190,29 +199,10 @@
 			self.messagesTableViewController = aView;
 			[aView release];
 			
-			UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-			label.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
-			label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-			
-			[label setFont:[UIFont boldSystemFontOfSize:13.0]];
-			[label setAdjustsFontSizeToFitWidth:YES];
-			[label setBackgroundColor:[UIColor clearColor]];
-			[label setTextAlignment:UITextAlignmentCenter];
-			[label setLineBreakMode:UILineBreakModeMiddleTruncation];
-			label.shadowColor = [UIColor darkGrayColor];
-			label.shadowOffset = CGSizeMake(0.0, -1.0);
-			[label setTextColor:[UIColor whiteColor]];
-			[label setNumberOfLines:0];
-			
-			[label setText:[[arrayData objectAtIndex:pressedIndexPath.row] aTitle]];
-			
-			[messagesTableViewController.navigationItem setTitleView:label];
-			[label release];	
-			
 			self.messagesTableViewController.topicName = [[arrayData objectAtIndex:pressedIndexPath.row] aTitle];	
 			self.messagesTableViewController.isViewed = [[arrayData objectAtIndex:pressedIndexPath.row] isViewed];	
 
-			[self.navigationController pushViewController:messagesTableViewController animated:YES];			
+			[self pushTopic];
 			
 			//NSLog(@"url pressed last page: %@", [[arrayData objectAtIndex:pressedIndexPath.row] aURLOfLastPage]);
 			 
@@ -225,29 +215,10 @@
 			self.messagesTableViewController = aView;
 			[aView release];
 			
-			UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-			label.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
-			label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-			
-			[label setFont:[UIFont boldSystemFontOfSize:13.0]];
-			[label setAdjustsFontSizeToFitWidth:YES];
-			[label setBackgroundColor:[UIColor clearColor]];
-			[label setTextAlignment:UITextAlignmentCenter];
-			[label setLineBreakMode:UILineBreakModeMiddleTruncation];
-			label.shadowColor = [UIColor darkGrayColor];
-			label.shadowOffset = CGSizeMake(0.0, -1.0);
-			[label setTextColor:[UIColor whiteColor]];
-			[label setNumberOfLines:0];
-			
-			[label setText:[[arrayData objectAtIndex:pressedIndexPath.row] aTitle]];
-			
-			[messagesTableViewController.navigationItem setTitleView:label];
-			[label release];	
-			
 			self.messagesTableViewController.topicName = [[arrayData objectAtIndex:pressedIndexPath.row] aTitle];	
 			self.messagesTableViewController.isViewed = [[arrayData objectAtIndex:pressedIndexPath.row] isViewed];	
 
-			[self.navigationController pushViewController:messagesTableViewController animated:YES];	
+			[self pushTopic];
 			 
 			//NSLog(@"url pressed last post: %@", [[arrayData objectAtIndex:pressedIndexPath.row] aURL]);
 			 
@@ -284,7 +255,7 @@
 	
 	[super fetchContentComplete:theRequest];
 
-    NSLog(@"%d", self.status);
+    //NSLog(@"%d", self.status);
     
 	switch (self.status) {
 		case kMaintenance:

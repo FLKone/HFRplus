@@ -62,6 +62,8 @@
 		self.loaded = NO;
 		self.isDragging = NO;
 		
+        self.lastSelectedRange = NSMakeRange(NSNotFound, NSNotFound);
+
 		self.haveCategory = NO;
 		self.haveTitle = NO;
 		self.haveTo	= NO;
@@ -173,9 +175,7 @@
 	 [[NSNotificationCenter defaultCenter] addObserver:self
 	 selector:@selector(smileyReceived:)
 	 name:@"smileyReceived" object:nil];
-
-	self.lastSelectedRange = NSMakeRange(NSNotFound, NSNotFound);
-	
+    
 	UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 40)];
 	v.backgroundColor = [UIColor whiteColor];
 	[self.commonTableView setTableFooterView:v];
@@ -302,23 +302,23 @@
 - (void)viewWillAppear:(BOOL)animated{
 	//NSLog(@"viewWillAppear");
 	[super viewWillAppear:animated];
-
-	if(lastSelectedRange.location != NSNotFound) 
+    
+	if(self.lastSelectedRange.location != NSNotFound)
 	{
-		textView.selectedRange = lastSelectedRange;
+		self.textView.selectedRange = lastSelectedRange;
 	}
 
 }
 
 -(void)setupResponder {
 	if (self.haveTo && ![[textFieldTo text] length]) {
-		[textFieldTo becomeFirstResponder];
+		[self.textFieldTo becomeFirstResponder];
 	}
 	else if (self.haveTitle) {
-		[textFieldTitle becomeFirstResponder];
+		[self.textFieldTitle becomeFirstResponder];
 	}
 	else {
-		[textView becomeFirstResponder];
+		[self.textView becomeFirstResponder];
 	}
 }
 

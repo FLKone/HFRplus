@@ -12,7 +12,6 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    NSLog(@"initWithNibName %@", nibNameOrNil);
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.delegate = self;
@@ -21,10 +20,8 @@
     return self;
 }
 
-
 #pragma mark -
 - (void)settingsViewController:(IASKAppSettingsViewController*)sender buttonTappedForKey:(NSString*)key {
-    NSLog(@"settingsViewController");
     
 	if ([key isEqualToString:@"EmptyCacheButton"]) {
 

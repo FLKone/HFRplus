@@ -50,5 +50,8 @@
 -(void)previousPage:(id)sender;
 -(void)firstPage:(id)sender;
 -(void)lastPage:(id)sender;
+-(void)firstPage;
+-(void)lastPage;
+-(void)lastAnswer;
 
 @end

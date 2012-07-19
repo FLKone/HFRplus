@@ -58,6 +58,7 @@
 -(void)reload:(BOOL)shake;
 -(void)reload;
 
+- (void)setTopicViewed;
 - (void)pushTopic;
 
 @property (nonatomic, retain) UITextField *pageNumberField;
