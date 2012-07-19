@@ -10,12 +10,13 @@
 #import "ForumsTableViewController.h"
 #import "TopicsTableViewController.h"
 
-#import "ASIHTTPRequest.h"
 #import "HTMLParser.h"
 #import "RegexKitLite.h"
 #import "ShakeView.h"
 
 #import "Forum.h"
+
+#import "AFHTTPRequestOperation.h"
 
 @implementation ForumsTableViewController
 @synthesize request;
@@ -26,28 +27,32 @@
 
 - (void)cancelFetchContent
 {
-	[request cancel];
+    NSLog(@"cancelFetchContent");
+    
+    [self fetchContentFailed:nil];
+
 }
 
 - (void)fetchContent
 {
-	
 	self.status = kIdle;	
-	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];
-	
-	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:kForumURL]]];
-	[request setDelegate:self];
-	
-	[request setDidStartSelector:@selector(fetchContentStarted:)];
-	[request setDidFinishSelector:@selector(fetchContentComplete:)];
-	[request setDidFailSelector:@selector(fetchContentFailed:)];
-	
-
-
-	[request startAsynchronous];
+    
+    NSURLRequest *aRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:kForumURL] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:kTimeoutMini];
+    
+    [self setRequest:[[AFHTTPRequestOperation alloc] initWithRequest:aRequest]];
+    
+    
+    [[self request] setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self fetchContentComplete:operation];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self fetchContentFailed:operation];
+    }];
+    
+    [[self request] start];
+    [self fetchContentStarted];
 }
 
-- (void)fetchContentStarted:(ASIHTTPRequest *)theRequest
+- (void)fetchContentStarted
 {
 	//Bouton Stop
 	self.navigationItem.rightBarButtonItem = nil;	
@@ -60,7 +65,7 @@
 	[self.loadingView setHidden:NO];
 }
 
-- (void)fetchContentComplete:(ASIHTTPRequest *)theRequest
+- (void)fetchContentComplete:(AFHTTPRequestOperation *)theRequest
 {
 	//Bouton Reload
 	self.navigationItem.rightBarButtonItem = nil;
@@ -71,7 +76,7 @@
 	[self.arrayData removeAllObjects];
 	[self.forumsTableView reloadData];
 	
-	[self loadDataInTableView:[request responseData]];
+	[self loadDataInTableView:[theRequest responseData]];
 
 	[self.loadingView setHidden:YES];
 
@@ -91,16 +96,16 @@
 	
 }
 
-- (void)fetchContentFailed:(ASIHTTPRequest *)theRequest
-{
-	//Bouton Reload
+- (void)fetchContentFailed:(AFHTTPRequestOperation *)theRequest
+{    
+    //Bouton Reload
 	self.navigationItem.rightBarButtonItem = nil;
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
     [segmentBarItem release];
 	
 	[self.loadingView setHidden:YES];
-
+    
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[theRequest.error localizedDescription]
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
 	[alert show];
