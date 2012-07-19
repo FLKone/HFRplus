@@ -271,7 +271,9 @@
 		textFieldTo.returnKeyType = UIReturnKeyNext;
 		[textFieldTo setText:[self.arrayInputData valueForKey:@"dest"]];
 		textFieldTo.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-
+        textFieldTo.keyboardType = UIKeyboardTypeASCIICapable;
+        
+        
 		originY += textFieldTo.frame.size.height;
 		
 		UIView* separator = [[[UIView alloc] initWithFrame:CGRectMake(0, originY, 320 + offsetforiPad, 1)] autorelease];
@@ -308,6 +310,7 @@
 		textFieldTitle.returnKeyType = UIReturnKeyNext;
 		[textFieldTitle setText:[self.arrayInputData valueForKey:@"sujet"]];
 		textFieldTitle.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        textFieldTitle.keyboardType = UIKeyboardTypeASCIICapable;
 
 		//[textFieldTitle setText:[[fastAnswerNode findChildWithAttribute:@"name" matchingName:@"sujet" allowPartial:NO] getAttributeNamed:@"value"]];
 
@@ -368,6 +371,7 @@
 		[textFieldCat setText:[self.arrayInputData valueForKey:@"subcat"]];
 		textFieldCat.userInteractionEnabled = NO;
 		textFieldCat.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        textFieldCat.keyboardType = UIKeyboardTypeASCIICapable;
 
 		originY += textFieldCat.frame.size.height;
 		
@@ -425,6 +429,9 @@
 		//-- PICKER
 		
 	}
+
+    self.textView.keyboardType = UIKeyboardTypeASCIICapable;
+    self.textFieldSmileys.keyboardType = UIKeyboardTypeASCIICapable;
 
 	headerView.frame = CGRectMake(headerView.frame.origin.x, originY * -1.0f, headerView.frame.size.width, originY);
 	[self.textView addSubview:headerView];
