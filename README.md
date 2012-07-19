@@ -22,6 +22,6 @@ RoadMap
     <td>1.6.1</td><td>Fonctionnalités</td><td>Fin 2012</td>
   </tr>
 <tr>
-    <td>1.6.2</td><td>Fonctionnalités avancés</td><td>tbd</td>
+    <td>1.6.2</td><td>Fonctionnalités avancées</td><td>tbd</td>
   </tr>
 </table>
