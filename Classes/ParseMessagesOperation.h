@@ -7,8 +7,8 @@
 
 @class LinkItem;
 @class HTMLParser;
-
 @protocol ParseMessagesOperationDelegate;
+
 
 @interface ParseMessagesOperation : NSOperation
 {
@@ -21,6 +21,8 @@
     LinkItem		*workingEntry;
     BOOL            reverse;
 	int				index;
+
+    NSOperationQueue		*queue;
 }
 
 -(id)initWithData:(NSData *)data index:(int)theIndex reverse:(BOOL)isReverse delegate:(id <ParseMessagesOperationDelegate>)theDelegate;

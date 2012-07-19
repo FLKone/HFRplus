@@ -47,25 +47,6 @@
 	NSLog(@"Progress %f%", newProgress*100);
 }
 
--(void)request:(ASIHTTPRequest *)request didReceiveBytes:(long long)bytes
-{
-    //NSLog(@"bytes: %llu", bytes);
-    
-	NSString *connectionType;
-	if ([ASIHTTPRequest isNetworkReachableViaWWAN]) {
-		connectionType = @"Using WWAN";
-	} else {
-		connectionType = @"Not using WWAN";
-	}
-	NSString *throttling = @"Throttling OFF";
-	if ([ASIHTTPRequest isBandwidthThrottled]) {
-		throttling = @"Throttling ON";
-	}
-    
-	NSLog(@"%@", [NSString stringWithFormat:@"%@ / %luKB per second / %@",connectionType, [ASIHTTPRequest averageBandwidthUsedPerSecond]/1024,throttling]);    
-    
-}
-
 - (void)cancelFetchContent
 {
 	[request cancel];
@@ -77,7 +58,7 @@
     
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMaxi];
 
-    NSLog(@"URL %@", [self currentUrl]);
+    //NSLog(@"URL %@", [self currentUrl]);
     
 	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]]]];
 	[request setDelegate:self];
@@ -100,7 +81,6 @@
     }
 	
     [self.loadingView setHidden:NO];
-
 
 	[request startAsynchronous];
 }
@@ -1255,8 +1235,6 @@
 
 - (void)handleLoadedApps:(NSArray *)loadedItems
 {	
-    NSLog(@"BEGIN");
-    
 	[self.arrayData removeAllObjects];
 	[self.arrayData addObjectsFromArray:loadedItems];
 
@@ -1301,14 +1279,10 @@
 	[HTMLString release];
 	//[tmpHTML release];
 
-	
-    NSLog(@"END");
 }
 - (void)handleLoadedParser:(HTMLParser *)myParser
 {
-    NSLog(@"BEGIN");
 	[self loadDataInTableView:myParser];
-    NSLog(@"END");
 }	
 
 // -------------------------------------------------------------------------------
@@ -1316,49 +1290,25 @@
 // -------------------------------------------------------------------------------
 - (void)didStartParsing:(HTMLParser *)myParser
 {
-    NSLog(@"BEGIN");
     [self performSelectorOnMainThread:@selector(handleLoadedParser:) withObject:myParser waitUntilDone:NO];
-    NSLog(@"END");
 }
 
 - (void)didFinishParsing:(NSArray *)appList
 {
-    NSLog(@"BEGIN");
-    
     [self performSelectorOnMainThread:@selector(handleLoadedApps:) withObject:appList waitUntilDone:NO];
-	//NSLog(@"didFinishParsing 0");
-
     [self.queue release], self.queue = nil;
-	
-    NSLog(@"END");
-
 }
 
 #pragma mark -
 #pragma mark WebView Delegate
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-    NSLog(@"BEGIN");
 	//NSLog(@"== webViewDidStartLoad");
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-
-    NSLog(@"END");    
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    NSLog(@"BEGIN");
-	
-
-
-	//NSLog(@"== webViewDidFinishLoad %@", [NSString stringWithFormat:@"window.location.hash='%@';$('img.lazy').lazyload({ placeholder : 'blank15.gif' });$('img.lazy2').lazyload({ placeholder : 'avatar_male_gray_on_light_48x48.png' });", self.stringFlagTopic]);
-//	jsString = [jsString stringByAppendingString:@"$('img.lazy').lazyload({ placeholder : 'blank15.gif' });"];
-//	jsString = [jsString stringByAppendingString:@"$('img.lazy2').lazyload({ placeholder : 'avatar_male_gray_on_light_48x48.png' });"];
-//	jsString = [jsString stringByAppendingString:[NSString stringWithFormat:@"window.location.hash='%@';", self.stringFlagTopic]];
-//$('img.lazy').lazyload({ placeholder : 'blank15.gif' });$('img.lazy2').lazyload({ placeholder : 'avatar_male_gray_on_light_48x48.png' });	
-	
-	
-
 	
 	NSString *jsString = [[[NSString alloc] initWithString:@""] autorelease];
 
@@ -1437,10 +1387,6 @@
     
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 	[self.messagesWebView setHidden:NO];
-    
-    
-    NSLog(@"END");
-    
 
 }
 //NSSelectorFromString([[[self arrayAction] objectAtIndex:curPostID] objectForKey:@"code"])
@@ -1548,9 +1494,9 @@
 			[self didSelectImage:[[[[aRequest.URL absoluteString] pathComponents] objectAtIndex:1] intValue] withUrl:imgUrl];
 			[imgUrl release];
 			return NO;
-		}		
+		}
 	}
-
+    
 	return YES;
 }
 
