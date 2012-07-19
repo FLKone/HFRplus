@@ -35,6 +35,19 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    // Return YES for supported orientations
+	// Get user preference
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSString *enabled = [defaults stringForKey:@"landscape_mode"];
+	
+	if (![enabled isEqualToString:@"none"]) {
+		return YES;
+	} else {
+		return (interfaceOrientation == UIInterfaceOrientationPortrait);
+	}
+}
+
 /* for iOS6 support
 - (NSUInteger)supportedInterfaceOrientations
 {
