@@ -134,11 +134,13 @@
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>IASKButtonSpecifier</string>
+			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>CHECKPOINT</string>
+			<string>Menu debug</string>
 			<key>Key</key>
-			<string>SetCheckpoint</string>
+			<string>menu_debug</string>
+			<key>DefaultValue</key>
+			<false/>
 		</dict>
 	</array>
 </dict>

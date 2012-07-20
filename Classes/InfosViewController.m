@@ -11,6 +11,8 @@
 #import	"AideViewController.h"
 #import "CreditsViewController.h"
 #import "HFRplusAppDelegate.h"
+#import "HFRDebugViewController.h"
+
 
 @implementation InfosViewController
 
@@ -58,8 +60,11 @@
     
     [self.menuList addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Réglages", @"SettingsViewController", @"IASKAppSettingsView", @"20-gear2", nil]
                                                                 forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];   
+
+    [self.menuList addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Debug", @"HFRDebugViewController", @"HFRDebugViewController", @"19-gear", nil]
+                                                                forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];   
+        
     
-    [self.tableView reloadData];
 }
 
 - (void)viewDidUnload
@@ -80,6 +85,7 @@
 	if(lastViewController) [lastViewController release];
 	[self setLastViewController:nil];
 
+    [self.tableView reloadData];
 
 }
 /*
@@ -101,7 +107,19 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	return menuList.count;
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	BOOL debug = [defaults boolForKey:@"menu_debug"];
+	
+    //NSLog(@"display %@", display);
+    
+	if (!debug) { 
+        return menuList.count - 1;
+        
+    }
+    else {
+        return menuList.count;
+
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

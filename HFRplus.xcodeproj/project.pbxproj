@@ -370,6 +370,8 @@
 		CAF03C6A1245680600897C3B /* ddr555.gif in Resources */ = {isa = PBXBuildFile; fileRef = CAF03C691245680600897C3B /* ddr555.gif */; };
 		CAFB776C126639AA004D8C57 /* jquery.lazyload.mini.js in Resources */ = {isa = PBXBuildFile; fileRef = CAFB776B126639AA004D8C57 /* jquery.lazyload.mini.js */; };
 		CAFCE8851298399D004E7CC0 /* loadinfo.net.gif in Resources */ = {isa = PBXBuildFile; fileRef = CAFCE8841298399D004E7CC0 /* loadinfo.net.gif */; };
+		CAFD004315B9B665003CA3FC /* HFRDebugViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAFD004115B9B665003CA3FC /* HFRDebugViewController.m */; };
+		CAFD004415B9B665003CA3FC /* HFRDebugViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAFD004215B9B665003CA3FC /* HFRDebugViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -858,6 +860,9 @@
 		CAF03C691245680600897C3B /* ddr555.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = ddr555.gif; sourceTree = "<group>"; };
 		CAFB776B126639AA004D8C57 /* jquery.lazyload.mini.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.lazyload.mini.js; sourceTree = "<group>"; };
 		CAFCE8841298399D004E7CC0 /* loadinfo.net.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loadinfo.net.gif; sourceTree = "<group>"; };
+		CAFD004015B9B665003CA3FC /* HFRDebugViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFRDebugViewController.h; sourceTree = "<group>"; };
+		CAFD004115B9B665003CA3FC /* HFRDebugViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFRDebugViewController.m; sourceTree = "<group>"; };
+		CAFD004215B9B665003CA3FC /* HFRDebugViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HFRDebugViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1084,6 +1089,7 @@
 		01BF8775121C4407007624B6 /* Infos */ = {
 			isa = PBXGroup;
 			children = (
+				CAFD003915B9B4FF003CA3FC /* Debug */,
 				01BF877E121C4407007624B6 /* Compte */,
 				01BF8776121C4407007624B6 /* InfosViewController.h */,
 				01BF8777121C4407007624B6 /* InfosViewController.m */,
@@ -1699,6 +1705,16 @@
 			name = GA;
 			sourceTree = "<group>";
 		};
+		CAFD003915B9B4FF003CA3FC /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				CAFD004015B9B665003CA3FC /* HFRDebugViewController.h */,
+				CAFD004115B9B665003CA3FC /* HFRDebugViewController.m */,
+				CAFD004215B9B665003CA3FC /* HFRDebugViewController.xib */,
+			);
+			name = Debug;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1995,6 +2011,7 @@
 				CA4CE89015B1B2760039FC3B /* README.mdown in Resources */,
 				CA4CE8A415B1B36F0039FC3B /* MWPhotoBrowser.bundle in Resources */,
 				CA45B60915B89F4F00380CA0 /* README.md in Resources */,
+				CAFD004415B9B665003CA3FC /* HFRDebugViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2108,6 +2125,7 @@
 				CA45B5F815B848EC00380CA0 /* AFURLConnectionOperation.m in Sources */,
 				CA45B5F915B848EC00380CA0 /* AFXMLRequestOperation.m in Sources */,
 				CA45B5FA15B848EC00380CA0 /* UIImageView+AFNetworking.m in Sources */,
+				CAFD004315B9B665003CA3FC /* HFRDebugViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
