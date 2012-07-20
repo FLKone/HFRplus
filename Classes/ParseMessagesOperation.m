@@ -283,18 +283,18 @@
                 NSString *tmpURL = [[avatarNode firstChild] getAttributeNamed:@"src"];
                 
                 if (tmpURL.length > 0) { // si on a pas, on check si on a une URL
-                    NSLog(@"on DL");                                    
+                    //NSLog(@"on DL");                                    
 					//async dl 
                     NSURLRequest *aRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:tmpURL] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:kTimeoutAvatar];
                     
                     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:aRequest];
                     
                     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-                        NSLog(@"Success %@", [[operation request] URL]);
+                        //NSLog(@"Success %@", [[operation request] URL]);
                         [fileManager createFileAtPath:key contents:[operation responseData] attributes:nil];
                         fasTest.imageUI = key;
                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                        NSLog(@"Failure %@", key);
+                        //NSLog(@"Failure %@", key);
                         fasTest.imageUI = nil;
                     }];
                     

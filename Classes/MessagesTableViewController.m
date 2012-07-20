@@ -44,7 +44,7 @@
 #pragma mark Data lifecycle
 
 - (void)setProgress:(float)newProgress{
-	NSLog(@"Progress %f%", newProgress*100);
+	//NSLog(@"Progress %f%", newProgress*100);
 }
 
 - (void)cancelFetchContent
