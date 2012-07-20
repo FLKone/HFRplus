@@ -33,7 +33,7 @@ Roadmap
 Utilisation
 -------------------------
 
-Pour pouvoir compiler la branche Update, il est nécessaire de créer le fichier suivant :
+Un fichier Config.h est nécessaire (dans le répertoire Classes) :
 
 ``` objective-c
 //
