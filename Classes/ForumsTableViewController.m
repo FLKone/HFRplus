@@ -40,7 +40,7 @@
     NSURLRequest *aRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:kForumURL] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:kTimeoutMini];
     
     [self setRequest:[[AFHTTPRequestOperation alloc] initWithRequest:aRequest]];
-    
+
     [[self request] setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self fetchContentComplete:operation];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -874,7 +874,7 @@
 
 -(void) shakeHappened:(ShakeView*)view
 {
-	if (![request inProgress]) {
+	if (![request isExecuting]) {
 		
 		[[GANTracker sharedTracker] startTrackerWithAccountID:kGoogleAnalyticsAPI
 											   dispatchPeriod:kGANDispatchPeriodSec
@@ -922,7 +922,7 @@
 	self.arrayData = nil;
 
 	[request cancel];
-	[request setDelegate:nil];
+	//[request setDelegate:nil];
 	self.request = nil;
 
 	self.statusMessage = nil;
