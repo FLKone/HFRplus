@@ -234,11 +234,8 @@
 		CA45B60915B89F4F00380CA0 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = CA45B60815B89F4E00380CA0 /* README.md */; };
 		CA4AA6DD15B2553C00E53A1F /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA4AA6DC15B2553C00E53A1F /* CoreText.framework */; };
 		CA4CE81015B1856F0039FC3B /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA4CE80C15B1856F0039FC3B /* libTestFlight.a */; };
-		CA4CE81115B1856F0039FC3B /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = CA4CE80D15B1856F0039FC3B /* README.txt */; };
-		CA4CE81215B1856F0039FC3B /* release_notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = CA4CE80E15B1856F0039FC3B /* release_notes.txt */; };
 		CA4CE81515B185CA0039FC3B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CA4CE81415B185CA0039FC3B /* libz.dylib */; };
 		CA4CE88615B1B2760039FC3B /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = CA4CE86E15B1B2760039FC3B /* LICENSE */; };
-		CA4CE88715B1B2760039FC3B /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = CA4CE86F15B1B2760039FC3B /* README.md */; };
 		CA4CE88815B1B2760039FC3B /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = CA4CE87115B1B2760039FC3B /* SDImageCache.m */; };
 		CA4CE88915B1B2760039FC3B /* SDWebImageDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = CA4CE87515B1B2760039FC3B /* SDWebImageDecoder.m */; };
 		CA4CE88A15B1B2760039FC3B /* SDWebImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = CA4CE87715B1B2760039FC3B /* SDWebImageDownloader.m */; };
@@ -247,7 +244,6 @@
 		CA4CE88D15B1B2760039FC3B /* UIButton+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = CA4CE87F15B1B2760039FC3B /* UIButton+WebCache.m */; };
 		CA4CE88E15B1B2760039FC3B /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = CA4CE88115B1B2760039FC3B /* UIImageView+WebCache.m */; };
 		CA4CE88F15B1B2760039FC3B /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = CA4CE88415B1B2760039FC3B /* MBProgressHUD.m */; };
-		CA4CE89015B1B2760039FC3B /* README.mdown in Resources */ = {isa = PBXBuildFile; fileRef = CA4CE88515B1B2760039FC3B /* README.mdown */; };
 		CA4CE89215B1B30B0039FC3B /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA4CE89115B1B30B0039FC3B /* ImageIO.framework */; };
 		CA4CE8A215B1B36F0039FC3B /* MWCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA4CE89515B1B36F0039FC3B /* MWCaptionView.m */; };
 		CA4CE8A315B1B36F0039FC3B /* MWPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = CA4CE89715B1B36F0039FC3B /* MWPhoto.m */; };
@@ -2004,11 +2000,7 @@
 				CA1070BC15A4D83F002E6C19 /* 20-gear2@2x.png in Resources */,
 				CA1070BF15A4DA1E002E6C19 /* Localizable.strings in Resources */,
 				CA2384A915A86501004F9345 /* InAppSettings.bundle in Resources */,
-				CA4CE81115B1856F0039FC3B /* README.txt in Resources */,
-				CA4CE81215B1856F0039FC3B /* release_notes.txt in Resources */,
 				CA4CE88615B1B2760039FC3B /* LICENSE in Resources */,
-				CA4CE88715B1B2760039FC3B /* README.md in Resources */,
-				CA4CE89015B1B2760039FC3B /* README.mdown in Resources */,
 				CA4CE8A415B1B36F0039FC3B /* MWPhotoBrowser.bundle in Resources */,
 				CA45B60915B89F4F00380CA0 /* README.md in Resources */,
 				CAFD004415B9B665003CA3FC /* HFRDebugViewController.xib in Resources */,
