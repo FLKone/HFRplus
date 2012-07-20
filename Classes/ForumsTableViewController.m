@@ -16,7 +16,7 @@
 
 #import "Forum.h"
 
-#import "AFHTTPRequestOperation.h"
+#import "AFNetworking.h"
 
 @implementation ForumsTableViewController
 @synthesize request;
@@ -40,7 +40,6 @@
     NSURLRequest *aRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:kForumURL] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:kTimeoutMini];
     
     [self setRequest:[[AFHTTPRequestOperation alloc] initWithRequest:aRequest]];
-    
     
     [[self request] setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self fetchContentComplete:operation];

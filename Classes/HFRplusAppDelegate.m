@@ -15,6 +15,8 @@
 #import "MKStoreManager.h"
 #import "BrowserViewController.h"
 
+#import "AFNetworking.h"
+
 @implementation HFRplusAppDelegate
 
 @synthesize window;
@@ -249,7 +251,8 @@
     
     [TestFlight takeOff:kTestFlightAPI];
     
-   
+    [AFHTTPRequestOperation addAcceptableStatusCodes:[NSIndexSet indexSetWithIndex:503]];
+
     
     dispatch_queue_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
