@@ -115,7 +115,7 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-    //[self addText:@"didReceiveData"];
+    [self addText:@"didReceiveData"];
 
 }
 
@@ -157,6 +157,7 @@
 	[con setDidFailSelector:@selector(fetchContentFailed:)];
 
     [con setDownloadProgressDelegate:self];
+    [con setShowAccurateProgress:YES];
 
     self.baseDate = [NSDate date];
     [con startAsynchronous];
@@ -179,7 +180,7 @@
 }
 
 -(void)request:(ASIHTTPRequest *)request didReceiveBytes:(long long)bytes {
-    //[self addText:@"didReceiveBytes"];	
+    [self addText:@"didReceiveBytes"];	
 }
 
 #pragma mark -
@@ -195,7 +196,7 @@
     AFHTTPRequestOperation *con = [[AFHTTPRequestOperation alloc] initWithRequest:theRequest];
     
     [con setDownloadProgressBlock:^(NSInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
-        //[self addText:@"setDownloadProgressBlock"];
+        [self addText:@"setDownloadProgressBlock"];
     }];
     
     [con setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
