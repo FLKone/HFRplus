@@ -2,8 +2,7 @@
 //  SplitViewController.m
 //  HFRplus
 //
-//  Created by Julien ALEXANDRE on 02/07/12.
-//  Copyright (c) 2012 FLK. All rights reserved.
+//  Created by FLK on 02/07/12.
 //
 
 #import "SplitViewController.h"

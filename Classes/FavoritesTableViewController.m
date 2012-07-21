@@ -21,9 +21,12 @@
 #import "Catcounter.h"
 #import "FavoriteCell.h"
 
+#import "Favorite.h"
+
 
 @implementation FavoritesTableViewController
-@synthesize pressedIndexPath, favoritesArray, arrayData, arrayDataID, arrayDataID2, favoritesTableView, loadingView, arraySection;
+@synthesize pressedIndexPath, favoritesTableView, loadingView, showAll;
+@synthesize arrayNewData; //v2 remplace arrayData, arrayDataID, arrayDataID2, arraySection
 @synthesize messagesTableViewController;
 
 @synthesize request;
@@ -32,6 +35,21 @@
 
 #pragma mark -
 #pragma mark Data lifecycle
+
+-(void) showAll:(id)sender {
+    
+    if (self.showAll) {
+        self.showAll = NO;
+    }
+    else {
+        self.showAll = YES;
+    }
+    
+    [self.favoritesTableView beginUpdates];
+    [self.favoritesTableView reloadData];
+    [self.favoritesTableView endUpdates];
+    
+}
 
 - (void)cancelFetchContent
 {
@@ -73,18 +91,14 @@
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
     [segmentBarItem release];
 	
-	[self.arrayDataID removeAllObjects];
-	[self.arrayData removeAllObjects];
-	
-	[self.arrayDataID2 removeAllObjects];
-	[self.arraySection removeAllObjects];
+	[self.arrayNewData removeAllObjects];
 	
 	//[self.favoritesTableView reloadData];
 	
 	[self loadDataInTableView:[request responseData]];
 	
 	[self.loadingView setHidden:YES];	
-
+    
 	switch (self.status) {
 		case kMaintenance:
 		case kNoResults:
@@ -123,12 +137,11 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
 	if (buttonIndex == 1 && alertView.tag == 669) {
-        int theRow = pressedIndexPath.row;
         
-        theRow += [[arrayDataID objectForKey:[arrayDataID2 objectAtIndex:pressedIndexPath.section]] lengthB4];
+        NSIndexPath *path = self.pressedIndexPath;
+        Topic *aTopic = [[[self.arrayNewData objectAtIndex:[path section]] topics] objectAtIndex:[path row]];
         
-        //NSLog(@"goto topic page %d", [[pageNumberField text] intValue]);
-        NSString * newUrl = [[NSString alloc] initWithString:[[arrayData objectAtIndex:theRow] aURL]];
+        NSString * newUrl = [aTopic aURL];
         
         //NSLog(@"newUrl %@", newUrl);
         
@@ -175,7 +188,7 @@
         
         
         //setup the URL
-        self.messagesTableViewController.topicName = [[arrayData objectAtIndex:theRow] aTitle];	
+        self.messagesTableViewController.topicName = [aTopic aTitle];	
         
         //NSLog(@"push message liste");
         [self pushTopic];
@@ -190,11 +203,7 @@
 	/*
 	[self fetchContent];
 	*/
-	[self.arrayDataID removeAllObjects];
-	[self.arrayData removeAllObjects];
-	
-	[self.arrayDataID2 removeAllObjects];
-	[self.arraySection removeAllObjects];
+	[self.arrayNewData removeAllObjects];
 	
 	[self.favoritesTableView reloadData];
 	[self.favoritesTableView setHidden:YES];
@@ -209,21 +218,11 @@
 
 -(void)loadDataInTableView:(NSData *)contentData {
 
-	[self.arrayDataID removeAllObjects];
-	[self.arrayData removeAllObjects];
-	
-	[self.arrayDataID2 removeAllObjects];
-	[self.arraySection removeAllObjects];
-	
-	//NSDate *then = [NSDate date]; // Create a current date
-
-	int globalCounter = -1;	
+	[self.arrayNewData removeAllObjects];
 	
 	HTMLParser * myParser = [[HTMLParser alloc] initWithData:contentData error:NULL];
 	HTMLNode * bodyNode = [myParser body];
 
-	//NSLog(@"rawContentsOfNode %@", rawContentsOfNode([bodyNode _node], [myParser _doc]));
-	
 	if (![bodyNode getAttributeNamed:@"id"]) {
 		if ([[[bodyNode firstChild] tagName] isEqualToString:@"p"]) {
 			NSLog(@"p");
@@ -261,8 +260,9 @@
 	}
 	//MP
 	
-	NSArray *temporaryTopicsArray = [bodyNode findChildrenWithAttribute:@"class" matchingName:@"sujet ligne_booleen" allowPartial:YES]; //Get links for cat
-
+	//v1
+    NSArray *temporaryTopicsArray = [bodyNode findChildrenWithAttribute:@"class" matchingName:@"sujet ligne_booleen" allowPartial:YES]; //Get topics for cat
+    
 	if (temporaryTopicsArray.count == 0) {
 		//NSLog(@"Aucun nouveau message %d", self.arrayDataID.count);
 		self.status = kNoResults;
@@ -276,196 +276,51 @@
 	[[HFRplusAppDelegate sharedAppDelegate] setHash_check:[hash_check getAttributeNamed:@"value"]];
 	//NSLog(@"hash_check %@", [hash_check getAttributeNamed:@"value"]);
 	
-	//Date du jour
-	NSDate *nowTopic = [[NSDate alloc] init];
-	NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-	[dateFormat setDateFormat:@"dd-MM-yyyy"];
-	NSString *theDate = [dateFormat stringFromDate:nowTopic];
-	
-	for (HTMLNode * topicNode in temporaryTopicsArray) { //Loop through all the tags
-		globalCounter += 1;
-
-		Topic *aTopic = [[Topic alloc] init];
-
-		//POSTID/CATID
-		HTMLNode * catIDNode = [topicNode findChildWithAttribute:@"name" matchingName:@"valuecat" allowPartial:YES];
-		[aTopic setCatID:[[catIDNode getAttributeNamed:@"value"] intValue]];
-		
-		HTMLNode * postIDNode = [topicNode findChildWithAttribute:@"name" matchingName:@"topic" allowPartial:YES];
-		[aTopic setPostID:[[postIDNode getAttributeNamed:@"value"] intValue]];
-		
-		//NSLog(@"%d - %d", [[catIDNode getAttributeNamed:@"value"] intValue], [[postIDNode getAttributeNamed:@"value"] intValue]);
-		
-		//Title
-		HTMLNode * topicTitleNode = [topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase3" allowPartial:NO];
-		NSString *aTopicAffix = [[NSString alloc] init];
-		NSString *aTopicSuffix = [[NSString alloc] init];
-		
-		if ([[topicNode className] rangeOfString:@"ligne_sticky"].location != NSNotFound) {
-			aTopicAffix = [aTopicAffix stringByAppendingString:@""];//➫ ➥▶✚
-		}
-		if ([topicTitleNode findChildWithAttribute:@"alt" matchingName:@"closed" allowPartial:NO]) {
-			aTopicAffix = [aTopicAffix stringByAppendingString:@""];
-		}
-		
-		if (aTopicAffix.length > 0) {
-			aTopicAffix = [aTopicAffix stringByAppendingString:@" "];
-		}		
-		
-		NSString *aTopicTitle = [[NSString alloc] initWithFormat:@"%@%@%@", aTopicAffix, [[topicTitleNode allContents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]], aTopicSuffix];
-		
-		[aTopic setATitle:aTopicTitle];
-		[aTopicTitle release];
-		
-
-		
-		//URL
-		HTMLNode * topicFlagNode = [topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase5" allowPartial:NO];
-		HTMLNode * topicFlagLinkNode = [topicFlagNode findChildTag:@"a"];
-
-		NSString *aTopicURL = [[NSString alloc] initWithString:[topicFlagLinkNode getAttributeNamed:@"href"]];
-		[aTopic setAURL:aTopicURL];
-		[aTopicURL release];
-
-		//Answer Count
-		HTMLNode * numRepNode = [topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase7" allowPartial:NO];
-		[aTopic setARepCount:[[numRepNode contents] intValue]];
-		
-		//Author & Url of Last Post & Date
-		HTMLNode * lastRepNode = [topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase9" allowPartial:YES];		
-		HTMLNode * linkLastRepNode = [lastRepNode firstChild];
-		NSString *aAuthorOfLastPost = [[NSString alloc] initWithString:[[linkLastRepNode findChildTag:@"b"] contents]];
-		[aTopic setAAuthorOfLastPost:aAuthorOfLastPost];
-		[aAuthorOfLastPost release];
-		
-		NSString *aURLOfLastPost = [[NSString alloc] initWithString:[linkLastRepNode getAttributeNamed:@"href"]];
-		[aTopic setAURLOfLastPost:aURLOfLastPost];
-		[aURLOfLastPost release];
-		
-		
-		NSString *maDate = [linkLastRepNode contents];
-		if ([theDate isEqual:[maDate substringToIndex:10]]) {
-			[aTopic setADateOfLastPost:[maDate substringFromIndex:13]];
-		}
-		else {
-			[aTopic setADateOfLastPost:[NSString stringWithFormat:@"%@/%@/%@", [maDate substringWithRange:NSMakeRange(0, 2)]
-										, [maDate substringWithRange:NSMakeRange(3, 2)]
-										, [maDate substringWithRange:NSMakeRange(8, 2)]]];
-		}
-		
-		//URL of Last Page
-		HTMLNode * topicLastPageNode = [[topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase4" allowPartial:NO] findChildTag:@"a"];
-		if (topicLastPageNode) {
-			NSString *aURLOfLastPage = [[NSString alloc] initWithString:[topicLastPageNode getAttributeNamed:@"href"]];
-			[aTopic setAURLOfLastPage:aURLOfLastPage];
-			[aURLOfLastPage release];
-            [aTopic setMaxTopicPage:[[topicLastPageNode contents] intValue]];            
-		}
-		else {
-			[aTopic setAURLOfLastPage:[aTopic aURL]];
-            [aTopic setMaxTopicPage:1];            
-		}
-		
+    //v2
+	HTMLNode *tableNode = [bodyNode findChildWithAttribute:@"class" matchingName:@"main" allowPartial:NO]; //Get favs for cat
+	NSArray *temporaryFavoriteArray = [tableNode findChildTags:@"tr"];
+    
+    BOOL first = YES;
+    Favorite *aFavorite;
+    
+    for (HTMLNode * trNode in temporaryFavoriteArray) { //Loop through all the tags
         
-        //Current page if flag
-        int pageNumber;
-        NSString *regexString  = @".*page=([^&]+).*";
-        NSRange   matchedRange;// = NSMakeRange(NSNotFound, 0UL);
-        NSRange   searchRange = NSMakeRange(0, aTopic.aURL.length);
-        NSError  *error2        = NULL;
-        
-        matchedRange = [aTopic.aURL rangeOfRegex:regexString options:RKLNoOptions inRange:searchRange capture:1L error:&error2];
-        
-        if (matchedRange.location == NSNotFound) {
-            NSRange rangeNumPage =  [aTopic.aURL rangeOfCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] options:NSBackwardsSearch];
-            pageNumber = [[aTopic.aURL substringWithRange:rangeNumPage] intValue];
-        }
-        else {
-            pageNumber = [[aTopic.aURL substringWithRange:matchedRange] intValue];
+        if ([[trNode className] rangeOfString:@"fondForum1fCat"].location != NSNotFound) {
+            //NSLog(@"HEADER // SECTION");
+
+            if (!first) {
+                [self.arrayNewData addObject:aFavorite];
+                [aFavorite release];
+            }
+
+            aFavorite = [[Favorite alloc] init];
+            [aFavorite parseNode:trNode];  
+            first = NO;
             
         }
+        else if ([[trNode className] rangeOfString:@"ligne_booleen"].location != NSNotFound) {
+            //NSLog(@"TOPIC // ROW");
+            
+            [aFavorite addTopicWithNode:trNode];
+        }
+        else {
+            //NSLog(@"ELSE");
+        }
+    }
+    
+    if (!first) {
+        [self.arrayNewData addObject:aFavorite];
+        [aFavorite release];
+    }
         
-        [aTopic setCurTopicPage:pageNumber];            
-        //NSLog(@"pageNumber %d/%d", aTopic.curTopicPage, aTopic.maxTopicPage);
-
-        //--- Current page if flag
-        
-		[arrayData addObject:aTopic];
-
-		[aTopic release];
-
-		//NSString *myString = [[NSString alloc] init];
-		NSString *myString = aTopic.aURL;
-		//NSLog(@"NAME : %@", fasTest.name);
-		
-		myString = [self wordAfterString:@"cat=" inString:myString];
-		//NSLog(@"CATID: %@", myString);
-		
-		
-		//NEW CAT OR OLD CAT ?
-		
-		if([arrayDataID objectForKey:myString])
-		{
-			//NSLog(@"old");
-			Catcounter *myCounter;// = [[Catcounter alloc] init];
-			
-			myCounter = [arrayDataID objectForKey:myString];
-			//myCounter.length = [NSNumber numberWithInteger:[[myCounter length] integerValue] + 1];
-			myCounter.length += 1;
-			[arrayDataID setObject:myCounter forKey:myString];
-			
-			//NSLog (@"OLD Counter: %@ %@", myCounter.id, myCounter.length);
-			
-			//[myCounter release];
-		}
-		else {
-			//NSLog(@"new");
-			
-			Catcounter *myCounter = [[Catcounter alloc] init];
-						
-			NSNumber* stringNumber = [NSNumber numberWithInteger:[myString integerValue]];
-			myCounter.id = stringNumber;
-			//[stringNumber release];
-			
-			myCounter.length = 1;
-			
-			myCounter.lengthB4 = globalCounter;
-			
-			
-			[arrayDataID setObject:myCounter forKey:myString];
-			[arrayDataID2 addObject:myString];
-			
-			[myCounter release];
-		}
-		
-		
-	}
-	
-	[dateFormat release];
-	[nowTopic release];
-	
-	//arrayOf Section
-	//NSArray *temporarySectionArray = [[NSArray alloc] init];
-	
-	NSArray *temporarySectionArray = [bodyNode findChildrenWithAttribute:@"class" matchingName:@"cHeader" allowPartial:NO]; //Get links for cat
-
-	
-	for (HTMLNode * sectionNode in temporarySectionArray) { //Loop through all the tags
-//		[arraySection setObject:[NSString stringWithFormat:@"%@", [obj3 valueForKey:@"nodeContent"]] forKey:[self wordAfterString:@"cat=" inString:[obj4 valueForKey:@"nodeContent"]]];
-		[arraySection setObject:[sectionNode contents] forKey:[self wordAfterString:@"cat=" inString:[sectionNode getAttributeNamed:@"href"]]];
-
-	}	
-
+	for (Favorite * fav in self.arrayNewData) { //Loop through all the tags
+        NSLog(@"fav 0 %@", fav);
+    }
+   
+    
 	[myParser release];
 	self.status = kComplete;
-	//NSDate *now = [NSDate date]; // Create a current date
-	//NSLog(@"FAVORITES Time elapsed: %f", [now timeIntervalSinceDate:then]);	
-	
-	
-	//NSLog(@"arrayData %@", arrayData);
-	//NSLog(@"arraySection %@", arraySection);
-	//NSLog(@"arrayDataID %@", arrayDataID);
-	//NSLog(@"arrayDataID2 %@", arrayDataID2);
+
 }
 -(NSString*)wordAfterString:(NSString*)searchString inString:(NSString*)selfString
 {
@@ -502,18 +357,23 @@
     [super viewDidLoad];
 	
 	self.title = @"Vos Sujets";
-
-	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
+    self.showAll = NO;
+    
+	// reload
+    UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
     [segmentBarItem release];		
-
+    
+    // showAll
+    UIBarButtonItem *segmentBarItem2 = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_list_bullets.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showAll:)];
+	self.navigationItem.leftBarButtonItem = segmentBarItem2;
+    [segmentBarItem2 release];
+        
+    
 	[(ShakeView*)self.view setShakeDelegate:self];
-
-	self.arrayData = [[NSMutableArray alloc] init];
-	self.arrayDataID = [[NSMutableDictionary alloc] init];
-	self.arrayDataID2 = [[NSMutableArray alloc] init];
-	self.arraySection = [[NSMutableDictionary alloc] init];
 	
+    self.arrayNewData = [[NSMutableArray alloc] init];
+    
 	self.statusMessage = [[NSString alloc] init];
 	
 	//NSLog(@"viewDidLoad %d", self.arrayDataID.count);
@@ -562,16 +422,16 @@
 
 #pragma mark -
 #pragma mark Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // Return the number of sections.
-	//NSLog(@"NB Section %d", arrayDataID.count);
-	
-    return arrayDataID.count;
-}
-
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-	return 23;
+    if (self.showAll) {
+        return 23;
+    }
+    else {
+        if ([[self.arrayNewData objectAtIndex:section] topics].count > 0) {
+            return 23;
+        }
+    }
+    return 0;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -592,7 +452,9 @@
 	headerLabel.shadowColor = [UIColor darkGrayColor];
 	headerLabel.shadowOffset = CGSizeMake(0.0, 1.0);
 	
-	headerLabel.text = [arraySection objectForKey:[arrayDataID2 objectAtIndex:section]];
+    //NSLog(@"%@", [[self.arrayNewData objectAtIndex:section] forum]);
+    Forum *tmpForum = [[self.arrayNewData objectAtIndex:section] forum];
+	headerLabel.text = [tmpForum aTitle];
 												   
 	/*
 	UILabel *detailLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
@@ -629,12 +491,18 @@
 	
 }
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    // Return the number of sections.
+	//NSLog(@"NB Section %d", self.arrayNewData.count);
+	
+    return self.arrayNewData.count;
+}
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
 	//NSLog(@"%d", section);
-	//NSLog(@"%@", [arrayDataID2 objectAtIndex:section]);
-	return [arraySection objectForKey:[arrayDataID2 objectAtIndex:section]];
+	//NSLog(@"titleForHeaderInSection %d %@", section, [[self.arrayNewData objectAtIndex:section] aTitle]);
+	return [[self.arrayNewData objectAtIndex:section] aTitle];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -645,9 +513,9 @@
 	
 	//return [arrayDataID objectForKey:[arrayDataID2 objectAtIndex:section]];
 	
-	//NSLog(@"Length %@", );
+	//NSLog(@"numberOfRowsInSection %d %d", section, [[self.arrayNewData objectAtIndex:section] topics].count);
 	
-    return [[arrayDataID objectForKey:[arrayDataID2 objectAtIndex:section]] length];
+    return [[self.arrayNewData objectAtIndex:section] topics].count;
 }
 
 
@@ -668,58 +536,25 @@
 		[cell addGestureRecognizer:longPressRecognizer];
 		[longPressRecognizer release];		
     }
-	
-	
-    
-	/*
-	 static NSString *CellIdentifier = @"Cell";
-	 
-	 UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-	 if (cell == nil) {
-	 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-	 }
-	 */
-	
-	int theRow = indexPath.row;
-	
-	theRow += [[arrayDataID objectForKey:[arrayDataID2 objectAtIndex:indexPath.section]] lengthB4];
-	
-	//NSLog(@"row %d", indexPath.row);
-	//NSLog(@"theRow %d", theRow);
-	//NSLog(@"theRow %d", [[arrayDataID objectForKey:[arrayDataID2 objectAtIndex:indexPath.section]] lengthB4]);
+    	
+    Topic *tmpTopic = [[[self.arrayNewData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
 	
     // Configure the cell...
-	[(UILabel *)[cell.contentView viewWithTag:999] setText:[[arrayData objectAtIndex:theRow] aTitle]];
+	[(UILabel *)[cell.contentView viewWithTag:999] setText:[tmpTopic aTitle]];
 	//[(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"%d messages", ([[arrayData objectAtIndex:theRow] aRepCount] + 1)]];
-	[(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"⚑ %d/%d", [[arrayData objectAtIndex:theRow] curTopicPage], [[arrayData objectAtIndex:theRow] maxTopicPage] ]];
+	[(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"⚑ %d/%d", [tmpTopic curTopicPage], [tmpTopic maxTopicPage] ]];
 	
     
-    [(UILabel *)[cell.contentView viewWithTag:997] setText:[NSString stringWithFormat:@"%@ - %@", [[arrayData objectAtIndex:theRow] aAuthorOfLastPost], [[arrayData objectAtIndex:theRow] aDateOfLastPost]]];
+    [(UILabel *)[cell.contentView viewWithTag:997] setText:[NSString stringWithFormat:@"%@ - %@", [tmpTopic aAuthorOfLastPost], [tmpTopic aDateOfLastPost]]];
 
-	if ([[arrayData objectAtIndex:theRow] isViewed]) {
+	if ([tmpTopic isViewed]) {
 		[(UILabel *)[cell.contentView viewWithTag:999] setFont:[UIFont systemFontOfSize:13]];
 	}
 	else {
 		[(UILabel *)[cell.contentView viewWithTag:999] setFont:[UIFont boldSystemFontOfSize:13]];
 		
 	}	
-	//[(UILabel *)[cell.contentView viewWithTag:999] setFont:[UIFont boldSystemFontOfSize:13]];	
-	
-	/*
-	 if (cell.badgeNumber == 0) {
-	 [(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"%d message", (cell.badgeNumber + 1)]];
-	 }
-	 else {
-	 [(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"%d messages", (cell.badgeNumber + 1)]];
-	 }
-	 [(UILabel *)[cell.contentView viewWithTag:997] setText:[NSString stringWithFormat:@"%@ - %@", [[arrayData objectAtIndex:indexPath.row] messageAuteur], [[arrayData objectAtIndex:indexPath.row] messageDate]]];
-	 */
-	
-	
-	//cell.textLabel.text = [[arrayData objectAtIndex:theRow] name];
-	//cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-	//cell.textLabel.numberOfLines = 2;
-	
+
     return cell;
 }
 
@@ -727,17 +562,15 @@
 #pragma mark Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	
-	int theRow = indexPath.row;
-	
-	theRow += [[arrayDataID objectForKey:[arrayDataID2 objectAtIndex:indexPath.section]] lengthB4];
-	
-	MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[arrayData objectAtIndex:theRow] aURL]];
+
+    Topic *aTopic = [[[self.arrayNewData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
+    
+	MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[aTopic aURL]];
 	self.messagesTableViewController = aView;
 	[aView release];
 	
 	//setup the URL
-	self.messagesTableViewController.topicName = [[arrayData objectAtIndex:theRow] aTitle];	
+	self.messagesTableViewController.topicName = [aTopic aTitle];	
 	
 	//NSLog(@"push message liste");
 	 [self pushTopic];
@@ -781,15 +614,14 @@
 	{
 		case 0:
 		{
-			int theRow = pressedIndexPath.row;
-			
-			theRow += [[arrayDataID objectForKey:[arrayDataID2 objectAtIndex:pressedIndexPath.section]] lengthB4];
-
-			MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[arrayData objectAtIndex:theRow] aURLOfLastPage]];
+			NSIndexPath *indexPath = pressedIndexPath;
+            Topic *tmpTopic = [[[self.arrayNewData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
+            
+			MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[tmpTopic aURLOfLastPage]];
 			self.messagesTableViewController = aView;
 			[aView release];
 			
-			self.messagesTableViewController.topicName = [[arrayData objectAtIndex:theRow] aTitle];	
+			self.messagesTableViewController.topicName = [tmpTopic aTitle];	
 			
 			 [self pushTopic];	
 
@@ -798,16 +630,14 @@
 		}
 		case 1:
 		{
-			int theRow = pressedIndexPath.row;
-			
-			theRow += [[arrayDataID objectForKey:[arrayDataID2 objectAtIndex:pressedIndexPath.section]] lengthB4];
-
-			MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[arrayData objectAtIndex:theRow] aURLOfLastPost]];
+			NSIndexPath *indexPath = pressedIndexPath;
+            Topic *tmpTopic = [[[self.arrayNewData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
+            
+			MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[tmpTopic aURLOfLastPost]];
 			self.messagesTableViewController = aView;
 			[aView release];
-				
 			
-			self.messagesTableViewController.topicName = [[arrayData objectAtIndex:theRow] aTitle];	
+			self.messagesTableViewController.topicName = [tmpTopic aTitle];	
 
 			 [self pushTopic];	
 
@@ -853,36 +683,26 @@
 }
 
 -(void)setTopicViewed {
-    //NSLog(@"setTopicViewed");
     
-	if (self.favoritesTableView.indexPathForSelectedRow && self.arrayDataID2.count > 0) {
-		//NSLog(@"FT viewDidDisappear indexPathForSelectedRow");
-        
-		int theRow = [self.favoritesTableView.indexPathForSelectedRow row];
-		theRow += [[self.arrayDataID objectForKey:[self.arrayDataID2 objectAtIndex:[self.favoritesTableView.indexPathForSelectedRow section]]] lengthB4];	
-		
-        [[self.arrayData objectAtIndex:theRow] setIsViewed:YES];
+	if (self.favoritesTableView.indexPathForSelectedRow && self.arrayNewData.count > 0) {
+
+        NSIndexPath *path = self.favoritesTableView.indexPathForSelectedRow;
+        [[[[self.arrayNewData objectAtIndex:[path section]] topics] objectAtIndex:[path row]] setIsViewed:YES];
 
         NSArray* rowsToReload = [NSArray arrayWithObjects:self.favoritesTableView.indexPathForSelectedRow, nil];
         [self.favoritesTableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
         
 		//[self.favoritesTableView reloadData];
 	}
-    else if (pressedIndexPath && self.arrayDataID2.count > 0) 
+    else if (pressedIndexPath && self.arrayNewData.count > 0) 
     {
-		//NSLog(@"FT viewDidDisappear pressedIndexPath");
-
-		int theRow = [self.pressedIndexPath row];
-		theRow += [[self.arrayDataID objectForKey:[self.arrayDataID2 objectAtIndex:[self.pressedIndexPath section]]] lengthB4];	
-		
-		[[self.arrayData objectAtIndex:theRow] setIsViewed:YES];
+        NSIndexPath *path = self.pressedIndexPath;
+        [[[[self.arrayNewData objectAtIndex:[path section]] topics] objectAtIndex:[path row]] setIsViewed:YES];
 		
         NSArray* rowsToReload = [NSArray arrayWithObjects:self.pressedIndexPath, nil];
         [self.favoritesTableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
 
-        //[self.favoritesTableView reloadData];
     }
-    //NSLog(@"pressedIndexPath %@", pressedIndexPath);
     
 }
 
@@ -892,12 +712,10 @@
 -(void)chooseTopicPage {
     //NSLog(@"chooseTopicPage Favs");
 
-    int theRow = pressedIndexPath.row;
+    NSIndexPath *indexPath = self.pressedIndexPath;
+    Topic *tmpTopic = [[[self.arrayNewData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
     
-    theRow += [[arrayDataID objectForKey:[arrayDataID2 objectAtIndex:pressedIndexPath.section]] lengthB4];
-
-    
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Aller à la page" message:[NSString stringWithFormat:@"\n\n(numéro entre 1 et %d)\n", [[arrayData objectAtIndex:theRow] maxTopicPage]]
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Aller à la page" message:[NSString stringWithFormat:@"\n\n(numéro entre 1 et %d)\n", [tmpTopic maxTopicPage]]
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"OK", nil];
 	
 	pageNumberField = [[UITextField alloc] initWithFrame:CGRectZero];
@@ -942,9 +760,8 @@
 -(void)textFieldTopicDidChange:(id)sender {
 	//NSLog(@"textFieldDidChange %d %@", [[(UITextField *)sender text] intValue], sender);	
 	
-    int theRow = pressedIndexPath.row;
-    
-    theRow += [[arrayDataID objectForKey:[arrayDataID2 objectAtIndex:pressedIndexPath.section]] lengthB4];
+    NSIndexPath *indexPath = self.pressedIndexPath;
+    Topic *tmpTopic = [[[self.arrayNewData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
 
 	if ([[(UITextField *)sender text] length] > 0) {
 		int val; 
@@ -961,9 +778,9 @@
 				//NSLog(@"ERROR NOW %d", [[(UITextField *)sender text] intValue]);
 				
 			}
-			else if ([[(UITextField *)sender text] intValue] > [[arrayData objectAtIndex:theRow] maxTopicPage]) {
+			else if ([[(UITextField *)sender text] intValue] > [tmpTopic maxTopicPage]) {
 				//NSLog(@"ERROR WAS %d", [[(UITextField *)sender text] intValue]);
-				[sender setText:[NSString stringWithFormat:@"%d", [[arrayData objectAtIndex:theRow] maxTopicPage]]];
+				[sender setText:[NSString stringWithFormat:@"%d", [tmpTopic maxTopicPage]]];
 				//NSLog(@"ERROR NOW %d", [[(UITextField *)sender text] intValue]);
 				
 			}	
@@ -1025,22 +842,15 @@
 		
 		[arequest setPostValue:@"forum1f" forKey:@"type_page"];
 
+        NSIndexPath *indexPath = self.pressedIndexPath;
+        Topic *tmpTopic = [[[self.arrayNewData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
 		
-		int theRow = indexPath.row;
-		
-		theRow += [[arrayDataID objectForKey:[arrayDataID2 objectAtIndex:indexPath.section]] lengthB4];
-		
-		[arequest setPostValue:[NSString stringWithFormat:@"%d", [[arrayData objectAtIndex:theRow] postID]] forKey:@"topic0"];
-		[arequest setPostValue:[NSString stringWithFormat:@"%d", [[arrayData objectAtIndex:theRow] catID]] forKey:@"valuecat0"];
+		[arequest setPostValue:[NSString stringWithFormat:@"%d", [tmpTopic postID]] forKey:@"topic0"];
+		[arequest setPostValue:[NSString stringWithFormat:@"%d", [tmpTopic catID]] forKey:@"valuecat0"];
 		
 		[arequest setPostValue:@"hardwarefr" forKey:@"valueforum0"];
-
-		
-		//NSLog(@"%d - %d", [[arrayData objectAtIndex:theRow] postID], [[arrayData objectAtIndex:theRow] catID]);
-		
-		[arequest startSynchronous];
-
-		//NSLog(@"arequest: %@", [arequest url]);
+		#warning async/delete
+		[arequest startSynchronous]; 
 
 		if (arequest) {
 			if ([arequest error]) {
@@ -1141,11 +951,7 @@
 
 	self.statusMessage = nil;
 	
-	[self.arrayDataID release];
-	self.arrayData = nil;
-
-	[self.arrayDataID2 release];
-	[self.arraySection release];
+	self.arrayNewData = nil;
 	
     [super dealloc];
 }
