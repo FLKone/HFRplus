@@ -26,11 +26,8 @@
 #pragma mark Data lifecycle
 
 - (void)cancelFetchContent
-{
-    NSLog(@"cancelFetchContent");
-    
+{    
     [self fetchContentFailed:nil];
-
 }
 
 - (void)fetchContent
@@ -41,13 +38,17 @@
     
     [self setRequest:[[AFHTTPRequestOperation alloc] initWithRequest:aRequest]];
 
-    [[self request] setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[self request] setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {   
         [self fetchContentComplete:operation];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self fetchContentFailed:operation];
     }];
     
+    [self.arrayData removeAllObjects];
+	[self.forumsTableView reloadData];
+    
     [[self request] start];
+    
     [self fetchContentStarted];
 }
 
@@ -58,45 +59,30 @@
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(cancelFetchContent)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
     [segmentBarItem release];	
-	
+
 	[self.maintenanceView setHidden:YES];
-	[self.forumsTableView setHidden:YES];
 	[self.loadingView setHidden:NO];
 }
 
 - (void)fetchContentComplete:(AFHTTPRequestOperation *)theRequest
-{
+{    
 	//Bouton Reload
 	self.navigationItem.rightBarButtonItem = nil;
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
     [segmentBarItem release];
     
-	[self.arrayData removeAllObjects];
-	[self.forumsTableView reloadData];
+    [self.loadingView setHidden:YES];
 	
-	[self loadDataInTableView:[theRequest responseData]];
-
-	[self.loadingView setHidden:YES];
-
-	switch (self.status) {
-		case kMaintenance:
-		case kNoResults:
-		case kNoAuth:            
-			[self.maintenanceView setText:self.statusMessage];
-			[self.maintenanceView setHidden:NO];
-			[self.forumsTableView setHidden:YES];
-			break;
-		default:
-			[self.forumsTableView reloadData];			
-			[self.forumsTableView setHidden:NO];			
-			break;
-	}
-	
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self loadDataInTableView:[theRequest responseData]];
+    });
 }
 
 - (void)fetchContentFailed:(AFHTTPRequestOperation *)theRequest
-{    
+{        
+    [self.request cancel];
+    
     //Bouton Reload
 	self.navigationItem.rightBarButtonItem = nil;
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
@@ -122,26 +108,24 @@
 #pragma mark View lifecycle
 
 -(void)loadDataInTableView:(NSData *)contentData
-{
+{    
 	HTMLParser * myParser = [[HTMLParser alloc] initWithData:contentData error:NULL];
 	HTMLNode * bodyNode = [myParser body];
 	
-	//NSLog(@"bodyNode %@", rawContentsOfNode([bodyNode _node], [myParser _doc]));	
-	
-	//HTMLNode *hash_check = [bodyNode findChildWithAttribute:@"name" matchingName:@"hash_check" allowPartial:NO];
-	//NSLog(@"hash_check %@", rawContentsOfNode([hash_check _node], [myParser _doc]));
-	
 	NSArray *temporaryForumsArray = [bodyNode findChildrenWithAttribute:@"class" matchingName:@"cat" allowPartial:YES];
-
-	//NSLog(@"temporaryForumsArray %d", [temporaryForumsArray count]);	
 
 	if ([[[bodyNode firstChild] tagName] isEqualToString:@"p"]) {
 		self.status = kMaintenance;
 		self.statusMessage = [[[bodyNode firstChild] contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 		[myParser release];
+        dispatch_sync(dispatch_get_main_queue(), 
+                      ^{    
+                          [self.maintenanceView setText:self.statusMessage];
+                          [self.maintenanceView setHidden:NO];
+                      });
+    
 		return;
 	}
-	
 	
 	for (HTMLNode * forumNode in temporaryForumsArray) {
 
@@ -683,16 +667,16 @@
 		}
 		//--- Sous categories
 
-		
-		
-		
-		//NSLog(@"aForumURL %@", aForumURL);
-
 		if ([aForumURL rangeOfString:@"cat=prive"].location == NSNotFound) {
 			[arrayData addObject:aForum];
+            dispatch_sync(dispatch_get_main_queue(), 
+            ^{
+                NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:self.arrayData.count-1 inSection:0];               
+                [self.forumsTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationRight];               
+            });
+
 		}
 		else {
-			//NSLog(@"else %@", [[topicNode findChildWithAttribute:@"class" matchingName:@"cCatTopic" allowPartial:YES] contents]);
 			NSString *regExMP = @"[^.0-9]+([0-9]{1,})[^.0-9]+";			
 			NSString *myMPNumber = [[[topicNode findChildWithAttribute:@"class" matchingName:@"cCatTopic" allowPartial:YES] contents] stringByReplacingOccurrencesOfRegex:regExMP
 																  withString:@"$1"];
@@ -722,6 +706,11 @@
 	self.arrayData = [[NSMutableArray alloc] init];
 	self.statusMessage = [[NSString alloc] init];
 
+    UIView *v = [[UIView alloc] initWithFrame:CGRectZero];
+    v.backgroundColor = [UIColor clearColor];
+    [self.forumsTableView setTableFooterView:v];
+    [v release];
+    
 	[self fetchContent];
 }
 
