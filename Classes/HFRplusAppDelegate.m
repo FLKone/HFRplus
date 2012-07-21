@@ -551,21 +551,23 @@
 - (void)updateMPBadgeWithString:(NSString *)badgeValue;
 {
 	//NSLog(@"%@ - %d", badgeValue, [badgeValue intValue]);
-	
-	if ([badgeValue intValue] > 0) {
-		[[[[[self rootController] tabBar] items] objectAtIndex:2] setBadgeValue:badgeValue];
-	}
-	else {
-		[[[[[self rootController] tabBar] items] objectAtIndex:2] setBadgeValue:nil];
-		
-	}
-	
+    dispatch_sync(dispatch_get_main_queue(), 
+                  ^{  	
+        if ([badgeValue intValue] > 0) {
+            [[[[[self rootController] tabBar] items] objectAtIndex:2] setBadgeValue:badgeValue];
+        }
+        else {
+            [[[[[self rootController] tabBar] items] objectAtIndex:2] setBadgeValue:nil];
+            
+        }
+                  });
 }
 
 - (void)readMPBadge;
 {
 	//NSLog(@"%@ - %d", badgeValue, [badgeValue intValue]);
-	
+    dispatch_sync(dispatch_get_main_queue(), 
+                  ^{ 	
 	NSString *badgeValue = [[[[[self rootController] tabBar] items] objectAtIndex:2] badgeValue];
 	
 	if ( ([badgeValue intValue] - 1) > 0) {
@@ -574,7 +576,7 @@
 	else {
 		[[[[[self rootController] tabBar] items] objectAtIndex:2] setBadgeValue:nil];
 	}
-	
+                  });	
 }
 
 
