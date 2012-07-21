@@ -551,7 +551,7 @@
 - (void)updateMPBadgeWithString:(NSString *)badgeValue;
 {
 	//NSLog(@"%@ - %d", badgeValue, [badgeValue intValue]);
-    dispatch_sync(dispatch_get_main_queue(), 
+    dispatch_async(dispatch_get_main_queue(), 
                   ^{  	
         if ([badgeValue intValue] > 0) {
             [[[[[self rootController] tabBar] items] objectAtIndex:2] setBadgeValue:badgeValue];
@@ -566,7 +566,7 @@
 - (void)readMPBadge;
 {
 	//NSLog(@"%@ - %d", badgeValue, [badgeValue intValue]);
-    dispatch_sync(dispatch_get_main_queue(), 
+    dispatch_async(dispatch_get_main_queue(), 
                   ^{ 	
 	NSString *badgeValue = [[[[[self rootController] tabBar] items] objectAtIndex:2] badgeValue];
 	
