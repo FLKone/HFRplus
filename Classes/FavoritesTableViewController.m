@@ -22,7 +22,10 @@
 #import "FavoriteCell.h"
 
 #import "Favorite.h"
+#import "UIImage+Resize.h"
 
+#import "AKSingleSegmentedControl.h"
+#import "TopicsTableViewController.h"
 
 @implementation FavoritesTableViewController
 @synthesize pressedIndexPath, favoritesTableView, loadingView, showAll;
@@ -37,6 +40,8 @@
 #pragma mark Data lifecycle
 
 -(void) showAll:(id)sender {
+    
+    NSLog(@"showAll %d", self.showAll);
     
     if (self.showAll) {
         self.showAll = NO;
@@ -72,6 +77,7 @@
 
 - (void)fetchContentStarted:(ASIHTTPRequest *)theRequest
 {
+    NSLog(@"fetchContentStarted");
 	//Bouton Stop
 	self.navigationItem.rightBarButtonItem = nil;	
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(cancelFetchContent)];
@@ -85,6 +91,8 @@
 
 - (void)fetchContentComplete:(ASIHTTPRequest *)theRequest
 {
+    NSLog(@"fetchContentComplete");
+
 	//Bouton Reload
 	self.navigationItem.rightBarButtonItem = nil;
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
@@ -220,6 +228,8 @@
 
 	[self.arrayNewData removeAllObjects];
 	
+    NSLog(@"loadDataInTableView");
+
 	HTMLParser * myParser = [[HTMLParser alloc] initWithData:contentData error:NULL];
 	HTMLNode * bodyNode = [myParser body];
 
@@ -282,8 +292,9 @@
     
     BOOL first = YES;
     Favorite *aFavorite;
-    
+    NSLog(@"run");
     for (HTMLNode * trNode in temporaryFavoriteArray) { //Loop through all the tags
+        
         
         if ([[trNode className] rangeOfString:@"fondForum1fCat"].location != NSNotFound) {
             //NSLog(@"HEADER // SECTION");
@@ -307,16 +318,11 @@
             //NSLog(@"ELSE");
         }
     }
-    
+    NSLog(@"run2");
     if (!first) {
         [self.arrayNewData addObject:aFavorite];
         [aFavorite release];
     }
-        
-	for (Favorite * fav in self.arrayNewData) { //Loop through all the tags
-        NSLog(@"fav 0 %@", fav);
-    }
-   
     
 	[myParser release];
 	self.status = kComplete;
@@ -365,10 +371,25 @@
     [segmentBarItem release];		
     
     // showAll
+    AKSingleSegmentedControl* segmentedControl = [[AKSingleSegmentedControl alloc] initWithItems:[NSArray array]];
+    //[segmentedControl setMomentary:YES];
+    [segmentedControl insertSegmentWithImage:[UIImage imageNamed:@"icon_list_bullets"] atIndex:0 animated:NO];
+    segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+    [segmentedControl addTarget:self action:@selector(showAll:) forControlEvents:UIControlEventValueChanged];
+    
+    UIBarButtonItem * segmentBarItem2 = [[UIBarButtonItem alloc] initWithCustomView: segmentedControl];
+    self.navigationItem.leftBarButtonItem = segmentBarItem2;
+    
+	//segmentedControl2.segmentedControlStyle = UISegmentedControlStyleBar;
+	//segmentedControl2.momentary = YES;
+	    
+    
+    /*
     UIBarButtonItem *segmentBarItem2 = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_list_bullets.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showAll:)];
 	self.navigationItem.leftBarButtonItem = segmentBarItem2;
     [segmentBarItem2 release];
-        
+      */  
     
 	[(ShakeView*)self.view setShakeDelegate:self];
 	
@@ -420,8 +441,25 @@
 }
 
 
+- (void)loadCatForType:(id)sender {
+    
+    
+    NSLog(@"loadCatForType %d", [sender tag]);
+    int section = [sender tag];
+    TopicsTableViewController *aView = [[TopicsTableViewController alloc] initWithNibName:@"TopicsTableViewController" bundle:nil flag:2];
+
+	aView.forumFlag1URL = [[[arrayNewData objectAtIndex:section] forum] aURL];	
+	aView.forumName = [[[arrayNewData objectAtIndex:section] forum] aTitle];	
+	//aView.pickerViewArray = [[arrayNewData objectAtIndex:section] forum] subCats];	
+    
+	[self.navigationController pushViewController:aView animated:YES];
+    
+}
+
 #pragma mark -
 #pragma mark Table view data source
+
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (self.showAll) {
         return 23;
@@ -452,36 +490,53 @@
 	headerLabel.shadowColor = [UIColor darkGrayColor];
 	headerLabel.shadowOffset = CGSizeMake(0.0, 1.0);
 	
+
     //NSLog(@"%@", [[self.arrayNewData objectAtIndex:section] forum]);
     Forum *tmpForum = [[self.arrayNewData objectAtIndex:section] forum];
 	headerLabel.text = [tmpForum aTitle];
 												   
-	/*
-	UILabel *detailLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
-	detailLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-	
-	detailLabel.font = [UIFont boldSystemFontOfSize:10];
-	detailLabel.frame = CGRectMake(260,0,50,23);
-	detailLabel.textColor = [UIColor whiteColor];
-	detailLabel.textAlignment = UITextAlignmentRight;
-	detailLabel.backgroundColor = [UIColor clearColor];
-	detailLabel.shadowColor = [UIColor darkGrayColor];
-	detailLabel.shadowOffset = CGSizeMake(0.0, 1.0);	
-	
-	detailLabel.text = [NSString stringWithFormat:@"page %d", self.pageNumber];
-	*/
-												   
 	// create image object
 	UIImage *myImage = [UIImage imageNamed:@"bar2.png"];
+    
 	// create the imageView with the image in it
 	UIImageView *imageView = [[[UIImageView alloc] initWithImage:myImage] autorelease];
 	imageView.alpha = 0.9;
 	imageView.frame = CGRectMake(0,0,320,23);
 	imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	
-	
+	// create the imageView with the image in it
+	UIImageView *imageView2 = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrowR"]] autorelease];
+	imageView2.alpha = 1;
+	imageView2.frame = CGRectMake(295,5,15,15);
+	imageView2.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    
 	[customView addSubview:imageView];
-	[customView addSubview:headerLabel];
+    
+    UIImage *backButton = [[UIImage imageNamed:@"arrowR"] scaleToSize:CGSizeMake(15, 15)];
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 320, 23)];
+    [button setTag:section];
+    [button setTitle:[tmpForum aTitle] forState:UIControlStateNormal];
+    [button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    if (self.showAll) {
+        [button setImage:backButton forState:UIControlStateNormal];
+        [button setTitleEdgeInsets:UIEdgeInsetsMake(0, -7, 0, 0)];
+        [button setImageEdgeInsets:UIEdgeInsetsMake(2, 297, 0, 0)]; 
+    }
+    else {
+        [button setTitleEdgeInsets:UIEdgeInsetsMake(0, 8, 0, 0)];
+    }
+    [button.titleLabel setFont:[UIFont boldSystemFontOfSize:15]]; //18
+    [button.titleLabel setShadowColor:[UIColor darkGrayColor]]; //18
+    [button.titleLabel setShadowOffset:CGSizeMake(0.0, 1.0)]; //18
+    [button addTarget:self action:@selector(loadCatForType:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    [customView addSubview:button];
+
+	//[customView addSubview:imageView2];
+    
+	//[customView addSubview:headerLabel];
 	
 	//if ([(UISegmentedControl *)[self.navigationItem.titleView.subviews objectAtIndex:0] selectedSegmentIndex] == 0) {
 	//	[customView addSubview:detailLabel];
@@ -502,7 +557,7 @@
 {
 	//NSLog(@"%d", section);
 	//NSLog(@"titleForHeaderInSection %d %@", section, [[self.arrayNewData objectAtIndex:section] aTitle]);
-	return [[self.arrayNewData objectAtIndex:section] aTitle];
+	return [[[self.arrayNewData objectAtIndex:section] forum] aTitle];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -842,28 +897,17 @@
 		
 		[arequest setPostValue:@"forum1f" forKey:@"type_page"];
 
-        NSIndexPath *indexPath = self.pressedIndexPath;
         Topic *tmpTopic = [[[self.arrayNewData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
-		
+        
 		[arequest setPostValue:[NSString stringWithFormat:@"%d", [tmpTopic postID]] forKey:@"topic0"];
 		[arequest setPostValue:[NSString stringWithFormat:@"%d", [tmpTopic catID]] forKey:@"valuecat0"];
 		
 		[arequest setPostValue:@"hardwarefr" forKey:@"valueforum0"];
-		#warning async/delete
-		[arequest startSynchronous]; 
+		[arequest startAsynchronous]; 
+        
+        [[[self.arrayNewData objectAtIndex:indexPath.section] topics] removeObjectAtIndex:indexPath.row];
+        [self.favoritesTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
 
-		if (arequest) {
-			if ([arequest error]) {
-				//NSLog(@"error: %@", [[arequest error] localizedDescription]);
-			}
-			else if ([arequest responseString])
-			{
-				//NSLog(@"responseString: %@", [arequest responseString]);
-				
-				[self reload];
-
-			}
-		}
 		
 	}
 }

@@ -13,7 +13,6 @@
 #include <mach/mach_time.h>
 #include <unistd.h>
 
-#import "AFNetworking.h"
 #import "ASIHTTPRequest.h"
 
 #define kBenchUrlForum   @"http://forum.hardware.fr"
@@ -183,6 +182,7 @@
     [self addText:@"didReceiveBytes"];	
 }
 
+/*
 #pragma mark -
 #pragma mark network_af
 
@@ -210,6 +210,7 @@
     [con start];
     [self.textView setText:[NSString stringWithFormat:@"%f\t\t@AFHTTPRequestOperation (%@)", [[NSDate date] timeIntervalSinceDate:self.baseDate], [self getURL]]];
 }
+*/
 
 - (IBAction)changeURL:(id)sender {
 }

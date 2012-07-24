@@ -15,7 +15,7 @@
 #import "RangeOfCharacters.h"
 #import <CommonCrypto/CommonDigest.h>
 
-#import "AFHTTPRequestOperation.h"
+#import "ASIHTTPRequest.h"
 
 @interface ParseMessagesOperation ()
 @property (nonatomic, assign) id <ParseMessagesOperationDelegate> delegate;
@@ -122,6 +122,8 @@
 	}
 	
 
+    [ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutAvatar];    
+    
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
@@ -285,19 +287,18 @@
                 if (tmpURL.length > 0) { // si on a pas, on check si on a une URL
                     //NSLog(@"on DL");                                    
 					//async dl 
-                    NSURLRequest *aRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:tmpURL] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:kTimeoutAvatar];
                     
-                    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:aRequest];
-                    
-                    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-                        //NSLog(@"Success %@", [[operation request] URL]);
+                    ASIHTTPRequest *operation = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:tmpURL]];
+                    [operation setCompletionBlock:^{
+                        NSLog(@"setCompletionBlock");
                         [fileManager createFileAtPath:key contents:[operation responseData] attributes:nil];
                         fasTest.imageUI = key;
-                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                        //NSLog(@"Failure %@", key);
+                    }];
+                    [operation setFailedBlock:^{
+                                                NSLog(@"setFailedBlock");
                         fasTest.imageUI = nil;
                     }];
-                    
+                                        
                     [self.queue addOperation:operation];
                     //async dl                    
                     
@@ -345,4 +346,5 @@
 	[diskCachePath release];
 
 }
+
 @end

@@ -136,9 +136,20 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
         // Custom initialization
-		//NSLog(@"initWithNibName TTVC");
+		NSLog(@"initWithNibName TTVC 0");
 		
         self.selectedFlagIndex = 0;
+        
+    }
+    return self;
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil flag:(int)flag {
+    if ((self = [self initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
+        // Custom initialization
+		NSLog(@"initWithNibName TTVC %d", flag);
+		
+        self.selectedFlagIndex = flag;
         
     }
     return self;
@@ -226,6 +237,7 @@
 	HTMLNode *FiltresNode =		[bodyNode findChildWithAttribute:@"class" matchingName:@"cadreonglet" allowPartial:NO];
 	
 	if([FiltresNode findChildWithAttribute:@"id" matchingName:@"onglet1" allowPartial:NO]) self.forumBaseURL = [[FiltresNode findChildWithAttribute:@"id" matchingName:@"onglet1" allowPartial:NO] getAttributeNamed:@"href"];
+    
 	if ([[FiltresNode findChildWithAttribute:@"id" matchingName:@"onglet2" allowPartial:NO] getAttributeNamed:@"href"]) {
 		if(!self.forumFavorisURL)	self.forumFavorisURL = [[FiltresNode findChildWithAttribute:@"id" matchingName:@"onglet2" allowPartial:NO] getAttributeNamed:@"href"];
 		[(UISegmentedControl *)[self.navigationItem.titleView.subviews objectAtIndex:0] setEnabled:YES forSegmentAtIndex:1];		
@@ -699,6 +711,7 @@
 
 	if (![self.forumName isEqualToString:[[pickerViewArray objectAtIndex:[myPickerView selectedRowInComponent:0]] aTitle]]) {
 		//NSLog(@"On switch");
+        
 		self.currentUrl = [[pickerViewArray objectAtIndex:[myPickerView selectedRowInComponent:0]] aURL];
 		self.forumName = [[pickerViewArray objectAtIndex:[myPickerView selectedRowInComponent:0]] aTitle];
 		self.forumBaseURL = self.currentUrl;
@@ -781,6 +794,7 @@
 	//NSLog(@"sg	%@", segmentedControl);
 	[self.navigationItem.titleView insertSubview:segmentedControl atIndex:1];
 
+    
 	//SubCats Control
 	UISegmentedControl *segmentedControl2 = [[UISegmentedControl alloc] initWithItems:
 											[NSArray arrayWithObjects:
@@ -797,7 +811,7 @@
 
 	if (self.pickerViewArray.count == 0) {
 		segmentedControl2.enabled = NO;
-		segmentedControl2.alpha = 0.3;		
+		segmentedControl2.alpha = 0;		
 	}
 	
 	//NSLog(@"sg2	%@", segmentedControl2);
@@ -847,37 +861,41 @@
 	
 	//NSLog(@"%f", self.searchDisplayController.searchBar.frame.size.height);
 	
-	actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:nil cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
-	[actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
-	
-	myPickerView = [[UIPickerView alloc] initWithFrame:CGRectZero];
-	//myPickerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-	
-	
-	myPickerView.showsSelectionIndicator = YES;
-	myPickerView.dataSource = self;
-	myPickerView.delegate = self;
-	
-	[actionSheet addSubview:myPickerView];
+    
+    if (self.pickerViewArray.count) {
+        actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:nil cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+        [actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+        
+        myPickerView = [[UIPickerView alloc] initWithFrame:CGRectZero];
+        //myPickerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        
+        
+        myPickerView.showsSelectionIndicator = YES;
+        myPickerView.dataSource = self;
+        myPickerView.delegate = self;
+        
+        [actionSheet addSubview:myPickerView];
+        
+        UISegmentedControl *closeButton = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:@"Retour"]];
+        closeButton.momentary = YES; 
+        closeButton.frame = CGRectMake(10, 7.0f, 55.0f, 30.0f);
+        closeButton.segmentedControlStyle = UISegmentedControlStyleBar;
+        closeButton.tintColor = [UIColor blackColor];
+        [closeButton addTarget:self action:@selector(dismissActionSheet) forControlEvents:UIControlEventValueChanged];
+        [actionSheet addSubview:closeButton];
+        [closeButton release];
+        
+        UISegmentedControl *confirmButton = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:@"Valider"]];
+        confirmButton.momentary = YES; 
+        confirmButton.tag = 546; 
+        confirmButton.frame = CGRectMake(255, 7.0f, 55.0f, 30.0f);
+        confirmButton.segmentedControlStyle = UISegmentedControlStyleBar;
+        confirmButton.tintColor = [UIColor colorWithRed:60/255.f green:136/255.f blue:230/255.f alpha:1.00];
+        [confirmButton addTarget:self action:@selector(loadSubCat) forControlEvents:UIControlEventValueChanged];
+        [actionSheet addSubview:confirmButton];
+        [confirmButton release];
+    }
 
-	UISegmentedControl *closeButton = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:@"Retour"]];
-	closeButton.momentary = YES; 
-	closeButton.frame = CGRectMake(10, 7.0f, 55.0f, 30.0f);
-	closeButton.segmentedControlStyle = UISegmentedControlStyleBar;
-	closeButton.tintColor = [UIColor blackColor];
-	[closeButton addTarget:self action:@selector(dismissActionSheet) forControlEvents:UIControlEventValueChanged];
-	[actionSheet addSubview:closeButton];
-	[closeButton release];
-	
-	UISegmentedControl *confirmButton = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:@"Valider"]];
-	confirmButton.momentary = YES; 
-	confirmButton.tag = 546; 
-	confirmButton.frame = CGRectMake(255, 7.0f, 55.0f, 30.0f);
-	confirmButton.segmentedControlStyle = UISegmentedControlStyleBar;
-	confirmButton.tintColor = [UIColor colorWithRed:60/255.f green:136/255.f blue:230/255.f alpha:1.00];
-	[confirmButton addTarget:self action:@selector(loadSubCat) forControlEvents:UIControlEventValueChanged];
-	[actionSheet addSubview:confirmButton];
-	[confirmButton release];
 	
     [(UISegmentedControl *)[self.navigationItem.titleView.subviews objectAtIndex:0] setSelectedSegmentIndex:self.selectedFlagIndex];
 

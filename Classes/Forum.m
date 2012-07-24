@@ -26,7 +26,7 @@
         self.aURL = [NSString string];
         
         self.aID = [NSString string];
-        self.subCats = [NSString string];
+        self.subCats = [NSMutableArray array];
         
 	}
 	return self;

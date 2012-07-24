@@ -16,7 +16,7 @@
 
 #import "Forum.h"
 
-#import "AFNetworking.h"
+#import "ASIHTTPRequest.h"
 
 @implementation ForumsTableViewController
 @synthesize request;
@@ -27,45 +27,49 @@
 
 - (void)cancelFetchContent
 {    
-    [self fetchContentFailed:nil];
+    NSLog(@"cancelFetchContent");
+
+    [self.request cancel];
 }
 
 - (void)fetchContent
 {
 	self.status = kIdle;	
-    
-    NSURLRequest *aRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:kForumURL] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:kTimeoutMini];
-    
-    [self setRequest:[[AFHTTPRequestOperation alloc] initWithRequest:aRequest]];
 
-    [[self request] setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {   
-        [self fetchContentComplete:operation];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self fetchContentFailed:operation];
-    }];
+    [ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];    
     
-    [self.arrayData removeAllObjects];
-	[self.forumsTableView reloadData];
+    [self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:kForumURL]]];
+    [request setDelegate:self];
+    [request setDidStartSelector:@selector(fetchContentStarted:)];
+    [request setDidFinishSelector:@selector(fetchContentComplete:)];
+    [request setDidFailSelector:@selector(fetchContentFailed:)];
     
-    [[self request] start];
-    
-    [self fetchContentStarted];
+    [request startAsynchronous];
+
 }
 
-- (void)fetchContentStarted
+- (void)fetchContentStarted:(ASIHTTPRequest *)theRequest
 {
+    NSLog(@"fetchContentStarted");
+    
 	//Bouton Stop
 	self.navigationItem.rightBarButtonItem = nil;	
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(cancelFetchContent)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
     [segmentBarItem release];	
 
+    [self.arrayData removeAllObjects];
+	[self.forumsTableView reloadData];
+    
 	[self.maintenanceView setHidden:YES];
 	[self.loadingView setHidden:NO];
 }
 
-- (void)fetchContentComplete:(AFHTTPRequestOperation *)theRequest
+- (void)fetchContentComplete:(ASIHTTPRequest *)theRequest
 {    
+    NSLog(@"fetchContentComplete");
+
+    
 	//Bouton Reload
 	self.navigationItem.rightBarButtonItem = nil;
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
@@ -74,14 +78,14 @@
     
     [self.loadingView setHidden:YES];
 	
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self loadDataInTableView:[theRequest responseData]];
-    });
+    [self loadDataInTableView:[theRequest responseData]];
+    
+	[self.forumsTableView reloadData];    
 }
 
-- (void)fetchContentFailed:(AFHTTPRequestOperation *)theRequest
+- (void)fetchContentFailed:(ASIHTTPRequest *)theRequest
 {        
-    [self.request cancel];
+    NSLog(@"fetchContentFailed");
     
     //Bouton Reload
 	self.navigationItem.rightBarButtonItem = nil;
@@ -109,6 +113,8 @@
 
 -(void)loadDataInTableView:(NSData *)contentData
 {    
+    NSLog(@"loadDataInTableView");
+    
 	HTMLParser * myParser = [[HTMLParser alloc] initWithData:contentData error:NULL];
 	HTMLNode * bodyNode = [myParser body];
 	
@@ -118,21 +124,19 @@
 		self.status = kMaintenance;
 		self.statusMessage = [[[bodyNode firstChild] contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 		[myParser release];
-        dispatch_sync(dispatch_get_main_queue(), 
-                      ^{    
-                          [self.maintenanceView setText:self.statusMessage];
-                          [self.maintenanceView setHidden:NO];
-                      });
+        
+
+          [self.maintenanceView setText:self.statusMessage];
+          [self.maintenanceView setHidden:NO];
     
 		return;
 	}
-	
+
 	for (HTMLNode * forumNode in temporaryForumsArray) {
 
 		if (![[forumNode tagName] isEqualToString:@"tr"]) {
 			continue;
 		}
-
 		
 		NSArray *temporaryForumArray = [forumNode findChildTags:@"td"];
 
@@ -669,12 +673,6 @@
 
 		if ([aForumURL rangeOfString:@"cat=prive"].location == NSNotFound) {
 			[arrayData addObject:aForum];
-            dispatch_sync(dispatch_get_main_queue(), 
-            ^{
-                NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:self.arrayData.count-1 inSection:0];               
-                [self.forumsTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationRight];               
-            });
-
 		}
 		else {
 			NSString *regExMP = @"[^.0-9]+([0-9]{1,})[^.0-9]+";			
@@ -770,7 +768,7 @@
     }
     
     // Configure the cell...
-	cell.textLabel.text = [NSString stringWithFormat:@"%@", [[arrayData objectAtIndex:indexPath.row] aTitle], [[[arrayData objectAtIndex:indexPath.row] subCats] count]];
+	cell.textLabel.text = [NSString stringWithFormat:@"%@", [[arrayData objectAtIndex:indexPath.row] aTitle]];
 	cell.textLabel.font = [UIFont boldSystemFontOfSize:17];
 	
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
