@@ -48,7 +48,6 @@ Un fichier Config.h est nécessaire (dans le répertoire Classes) :
 Crédits
 -------------------------
 
-* [AFNetworking](https://github.com/AFNetworking/AFNetworking)
 * [MWPhotoBrowser](https://github.com/mwaterfall/MWPhotoBrowser)
 * [SDWebImage](https://github.com/rs/SDWebImage)
 * [MBProgressHUD](https://github.com/jdg/MBProgressHUD)
