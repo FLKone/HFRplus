@@ -269,35 +269,14 @@
 	
 	[MKStoreManager sharedManager];
 	
-	[[GANTracker sharedTracker] startTrackerWithAccountID:kGoogleAnalyticsAPI
-										   dispatchPeriod:kGANDispatchPeriodSec
-												 delegate:nil];
-	NSError *error;
-	if (![[GANTracker sharedTracker] trackPageview:@"/app_entry_point"
-										 withError:&error]) {
-		// Handle error here
-		//NSLog(@"error GA", error);
-	}
-	
-    error = nil;
-    if (![[GANTracker sharedTracker] trackEvent:@"user iOS"
-                                         action:[[UIDevice currentDevice] systemVersion]
-                                          label:nil
-                                          value:-1
-                                      withError:&error]) {
-        // Handle error here
-        NSLog(@"error 1");
-    }    
-        
-    error = nil;
-    if (![[GANTracker sharedTracker] trackEvent:@"user iDevice"
-                                         action:[[UIDevice currentDevice] model]
-                                          label:[[UIDevice currentDevice] systemVersion]
-                                          value:-1
-                                      withError:&error]) {
-        // Handle error here
-        NSLog(@"error 2");
-    }        
+    // GA
+    [GAI sharedInstance].dispatchInterval = kGANDispatchPeriodSec;
+    id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:kGoogleAnalyticsAPI];
+
+	[tracker trackView:@"/app_entry_point"];
+	[tracker trackEventWithCategory:@"iOS" withAction:[[UIDevice currentDevice] systemVersion] withLabel:nil withValue:[NSNumber numberWithInt:-1]];
+    [tracker trackEventWithCategory:@"iDevice" withAction:[[UIDevice currentDevice] model] withLabel:[[UIDevice currentDevice] systemVersion] withValue:[NSNumber numberWithInt:-1]];
+    //-- GA
     
     [self registerDefaultsFromSettingsBundle];
     
@@ -705,9 +684,7 @@
     //[periodicMaintenanceOperation release], periodicMaintenanceOperation = nil;
 	//[ioQueue release], ioQueue = nil;
 
-	
-	[[GANTracker sharedTracker] stopTracker];
-	
+	[[[GAI sharedInstance] defaultTracker] close];
     
     [docSmiley release];
     

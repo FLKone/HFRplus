@@ -343,7 +343,6 @@
 		CABB3196121F034A009CE100 /* up.png in Resources */ = {isa = PBXBuildFile; fileRef = CABB3194121F034A009CE100 /* up.png */; };
 		CABB3197121F034A009CE100 /* down.png in Resources */ = {isa = PBXBuildFile; fileRef = CABB3195121F034A009CE100 /* down.png */; };
 		CABB31A4121F039E009CE100 /* style-max.css in Resources */ = {isa = PBXBuildFile; fileRef = CABB31A2121F039E009CE100 /* style-max.css */; };
-		CABBC39A125E97E500BCA6C8 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CABBC399125E97E500BCA6C8 /* libGoogleAnalytics.a */; };
 		CABEF19F123FD01100DDB9A9 /* flagyellowcopie@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CABEF19E123FD01100DDB9A9 /* flagyellowcopie@2x.png */; };
 		CABEF20E1240F12500DDB9A9 /* global.gif in Resources */ = {isa = PBXBuildFile; fileRef = CABEF20A1240F12500DDB9A9 /* global.gif */; };
 		CABEF20F1240F12500DDB9A9 /* multipleflag0.gif in Resources */ = {isa = PBXBuildFile; fileRef = CABEF20B1240F12500DDB9A9 /* multipleflag0.gif */; };
@@ -360,6 +359,8 @@
 		CAF03C561245612800897C3B /* AccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAF03C551245612800897C3B /* AccessoryView.xib */; };
 		CAF03C6A1245680600897C3B /* ddr555.gif in Resources */ = {isa = PBXBuildFile; fileRef = CAF03C691245680600897C3B /* ddr555.gif */; };
 		CAF6C006160790AA00B4B70C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF6C003160790AA00B4B70C /* Default-568h@2x.png */; };
+		CAF6C0101607B60A00B4B70C /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CAF6C00E1607B5BE00B4B70C /* libGoogleAnalytics.a */; };
+		CAF6C0121607B62300B4B70C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAF6C0111607B62300B4B70C /* CoreData.framework */; };
 		CAFB776C126639AA004D8C57 /* jquery.lazyload.mini.js in Resources */ = {isa = PBXBuildFile; fileRef = CAFB776B126639AA004D8C57 /* jquery.lazyload.mini.js */; };
 		CAFCE8851298399D004E7CC0 /* loadinfo.net.gif in Resources */ = {isa = PBXBuildFile; fileRef = CAFCE8841298399D004E7CC0 /* loadinfo.net.gif */; };
 		CAFD004315B9B665003CA3FC /* HFRDebugViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAFD004115B9B665003CA3FC /* HFRDebugViewController.m */; };
@@ -818,8 +819,6 @@
 		CABB3194121F034A009CE100 /* up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = up.png; sourceTree = "<group>"; };
 		CABB3195121F034A009CE100 /* down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down.png; sourceTree = "<group>"; };
 		CABB31A2121F039E009CE100 /* style-max.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "style-max.css"; sourceTree = "<group>"; };
-		CABBC398125E97E500BCA6C8 /* GANTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GANTracker.h; sourceTree = "<group>"; };
-		CABBC399125E97E500BCA6C8 /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics.a; sourceTree = "<group>"; };
 		CABEF19E123FD01100DDB9A9 /* flagyellowcopie@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flagyellowcopie@2x.png"; sourceTree = "<group>"; };
 		CABEF20A1240F12500DDB9A9 /* global.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = global.gif; sourceTree = "<group>"; };
 		CABEF20B1240F12500DDB9A9 /* multipleflag0.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = multipleflag0.gif; sourceTree = "<group>"; };
@@ -840,6 +839,13 @@
 		CAF6C001160790AA00B4B70C /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		CAF6C002160790AA00B4B70C /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		CAF6C003160790AA00B4B70C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		CAF6C0091607B5BE00B4B70C /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAI.h; path = GA/GAI.h; sourceTree = "<group>"; };
+		CAF6C00A1607B5BE00B4B70C /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITrackedViewController.h; path = GA/GAITrackedViewController.h; sourceTree = "<group>"; };
+		CAF6C00B1607B5BE00B4B70C /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITracker.h; path = GA/GAITracker.h; sourceTree = "<group>"; };
+		CAF6C00C1607B5BE00B4B70C /* GAITransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITransaction.h; path = GA/GAITransaction.h; sourceTree = "<group>"; };
+		CAF6C00D1607B5BE00B4B70C /* GAITransactionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITransactionItem.h; path = GA/GAITransactionItem.h; sourceTree = "<group>"; };
+		CAF6C00E1607B5BE00B4B70C /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalytics.a; path = GA/libGoogleAnalytics.a; sourceTree = "<group>"; };
+		CAF6C0111607B62300B4B70C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		CAFB776B126639AA004D8C57 /* jquery.lazyload.mini.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.lazyload.mini.js; sourceTree = "<group>"; };
 		CAFCE8841298399D004E7CC0 /* loadinfo.net.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loadinfo.net.gif; sourceTree = "<group>"; };
 		CAFD004015B9B665003CA3FC /* HFRDebugViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFRDebugViewController.h; sourceTree = "<group>"; };
@@ -852,6 +858,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAF6C0121607B62300B4B70C /* CoreData.framework in Frameworks */,
 				CA4AA6DD15B2553C00E53A1F /* CoreText.framework in Frameworks */,
 				CA4CE89215B1B30B0039FC3B /* ImageIO.framework in Frameworks */,
 				CA1070B415A4CEFE002E6C19 /* MessageUI.framework in Frameworks */,
@@ -864,11 +871,11 @@
 				013F0DB5121E0E8700BEBEB1 /* QuartzCore.framework in Frameworks */,
 				CA18B161126245AB008B8466 /* AssetsLibrary.framework in Frameworks */,
 				CA8DDC9C12EB30AC00635441 /* StoreKit.framework in Frameworks */,
-				CABBC39A125E97E500BCA6C8 /* libGoogleAnalytics.a in Frameworks */,
 				CA05A37715B48B750083EB64 /* libxml2.dylib in Frameworks */,
 				CA37D50D15A1BD5F002C72C6 /* libsqlite3.dylib in Frameworks */,
 				CA4CE81515B185CA0039FC3B /* libz.dylib in Frameworks */,
 				CA4CE81015B1856F0039FC3B /* libTestFlight.a in Frameworks */,
+				CAF6C0101607B60A00B4B70C /* libGoogleAnalytics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1352,6 +1359,7 @@
 				CA05A37615B48B750083EB64 /* libxml2.dylib */,
 				CA4CE81415B185CA0039FC3B /* libz.dylib */,
 				CA37D50C15A1BD5F002C72C6 /* libsqlite3.dylib */,
+				CAF6C0111607B62300B4B70C /* CoreData.framework */,
 				CA4AA6DC15B2553C00E53A1F /* CoreText.framework */,
 				CA4CE89115B1B30B0039FC3B /* ImageIO.framework */,
 				CA1070B315A4CEFD002E6C19 /* MessageUI.framework */,
@@ -1663,8 +1671,12 @@
 		CABBC394125E97D500BCA6C8 /* GA */ = {
 			isa = PBXGroup;
 			children = (
-				CABBC398125E97E500BCA6C8 /* GANTracker.h */,
-				CABBC399125E97E500BCA6C8 /* libGoogleAnalytics.a */,
+				CAF6C0091607B5BE00B4B70C /* GAI.h */,
+				CAF6C00A1607B5BE00B4B70C /* GAITrackedViewController.h */,
+				CAF6C00B1607B5BE00B4B70C /* GAITracker.h */,
+				CAF6C00C1607B5BE00B4B70C /* GAITransaction.h */,
+				CAF6C00D1607B5BE00B4B70C /* GAITransactionItem.h */,
+				CAF6C00E1607B5BE00B4B70C /* libGoogleAnalytics.a */,
 			);
 			name = GA;
 			sourceTree = "<group>";
@@ -2119,6 +2131,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/TestFlight\"",
+					"\"$(SRCROOT)/GA\"",
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = HFRplus;
@@ -2144,6 +2157,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/TestFlight\"",
+					"\"$(SRCROOT)/GA\"",
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = HFRplus;
@@ -2229,6 +2243,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/TestFlight\"",
+					"\"$(SRCROOT)/GA\"",
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = HFRplus;
@@ -2275,6 +2290,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/TestFlight\"",
+					"\"$(SRCROOT)/GA\"",
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = HFRplus;

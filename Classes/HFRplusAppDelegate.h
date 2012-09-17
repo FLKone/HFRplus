@@ -5,8 +5,8 @@
 //  Created by FLK on 18/08/10.
 //
 
-#import "GANTracker.h"
-static const NSInteger kGANDispatchPeriodSec = 10;
+#import "GAI.h"
+static const NSInteger kGANDispatchPeriodSec = 20;
 
 #import <UIKit/UIKit.h>
 #import "Constants.h"

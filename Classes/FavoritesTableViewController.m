@@ -924,18 +924,7 @@
 -(void)reload:(BOOL)shake
 {
 	if (!shake) {
-		[[GANTracker sharedTracker] startTrackerWithAccountID:kGoogleAnalyticsAPI
-											   dispatchPeriod:kGANDispatchPeriodSec
-													 delegate:nil];
-		NSError *error;
-		if (![[GANTracker sharedTracker] trackEvent:@"sujets"
-											 action:@"reload"
-											  label:@"manual"
-											  value:-1
-										  withError:&error]) {
-			// Handle error here
-		}
-		
+        [[[GAI sharedInstance] defaultTracker] trackEventWithCategory:@"Sujets" withAction:@"reload" withLabel:@"manual" withValue:[NSNumber numberWithInt:-1]];
 	}
 
 
@@ -947,17 +936,7 @@
 {
 	if (![request inProgress]) {
 		
-		[[GANTracker sharedTracker] startTrackerWithAccountID:kGoogleAnalyticsAPI
-											   dispatchPeriod:kGANDispatchPeriodSec
-													 delegate:nil];
-		NSError *error;
-		if (![[GANTracker sharedTracker] trackEvent:@"sujets"
-											 action:@"reload"
-											  label:@"shake"
-											  value:-1
-										  withError:&error]) {
-			// Handle error here
-		}
+        [[[GAI sharedInstance] defaultTracker] trackEventWithCategory:@"Sujets" withAction:@"reload" withLabel:@"shake" withValue:[NSNumber numberWithInt:-1]];
 		
 		[self reload:YES];		
 	}
@@ -987,8 +966,6 @@
 	//NSLog(@"dealloc ftv");
 
 	[self viewDidUnload];
-
-	[[GANTracker sharedTracker] stopTracker];
 
 	[request cancel];
 	[request setDelegate:nil];

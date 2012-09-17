@@ -842,17 +842,9 @@
 -(void)reload:(BOOL)shake
 {
 	if (!shake) {
-		[[GANTracker sharedTracker] startTrackerWithAccountID:kGoogleAnalyticsAPI
-											   dispatchPeriod:kGANDispatchPeriodSec
-													 delegate:nil];
-		NSError *error;
-		if (![[GANTracker sharedTracker] trackEvent:@"forums"
-											 action:@"reload"
-											  label:@"manual"
-											  value:-1
-										  withError:&error]) {
-			// Handle error here
-		}
+        
+        [[[GAI sharedInstance] defaultTracker] trackEventWithCategory:@"Forums" withAction:@"reload" withLabel:@"manual" withValue:[NSNumber numberWithInt:-1]];
+
 	}
 
 	[self fetchContent];
@@ -862,18 +854,8 @@
 -(void) shakeHappened:(ShakeView*)view
 {
 	if (![request isExecuting]) {
-		
-		[[GANTracker sharedTracker] startTrackerWithAccountID:kGoogleAnalyticsAPI
-											   dispatchPeriod:kGANDispatchPeriodSec
-													 delegate:nil];
-		NSError *error;
-		if (![[GANTracker sharedTracker] trackEvent:@"forums"
-											 action:@"reload"
-											  label:@"shake"
-											  value:-1
-										  withError:&error]) {
-			// Handle error here
-		}
+
+        [[[GAI sharedInstance] defaultTracker] trackEventWithCategory:@"Forums" withAction:@"reload" withLabel:@"shake" withValue:[NSNumber numberWithInt:-1]];
 		
 		[self reload:YES];		
 	}
@@ -903,8 +885,6 @@
 - (void)dealloc {
 	//NSLog(@"dealloc Forums Table View");
 	[self viewDidUnload];
-	
-	[[GANTracker sharedTracker] stopTracker];
 
 	self.arrayData = nil;
 
