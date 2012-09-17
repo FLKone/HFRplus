@@ -550,8 +550,7 @@
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-    BOOL actionsmesages_answer      = [defaults boolForKey:@"actionsmesages_answer"];
-    if(actionsmesages_answer && topicAnswerUrl.length > 0) 
+    if(self.topicAnswerUrl.length > 0)
         [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Répondre", @"answerTopic", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
     
     BOOL actionsmesages_firstpage   = [defaults boolForKey:@"actionsmesages_firstpage"];
