@@ -48,9 +48,11 @@
 	}
 }
 
-/* for iOS6 support
+/* for iOS6 support */
 - (NSUInteger)supportedInterfaceOrientations
 {
+    //NSLog(@"supportedInterfaceOrientations");
+    
     if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"landscape_mode"] isEqualToString:@"none"]) {
         return UIInterfaceOrientationMaskPortrait;
 	} else {
@@ -60,10 +62,10 @@
 
 - (BOOL)shouldAutorotate
 {
-    NSLog(@"shouldAutorotate %@", [[NSUserDefaults standardUserDefaults] stringForKey:@"landscape_mode"]);
+   // NSLog(@"shouldAutorotate %@", [[NSUserDefaults standardUserDefaults] stringForKey:@"landscape_mode"]);
 
     return YES;
 }
-*/
+
 
 @end
