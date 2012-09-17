@@ -359,8 +359,6 @@
 		CAF038AF1244F6FE00897C3B /* compose.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF038AE1244F6FE00897C3B /* compose.png */; };
 		CAF03C561245612800897C3B /* AccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAF03C551245612800897C3B /* AccessoryView.xib */; };
 		CAF03C6A1245680600897C3B /* ddr555.gif in Resources */ = {isa = PBXBuildFile; fileRef = CAF03C691245680600897C3B /* ddr555.gif */; };
-		CAF6C004160790AA00B4B70C /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF6C001160790AA00B4B70C /* Default.png */; };
-		CAF6C005160790AA00B4B70C /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF6C002160790AA00B4B70C /* Default@2x.png */; };
 		CAF6C006160790AA00B4B70C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF6C003160790AA00B4B70C /* Default-568h@2x.png */; };
 		CAFB776C126639AA004D8C57 /* jquery.lazyload.mini.js in Resources */ = {isa = PBXBuildFile; fileRef = CAFB776B126639AA004D8C57 /* jquery.lazyload.mini.js */; };
 		CAFCE8851298399D004E7CC0 /* loadinfo.net.gif in Resources */ = {isa = PBXBuildFile; fileRef = CAFCE8841298399D004E7CC0 /* loadinfo.net.gif */; };
@@ -1707,7 +1705,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0440;
+				LastUpgradeCheck = 0450;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "HFRplus" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1976,8 +1974,6 @@
 				CAFD004415B9B665003CA3FC /* HFRDebugViewController.xib in Resources */,
 				CA9CBF0315BC726A004F7DAC /* arrowR.png in Resources */,
 				CA9CBF0415BC726A004F7DAC /* arrowR@2x.png in Resources */,
-				CAF6C004160790AA00B4B70C /* Default.png in Resources */,
-				CAF6C005160790AA00B4B70C /* Default@2x.png in Resources */,
 				CAF6C006160790AA00B4B70C /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

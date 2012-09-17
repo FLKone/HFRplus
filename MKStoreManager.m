@@ -118,6 +118,8 @@ static MKStoreManager* _sharedStoreManager;
 - (void)release
 {
     //do nothing
+    
+    return;
 }
 
 - (id)autorelease

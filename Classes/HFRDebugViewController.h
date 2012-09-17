@@ -22,7 +22,6 @@
 
 -(IBAction) network_base;
 -(IBAction) network_asi;
--(IBAction) network_af;
 -(IBAction)changeURL:(id)sender;
 
 @end
