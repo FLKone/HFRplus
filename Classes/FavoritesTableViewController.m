@@ -41,18 +41,19 @@
 
 -(void) showAll:(id)sender {
     
-    NSLog(@"showAll %d", self.showAll);
-    
+    //NSLog(@"showAll %d", self.showAll);
     if (self.showAll) {
         self.showAll = NO;
     }
     else {
         self.showAll = YES;
     }
-    
-    [self.favoritesTableView beginUpdates];
-    [self.favoritesTableView reloadData];
-    [self.favoritesTableView endUpdates];
+
+    if (![self.favoritesTableView isHidden]) {
+        [self.favoritesTableView beginUpdates];
+        [self.favoritesTableView reloadData];
+        [self.favoritesTableView endUpdates];
+    }
     
 }
 
