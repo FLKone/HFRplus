@@ -68,7 +68,6 @@
 	[request setDidFinishSelector:@selector(fetchContentComplete:)];
 	[request setDidFailSelector:@selector(fetchContentFailed:)];
 
-
 	[self.view removeGestureRecognizer:swipeLeftRecognizer];
 	[self.view removeGestureRecognizer:swipeRightRecognizer];
 	
@@ -745,9 +744,6 @@
     
           
 	//NSLog(@"viewDidLoad %@ - %@", [[UIDevice currentDevice] systemName], [[UIDevice currentDevice] systemVersion]);
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(loadSubCat) name:@"SubCatSelected" object:nil];
         
 	//Gesture
 	UIGestureRecognizer *recognizer;
@@ -982,7 +978,9 @@
     [super viewWillAppear:animated];
 	[self.view becomeFirstResponder];
 
-	
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(loadSubCat) name:@"SubCatSelected" object:nil];
+    
 	if (self.messagesTableViewController) {
 		//NSLog(@"viewWillAppear Topics Table View Dealloc MTV");
 
@@ -999,6 +997,7 @@
 {
     [super viewDidDisappear:animated];
 	[self.view resignFirstResponder];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"SubCatSelected" object:nil];
 	
 	//Topic *aTopic = [arrayData objectAtIndex:indexPath.row];
 	
