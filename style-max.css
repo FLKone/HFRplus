@@ -136,6 +136,38 @@ div.masque {
     
 }
 
+@media only screen and (orientation:landscape) and (min-width: 568px) and (max-width: 568px) {
+	 /* landscape styles here */
+	
+	body {
+		width:568px;
+	}
+    
+    img {
+        max-width:548px;
+    }
+    
+	table 
+	{ 
+		max-width:548px;
+		
+	}
+    
+	
+	table p
+	{
+		max-width:548px;
+	}
+    
+    table p img
+    {
+        max-width:528px;
+    }
+    
+        
+}
+
+
 
 @media only screen and (min-width: 767px) {
 	body {

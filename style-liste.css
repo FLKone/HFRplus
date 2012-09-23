@@ -40,7 +40,6 @@ span.signature, div.edited {
     
 }
 
-
 table 
 { 
 	border: 1px solid silver;
@@ -470,6 +469,70 @@ background:-webkit-gradient(
 
 	#actualiserbtn.loading {
 		background-position: 180px 14px;
+	}	
+
+}
+
+@media only screen and (orientation:landscape) and (min-width: 568px) and (max-width: 568px) {
+	 /* landscape styles here */
+	
+	body {
+		width:568px;
+	}
+
+	.message {
+		width:568px;
+	}
+	
+	.message .header {
+		width:548px;
+	}
+	
+	.message .content .right {
+		width:548px;
+	}
+
+    img {
+        max-width:548px;
+    }
+    
+	table 
+	{ 
+		max-width:548px;
+		
+	}
+
+	
+	table p
+	{
+		max-width:548px;
+	}
+	
+
+    
+    table p img
+    {
+        max-width:548px;
+    }
+    
+    
+    
+    .message .header .left {
+        width: 270px;
+    }
+    
+	#toolbarpage {
+		
+		width:568px;
+	}
+	
+	#actualiserbtn {
+
+		width:568px;
+	}
+
+	#actualiserbtn.loading {
+		background-position: 225px 14px;
 	}	
 
 }
