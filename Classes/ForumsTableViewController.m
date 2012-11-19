@@ -10,12 +10,13 @@
 #import "ForumsTableViewController.h"
 #import "TopicsTableViewController.h"
 
-#import "ASIHTTPRequest.h"
 #import "HTMLParser.h"
 #import "RegexKitLite.h"
 #import "ShakeView.h"
 
 #import "Forum.h"
+
+#import "ASIHTTPRequest.h"
 
 @implementation ForumsTableViewController
 @synthesize request;
@@ -25,82 +26,75 @@
 #pragma mark Data lifecycle
 
 - (void)cancelFetchContent
-{
-	[request cancel];
+{    
+    NSLog(@"cancelFetchContent");
+
+    [self.request cancel];
 }
 
 - (void)fetchContent
 {
-	
 	self.status = kIdle;	
-	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];
-	
-	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:kForumURL]]];
-	[request setDelegate:self];
-	
-	[request setDidStartSelector:@selector(fetchContentStarted:)];
-	[request setDidFinishSelector:@selector(fetchContentComplete:)];
-	[request setDidFailSelector:@selector(fetchContentFailed:)];
-	
 
+    [ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];    
+    
+    [self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:kForumURL]]];
+    [request setDelegate:self];
+    [request setDidStartSelector:@selector(fetchContentStarted:)];
+    [request setDidFinishSelector:@selector(fetchContentComplete:)];
+    [request setDidFailSelector:@selector(fetchContentFailed:)];
+    
+    [request startAsynchronous];
 
-	[request startAsynchronous];
 }
 
 - (void)fetchContentStarted:(ASIHTTPRequest *)theRequest
 {
+    NSLog(@"fetchContentStarted");
+    
 	//Bouton Stop
 	self.navigationItem.rightBarButtonItem = nil;	
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(cancelFetchContent)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
     [segmentBarItem release];	
-	
+
+    [self.arrayData removeAllObjects];
+	[self.forumsTableView reloadData];
+    
 	[self.maintenanceView setHidden:YES];
-	[self.forumsTableView setHidden:YES];
 	[self.loadingView setHidden:NO];
 }
 
 - (void)fetchContentComplete:(ASIHTTPRequest *)theRequest
-{
+{    
+    NSLog(@"fetchContentComplete");
+
+    
 	//Bouton Reload
 	self.navigationItem.rightBarButtonItem = nil;
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
     [segmentBarItem release];
     
-	[self.arrayData removeAllObjects];
-	[self.forumsTableView reloadData];
+    [self.loadingView setHidden:YES];
 	
-	[self loadDataInTableView:[request responseData]];
-
-	[self.loadingView setHidden:YES];
-
-	switch (self.status) {
-		case kMaintenance:
-		case kNoResults:
-		case kNoAuth:            
-			[self.maintenanceView setText:self.statusMessage];
-			[self.maintenanceView setHidden:NO];
-			[self.forumsTableView setHidden:YES];
-			break;
-		default:
-			[self.forumsTableView reloadData];			
-			[self.forumsTableView setHidden:NO];			
-			break;
-	}
-	
+    [self loadDataInTableView:[theRequest responseData]];
+    
+	[self.forumsTableView reloadData];    
 }
 
 - (void)fetchContentFailed:(ASIHTTPRequest *)theRequest
-{
-	//Bouton Reload
+{        
+    NSLog(@"fetchContentFailed");
+    
+    //Bouton Reload
 	self.navigationItem.rightBarButtonItem = nil;
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
     [segmentBarItem release];
 	
 	[self.loadingView setHidden:YES];
-
+    
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[theRequest.error localizedDescription]
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
 	[alert show];
@@ -118,33 +112,31 @@
 #pragma mark View lifecycle
 
 -(void)loadDataInTableView:(NSData *)contentData
-{
+{    
+    NSLog(@"loadDataInTableView");
+    
 	HTMLParser * myParser = [[HTMLParser alloc] initWithData:contentData error:NULL];
 	HTMLNode * bodyNode = [myParser body];
 	
-	//NSLog(@"bodyNode %@", rawContentsOfNode([bodyNode _node], [myParser _doc]));	
-	
-	//HTMLNode *hash_check = [bodyNode findChildWithAttribute:@"name" matchingName:@"hash_check" allowPartial:NO];
-	//NSLog(@"hash_check %@", rawContentsOfNode([hash_check _node], [myParser _doc]));
-	
 	NSArray *temporaryForumsArray = [bodyNode findChildrenWithAttribute:@"class" matchingName:@"cat" allowPartial:YES];
-
-	//NSLog(@"temporaryForumsArray %d", [temporaryForumsArray count]);	
 
 	if ([[[bodyNode firstChild] tagName] isEqualToString:@"p"]) {
 		self.status = kMaintenance;
 		self.statusMessage = [[[bodyNode firstChild] contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 		[myParser release];
+        
+
+          [self.maintenanceView setText:self.statusMessage];
+          [self.maintenanceView setHidden:NO];
+    
 		return;
 	}
-	
-	
+
 	for (HTMLNode * forumNode in temporaryForumsArray) {
 
 		if (![[forumNode tagName] isEqualToString:@"tr"]) {
 			continue;
 		}
-
 		
 		NSArray *temporaryForumArray = [forumNode findChildTags:@"td"];
 
@@ -679,16 +671,10 @@
 		}
 		//--- Sous categories
 
-		
-		
-		
-		//NSLog(@"aForumURL %@", aForumURL);
-
 		if ([aForumURL rangeOfString:@"cat=prive"].location == NSNotFound) {
 			[arrayData addObject:aForum];
 		}
 		else {
-			//NSLog(@"else %@", [[topicNode findChildWithAttribute:@"class" matchingName:@"cCatTopic" allowPartial:YES] contents]);
 			NSString *regExMP = @"[^.0-9]+([0-9]{1,})[^.0-9]+";			
 			NSString *myMPNumber = [[[topicNode findChildWithAttribute:@"class" matchingName:@"cCatTopic" allowPartial:YES] contents] stringByReplacingOccurrencesOfRegex:regExMP
 																  withString:@"$1"];
@@ -718,6 +704,11 @@
 	self.arrayData = [[NSMutableArray alloc] init];
 	self.statusMessage = [[NSString alloc] init];
 
+    UIView *v = [[UIView alloc] initWithFrame:CGRectZero];
+    v.backgroundColor = [UIColor clearColor];
+    [self.forumsTableView setTableFooterView:v];
+    [v release];
+    
 	[self fetchContent];
 }
 
@@ -777,7 +768,7 @@
     }
     
     // Configure the cell...
-	cell.textLabel.text = [NSString stringWithFormat:@"%@", [[arrayData objectAtIndex:indexPath.row] aTitle], [[[arrayData objectAtIndex:indexPath.row] subCats] count]];
+	cell.textLabel.text = [NSString stringWithFormat:@"%@", [[arrayData objectAtIndex:indexPath.row] aTitle]];
 	cell.textLabel.font = [UIFont boldSystemFontOfSize:17];
 	
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -851,17 +842,9 @@
 -(void)reload:(BOOL)shake
 {
 	if (!shake) {
-		[[GANTracker sharedTracker] startTrackerWithAccountID:kGoogleAnalyticsAPI
-											   dispatchPeriod:kGANDispatchPeriodSec
-													 delegate:nil];
-		NSError *error;
-		if (![[GANTracker sharedTracker] trackEvent:@"forums"
-											 action:@"reload"
-											  label:@"manual"
-											  value:-1
-										  withError:&error]) {
-			// Handle error here
-		}
+        
+        [[[GAI sharedInstance] defaultTracker] trackEventWithCategory:@"Forums" withAction:@"reload" withLabel:@"manual" withValue:[NSNumber numberWithInt:-1]];
+
 	}
 
 	[self fetchContent];
@@ -870,19 +853,9 @@
 
 -(void) shakeHappened:(ShakeView*)view
 {
-	if (![request inProgress]) {
-		
-		[[GANTracker sharedTracker] startTrackerWithAccountID:kGoogleAnalyticsAPI
-											   dispatchPeriod:kGANDispatchPeriodSec
-													 delegate:nil];
-		NSError *error;
-		if (![[GANTracker sharedTracker] trackEvent:@"forums"
-											 action:@"reload"
-											  label:@"shake"
-											  value:-1
-										  withError:&error]) {
-			// Handle error here
-		}
+	if (![request isExecuting]) {
+
+        [[[GAI sharedInstance] defaultTracker] trackEventWithCategory:@"Forums" withAction:@"reload" withLabel:@"shake" withValue:[NSNumber numberWithInt:-1]];
 		
 		[self reload:YES];		
 	}
@@ -912,13 +885,11 @@
 - (void)dealloc {
 	//NSLog(@"dealloc Forums Table View");
 	[self viewDidUnload];
-	
-	[[GANTracker sharedTracker] stopTracker];
 
 	self.arrayData = nil;
 
 	[request cancel];
-	[request setDelegate:nil];
+	//[request setDelegate:nil];
 	self.request = nil;
 
 	self.statusMessage = nil;

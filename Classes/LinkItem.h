@@ -33,7 +33,6 @@
 	NSString *dicoHTML;
 	HTMLNode *messageNode;
 
-	NSString *imageUrl;
 	NSString *imageUI;
 	NSString *messageDate;
 	NSString *messageAuteur;
@@ -65,7 +64,6 @@
 @property (nonatomic, retain) NSString *dicoHTML;
 @property (nonatomic, retain) HTMLNode *messageNode;
 
-@property (nonatomic, retain) NSString *imageUrl;
 @property (nonatomic, retain) NSString *imageUI;
 
 @property (nonatomic, retain) NSString *messageDate;

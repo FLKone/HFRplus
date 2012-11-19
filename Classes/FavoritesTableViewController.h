@@ -13,12 +13,8 @@
 @interface FavoritesTableViewController : UIViewController <UIActionSheetDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIAlertViewDelegate> {
 	UITableView *favoritesTableView;
 	UIView *loadingView;
-	
-	NSMutableArray *favoritesArray;
-	NSMutableArray *arrayData;
-	NSMutableDictionary *arrayDataID;
-	NSMutableArray *arrayDataID2;
-	NSMutableDictionary *arraySection;
+
+    NSMutableArray *arrayNewData;
 
 	MessagesTableViewController *messagesTableViewController;
 
@@ -31,17 +27,18 @@
 	IBOutlet UILabel *maintenanceView;	
     
     UITextField *pageNumberField;
+    
+    BOOL showAll;
 }
 
 @property (nonatomic, retain) IBOutlet UITableView *favoritesTableView;
 @property (nonatomic, retain) IBOutlet UIView *loadingView;
 
-@property (nonatomic, retain) NSMutableArray *favoritesArray;
-@property (nonatomic, retain) NSMutableArray *arrayData;
-@property (nonatomic, retain) NSMutableDictionary *arrayDataID;
-@property (nonatomic, retain) NSMutableArray *arrayDataID2;
-@property (nonatomic, retain) NSMutableDictionary *arraySection;
+@property (nonatomic, retain) NSMutableArray *arrayNewData;
+
 @property (nonatomic, retain) MessagesTableViewController *messagesTableViewController;
+
+@property BOOL showAll;
 
 @property STATUS status;
 @property (nonatomic, retain) NSString *statusMessage;

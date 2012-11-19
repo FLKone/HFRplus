@@ -106,6 +106,8 @@
 
 @property (nonatomic, retain) id popover;
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil flag:(int)flag;
+
 -(void)loadDataInTableView:(NSData *)contentData;
 -(void)reset;
 -(void)shakeHappened:(ShakeView*)view;

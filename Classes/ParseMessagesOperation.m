@@ -15,6 +15,7 @@
 #import "RangeOfCharacters.h"
 #import <CommonCrypto/CommonDigest.h>
 
+#import "ASIHTTPRequest.h"
 
 @interface ParseMessagesOperation ()
 @property (nonatomic, assign) id <ParseMessagesOperationDelegate> delegate;
@@ -23,11 +24,12 @@
 @property (nonatomic, retain) LinkItem *workingEntry;
 @property (nonatomic, assign) BOOL reverse;
 @property (nonatomic, assign) int index;
+@property (nonatomic, retain) NSOperationQueue *queue;
 @end
 
 @implementation ParseMessagesOperation
 
-@synthesize delegate, dataToParse, workingArray, workingEntry, reverse, index;
+@synthesize delegate, dataToParse, workingArray, workingEntry, reverse, index, queue;
 
 -(id)initWithData:(NSData *)data index:(int)theIndex reverse:(BOOL)isReverse delegate:(id <ParseMessagesOperationDelegate>)theDelegate
 //- (id)initWithData:(NSData *)data delegate:(id <ParseMessagesOperationDelegate>)theDelegate
@@ -39,6 +41,9 @@
         self.delegate = theDelegate;
 		self.index = theIndex;
 		self.reverse = isReverse;
+
+        self.queue = [[[NSOperationQueue alloc] init] autorelease];
+
     }
     return self;
 }
@@ -64,7 +69,7 @@
 {
 
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	
+    
 	if ([self isCancelled])
 	{
 		//NSLog(@"main canceled");		
@@ -89,6 +94,9 @@
     {
 		//NSLog(@"OK");
         // notify our AppDelegate that the parsing is complete
+        
+        [self.queue waitUntilAllOperationsAreFinished];
+        
         [self.delegate didFinishParsing:self.workingArray];
 		//NSLog(@"OK2");
     }
@@ -113,13 +121,15 @@
 		return;
 	}
 	
-	//NSDate *thenT = [NSDate date]; // Create a current date
 
-
+    [ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutAvatar];    
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
 	NSString *diskCachePath = [[[paths objectAtIndex:0] stringByAppendingPathComponent:@"ImageCache"] retain];
 	
-	if (![[NSFileManager defaultManager] fileExistsAtPath:diskCachePath])
+	if (![fileManager fileExistsAtPath:diskCachePath])
 	{
 		//NSLog(@"createDirectoryAtPath");
 		[[NSFileManager defaultManager] createDirectoryAtPath:diskCachePath
@@ -137,7 +147,7 @@
 	
 	NSArray * messagesNodes = [bodyNode findChildrenWithAttribute:@"class" matchingName:@"messagetable" allowPartial:NO]; //Get all the <img alt="" />
 
-	//NSLog(@"message %d", [messagesNodes count]);
+	//NSLog(@"%f message %d", [thenT timeIntervalSinceNow] * -1000.0, [messagesNodes count]);
 	
 	for (HTMLNode * messageNode2 in messagesNodes) { //Loop through all the tags
 		
@@ -170,19 +180,12 @@
 			fasTest.name = [authorNode allContents];
 			fasTest.name = [fasTest.name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 			//fasTest.name = [[fasTest.name componentsSeparatedByCharactersInSet:[[NSCharacterSet letterCharacterSet] invertedSet]] componentsJoinedByString:@""];
-
-			//NSLog(@"name %@", fasTest.name);
-			//NSLog(@"postID %@", fasTest.postID);
 			
 			if ([fasTest.name isEqualToString:@"Publicité"]) {
 				[fasTest release];
 				//[pool2 drain];
 				continue;
 			}
-			
-			
-
-			
 
 			HTMLNode * avatarNode = [messageNode findChildWithAttribute:@"class" matchingName:@"avatar_center" allowPartial:NO];
 			HTMLNode * contentNode = [messageNode findChildWithAttribute:@"id" matchingName:@"para" allowPartial:YES];
@@ -257,39 +260,52 @@
 			NSPredicate *regExErrorPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regExError];
 			BOOL isRegExError = [regExErrorPredicate evaluateWithObject:[request responseString]];*/
 			
-			fasTest.imageUrl = nil;
 			fasTest.imageUI = nil;
 
 			//NSDate *then4 = [NSDate date]; // Create a current date
 
-			if ([[avatarNode firstChild] getAttributeNamed:@"src"]) {
-				/*fasTest.imageUrl = [[avatarNode firstChild] getAttributeNamed:@"src"];*/
+            //NSLog(@"%f BEFORE AVAT", [thenT timeIntervalSinceNow] * -1000.0);
 
-				
-				NSFileManager *fileManager = [[NSFileManager alloc] init];
-
-				fasTest.imageUrl = [[avatarNode firstChild] getAttributeNamed:@"src"];
-
-				//Dl
-				const char *str = [fasTest.imageUrl UTF8String];
-				unsigned char r[CC_MD5_DIGEST_LENGTH];
-				CC_MD5(str, strlen(str), r);
-				NSString *filename = [NSString stringWithFormat:@"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
-									  r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8], r[9], r[10], r[11], r[12], r[13], r[14], r[15]];
-				
-				NSString *key = [diskCachePath stringByAppendingPathComponent:filename];
-				
-				if (![fileManager fileExistsAtPath:key])
-				{
-					[fileManager createFileAtPath:key contents:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", fasTest.imageUrl]]] attributes:nil];					
-				}
-				
-				fasTest.imageUI = key;
-				[fileManager release];
-				
-			}
-
-			
+            //AVATAR BY NAME v2
+            
+            //Key for pseudo
+            const char *str = [fasTest.name UTF8String];
+            unsigned char r[CC_MD5_DIGEST_LENGTH];
+            CC_MD5(str, strlen(str), r);
+            NSString *filename = [NSString stringWithFormat:@"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
+                                  r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8], r[9], r[10], r[11], r[12], r[13], r[14], r[15]];
+            
+            NSString *key = [diskCachePath stringByAppendingPathComponent:filename];
+            
+            if ([fileManager fileExistsAtPath:key]) // on check si on a deja l'avatar pour cette key
+            {
+                fasTest.imageUI = key;
+            }
+            else { 
+                NSString *tmpURL = [[avatarNode firstChild] getAttributeNamed:@"src"];
+                
+                if (tmpURL.length > 0) { // si on a pas, on check si on a une URL
+                    //NSLog(@"on DL");                                    
+					//async dl 
+                    
+                    ASIHTTPRequest *operation = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:tmpURL]];
+                    [operation setCompletionBlock:^{
+                        NSLog(@"setCompletionBlock");
+                        [fileManager createFileAtPath:key contents:[operation responseData] attributes:nil];
+                        fasTest.imageUI = key;
+                    }];
+                    [operation setFailedBlock:^{
+                                                NSLog(@"setFailedBlock");
+                        fasTest.imageUI = nil;
+                    }];
+                                        
+                    [self.queue addOperation:operation];
+                    //async dl                    
+                    
+                }
+            }
+            //== AVATAR BY NAME v2
+            
 			if ([self isCancelled]) {
 				[fasTest release];
 				break;
@@ -325,9 +341,10 @@
 
 	//NSLog(@"TOPICS Parse Time elapsed Total		: %f", [nowT timeIntervalSinceDate:thenT]);
 
-	
+	[fileManager release];
 	
 	[diskCachePath release];
 
 }
+
 @end

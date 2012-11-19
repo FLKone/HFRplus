@@ -11,7 +11,7 @@
 
 @implementation LinkItem
 
-@synthesize postID, lastPageUrl, lastPostUrl, viewed, name, url, flagUrl, typeFlag, rep, dicoHTML, messageDate, imageUrl, imageUI, textViewMsg, messageNode, messageAuteur;
+@synthesize postID, lastPageUrl, lastPostUrl, viewed, name, url, flagUrl, typeFlag, rep, dicoHTML, messageDate, imageUI, textViewMsg, messageNode, messageAuteur;
 @synthesize urlQuote, urlEdit, addFlagUrl, quoteJS, MPUrl, isDel;
 
 @synthesize quotedNB, quotedLINK, editedTime;
@@ -37,8 +37,9 @@
 
 	//tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"%%AUTEUR_AVATAR_SRC%%" withString:@"bundle://avatar_male_gray_on_light_48x48.png"];
 
-	if([self imageUrl] != nil)
-		tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"%%AUTEUR_AVATAR_SRC%%" withString:[self imageUI]]; //avatar_male_gray_on_light_48x48.png //imageUrl
+	if([self imageUI] != nil){
+		tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"%%AUTEUR_AVATAR_SRC%%" withString:[self imageUI]]; //avatar_male_gray_on_light_48x48.png //imageUrl        
+    }
 	else {
 		tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"%%AUTEUR_AVATAR_SRC%%" withString:@"avatar_male_gray_on_light_32x32.png"];
 	}
@@ -198,7 +199,6 @@
 	
 	self.dicoHTML = nil;	
 	self.messageDate = nil;	
-	self.imageUrl = nil;
 	self.imageUI = nil;	
 	
 	self.textViewMsg = nil;	
