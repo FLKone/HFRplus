@@ -601,10 +601,8 @@
         NSString *web = [defaults stringForKey:@"default_web"];
         
         if ([web isEqualToString:@"googlechrome"]) {
-            tURL = [NSURL URLWithString:[[tURLbase absoluteString] stringByReplacingOccurrencesOfString:[tURLbase scheme] withString:web]];
-            
-            //tURL = [[NSURL alloc] initWithScheme:web host:[tURLbase host] path:[tURLbase path]];// - (id)initWithScheme:(NSString *)scheme host:(NSString *)host path:(NSString *)path
-
+            NSRange rangeOfScheme = [[tURLbase absoluteString] rangeOfString:[tURLbase scheme]];
+            tURL = [NSURL URLWithString:[[tURLbase absoluteString] stringByReplacingCharactersInRange:rangeOfScheme withString:web]];
         }
         
         if ([[UIApplication sharedApplication] canOpenURL:tURL]) {
