@@ -43,6 +43,9 @@
 #pragma mark -
 #pragma mark Data lifecycle
 
+- (void)setProgress:(float)newProgress{
+	//NSLog(@"Progress %f%", newProgress*100);
+}
 
 - (void)cancelFetchContent
 {
@@ -55,12 +58,17 @@
     
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMaxi];
 
+    //NSLog(@"URL %@", [self currentUrl]);
+    
 	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]]]];
 	[request setDelegate:self];
-
+    [request setShowAccurateProgress:YES];
+    
 	//[request setCachePolicy:ASIReloadIfDifferentCachePolicy];
 	//[request setDownloadCache:[ASIDownloadCache sharedCache]];
 	
+    [request setDownloadProgressDelegate:self];
+    
 	[request setDidStartSelector:@selector(fetchContentStarted:)];
 	[request setDidFinishSelector:@selector(fetchContentComplete:)];
 	[request setDidFailSelector:@selector(fetchContentFailed:)];
@@ -74,20 +82,19 @@
 	
     [self.loadingView setHidden:NO];
 
-
 	[request startAsynchronous];
 }
 
 - (void)fetchContentStarted:(ASIHTTPRequest *)theRequest
 {
 	//--
-	//NSLog(@"fetchContentStarted");
+	NSLog(@"fetchContentStarted");
 
 }
 
 - (void)fetchContentComplete:(ASIHTTPRequest *)theRequest
 {
-	//NSLog(@"fetchContentComplete Message");
+	NSLog(@"fetchContentComplete");
 	
 	// create the queue to run our ParseOperation
     self.queue = [[NSOperationQueue alloc] init];
@@ -543,8 +550,7 @@
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-    BOOL actionsmesages_answer      = [defaults boolForKey:@"actionsmesages_answer"];
-    if(actionsmesages_answer && topicAnswerUrl.length > 0) 
+    if(self.topicAnswerUrl.length > 0)
         [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Répondre", @"answerTopic", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
     
     BOOL actionsmesages_firstpage   = [defaults boolForKey:@"actionsmesages_firstpage"];
@@ -698,27 +704,6 @@
 
 -(void)answerTopic
 {
-	// Create the root view controller for the navigation controller
-	// The new view controller configures a Cancel and Done button for the
-	// navigation bar.
-	
-	/*
-	FormViewController *formViewController = [[FormViewController alloc]
-														  initWithNibName:@"FormViewController" bundle:nil];
-	
-	[[formViewController.viewControllers objectAtIndex:0] setDelegate:self];
-	[[formViewController.viewControllers objectAtIndex:0] setArrayInputData:self.arrayInputData];
-
-	[self presentModalViewController:formViewController animated:YES];
-
-	[formViewController release];
-
-
-	AddMessageViewController *addMessageViewController = [[AddMessageViewController alloc]
-															  initWithNibName:@"AddMessageViewController" bundle:nil];
-	addMessageViewController.delegate = self;
-	[addMessageViewController setArrayInputData:self.arrayInputData];
-*/
 	
 	while (self.isAnimating) {
         //NSLog(@"isAnimating");
@@ -734,7 +719,7 @@
 	
 	
 	// Create the navigation controller and present it modally.
-	UINavigationController *navigationController = [[UINavigationController alloc]
+	HFRNavigationController *navigationController = [[HFRNavigationController alloc]
 													initWithRootViewController:addMessageViewController];
     
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
@@ -784,7 +769,7 @@
 	[quoteMessageViewController setUrlQuote:quoteUrl];
 	
 	// Create the navigation controller and present it modally.
-	UINavigationController *navigationController = [[UINavigationController alloc]
+	HFRNavigationController *navigationController = [[HFRNavigationController alloc]
 													initWithRootViewController:quoteMessageViewController];
     
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
@@ -824,7 +809,7 @@
 	[editMessageViewController setUrlQuote:editUrl];
 	
 	// Create the navigation controller and present it modally.
-	UINavigationController *navigationController = [[UINavigationController alloc]
+	HFRNavigationController *navigationController = [[HFRNavigationController alloc]
 													initWithRootViewController:editMessageViewController];
     
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
@@ -1058,7 +1043,7 @@
     // Present
 
     
-    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:browser];
+    HFRNavigationController *nc = [[HFRNavigationController alloc] initWithRootViewController:browser];
     nc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self presentModalViewController:nc animated:YES];
     [nc release];    
@@ -1293,8 +1278,6 @@
 	[HTMLString release];
 	//[tmpHTML release];
 
-	
-	
 }
 - (void)handleLoadedParser:(HTMLParser *)myParser
 {
@@ -1306,22 +1289,13 @@
 // -------------------------------------------------------------------------------
 - (void)didStartParsing:(HTMLParser *)myParser
 {
-	//NSLog(@"didStartParsing");
-
     [self performSelectorOnMainThread:@selector(handleLoadedParser:) withObject:myParser waitUntilDone:NO];
 }
 
 - (void)didFinishParsing:(NSArray *)appList
 {
-	//NSLog(@"didFinishParsing");
-
     [self performSelectorOnMainThread:@selector(handleLoadedApps:) withObject:appList waitUntilDone:NO];
-	//NSLog(@"didFinishParsing 0");
-
     [self.queue release], self.queue = nil;
-	
-	//NSLog(@"didFinishParsing end");
-
 }
 
 #pragma mark -
@@ -1334,19 +1308,6 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-	//NSLog(@"== webViewDidFinishLoad");
-	
-	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;	
-	[self.messagesWebView setHidden:NO];
-
-	//NSLog(@"== webViewDidFinishLoad %@", [NSString stringWithFormat:@"window.location.hash='%@';$('img.lazy').lazyload({ placeholder : 'blank15.gif' });$('img.lazy2').lazyload({ placeholder : 'avatar_male_gray_on_light_48x48.png' });", self.stringFlagTopic]);
-//	jsString = [jsString stringByAppendingString:@"$('img.lazy').lazyload({ placeholder : 'blank15.gif' });"];
-//	jsString = [jsString stringByAppendingString:@"$('img.lazy2').lazyload({ placeholder : 'avatar_male_gray_on_light_48x48.png' });"];
-//	jsString = [jsString stringByAppendingString:[NSString stringWithFormat:@"window.location.hash='%@';", self.stringFlagTopic]];
-//$('img.lazy').lazyload({ placeholder : 'blank15.gif' });$('img.lazy2').lazyload({ placeholder : 'avatar_male_gray_on_light_48x48.png' });	
-	
-	
-
 	
 	NSString *jsString = [[[NSString alloc] initWithString:@""] autorelease];
 
@@ -1420,7 +1381,11 @@
 	//NSLog(@"? webViewDidFinishLoad JS");
 	
 	//NSDate *nowT = [NSDate date]; // Create a current date
- 	//NSLog(@"TOTAL Time elapsed    : %f", [nowT timeIntervalSinceDate:self.firstDate]);	
+ 	//NSLog(@"TOTAL Time elapsed    : %f", [nowT timeIntervalSinceDate:self.firstDate]);
+
+    
+	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+	[self.messagesWebView setHidden:NO];
 
 }
 //NSSelectorFromString([[[self arrayAction] objectAtIndex:curPostID] objectForKey:@"code"])
@@ -1528,9 +1493,9 @@
 			[self didSelectImage:[[[[aRequest.URL absoluteString] pathComponents] objectAtIndex:1] intValue] withUrl:imgUrl];
 			[imgUrl release];
 			return NO;
-		}		
+		}
 	}
-
+    
 	return YES;
 }
 
@@ -1743,7 +1708,7 @@
 	[editMessageViewController setUrlQuote:[NSString stringWithFormat:@"%@%@", kForumURL, [[arrayData objectAtIndex:curMsg] MPUrl]]];
 	editMessageViewController.title = @"Nouv. Message";
 	// Create the navigation controller and present it modally.
-	UINavigationController *navigationController = [[UINavigationController alloc]
+	HFRNavigationController *navigationController = [[HFRNavigationController alloc]
 													initWithRootViewController:editMessageViewController];
     
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
@@ -1969,4 +1934,3 @@
 }
 
 @end
-

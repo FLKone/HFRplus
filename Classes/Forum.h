@@ -12,12 +12,12 @@
 	NSString *aTitle;
 	NSString *aURL;
 	NSString *aID;
-	NSArray *subCats;
+	NSMutableArray *subCats;
 }
 
 @property (nonatomic, retain) NSString *aTitle;
 @property (nonatomic, retain) NSString *aURL;
 @property (nonatomic, retain) NSString *aID;
-@property (nonatomic, retain) NSArray *subCats;
+@property (nonatomic, retain) NSMutableArray *subCats;
 
 @end

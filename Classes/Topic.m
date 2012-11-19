@@ -31,6 +31,32 @@
 
 @synthesize postID, catID;
 
+
+- (id)init {
+	self = [super init];
+	if (self) {
+        self.aTitle = [NSString string];
+        self.aURLOfFlag = [NSString string];
+        
+        self.aURLOfFlag = [NSString string];
+        self.aTypeOfFlag = [NSString string];
+        
+        self.aURLOfLastPost = [NSString string];
+        self.aURLOfLastPage = [NSString string];
+        
+        self.aDateOfLastPost = [NSString string];
+        self.aAuthorOfLastPost = [NSString string];
+        
+        self.aAuthorOrInter = [NSString string];
+
+	}
+	return self;
+}
+
+-(NSString *)description {
+    return [NSString stringWithFormat:@"%d %@", self.postID, self.aTitle];
+}
+
 -(void)dealloc {
 	self.aTitle	= nil;
 	self.aURL	= nil;

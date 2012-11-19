@@ -275,4 +275,34 @@ finish:
     
 }
 
+-(NSString*)wordAfterString:(NSString*)searchString
+{
+    NSRange searchRange, foundRange, foundRange2, resultRange;//endRange
+	
+    foundRange = [self rangeOfString:searchString];
+    //endRange = [selfString rangeOfString:@"&subcat"];
+	
+    if ((foundRange.length == 0) ||
+        (foundRange.location == 0))
+    {
+        // searchString wasn't found or it was found first in the string
+        return @"";
+    }
+    // start search before the found string
+    //searchRange = NSMakeRange(foundRange.location, endRange.location-foundRange.location);
+	
+	searchRange.location = foundRange.location;
+	searchRange.length = foundRange.length + 4;
+	
+	//NSLog (@"URLS: %@", selfString);
+	//NSLog (@"URLS: %@", arrayFavs3);
+	
+	foundRange2 = [self rangeOfString:@"&" options:NSBackwardsSearch range:searchRange];
+	
+	
+    resultRange = NSMakeRange(foundRange.location+foundRange.length, foundRange2.location-foundRange.location-foundRange.length);
+	
+    return [self substringWithRange:resultRange];
+}
+
 @end

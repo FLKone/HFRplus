@@ -28,6 +28,11 @@
 		UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Vider le cache ?" message:@"Tous les onglets (Catégories, Vos Sujets etc.) seront reinitialisés.\nAttention donc si vous êtes en train de lire un sujet intéressant :o" delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Oui !", nil] autorelease];
 		[alert show];
 	}
+    else if ([key isEqualToString:@"SetCheckpoint"]) {
+
+        [TestFlight passCheckpoint:@"DEBUG"];
+        
+    }
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -63,7 +68,7 @@
 #pragma mark -
 #pragma mark IASKAppSettingsViewControllerDelegate protocol
 - (void)settingsViewControllerDidEnd:(IASKAppSettingsViewController*)sender {
-    NSLog(@"settingsViewControllerDidEnd");
+    //NSLog(@"settingsViewControllerDidEnd");
 	
 	// your code here to reconfigure the app for changed settings
 }

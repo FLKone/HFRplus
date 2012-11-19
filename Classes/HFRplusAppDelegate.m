@@ -12,11 +12,8 @@
 #import "HFRMPViewController.h"
 #import "FavoritesTableViewController.h"
 
-#import "SDURLCache.h"
-
 #import "MKStoreManager.h"
 #import "BrowserViewController.h"
-
 
 @implementation HFRplusAppDelegate
 
@@ -146,7 +143,7 @@
         
         id item = [query resultAtIndex:0];
         NSURL *url = [item valueForAttribute:NSMetadataItemURLKey];
-        NSLog(@"URL %@", url);
+        //NSLog(@"URL %@", url);
         UsedSmileys *doc = [[UsedSmileys alloc] initWithFileURL:url];
         self.docSmiley = doc;
         [self.docSmiley openWithCompletionHandler:^(BOOL success) {
@@ -226,7 +223,7 @@
 
 - (void)updateWithUbiquityContainer:(id)container {
     if (container) {
-        NSLog(@"iCloud access at %@", container);
+        //NSLog(@"iCloud access at %@", container);
         [self loadDocument];
     } else {
         NSLog(@"No iCloud access");
@@ -246,7 +243,10 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
-        
+
+    NSLog(@"didFinishLaunchingWithOptions");
+
+    
     [TestFlight takeOff:kTestFlightAPI];
     
     dispatch_queue_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -269,59 +269,16 @@
 	
 	[MKStoreManager sharedManager];
 	
-	[[GANTracker sharedTracker] startTrackerWithAccountID:kGoogleAnalyticsAPI
-										   dispatchPeriod:kGANDispatchPeriodSec
-												 delegate:nil];
-	NSError *error;
-	if (![[GANTracker sharedTracker] trackPageview:@"/app_entry_point"
-										 withError:&error]) {
-		// Handle error here
-		//NSLog(@"error GA", error);
-	}
-	
-    error = nil;
-    if (![[GANTracker sharedTracker] trackEvent:@"user iOS"
-                                         action:[[UIDevice currentDevice] systemVersion]
-                                          label:nil
-                                          value:-1
-                                      withError:&error]) {
-        // Handle error here
-        NSLog(@"error 1");
-    }    
-        
-    error = nil;
-    if (![[GANTracker sharedTracker] trackEvent:@"user iDevice"
-                                         action:[[UIDevice currentDevice] model]
-                                          label:[[UIDevice currentDevice] systemVersion]
-                                          value:-1
-                                      withError:&error]) {
-        // Handle error here
-        NSLog(@"error 2");
-    }        
-	
-    /*
-	SDURLCache *urlCache = [[SDURLCache alloc] initWithMemoryCapacity:1024*1024*1   // 1MB mem cache
-														 diskCapacity:1024*1024*50 // 5MB disk cache
-															 diskPath:[SDURLCache defaultCachePath]];
-		
-	//NSLog(@"defaultCachePath %@", [SDURLCache defaultCachePath]);
-	
-	[NSURLCache setSharedURLCache:urlCache];
-	[urlCache release];
-	*/
-    
-	NSString *enabled = [[NSUserDefaults standardUserDefaults] stringForKey:@"landscape_mode"];
-    NSString *img = [[NSUserDefaults standardUserDefaults] stringForKey:@"display_images"];
-    NSString *tab = [[NSUserDefaults standardUserDefaults] stringForKey:@"default_tab"];
-    NSString *web = [[NSUserDefaults standardUserDefaults] stringForKey:@"default_web"];
+    // GA
+    [GAI sharedInstance].dispatchInterval = kGANDispatchPeriodSec;
+    id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:kGoogleAnalyticsAPI];
 
-	if(!enabled || !img || !tab || !web) {
-        [self registerDefaultsFromSettingsBundle];
-    }
-	enabled = [[NSUserDefaults standardUserDefaults] stringForKey:@"landscape_mode"];
-    img = [[NSUserDefaults standardUserDefaults] stringForKey:@"display_images"];
-    tab = [[NSUserDefaults standardUserDefaults] stringForKey:@"default_tab"];
-    web = [[NSUserDefaults standardUserDefaults] stringForKey:@"default_web"];
+	[tracker trackView:@"/app_entry_point"];
+	[tracker trackEventWithCategory:@"iOS" withAction:[[UIDevice currentDevice] systemVersion] withLabel:nil withValue:[NSNumber numberWithInt:-1]];
+    [tracker trackEventWithCategory:@"iDevice" withAction:[[UIDevice currentDevice] model] withLabel:[[UIDevice currentDevice] systemVersion] withValue:[NSNumber numberWithInt:-1]];
+    //-- GA
+    
+    [self registerDefaultsFromSettingsBundle];
     
 	// Override point for customization after application launch.
 	    
@@ -369,6 +326,7 @@
     NSMutableDictionary *defaultsToRegister = [[NSMutableDictionary alloc] initWithCapacity:[preferences count]];
     for(NSDictionary *prefSpecification in preferences) {
         NSString *key = [prefSpecification objectForKey:@"Key"];
+        
         if(key && [prefSpecification objectForKey:@"DefaultValue"]) {
             [defaultsToRegister setObject:[prefSpecification objectForKey:@"DefaultValue"] forKey:key];
         }
@@ -379,12 +337,13 @@
 	
     for(NSDictionary *prefSpecification in preferences2) {
         NSString *key = [prefSpecification objectForKey:@"Key"];
+        
         if(key && [prefSpecification objectForKey:@"DefaultValue"]) {
             [defaultsToRegister setObject:[prefSpecification objectForKey:@"DefaultValue"] forKey:key];
         }
     }	
     
-    [[NSUserDefaults standardUserDefaults] registerDefaults:defaultsToRegister];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:defaultsToRegister];    
     [defaultsToRegister release];
 }
 
@@ -549,6 +508,9 @@
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
+    
+    NSLog(@"applicationDidBecomeActive");
+
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -563,21 +525,23 @@
 - (void)updateMPBadgeWithString:(NSString *)badgeValue;
 {
 	//NSLog(@"%@ - %d", badgeValue, [badgeValue intValue]);
-	
-	if ([badgeValue intValue] > 0) {
-		[[[[[self rootController] tabBar] items] objectAtIndex:2] setBadgeValue:badgeValue];
-	}
-	else {
-		[[[[[self rootController] tabBar] items] objectAtIndex:2] setBadgeValue:nil];
-		
-	}
-	
+    dispatch_async(dispatch_get_main_queue(), 
+                  ^{  	
+        if ([badgeValue intValue] > 0) {
+            [[[[[self rootController] tabBar] items] objectAtIndex:2] setBadgeValue:badgeValue];
+        }
+        else {
+            [[[[[self rootController] tabBar] items] objectAtIndex:2] setBadgeValue:nil];
+            
+        }
+                  });
 }
 
 - (void)readMPBadge;
 {
 	//NSLog(@"%@ - %d", badgeValue, [badgeValue intValue]);
-	
+    dispatch_async(dispatch_get_main_queue(), 
+                  ^{ 	
 	NSString *badgeValue = [[[[[self rootController] tabBar] items] objectAtIndex:2] badgeValue];
 	
 	if ( ([badgeValue intValue] - 1) > 0) {
@@ -586,7 +550,7 @@
 	else {
 		[[[[[self rootController] tabBar] items] objectAtIndex:2] setBadgeValue:nil];
 	}
-	
+                  });	
 }
 
 
@@ -602,7 +566,6 @@
         BrowserViewController *browserViewController = [[BrowserViewController alloc]
                                                         initWithNibName:@"BrowserViewController" bundle:nil];
         browserViewController.delegate = self.rootController;
-        NSLog(@"OK %@", stringUrl);
         
         [self.rootController presentModalViewController:browserViewController animated:YES];
         [browserViewController.myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:stringUrl]]];
@@ -630,7 +593,6 @@
 - (void)alertView:(UIAlertViewURL *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
 	if (buttonIndex == 1) {
-		NSLog(@"OK %@", [alertView stringURL]);
         
         NSURL *tURLbase = [NSURL URLWithString:[alertView stringURL]];
         NSURL *tURL = [NSURL URLWithString:[alertView stringURL]];
@@ -645,7 +607,6 @@
 
         }
         
-        NSLog(@"OK %@", tURL);
         if ([[UIApplication sharedApplication] canOpenURL:tURL]) {
             [[UIApplication sharedApplication] openURL:tURL];
         }
@@ -723,9 +684,7 @@
     //[periodicMaintenanceOperation release], periodicMaintenanceOperation = nil;
 	//[ioQueue release], ioQueue = nil;
 
-	
-	[[GANTracker sharedTracker] stopTracker];
-	
+	[[[GAI sharedInstance] defaultTracker] close];
     
     [docSmiley release];
     

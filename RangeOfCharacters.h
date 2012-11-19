@@ -31,5 +31,6 @@
 
 -(NSString*) decodeHtmlUnicodeCharacters: (NSString*) html;
 
+-(NSString*)wordAfterString:(NSString*)searchString;
 
 @end

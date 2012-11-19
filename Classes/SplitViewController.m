@@ -2,8 +2,7 @@
 //  SplitViewController.m
 //  HFRplus
 //
-//  Created by Julien ALEXANDRE on 02/07/12.
-//  Copyright (c) 2012 FLK. All rights reserved.
+//  Created by FLK on 02/07/12.
 //
 
 #import "SplitViewController.h"
@@ -46,6 +45,27 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
+
+/* for iOS6 support */
+- (NSUInteger)supportedInterfaceOrientations
+{
+	if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"landscape_mode"] isEqualToString:@"all"]) {
+        //NSLog(@"All");
+        
+		return UIInterfaceOrientationMaskAll;
+	} else {
+        //NSLog(@"Portrait");
+        
+		return UIInterfaceOrientationMaskPortrait;
+	}
+}
+
+ 
+- (BOOL)shouldAutorotate
+{
+    return YES;
+}
+
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {

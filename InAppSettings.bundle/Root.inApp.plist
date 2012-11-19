@@ -126,6 +126,22 @@
 			<key>Key</key>
 			<string>EmptyCacheButton</string>
 		</dict>
+		<dict>
+			<key>Title</key>
+			<string>Debug</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Menu debug</string>
+			<key>Key</key>
+			<string>menu_debug</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
 	</array>
 </dict>
 </plist>

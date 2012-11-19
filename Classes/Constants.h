@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 #import "UITableViewController+Ext.h"
 #import "NSDictionary+Merging.h"
+#import "HFRNavigationController.h"
 
 #define NSLog(__FORMAT__, ...) TFLog((@"%s [Line %d] " __FORMAT__), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 
@@ -23,6 +24,7 @@ typedef enum {
 
 #define kTimeoutMini		30
 #define kTimeoutMaxi		60
+#define kTimeoutAvatar      10
 
 #define MAX_HEIGHT 1200.0f 
 #define MAX_CELL_CONTENT 300.0f
