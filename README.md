@@ -4,7 +4,7 @@ HFR+
 =========================
 Application iOS (iPhone, iPod Touch et iPad) pour le forum hardware.fr
 
-<a href="https://itunes.apple.com/app/hfr/id384464712?mt=8" target="_blank"><img src="http://www.flk.io/hfrplus/appstore.svg" alt="AppStore" title="AppStore"></a>
+<a href="https://itunes.apple.com/app/hfr/id384464712?mt=8" target="_blank"><img src="http://apps.flk.io/hfrplus/appstore.svg" alt="AppStore" title="AppStore"></a>
 
 
 Roadmap
@@ -62,5 +62,5 @@ Crédits
 Soutenir le développement
 -------------------------
 
-<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2EBXBLRGHF9FA" target="_blank"><img src="https://www.paypalobjects.com/fr_FR/FR/i/btn/btn_donate_LG.gif" alt="PayPal - la solution de paiement en ligne la plus simple et la plus sécurisée !"></a>
-<span style="color:#bebebe; font-size:11px;">(comission Paypal: 3,4% + 0,25€)</span>
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4EBPMFBQ8M6HN" target="_blank"><img src="https://www.paypalobjects.com/fr_FR/FR/i/btn/btn_donate_LG.gif" alt="PayPal - la solution de paiement en ligne la plus simple et la plus sécurisée !"></a>
+<span style="color:#bebebe; font-size:11px;">(commission Paypal: 3,4% + 0,25€)</span>
