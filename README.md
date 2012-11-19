@@ -4,6 +4,8 @@ HFR+
 =========================
 Application iOS (iPhone, iPod Touch et iPad) pour le forum hardware.fr
 
+<a href="https://itunes.apple.com/app/hfr/id384464712?mt=8" target="_blank"><img src="appstore.svg" alt="AppStore" title="AppStore"></a>
+
 
 Roadmap
 -------------------------
@@ -55,3 +57,16 @@ Crédits
 * [MKStoreKit](https://github.com/MugunthKumar/MKStoreKit)
 * [ASIHTTPRequest](https://github.com/pokeb/asi-http-request)
 * [Objective-C-HMTL-Parser](https://github.com/zootreeves/Objective-C-HMTL-Parser)
+
+
+Soutenir le développement
+-------------------------
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="2EBXBLRGHF9FA">
+<input type="image" src="https://www.paypalobjects.com/fr_FR/FR/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - la solution de paiement en ligne la plus simple et la plus sécurisée !">
+<img alt="" border="0" src="https://www.paypalobjects.com/fr_FR/i/scr/pixel.gif" width="1" height="1">
+</form>
+
+<span style="color:#bebebe; font-size:11px;">(comission Paypal: 3,4% + 0,25€)</span>
