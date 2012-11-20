@@ -15,7 +15,7 @@ Roadmap
     <th>Version</th><th>Type</th><th>Sortie</th>
   </tr>
 <tr>
-    <td>1.6.0.x</td><td>Bugs</td><td>Fin 2012</td>
+    <td>1.6.006</td><td>Bugs</td><td>Fin 2012</td>
   </tr>  
 <tr>
     <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=12&page=1&sort=created&state=open">1.6.1</a></td><td>Fonctionnalités</td><td>Fin 2012</td>
