@@ -825,6 +825,7 @@
 		CAC4966715B77357009128BC /* HFRNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFRNavigationController.h; sourceTree = "<group>"; };
 		CAC4966815B77357009128BC /* HFRNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HFRNavigationController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CAC593C115A63F5100913CFB /* HFRplus.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = HFRplus.entitlements; sourceTree = "<group>"; };
+		CAC85AA8165ADA4D00864D03 /* GANTracker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GANTracker.h; path = GA/GANTracker.h; sourceTree = "<group>"; };
 		CADCBB94127A07AD00419AE6 /* 60-signpost.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "60-signpost.png"; sourceTree = "<group>"; };
 		CADCBB98127A081B00419AE6 /* 06-magnifying-glass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "06-magnifying-glass.png"; sourceTree = "<group>"; };
 		CAE1D2F0125A8DD20067715B /* smileybase.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = smileybase.html; sourceTree = "<group>"; };
@@ -837,11 +838,6 @@
 		CAF6C001160790AA00B4B70C /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		CAF6C002160790AA00B4B70C /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		CAF6C003160790AA00B4B70C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		CAF6C0091607B5BE00B4B70C /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAI.h; path = GA/GAI.h; sourceTree = "<group>"; };
-		CAF6C00A1607B5BE00B4B70C /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITrackedViewController.h; path = GA/GAITrackedViewController.h; sourceTree = "<group>"; };
-		CAF6C00B1607B5BE00B4B70C /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITracker.h; path = GA/GAITracker.h; sourceTree = "<group>"; };
-		CAF6C00C1607B5BE00B4B70C /* GAITransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITransaction.h; path = GA/GAITransaction.h; sourceTree = "<group>"; };
-		CAF6C00D1607B5BE00B4B70C /* GAITransactionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITransactionItem.h; path = GA/GAITransactionItem.h; sourceTree = "<group>"; };
 		CAF6C00E1607B5BE00B4B70C /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalytics.a; path = GA/libGoogleAnalytics.a; sourceTree = "<group>"; };
 		CAF6C0111607B62300B4B70C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		CAFB776B126639AA004D8C57 /* jquery.lazyload.mini.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.lazyload.mini.js; sourceTree = "<group>"; };
@@ -1667,11 +1663,7 @@
 		CABBC394125E97D500BCA6C8 /* GA */ = {
 			isa = PBXGroup;
 			children = (
-				CAF6C0091607B5BE00B4B70C /* GAI.h */,
-				CAF6C00A1607B5BE00B4B70C /* GAITrackedViewController.h */,
-				CAF6C00B1607B5BE00B4B70C /* GAITracker.h */,
-				CAF6C00C1607B5BE00B4B70C /* GAITransaction.h */,
-				CAF6C00D1607B5BE00B4B70C /* GAITransactionItem.h */,
+				CAC85AA8165ADA4D00864D03 /* GANTracker.h */,
 				CAF6C00E1607B5BE00B4B70C /* libGoogleAnalytics.a */,
 			);
 			name = GA;

@@ -5,8 +5,7 @@
 //  Created by FLK on 18/08/10.
 //
 
-#import "GAI.h"
-static const NSInteger kGANDispatchPeriodSec = 20;
+#import "GANTracker.h"
 
 #import <UIKit/UIKit.h>
 #import "Constants.h"
@@ -21,7 +20,7 @@ static const NSInteger kGANDispatchPeriodSec = 20;
 #import "UsedSmileys.h"
 
 
-@interface HFRplusAppDelegate : NSObject <UIApplicationDelegate> {
+@interface HFRplusAppDelegate : NSObject <UIApplicationDelegate, GANTrackerDelegate> {
     UIWindow *window;
 	TabBarController *rootController;	
 	SplitViewController *splitViewController;

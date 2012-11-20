@@ -923,7 +923,7 @@
 -(void)reload:(BOOL)shake
 {
 	if (!shake) {
-        [[[GAI sharedInstance] defaultTracker] trackEventWithCategory:@"Sujets" withAction:@"reload" withLabel:@"manual" withValue:[NSNumber numberWithInt:-1]];
+        //GA-- [[[GAI sharedInstance] defaultTracker] trackEventWithCategory:@"Sujets" withAction:@"reload" withLabel:@"manual" withValue:[NSNumber numberWithInt:-1]];
 	}
 
 
@@ -935,7 +935,7 @@
 {
 	if (![request inProgress]) {
 		
-        [[[GAI sharedInstance] defaultTracker] trackEventWithCategory:@"Sujets" withAction:@"reload" withLabel:@"shake" withValue:[NSNumber numberWithInt:-1]];
+        //GA-- [[[GAI sharedInstance] defaultTracker] trackEventWithCategory:@"Sujets" withAction:@"reload" withLabel:@"shake" withValue:[NSNumber numberWithInt:-1]];
 		
 		[self reload:YES];		
 	}

@@ -270,12 +270,36 @@
 	[MKStoreManager sharedManager];
 	
     // GA
-    [GAI sharedInstance].dispatchInterval = kGANDispatchPeriodSec;
-    id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:kGoogleAnalyticsAPI];
+    [[GANTracker sharedTracker] startTrackerWithAccountID:kAnalyticsAccountId
+                                           dispatchPeriod:kDispatchPeriodSeconds
+                                                 delegate:self];
 
-	[tracker trackView:@"/app_entry_point"];
-	[tracker trackEventWithCategory:@"iOS" withAction:[[UIDevice currentDevice] systemVersion] withLabel:nil withValue:[NSNumber numberWithInt:-1]];
-    [tracker trackEventWithCategory:@"iDevice" withAction:[[UIDevice currentDevice] model] withLabel:[[UIDevice currentDevice] systemVersion] withValue:[NSNumber numberWithInt:-1]];
+    NSError *error = nil;
+    if (![[GANTracker sharedTracker] trackPageview:@"/app_entry_point"
+    								 withError:&error]) {
+        // Handle error here
+        NSLog(@"error GA 0", error);
+    }
+
+    error = nil;
+    if (![[GANTracker sharedTracker] trackEvent:@"iOS"
+                                         action:[[UIDevice currentDevice] systemVersion]
+                                          label:nil
+                                          value:-1
+                                      withError:&error]) {
+            // Handle error here
+        NSLog(@"error GA 1", error);
+    }
+
+    error = nil;
+    if (![[GANTracker sharedTracker] trackEvent:@"iDevice"
+                                         action:[[UIDevice currentDevice] model]
+                                          label:[[UIDevice currentDevice] systemVersion]
+                                          value:-1
+                                      withError:&error]) {
+            // Handle error here
+        NSLog(@"error GA 2", error);
+    }
     //-- GA
     
     [self registerDefaultsFromSettingsBundle];
@@ -660,6 +684,20 @@
 }
 
 #pragma mark -
+#pragma mark GANTrackerDelegate methods
+
+- (void)hitDispatched:(NSString *)hitString {
+    NSLog(@"Hit Dispatched: %@", hitString);
+}
+
+- (void)trackerDispatchDidComplete:(GANTracker *)tracker
+                  eventsDispatched:(NSUInteger)hitsDispatched
+              eventsFailedDispatch:(NSUInteger)hitsFailedDispatch {
+    NSLog(@"Dispatch completed (%u OK, %u failed)",
+          hitsDispatched, hitsFailedDispatch);
+}
+
+#pragma mark -
 #pragma mark login management
 
 - (void)checkLogin {
@@ -682,8 +720,6 @@
     //[periodicMaintenanceOperation release], periodicMaintenanceOperation = nil;
 	//[ioQueue release], ioQueue = nil;
 
-	[[[GAI sharedInstance] defaultTracker] close];
-    
     [docSmiley release];
     
 	[rootController release];
