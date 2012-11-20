@@ -13,8 +13,6 @@
 
 @implementation PayViewController
 
-@synthesize resutsBtn;
-
 // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -44,21 +42,21 @@
 	if([MKStoreManager isFeaturePurchased:@"hfrplus.don1"])
 	{
 		if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"hfrplus.don1"] intValue] > 1) {
-			[self.resutsBtn setTitle:[NSString stringWithFormat:@"Dons effectués: %d, Merci!", [[[NSUserDefaults standardUserDefaults] valueForKey:@"hfrplus.don1"] intValue]] forState:UIControlStateNormal];
+			//[self.resutsBtn setTitle:[NSString stringWithFormat:@"Dons effectués: %d, Merci!", [[[NSUserDefaults standardUserDefaults] valueForKey:@"hfrplus.don1"] intValue]] forState:UIControlStateNormal];
 
 		}
 		else if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"hfrplus.don1"] intValue] == 1) {
 
-			[self.resutsBtn setTitle:[NSString stringWithFormat:@"Don effectué %d, Merci!", [[[NSUserDefaults standardUserDefaults] valueForKey:@"hfrplus.don1"] intValue]] forState:UIControlStateNormal];
+			//[self.resutsBtn setTitle:[NSString stringWithFormat:@"Don effectué %d, Merci!", [[[NSUserDefaults standardUserDefaults] valueForKey:@"hfrplus.don1"] intValue]] forState:UIControlStateNormal];
 		}
 		else {
-			[self.resutsBtn setTitle:@"Aucun don effectué" forState:UIControlStateNormal];
+			//[self.resutsBtn setTitle:@"Aucun don effectué" forState:UIControlStateNormal];
 		}
 
 
 	}
 	else {
-		[self.resutsBtn setTitle:@"Aucun don effectué" forState:UIControlStateNormal];
+		//[self.resutsBtn setTitle:@"Aucun don effectué" forState:UIControlStateNormal];
 	}
 	
 	
@@ -67,6 +65,12 @@
 	
 	
 	
+}
+
+- (IBAction)gotohfrplus {
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://apps.flk.io/hfrplus/"]];
+    
 }
 - (void) viewWillAppear:(BOOL)animated
 {
@@ -104,36 +108,6 @@
 	[[MKStoreManager sharedManager] buyFeature:@"hfrplus.don1"];
 }
 
-- (IBAction) data {
-	NSLog(@"test");
-	
-	
-	if([MKStoreManager isFeaturePurchased:@"hfrplus.don1"])
-	{
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"YES"
-														message:[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] valueForKey:@"hfrplus.don1"]]
-													   delegate:self 
-											  cancelButtonTitle:NSLocalizedString(@"Dismiss", @"")
-											  otherButtonTitles: nil];	
-		[alert show];
-		[alert release];
-	}
-	else {
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"NO"
-														message:[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] valueForKey:@"hfrplus.don1"]]
-													   delegate:self 
-											  cancelButtonTitle:NSLocalizedString(@"Dismiss", @"")
-											  otherButtonTitles: nil];
-	
-		[alert show];
-		[alert release];
-	}
-	
-
-
-	
-}
-
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
@@ -142,6 +116,7 @@
 }
 
 - (void)viewDidUnload {
+
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -151,7 +126,7 @@
 - (void)dealloc {
 	[periodicMaintenanceTimer invalidate];
     [periodicMaintenanceTimer release], periodicMaintenanceTimer = nil;
-	
+
     [super dealloc];
 }
 
