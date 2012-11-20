@@ -10,11 +10,12 @@
 
 @interface PayViewController : UIViewController {
 	NSTimer *periodicMaintenanceTimer;
+    IBOutlet UIButton *resutsBtn;
 
 }
+@property (retain, nonatomic) IBOutlet UIButton *resutsBtn;
 
 - (IBAction) achat;
-- (IBAction) data;
 - (void)periodicCheck;
 - (IBAction)gotohfrplus;
 
