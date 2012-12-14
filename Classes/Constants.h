@@ -12,6 +12,8 @@
 
 #define NSLog(__FORMAT__, ...) TFLog((@"%s [Line %d] " __FORMAT__), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 
+static const NSInteger kDispatchPeriodSeconds = 20;
+
 typedef enum {
 	kIdle,
 	kMaintenance,

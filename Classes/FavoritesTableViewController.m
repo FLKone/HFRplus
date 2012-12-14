@@ -375,7 +375,6 @@
     AKSingleSegmentedControl* segmentedControl = [[AKSingleSegmentedControl alloc] initWithItems:[NSArray array]];
     //[segmentedControl setMomentary:YES];
     [segmentedControl insertSegmentWithImage:[UIImage imageNamed:@"icon_list_bullets"] atIndex:0 animated:NO];
-    segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
     [segmentedControl addTarget:self action:@selector(showAll:) forControlEvents:UIControlEventValueChanged];
     
@@ -924,7 +923,7 @@
 -(void)reload:(BOOL)shake
 {
 	if (!shake) {
-        [[[GAI sharedInstance] defaultTracker] trackEventWithCategory:@"Sujets" withAction:@"reload" withLabel:@"manual" withValue:[NSNumber numberWithInt:-1]];
+        //GA-- [[[GAI sharedInstance] defaultTracker] trackEventWithCategory:@"Sujets" withAction:@"reload" withLabel:@"manual" withValue:[NSNumber numberWithInt:-1]];
 	}
 
 
@@ -936,7 +935,7 @@
 {
 	if (![request inProgress]) {
 		
-        [[[GAI sharedInstance] defaultTracker] trackEventWithCategory:@"Sujets" withAction:@"reload" withLabel:@"shake" withValue:[NSNumber numberWithInt:-1]];
+        //GA-- [[[GAI sharedInstance] defaultTracker] trackEventWithCategory:@"Sujets" withAction:@"reload" withLabel:@"shake" withValue:[NSNumber numberWithInt:-1]];
 		
 		[self reload:YES];		
 	}

@@ -631,6 +631,9 @@
 }
 
 - (void) didSelectSmile:(NSString *)smile {
+
+    smile = [NSString stringWithFormat:@" %@ ", smile]; // ajout des espaces avant/aprés le smiley.
+    
 	//NSLog(@"didSelectSmile");
 
 	//STATS RECHERCHES
