@@ -4,6 +4,8 @@ HFR+
 =========================
 Application iOS (iPhone, iPod Touch et iPad) pour le forum hardware.fr
 
+<a href="https://itunes.apple.com/app/hfr/id384464712?mt=8" target="_blank"><img src="http://apps.flk.io/hfrplus/appstore.svg" alt="AppStore" title="AppStore"></a>
+
 
 Roadmap
 -------------------------
@@ -12,21 +14,21 @@ Roadmap
   <tr>
     <th>Version</th><th>Type</th><th>Sortie</th>
   </tr>
-  <tr>
-    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=4&page=1&sort=created&state=open">1.5.5</a></td><td>Fonctionnalités</td><td>Été 2012</td>
-  </tr>
-  <tr>
-    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=10&page=1&sort=created&state=open">1.5.6</a></td><td>UI</td><td>Été 2012</td>
-  </tr>
- <tr>
-    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=3&page=1&sort=created&state=open">1.6</a></td><td>Compatibilité</td><td>Automne 2012</td>
+<tr>
+    <td>1.6.006</td><td>Bugs</td><td>Fin 2012</td>
+  </tr>  
+<tr>
+    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=12&page=1&sort=created&state=open">1.6.1</a></td><td>Fonctionnalités</td><td>Fin 2012</td>
   </tr>
 <tr>
-    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=7&page=1&sort=created&state=open">1.6.1</a></td><td>Fonctionnalités</td><td>Fin 2012</td>
+    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=13&page=1&sort=created&state=open">1.6.2</a></td><td>UI</td><td>2013</td>
   </tr>
 <tr>
-    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=9&page=1&sort=created&state=open">1.6.2</a></td><td>Fonctionnalités avancées</td><td>tbd</td>
+    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=7&page=1&sort=created&state=open">1.6.3</a></td><td>Fonctionnalités avancées</td><td>2013</td>
   </tr>
+<tr>
+    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=9&page=1&sort=created&state=open">1.6.4</a></td><td>Fonctionnalités avancées v2</td><td>2013</td>
+  </tr>    
 </table>
 
 
@@ -55,3 +57,10 @@ Crédits
 * [MKStoreKit](https://github.com/MugunthKumar/MKStoreKit)
 * [ASIHTTPRequest](https://github.com/pokeb/asi-http-request)
 * [Objective-C-HMTL-Parser](https://github.com/zootreeves/Objective-C-HMTL-Parser)
+
+
+Soutenir le développement
+-------------------------
+
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4EBPMFBQ8M6HN" target="_blank"><img src="https://www.paypalobjects.com/fr_FR/FR/i/btn/btn_donate_LG.gif" alt="PayPal - la solution de paiement en ligne la plus simple et la plus sécurisée !"></a>
+<span style="color:#bebebe; font-size:11px;">(commission Paypal: 3,4% + 0,25€)</span>

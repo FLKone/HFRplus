@@ -49,24 +49,30 @@
 		}
 		else if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"hfrplus.don1"] intValue] == 1) {
 
-			[self.resutsBtn setTitle:[NSString stringWithFormat:@"Don effectué %d, Merci!", [[[NSUserDefaults standardUserDefaults] valueForKey:@"hfrplus.don1"] intValue]] forState:UIControlStateNormal];
+			[self.resutsBtn setTitle:[NSString stringWithFormat:@"Don effectué, Merci!"] forState:UIControlStateNormal];
 		}
 		else {
-			[self.resutsBtn setTitle:@"Aucun don effectué" forState:UIControlStateNormal];
+			[self.resutsBtn setTitle:@"Aucun don effectué via l'Application" forState:UIControlStateNormal];
 		}
 
 
 	}
 	else {
-		[self.resutsBtn setTitle:@"Aucun don effectué" forState:UIControlStateNormal];
+		[self.resutsBtn setTitle:@"Aucun don effectué via l'Application" forState:UIControlStateNormal];
 	}
 	
 	
-//	self.resutsBtn.titleLabel.text = @"Don(s) effectué(s): aucun";
+    //self.resutsBtn.titleLabel.text = @"Don(s) effectué(s): aucun";
 	
 	
 	
 	
+}
+
+- (IBAction)gotohfrplus {
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://apps.flk.io/hfrplus/"]];
+    
 }
 - (void) viewWillAppear:(BOOL)animated
 {
@@ -104,36 +110,6 @@
 	[[MKStoreManager sharedManager] buyFeature:@"hfrplus.don1"];
 }
 
-- (IBAction) data {
-	NSLog(@"test");
-	
-	
-	if([MKStoreManager isFeaturePurchased:@"hfrplus.don1"])
-	{
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"YES"
-														message:[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] valueForKey:@"hfrplus.don1"]]
-													   delegate:self 
-											  cancelButtonTitle:NSLocalizedString(@"Dismiss", @"")
-											  otherButtonTitles: nil];	
-		[alert show];
-		[alert release];
-	}
-	else {
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"NO"
-														message:[NSString stringWithFormat:@"%@", [[NSUserDefaults standardUserDefaults] valueForKey:@"hfrplus.don1"]]
-													   delegate:self 
-											  cancelButtonTitle:NSLocalizedString(@"Dismiss", @"")
-											  otherButtonTitles: nil];
-	
-		[alert show];
-		[alert release];
-	}
-	
-
-
-	
-}
-
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
@@ -142,6 +118,11 @@
 }
 
 - (void)viewDidUnload {
+
+    [resutsBtn release];
+    resutsBtn = nil;
+    [self setResutsBtn:nil];
+    
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -151,7 +132,8 @@
 - (void)dealloc {
 	[periodicMaintenanceTimer invalidate];
     [periodicMaintenanceTimer release], periodicMaintenanceTimer = nil;
-	
+
+    [resutsBtn release];
     [super dealloc];
 }
 
