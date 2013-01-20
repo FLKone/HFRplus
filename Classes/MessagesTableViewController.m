@@ -1232,6 +1232,17 @@
 //	handleLoadedApps:notif
 // -------------------------------------------------------------------------------
 
+- (void) hideGradientBackground:(UIView*)theView
+{
+    for (UIView* subview in theView.subviews)
+    {
+        if ([subview isKindOfClass:[UIImageView class]])
+            subview.hidden = YES;
+        
+        [self hideGradientBackground:subview];
+    }
+}
+
 - (void)handleLoadedApps:(NSArray *)loadedItems
 {	
 	[self.arrayData removeAllObjects];
@@ -1271,6 +1282,9 @@
 	//NSLog(@"baseURL %@", baseURL);
 	//NSLog(@"======================================================================================================");
 	
+    [self.messagesWebView setBackgroundColor:[UIColor clearColor]];
+    [self hideGradientBackground:self.messagesWebView];
+    
 	[self.messagesWebView loadHTMLString:HTMLString baseURL:baseURL];
 	
 	[self.messagesWebView setUserInteractionEnabled:YES];	
