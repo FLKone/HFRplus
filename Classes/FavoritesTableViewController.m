@@ -923,7 +923,7 @@
 -(void)reload:(BOOL)shake
 {
 	if (!shake) {
-        //GA-- [[[GAI sharedInstance] defaultTracker] trackEventWithCategory:@"Sujets" withAction:@"reload" withLabel:@"manual" withValue:[NSNumber numberWithInt:-1]];
+
 	}
 
 
@@ -934,8 +934,6 @@
 -(void) shakeHappened:(ShakeView*)view
 {
 	if (![request inProgress]) {
-		
-        //GA-- [[[GAI sharedInstance] defaultTracker] trackEventWithCategory:@"Sujets" withAction:@"reload" withLabel:@"shake" withValue:[NSNumber numberWithInt:-1]];
 		
 		[self reload:YES];		
 	}

@@ -5,8 +5,6 @@
 //  Created by FLK on 18/08/10.
 //
 
-#import "GANTracker.h"
-
 #import <UIKit/UIKit.h>
 #import "Constants.h"
 #import "TabBarController.h"
@@ -20,7 +18,7 @@
 #import "UsedSmileys.h"
 
 
-@interface HFRplusAppDelegate : NSObject <UIApplicationDelegate, GANTrackerDelegate> {
+@interface HFRplusAppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;
 	TabBarController *rootController;	
 	SplitViewController *splitViewController;

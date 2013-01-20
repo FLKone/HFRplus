@@ -268,40 +268,7 @@
 	self.hash_check = [[NSString alloc] init];
 	
 	[MKStoreManager sharedManager];
-	
-    // GA
-    [[GANTracker sharedTracker] startTrackerWithAccountID:kAnalyticsAccountId
-                                           dispatchPeriod:kDispatchPeriodSeconds
-                                                 delegate:self];
-
-    NSError *error = nil;
-    if (![[GANTracker sharedTracker] trackPageview:@"/app_entry_point"
-    								 withError:&error]) {
-        // Handle error here
-        NSLog(@"error GA 0", error);
-    }
-
-    error = nil;
-    if (![[GANTracker sharedTracker] trackEvent:@"iOS"
-                                         action:[[UIDevice currentDevice] systemVersion]
-                                          label:nil
-                                          value:-1
-                                      withError:&error]) {
-            // Handle error here
-        NSLog(@"error GA 1", error);
-    }
-
-    error = nil;
-    if (![[GANTracker sharedTracker] trackEvent:@"iDevice"
-                                         action:[[UIDevice currentDevice] model]
-                                          label:[[UIDevice currentDevice] systemVersion]
-                                          value:-1
-                                      withError:&error]) {
-            // Handle error here
-        NSLog(@"error GA 2", error);
-    }
-    //-- GA
-    
+	    
     [self registerDefaultsFromSettingsBundle];
     
 	// Override point for customization after application launch.
@@ -681,20 +648,6 @@
     
     [[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] setViewControllers:[NSMutableArray arrayWithObjects: uivc, nil] animated:NO];
 
-}
-
-#pragma mark -
-#pragma mark GANTrackerDelegate methods
-
-- (void)hitDispatched:(NSString *)hitString {
-    NSLog(@"Hit Dispatched: %@", hitString);
-}
-
-- (void)trackerDispatchDidComplete:(GANTracker *)tracker
-                  eventsDispatched:(NSUInteger)hitsDispatched
-              eventsFailedDispatch:(NSUInteger)hitsFailedDispatch {
-    NSLog(@"Dispatch completed (%u OK, %u failed)",
-          hitsDispatched, hitsFailedDispatch);
 }
 
 #pragma mark -

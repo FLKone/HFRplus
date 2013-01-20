@@ -842,8 +842,6 @@
 -(void)reload:(BOOL)shake
 {
 	if (!shake) {
-        
-        //GA-- [[[GAI sharedInstance] defaultTracker] trackEventWithCategory:@"Forums" withAction:@"reload" withLabel:@"manual" withValue:[NSNumber numberWithInt:-1]];
 
 	}
 
@@ -855,8 +853,6 @@
 {
 	if (![request isExecuting]) {
 
-        //GA-- [[[GAI sharedInstance] defaultTracker] trackEventWithCategory:@"Forums" withAction:@"reload" withLabel:@"shake" withValue:[NSNumber numberWithInt:-1]];
-		
 		[self reload:YES];		
 	}
 }

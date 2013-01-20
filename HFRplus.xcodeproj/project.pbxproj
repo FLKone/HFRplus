@@ -359,7 +359,6 @@
 		CAF03C561245612800897C3B /* AccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAF03C551245612800897C3B /* AccessoryView.xib */; };
 		CAF03C6A1245680600897C3B /* ddr555.gif in Resources */ = {isa = PBXBuildFile; fileRef = CAF03C691245680600897C3B /* ddr555.gif */; };
 		CAF6C006160790AA00B4B70C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF6C003160790AA00B4B70C /* Default-568h@2x.png */; };
-		CAF6C0101607B60A00B4B70C /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CAF6C00E1607B5BE00B4B70C /* libGoogleAnalytics.a */; };
 		CAF6C0121607B62300B4B70C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAF6C0111607B62300B4B70C /* CoreData.framework */; };
 		CAFB776C126639AA004D8C57 /* jquery.lazyload.mini.js in Resources */ = {isa = PBXBuildFile; fileRef = CAFB776B126639AA004D8C57 /* jquery.lazyload.mini.js */; };
 		CAFCE8851298399D004E7CC0 /* loadinfo.net.gif in Resources */ = {isa = PBXBuildFile; fileRef = CAFCE8841298399D004E7CC0 /* loadinfo.net.gif */; };
@@ -825,7 +824,6 @@
 		CAC4966715B77357009128BC /* HFRNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFRNavigationController.h; sourceTree = "<group>"; };
 		CAC4966815B77357009128BC /* HFRNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HFRNavigationController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CAC593C115A63F5100913CFB /* HFRplus.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = HFRplus.entitlements; sourceTree = "<group>"; };
-		CAC85AA8165ADA4D00864D03 /* GANTracker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GANTracker.h; path = GA/GANTracker.h; sourceTree = "<group>"; };
 		CADCBB94127A07AD00419AE6 /* 60-signpost.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "60-signpost.png"; sourceTree = "<group>"; };
 		CADCBB98127A081B00419AE6 /* 06-magnifying-glass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "06-magnifying-glass.png"; sourceTree = "<group>"; };
 		CAE1D2F0125A8DD20067715B /* smileybase.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = smileybase.html; sourceTree = "<group>"; };
@@ -838,7 +836,6 @@
 		CAF6C001160790AA00B4B70C /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		CAF6C002160790AA00B4B70C /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		CAF6C003160790AA00B4B70C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		CAF6C00E1607B5BE00B4B70C /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalytics.a; path = GA/libGoogleAnalytics.a; sourceTree = "<group>"; };
 		CAF6C0111607B62300B4B70C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		CAFB776B126639AA004D8C57 /* jquery.lazyload.mini.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.lazyload.mini.js; sourceTree = "<group>"; };
 		CAFCE8841298399D004E7CC0 /* loadinfo.net.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loadinfo.net.gif; sourceTree = "<group>"; };
@@ -869,7 +866,6 @@
 				CA37D50D15A1BD5F002C72C6 /* libsqlite3.dylib in Frameworks */,
 				CA4CE81515B185CA0039FC3B /* libz.dylib in Frameworks */,
 				CA4CE81015B1856F0039FC3B /* libTestFlight.a in Frameworks */,
-				CAF6C0101607B60A00B4B70C /* libGoogleAnalytics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1305,7 +1301,6 @@
 				CA4CE80B15B1856F0039FC3B /* TestFlight */,
 				CA10707415A4CEA5002E6C19 /* InAppSettingsKit */,
 				CA3BB08312EC0DB900F7DF7B /* MK */,
-				CABBC394125E97D500BCA6C8 /* GA */,
 				01BF8A2C121D770F007624B6 /* HTMLParser */,
 				01BF8797121C4426007624B6 /* HTTP */,
 				01BF87AA121C4427007624B6 /* RegexKitLite.h */,
@@ -1658,15 +1653,6 @@
 				CAA1B091125C0A53009C80E3 /* AKSegmentedControl.m */,
 			);
 			name = Forms;
-			sourceTree = "<group>";
-		};
-		CABBC394125E97D500BCA6C8 /* GA */ = {
-			isa = PBXGroup;
-			children = (
-				CAC85AA8165ADA4D00864D03 /* GANTracker.h */,
-				CAF6C00E1607B5BE00B4B70C /* libGoogleAnalytics.a */,
-			);
-			name = GA;
 			sourceTree = "<group>";
 		};
 		CAFD003915B9B4FF003CA3FC /* Debug */ = {

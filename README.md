@@ -15,16 +15,16 @@ Roadmap
     <th>Version</th><th>Type</th><th>Sortie</th>
   </tr>
 <tr>
-    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=12&page=1&sort=created&state=open">1.6.1</a></td><td>Fonctionnalités</td><td>Fin 2012</td>
+    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=12&page=1&sort=created&state=open">1.6.100</a></td><td>Fonctionnalités</td><td>2013</td>
   </tr>
 <tr>
-    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=13&page=1&sort=created&state=open">1.6.2</a></td><td>UI</td><td>2013</td>
+    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=13&page=1&sort=created&state=open">1.6.200</a></td><td>UI</td><td>2013</td>
   </tr>
 <tr>
-    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=7&page=1&sort=created&state=open">1.6.3</a></td><td>Fonctionnalités avancées</td><td>2013</td>
+    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=7&page=1&sort=created&state=open">1.6.300</a></td><td>Fonctionnalités avancées</td><td>2013</td>
   </tr>
 <tr>
-    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=9&page=1&sort=created&state=open">1.6.4</a></td><td>Fonctionnalités avancées v2</td><td>2013</td>
+    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=9&page=1&sort=created&state=open">1.6.400</a></td><td>Fonctionnalités avancées v2</td><td>2013</td>
   </tr>    
 </table>
 
@@ -38,9 +38,7 @@ Un fichier Config.h est nécessaire (dans le répertoire Classes) :
 //
 //  Classes/Config.h
 //
-
-#define kTestFlightAPI                  @"TestFlight API Key"
-#define kAnalyticsAccountId             @"Google Analytics API Key"
+static NSString *const kTestFlightAPI = @"TestFlight API Key";
 ```
 
 
