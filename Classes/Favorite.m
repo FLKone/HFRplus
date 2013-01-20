@@ -90,13 +90,7 @@
     [aTopic setATitle:aTopicTitle];
     [aTopicTitle release];
     
-    //URL
-    HTMLNode * topicFlagNode = [topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase5" allowPartial:NO];
-    HTMLNode * topicFlagLinkNode = [topicFlagNode findChildTag:@"a"];
-    
-    NSString *aTopicURL = [[NSString alloc] initWithString:[topicFlagLinkNode getAttributeNamed:@"href"]];
-    [aTopic setAURL:aTopicURL];
-    [aTopicURL release];
+
     
     //Answer Count
     HTMLNode * numRepNode = [topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase7" allowPartial:NO];
@@ -136,6 +130,25 @@
         [aTopic setMaxTopicPage:1];            
     }
     
+    //URL
+    HTMLNode * topicFlagNode = [topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase5" allowPartial:NO];
+    HTMLNode * topicFlagLinkNode = [topicFlagNode findChildTag:@"a"];
+    
+    if (!topicFlagLinkNode) {
+        // Si pas de dernier topic = url = last page
+        NSString *aTopicURL = [[NSString alloc] initWithString:[linkLastRepNode getAttributeNamed:@"href"]];
+        [aTopic setAURL:aTopicURL];
+        [aTopicURL release];
+        
+        [aTopic setIsViewed:YES];
+    }
+    else
+    {
+        NSString *aTopicURL = [[NSString alloc] initWithString:[topicFlagLinkNode getAttributeNamed:@"href"]];
+        [aTopic setAURL:aTopicURL];
+        [aTopicURL release];
+    }
+
     
     //Current page if flag
     int pageNumber;

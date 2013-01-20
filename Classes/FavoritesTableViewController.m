@@ -64,9 +64,25 @@
 
 - (void)fetchContent
 {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSInteger vos_sujets = [defaults integerForKey:@"vos_sujets"];
+
+    
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];
 	self.status = kIdle;
-	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/forum1f.php?owntopic=1", kForumURL]]]];
+    
+    switch (vos_sujets) {
+        case 0:
+            [self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/forum1f.php?owntopic=1", kForumURL]]]];
+            break;
+        case 1:
+            [self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/forum1f.php?owntopic=3", kForumURL]]]];
+            break;
+        default:
+            [self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/forum1f.php?owntopic=1", kForumURL]]]];            
+            break;
+    }
+    
 	[request setDelegate:self];
 
 	[request setDidStartSelector:@selector(fetchContentStarted:)];
@@ -444,11 +460,31 @@
 - (void)loadCatForType:(id)sender {
     
     
-    NSLog(@"loadCatForType %d", [sender tag]);
+    //NSLog(@"loadCatForType %d", [sender tag]);
     int section = [sender tag];
-    TopicsTableViewController *aView = [[TopicsTableViewController alloc] initWithNibName:@"TopicsTableViewController" bundle:nil flag:2];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSInteger vos_sujets = [defaults integerForKey:@"vos_sujets"];
+    
+    TopicsTableViewController *aView;
+    
+    //NSLog(@"aURL %@", [[[arrayNewData objectAtIndex:section] forum] aURL]);
+    
+    switch (vos_sujets) {
+        case 0:
+            aView = [[TopicsTableViewController alloc] initWithNibName:@"TopicsTableViewController" bundle:nil flag:2];
+            aView.forumFlag1URL = [[[arrayNewData objectAtIndex:section] forum] aURL];
+            break;
+        case 1:
+            aView = [[TopicsTableViewController alloc] initWithNibName:@"TopicsTableViewController" bundle:nil flag:1];
+            aView.forumFavorisURL = [[[arrayNewData objectAtIndex:section] forum] aURL];
+            break;
+        default:
+            aView = [[TopicsTableViewController alloc] initWithNibName:@"TopicsTableViewController" bundle:nil flag:2];
+            aView.forumFlag1URL = [[[arrayNewData objectAtIndex:section] forum] aURL];            
+            break;
+    }
 
-	aView.forumFlag1URL = [[[arrayNewData objectAtIndex:section] forum] aURL];	
 	aView.forumName = [[[arrayNewData objectAtIndex:section] forum] aTitle];	
 	//aView.pickerViewArray = [[arrayNewData objectAtIndex:section] forum] subCats];	
     
@@ -597,8 +633,21 @@
     // Configure the cell...
 	[(UILabel *)[cell.contentView viewWithTag:999] setText:[tmpTopic aTitle]];
 	//[(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"%d messages", ([[arrayData objectAtIndex:theRow] aRepCount] + 1)]];
-	[(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"⚑ %d/%d", [tmpTopic curTopicPage], [tmpTopic maxTopicPage] ]];
 	
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSInteger vos_sujets = [defaults integerForKey:@"vos_sujets"];
+    
+    switch (vos_sujets) {
+        case 0:
+            [(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"⚑ %d/%d", [tmpTopic curTopicPage], [tmpTopic maxTopicPage] ]];
+            break;
+        case 1:
+            [(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"★ %d/%d", [tmpTopic curTopicPage], [tmpTopic maxTopicPage] ]];
+            break;
+        default:
+            [(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"⚑ %d/%d", [tmpTopic curTopicPage], [tmpTopic maxTopicPage] ]];
+            break;
+    }
     
     [(UILabel *)[cell.contentView viewWithTag:997] setText:[NSString stringWithFormat:@"%@ - %@", [tmpTopic aAuthorOfLastPost], [tmpTopic aDateOfLastPost]]];
 
