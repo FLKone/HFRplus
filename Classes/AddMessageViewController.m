@@ -12,7 +12,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "NSData+Base64.h"
 #import "RegexKitLite.h"
-
+#import "UIWebView+Tools.h"
 
 @implementation AddMessageViewController
 @synthesize delegate, textView, arrayInputData, formSubmit, accessoryView, smileView;
@@ -157,7 +157,12 @@
 	//NSLog(@"viewDidLoad add");
 	
    // [super viewDidLoad];
-	
+
+    
+    
+    [self.smileView setBackgroundColor:[UIColor colorWithRed:46/255.f green:46/255.f blue:46/255.f alpha:1.00]];
+    [self.smileView hideGradientBackground];
+    
 	[self.smileView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"smileybase" ofType:@"html"] isDirectory:NO]]];
 		
 	self.formSubmit = [NSString stringWithFormat:@"%@/bddpost.php", kForumURL];
