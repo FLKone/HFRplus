@@ -241,7 +241,6 @@
 		CA4CE8A615B1B36F0039FC3B /* MWTapDetectingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA4CE89D15B1B36F0039FC3B /* MWTapDetectingImageView.m */; };
 		CA4CE8A715B1B36F0039FC3B /* MWTapDetectingView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA4CE89F15B1B36F0039FC3B /* MWTapDetectingView.m */; };
 		CA4CE8A815B1B36F0039FC3B /* MWZoomingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA4CE8A115B1B36F0039FC3B /* MWZoomingScrollView.m */; };
-		CA5B8C2E15A72606009CE613 /* UsedSmileys.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5B8C2D15A72606009CE613 /* UsedSmileys.m */; };
 		CA5B8C3515A78A2A009CE613 /* NSDictionary+Merging.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5B8C3415A78A2A009CE613 /* NSDictionary+Merging.m */; };
 		CA65AD5912663F92005921B1 /* blank15.gif in Resources */ = {isa = PBXBuildFile; fileRef = CA65AD5812663F92005921B1 /* blank15.gif */; };
 		CA730DAA15B1E46900FB7FF1 /* jquery-1.7.2.min.js in Resources */ = {isa = PBXBuildFile; fileRef = CA730DA715B1D9B600FB7FF1 /* jquery-1.7.2.min.js */; };
@@ -679,8 +678,6 @@
 		CA4CE89F15B1B36F0039FC3B /* MWTapDetectingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWTapDetectingView.m; sourceTree = "<group>"; };
 		CA4CE8A015B1B36F0039FC3B /* MWZoomingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWZoomingScrollView.h; sourceTree = "<group>"; };
 		CA4CE8A115B1B36F0039FC3B /* MWZoomingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWZoomingScrollView.m; sourceTree = "<group>"; };
-		CA5B8C2C15A72606009CE613 /* UsedSmileys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsedSmileys.h; sourceTree = "<group>"; };
-		CA5B8C2D15A72606009CE613 /* UsedSmileys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UsedSmileys.m; sourceTree = "<group>"; };
 		CA5B8C3315A78A2A009CE613 /* NSDictionary+Merging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Merging.h"; sourceTree = "<group>"; };
 		CA5B8C3415A78A2A009CE613 /* NSDictionary+Merging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Merging.m"; sourceTree = "<group>"; };
 		CA65AD5812663F92005921B1 /* blank15.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = blank15.gif; sourceTree = "<group>"; };
@@ -1258,7 +1255,6 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				CA5B8C2615A6F26E009CE613 /* iCloud */,
 				CA26861C13ADD94100AC5511 /* webBrowser */,
 				01BF8A0C121D7450007624B6 /* Common */,
 				01BF8A0F121D7469007624B6 /* Forums */,
@@ -1610,15 +1606,6 @@
 				CA4CE8A115B1B36F0039FC3B /* MWZoomingScrollView.m */,
 			);
 			path = MWPhotoBrowser;
-			sourceTree = "<group>";
-		};
-		CA5B8C2615A6F26E009CE613 /* iCloud */ = {
-			isa = PBXGroup;
-			children = (
-				CA5B8C2C15A72606009CE613 /* UsedSmileys.h */,
-				CA5B8C2D15A72606009CE613 /* UsedSmileys.m */,
-			);
-			name = iCloud;
 			sourceTree = "<group>";
 		};
 		CA9E8275124364E8000EE882 /* PhotoViewer */ = {
@@ -2047,7 +2034,6 @@
 				CA1070AB15A4CEA5002E6C19 /* IASKSwitch.m in Sources */,
 				CA1070AC15A4CEA5002E6C19 /* IASKTextField.m in Sources */,
 				CA1070C915A5F408002E6C19 /* SettingsViewController.m in Sources */,
-				CA5B8C2E15A72606009CE613 /* UsedSmileys.m in Sources */,
 				CA5B8C3515A78A2A009CE613 /* NSDictionary+Merging.m in Sources */,
 				CA4CE88815B1B2760039FC3B /* SDImageCache.m in Sources */,
 				CA4CE88915B1B2760039FC3B /* SDWebImageDecoder.m in Sources */,
