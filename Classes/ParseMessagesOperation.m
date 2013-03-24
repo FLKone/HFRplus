@@ -81,31 +81,20 @@
 	
 	if (![self isCancelled])
 	{
-		[self.delegate didStartParsing:myParser];		
-	}
-    else {
-		//NSLog(@"main canceled before");		
-	}
-    
-	[self parseData:myParser];
-
-	
-	if (![self isCancelled])
-    {
-		//NSLog(@"OK");
-        // notify our AppDelegate that the parsing is complete
+		[self.delegate didStartParsing:myParser];
+        
+        
+        [self parseData:myParser];
         
         [self.queue waitUntilAllOperationsAreFinished];
         
-        [self.delegate didFinishParsing:self.workingArray];
-		//NSLog(@"OK2");
-    }
-    else {
-		//NSLog(@"main canceled after");		
+        if (![self isCancelled])
+        {
+            [self.delegate didFinishParsing:self.workingArray];
+            
+        }
+        
 	}
-
-    self.workingArray = nil;
-    self.dataToParse = nil;
     
     [myParser release], myParser = nil;
 	
