@@ -296,6 +296,7 @@
 		CA94528C13F5F6F900913D63 /* OptionsTopicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA94528913F5F6F900913D63 /* OptionsTopicViewController.xib */; };
 		CA94528D13F5F6F900913D63 /* OptionsTopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA94528A13F5F6F900913D63 /* OptionsTopicViewController.m */; };
 		CA9B06C216FF6A92003584B1 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA9B06C016FF6A92003584B1 /* libTestFlight.a */; };
+		CA9B06C516FF8984003584B1 /* UIWebView+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = CA9B06C416FF8984003584B1 /* UIWebView+Tools.m */; };
 		CA9BCD681239410F00B4F2D1 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = CA9BCD671239410F00B4F2D1 /* loading.gif */; };
 		CA9CBF0315BC726A004F7DAC /* arrowR.png in Resources */ = {isa = PBXBuildFile; fileRef = CA9CBF0115BC726A004F7DAC /* arrowR.png */; };
 		CA9CBF0415BC726A004F7DAC /* arrowR@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA9CBF0215BC726A004F7DAC /* arrowR@2x.png */; };
@@ -744,6 +745,8 @@
 		CA94528B13F5F6F900913D63 /* OptionsTopicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = OptionsTopicViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CA9B06C016FF6A92003584B1 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
 		CA9B06C116FF6A92003584B1 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
+		CA9B06C316FF8984003584B1 /* UIWebView+Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+Tools.h"; sourceTree = "<group>"; };
+		CA9B06C416FF8984003584B1 /* UIWebView+Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+Tools.m"; sourceTree = "<group>"; };
 		CA9BCD671239410F00B4F2D1 /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
 		CA9CBF0115BC726A004F7DAC /* arrowR.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowR.png; sourceTree = "<group>"; };
 		CA9CBF0215BC726A004F7DAC /* arrowR@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowR@2x.png"; sourceTree = "<group>"; };
@@ -1300,6 +1303,8 @@
 				01BF8A2C121D770F007624B6 /* HTMLParser */,
 				01BF8797121C4426007624B6 /* HTTP */,
 				01BF87AA121C4427007624B6 /* RegexKitLite.h */,
+				CA9B06C316FF8984003584B1 /* UIWebView+Tools.h */,
+				CA9B06C416FF8984003584B1 /* UIWebView+Tools.m */,
 				01BF87AB121C4427007624B6 /* RegexKitLite.m */,
 				01BF8A7F121D8051007624B6 /* RangeOfCharacters.h */,
 				01BF8A80121D8051007624B6 /* RangeOfCharacters.m */,
@@ -2054,6 +2059,7 @@
 				CA8A79B215BB404700D8E9E7 /* Favorite.m in Sources */,
 				CA9CBF0715BC8702004F7DAC /* UIImage+Resize.m in Sources */,
 				CA9CBF0E15BEEC51004F7DAC /* AKSingleSegmentedControl.m in Sources */,
+				CA9B06C516FF8984003584B1 /* UIWebView+Tools.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,6 +16,8 @@
 #import "ASIHTTPRequest.h"
 #import "ASIDownloadCache.h"
 
+#import "UIWebView+Tools.h"
+
 #import "ShakeView.h"
 //#import "UIImageView+WebCache.h"
 #import "RangeOfCharacters.h"
@@ -1232,17 +1234,6 @@
 //	handleLoadedApps:notif
 // -------------------------------------------------------------------------------
 
-- (void) hideGradientBackground:(UIView*)theView
-{
-    for (UIView* subview in theView.subviews)
-    {
-        if ([subview isKindOfClass:[UIImageView class]])
-            subview.hidden = YES;
-        
-        [self hideGradientBackground:subview];
-    }
-}
-
 - (void)handleLoadedApps:(NSArray *)loadedItems
 {	
 	[self.arrayData removeAllObjects];
@@ -1283,7 +1274,7 @@
 	//NSLog(@"======================================================================================================");
 	
     [self.messagesWebView setBackgroundColor:[UIColor clearColor]];
-    [self hideGradientBackground:self.messagesWebView];
+    [self.messagesWebView hideGradientBackground];
     
 	[self.messagesWebView loadHTMLString:HTMLString baseURL:baseURL];
 	

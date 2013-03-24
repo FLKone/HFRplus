@@ -14,6 +14,7 @@
 #import "ASIHTTPRequest.h"
 #import "RegexKitLite.h"
 
+#import "UIWebView+Tools.h"
 
 #import "LinkItem.h"
 
@@ -135,6 +136,9 @@
 	
 	//NSLog(@"baseURL: %@", baseURL);
 
+    [self.messageView setBackgroundColor:[UIColor clearColor]];
+    [self.messageView hideGradientBackground];
+    
 	[messageView loadHTMLString:HTMLString baseURL:baseURL];
 	
 	[messageView setUserInteractionEnabled:YES];
