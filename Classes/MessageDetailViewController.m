@@ -374,7 +374,23 @@
             
 
             return NO;
-        }        
+        }
+		else if ([[aRequest.URL host] isEqualToString:@"forum.hardware.fr"] && ([[[aRequest.URL pathComponents] objectAtIndex:1] isEqualToString:@"forum2.php"] || [[[aRequest.URL pathComponents] objectAtIndex:1] isEqualToString:@"hfr"])) {
+            
+            NSLog(@"%@", aRequest.URL);
+            
+            MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[aRequest.URL absoluteString] stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@", kForumURL] withString:@""]];
+            self.messagesTableViewController = aView;
+            [aView release];
+            
+            //setup the URL
+            self.messagesTableViewController.topicName = @"";
+            self.messagesTableViewController.isViewed = YES;
+            
+            [self.navigationController pushViewController:messagesTableViewController animated:YES];
+            
+            return NO;
+        }
         else {
             NSURL *url = aRequest.URL;
             NSString *urlString = url.absoluteString;
