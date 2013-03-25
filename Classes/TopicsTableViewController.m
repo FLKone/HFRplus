@@ -1196,10 +1196,10 @@
 	[cell.titleLabel setText:[aTopic aTitle]];
 	 
 	if (aTopic.aRepCount == 0) {
-	 [cell.msgLabel setText:[NSString stringWithFormat:@"%d message", (aTopic.aRepCount + 1)]];
+	 [cell.msgLabel setText:[NSString stringWithFormat:@"↺ %d", (aTopic.aRepCount + 1)]];
 	}
 	else {
-	 [cell.msgLabel setText:[NSString stringWithFormat:@"%d messages", (aTopic.aRepCount + 1)]];
+	 [cell.msgLabel setText:[NSString stringWithFormat:@"↺ %d", (aTopic.aRepCount + 1)]];
 	}
 	
 	[cell.timeLabel setText:[NSString stringWithFormat:@"%@ - %@", [aTopic aAuthorOfLastPost], [aTopic aDateOfLastPost]]];
