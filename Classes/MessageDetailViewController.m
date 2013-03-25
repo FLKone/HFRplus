@@ -136,7 +136,7 @@
 	
 	//NSLog(@"baseURL: %@", baseURL);
 
-    [self.messageView setBackgroundColor:[UIColor clearColor]];
+    [self.messageView setBackgroundColor:[UIColor whiteColor]];
     [self.messageView hideGradientBackground];
     
 	[messageView loadHTMLString:HTMLString baseURL:baseURL];

@@ -147,6 +147,8 @@
 -(void)searchNewMessages;
 -(void)fetchContentinBackground:(id)from;
 
+-(void)webViewDidFinishLoadDOM;
+
 -(BOOL) canBeFavorite;
 -(void) EcrireCookie:(NSString *)nom withVal:(NSString *)valeur;
 -(NSString *) LireCookie:(NSString *)nom;
