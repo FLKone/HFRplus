@@ -1413,7 +1413,9 @@
 	
 	//NSLog(@"stringFlagTopic %@", self.stringFlagTopic);
     
-	jsString = [jsString stringByAppendingString:[NSString stringWithFormat:@"$('html, body').animate({scrollTop:$('a[name=\"%@\"]').offset().top }, 'slow');", [self.stringFlagTopic stringByReplacingOccurrencesOfString:@"#" withString:@""]]];
+    jsString = [jsString stringByAppendingString:[NSString stringWithFormat:@"window.location.hash='';window.location.hash='%@';", self.stringFlagTopic]];
+    
+	//jsString = [jsString stringByAppendingString:[NSString stringWithFormat:@"$('html, body').animate({scrollTop:$('a[name=\"%@\"]').offset().top }, 'slow');", [self.stringFlagTopic stringByReplacingOccurrencesOfString:@"#" withString:@""]]];
     
     self.stringFlagTopic = @"";
 	
