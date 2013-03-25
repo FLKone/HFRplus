@@ -199,14 +199,15 @@
     UIMenuItem *textStrikeItem = [[[UIMenuItem alloc] initWithTitle:@"S" action:@selector(textStrike:)] autorelease];
     
 	UIMenuItem *textSpoilerItem = [[[UIMenuItem alloc] initWithTitle:@"SPOILER" action:@selector(textSpoiler:)] autorelease];
-    UIMenuItem *textFixeItem = [[[UIMenuItem alloc] initWithTitle:@"FIXE" action:@selector(textFixe:)] autorelease];
+    UIMenuItem *textFixeItem = [[[UIMenuItem alloc] initWithTitle:@"FIXED" action:@selector(textFixe:)] autorelease];
+    UIMenuItem *textQuoteItem = [[[UIMenuItem alloc] initWithTitle:@"QUOTE" action:@selector(textQuote:)] autorelease];
  //   UIMenuItem *textCppItem = [[[UIMenuItem alloc] initWithTitle:@"CPP" action:@selector(textStrike:)] autorelease];
     UIMenuItem *textLinkItem = [[[UIMenuItem alloc] initWithTitle:@"URL" action:@selector(textLink:)] autorelease];
     //UIMenuItem *textMailItem = [[[UIMenuItem alloc] initWithTitle:@"@" action:@selector(textStrike:)] autorelease];
     UIMenuItem *textImgItem = [[[UIMenuItem alloc] initWithTitle:@"IMG" action:@selector(textImg:)] autorelease];
 	
     [[UIMenuController sharedMenuController] setMenuItems:[NSArray arrayWithObjects:textBoldItem, textItalicItem, textUnderlineItem, textStrikeItem,
-														   textSpoilerItem, textFixeItem, textLinkItem, textImgItem, nil]];
+														   textSpoilerItem, textFixeItem, textQuoteItem, textLinkItem, textImgItem, nil]];
 
 	
 	[segmentControler setEnabled:NO forSegmentAtIndex:1];		
@@ -731,7 +732,10 @@
 }
 - (void)textFixe:(id)sender{
 	[self insertBBCode:@"fixed"];
-}	 
+}
+- (void)textQuote:(id)sender{
+	[self insertBBCode:@"quote"];
+}
 - (void)textLink:(id)sender{
 	[self insertBBCode:@"url"];
 }
