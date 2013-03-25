@@ -16,6 +16,10 @@ style='margin:0;padding:0;font-size:12;font-family:Helvetica;'
 	-webkit-text-size-adjust: none;
 }
 
+.maxmessage {
+    padding-bottom:54px !important;
+}
+
 body {
 	width:320px;
 }
@@ -266,6 +270,10 @@ background:-webkit-gradient(
 
 .message .content .right table.code * {
 	font-size:9px !important;
+}
+
+table.code *, table.fixed * {
+    font-family: monospace !important;
 }
 
 #actualiserbtn {

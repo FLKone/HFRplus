@@ -88,6 +88,10 @@ table ol, ul
 	padding-left:20px !important
 }
 
+table.code *, table.fixed * {
+    font-family: monospace !important;
+}
+
 table.code * {
 	font-size:9px !important;
 }
