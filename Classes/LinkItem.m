@@ -84,12 +84,12 @@
 		//Replacing Links with IMG with custom IMG
 		NSString *regEx3 = @"<a rel=\"nofollow\" href=\"([^\"]+)\" target=\"_blank\" class=\"cLink\"><img src=\"([^\"]+)\" alt=\"[^\"]+\" title=\"[^\"]+\" onload=\"[^\"]+\" style=\"[^\"]+\"></a>";			
 		myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx3
-															  withString:@"<img class=\"hfrplusimg\" title=\"%%ID%%\" src=\"121-lanscape.png\" alt=\"$2\" longdesc=\"$1\">"];
+															  withString:@"<img class=\"hfrplusimg\" title=\"%%ID%%\" src=\"121-landscapebig.png\" alt=\"$2\" longdesc=\"$1\">"];
 		
 		//External Images			
 		NSString *regEx = @"<img src=\"([^\"]+)\" alt=\"[^\"]+\" title=\"[^\"]+\" onload=\"[^\"]+\" style=\"[^\"]+\">";			
 		myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx
-															  withString:@"<img class=\"hfrplusimg\" title=\"%%ID%%\" src=\"121-lanscape.png\" alt=\"$1\" longdesc=\"\">"];	
+															  withString:@"<img class=\"hfrplusimg\" title=\"%%ID%%\" src=\"121-landscapebig.png\" alt=\"$1\" longdesc=\"\">"];	
 		
 		
 	} else if ([display isEqualToString:@"yes"]) {
@@ -113,12 +113,12 @@
                 //Replacing Links with IMG with custom IMG
                 NSString *regEx3 = @"<a rel=\"nofollow\" href=\"([^\"]+)\" target=\"_blank\" class=\"cLink\"><img src=\"([^\"]+)\" alt=\"[^\"]+\" title=\"[^\"]+\" onload=\"[^\"]+\" style=\"[^\"]+\"></a>";			
                 myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx3
-                                                                      withString:@"<img class=\"hfrplusimg\" title=\"%%ID%%\" src=\"121-lanscape.png\" alt=\"$2\" longdesc=\"$1\">"];
+                                                                      withString:@"<img class=\"hfrplusimg\" title=\"%%ID%%\" src=\"121-landscapebig.png\" alt=\"$2\" longdesc=\"$1\">"];
                 
                 //External Images			
                 NSString *regEx = @"<img src=\"([^\"]+)\" alt=\"[^\"]+\" title=\"[^\"]+\" onload=\"[^\"]+\" style=\"[^\"]+\">";			
                 myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx
-                                                                      withString:@"<img class=\"hfrplusimg\" title=\"%%ID%%\" src=\"121-lanscape.png\" alt=\"$1\" longdesc=\"\">"];	                
+                                                                      withString:@"<img class=\"hfrplusimg\" title=\"%%ID%%\" src=\"121-landscapebig.png\" alt=\"$1\" longdesc=\"\">"];	                
                 break;
             }
             case ReachableViaWiFi:
