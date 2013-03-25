@@ -14,13 +14,18 @@
 
 body {
 	background:#2e2e2e;
-	padding:3px !important;	
+	padding: 10px 0 38px 0 !important;
 	position:relative;
-	padding-bottom:35px !important;	
 	
 }
+#container {
+    width: 310px;
+       
+}
+
 #container_ajax, #container {
 	text-align:center;
+    margin: 0 auto;     
 }
 #container_ajax .loading img {
 	vertical-align:middle;
@@ -47,6 +52,7 @@ body {
 	padding:5px !important;
 	margin:4px 3px !important;	
 	max-height:30px;
+    min-height: 15px;
 }
 #container_ajax img.smile.selected {
 	background-image: 	-webkit-gradient(
@@ -59,7 +65,7 @@ body {
 }
 
 .button {
-	float:left;
+    display: inline-block;
 	padding:5px !important;
 	margin:4px 3px !important;
 	height:30px;
@@ -96,3 +102,17 @@ body {
     color-stop(0.47, rgb(127,127,127))
 ); 	
 }
+
+@media only screen and (min-width: 540px) {
+    #container {
+        width: 520px;
+    }
+}
+
+@media only screen and (min-width: 568px) {
+    #container {
+        width: 541px;
+    }
+}
+
+
