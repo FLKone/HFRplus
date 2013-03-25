@@ -60,7 +60,7 @@
     
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMaxi];
 
-    //NSLog(@"URL %@", [self currentUrl]);
+    NSLog(@"URL %@", [self currentUrl]);
     
 	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]]]];
 	[request setDelegate:self];
@@ -437,7 +437,7 @@
 		self.currentUrl = [theTopicUrl copy];	
 		self.loaded = NO;
 		self.isViewed = YES;
-		//[self refreshData];
+
 
 	}
 	return self;
@@ -1280,11 +1280,11 @@
                 <script type='text/javascript'>\
                     document.addEventListener('DOMContentLoaded', loadedML);\
                     document.addEventListener('touchstart', touchstart);\
-                    function loadedML() { document.location.href = 'oijlkajsdoihjlkjasdoloaded://loaded'};\
+                    function loadedML() { setTimeout(function() {document.location.href = 'oijlkajsdoihjlkjasdoloaded://loaded';},700); };\
                     function HLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bselected'; }\
                     function UHLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bunselected'; }\
-                    function swap_spoiler_states(obj){var div=obj.getElementsByTagName('div');if(div[0]){if(div[0].style.visibility==\"visible\"){div[0].style.visibility='hidden';}else if(div[0].style.visibility==\"hidden\"||!div[0].style.visibility){div[0].style.visibility='visible';}}} $('img').error(function(){\
-                    $(this).attr('src', 'photoDefaultfailmini.png');});\
+                    function swap_spoiler_states(obj){var div=obj.getElementsByTagName('div');if(div[0]){if(div[0].style.visibility==\"visible\"){div[0].style.visibility='hidden';}else if(div[0].style.visibility==\"hidden\"||!div[0].style.visibility){div[0].style.visibility='visible';}}}\
+                    $('img').error(function(){ $(this).attr('src', 'photoDefaultfailmini.png');});\
                     function touchstart() { document.location.href = 'oijlkajsdoihjlkjasdotouch://touchstart'};\
                 </script>\
                 </body></html>", tmpHTML];
@@ -1302,6 +1302,7 @@
     [self.messagesWebView setBackgroundColor:[UIColor whiteColor]];
     [self.messagesWebView hideGradientBackground];
     
+    self.loaded = NO;
 	[self.messagesWebView loadHTMLString:HTMLString baseURL:baseURL];
 	
 	[self.messagesWebView setUserInteractionEnabled:YES];
@@ -1341,7 +1342,12 @@
 - (void)webViewDidFinishLoadDOM
 {
     NSLog(@"== webViewDidFinishLoadDOM");
-
+    if (self.loaded) {
+        NSLog(@"deja DOMed");
+        return;
+    }
+    
+    self.loaded = YES;
     
 	NSString *jsString = [[[NSString alloc] initWithString:@""] autorelease];
     
@@ -1425,11 +1431,12 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-	//NSLog(@"== webViewDidFinishLoad");
-
+	NSLog(@"== webViewDidFinishLoad");
+    
+    [self webViewDidFinishLoadDOM];
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
-    //NSLog(@"== webViewDidFinishLoad OK");
+    NSLog(@"== webViewDidFinishLoad OK");
 
 }
 //NSSelectorFromString([[[self arrayAction] objectAtIndex:curPostID] objectForKey:@"code"])
