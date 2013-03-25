@@ -443,6 +443,12 @@
 	return self;
 }
 
+- (void)editMenuHidden {
+    UIMenuController *menuController = [UIMenuController sharedMenuController];
+    [menuController setMenuItems:nil];
+    //[self resignFirstResponder];
+}
+
 - (void)viewDidLoad {
 	//NSLog(@"viewDidLoad");
 
@@ -450,7 +456,13 @@
 	self.isAnimating = NO;
 
 	self.title = self.topicName;  
-        
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(editMenuHidden)
+                                                 name:UIMenuControllerDidHideMenuNotification
+                                               object:nil];
+    
+    
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
     
     label.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
@@ -1248,21 +1260,34 @@
 	}	
 	
 	NSString *HTMLString = [[NSString alloc] 
-                            initWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
-                            <html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"fr\" lang=\"fr\">\
-                            <head>\
-                            <script type='text/javascript' src='jquery.js'></script>\
-                            <script type='text/javascript' src='jquery.doubletap.js'></script>\
-                            <script type='text/javascript' src='jquery.base64.js'></script>\
-                            <script type='text/javascript' src='jquery.lazyload.mini.js'></script>\
-                            <meta name='viewport' content='initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0' />\
-                            <link type='text/css' rel='stylesheet' href='style-liste.css'/>\
-                            <link type='text/css' rel='stylesheet' href='style-liste-retina.css' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\
-                            <link type='text/css' rel='stylesheet' href='style-liste-ipad-portrait.css' media='all and (min-width: 767px)'/>\
-                            <link type='text/css' rel='stylesheet' href='style-liste-ipad-landscape.css' media='all and (min-width: 700px) and (max-width: 750px)'/>\
-                            </head><body>\
-                            <div class='bunselected' id='qsdoiqjsdkjhqkjhqsdqdilkjqsd2'>%@</div><div id='endofpage'></div><div id='endofpagetoolbar'></div><a name='bas'></a><script type='text/javascript'>document.addEventListener('DOMContentLoaded',loadedML); function loadedML() { document.location.href = 'oijlkajsdoihjlkjasdoloaded://loaded'}; function HLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bselected'; } function UHLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bunselected'; } function swap_spoiler_states(obj){var div=obj.getElementsByTagName('div');if(div[0]){if(div[0].style.visibility==\"visible\"){div[0].style.visibility='hidden';}else if(div[0].style.visibility==\"hidden\"||!div[0].style.visibility){div[0].style.visibility='visible';}}} $('img').error(function(){\
-                            $(this).attr('src', 'photoDefaultfailmini.png');});</script></body></html>", tmpHTML];
+                initWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
+                <html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"fr\" lang=\"fr\">\
+                <head>\
+                <script type='text/javascript' src='jquery.js'></script>\
+                <script type='text/javascript' src='jquery.doubletap.js'></script>\
+                <script type='text/javascript' src='jquery.base64.js'></script>\
+                <script type='text/javascript' src='jquery.lazyload.mini.js'></script>\
+                <meta name='viewport' content='initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0' />\
+                <link type='text/css' rel='stylesheet' href='style-liste.css'/>\
+                <link type='text/css' rel='stylesheet' href='style-liste-retina.css' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\
+                <link type='text/css' rel='stylesheet' href='style-liste-ipad-portrait.css' media='all and (min-width: 767px)'/>\
+                <link type='text/css' rel='stylesheet' href='style-liste-ipad-landscape.css' media='all and (min-width: 700px) and (max-width: 750px)'/>\
+                </head><body>\
+                <div class='bunselected' id='qsdoiqjsdkjhqkjhqsdqdilkjqsd2'>%@</div>\
+                <div id='endofpage'></div>\
+                <div id='endofpagetoolbar'></div>\
+                <a name='bas'></a>\
+                <script type='text/javascript'>\
+                    document.addEventListener('DOMContentLoaded', loadedML);\
+                    document.addEventListener('touchstart', touchstart);\
+                    function loadedML() { document.location.href = 'oijlkajsdoihjlkjasdoloaded://loaded'};\
+                    function HLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bselected'; }\
+                    function UHLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bunselected'; }\
+                    function swap_spoiler_states(obj){var div=obj.getElementsByTagName('div');if(div[0]){if(div[0].style.visibility==\"visible\"){div[0].style.visibility='hidden';}else if(div[0].style.visibility==\"hidden\"||!div[0].style.visibility){div[0].style.visibility='visible';}}} $('img').error(function(){\
+                    $(this).attr('src', 'photoDefaultfailmini.png');});\
+                    function touchstart() { document.location.href = 'oijlkajsdoihjlkjasdotouch://touchstart'};\
+                </script>\
+                </body></html>", tmpHTML];
 	
 	NSString *path = [[NSBundle mainBundle] bundlePath];
 	NSURL *baseURL = [NSURL fileURLWithPath:path];
@@ -1280,8 +1305,7 @@
 	[self.messagesWebView loadHTMLString:HTMLString baseURL:baseURL];
 	
 	[self.messagesWebView setUserInteractionEnabled:YES];
-    [self.loadingView setHidden:YES];
-	[self.messagesWebView setHidden:NO];
+    
 
 	[HTMLString release];
 	//[tmpHTML release];
@@ -1388,6 +1412,11 @@
     self.stringFlagTopic = @"";
 	
 	[self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString];
+    
+    
+    [self.loadingView setHidden:YES];
+    [self.messagesWebView setHidden:NO];
+
 	//NSLog(@"? webViewDidFinishLoad JS");
 	
 	//NSDate *nowT = [NSDate date]; // Create a current date
@@ -1418,7 +1447,7 @@
 }
 	 
 - (BOOL) canBecomeFirstResponder {
-	//NSLog(@"canBecomeFirstResponder");
+	NSLog(@"canBecomeFirstResponder");
 	
     return YES;
 }
@@ -1475,6 +1504,15 @@
 		if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdodetails"]) {
             //NSLog(@"details ==========");
 			[self didSelectMessage:[[[aRequest.URL absoluteString] lastPathComponent] intValue]];
+			return NO;
+		}
+		else if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdotouch"]) {
+			//NSLog(@"touch %@", [[aRequest.URL absoluteString] lastPathComponent]);
+            if ([[[aRequest.URL absoluteString] lastPathComponent] isEqualToString:@"touchstart"]) {
+                if ([UIMenuController sharedMenuController].isMenuVisible) {
+                    [[UIMenuController sharedMenuController] setMenuVisible:NO animated:YES];
+                }
+            }
 			return NO;
 		}
 		else if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdoloaded"]) {
