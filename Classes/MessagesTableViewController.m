@@ -1306,7 +1306,6 @@
 	[self.messagesWebView loadHTMLString:HTMLString baseURL:baseURL];
 	
 	[self.messagesWebView setUserInteractionEnabled:YES];
-    
 
 	[HTMLString release];
 	//[tmpHTML release];

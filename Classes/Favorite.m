@@ -90,6 +90,9 @@
     [aTopic setATitle:aTopicTitle];
     [aTopicTitle release];
     
+    NSString *aTopicURL = [[NSString alloc] initWithString:[[topicTitleNode findChildTag:@"a"] getAttributeNamed:@"href"]];
+    [aTopic setAURLOfFirstPage:aTopicURL];
+    [aTopicURL release];
 
     
     //Answer Count

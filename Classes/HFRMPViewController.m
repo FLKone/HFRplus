@@ -152,7 +152,7 @@
 		self.topicActionSheet = [[UIActionSheet alloc] initWithTitle:@"Aller à..."
 																delegate:self cancelButtonTitle:@"Annuler"
 												  destructiveButtonTitle:nil
-													   otherButtonTitles:	@"la dernière page", @"la première page", @"la page numéro...",
+													   otherButtonTitles:	@"la dernière page", @"la première page", @"la page numéro...", @"Copier le lien",
 									 nil,
 									 nil];
 		
@@ -192,6 +192,7 @@
 
 - (void)actionSheet:(UIActionSheet *)modalView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    NSLog(@"buttonIndex %d", buttonIndex);
 	switch (buttonIndex)
 	{
 		case 0:
@@ -229,6 +230,7 @@
 		}
         default:
         {
+            NSLog(@"default");
             [super actionSheet:modalView clickedButtonAtIndex:buttonIndex];
             break;
         }

@@ -36,7 +36,9 @@
 	self = [super init];
 	if (self) {
         self.aTitle = [NSString string];
-        self.aURLOfFlag = [NSString string];
+        self.aURL = [NSString string];
+
+        self.aURLOfFirstPage = [NSString string];
         
         self.aURLOfFlag = [NSString string];
         self.aTypeOfFlag = [NSString string];
@@ -60,6 +62,8 @@
 -(void)dealloc {
 	self.aTitle	= nil;
 	self.aURL	= nil;
+
+    self.aURLOfFirstPage		= nil;
 
 	self.aURLOfFlag		= nil;
 	self.aTypeOfFlag	= nil;

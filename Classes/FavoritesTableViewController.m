@@ -705,7 +705,7 @@
 		self.topicActionSheet = [[UIActionSheet alloc] initWithTitle:@"Aller à..."
 																delegate:self cancelButtonTitle:@"Annuler"
 												  destructiveButtonTitle:nil
-													   otherButtonTitles:	@"la dernière page", @"la dernière réponse", @"la page numéro...",
+													   otherButtonTitles:	@"la dernière page", @"la dernière réponse", @"la page numéro...", @"Copier le lien",
 									 nil,
 									 nil];
 		
@@ -766,6 +766,18 @@
 		{
 			NSLog(@"page numero");
             [self chooseTopicPage];
+			break;
+			
+		}
+		case 3:
+		{
+			NSLog(@"copier lien page 1");
+			NSIndexPath *indexPath = pressedIndexPath;
+            Topic *tmpTopic = [[[self.arrayNewData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
+            
+            UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+            pasteboard.string = [NSString stringWithFormat:@"%@%@", kForumURL, [tmpTopic aURLOfFirstPage]];
+
 			break;
 			
 		}

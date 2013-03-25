@@ -10,7 +10,7 @@
 @class MessagesTableViewController;
 @class TopicSearchCellView;
 
-@interface HFRSearchViewController : UIViewController <UISearchBarDelegate, UITableViewDataSource, NSXMLParserDelegate> {
+@interface HFRSearchViewController : UIViewController <UISearchBarDelegate, UITableViewDataSource, NSXMLParserDelegate, UIActionSheetDelegate> {
 	UIView *disableViewOverlay;
 
     UITableView *theTableView;
@@ -26,8 +26,9 @@
 	MessagesTableViewController *messagesTableViewController;
 	TopicSearchCellView *tmpCell;
 
-	
-	
+	NSIndexPath *pressedIndexPath;
+	UIActionSheet		*topicActionSheet;
+    
 	NSXMLParser * rssParser;
 	
 	NSMutableArray * stories;
@@ -55,6 +56,9 @@
 @property (retain, nonatomic) ASIFormDataRequest *request;
 @property STATUS status;
 @property (nonatomic, retain) NSString *statusMessage;
+
+@property (nonatomic, retain) NSIndexPath *pressedIndexPath;
+@property (nonatomic, retain) UIActionSheet *topicActionSheet;
 
 @property (nonatomic, retain) MessagesTableViewController *messagesTableViewController;
 @property (nonatomic, assign) IBOutlet TopicSearchCellView *tmpCell;
