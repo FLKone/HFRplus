@@ -34,7 +34,7 @@
 
 @synthesize request;
 
-@synthesize status, statusMessage, maintenanceView, pageNumberField;
+@synthesize status, statusMessage, maintenanceView, pageNumberField, topicActionSheet;
 
 #pragma mark -
 #pragma mark Data lifecycle
@@ -375,12 +375,24 @@
     return [selfString substringWithRange:resultRange];
 }
 
+-(void)OrientationChanged
+{
+    if (self.topicActionSheet) {
+        [self.topicActionSheet dismissWithClickedButtonIndex:[self.topicActionSheet cancelButtonIndex] animated:YES];
+    }
+}
+
 - (void)viewDidLoad {
 	//NSLog(@"viewDidLoad ftv");
     [super viewDidLoad];
 	
 	self.title = @"Vos Sujets";
     self.showAll = NO;
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(OrientationChanged)
+                                                 name:@"UIDeviceOrientationDidChangeNotification"
+                                               object:nil];
     
 	// reload
     UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
@@ -685,8 +697,12 @@
 	if (longPressRecognizer.state == UIGestureRecognizerStateBegan) {
 		CGPoint longPressLocation = [longPressRecognizer locationInView:self.favoritesTableView];
 		self.pressedIndexPath = [[self.favoritesTableView indexPathForRowAtPoint:longPressLocation] copy];
-				
-		UIActionSheet *styleAlert = [[UIActionSheet alloc] initWithTitle:@"Aller à..."
+
+        if (self.topicActionSheet != nil) {
+            [self.topicActionSheet release], self.topicActionSheet = nil;
+        }
+        
+		self.topicActionSheet = [[UIActionSheet alloc] initWithTitle:@"Aller à..."
 																delegate:self cancelButtonTitle:@"Annuler"
 												  destructiveButtonTitle:nil
 													   otherButtonTitles:	@"la dernière page", @"la dernière réponse", @"la page numéro...",
@@ -694,20 +710,17 @@
 									 nil];
 		
 		// use the same style as the nav bar
-		styleAlert.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+		self.topicActionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
 		
         CGPoint longPressLocation2 = [longPressRecognizer locationInView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view]];
         CGRect origFrame = CGRectMake( longPressLocation2.x, longPressLocation2.y, 0, 0);
         
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         {
-            [styleAlert showFromRect:origFrame inView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view] animated:YES];
+            [self.topicActionSheet showFromRect:origFrame inView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view] animated:YES];
         }
         else    
-            [styleAlert showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
-        
-        
-		[styleAlert release];
+            [self.topicActionSheet showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
 		
 	}
 }
@@ -1016,12 +1029,16 @@
 
 	[self viewDidUnload];
 
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UIDeviceOrientationDidChangeNotification" object:nil];
+
 	[request cancel];
 	[request setDelegate:nil];
 	self.request = nil;
 
 	self.statusMessage = nil;
 	
+    self.topicActionSheet = nil;
+    
 	self.arrayNewData = nil;
 	
     [super dealloc];

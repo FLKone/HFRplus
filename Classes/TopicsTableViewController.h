@@ -51,6 +51,8 @@
 	NSArray				*pickerViewArray;
 	UIActionSheet		*actionSheet;
 	
+    UIActionSheet		*topicActionSheet;
+
 	TopicCellView *tmpCell;
 	
 	STATUS status;
@@ -68,6 +70,7 @@
 @property (nonatomic, retain) UIPickerView *myPickerView;
 @property (nonatomic, retain) NSArray *pickerViewArray;
 @property (nonatomic, retain) UIActionSheet *actionSheet;
+@property (nonatomic, retain) UIActionSheet *topicActionSheet;
 
 @property (nonatomic, retain) IBOutlet UITableView *topicsTableView;
 @property (nonatomic, retain) IBOutlet UIView *loadingView;
