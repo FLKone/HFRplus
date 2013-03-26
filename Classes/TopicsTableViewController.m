@@ -497,8 +497,8 @@
 		//Title & URL
 		HTMLNode * topicTitleNode = [topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase3" allowPartial:NO];
 
-		NSString *aTopicAffix = [[NSString alloc] init];
-		NSString *aTopicSuffix = [[NSString alloc] init];
+        NSString *aTopicAffix = [NSString string];
+        NSString *aTopicSuffix = [NSString string];
 
 		
 		if ([[topicNode className] rangeOfString:@"ligne_sticky"].location != NSNotFound) {

@@ -418,6 +418,7 @@
 	self.navigationItem.leftBarButtonItem = segmentBarItem2;
     [segmentBarItem2 release];
       */  
+    [segmentBarItem2 release];
     
 	[(ShakeView*)self.view setShakeDelegate:self];
 	

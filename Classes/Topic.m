@@ -27,7 +27,7 @@
 
 @synthesize aAuthorOrInter;
 
-@synthesize maxTopicPage, curTopicPage;
+@synthesize maxTopicPage, curTopicPage, aURLOfFirstPage;
 
 @synthesize postID, catID;
 

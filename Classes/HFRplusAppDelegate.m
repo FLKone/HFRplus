@@ -53,7 +53,7 @@
     
     [TestFlight takeOff:kTestFlightAPI];
     
-	self.hash_check = [[NSString alloc] init];
+	//self.hash_check = [[NSString alloc] init];
 	
 	[MKStoreManager sharedManager];
 	    
@@ -278,6 +278,7 @@
         [ioQueue addOperation:periodicMaintenanceOperation];
     }*/
 	//NSLog(@"end");
+    [diskCachePath release];
 	[pool2 drain];
 
 }
@@ -468,7 +469,7 @@
 	[favoritesNavController release];
 	[messagesNavController release];
 	
-	[hash_check release];
+	self.hash_check = nil;
 	
     [window release];
     [super dealloc];
