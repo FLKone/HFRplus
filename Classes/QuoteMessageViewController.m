@@ -126,6 +126,29 @@
 
 	HTMLNode * bodyNode = [myParser body]; //Find the body tag
 		
+    // SMILEY PERSO
+    HTMLNode * smileyNode = [bodyNode findChildWithAttribute:@"id" matchingName:@"dynamic_smilies" allowPartial:NO];
+
+	NSArray * tmpImageArray =  [smileyNode findChildTags:@"img"];
+	
+    self.smileyCustom = [[NSString alloc] init];
+    
+	//Traitement des smileys (to Array)
+	[self.smileyArray removeAllObjects]; //RaZ
+	
+	for (HTMLNode * imgNode in tmpImageArray) { //Loop through all the tags
+		self.smileyCustom = [self.smileyCustom stringByAppendingFormat:@"<img class=\"smile\" src=\"%@\" alt=\"%@\"/>", [imgNode getAttributeNamed:@"src"], [imgNode getAttributeNamed:@"alt"]];
+        //[self.smileyArray addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[imgNode getAttributeNamed:@"src"], [imgNode getAttributeNamed:@"alt"], nil] forKeys:[NSArray arrayWithObjects:@"source", @"code", nil]]];
+        
+	}
+    
+
+    NSLog(@"smileyNode %@", rawContentsOfNode([smileyNode _node], [myParser _doc]));
+    NSLog(@"smileyCustom %@", self.smileyCustom);
+
+    
+    // SMILEY PERSO
+    
 	HTMLNode * fastAnswerNode = [bodyNode findChildWithAttribute:@"name" matchingName:@"hop" allowPartial:NO];
 	
 	NSArray *temporaryAllInputArray = [fastAnswerNode findChildTags:@"input"];

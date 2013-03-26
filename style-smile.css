@@ -39,7 +39,7 @@ body {
 	text-align:center;
 }
 
-#container_ajax img.smile {
+#container_ajax img.smile, #smileperso img.smile {
 	max-height:30px;
 	background-image: 	-webkit-gradient(
 		linear,
@@ -54,7 +54,7 @@ body {
 	max-height:30px;
     min-height: 15px;
 }
-#container_ajax img.smile.selected {
+#container_ajax img.smile.selected, #smileperso img.smile.selected {
 	background-image: 	-webkit-gradient(
     linear,
     left bottom,
@@ -101,6 +101,12 @@ body {
     color-stop(0.09, rgb(83,83,83)),
     color-stop(0.47, rgb(127,127,127))
 ); 	
+}
+
+@media only screen and (min-width: 480px) {
+    #container {
+        width: 460px;
+    }
 }
 
 @media only screen and (min-width: 540px) {

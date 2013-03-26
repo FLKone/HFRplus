@@ -24,7 +24,7 @@
 @synthesize haveTitle, textFieldTitle;
 @synthesize haveTo, textFieldTo;
 @synthesize haveCategory, textFieldCat;
-@synthesize offsetY;
+@synthesize offsetY, smileyCustom;
 
 @synthesize popover = _popover, refreshAnchor;
 
@@ -111,6 +111,8 @@
 	NSString *jsString = [[[NSString alloc] initWithString:@""] autorelease];
 	//jsString = [jsString stringByAppendingString:@"$('body').bind('touchmove', function(e){e.preventDefault()});"];
 	jsString = [jsString stringByAppendingString:@"$('.button').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+$.base64.encode(this.title); });"];
+    
+	jsString = [jsString stringByAppendingString:@"$('#smileperso img.smile').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+$.base64.encode(this.alt); });"];    
 	[webView stringByEvaluatingJavaScriptFromString:jsString];
 	
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
@@ -160,11 +162,23 @@
 
     
     
+    // LOAD SMILEY HTML
+    
+	NSString *path = [[NSBundle mainBundle] bundlePath];
+	NSURL *baseURL = [NSURL fileURLWithPath:path];
+
+    NSString *tempHTML = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"smileybase" ofType:@"html"] encoding:NSUTF8StringEncoding error:NULL];
+    
     [self.smileView setBackgroundColor:[UIColor colorWithRed:46/255.f green:46/255.f blue:46/255.f alpha:1.00]];
     [self.smileView hideGradientBackground];
     
-	[self.smileView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"smileybase" ofType:@"html"] isDirectory:NO]]];
-		
+    [self.smileView loadHTMLString:[tempHTML stringByReplacingOccurrencesOfString:@"%SMILEYCUSTOM%"
+                                                                       withString:[NSString stringWithFormat:@"<div id='smileperso'>%@</div>",
+                                                                                   self.smileyCustom]] baseURL:baseURL];
+    
+//	[self.smileView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"smileybase" ofType:@"html"] isDirectory:NO]]];
+    //==
+    
 	self.formSubmit = [NSString stringWithFormat:@"%@/bddpost.php", kForumURL];
 
 	 [[NSNotificationCenter defaultCenter] addObserver:self
@@ -1302,6 +1316,8 @@
 	[requestSmile setDelegate:nil];
 	self.requestSmile = nil;
 	
+    self.smileyCustom = nil;
+    
 	self.smileyArray = nil;
 	self.usedSearchDict = nil;
 	self.usedSearchSortedArray = nil;
