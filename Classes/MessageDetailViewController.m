@@ -143,9 +143,6 @@
 	NSURL *baseURL = [NSURL fileURLWithPath:path];
 	
 	//NSLog(@"baseURL: %@", baseURL);
-
-    [self.messageView setBackgroundColor:[UIColor whiteColor]];
-    [self.messageView hideGradientBackground];
     
 	[messageView loadHTMLString:HTMLString baseURL:baseURL];
 	
@@ -263,6 +260,8 @@
 	
 	[messageTitle setText:self.messageTitleString];	
 
+    [self.messageView setBackgroundColor:[UIColor whiteColor]];
+    [self.messageView hideGradientBackground];
 
 }
 	 
