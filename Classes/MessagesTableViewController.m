@@ -445,7 +445,8 @@
 	return self;
 }
 
-- (void)editMenuHidden {
+- (void)editMenuHidden:(id)sender {
+
     UIMenuController *menuController = [UIMenuController sharedMenuController];
     [menuController setMenuItems:nil];
     //[self resignFirstResponder];
@@ -459,10 +460,7 @@
 
 	self.title = self.topicName;  
 
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(editMenuHidden)
-                                                 name:UIMenuControllerDidHideMenuNotification
-                                               object:nil];
+
     
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -553,15 +551,22 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-	[super viewWillDisappear:animated];
 	//NSLog(@"viewWillDisappear");
+	
+    [super viewWillDisappear:animated];
 	self.isAnimating = YES;
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIMenuControllerDidHideMenuNotification object:nil];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    //NSLog(@"viewDidAppear");
+    
 	[super viewDidAppear:animated];
-	//NSLog(@"viewDidAppear");
 	self.isAnimating = NO;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editMenuHidden:) name:UIMenuControllerDidHideMenuNotification object:nil];
 }
 
 -(void)optionsTopic:(id)sender
@@ -1980,7 +1985,8 @@
 	[self viewDidUnload];
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIMenuControllerDidHideMenuNotification object:nil];
+
 	[self.queue cancelAllOperations];
 	[self.queue release];
 	

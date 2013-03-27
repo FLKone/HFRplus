@@ -136,6 +136,8 @@
 	return YES;
 }
 - (void)viewDidLoad {
+    [super viewDidLoad];
+    
 	//Bouton Annuler
 	UIBarButtonItem *cancelBarItem = [[UIBarButtonItem alloc] initWithTitle:@"Annuler" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
 	self.navigationItem.leftBarButtonItem = cancelBarItem;
