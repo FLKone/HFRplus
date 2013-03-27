@@ -496,6 +496,10 @@
     
     [self.navigationItem setTitleView:label];
     [label release];
+
+    // fond blanc WebView
+    [self.messagesWebView setBackgroundColor:[UIColor whiteColor]];
+    [self.messagesWebView hideGradientBackground];
     
 	//Gesture
 	UIGestureRecognizer *recognizer;
@@ -1298,9 +1302,6 @@
 	//NSLog(@"======================================================================================================");
 	//NSLog(@"baseURL %@", baseURL);
 	//NSLog(@"======================================================================================================");
-	
-    [self.messagesWebView setBackgroundColor:[UIColor whiteColor]];
-    [self.messagesWebView hideGradientBackground];
     
     self.loaded = NO;
 	[self.messagesWebView loadHTMLString:HTMLString baseURL:baseURL];
