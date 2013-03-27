@@ -240,6 +240,8 @@
 				[newLastPageUrl release];
 			}
 			else {
+                NSLog(@"lastObject %@", [[temporaryNumPagesArray lastObject] allContents]);
+                
 				NSString *newLastPageUrl = [[NSString alloc] initWithString:[[temporaryNumPagesArray lastObject] getAttributeNamed:@"href"]];
 				[self setLastPageUrl:newLastPageUrl];
 				[newLastPageUrl release];
