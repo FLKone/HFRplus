@@ -38,8 +38,8 @@
 	label.textAlignment = UITextAlignmentCenter;
 	label.textColor =[UIColor whiteColor];
 	//label.text= @"HFR+ 1.1 (1.1.0.7)";
-	label.text= [NSString stringWithFormat:@"HFR+ %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];	
-	//self.navigationItem.titleView = label;		
+	label.text= [NSString stringWithFormat:@"HFR+ %@ (%@)", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];	
+	self.navigationItem.titleView = label;		
 	[label release];
 	
     [self hideEmptySeparators];
