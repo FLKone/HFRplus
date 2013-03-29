@@ -90,13 +90,13 @@
 - (void)fetchContentStarted:(ASIHTTPRequest *)theRequest
 {
 	//--
-	NSLog(@"fetchContentStarted");
+	//NSLog(@"fetchContentStarted");
 
 }
 
 - (void)fetchContentComplete:(ASIHTTPRequest *)theRequest
 {
-	NSLog(@"fetchContentComplete");
+	//NSLog(@"fetchContentComplete");
 	
 	// create the queue to run our ParseOperation
     self.queue = [[NSOperationQueue alloc] init];
@@ -445,8 +445,40 @@
 	return self;
 }
 
-- (void)editMenuHidden:(id)sender {
+- (void)viewWillDisappear:(BOOL)animated {
+	//NSLog(@"viewWillDisappear");
+	
+    [super viewWillDisappear:animated];
+	self.isAnimating = YES;
+    
+    
+}
 
+- (void)viewDidAppear:(BOOL)animated {
+    //NSLog(@"viewDidAppear");
+    
+	[super viewDidAppear:animated];
+	self.isAnimating = NO;
+    
+}
+
+- (void)VisibilityChanged:(NSNotification *)notification {
+   // NSLog(@"VisibilityChanged %@", notification);
+
+    if ([[notification valueForKey:@"object"] isEqualToString:@"SHOW"]) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIMenuControllerDidHideMenuNotification object:nil];
+    }
+    else
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIMenuControllerDidHideMenuNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editMenuHidden:) name:UIMenuControllerDidHideMenuNotification object:nil];
+    }
+    //[self resignFirstResponder];
+}
+
+- (void)editMenuHidden:(id)sender {
+    //NSLog(@"editMenuHidden %@ NOMBRE %d", sender, [UIMenuController sharedMenuController].menuItems.count);
+    
     UIMenuController *menuController = [UIMenuController sharedMenuController];
     [menuController setMenuItems:nil];
     //[self resignFirstResponder];
@@ -460,8 +492,9 @@
 
 	self.title = self.topicName;  
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(VisibilityChanged:) name:@"VisibilityChanged" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editMenuHidden:) name:UIMenuControllerDidHideMenuNotification object:nil];
 
-    
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
     
@@ -550,24 +583,6 @@
 	
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-	//NSLog(@"viewWillDisappear");
-	
-    [super viewWillDisappear:animated];
-	self.isAnimating = YES;
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIMenuControllerDidHideMenuNotification object:nil];
-    
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    //NSLog(@"viewDidAppear");
-    
-	[super viewDidAppear:animated];
-	self.isAnimating = NO;
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editMenuHidden:) name:UIMenuControllerDidHideMenuNotification object:nil];
-}
 
 -(void)optionsTopic:(id)sender
 {	
@@ -658,10 +673,10 @@
 
 - (void)actionSheet:(UIActionSheet *)modalView clickedButtonAtIndex:(NSInteger)buttonIndex
 {    
-    NSLog(@"clickedButtonAtIndex %d", buttonIndex);
+    //NSLog(@"clickedButtonAtIndex %d", buttonIndex);
 
     if (buttonIndex < self.arrayActionsMessages.count) {
-        NSLog(@"action %@", [self.arrayActionsMessages objectAtIndex:buttonIndex]);
+        //NSLog(@"action %@", [self.arrayActionsMessages objectAtIndex:buttonIndex]);
         if ([self respondsToSelector:NSSelectorFromString([[self.arrayActionsMessages objectAtIndex:buttonIndex] objectForKey:@"code"])]) 
         {
             [self performSelector:NSSelectorFromString([[self.arrayActionsMessages objectAtIndex:buttonIndex] objectForKey:@"code"])];
@@ -674,12 +689,6 @@
 
 }
 
-- (void)optionsTopicViewControllerDidFinish:(OptionsTopicViewController *)controller {
-    //NSLog(@"optionsTopicViewControllerDidFinish");
-	
-	//[self dismissModalViewControllerAnimated:YES];
-    [self answerTopic];
-}
 
 -(void)markUnread {
     ASIHTTPRequest  *delrequest =  
@@ -749,7 +758,7 @@
     
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
 	[self presentModalViewController:navigationController animated:YES];
-	
+    
 	// The navigation controller is now owned by the current view controller
 	// and the root view controller is owned by the navigation controller,
 	// so both objects should be released to prevent over-retention.
@@ -773,20 +782,6 @@
 		return;
 	}
 	
-	// Create the root view controller for the navigation controller
-	// The new view controller configures a Cancel and Done button for the
-	// navigation bar.
-	/*
-	QuoteFormView *formViewController = [[QuoteFormView alloc]
-											  initWithNibName:@"FormViewController" bundle:nil];
-	
-	[[formViewController.viewControllers objectAtIndex:0] setDelegate:self];
-	[[formViewController.viewControllers objectAtIndex:0] setUrlQuote:quoteUrl];
-	
-	[self presentModalViewController:formViewController animated:YES];
-	
-	[formViewController release];
- */
 	
 	QuoteMessageViewController *quoteMessageViewController = [[QuoteMessageViewController alloc]
 														  initWithNibName:@"AddMessageViewController" bundle:nil];
@@ -799,7 +794,7 @@
     
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
 	[self presentModalViewController:navigationController animated:YES];
-	
+    
 	// The navigation controller is now owned by the current view controller
 	// and the root view controller is owned by the navigation controller,
 	// so both objects should be released to prevent over-retention.
@@ -813,20 +808,6 @@
 	if (self.isAnimating) {
 		return;
 	}
-	// Create the root view controller for the navigation controller
-	// The new view controller configures a Cancel and Done button for the
-	// navigation bar.
-	/*
-	EditFormView *formViewController = [[EditFormView alloc]
-											  initWithNibName:@"FormViewController" bundle:nil];
-	
-	[[formViewController.viewControllers objectAtIndex:0] setDelegate:self];
-	[[formViewController.viewControllers objectAtIndex:0] setUrlQuote:editUrl];
-	
-	[self presentModalViewController:formViewController animated:YES];
-	
-	[formViewController release];
-	 */
 	
 	EditMessageViewController *editMessageViewController = [[EditMessageViewController alloc]
 															  initWithNibName:@"AddMessageViewController" bundle:nil];
@@ -839,7 +820,7 @@
     
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
 	[self presentModalViewController:navigationController animated:YES];
-	
+    
 	// The navigation controller is now owned by the current view controller
 	// and the root view controller is owned by the navigation controller,
 	// so both objects should be released to prevent over-retention.
@@ -1050,9 +1031,7 @@
 	[photoViewController setImageData:imageArray];
 	[photoViewController setSelectedIndex:selectedIndex];
 	[imageArray release];
-    
-	[self presentModalViewController:photoViewController animated:YES];
-	
+    	
 	// The navigation controller is now owned by the current view controller
 	// and the root view controller is owned by the navigation controller,
 	// so both objects should be released to prevent over-retention.
@@ -1221,9 +1200,9 @@
 
 - (void)addMessageViewControllerDidFinishOK:(AddMessageViewController *)controller {
 	//NSLog(@"addMessageViewControllerDidFinishOK");
-	
+    
 	[self dismissModalViewControllerAnimated:YES];
-	
+    
     if (self.arrayData.count > 0) {
 		//NSLog(@"curid %d", self.curPostID);
 		NSString *components = [[[self.arrayData objectAtIndex:0] quoteJS] substringFromIndex:7];
@@ -1342,15 +1321,15 @@
 #pragma mark WebView Delegate
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-	NSLog(@"== webViewDidStartLoad");
+	//NSLog(@"== webViewDidStartLoad");
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 }
 
 - (void)webViewDidFinishLoadDOM
 {
-    NSLog(@"== webViewDidFinishLoadDOM");
+    //NSLog(@"== webViewDidFinishLoadDOM");
     if (self.loaded) {
-        NSLog(@"deja DOMed");
+        //NSLog(@"deja DOMed");
         return;
     }
     
@@ -1440,12 +1419,12 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-	NSLog(@"== webViewDidFinishLoad");
+	//NSLog(@"== webViewDidFinishLoad");
     
     [self webViewDidFinishLoadDOM];
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
-    NSLog(@"== webViewDidFinishLoad OK");
+    //NSLog(@"== webViewDidFinishLoad OK");
 
 }
 //NSSelectorFromString([[[self arrayAction] objectAtIndex:curPostID] objectForKey:@"code"])
@@ -1463,7 +1442,7 @@
 }
 	 
 - (BOOL) canBecomeFirstResponder {
-	NSLog(@"canBecomeFirstResponder");
+	//NSLog(@"canBecomeFirstResponder");
 	
     return YES;
 }
@@ -1509,7 +1488,7 @@
 		}
 		else if ([[aRequest.URL host] isEqualToString:@"forum.hardware.fr"] && ([[[aRequest.URL pathComponents] objectAtIndex:1] isEqualToString:@"forum2.php"] || [[[aRequest.URL pathComponents] objectAtIndex:1] isEqualToString:@"hfr"])) {
             
-            NSLog(@"%@", aRequest.URL);
+            //NSLog(@"%@", aRequest.URL);
             
             MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[aRequest.URL absoluteString] stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@", kForumURL] withString:@""]];
             self.messagesTableViewController = aView;
@@ -1802,7 +1781,7 @@
     
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
 	[self presentModalViewController:navigationController animated:YES];
-	
+    
 	// The navigation controller is now owned by the current view controller
 	// and the root view controller is owned by the navigation controller,
 	// so both objects should be released to prevent over-retention.
@@ -1986,6 +1965,7 @@
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIMenuControllerDidHideMenuNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"VisibilityChanged" object:nil];
 
 	[self.queue cancelAllOperations];
 	[self.queue release];

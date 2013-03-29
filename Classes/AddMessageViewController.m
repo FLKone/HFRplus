@@ -297,7 +297,9 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-	//NSLog(@"viewWillAppear");
+	NSLog(@"viewWillAppear");
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"VisibilityChanged" object:@"SHOW"];
+
 	[super viewWillAppear:animated];
     
 	if(self.lastSelectedRange.location != NSNotFound)
@@ -400,6 +402,7 @@
 			[alert release];
 		}
 		else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"VisibilityChanged" object:nil];
 			[self.delegate addMessageViewControllerDidFinish:self];	
 		}
 	}
@@ -408,6 +411,7 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
 	if (buttonIndex == 1 && alertView.tag == 666) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"VisibilityChanged" object:nil];
 		[self.delegate addMessageViewControllerDidFinish:self];	
 	}
 }
@@ -505,7 +509,8 @@
                     }
                     
                 }
-
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"VisibilityChanged" object:nil];
 				[self.delegate addMessageViewControllerDidFinishOK:self];	
 
 			}

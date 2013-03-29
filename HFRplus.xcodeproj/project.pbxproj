@@ -293,8 +293,6 @@
 		CA88EA8E124D75CA00E53E54 /* commonsmile.plist in Resources */ = {isa = PBXBuildFile; fileRef = CA88EA8D124D75CA00E53E54 /* commonsmile.plist */; };
 		CA8A79B215BB404700D8E9E7 /* Favorite.m in Sources */ = {isa = PBXBuildFile; fileRef = CA8A79B115BB404700D8E9E7 /* Favorite.m */; };
 		CA8DDC9C12EB30AC00635441 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8DDC9B12EB30AC00635441 /* StoreKit.framework */; };
-		CA94528C13F5F6F900913D63 /* OptionsTopicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA94528913F5F6F900913D63 /* OptionsTopicViewController.xib */; };
-		CA94528D13F5F6F900913D63 /* OptionsTopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA94528A13F5F6F900913D63 /* OptionsTopicViewController.m */; };
 		CA9B06C216FF6A92003584B1 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA9B06C016FF6A92003584B1 /* libTestFlight.a */; };
 		CA9B06C516FF8984003584B1 /* UIWebView+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = CA9B06C416FF8984003584B1 /* UIWebView+Tools.m */; };
 		CA9B06C716FFA512003584B1 /* photoDefaultfailmini.png in Resources */ = {isa = PBXBuildFile; fileRef = CA9B06C616FFA50D003584B1 /* photoDefaultfailmini.png */; };
@@ -742,9 +740,6 @@
 		CA8A79B015BB404700D8E9E7 /* Favorite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Favorite.h; sourceTree = "<group>"; };
 		CA8A79B115BB404700D8E9E7 /* Favorite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Favorite.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CA8DDC9B12EB30AC00635441 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		CA94528913F5F6F900913D63 /* OptionsTopicViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OptionsTopicViewController.xib; sourceTree = "<group>"; };
-		CA94528A13F5F6F900913D63 /* OptionsTopicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = OptionsTopicViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		CA94528B13F5F6F900913D63 /* OptionsTopicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = OptionsTopicViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CA9B06C016FF6A92003584B1 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
 		CA9B06C116FF6A92003584B1 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		CA9B06C316FF8984003584B1 /* UIWebView+Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+Tools.h"; sourceTree = "<group>"; };
@@ -894,9 +889,6 @@
 				CA228CEF125CFD4500DDCD2E /* MessageDetailViewControllerv2.xib */,
 				CAB9B3A51263E5FC00731127 /* HFRMenuItem.h */,
 				CAB9B3A61263E5FC00731127 /* HFRMenuItem.m */,
-				CA94528B13F5F6F900913D63 /* OptionsTopicViewController.h */,
-				CA94528A13F5F6F900913D63 /* OptionsTopicViewController.m */,
-				CA94528913F5F6F900913D63 /* OptionsTopicViewController.xib */,
 			);
 			name = Messages;
 			sourceTree = "<group>";
@@ -1922,7 +1914,6 @@
 				CA192D1312F477EB00537A87 /* 44-shoebox.png in Resources */,
 				CA192D1412F477EB00537A87 /* 44-shoebox@2x.png in Resources */,
 				CA26862613ADE01100AC5511 /* BrowserViewController.xib in Resources */,
-				CA94528C13F5F6F900913D63 /* OptionsTopicViewController.xib in Resources */,
 				CA25DA84159F929900F6D675 /* Icon-72.png in Resources */,
 				CA25DA85159F929900F6D675 /* Icon-72@2x.png in Resources */,
 				CA25DA86159F929900F6D675 /* Icon-Small-50.png in Resources */,
@@ -2026,7 +2017,6 @@
 				CA9DD4A113A3BDB9005B69EC /* ASINetworkQueue.m in Sources */,
 				CA9DD4A413A3BDD8005B69EC /* Reachability.m in Sources */,
 				CA26862513ADE01100AC5511 /* BrowserViewController.m in Sources */,
-				CA94528D13F5F6F900913D63 /* OptionsTopicViewController.m in Sources */,
 				CA7E25E315A1D17500721F6D /* SplitViewController.m in Sources */,
 				CA7E25F115A1F4AA00721F6D /* DetailNavigationViewController.m in Sources */,
 				CA7E260215A24A9B00721F6D /* SubCatTableViewController.m in Sources */,
