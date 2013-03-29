@@ -399,16 +399,22 @@
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
     [segmentBarItem release];		
     
+    
     // showAll
     AKSingleSegmentedControl* segmentedControl = [[AKSingleSegmentedControl alloc] initWithItems:[NSArray array]];
     //[segmentedControl setMomentary:YES];
     [segmentedControl insertSegmentWithImage:[UIImage imageNamed:@"icon_list_bullets"] atIndex:0 animated:NO];
     segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
     [segmentedControl addTarget:self action:@selector(showAll:) forControlEvents:UIControlEventValueChanged];
+
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        segmentedControl.tintColor = [UIColor colorWithRed:144/255.f green:152/255.f blue:159/255.f alpha:0.51];
+    }
     
     UIBarButtonItem * segmentBarItem2 = [[UIBarButtonItem alloc] initWithCustomView: segmentedControl];
     self.navigationItem.leftBarButtonItem = segmentBarItem2;
     
+    [segmentBarItem2 release];
 	//segmentedControl2.segmentedControlStyle = UISegmentedControlStyleBar;
 	//segmentedControl2.momentary = YES;
 	    
@@ -418,7 +424,7 @@
 	self.navigationItem.leftBarButtonItem = segmentBarItem2;
     [segmentBarItem2 release];
       */  
-    [segmentBarItem2 release];
+    
     
 	[(ShakeView*)self.view setShakeDelegate:self];
 	
