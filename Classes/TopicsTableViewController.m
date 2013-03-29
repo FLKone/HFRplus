@@ -379,7 +379,21 @@
 			labelBtn.frame = CGRectMake(0, 0, 130, 44);
 			[labelBtn addTarget:self action:@selector(choosePage) forControlEvents:UIControlEventTouchUpInside];
 			[labelBtn setTitle:[NSString stringWithFormat:@"%d/%d", [self pageNumber], [self lastPageNumber]] forState:UIControlStateNormal];
-			[[labelBtn titleLabel] setFont:[UIFont boldSystemFontOfSize:15.0]];
+			
+            [[labelBtn titleLabel] setFont:[UIFont boldSystemFontOfSize:16.0]];
+
+            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+                [labelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                [labelBtn setTitleShadowColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+                [labelBtn titleLabel].shadowOffset = CGSizeMake(0.0, -1.0);
+            }
+            else {
+                [labelBtn setTitleColor:[UIColor colorWithRed:113/255.0 green:120/255.0 blue:128/255.0 alpha:1.0] forState:UIControlStateNormal];
+                [labelBtn setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                [labelBtn titleLabel].shadowColor = [UIColor whiteColor];
+                [labelBtn titleLabel].shadowOffset = CGSizeMake(0.0, 1.0);
+            }
+            
 
 			UIBarButtonItem *systemItem3 = [[UIBarButtonItem alloc] initWithCustomView:labelBtn];
 			
