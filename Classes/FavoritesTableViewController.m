@@ -408,7 +408,7 @@
     [segmentedControl addTarget:self action:@selector(showAll:) forControlEvents:UIControlEventValueChanged];
 
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        segmentedControl.tintColor = [UIColor colorWithRed:144/255.f green:152/255.f blue:159/255.f alpha:0.51];
+        segmentedControl.tintColor = [UIColor colorWithRed:156/255.f green:161/255.f blue:167/255.f alpha:1.00];
     }
     
     UIBarButtonItem * segmentBarItem2 = [[UIBarButtonItem alloc] initWithCustomView: segmentedControl];
