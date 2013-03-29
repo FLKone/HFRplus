@@ -4,7 +4,7 @@ HFR+
 =========================
 Application iOS (iPhone, iPod Touch et iPad) pour le forum hardware.fr
 
-<a href="https://itunes.apple.com/app/hfr/id384464712?mt=8" target="_blank"><img src="http://apps.flk.io/hfrplus/appstore.svg" alt="AppStore" title="AppStore"></a>
+<a href="https://itunes.apple.com/app/hfr/id384464712?mt=8" target="_blank"><img src="http://apps.flkone.com/hfrplus/appstore.svg" alt="AppStore" title="AppStore"></a>
 
 
 Roadmap
@@ -15,17 +15,14 @@ Roadmap
     <th>Version</th><th>Type</th><th>Sortie</th>
   </tr>
 <tr>
-    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=12&page=1&sort=created&state=open">1.6.100</a></td><td>Fonctionnalités</td><td>2013</td>
+    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=12&page=1&sort=created&state=open">1.7</a></td><td>Fonctionnalités</td><td>2013</td>
   </tr>
 <tr>
-    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=13&page=1&sort=created&state=open">1.6.200</a></td><td>UI</td><td>2013</td>
+    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=13&page=1&sort=created&state=open">1.7.1</a></td><td>UI</td><td>2013</td>
   </tr>
 <tr>
-    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=7&page=1&sort=created&state=open">1.6.300</a></td><td>Fonctionnalités avancées</td><td>2013</td>
-  </tr>
-<tr>
-    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=9&page=1&sort=created&state=open">1.6.400</a></td><td>Fonctionnalités avancées v2</td><td>2013</td>
-  </tr>    
+    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=9&page=1&sort=created&state=open">1.8</a></td><td>Fonctionnalités avancées</td><td>2013</td>
+  </tr>   
 </table>
 
 
