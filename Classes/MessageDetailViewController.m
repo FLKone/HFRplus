@@ -237,12 +237,18 @@
 											 [UIImage imageNamed:@"down.png"],
 											 nil]];
 	[segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
-	if ([[UIDevice currentDevice] orientation] == UIDeviceOrientationLandscapeLeft || [[UIDevice currentDevice] orientation] == UIDeviceOrientationLandscapeRight) {
-		segmentedControl.frame = CGRectMake(0, 0, 90, 24);
-	}
-	else {
-		segmentedControl.frame = CGRectMake(0, 0, 90, 30);
-	}	
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        if ([[UIDevice currentDevice] orientation] == UIDeviceOrientationLandscapeLeft || [[UIDevice currentDevice] orientation] == UIDeviceOrientationLandscapeRight) {
+            segmentedControl.frame = CGRectMake(0, 0, 90, 24);
+        }
+        else {
+            segmentedControl.frame = CGRectMake(0, 0, 90, 30);
+        }
+    }
+    else
+        segmentedControl.frame = CGRectMake(0, 0, 90, 30);
+    
 	segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
 	segmentedControl.momentary = YES;
 	segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleHeight;

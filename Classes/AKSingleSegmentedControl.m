@@ -12,11 +12,11 @@
 {
     int oldValue = self.selectedSegmentIndex;
     
-    NSLog(@"touchesBegan %d", oldValue);
+    //NSLog(@"touchesBegan %d", oldValue);
     
     [super touchesBegan:touches withEvent:event];
     
-    NSLog(@"selectedSegmentIndex %d", self.selectedSegmentIndex);
+    //NSLog(@"selectedSegmentIndex %d", self.selectedSegmentIndex);
     
     if ( oldValue == self.selectedSegmentIndex )
     {
