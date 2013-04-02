@@ -1263,7 +1263,7 @@
                 <link type='text/css' rel='stylesheet' href='style-liste-ipad-portrait.css' media='all and (min-width: 767px)'/>\
                 <link type='text/css' rel='stylesheet' href='style-liste-ipad-landscape.css' media='all and (min-width: 700px) and (max-width: 750px)'/>\
                 </head><body>\
-                <div class='bunselected' id='qsdoiqjsdkjhqkjhqsdqdilkjqsd2'>%@</div>\
+                <div class='bunselected nosig' id='qsdoiqjsdkjhqkjhqsdqdilkjqsd2'>%@</div>\
                 <div id='endofpage'></div>\
                 <div id='endofpagetoolbar'></div>\
                 <a name='bas'></a>\

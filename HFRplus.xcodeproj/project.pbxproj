@@ -1280,7 +1280,7 @@
 			children = (
 				CA45B60815B89F4E00380CA0 /* README.md */,
 				080E96DDFE201D6D7F000001 /* Classes */,
-				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97315FDCFA39411CA2CEA /* Vendor */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				CA37D50915A1BD18002C72C6 /* iPad */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -1289,7 +1289,7 @@
 			name = CustomTemplate;
 			sourceTree = "<group>";
 		};
-		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+		29B97315FDCFA39411CA2CEA /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
 				CA4CE89315B1B36F0039FC3B /* MWPhotoBrowser */,
@@ -1321,7 +1321,7 @@
 				CA9CBF0C15BEEC51004F7DAC /* AKSingleSegmentedControl.h */,
 				CA9CBF0D15BEEC51004F7DAC /* AKSingleSegmentedControl.m */,
 			);
-			name = "Other Sources";
+			name = Vendor;
 			sourceTree = "<group>";
 		};
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
