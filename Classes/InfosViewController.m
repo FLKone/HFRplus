@@ -33,13 +33,24 @@
 	// Make the title of this page the same as the title of this app
 	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 400, 44)];
 	label.backgroundColor = [UIColor clearColor];
-	label.font = [UIFont boldSystemFontOfSize:20.0];
-	label.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
+    [label setFont:[UIFont boldSystemFontOfSize:20.0]];
 	label.textAlignment = UITextAlignmentCenter;
-	label.textColor =[UIColor whiteColor];
-	//label.text= @"HFR+ 1.1 (1.1.0.7)";
-	label.text= [NSString stringWithFormat:@"HFR+ %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];	
-	//self.navigationItem.titleView = label;		
+	
+	label.text= [NSString stringWithFormat:@"HFR+ %@ (%@)", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        [label setTextColor:[UIColor whiteColor]];
+        label.shadowColor = [UIColor darkGrayColor];
+        label.shadowOffset = CGSizeMake(0.0, -1.0);
+    }
+    else {
+        [label setTextColor:[UIColor colorWithRed:113/255.f green:120/255.f blue:128/255.f alpha:1.00]];
+        label.shadowColor = [UIColor whiteColor];
+        label.shadowOffset = CGSizeMake(0.0, 1.0);        
+    }
+    
+    
+	self.navigationItem.titleView = label;		
 	[label release];
 	
     [self hideEmptySeparators];

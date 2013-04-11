@@ -34,7 +34,7 @@
 
 @synthesize request;
 
-@synthesize status, statusMessage, maintenanceView, pageNumberField;
+@synthesize status, statusMessage, maintenanceView, pageNumberField, topicActionSheet;
 
 #pragma mark -
 #pragma mark Data lifecycle
@@ -64,9 +64,25 @@
 
 - (void)fetchContent
 {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSInteger vos_sujets = [defaults integerForKey:@"vos_sujets"];
+
+    
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];
 	self.status = kIdle;
-	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/forum1f.php?owntopic=1", kForumURL]]]];
+    
+    switch (vos_sujets) {
+        case 0:
+            [self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/forum1f.php?owntopic=1", kForumURL]]]];
+            break;
+        case 1:
+            [self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/forum1f.php?owntopic=3", kForumURL]]]];
+            break;
+        default:
+            [self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/forum1f.php?owntopic=1", kForumURL]]]];            
+            break;
+    }
+    
 	[request setDelegate:self];
 
 	[request setDidStartSelector:@selector(fetchContentStarted:)];
@@ -359,17 +375,30 @@
     return [selfString substringWithRange:resultRange];
 }
 
+-(void)OrientationChanged
+{
+    if (self.topicActionSheet) {
+        [self.topicActionSheet dismissWithClickedButtonIndex:[self.topicActionSheet cancelButtonIndex] animated:YES];
+    }
+}
+
 - (void)viewDidLoad {
 	//NSLog(@"viewDidLoad ftv");
     [super viewDidLoad];
 	
 	self.title = @"Vos Sujets";
     self.showAll = NO;
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(OrientationChanged)
+                                                 name:@"UIDeviceOrientationDidChangeNotification"
+                                               object:nil];
     
 	// reload
     UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
     [segmentBarItem release];		
+    
     
     // showAll
     AKSingleSegmentedControl* segmentedControl = [[AKSingleSegmentedControl alloc] initWithItems:[NSArray array]];
@@ -377,10 +406,15 @@
     [segmentedControl insertSegmentWithImage:[UIImage imageNamed:@"icon_list_bullets"] atIndex:0 animated:NO];
     segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
     [segmentedControl addTarget:self action:@selector(showAll:) forControlEvents:UIControlEventValueChanged];
+
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        segmentedControl.tintColor = [UIColor colorWithRed:156/255.f green:161/255.f blue:167/255.f alpha:1.00];
+    }
     
     UIBarButtonItem * segmentBarItem2 = [[UIBarButtonItem alloc] initWithCustomView: segmentedControl];
     self.navigationItem.leftBarButtonItem = segmentBarItem2;
     
+    [segmentBarItem2 release];
 	//segmentedControl2.segmentedControlStyle = UISegmentedControlStyleBar;
 	//segmentedControl2.momentary = YES;
 	    
@@ -390,6 +424,7 @@
 	self.navigationItem.leftBarButtonItem = segmentBarItem2;
     [segmentBarItem2 release];
       */  
+    
     
 	[(ShakeView*)self.view setShakeDelegate:self];
 	
@@ -444,11 +479,31 @@
 - (void)loadCatForType:(id)sender {
     
     
-    NSLog(@"loadCatForType %d", [sender tag]);
+    //NSLog(@"loadCatForType %d", [sender tag]);
     int section = [sender tag];
-    TopicsTableViewController *aView = [[TopicsTableViewController alloc] initWithNibName:@"TopicsTableViewController" bundle:nil flag:2];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSInteger vos_sujets = [defaults integerForKey:@"vos_sujets"];
+    
+    TopicsTableViewController *aView;
+    
+    //NSLog(@"aURL %@", [[[arrayNewData objectAtIndex:section] forum] aURL]);
+    
+    switch (vos_sujets) {
+        case 0:
+            aView = [[TopicsTableViewController alloc] initWithNibName:@"TopicsTableViewController" bundle:nil flag:2];
+            aView.forumFlag1URL = [[[arrayNewData objectAtIndex:section] forum] aURL];
+            break;
+        case 1:
+            aView = [[TopicsTableViewController alloc] initWithNibName:@"TopicsTableViewController" bundle:nil flag:1];
+            aView.forumFavorisURL = [[[arrayNewData objectAtIndex:section] forum] aURL];
+            break;
+        default:
+            aView = [[TopicsTableViewController alloc] initWithNibName:@"TopicsTableViewController" bundle:nil flag:2];
+            aView.forumFlag1URL = [[[arrayNewData objectAtIndex:section] forum] aURL];            
+            break;
+    }
 
-	aView.forumFlag1URL = [[[arrayNewData objectAtIndex:section] forum] aURL];	
 	aView.forumName = [[[arrayNewData objectAtIndex:section] forum] aTitle];	
 	//aView.pickerViewArray = [[arrayNewData objectAtIndex:section] forum] subCats];	
     
@@ -597,8 +652,21 @@
     // Configure the cell...
 	[(UILabel *)[cell.contentView viewWithTag:999] setText:[tmpTopic aTitle]];
 	//[(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"%d messages", ([[arrayData objectAtIndex:theRow] aRepCount] + 1)]];
-	[(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"⚑ %d/%d", [tmpTopic curTopicPage], [tmpTopic maxTopicPage] ]];
 	
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSInteger vos_sujets = [defaults integerForKey:@"vos_sujets"];
+    
+    switch (vos_sujets) {
+        case 0:
+            [(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"⚑ %d/%d", [tmpTopic curTopicPage], [tmpTopic maxTopicPage] ]];
+            break;
+        case 1:
+            [(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"★ %d/%d", [tmpTopic curTopicPage], [tmpTopic maxTopicPage] ]];
+            break;
+        default:
+            [(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"⚑ %d/%d", [tmpTopic curTopicPage], [tmpTopic maxTopicPage] ]];
+            break;
+    }
     
     [(UILabel *)[cell.contentView viewWithTag:997] setText:[NSString stringWithFormat:@"%@ - %@", [tmpTopic aAuthorOfLastPost], [tmpTopic aDateOfLastPost]]];
 
@@ -636,29 +704,30 @@
 	if (longPressRecognizer.state == UIGestureRecognizerStateBegan) {
 		CGPoint longPressLocation = [longPressRecognizer locationInView:self.favoritesTableView];
 		self.pressedIndexPath = [[self.favoritesTableView indexPathForRowAtPoint:longPressLocation] copy];
-				
-		UIActionSheet *styleAlert = [[UIActionSheet alloc] initWithTitle:@"Aller à..."
+
+        if (self.topicActionSheet != nil) {
+            [self.topicActionSheet release], self.topicActionSheet = nil;
+        }
+        
+		self.topicActionSheet = [[UIActionSheet alloc] initWithTitle:@"Aller à..."
 																delegate:self cancelButtonTitle:@"Annuler"
 												  destructiveButtonTitle:nil
-													   otherButtonTitles:	@"la dernière page", @"la dernière réponse", @"la page numéro...",
+													   otherButtonTitles:	@"la dernière page", @"la dernière réponse", @"la page numéro...", @"Copier le lien",
 									 nil,
 									 nil];
 		
 		// use the same style as the nav bar
-		styleAlert.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+		self.topicActionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
 		
         CGPoint longPressLocation2 = [longPressRecognizer locationInView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view]];
-        CGRect origFrame = CGRectMake( longPressLocation2.x, longPressLocation2.y, 0, 0);
+        CGRect origFrame = CGRectMake( longPressLocation2.x, longPressLocation2.y, 1, 1);
         
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         {
-            [styleAlert showFromRect:origFrame inView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view] animated:YES];
+            [self.topicActionSheet showFromRect:origFrame inView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view] animated:YES];
         }
         else    
-            [styleAlert showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
-        
-        
-		[styleAlert release];
+            [self.topicActionSheet showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
 		
 	}
 }
@@ -704,6 +773,18 @@
 		{
 			NSLog(@"page numero");
             [self chooseTopicPage];
+			break;
+			
+		}
+		case 3:
+		{
+			NSLog(@"copier lien page 1");
+			NSIndexPath *indexPath = pressedIndexPath;
+            Topic *tmpTopic = [[[self.arrayNewData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
+            
+            UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+            pasteboard.string = [NSString stringWithFormat:@"%@%@", kForumURL, [tmpTopic aURLOfFirstPage]];
+
 			break;
 			
 		}
@@ -907,7 +988,10 @@
         
         [[[self.arrayNewData objectAtIndex:indexPath.section] topics] removeObjectAtIndex:indexPath.row];
         [self.favoritesTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        if ([[self.arrayNewData objectAtIndex:indexPath.section] topics].count == 0) {
+            [self.favoritesTableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationNone];
 
+        }
 		
 	}
 }
@@ -923,7 +1007,7 @@
 -(void)reload:(BOOL)shake
 {
 	if (!shake) {
-        //GA-- [[[GAI sharedInstance] defaultTracker] trackEventWithCategory:@"Sujets" withAction:@"reload" withLabel:@"manual" withValue:[NSNumber numberWithInt:-1]];
+
 	}
 
 
@@ -934,8 +1018,6 @@
 -(void) shakeHappened:(ShakeView*)view
 {
 	if (![request inProgress]) {
-		
-        //GA-- [[[GAI sharedInstance] defaultTracker] trackEventWithCategory:@"Sujets" withAction:@"reload" withLabel:@"shake" withValue:[NSNumber numberWithInt:-1]];
 		
 		[self reload:YES];		
 	}
@@ -966,12 +1048,16 @@
 
 	[self viewDidUnload];
 
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UIDeviceOrientationDidChangeNotification" object:nil];
+
 	[request cancel];
 	[request setDelegate:nil];
 	self.request = nil;
 
 	self.statusMessage = nil;
 	
+    self.topicActionSheet = nil;
+    
 	self.arrayNewData = nil;
 	
     [super dealloc];

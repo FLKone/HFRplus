@@ -37,7 +37,7 @@
 
 @synthesize request;
 
-@synthesize myPickerView, pickerViewArray, actionSheet;
+@synthesize myPickerView, pickerViewArray, actionSheet, topicActionSheet;
 
 
 @synthesize tmpCell;
@@ -379,7 +379,21 @@
 			labelBtn.frame = CGRectMake(0, 0, 130, 44);
 			[labelBtn addTarget:self action:@selector(choosePage) forControlEvents:UIControlEventTouchUpInside];
 			[labelBtn setTitle:[NSString stringWithFormat:@"%d/%d", [self pageNumber], [self lastPageNumber]] forState:UIControlStateNormal];
-			[[labelBtn titleLabel] setFont:[UIFont boldSystemFontOfSize:15.0]];
+			
+            [[labelBtn titleLabel] setFont:[UIFont boldSystemFontOfSize:16.0]];
+
+            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+                [labelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                [labelBtn setTitleShadowColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+                [labelBtn titleLabel].shadowOffset = CGSizeMake(0.0, -1.0);
+            }
+            else {
+                [labelBtn setTitleColor:[UIColor colorWithRed:113/255.0 green:120/255.0 blue:128/255.0 alpha:1.0] forState:UIControlStateNormal];
+                [labelBtn setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                [labelBtn titleLabel].shadowColor = [UIColor whiteColor];
+                [labelBtn titleLabel].shadowOffset = CGSizeMake(0.0, 1.0);
+            }
+            
 
 			UIBarButtonItem *systemItem3 = [[UIBarButtonItem alloc] initWithCustomView:labelBtn];
 			
@@ -497,8 +511,8 @@
 		//Title & URL
 		HTMLNode * topicTitleNode = [topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase3" allowPartial:NO];
 
-		NSString *aTopicAffix = [[NSString alloc] init];
-		NSString *aTopicSuffix = [[NSString alloc] init];
+        NSString *aTopicAffix = [NSString string];
+        NSString *aTopicSuffix = [NSString string];
 
 		
 		if ([[topicNode className] rangeOfString:@"ligne_sticky"].location != NSNotFound) {
@@ -736,6 +750,13 @@
 
 }
 
+-(void)OrientationChanged
+{
+    if (self.topicActionSheet) {
+        [self.topicActionSheet dismissWithClickedButtonIndex:[self.topicActionSheet cancelButtonIndex] animated:YES];
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 	self.title = forumName;
@@ -744,7 +765,12 @@
     
           
 	//NSLog(@"viewDidLoad %@ - %@", [[UIDevice currentDevice] systemName], [[UIDevice currentDevice] systemVersion]);
-        
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(OrientationChanged)
+                                                 name:@"UIDeviceOrientationDidChangeNotification"
+                                               object:nil];
+    
 	//Gesture
 	UIGestureRecognizer *recognizer;
 	
@@ -801,7 +827,11 @@
 	[segmentedControl2 addTarget:self action:@selector(segmentCatAction:) forControlEvents:UIControlEventValueChanged];
 	segmentedControl2.segmentedControlStyle = UISegmentedControlStyleBar;
 	segmentedControl2.momentary = YES;
-	
+
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        segmentedControl2.tintColor = [UIColor colorWithRed:156/255.f green:161/255.f blue:167/255.f alpha:1.00];
+    }
+    
 	segmentedControl2.frame = CGRectMake(segmentedControl.frame.size.width + 15, 0, segmentedControl2.frame.size.width, segmentedControl2.frame.size.height);
 	segmentedControl.frame = CGRectMake(5, 0, segmentedControl.frame.size.width, segmentedControl.frame.size.height);
 
@@ -1196,10 +1226,10 @@
 	[cell.titleLabel setText:[aTopic aTitle]];
 	 
 	if (aTopic.aRepCount == 0) {
-	 [cell.msgLabel setText:[NSString stringWithFormat:@"%d message", (aTopic.aRepCount + 1)]];
+	 [cell.msgLabel setText:[NSString stringWithFormat:@"↺ %d", (aTopic.aRepCount + 1)]];
 	}
 	else {
-	 [cell.msgLabel setText:[NSString stringWithFormat:@"%d messages", (aTopic.aRepCount + 1)]];
+	 [cell.msgLabel setText:[NSString stringWithFormat:@"↺ %d", (aTopic.aRepCount + 1)]];
 	}
 	
 	[cell.timeLabel setText:[NSString stringWithFormat:@"%@ - %@", [aTopic aAuthorOfLastPost], [aTopic aDateOfLastPost]]];
@@ -1296,28 +1326,29 @@
 		CGPoint longPressLocation = [longPressRecognizer locationInView:self.topicsTableView];
 		self.pressedIndexPath = [[self.topicsTableView indexPathForRowAtPoint:longPressLocation] copy];
 				
-		UIActionSheet *styleAlert = [[UIActionSheet alloc] initWithTitle:@"Aller à..."
+        if (self.topicActionSheet != nil) {
+            [self.topicActionSheet release], self.topicActionSheet = nil;
+        }
+        
+		self.topicActionSheet = [[UIActionSheet alloc] initWithTitle:@"Aller à..."
 																delegate:self cancelButtonTitle:@"Annuler"
 												  destructiveButtonTitle:nil
-													   otherButtonTitles:	@"la dernière page", @"la dernière réponse", @"la page numéro...",
+													   otherButtonTitles:	@"la dernière page", @"la dernière réponse", @"la page numéro...", @"Copier le lien",
 									 nil,
 									 nil];
 		
 		// use the same style as the nav bar
-		styleAlert.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+		self.topicActionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
 		
         CGPoint longPressLocation2 = [longPressRecognizer locationInView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view]];
-        CGRect origFrame = CGRectMake( longPressLocation2.x, longPressLocation2.y, 0, 0);
+        CGRect origFrame = CGRectMake( longPressLocation2.x, longPressLocation2.y, 1, 1);
 
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         {
-            [styleAlert showFromRect:origFrame inView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view] animated:YES];
+            [self.topicActionSheet showFromRect:origFrame inView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view] animated:YES];
         }
         else    
-            [styleAlert showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
-        
-        
-        [styleAlert release];
+            [self.topicActionSheet showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
 
 	}
 }
@@ -1361,6 +1392,22 @@
 			break;
 			
 		}
+		case 3:
+		{
+			NSLog(@"copier lien page 1");
+
+            UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+            pasteboard.string = [NSString stringWithFormat:@"%@%@", kForumURL, [[arrayData objectAtIndex:pressedIndexPath.row] aURL]];
+            
+			break;
+			
+		}
+        default:
+        {
+            NSLog(@"default");
+            self.pressedIndexPath = nil;
+            break;
+        }
 			
 	}
 }
@@ -1750,6 +1797,7 @@
 	[self viewDidUnload];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"SubCatSelected" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UIDeviceOrientationDidChangeNotification" object:nil];
 
 	[request cancel];
 	[request setDelegate:nil];
@@ -1784,6 +1832,8 @@
 	self.actionSheet = nil;
 	self.pickerViewArray = nil;
 
+    self.topicActionSheet = nil;
+    
 	self.statusMessage = nil;
 	
 	[super dealloc];

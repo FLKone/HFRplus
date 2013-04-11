@@ -16,6 +16,8 @@
 	
 	BOOL isViewed;
 	
+	NSString *aURLOfFirstPage;
+    
 	NSString *aURLOfFlag;
 	NSString *aTypeOfFlag;
 
@@ -39,6 +41,8 @@
 
 @property int aRepCount;
 @property BOOL isViewed;
+
+@property (nonatomic, retain) NSString *aURLOfFirstPage;
 
 @property (nonatomic, retain) NSString *aURLOfFlag;
 @property (nonatomic, retain) NSString *aTypeOfFlag;

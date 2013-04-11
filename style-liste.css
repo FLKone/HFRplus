@@ -10,10 +10,16 @@ style='margin:0;padding:0;font-size:12;font-family:Helvetica;'
 	/*font-size:12px !important;*/
 	font-family:Helvetica !important;
 	
+    /*-webkit-user-select: none;
+    
 	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-   	/*-webkit-tap-highlight-color:rgba(0,0,0,0);*/
+	
+   	-webkit-tap-highlight-color:rgba(0,0,0,0);*/
 	-webkit-text-size-adjust: none;
+}
+
+.maxmessage {
+    padding-bottom:54px !important;
 }
 
 body {
@@ -32,7 +38,7 @@ body {
 }
 
 img {
-	max-width:300px;
+    max-width: 298px;
 }
 
 span.signature, div.edited { 
@@ -90,6 +96,7 @@ div.masque {
 }
 
 .message .header {
+    -webkit-user-select: none;
 	height:34px;
 	width:300px;
 	padding:0 10px !important;
@@ -230,6 +237,7 @@ background:-webkit-gradient(
 }
 
 .message .content {
+    
 	padding:10px 0!important;
 	/*background:-webkit-gradient(
     linear,
@@ -268,6 +276,10 @@ background:-webkit-gradient(
 	font-size:9px !important;
 }
 
+table.code *, table.fixed * {
+    font-family: monospace !important;
+}
+
 #actualiserbtn {
 	color:#2470d8;
 	line-height:44px;
@@ -297,7 +309,7 @@ background:-webkit-gradient(
 	background-image: url(toolbar3.png);
 	height:43px;
 	width:320px;
-	text-shadow: rgba(0, 0, 0, 0.246094) 0px -1px 1px;
+	text-shadow: rgba(0, 0, 0, 0.6) 0px -1px 1px;
     
 }
 #toolbarpage a {

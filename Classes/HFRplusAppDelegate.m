@@ -32,203 +32,7 @@
 
 @synthesize hash_check, internetReach;
 
-@synthesize docSmiley;
-@synthesize query = _query;
-
-//@synthesize periodicMaintenanceOperation; //ioQueue, 
-
-#pragma mark -
-#pragma mark iCloud Docs
--(void)documentStateChanged {
-    UIDocumentState state = self.docSmiley.documentState;
-
-    if (state & UIDocumentStateEditingDisabled) {
-        //NSLog(@"UIDocumentStateEditingDisabled");
-    }
-    if (state & UIDocumentStateInConflict) {
-        //NSLog(@"UIDocumentStateInConflict");
-        
-        //NSError *error;    
-        //NSLog(@"== Content of current version");
-        NSURL *curURL = [[NSFileVersion currentVersionOfItemAtURL:self.docSmiley.fileURL] URL];
-        
-        NSData *data;
-        NSKeyedUnarchiver *unarchiver;
-        
-        data = [[NSMutableData alloc] initWithContentsOfURL:curURL];
-        unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-        
-        NSMutableDictionary *baseDic = [unarchiver decodeObjectForKey: @"usedSmileys"];
-        
-        //NSLog(@"BEFORE %@", baseDic);
-        
-        NSArray *oArray = [NSFileVersion unresolvedConflictVersionsOfItemAtURL:self.docSmiley.fileURL];
-        
-        //NSLog(@"== Conflict versions %d", oArray.count);
-        
-        NSEnumerator *enumerator = [oArray objectEnumerator];
-        
-        id object;
-        while (object = [enumerator nextObject]) {
-            //NSLog(@"==");
-                  
-            data = [[NSMutableData alloc] initWithContentsOfURL:[object URL]];
-            unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-            NSMutableDictionary *newDic = [unarchiver decodeObjectForKey: @"usedSmileys"];
-
-            //NSLog(@"%@", newDic);
-
-            baseDic = [baseDic dictionaryByMergingAndAddingDictionary:newDic];
-
-            [object setResolved:YES];
-        }
-        
-        //NSLog(@"== Final Dictionnary %@", baseDic);
-
-        [self.docSmiley setUsedSmileys:baseDic];
-        [self.docSmiley updateChangeCount:UIDocumentChangeDone];
-                
-        [NSFileVersion removeOtherVersionsOfItemAtURL:self.docSmiley.fileURL error:NULL];
-        [[NSFileVersion currentVersionOfItemAtURL:self.docSmiley.fileURL] setResolved:YES];
-
-        [self.docSmiley notify];
-        
-/*        
-        NSURL *curURL2 = [[NSFileVersion currentVersionOfItemAtURL:self.docSmiley.fileURL] URL];
-        
-        NSData *data2;
-        NSKeyedUnarchiver *unarchiver2;
-        
-        data2 = [[NSMutableData alloc] initWithContentsOfURL:curURL2];
-        unarchiver2 = [[NSKeyedUnarchiver alloc] initForReadingWithData:data2];
-        
-        NSMutableDictionary *baseDic2 = [unarchiver2 decodeObjectForKey: @"usedSmileys"];
-        
-        NSLog(@"== AFTER %@", baseDic2);
-        
-        NSArray *oArray2 = [NSFileVersion otherVersionsOfItemAtURL:self.docSmiley.fileURL];
-        
-        NSLog(@"== AFTER Conflict versions %d", oArray2.count);
-
-        if ([baseDic isEqualToDictionary:baseDic2]) {
-            NSLog(@"The two dictionaries are equal.");
-            
-        }
-             
-        //NSLog(@"%@", [unarchiver decodeObjectForKey: @"usedSmileys"]);
-        
-        */
-/*        
-        if (![NSFileVersion removeOtherVersionsOfItemAtURL:self.docSmiley.fileURL error:&error])    
-        {    
-            
-            
-            
-            NSLog(@"Error removing other document versions: %@",  error.localizedFailureReason);    
-            return;    
-        }    
- */
-        
-    }
-    else {
-        NSLog(@"documentStateChanged OK");
-
-    }
-}
-
-
-- (void)loadData:(id)query {
-    
-    if ([query resultCount] == 1) {
-        
-        id item = [query resultAtIndex:0];
-        NSURL *url = [item valueForAttribute:NSMetadataItemURLKey];
-        //NSLog(@"URL %@", url);
-        UsedSmileys *doc = [[UsedSmileys alloc] initWithFileURL:url];
-        self.docSmiley = doc;
-        [self.docSmiley openWithCompletionHandler:^(BOOL success) {
-            if (success) {                
-                NSLog(@"iCloud document opened");                    
-            } else {                
-                NSLog(@"failed opening document from iCloud");                
-            }
-        }];
-        
-	} 
-    else {
-        
-        NSURL *ubiq = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
-        NSURL *ubiquitousPackage = [[ubiq URLByAppendingPathComponent:@"Documents"] URLByAppendingPathComponent:kFILENAMESmiley];
-        
-        UsedSmileys *doc = [[UsedSmileys alloc] initWithFileURL:ubiquitousPackage];
-        self.docSmiley = doc;
-        
-        [doc saveToURL:[doc fileURL] forSaveOperation:UIDocumentSaveForCreating completionHandler:^(BOOL success) {            
-            if (success) {
-                [doc openWithCompletionHandler:^(BOOL success) {
-                    
-                    NSLog(@"new document opened from iCloud");
-                    
-                }];                
-            }
-        }];
-    }
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(documentStateChanged)
-                                                 name:UIDocumentStateChangedNotification object:self.docSmiley];
-    
-}
-
-- (void)queryDidFinishGathering:(NSNotification *)notification {
-    
-    Class cls = NSClassFromString (@"NSMetadataQuery");
-    if (cls)
-    {
-        id query = [notification object];
-        [query disableUpdates];
-        [query stopQuery];
-        
-        [[NSNotificationCenter defaultCenter] removeObserver:self 
-                                                        name:NSMetadataQueryDidFinishGatheringNotification
-                                                      object:query];
-        
-        //_query = nil;
-        
-        [self loadData:query];
-    }
-    
-    
-    
-}
-
-- (void)loadDocument {
-    
-    Class cls = NSClassFromString (@"NSMetadataQuery");
-    if (cls)
-    {
-        id query;
-        
-        query = [[cls alloc] init];
-        _query = query;
-        [query setSearchScopes:[NSArray arrayWithObject:NSMetadataQueryUbiquitousDocumentsScope]];
-        NSPredicate *pred = [NSPredicate predicateWithFormat: @"%K == %@", NSMetadataItemFSNameKey, kFILENAMESmiley];
-        [query setPredicate:pred];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(queryDidFinishGathering:) name:NSMetadataQueryDidFinishGatheringNotification object:query];
-        
-        [query startQuery];
-    } 
-}
-
-- (void)updateWithUbiquityContainer:(id)container {
-    if (container) {
-        //NSLog(@"iCloud access at %@", container);
-        [self loadDocument];
-    } else {
-        NSLog(@"No iCloud access");
-    } 
-}
+//@synthesize periodicMaintenanceOperation; //ioQueue,
 
 #pragma mark -
 #pragma mark Application lifecycle
@@ -249,59 +53,10 @@
     
     [TestFlight takeOff:kTestFlightAPI];
     
-    dispatch_queue_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    
-    dispatch_async(globalQueue, ^{
-        
-        if ([[NSFileManager defaultManager] respondsToSelector:@selector(URLForUbiquityContainerIdentifier:)] ) {
-            NSURL *ubiq = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self updateWithUbiquityContainer:ubiq];
-            });
-        }        
-        
-
-    });
-
-	
-	self.hash_check = [[NSString alloc] init];
+	//self.hash_check = [[NSString alloc] init];
 	
 	[MKStoreManager sharedManager];
-	
-    // GA
-    [[GANTracker sharedTracker] startTrackerWithAccountID:kAnalyticsAccountId
-                                           dispatchPeriod:kDispatchPeriodSeconds
-                                                 delegate:self];
-
-    NSError *error = nil;
-    if (![[GANTracker sharedTracker] trackPageview:@"/app_entry_point"
-    								 withError:&error]) {
-        // Handle error here
-        NSLog(@"error GA 0", error);
-    }
-
-    error = nil;
-    if (![[GANTracker sharedTracker] trackEvent:@"iOS"
-                                         action:[[UIDevice currentDevice] systemVersion]
-                                          label:nil
-                                          value:-1
-                                      withError:&error]) {
-            // Handle error here
-        NSLog(@"error GA 1", error);
-    }
-
-    error = nil;
-    if (![[GANTracker sharedTracker] trackEvent:@"iDevice"
-                                         action:[[UIDevice currentDevice] model]
-                                          label:[[UIDevice currentDevice] systemVersion]
-                                          value:-1
-                                      withError:&error]) {
-            // Handle error here
-        NSLog(@"error GA 2", error);
-    }
-    //-- GA
-    
+	    
     [self registerDefaultsFromSettingsBundle];
     
 	// Override point for customization after application launch.
@@ -523,6 +278,7 @@
         [ioQueue addOperation:periodicMaintenanceOperation];
     }*/
 	//NSLog(@"end");
+    [diskCachePath release];
 	[pool2 drain];
 
 }
@@ -684,20 +440,6 @@
 }
 
 #pragma mark -
-#pragma mark GANTrackerDelegate methods
-
-- (void)hitDispatched:(NSString *)hitString {
-    NSLog(@"Hit Dispatched: %@", hitString);
-}
-
-- (void)trackerDispatchDidComplete:(GANTracker *)tracker
-                  eventsDispatched:(NSUInteger)hitsDispatched
-              eventsFailedDispatch:(NSUInteger)hitsFailedDispatch {
-    NSLog(@"Dispatch completed (%u OK, %u failed)",
-          hitsDispatched, hitsFailedDispatch);
-}
-
-#pragma mark -
 #pragma mark login management
 
 - (void)checkLogin {
@@ -719,8 +461,6 @@
     [periodicMaintenanceTimer release], periodicMaintenanceTimer = nil;
     //[periodicMaintenanceOperation release], periodicMaintenanceOperation = nil;
 	//[ioQueue release], ioQueue = nil;
-
-    [docSmiley release];
     
 	[rootController release];
     self.splitViewController = nil;
@@ -729,7 +469,7 @@
 	[favoritesNavController release];
 	[messagesNavController release];
 	
-	[hash_check release];
+	self.hash_check = nil;
 	
     [window release];
     [super dealloc];

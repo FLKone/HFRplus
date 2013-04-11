@@ -38,7 +38,8 @@
 	UITableView *commonTableView;
 	NSMutableDictionary *usedSearchDict;
 	NSMutableArray *usedSearchSortedArray;
-
+    
+    NSString *smileyCustom;
 	
 	BOOL haveTitle;
 	UITextField *textFieldTitle;
@@ -77,6 +78,7 @@
 @property int offsetY;
 
 @property (nonatomic, retain) IBOutlet UIWebView *smileView;
+@property (nonatomic, retain) NSString *smileyCustom;
 
 @property (nonatomic, retain) IBOutlet UISegmentedControl *segmentControler;
 @property (nonatomic, retain) IBOutlet UISegmentedControl *segmentControlerPage;

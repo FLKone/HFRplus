@@ -55,6 +55,28 @@
 			</array>
 		</dict>
 		<dict>
+			<key>DefaultValue</key>
+			<string>0</string>
+			<key>FooterText</key>
+			<string>&quot;Drapeaux &amp; Favoris&quot; affiche uniquement les sujets que vous suivez (⚑ + ★) qui disposent de nouvelles réponses. C&apos;est l&apos;affichage classique.  &quot;Favoris&quot; affiche tous les sujets que vous avez placé en favoris (★), qu&apos;une nouvelle réponse soit disponible ou pas. Dans ce cas, les sujets avec de nouvelles réponses sont en gras dans la liste.</string>
+			<key>Key</key>
+			<string>vos_sujets</string>
+			<key>Title</key>
+			<string>Vos Sujets</string>
+			<key>Titles</key>
+			<array>
+				<string>Drapeaux &amp; Favoris</string>
+				<string>Favoris</string>
+			</array>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Values</key>
+			<array>
+				<string>0</string>
+				<string>1</string>
+			</array>
+		</dict>
+		<dict>
 			<key>Title</key>
 			<string>Liste des messages</string>
 			<key>Type</key>
