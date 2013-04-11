@@ -71,7 +71,7 @@
 
 - (IBAction)gotohfrplus {
     
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://apps.flk.io/hfrplus/"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://apps.flkone.com/hfrplus/"]];
     
 }
 - (void) viewWillAppear:(BOOL)animated

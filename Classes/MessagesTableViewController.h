@@ -16,8 +16,6 @@
 //#import "EditFormView.h"
 //#import "QuoteFormView.h"
 
-#import "OptionsTopicViewController.h"
-
 #import "QuoteMessageViewController.h"
 #import "EditMessageViewController.h"
 #import "NewMessageViewController.h"
@@ -146,6 +144,8 @@
 -(void)searchNewMessages:(int)from;
 -(void)searchNewMessages;
 -(void)fetchContentinBackground:(id)from;
+
+-(void)webViewDidFinishLoadDOM;
 
 -(BOOL) canBeFavorite;
 -(void) EcrireCookie:(NSString *)nom withVal:(NSString *)valeur;

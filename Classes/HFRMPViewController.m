@@ -145,28 +145,30 @@
 		CGPoint longPressLocation = [longPressRecognizer locationInView:self.topicsTableView];
 		self.pressedIndexPath = [[self.topicsTableView indexPathForRowAtPoint:longPressLocation] copy];
 		
-		UIActionSheet *styleAlert = [[UIActionSheet alloc] initWithTitle:@"Aller à..."
+        if (self.topicActionSheet != nil) {
+            [self.topicActionSheet release], self.topicActionSheet = nil;
+        }
+        
+		self.topicActionSheet = [[UIActionSheet alloc] initWithTitle:@"Aller à..."
 																delegate:self cancelButtonTitle:@"Annuler"
 												  destructiveButtonTitle:nil
-													   otherButtonTitles:	@"la dernière page", @"la première page", @"la page numéro...",
+													   otherButtonTitles:	@"la dernière page", @"la première page", @"la page numéro...", @"Copier le lien",
 									 nil,
 									 nil];
 		
 		// use the same style as the nav bar
-		styleAlert.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+		self.topicActionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
 		
         CGPoint longPressLocation2 = [longPressRecognizer locationInView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view]];
-        CGRect origFrame = CGRectMake( longPressLocation2.x, longPressLocation2.y, 0, 0);
+        CGRect origFrame = CGRectMake( longPressLocation2.x, longPressLocation2.y, 1, 1);
         
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         {
-            [styleAlert showFromRect:origFrame inView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view] animated:YES];
+            [self.topicActionSheet showFromRect:origFrame inView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view] animated:YES];
         }
         else    
-            [styleAlert showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
-        
-        
-		[styleAlert release];
+            [self.topicActionSheet showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
+
 		
 	}
 }
@@ -190,6 +192,7 @@
 
 - (void)actionSheet:(UIActionSheet *)modalView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    NSLog(@"buttonIndex %d", buttonIndex);
 	switch (buttonIndex)
 	{
 		case 0:
@@ -227,6 +230,7 @@
 		}
         default:
         {
+            NSLog(@"default");
             [super actionSheet:modalView clickedButtonAtIndex:buttonIndex];
             break;
         }

@@ -21,7 +21,7 @@
 @synthesize request;
 
 @synthesize disableViewOverlay, loadingView;
-@synthesize status, statusMessage, maintenanceView, messagesTableViewController, tmpCell;
+@synthesize status, statusMessage, maintenanceView, messagesTableViewController, tmpCell, pressedIndexPath, topicActionSheet;
 
 @synthesize theSearchBar;
 @synthesize theTableView;
@@ -82,10 +82,22 @@
 	
 }
 
+-(void)OrientationChanged
+{
+    if (self.topicActionSheet) {
+        [self.topicActionSheet dismissWithClickedButtonIndex:[self.topicActionSheet cancelButtonIndex] animated:YES];
+    }
+}
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(OrientationChanged)
+                                                 name:@"UIDeviceOrientationDidChangeNotification"
+                                               object:nil];
+    
 	self.title = @"Recherche";
     self.stories =[[NSMutableArray alloc]init];
     self.disableViewOverlay = [[UIView alloc]
@@ -399,7 +411,12 @@
         cell = tmpCell;
 		cell.accessoryType = UITableViewCellAccessoryNone;
 		cell.selectionStyle = UITableViewCellSelectionStyleBlue;	
-			
+
+		UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc]
+															 initWithTarget:self action:@selector(handleLongPress:)];
+		[cell addGestureRecognizer:longPressRecognizer];
+		[longPressRecognizer release];
+        
         self.tmpCell = nil;
 		
 	}
@@ -471,6 +488,65 @@
     
 }
 
+#pragma mark -
+#pragma mark LongPress delegate
+
+-(void)handleLongPress:(UILongPressGestureRecognizer*)longPressRecognizer {
+	if (longPressRecognizer.state == UIGestureRecognizerStateBegan) {
+		CGPoint longPressLocation = [longPressRecognizer locationInView:self.theTableView];
+		self.pressedIndexPath = [[self.theTableView indexPathForRowAtPoint:longPressLocation] copy];
+        
+        if (self.topicActionSheet != nil) {
+            [self.topicActionSheet release], self.topicActionSheet = nil;
+        }
+        
+		self.topicActionSheet = [[UIActionSheet alloc] initWithTitle:@":smiley-menu:"
+                                                            delegate:self cancelButtonTitle:@"Annuler"
+                                              destructiveButtonTitle:nil
+                                                   otherButtonTitles:	@"Copier le lien",
+                                 nil,
+                                 nil];
+		
+		// use the same style as the nav bar
+		self.topicActionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+		
+        CGPoint longPressLocation2 = [longPressRecognizer locationInView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view]];
+        CGRect origFrame = CGRectMake( longPressLocation2.x, longPressLocation2.y, 1, 1);
+        
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            [self.topicActionSheet showFromRect:origFrame inView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view] animated:YES];
+        }
+        else
+            [self.topicActionSheet showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
+        
+	}
+}
+
+- (void)actionSheet:(UIActionSheet *)modalView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	switch (buttonIndex)
+	{
+		case 0:
+		{
+			NSLog(@"copier lien page 1 %@", [[stories objectAtIndex: pressedIndexPath.row] objectForKey: @"link"]);
+            
+            UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+            pasteboard.string = [NSString stringWithFormat:@"%@%@", kForumURL, [[stories objectAtIndex: pressedIndexPath.row] objectForKey: @"link"]];
+            
+			break;
+			
+		}
+        default:
+        {
+            NSLog(@"default");
+            self.pressedIndexPath = nil;
+            break;
+        }
+			
+	}
+}
+
 - (void)viewDidUnload {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
@@ -484,6 +560,11 @@
     [stories dealloc];	
 	[disableViewOverlay dealloc];
 
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UIDeviceOrientationDidChangeNotification" object:nil];
+
+    self.pressedIndexPath = nil;
+    self.topicActionSheet = nil;
+    
     [super dealloc];
 }
 

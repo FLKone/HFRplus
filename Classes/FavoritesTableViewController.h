@@ -28,11 +28,15 @@
     
     UITextField *pageNumberField;
     
+    UIActionSheet		*topicActionSheet;
+    
     BOOL showAll;
 }
 
 @property (nonatomic, retain) IBOutlet UITableView *favoritesTableView;
 @property (nonatomic, retain) IBOutlet UIView *loadingView;
+
+@property (nonatomic, retain) UIActionSheet *topicActionSheet;
 
 @property (nonatomic, retain) NSMutableArray *arrayNewData;
 

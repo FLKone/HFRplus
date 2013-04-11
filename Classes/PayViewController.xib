@@ -203,6 +203,7 @@
 						<reference key="IBUIBackgroundColor" ref="93686324"/>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
+						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<bool key="IBUIBounces">NO</bool>
 						<bool key="IBUIScrollEnabled">NO</bool>
@@ -225,7 +226,7 @@
 							<int key="NSfFlags">16</int>
 						</object>
 					</object>
-					<object class="IBUIButton" id="382049407">
+					<object class="IBUIButton" id="396442435">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{20, 229}, {280, 44}}</string>
@@ -266,7 +267,7 @@
 						<string key="NSFrame">{{20, 204}, {280, 41}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="382049407"/>
+						<reference key="NSNextKeyView" ref="396442435"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
@@ -314,7 +315,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">resutsBtn</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="382049407"/>
+						<reference key="destination" ref="396442435"/>
 					</object>
 					<int key="connectionID">44</int>
 				</object>
@@ -360,7 +361,7 @@
 							<reference ref="333897613"/>
 							<reference ref="23336085"/>
 							<reference ref="874396321"/>
-							<reference ref="382049407"/>
+							<reference ref="396442435"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -412,7 +413,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">40</int>
-						<reference key="object" ref="382049407"/>
+						<reference key="object" ref="396442435"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 				</object>

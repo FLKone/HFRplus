@@ -12,10 +12,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "NSData+Base64.h"
 #import "RegexKitLite.h"
-
-//#import "SmileFormController.h"
-#import "UsedSmileys.h"
-
+#import "UIWebView+Tools.h"
 
 @implementation AddMessageViewController
 @synthesize delegate, textView, arrayInputData, formSubmit, accessoryView, smileView;
@@ -27,7 +24,7 @@
 @synthesize haveTitle, textFieldTitle;
 @synthesize haveTo, textFieldTo;
 @synthesize haveCategory, textFieldCat;
-@synthesize offsetY;
+@synthesize offsetY, smileyCustom;
 
 @synthesize popover = _popover, refreshAnchor;
 
@@ -78,18 +75,11 @@
 		NSString *directory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 		NSString *usedSmilieys = [[NSString alloc] initWithString:[directory stringByAppendingPathComponent:@"usedSmilieys.plist"]];
 		
-        if ([[HFRplusAppDelegate sharedAppDelegate] docSmiley].usedSmileys.count > 0) {
-            //NSLog(@"== From iCloud");
-            self.usedSearchDict = [[HFRplusAppDelegate sharedAppDelegate] docSmiley].usedSmileys;
+        if ([fileManager fileExistsAtPath:usedSmilieys]) {
+            self.usedSearchDict = [NSMutableDictionary dictionaryWithContentsOfFile:usedSmilieys];
+            self.usedSearchSortedArray = (NSMutableArray *)[[self.usedSearchDict allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
         }
-        else if ([fileManager fileExistsAtPath:usedSmilieys]) {
-            //NSLog(@"== From Local");            
-			self.usedSearchDict = [NSMutableDictionary dictionaryWithContentsOfFile:usedSmilieys];
-            
-            [[HFRplusAppDelegate sharedAppDelegate] docSmiley].usedSmileys = self.usedSearchDict;
-            [[[HFRplusAppDelegate sharedAppDelegate] docSmiley] updateChangeCount:UIDocumentChangeDone];
-		}
-        
+                
         if (self.usedSearchDict.count > 0) {
             self.usedSearchSortedArray = (NSMutableArray *)[[self.usedSearchDict allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
         }
@@ -121,6 +111,8 @@
 	NSString *jsString = [[[NSString alloc] initWithString:@""] autorelease];
 	//jsString = [jsString stringByAppendingString:@"$('body').bind('touchmove', function(e){e.preventDefault()});"];
 	jsString = [jsString stringByAppendingString:@"$('.button').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+$.base64.encode(this.title); });"];
+    
+	jsString = [jsString stringByAppendingString:@"$('#smileperso img.smile').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+$.base64.encode(this.alt); });"];    
 	[webView stringByEvaluatingJavaScriptFromString:jsString];
 	
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
@@ -144,6 +136,8 @@
 	return YES;
 }
 - (void)viewDidLoad {
+    [super viewDidLoad];
+    
 	//Bouton Annuler
 	UIBarButtonItem *cancelBarItem = [[UIBarButtonItem alloc] initWithTitle:@"Annuler" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
 	self.navigationItem.leftBarButtonItem = cancelBarItem;
@@ -167,9 +161,26 @@
 	//NSLog(@"viewDidLoad add");
 	
    // [super viewDidLoad];
-	
-	[self.smileView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"smileybase" ofType:@"html"] isDirectory:NO]]];
-		
+
+    
+    
+    // LOAD SMILEY HTML
+    
+	NSString *path = [[NSBundle mainBundle] bundlePath];
+	NSURL *baseURL = [NSURL fileURLWithPath:path];
+
+    NSString *tempHTML = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"smileybase" ofType:@"html"] encoding:NSUTF8StringEncoding error:NULL];
+    
+    [self.smileView setBackgroundColor:[UIColor colorWithRed:46/255.f green:46/255.f blue:46/255.f alpha:1.00]];
+    [self.smileView hideGradientBackground];
+    
+    [self.smileView loadHTMLString:[tempHTML stringByReplacingOccurrencesOfString:@"%SMILEYCUSTOM%"
+                                                                       withString:[NSString stringWithFormat:@"<div id='smileperso'>%@</div>",
+                                                                                   self.smileyCustom]] baseURL:baseURL];
+    
+//	[self.smileView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"smileybase" ofType:@"html"] isDirectory:NO]]];
+    //==
+    
 	self.formSubmit = [NSString stringWithFormat:@"%@/bddpost.php", kForumURL];
 
 	 [[NSNotificationCenter defaultCenter] addObserver:self
@@ -197,10 +208,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 	
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(docDidUpdate:) name:@"docsModified" object:nil];
-    
-
-	
 	// On rajoute les menus pour le style
     UIMenuItem *textBoldItem = [[[UIMenuItem alloc] initWithTitle:@"B" action:@selector(textBold:)] autorelease];
     UIMenuItem *textItalicItem = [[[UIMenuItem alloc] initWithTitle:@"I" action:@selector(textItalic:)] autorelease];
@@ -208,30 +215,20 @@
     UIMenuItem *textStrikeItem = [[[UIMenuItem alloc] initWithTitle:@"S" action:@selector(textStrike:)] autorelease];
     
 	UIMenuItem *textSpoilerItem = [[[UIMenuItem alloc] initWithTitle:@"SPOILER" action:@selector(textSpoiler:)] autorelease];
-    UIMenuItem *textFixeItem = [[[UIMenuItem alloc] initWithTitle:@"FIXE" action:@selector(textFixe:)] autorelease];
+    UIMenuItem *textFixeItem = [[[UIMenuItem alloc] initWithTitle:@"FIXED" action:@selector(textFixe:)] autorelease];
+    UIMenuItem *textQuoteItem = [[[UIMenuItem alloc] initWithTitle:@"QUOTE" action:@selector(textQuote:)] autorelease];
  //   UIMenuItem *textCppItem = [[[UIMenuItem alloc] initWithTitle:@"CPP" action:@selector(textStrike:)] autorelease];
     UIMenuItem *textLinkItem = [[[UIMenuItem alloc] initWithTitle:@"URL" action:@selector(textLink:)] autorelease];
     //UIMenuItem *textMailItem = [[[UIMenuItem alloc] initWithTitle:@"@" action:@selector(textStrike:)] autorelease];
     UIMenuItem *textImgItem = [[[UIMenuItem alloc] initWithTitle:@"IMG" action:@selector(textImg:)] autorelease];
 	
     [[UIMenuController sharedMenuController] setMenuItems:[NSArray arrayWithObjects:textBoldItem, textItalicItem, textUnderlineItem, textStrikeItem,
-														   textSpoilerItem, textFixeItem, textLinkItem, textImgItem, nil]];
+														   textSpoilerItem, textFixeItem, textQuoteItem, textLinkItem, textImgItem, nil]];
 
 	
 	[segmentControler setEnabled:NO forSegmentAtIndex:1];		
 	//[segmentControler setEnabled:NO forSegmentAtIndex:2];		
 
-}
-
-- (void)docDidUpdate:(NSNotification *)notification {
-    
-    
-    self.usedSearchDict = [[HFRplusAppDelegate sharedAppDelegate] docSmiley].usedSmileys;
-    
-    //NSLog(@"queryDidUpdate %@", self.usedSearchDict);
-
-    [self textFieldSmileChange:self.textFieldSmileys];
-    
 }
 
 #pragma mark -
@@ -300,7 +297,9 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-	//NSLog(@"viewWillAppear");
+	NSLog(@"viewWillAppear");
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"VisibilityChanged" object:@"SHOW"];
+
 	[super viewWillAppear:animated];
     
 	if(self.lastSelectedRange.location != NSNotFound)
@@ -403,6 +402,7 @@
 			[alert release];
 		}
 		else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"VisibilityChanged" object:nil];
 			[self.delegate addMessageViewControllerDidFinish:self];	
 		}
 	}
@@ -411,6 +411,7 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
 	if (buttonIndex == 1 && alertView.tag == 666) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"VisibilityChanged" object:nil];
 		[self.delegate addMessageViewControllerDidFinish:self];	
 	}
 }
@@ -508,7 +509,8 @@
                     }
                     
                 }
-
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"VisibilityChanged" object:nil];
 				[self.delegate addMessageViewControllerDidFinishOK:self];	
 
 			}
@@ -656,14 +658,6 @@
 		NSString *usedSmilieys = [[NSString alloc] initWithString:[directory stringByAppendingPathComponent:@"usedSmilieys.plist"]];
 		
 		[self.usedSearchDict writeToFile:usedSmilieys atomically:YES];
-		
-        
-        //iCloud sauvegarde sur iCloud des smileys
-        //NSLog(@"//iCloud sauvegarde sur iCloud des smileys");
-        [[HFRplusAppDelegate sharedAppDelegate] docSmiley].usedSmileys = self.usedSearchDict;
-        //NSLog(@"//iCloud b4 update");
-        [[[HFRplusAppDelegate sharedAppDelegate] docSmiley] updateChangeCount:UIDocumentChangeDone];
-        //NSLog(@"//iCloud");
         
         //NSLog(@"usedSearchDict AFTER SAVE %@", self.usedSearchDict);
 		// Recherche Smileys utilises
@@ -759,7 +753,10 @@
 }
 - (void)textFixe:(id)sender{
 	[self insertBBCode:@"fixed"];
-}	 
+}
+- (void)textQuote:(id)sender{
+	[self insertBBCode:@"quote"];
+}
 - (void)textLink:(id)sender{
 	[self insertBBCode:@"url"];
 }
@@ -1326,6 +1323,8 @@
 	[requestSmile setDelegate:nil];
 	self.requestSmile = nil;
 	
+    self.smileyCustom = nil;
+    
 	self.smileyArray = nil;
 	self.usedSearchDict = nil;
 	self.usedSearchSortedArray = nil;

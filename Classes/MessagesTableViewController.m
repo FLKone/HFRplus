@@ -16,6 +16,8 @@
 #import "ASIHTTPRequest.h"
 #import "ASIDownloadCache.h"
 
+#import "UIWebView+Tools.h"
+
 #import "ShakeView.h"
 //#import "UIImageView+WebCache.h"
 #import "RangeOfCharacters.h"
@@ -58,7 +60,7 @@
     
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMaxi];
 
-    //NSLog(@"URL %@", [self currentUrl]);
+    NSLog(@"URL %@", [self currentUrl]);
     
 	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]]]];
 	[request setDelegate:self];
@@ -88,13 +90,13 @@
 - (void)fetchContentStarted:(ASIHTTPRequest *)theRequest
 {
 	//--
-	NSLog(@"fetchContentStarted");
+	//NSLog(@"fetchContentStarted");
 
 }
 
 - (void)fetchContentComplete:(ASIHTTPRequest *)theRequest
 {
-	NSLog(@"fetchContentComplete");
+	//NSLog(@"fetchContentComplete");
 	
 	// create the queue to run our ParseOperation
     self.queue = [[NSOperationQueue alloc] init];
@@ -238,6 +240,8 @@
 				[newLastPageUrl release];
 			}
 			else {
+                NSLog(@"lastObject %@", [[temporaryNumPagesArray lastObject] allContents]);
+                
 				NSString *newLastPageUrl = [[NSString alloc] initWithString:[[temporaryNumPagesArray lastObject] getAttributeNamed:@"href"]];
 				[self setLastPageUrl:newLastPageUrl];
 				[newLastPageUrl release];
@@ -435,10 +439,49 @@
 		self.currentUrl = [theTopicUrl copy];	
 		self.loaded = NO;
 		self.isViewed = YES;
-		//[self refreshData];
+
 
 	}
 	return self;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+	//NSLog(@"viewWillDisappear");
+	
+    [super viewWillDisappear:animated];
+	self.isAnimating = YES;
+    
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    //NSLog(@"viewDidAppear");
+    
+	[super viewDidAppear:animated];
+	self.isAnimating = NO;
+    
+}
+
+- (void)VisibilityChanged:(NSNotification *)notification {
+   // NSLog(@"VisibilityChanged %@", notification);
+
+    if ([[notification valueForKey:@"object"] isEqualToString:@"SHOW"]) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIMenuControllerDidHideMenuNotification object:nil];
+    }
+    else
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIMenuControllerDidHideMenuNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editMenuHidden:) name:UIMenuControllerDidHideMenuNotification object:nil];
+    }
+    //[self resignFirstResponder];
+}
+
+- (void)editMenuHidden:(id)sender {
+    //NSLog(@"editMenuHidden %@ NOMBRE %d", sender, [UIMenuController sharedMenuController].menuItems.count);
+    
+    UIMenuController *menuController = [UIMenuController sharedMenuController];
+    [menuController setMenuItems:nil];
+    //[self resignFirstResponder];
 }
 
 - (void)viewDidLoad {
@@ -448,7 +491,11 @@
 	self.isAnimating = NO;
 
 	self.title = self.topicName;  
-        
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(VisibilityChanged:) name:@"VisibilityChanged" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editMenuHidden:) name:UIMenuControllerDidHideMenuNotification object:nil];
+
+    
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
     
     label.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
@@ -482,6 +529,10 @@
     
     [self.navigationItem setTitleView:label];
     [label release];
+
+    // fond blanc WebView
+    [self.messagesWebView setBackgroundColor:[UIColor whiteColor]];
+    [self.messagesWebView hideGradientBackground];
     
 	//Gesture
 	UIGestureRecognizer *recognizer;
@@ -532,17 +583,6 @@
 	
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-	[super viewWillDisappear:animated];
-	//NSLog(@"viewWillDisappear");
-	self.isAnimating = YES;
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-	[super viewDidAppear:animated];
-	//NSLog(@"viewDidAppear");
-	self.isAnimating = NO;
-}
 
 -(void)optionsTopic:(id)sender
 {	
@@ -633,10 +673,10 @@
 
 - (void)actionSheet:(UIActionSheet *)modalView clickedButtonAtIndex:(NSInteger)buttonIndex
 {    
-    NSLog(@"clickedButtonAtIndex %d", buttonIndex);
+    //NSLog(@"clickedButtonAtIndex %d", buttonIndex);
 
     if (buttonIndex < self.arrayActionsMessages.count) {
-        NSLog(@"action %@", [self.arrayActionsMessages objectAtIndex:buttonIndex]);
+        //NSLog(@"action %@", [self.arrayActionsMessages objectAtIndex:buttonIndex]);
         if ([self respondsToSelector:NSSelectorFromString([[self.arrayActionsMessages objectAtIndex:buttonIndex] objectForKey:@"code"])]) 
         {
             [self performSelector:NSSelectorFromString([[self.arrayActionsMessages objectAtIndex:buttonIndex] objectForKey:@"code"])];
@@ -649,12 +689,6 @@
 
 }
 
-- (void)optionsTopicViewControllerDidFinish:(OptionsTopicViewController *)controller {
-    //NSLog(@"optionsTopicViewControllerDidFinish");
-	
-	//[self dismissModalViewControllerAnimated:YES];
-    [self answerTopic];
-}
 
 -(void)markUnread {
     ASIHTTPRequest  *delrequest =  
@@ -724,7 +758,7 @@
     
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
 	[self presentModalViewController:navigationController animated:YES];
-	
+    
 	// The navigation controller is now owned by the current view controller
 	// and the root view controller is owned by the navigation controller,
 	// so both objects should be released to prevent over-retention.
@@ -748,20 +782,6 @@
 		return;
 	}
 	
-	// Create the root view controller for the navigation controller
-	// The new view controller configures a Cancel and Done button for the
-	// navigation bar.
-	/*
-	QuoteFormView *formViewController = [[QuoteFormView alloc]
-											  initWithNibName:@"FormViewController" bundle:nil];
-	
-	[[formViewController.viewControllers objectAtIndex:0] setDelegate:self];
-	[[formViewController.viewControllers objectAtIndex:0] setUrlQuote:quoteUrl];
-	
-	[self presentModalViewController:formViewController animated:YES];
-	
-	[formViewController release];
- */
 	
 	QuoteMessageViewController *quoteMessageViewController = [[QuoteMessageViewController alloc]
 														  initWithNibName:@"AddMessageViewController" bundle:nil];
@@ -774,7 +794,7 @@
     
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
 	[self presentModalViewController:navigationController animated:YES];
-	
+    
 	// The navigation controller is now owned by the current view controller
 	// and the root view controller is owned by the navigation controller,
 	// so both objects should be released to prevent over-retention.
@@ -788,20 +808,6 @@
 	if (self.isAnimating) {
 		return;
 	}
-	// Create the root view controller for the navigation controller
-	// The new view controller configures a Cancel and Done button for the
-	// navigation bar.
-	/*
-	EditFormView *formViewController = [[EditFormView alloc]
-											  initWithNibName:@"FormViewController" bundle:nil];
-	
-	[[formViewController.viewControllers objectAtIndex:0] setDelegate:self];
-	[[formViewController.viewControllers objectAtIndex:0] setUrlQuote:editUrl];
-	
-	[self presentModalViewController:formViewController animated:YES];
-	
-	[formViewController release];
-	 */
 	
 	EditMessageViewController *editMessageViewController = [[EditMessageViewController alloc]
 															  initWithNibName:@"AddMessageViewController" bundle:nil];
@@ -814,7 +820,7 @@
     
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
 	[self presentModalViewController:navigationController animated:YES];
-	
+    
 	// The navigation controller is now owned by the current view controller
 	// and the root view controller is owned by the navigation controller,
 	// so both objects should be released to prevent over-retention.
@@ -1025,9 +1031,7 @@
 	[photoViewController setImageData:imageArray];
 	[photoViewController setSelectedIndex:selectedIndex];
 	[imageArray release];
-    
-	[self presentModalViewController:photoViewController animated:YES];
-	
+    	
 	// The navigation controller is now owned by the current view controller
 	// and the root view controller is owned by the navigation controller,
 	// so both objects should be released to prevent over-retention.
@@ -1196,9 +1200,9 @@
 
 - (void)addMessageViewControllerDidFinishOK:(AddMessageViewController *)controller {
 	//NSLog(@"addMessageViewControllerDidFinishOK");
-	
+    
 	[self dismissModalViewControllerAnimated:YES];
-	
+    
     if (self.arrayData.count > 0) {
 		//NSLog(@"curid %d", self.curPostID);
 		NSString *components = [[[self.arrayData objectAtIndex:0] quoteJS] substringFromIndex:7];
@@ -1246,20 +1250,34 @@
 	}	
 	
 	NSString *HTMLString = [[NSString alloc] 
-                            initWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
-                            <html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"fr\" lang=\"fr\">\
-                            <head>\
-                            <script type='text/javascript' src='jquery.js'></script>\
-                            <script type='text/javascript' src='jquery.doubletap.js'></script>\
-                            <script type='text/javascript' src='jquery.base64.js'></script>\
-                            <script type='text/javascript' src='jquery.lazyload.mini.js'></script>\
-                            <meta name='viewport' content='initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0' />\
-                            <link type='text/css' rel='stylesheet' href='style-liste.css'/>\
-                            <link type='text/css' rel='stylesheet' href='style-liste-retina.css' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\
-                            <link type='text/css' rel='stylesheet' href='style-liste-ipad-portrait.css' media='all and (min-width: 767px)'/>\
-                            <link type='text/css' rel='stylesheet' href='style-liste-ipad-landscape.css' media='all and (min-width: 700px) and (max-width: 750px)'/>\
-                            </head><body>\
-                            <div class='bunselected' id='qsdoiqjsdkjhqkjhqsdqdilkjqsd2'>%@</div><div id='endofpage'></div><div id='endofpagetoolbar'></div><a name='bas'></a><script type='text/javascript'> function HLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bselected'; } function UHLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bunselected'; } function swap_spoiler_states(obj){var div=obj.getElementsByTagName('div');if(div[0]){if(div[0].style.visibility==\"visible\"){div[0].style.visibility='visible';}else if(div[0].style.visibility==\"hidden\"||!div[0].style.visibility){div[0].style.visibility='visible';}}} </script></body></html>", tmpHTML];
+                initWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
+                <html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"fr\" lang=\"fr\">\
+                <head>\
+                <script type='text/javascript' src='jquery.js'></script>\
+                <script type='text/javascript' src='jquery.doubletap.js'></script>\
+                <script type='text/javascript' src='jquery.base64.js'></script>\
+                <script type='text/javascript' src='jquery.lazyload.mini.js'></script>\
+                <meta name='viewport' content='initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0' />\
+                <link type='text/css' rel='stylesheet' href='style-liste.css'/>\
+                <link type='text/css' rel='stylesheet' href='style-liste-retina.css' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\
+                <link type='text/css' rel='stylesheet' href='style-liste-ipad-portrait.css' media='all and (min-width: 767px)'/>\
+                <link type='text/css' rel='stylesheet' href='style-liste-ipad-landscape.css' media='all and (min-width: 700px) and (max-width: 750px)'/>\
+                </head><body>\
+                <div class='bunselected' id='qsdoiqjsdkjhqkjhqsdqdilkjqsd2'>%@</div>\
+                <div id='endofpage'></div>\
+                <div id='endofpagetoolbar'></div>\
+                <a name='bas'></a>\
+                <script type='text/javascript'>\
+                    document.addEventListener('DOMContentLoaded', loadedML);\
+                    document.addEventListener('touchstart', touchstart);\
+                    function loadedML() { setTimeout(function() {document.location.href = 'oijlkajsdoihjlkjasdoloaded://loaded';},700); };\
+                    function HLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bselected'; }\
+                    function UHLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bunselected'; }\
+                    function swap_spoiler_states(obj){var div=obj.getElementsByTagName('div');if(div[0]){if(div[0].style.visibility==\"visible\"){div[0].style.visibility='hidden';}else if(div[0].style.visibility==\"hidden\"||!div[0].style.visibility){div[0].style.visibility='visible';}}}\
+                    $('img').error(function(){ $(this).attr('src', 'photoDefaultfailmini.png');});\
+                    function touchstart() { document.location.href = 'oijlkajsdoihjlkjasdotouch://touchstart'};\
+                </script>\
+                </body></html>", tmpHTML];
 	
 	NSString *path = [[NSBundle mainBundle] bundlePath];
 	NSURL *baseURL = [NSURL fileURLWithPath:path];
@@ -1270,10 +1288,11 @@
 	//NSLog(@"======================================================================================================");
 	//NSLog(@"baseURL %@", baseURL);
 	//NSLog(@"======================================================================================================");
-	
+    
+    self.loaded = NO;
 	[self.messagesWebView loadHTMLString:HTMLString baseURL:baseURL];
 	
-	[self.messagesWebView setUserInteractionEnabled:YES];	
+	[self.messagesWebView setUserInteractionEnabled:YES];
 
 	[HTMLString release];
 	//[tmpHTML release];
@@ -1306,12 +1325,19 @@
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView
+- (void)webViewDidFinishLoadDOM
 {
-	
+    //NSLog(@"== webViewDidFinishLoadDOM");
+    if (self.loaded) {
+        //NSLog(@"deja DOMed");
+        return;
+    }
+    
+    self.loaded = YES;
+    
 	NSString *jsString = [[[NSString alloc] initWithString:@""] autorelease];
-
-
+    
+    
 	//on ajoute le bouton actualiser si besoin
 	if (([self pageNumber] == [self lastPageNumber]) || ([self lastPageNumber] == 0)) {
 		//NSLog(@"premiere et unique ou dernier");
@@ -1334,7 +1360,7 @@
 	//Toolbar;
 	if (self.aToolbar) {
 		NSString *buttonBegin, *buttonEnd;
-		NSString *buttonPrevious, *buttonNext;		
+		NSString *buttonPrevious, *buttonNext;
 		
 		if ([(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:0] isEnabled]) {
 			buttonBegin = @"<div class=\"button begin active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://begin\">begin</a></div>";
@@ -1344,7 +1370,7 @@
 			buttonBegin = @"<div class=\"button begin\"></div>";
 			buttonPrevious = @"<div class=\"button2 begin\"></div>";
 		}
-
+        
 		if ([(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:4] isEnabled]) {
 			buttonEnd = @"<div class=\"button end active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://end\">end</a></div>";
 			buttonNext = @"<div class=\"button2 end active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://next\">next</a></div>";
@@ -1358,34 +1384,47 @@
 		//[NSString stringWithString:@"<div class=\"button end\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://end\">end</a></div>"];
 		
 		jsString = [jsString stringByAppendingString:
-		 [NSString stringWithFormat:@"$('#endofpage').before('\
-		  <div id=\"toolbarpage\">\
-		  %@\
-		  %@\
-		  <a href=\"oijlkajsdoihjlkjasdoauto://choose\">%d/%d</a>\
-		  %@\
-		  %@\
-		  <div>\
-		  ');", buttonBegin, buttonPrevious, [self pageNumber], [self lastPageNumber], buttonNext, buttonEnd]
-		 ];
+                    [NSString stringWithFormat:@"$('#endofpage').before('\
+                     <div id=\"toolbarpage\">\
+                     %@\
+                     %@\
+                     <a href=\"oijlkajsdoihjlkjasdoauto://choose\">%d/%d</a>\
+                     %@\
+                     %@\
+                     <div>\
+                     ');", buttonBegin, buttonPrevious, [self pageNumber], [self lastPageNumber], buttonNext, buttonEnd]
+                    ];
 	}
 	
 	
 	//NSLog(@"stringFlagTopic %@", self.stringFlagTopic);
-
-	jsString = [jsString stringByAppendingString:[NSString stringWithFormat:@"window.location.hash='';window.location.hash='%@';", self.stringFlagTopic]];
-
+    
+    jsString = [jsString stringByAppendingString:[NSString stringWithFormat:@"window.location.hash='';window.location.hash='%@';", self.stringFlagTopic]];
+    
+	//jsString = [jsString stringByAppendingString:[NSString stringWithFormat:@"$('html, body').animate({scrollTop:$('a[name=\"%@\"]').offset().top }, 'slow');", [self.stringFlagTopic stringByReplacingOccurrencesOfString:@"#" withString:@""]]];
+    
     self.stringFlagTopic = @"";
 	
-	[webView stringByEvaluatingJavaScriptFromString:jsString];
+	[self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString];
+    
+    
+    [self.loadingView setHidden:YES];
+    [self.messagesWebView setHidden:NO];
+
 	//NSLog(@"? webViewDidFinishLoad JS");
 	
 	//NSDate *nowT = [NSDate date]; // Create a current date
  	//NSLog(@"TOTAL Time elapsed    : %f", [nowT timeIntervalSinceDate:self.firstDate]);
+}
 
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+	//NSLog(@"== webViewDidFinishLoad");
     
+    [self webViewDidFinishLoadDOM];
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-	[self.messagesWebView setHidden:NO];
+
+    //NSLog(@"== webViewDidFinishLoad OK");
 
 }
 //NSSelectorFromString([[[self arrayAction] objectAtIndex:curPostID] objectForKey:@"code"])
@@ -1446,7 +1485,23 @@
           //  NSLog(@"clicked [[aRequest.URL lastPathComponent] %@", [aRequest.URL lastPathComponent]);
             
 			return NO;
-		}        
+		}
+		else if ([[aRequest.URL host] isEqualToString:@"forum.hardware.fr"] && ([[[aRequest.URL pathComponents] objectAtIndex:1] isEqualToString:@"forum2.php"] || [[[aRequest.URL pathComponents] objectAtIndex:1] isEqualToString:@"hfr"])) {
+            
+            //NSLog(@"%@", aRequest.URL);
+            
+            MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[aRequest.URL absoluteString] stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@", kForumURL] withString:@""]];
+            self.messagesTableViewController = aView;
+            [aView release];
+            
+            //setup the URL
+            self.messagesTableViewController.topicName = @"";
+            self.messagesTableViewController.isViewed = YES;
+            
+            [self.navigationController pushViewController:messagesTableViewController animated:YES];
+
+            return NO;
+        }
 		else {
 			NSURL *url = aRequest.URL;
 			NSString *urlString = url.absoluteString;
@@ -1460,6 +1515,19 @@
 		if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdodetails"]) {
             //NSLog(@"details ==========");
 			[self didSelectMessage:[[[aRequest.URL absoluteString] lastPathComponent] intValue]];
+			return NO;
+		}
+		else if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdotouch"]) {
+			//NSLog(@"touch %@", [[aRequest.URL absoluteString] lastPathComponent]);
+            if ([[[aRequest.URL absoluteString] lastPathComponent] isEqualToString:@"touchstart"]) {
+                if ([UIMenuController sharedMenuController].isMenuVisible) {
+                    [[UIMenuController sharedMenuController] setMenuVisible:NO animated:YES];
+                }
+            }
+			return NO;
+		}
+		else if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdoloaded"]) {
+			[self webViewDidFinishLoadDOM];
 			return NO;
 		}
 		else if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdorefresh"]) {
@@ -1713,7 +1781,7 @@
     
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
 	[self presentModalViewController:navigationController animated:YES];
-	
+    
 	// The navigation controller is now owned by the current view controller
 	// and the root view controller is owned by the navigation controller,
 	// so both objects should be released to prevent over-retention.
@@ -1896,7 +1964,9 @@
 	[self viewDidUnload];
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIMenuControllerDidHideMenuNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"VisibilityChanged" object:nil];
+
 	[self.queue cancelAllOperations];
 	[self.queue release];
 	

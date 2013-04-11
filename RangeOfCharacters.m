@@ -92,15 +92,14 @@ FoundMember:
 -(NSString*)decodeSpanUrlFromString {
 	
 	NSString *linkQuoteCrypted = [self substringFromIndex:20];
-	NSString *linkBase16 = [NSString stringWithString:@"0A12B34C56D78E9F"];
-	NSString *linkQuoteUnCrypted = [[[NSString alloc] init] autorelease];
+	NSString *linkBase16 = @"0A12B34C56D78E9F";
+	NSString *linkQuoteUnCrypted = [[[NSString alloc] initWithString:@""] autorelease];
 	
 	NSRange chRange, clRange;
 	
 	int i = 0;
 		
 	//NSLog(@"linkQuoteCrypted : %@", linkQuoteCrypted);
-	linkQuoteUnCrypted = @"";
 	
 	for (i=0; i<linkQuoteCrypted.length; i+=2){
 		
@@ -117,15 +116,14 @@ FoundMember:
 -(NSString*)decodeSpanUrlFromString2 {
 	
 	NSString *linkQuoteCrypted = [self substringFromIndex:12];
-	NSString *linkBase16 = [NSString stringWithString:@"0A12B34C56D78E9F"];
-	NSString *linkQuoteUnCrypted = [[[NSString alloc] init] autorelease];
+	NSString *linkBase16 = @"0A12B34C56D78E9F";
+	NSString *linkQuoteUnCrypted = [[[NSString alloc] initWithString:@""] autorelease];
 	
 	NSRange chRange, clRange;
 	
 	int i = 0;
 	
 	//NSLog(@"linkQuoteCrypted : %@", linkQuoteCrypted);
-	linkQuoteUnCrypted = @"";
 	
 	for (i=0; i<linkQuoteCrypted.length; i+=2){
 		
