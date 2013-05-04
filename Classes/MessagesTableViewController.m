@@ -1427,22 +1427,36 @@
     //NSLog(@"== webViewDidFinishLoad OK");
 
 }
+/*
 //NSSelectorFromString([[[self arrayAction] objectAtIndex:curPostID] objectForKey:@"code"])
 - (BOOL) canPerformAction:(SEL)selector withSender:(id) sender {
+    NSLog(@"=== %@ %d %@", NSStringFromSelector(selector), [UIMenuController sharedMenuController].menuItems.count, sender);
 
+    
+    //BOOL canI = [super canPerformAction:selector withSender:sender];
+    
+    //NSLog(@"canPerformAction %d %@", canI, NSStringFromSelector(selector));
+    
+    //return canI;
+    
+    //NSLog(@"editMenuHidden %@ %d", sender, [UIMenuController sharedMenuController].menuItems.count);
+
+    
 	for (id tmpAction in self.arrayAction) {
 		if (selector == NSSelectorFromString([tmpAction objectForKey:@"code"])) {
+            NSLog(@"YES");
 			return YES;
 		}
 	}
 	
-
+    
 	
 	return NO;
 }
+*/
 	 
 - (BOOL) canBecomeFirstResponder {
-	//NSLog(@"canBecomeFirstResponder");
+	NSLog(@"canBecomeFirstResponder");
 	
     return YES;
 }

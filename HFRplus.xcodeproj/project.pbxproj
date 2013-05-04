@@ -327,6 +327,7 @@
 		CAA1AFCD125BF3AE009C80E3 /* arrowforward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA1AFCB125BF3AE009C80E3 /* arrowforward@2x.png */; };
 		CAA1AFCE125BF3AE009C80E3 /* arrowback@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA1AFCC125BF3AE009C80E3 /* arrowback@2x.png */; };
 		CAA1B092125C0A53009C80E3 /* AKSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1B091125C0A53009C80E3 /* AKSegmentedControl.m */; };
+		CAAD3D561731EAC400DC1900 /* MessageWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = CAAD3D551731EAC400DC1900 /* MessageWebView.m */; };
 		CAADE5281269D2E900E19F00 /* templatev2.htm in Resources */ = {isa = PBXBuildFile; fileRef = CAADE5271269D2E900E19F00 /* templatev2.htm */; };
 		CAADE5841269DF6300E19F00 /* grayButton.png in Resources */ = {isa = PBXBuildFile; fileRef = CAADE5831269DF6300E19F00 /* grayButton.png */; };
 		CAADE6461269ED1800E19F00 /* alert-overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = CAADE6451269ED1800E19F00 /* alert-overlay.png */; };
@@ -796,6 +797,8 @@
 		CAA1AFCC125BF3AE009C80E3 /* arrowback@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowback@2x.png"; sourceTree = "<group>"; };
 		CAA1B090125C0A53009C80E3 /* AKSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKSegmentedControl.h; sourceTree = "<group>"; };
 		CAA1B091125C0A53009C80E3 /* AKSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKSegmentedControl.m; sourceTree = "<group>"; };
+		CAAD3D541731EAC400DC1900 /* MessageWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageWebView.h; sourceTree = "<group>"; };
+		CAAD3D551731EAC400DC1900 /* MessageWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageWebView.m; sourceTree = "<group>"; };
 		CAADE5271269D2E900E19F00 /* templatev2.htm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = templatev2.htm; sourceTree = "<group>"; };
 		CAADE5831269DF6300E19F00 /* grayButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayButton.png; sourceTree = "<group>"; };
 		CAADE6451269ED1800E19F00 /* alert-overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "alert-overlay.png"; sourceTree = "<group>"; };
@@ -889,6 +892,8 @@
 				CA228CEF125CFD4500DDCD2E /* MessageDetailViewControllerv2.xib */,
 				CAB9B3A51263E5FC00731127 /* HFRMenuItem.h */,
 				CAB9B3A61263E5FC00731127 /* HFRMenuItem.m */,
+				CAAD3D541731EAC400DC1900 /* MessageWebView.h */,
+				CAAD3D551731EAC400DC1900 /* MessageWebView.m */,
 			);
 			name = Messages;
 			sourceTree = "<group>";
@@ -2058,6 +2063,7 @@
 				CA9CBF0715BC8702004F7DAC /* UIImage+Resize.m in Sources */,
 				CA9CBF0E15BEEC51004F7DAC /* AKSingleSegmentedControl.m in Sources */,
 				CA9B06C516FF8984003584B1 /* UIWebView+Tools.m in Sources */,
+				CAAD3D561731EAC400DC1900 /* MessageWebView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
