@@ -21,18 +21,18 @@
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
     
-    NSLog(@"MWV %@ %d", NSStringFromSelector(action), [UIMenuController sharedMenuController].menuItems.count);
+    //NSLog(@"MWV %@ %d", NSStringFromSelector(action), [UIMenuController sharedMenuController].menuItems.count);
 
     int nbCustom = [UIMenuController sharedMenuController].menuItems.count;
     
     if (nbCustom) {
-        NSLog(@"NO");
+        //NSLog(@"NO");
         return NO;
     }
 
     //NSLog(@"MWV %@ %d %@", NSStringFromSelector(action), [UIMenuController sharedMenuController].menuItems.count, sender);
     BOOL returnB = [super canPerformAction:action withSender:sender];
-    NSLog(@"MWV returnB %d", returnB);
+    //NSLog(@"MWV returnB %d", returnB);
     return returnB;
 }
 
