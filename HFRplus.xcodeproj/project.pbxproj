@@ -737,6 +737,8 @@
 		CA7E260615A2567800721F6D /* UITableViewController+Ext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewController+Ext.m"; sourceTree = "<group>"; };
 		CA81D28B12281D5800AC6ADA /* EditMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditMessageViewController.h; sourceTree = "<group>"; };
 		CA81D28C12281D5800AC6ADA /* EditMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditMessageViewController.m; sourceTree = "<group>"; };
+		CA870360175FB6B1003293BB /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
+		CA870361175FB6B1003293BB /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
 		CA88EA8D124D75CA00E53E54 /* commonsmile.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = commonsmile.plist; sourceTree = "<group>"; };
 		CA8A79B015BB404700D8E9E7 /* Favorite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Favorite.h; sourceTree = "<group>"; };
 		CA8A79B115BB404700D8E9E7 /* Favorite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Favorite.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -1554,6 +1556,8 @@
 			children = (
 				CA9B06C016FF6A92003584B1 /* libTestFlight.a */,
 				CA9B06C116FF6A92003584B1 /* TestFlight.h */,
+				CA870360175FB6B1003293BB /* TestFlight+AsyncLogging.h */,
+				CA870361175FB6B1003293BB /* TestFlight+ManualSessions.h */,
 			);
 			path = TestFlight;
 			sourceTree = "<group>";
