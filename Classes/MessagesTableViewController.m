@@ -60,7 +60,7 @@
     
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMaxi];
 
-    NSLog(@"URL %@", [self currentUrl]);
+    //NSLog(@"URL %@", [self currentUrl]);
     
 	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]]]];
 	[request setDelegate:self];
@@ -91,6 +91,11 @@
 {
 	//--
 	//NSLog(@"fetchContentStarted");
+    
+    if (![self.currentUrl isEqualToString:[theRequest.url.absoluteString stringByReplacingOccurrencesOfString:kForumURL withString:@""]]) {
+        //NSLog(@"not equal ==");
+        self.currentUrl = [theRequest.url.absoluteString stringByReplacingOccurrencesOfString:kForumURL withString:@""];
+    }
 
 }
 
@@ -115,6 +120,8 @@
 	
 	//MaJ de la puce MP
 	
+    //NSLog(@"%@", [request responseString]);
+    
     ParseMessagesOperation *parser = [[ParseMessagesOperation alloc] initWithData:[request responseData] index:0 reverse:NO delegate:self];
 	
     [queue addOperation:parser]; // this will start the "ParseOperation"
@@ -190,7 +197,7 @@
 	
 }
 
--(void)setupPageToolbar:(HTMLNode *)bodyNode;
+-(void)setupPageToolbar:(HTMLNode *)bodyNode andP:(HTMLParser *)myParser;
 {
 	//NSLog(@"setupPageToolbar");
     //Titre
@@ -209,16 +216,16 @@
 	HTMLNode * pagesTrNode = [bodyNode findChildWithAttribute:@"class" matchingName:@"fondForum2PagesHaut" allowPartial:YES];
 	
 	if(pagesTrNode)
-	{		
+	{
+        
 		HTMLNode * pagesLinkNode = [pagesTrNode findChildWithAttribute:@"class" matchingName:@"left" allowPartial:NO];
 		
 		if (pagesLinkNode) {
-			//NSLog(@"pages");
+			//NSLog(@"pages %@", rawContentsOfNode([pagesLinkNode _node], [myParser _doc]));
 			
 			//NSArray *temporaryNumPagesArray = [[NSArray alloc] init];
 			NSArray *temporaryNumPagesArray = [pagesLinkNode children];
-			
-			
+            
 			[self setFirstPageNumber:[[[temporaryNumPagesArray objectAtIndex:2] contents] intValue]];
 			
 			if ([self pageNumber] == [self firstPageNumber]) {
@@ -232,6 +239,7 @@
 				[newFirstPageUrl release];
 			}
 			
+
 			[self setLastPageNumber:[[[temporaryNumPagesArray lastObject] contents] intValue]];
 			
 			if ([self pageNumber] == [self lastPageNumber]) {
@@ -246,7 +254,7 @@
 				[self setLastPageUrl:newLastPageUrl];
 				[newLastPageUrl release];
 			}
-			
+
 			/*
 			 NSLog(@"premiere %d", [self firstPageNumber]);			
 			 NSLog(@"premiere url %@", [self firstPageUrl]);
@@ -271,7 +279,7 @@
 			UIBarButtonItem *systemItem2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFastForward
 																						 target:self
 																						 action:@selector(lastPage:)];
-			
+
 			if ([self pageNumber] == [self lastPageNumber]) {
 				[systemItem2 setEnabled:NO];
 			}		
@@ -300,7 +308,7 @@
 			UIBarButtonItem *flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
 																					  target:nil
 																					  action:nil];
-			
+
 			//Add buttons to the array
 			NSArray *items = [NSArray arrayWithObjects: systemItem1, flexItem, systemItem3, flexItem, systemItem2, nil];
 			
@@ -340,7 +348,7 @@
 		}
 		else {
 			HTMLNode *nextUrlNode = [[temporaryPagesArray objectAtIndex:0] findChildWithAttribute:@"class" matchingName:@"cHeader" allowPartial:NO];
-			
+
 			if (nextUrlNode) {
 				//nextPageUrl = [[NSString stringWithFormat:@"%@", [topicUrl stringByReplacingCharactersInRange:rangeNumPage withString:[NSString stringWithFormat:@"%d", (pageNumber + 1)]]] retain];
 				//nextPageUrl = [[NSString stringWithFormat:@"%@", [topicUrl stringByReplacingCharactersInRange:rangeNumPage withString:[NSString stringWithFormat:@"%d", (pageNumber + 1)]]] retain];
@@ -381,7 +389,7 @@
 }
 
 -(void)loadDataInTableView:(HTMLParser *)myParser
-{
+{    
 	[self setupScrollAndPage];
 
 	//NSLog(@"name topicName %@", self.topicName);
@@ -408,7 +416,7 @@
 	}
 	
 	//MP
-	
+
 	//Answer Topic URL
 	HTMLNode * topicAnswerNode = [bodyNode findChildWithAttribute:@"id" matchingName:@"repondre_form" allowPartial:NO];
 	topicAnswerUrl = [[NSString alloc] init];
@@ -421,11 +429,9 @@
 	//if(topicAnswerUrl.length > 0) 
 	//-	
 
-	
 	//--Pages	
-	[self setupPageToolbar:bodyNode];
+	[self setupPageToolbar:bodyNode andP:myParser];
 
-    
     self.navigationItem.rightBarButtonItem.enabled = YES;
 
 	
@@ -1237,7 +1243,8 @@
 // -------------------------------------------------------------------------------
 
 - (void)handleLoadedApps:(NSArray *)loadedItems
-{	
+{
+    
 	[self.arrayData removeAllObjects];
 	[self.arrayData addObjectsFromArray:loadedItems];
 

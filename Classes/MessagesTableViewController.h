@@ -142,7 +142,7 @@
 -(void)loadDataInTableView:(HTMLParser *)myParser;
 
 -(void)setupFastAnswer:(HTMLNode *)bodyNode;
--(void)setupPageToolbar:(HTMLNode *)bodyNode;
+-(void)setupPageToolbar:(HTMLNode *)bodyNode andP:(HTMLParser *)myParser;
 
 -(void)searchNewMessages:(int)from;
 -(void)searchNewMessages;
