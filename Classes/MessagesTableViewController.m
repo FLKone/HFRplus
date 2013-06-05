@@ -1254,7 +1254,7 @@
 	int i;
 	for (i = 0; i < [self.arrayData count]; i++) { //Loop through all the tags
 		tmpHTML = [tmpHTML stringByAppendingString:[[self.arrayData objectAtIndex:i] toHTML:i]];
-	}	
+	}
 	
 	NSString *HTMLString = [[NSString alloc] 
                 initWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
@@ -1264,7 +1264,7 @@
                 <script type='text/javascript' src='jquery.doubletap.js'></script>\
                 <script type='text/javascript' src='jquery.base64.js'></script>\
                 <script type='text/javascript' src='jquery.lazyload.mini.js'></script>\
-                <meta name='viewport' content='initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0' />\
+                <meta name='viewport' content='initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no' />\
                 <link type='text/css' rel='stylesheet' href='style-liste.css'/>\
                 <link type='text/css' rel='stylesheet' href='style-liste-retina.css' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\
                 <link type='text/css' rel='stylesheet' href='style-liste-ipad-portrait.css' media='all and (min-width: 767px)'/>\
