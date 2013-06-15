@@ -294,7 +294,6 @@
 		CA88EA8E124D75CA00E53E54 /* commonsmile.plist in Resources */ = {isa = PBXBuildFile; fileRef = CA88EA8D124D75CA00E53E54 /* commonsmile.plist */; };
 		CA8A79B215BB404700D8E9E7 /* Favorite.m in Sources */ = {isa = PBXBuildFile; fileRef = CA8A79B115BB404700D8E9E7 /* Favorite.m */; };
 		CA8DDC9C12EB30AC00635441 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8DDC9B12EB30AC00635441 /* StoreKit.framework */; };
-		CA9B06C216FF6A92003584B1 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA9B06C016FF6A92003584B1 /* libTestFlight.a */; };
 		CA9B06C516FF8984003584B1 /* UIWebView+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = CA9B06C416FF8984003584B1 /* UIWebView+Tools.m */; };
 		CA9B06C716FFA512003584B1 /* photoDefaultfailmini.png in Resources */ = {isa = PBXBuildFile; fileRef = CA9B06C616FFA50D003584B1 /* photoDefaultfailmini.png */; };
 		CA9B06C916FFCDAD003584B1 /* 121-landscapebig.png in Resources */ = {isa = PBXBuildFile; fileRef = CA9B06C816FFCDA1003584B1 /* 121-landscapebig.png */; };
@@ -351,6 +350,7 @@
 		CABB8363176D00C30088F60A /* white_dot.png in Resources */ = {isa = PBXBuildFile; fileRef = CABB8361176D00C30088F60A /* white_dot.png */; };
 		CABB8365176D00FC0088F60A /* black_dot.png in Resources */ = {isa = PBXBuildFile; fileRef = CABB8364176D00FC0088F60A /* black_dot.png */; };
 		CABB836C176D10510088F60A /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CABB836B176D10510088F60A /* MenuViewController.m */; };
+		CABB837D176D15000088F60A /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CABB8379176D15000088F60A /* libTestFlight.a */; };
 		CABEF19F123FD01100DDB9A9 /* flagyellowcopie@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CABEF19E123FD01100DDB9A9 /* flagyellowcopie@2x.png */; };
 		CABEF20E1240F12500DDB9A9 /* global.gif in Resources */ = {isa = PBXBuildFile; fileRef = CABEF20A1240F12500DDB9A9 /* global.gif */; };
 		CABEF20F1240F12500DDB9A9 /* multipleflag0.gif in Resources */ = {isa = PBXBuildFile; fileRef = CABEF20B1240F12500DDB9A9 /* multipleflag0.gif */; };
@@ -743,14 +743,10 @@
 		CA7E260615A2567800721F6D /* UITableViewController+Ext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewController+Ext.m"; sourceTree = "<group>"; };
 		CA81D28B12281D5800AC6ADA /* EditMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditMessageViewController.h; sourceTree = "<group>"; };
 		CA81D28C12281D5800AC6ADA /* EditMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditMessageViewController.m; sourceTree = "<group>"; };
-		CA870360175FB6B1003293BB /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
-		CA870361175FB6B1003293BB /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
 		CA88EA8D124D75CA00E53E54 /* commonsmile.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = commonsmile.plist; sourceTree = "<group>"; };
 		CA8A79B015BB404700D8E9E7 /* Favorite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Favorite.h; sourceTree = "<group>"; };
 		CA8A79B115BB404700D8E9E7 /* Favorite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Favorite.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CA8DDC9B12EB30AC00635441 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		CA9B06C016FF6A92003584B1 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
-		CA9B06C116FF6A92003584B1 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		CA9B06C316FF8984003584B1 /* UIWebView+Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+Tools.h"; sourceTree = "<group>"; };
 		CA9B06C416FF8984003584B1 /* UIWebView+Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+Tools.m"; sourceTree = "<group>"; };
 		CA9B06C616FFA50D003584B1 /* photoDefaultfailmini.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photoDefaultfailmini.png; sourceTree = "<group>"; };
@@ -835,6 +831,10 @@
 		CABB836B176D10510088F60A /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		CABB836D176D12440088F60A /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = config.h; path = HFRplus/config.h; sourceTree = "<group>"; };
 		CABB836E176D12440088F60A /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = constants.h; path = HFRplus/constants.h; sourceTree = "<group>"; };
+		CABB8379176D15000088F60A /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		CABB837A176D15000088F60A /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
+		CABB837B176D15000088F60A /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
+		CABB837C176D15000088F60A /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		CABEF19E123FD01100DDB9A9 /* flagyellowcopie@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flagyellowcopie@2x.png"; sourceTree = "<group>"; };
 		CABEF20A1240F12500DDB9A9 /* global.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = global.gif; sourceTree = "<group>"; };
 		CABEF20B1240F12500DDB9A9 /* multipleflag0.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = multipleflag0.gif; sourceTree = "<group>"; };
@@ -884,7 +884,7 @@
 				CA05A37715B48B750083EB64 /* libxml2.dylib in Frameworks */,
 				CA37D50D15A1BD5F002C72C6 /* libsqlite3.dylib in Frameworks */,
 				CA4CE81515B185CA0039FC3B /* libz.dylib in Frameworks */,
-				CA9B06C216FF6A92003584B1 /* libTestFlight.a in Frameworks */,
+				CABB837D176D15000088F60A /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1316,7 +1316,6 @@
 				CA4CE89315B1B36F0039FC3B /* MWPhotoBrowser */,
 				CA4CE86D15B1B2760039FC3B /* SDWebImage */,
 				CA4CE88215B1B2760039FC3B /* MBProgressHUD */,
-				CA4CE80B15B1856F0039FC3B /* TestFlight */,
 				CA10707415A4CEA5002E6C19 /* InAppSettingsKit */,
 				CA3BB08312EC0DB900F7DF7B /* MK */,
 				01BF8A2C121D770F007624B6 /* HTMLParser */,
@@ -1566,17 +1565,6 @@
 			name = MK;
 			sourceTree = "<group>";
 		};
-		CA4CE80B15B1856F0039FC3B /* TestFlight */ = {
-			isa = PBXGroup;
-			children = (
-				CA9B06C016FF6A92003584B1 /* libTestFlight.a */,
-				CA9B06C116FF6A92003584B1 /* TestFlight.h */,
-				CA870360175FB6B1003293BB /* TestFlight+AsyncLogging.h */,
-				CA870361175FB6B1003293BB /* TestFlight+ManualSessions.h */,
-			);
-			path = TestFlight;
-			sourceTree = "<group>";
-		};
 		CA4CE86D15B1B2760039FC3B /* SDWebImage */ = {
 			isa = PBXGroup;
 			children = (
@@ -1697,6 +1685,7 @@
 				CABB8368176D0FEB0088F60A /* Controllers */,
 				CABB8369176D0FEB0088F60A /* Views */,
 				CABB835A176CFE4D0088F60A /* Assets */,
+				CABB8377176D15000088F60A /* Vendor */,
 			);
 			name = HFRplus;
 			sourceTree = "<group>";
@@ -1717,6 +1706,26 @@
 			);
 			name = Views;
 			path = HFRplus/Views;
+			sourceTree = "<group>";
+		};
+		CABB8377176D15000088F60A /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				CABB8378176D15000088F60A /* TestFlight */,
+			);
+			name = Vendor;
+			path = HFRplus/Vendor;
+			sourceTree = "<group>";
+		};
+		CABB8378176D15000088F60A /* TestFlight */ = {
+			isa = PBXGroup;
+			children = (
+				CABB8379176D15000088F60A /* libTestFlight.a */,
+				CABB837A176D15000088F60A /* TestFlight+AsyncLogging.h */,
+				CABB837B176D15000088F60A /* TestFlight+ManualSessions.h */,
+				CABB837C176D15000088F60A /* TestFlight.h */,
+			);
+			path = TestFlight;
 			sourceTree = "<group>";
 		};
 		CAFD003915B9B4FF003CA3FC /* Debug */ = {
@@ -2188,6 +2197,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/TestFlight\"",
+					"\"$(SRCROOT)/HFRplus/Vendor/TestFlight\"",
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = HFRplus;
@@ -2215,6 +2225,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/TestFlight\"",
+					"\"$(SRCROOT)/HFRplus/Vendor/TestFlight\"",
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = HFRplus;

@@ -43,7 +43,15 @@ typedef enum {
 #define kNewMessageFromEditor   3
 #define kNewMessageFromUnkwn    4
 
+//Categories
 #import "UITableViewController+Ext.h"
 #import "NSDictionary+Merging.h"
+
+// Helpers
 #import "HFRNavigationController.h"
+
+// Controllers
+#import "MenuViewController.h"
+
+//Vendor
 #import "TestFlight.h"
