@@ -17,7 +17,7 @@
 
 @interface HFRplusAppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;
-	TabBarController *rootController;	
+	UIViewController *rootController;
 	SplitViewController *splitViewController;
 	DetailNavigationViewController *detailNavigationController;
 
@@ -42,7 +42,7 @@
 - (void)periodicMaintenance;
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet TabBarController *rootController;
+@property (nonatomic, retain) IBOutlet UIViewController *rootController;
 @property (nonatomic, retain) IBOutlet SplitViewController *splitViewController;
 @property (nonatomic, retain) IBOutlet DetailNavigationViewController *detailNavigationController;
 

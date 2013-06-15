@@ -243,6 +243,7 @@
 		CA4CE8A815B1B36F0039FC3B /* MWZoomingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA4CE8A115B1B36F0039FC3B /* MWZoomingScrollView.m */; };
 		CA5B8C3515A78A2A009CE613 /* NSDictionary+Merging.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5B8C3415A78A2A009CE613 /* NSDictionary+Merging.m */; };
 		CA65AD5912663F92005921B1 /* blank15.gif in Resources */ = {isa = PBXBuildFile; fileRef = CA65AD5812663F92005921B1 /* blank15.gif */; };
+		CA6FFC40176CD4A800996A57 /* MainWindowFlat.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA6FFC3F176CD4A800996A57 /* MainWindowFlat.xib */; };
 		CA730DAA15B1E46900FB7FF1 /* jquery-1.7.2.min.js in Resources */ = {isa = PBXBuildFile; fileRef = CA730DA715B1D9B600FB7FF1 /* jquery-1.7.2.min.js */; };
 		CA77CD4E1260A66E00271D62 /* arrowend.png in Resources */ = {isa = PBXBuildFile; fileRef = CA77CD4C1260A66E00271D62 /* arrowend.png */; };
 		CA77CD4F1260A66E00271D62 /* arrowend@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA77CD4D1260A66E00271D62 /* arrowend@2x.png */; };
@@ -344,6 +345,7 @@
 		CABB3196121F034A009CE100 /* up.png in Resources */ = {isa = PBXBuildFile; fileRef = CABB3194121F034A009CE100 /* up.png */; };
 		CABB3197121F034A009CE100 /* down.png in Resources */ = {isa = PBXBuildFile; fileRef = CABB3195121F034A009CE100 /* down.png */; };
 		CABB31A4121F039E009CE100 /* style-max.css in Resources */ = {isa = PBXBuildFile; fileRef = CABB31A2121F039E009CE100 /* style-max.css */; };
+		CABB835D176CFE630088F60A /* categories.png in Resources */ = {isa = PBXBuildFile; fileRef = CABB835C176CFE630088F60A /* categories.png */; };
 		CABEF19F123FD01100DDB9A9 /* flagyellowcopie@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CABEF19E123FD01100DDB9A9 /* flagyellowcopie@2x.png */; };
 		CABEF20E1240F12500DDB9A9 /* global.gif in Resources */ = {isa = PBXBuildFile; fileRef = CABEF20A1240F12500DDB9A9 /* global.gif */; };
 		CABEF20F1240F12500DDB9A9 /* multipleflag0.gif in Resources */ = {isa = PBXBuildFile; fileRef = CABEF20B1240F12500DDB9A9 /* multipleflag0.gif */; };
@@ -683,6 +685,7 @@
 		CA5B8C3315A78A2A009CE613 /* NSDictionary+Merging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Merging.h"; sourceTree = "<group>"; };
 		CA5B8C3415A78A2A009CE613 /* NSDictionary+Merging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Merging.m"; sourceTree = "<group>"; };
 		CA65AD5812663F92005921B1 /* blank15.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = blank15.gif; sourceTree = "<group>"; };
+		CA6FFC3F176CD4A800996A57 /* MainWindowFlat.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindowFlat.xib; sourceTree = "<group>"; };
 		CA730DA715B1D9B600FB7FF1 /* jquery-1.7.2.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-1.7.2.min.js"; sourceTree = "<group>"; };
 		CA77CD4C1260A66E00271D62 /* arrowend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowend.png; sourceTree = "<group>"; };
 		CA77CD4D1260A66E00271D62 /* arrowend@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowend@2x.png"; sourceTree = "<group>"; };
@@ -820,6 +823,7 @@
 		CABB3194121F034A009CE100 /* up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = up.png; sourceTree = "<group>"; };
 		CABB3195121F034A009CE100 /* down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down.png; sourceTree = "<group>"; };
 		CABB31A2121F039E009CE100 /* style-max.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "style-max.css"; sourceTree = "<group>"; };
+		CABB835C176CFE630088F60A /* categories.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = categories.png; path = HFRplus/Assets/UI/categories.png; sourceTree = "<group>"; };
 		CABEF19E123FD01100DDB9A9 /* flagyellowcopie@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flagyellowcopie@2x.png"; sourceTree = "<group>"; };
 		CABEF20A1240F12500DDB9A9 /* global.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = global.gif; sourceTree = "<group>"; };
 		CABEF20B1240F12500DDB9A9 /* multipleflag0.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = multipleflag0.gif; sourceTree = "<group>"; };
@@ -1285,6 +1289,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				CABB835A176CFE4D0088F60A /* Assets */,
 				CA45B60815B89F4E00380CA0 /* README.md */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Vendor */,
@@ -1340,6 +1345,7 @@
 				CA10706F15A4CD1B002E6C19 /* gfx */,
 				01BF8868121C4B1D007624B6 /* html */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
+				CA6FFC3F176CD4A800996A57 /* MainWindowFlat.xib */,
 				CA2384A815A86501004F9345 /* InAppSettings.bundle */,
 				CAC593C115A63F5100913CFB /* HFRplus.entitlements */,
 				8D1107310486CEB800E47090 /* HFRplus-Info.plist */,
@@ -1654,6 +1660,22 @@
 			name = Forms;
 			sourceTree = "<group>";
 		};
+		CABB835A176CFE4D0088F60A /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				CABB835B176CFE530088F60A /* UI */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		CABB835B176CFE530088F60A /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				CABB835C176CFE630088F60A /* categories.png */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
 		CAFD003915B9B4FF003CA3FC /* Debug */ = {
 			isa = PBXGroup;
 			children = (
@@ -1811,6 +1833,7 @@
 				0140AB63121DFB24001C35C4 /* whistle.gif in Resources */,
 				0140AB64121DFB24001C35C4 /* wink.gif in Resources */,
 				0140ABD3121E034A001C35C4 /* FavoritesTableViewController.xib in Resources */,
+				CA6FFC40176CD4A800996A57 /* MainWindowFlat.xib in Resources */,
 				013F0EAD121E117900BEBEB1 /* MessagesTableViewController.xib in Resources */,
 				013F0EAF121E117900BEBEB1 /* MessageDetailViewController.xib in Resources */,
 				013F0EB3121E117900BEBEB1 /* AddMessageViewController.xib in Resources */,
@@ -1971,6 +1994,7 @@
 				CAF6C006160790AA00B4B70C /* Default-568h@2x.png in Resources */,
 				CA9B06C716FFA512003584B1 /* photoDefaultfailmini.png in Resources */,
 				CA9B06C916FFCDAD003584B1 /* 121-landscapebig.png in Resources */,
+				CABB835D176CFE630088F60A /* categories.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -66,7 +66,7 @@
     internetReach = [[Reachability reachabilityForInternetConnection] retain];
 	[internetReach startNotifier];
     
-	rootController.customizableViewControllers = nil;
+	//rootController.customizableViewControllers = nil;
 
     // Start up window
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) { 
