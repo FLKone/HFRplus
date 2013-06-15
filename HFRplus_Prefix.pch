@@ -5,6 +5,7 @@
 #ifdef __OBJC__
     #import <Foundation/Foundation.h>
     #import <UIKit/UIKit.h>
-    #import "TestFlight.h"
-    #import "Config.h"
+
+    #import "constants.h"
+    #import "config.h"
 #endif

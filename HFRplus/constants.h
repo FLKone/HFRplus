@@ -5,10 +5,6 @@
 //  Created by FLK on 05/08/10.
 //
 
-#import <Foundation/Foundation.h>
-#import "UITableViewController+Ext.h"
-#import "NSDictionary+Merging.h"
-#import "HFRNavigationController.h"
 
 #define NSLog(__FORMAT__, ...) TFLog((@"%s [Line %d] " __FORMAT__), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 
@@ -46,3 +42,8 @@ typedef enum {
 #define kNewMessageFromShake    2
 #define kNewMessageFromEditor   3
 #define kNewMessageFromUnkwn    4
+
+#import "UITableViewController+Ext.h"
+#import "NSDictionary+Merging.h"
+#import "HFRNavigationController.h"
+#import "TestFlight.h"
