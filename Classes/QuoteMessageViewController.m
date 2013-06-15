@@ -453,7 +453,7 @@
 		
 	}
 
-    self.textView.keyboardType = UIKeyboardTypeASCIICapable;
+    //self.textView.keyboardType = UIKeyboardTypeASCIICapable;
     self.textFieldSmileys.keyboardType = UIKeyboardTypeASCIICapable;
 
 	headerView.frame = CGRectMake(headerView.frame.origin.x, originY * -1.0f, headerView.frame.size.width, originY);

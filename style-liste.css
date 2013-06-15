@@ -41,9 +41,8 @@ img {
     max-width: 298px;
 }
 
-span.signature, div.edited { 
+.nosig span.signature, div.edited {
 	display:none;
-    
 }
 
 table 

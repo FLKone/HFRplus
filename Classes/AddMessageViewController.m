@@ -13,6 +13,7 @@
 #import "NSData+Base64.h"
 #import "RegexKitLite.h"
 #import "UIWebView+Tools.h"
+#import "RangeOfCharacters.h"
 
 @implementation AddMessageViewController
 @synthesize delegate, textView, arrayInputData, formSubmit, accessoryView, smileView;
@@ -437,7 +438,9 @@
 			[arequest setPostValue:[self.arrayInputData objectForKey:key] forKey:key];
 	}	
 	
-    [arequest setPostValue:[textView text] forKey:@"content_form"];
+    
+    [arequest setPostValue:[[textView text] removeEmoji] forKey:@"content_form"];
+    
 	if (self.haveTitle) {
 		[arequest setPostValue:[textFieldTitle text] forKey:@"sujet"];
 	}

@@ -353,7 +353,7 @@ static MKStoreManager* _sharedStoreManager;
 // Read my blog post http://mk.sg/31
 - (BOOL) canCurrentDeviceUseFeature: (NSString*) featureID
 {
-	NSString *uniqueID = [[UIDevice currentDevice] uniqueIdentifier];
+	NSString *uniqueID = @"";// = [[UIDevice currentDevice] uniqueIdentifier];
 	// check udid and featureid with developer's server
 	
 	if(ownServer == nil) return NO; // sanity check

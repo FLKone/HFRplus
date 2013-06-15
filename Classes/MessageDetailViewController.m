@@ -104,6 +104,16 @@
 	//<link type='text/css' rel='stylesheet' href='style-max-land.css' media='only screen and (orientation:landscape)'/>\
 	//<meta name='viewport' content='width=device-width; initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=0;' />\
 
+    NSString *myRawContent = [[arrayData objectAtIndex:curMsg] dicoHTML];
+    
+    if ([[arrayData objectAtIndex:curMsg] quotedNB]) {
+        myRawContent = [myRawContent stringByAppendingString:[NSString stringWithFormat:@"<a class=\"quotedhfrlink\" href=\"%@\">%@</a>", [[arrayData objectAtIndex:curMsg] quotedLINK], [[arrayData objectAtIndex:curMsg] quotedNB]]];
+    }
+    if ([[arrayData objectAtIndex:curMsg] editedTime ]) {
+        myRawContent = [myRawContent stringByAppendingString:[NSString stringWithFormat:@"<br/><p class=\"editedhfrlink\">édité par %@</p>", [[arrayData objectAtIndex:curMsg] editedTime]]];
+    }
+
+    
 	NSString *HTMLString = [NSString stringWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
                             <html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"fr\" lang=\"fr\">\
                             <head>\
@@ -116,7 +126,7 @@
 							</head><body><div class='bunselected maxmessage' id='qsdoiqjsdkjhqkjhqsdqdilkjqsd2'><div class='message' id='1'><div class='content'><div class='right'>%@</div></div></div></div></body></html><script type='text/javascript'>\
 							function HLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bselected'; } function UHLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bunselected'; } function swap_spoiler_states(obj){var div=obj.getElementsByTagName('div');if(div[0]){if(div[0].style.visibility==\"visible\"){div[0].style.visibility='hidden';}else if(div[0].style.visibility==\"hidden\"||!div[0].style.visibility){div[0].style.visibility='visible';}}} $('img').error(function(){\
                             $(this).attr('src', 'photoDefaultfailmini.png');}); </script>",
-							[[arrayData objectAtIndex:curMsg] dicoHTML]];
+							myRawContent];
 
 	HTMLString = [HTMLString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 	//HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"href=\"/forum2.php?" withString:@"href=\"http://forum.hardware.fr/forum2.php?"];
