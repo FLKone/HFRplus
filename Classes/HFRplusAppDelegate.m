@@ -304,6 +304,7 @@
 
 - (void)updateMPBadgeWithString:(NSString *)badgeValue;
 {
+    return;
 	//NSLog(@"%@ - %d", badgeValue, [badgeValue intValue]);
     dispatch_async(dispatch_get_main_queue(), 
                   ^{  	
@@ -319,6 +320,8 @@
 
 - (void)readMPBadge;
 {
+    return;
+    
 	//NSLog(@"%@ - %d", badgeValue, [badgeValue intValue]);
     dispatch_async(dispatch_get_main_queue(), 
                   ^{ 	

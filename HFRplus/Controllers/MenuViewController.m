@@ -39,51 +39,116 @@
     [_btnCategories release];
     [_scrollView release];
     [_popoverView release];
+    [_btnFavoris release];
+    [_btnSearch release];
     [super dealloc];
 }
-- (IBAction)switchBtn:(id)sender forEvent:(UIEvent *)event {
-
+- (IBAction)switchBtn:(MenuButton *)sender forEvent:(UIEvent *)event {
+    NSLog(@"switchBtn");
+    
+    BOOL add = NO;
+    
+    
     // Statut du bouton switch-like on/off
-    if ([(UIButton *)sender isSelected]) {
-        [(UIButton *)sender setHighlighted:NO];
-        [(UIButton *)sender setSelected:NO];
+    if ([sender isSelected]) {
+        [sender setHighlighted:NO];
+        [sender setSelected:NO];
+        //_activeMenu = nil;
     }
     else
     {
-        [(UIButton *)sender setHighlighted:NO];
-        [(UIButton *)sender setSelected:YES];
+        add = YES;
+        [sender setHighlighted:NO];
+        [sender setSelected:YES];
+        //_activeMenu = sender;
     }
+    
+    NSLog(@"sender      %@", sender);
+    NSLog(@"_activeMenu %@", _activeMenu);    
     
     //  Desactiver le bouton actif //TODO
-    
-    
+    if (_activeMenu && sender != _activeMenu) {
+        NSLog(@"desactiver ancien");
+        [_activeMenu sendActionsForControlEvents:UIControlEventTouchUpInside];
+
+    }
     
     // Action pour chaque bouton
-    if (sender == self.btnCategories) {
-        NSLog(@"btnCategories");
+    if (!add) {
+        NSLog(@"REMOVE");
         
+        _activeMenu = nil;
         
-        ForumsTableViewController *forumsViewController = [[ForumsTableViewController alloc]
-                                                           initWithNibName:@"ForumsTableViewController" bundle:nil];
+        [_activeController.view removeFromSuperview];
+        //[_activeController removeFromParentViewController];
         
-        // Create the navigation controller and present it modally.
-        UINavigationController *navigationController = [[UINavigationController alloc]
-                                                        initWithRootViewController:forumsViewController];
-        
-        [navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"black_dot.png"] forBarMetrics:UIBarMetricsDefault];
-        
-        
-        [self addChildViewController:navigationController];
-        [navigationController didMoveToParentViewController:self];
-        
-                
-
-        
-        //[self presentModalViewController:navigationController animated:YES];
-        
-        //navigationController.view.frame = _popoverView.frame;
-        [_popoverView addSubview:navigationController.view];
     }
+    else
+    {
+        _activeMenu = sender;
+        UINavigationController *navigationController;
+        
+        if (sender == self.btnCategories) {
+            NSLog(@"== btnCategories");
+            
+            if (!_forumsController) {
+                ForumsTableViewController *forumsViewController = [[ForumsTableViewController alloc] initWithNibName:@"ForumsTableViewController" bundle:nil];
+                navigationController = [[UINavigationController alloc] initWithRootViewController:forumsViewController];
+                [navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"black_dot"] forBarMetrics:UIBarMetricsDefault];
+                
+                _forumsController = navigationController;
+                
+                [self addChildViewController:_forumsController];
+            }
+            else
+                navigationController = _forumsController;
+
+        }
+        else if (sender == self.btnFavoris) {
+            NSLog(@"== btnFavoris");
+            
+            if (!_favoritesController) {            
+                FavoritesTableViewController *favoritesViewController = [[FavoritesTableViewController alloc] initWithNibName:@"FavoritesTableViewController" bundle:nil];
+                navigationController = [[UINavigationController alloc] initWithRootViewController:favoritesViewController];
+                [navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"black_dot"] forBarMetrics:UIBarMetricsDefault];
+
+                _favoritesController = navigationController;
+                
+                [self addChildViewController:_favoritesController];
+            }
+            else
+                navigationController = _favoritesController;
+        }
+        else if (sender == self.btnSearch) {
+            NSLog(@"== btnSearch");
+            
+            if (!_searchController) {
+                HFRSearchViewController *searchViewController = [[HFRSearchViewController alloc] initWithNibName:@"HFRSearchViewController" bundle:nil];
+                navigationController = [[UINavigationController alloc] initWithRootViewController:searchViewController];
+                [navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"black_dot"] forBarMetrics:UIBarMetricsDefault];
+                
+                _searchController = navigationController;
+                
+                [self addChildViewController:_searchController];
+            }
+            else
+                navigationController = _searchController;
+        }
+        else {
+            navigationController = [[UINavigationController alloc] init];
+        }
+        
+        
+        [navigationController didMoveToParentViewController:self];
+        [_popoverView addSubview:navigationController.view];
+        _activeController = navigationController;
+    }
+
+    /*
+     //navigationController.navigationBar.alpha = .95;
+     //navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+     //navigationController.navigationBar.translucent = YES;
+     */
     
     
 }
