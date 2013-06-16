@@ -53,9 +53,9 @@
     NSLog(@"fetchContentStarted");
     
 	//Bouton Stop
-	self.navigationItem.rightBarButtonItem = nil;	
+	//self.navigationItem.rightBarButtonItem = nil;
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(cancelFetchContent)];
-	self.navigationItem.rightBarButtonItem = segmentBarItem;
+	//self.navigationItem.rightBarButtonItem = segmentBarItem;
     [segmentBarItem release];	
 
     [self.arrayData removeAllObjects];
@@ -71,9 +71,9 @@
 
     
 	//Bouton Reload
-	self.navigationItem.rightBarButtonItem = nil;
+	//self.navigationItem.rightBarButtonItem = nil;
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
-	self.navigationItem.rightBarButtonItem = segmentBarItem;
+	//self.navigationItem.rightBarButtonItem = segmentBarItem;
     [segmentBarItem release];
     
     [self.loadingView setHidden:YES];
@@ -88,9 +88,9 @@
     NSLog(@"fetchContentFailed");
     
     //Bouton Reload
-	self.navigationItem.rightBarButtonItem = nil;
+	//self.navigationItem.rightBarButtonItem = nil;
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
-	self.navigationItem.rightBarButtonItem = segmentBarItem;
+	//self.navigationItem.rightBarButtonItem = segmentBarItem;
     [segmentBarItem release];
 	
 	[self.loadingView setHidden:YES];
@@ -695,9 +695,13 @@
 	self.title = @"Catégories";
 
 	//Bouton Reload
-	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
-	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];	
+    UIBarButtonItem *reloadBarItem = [UIBarButtonItem barItemWithImageNamed:@"reload" title:@"" target:self action:@selector(reload)];
+	self.navigationItem.rightBarButtonItem = reloadBarItem;
+    
+    //Bouton Settings/More
+    UIBarButtonItem *settingsBarItem = [UIBarButtonItem barItemWithImageNamed:@"reload" title:@"" target:self action:@selector(settings)];
+	self.navigationItem.leftBarButtonItem = settingsBarItem;
+    
 
 	[(ShakeView*)self.view setShakeDelegate:self];
 
@@ -832,7 +836,18 @@
 }
 
 #pragma mark -
-#pragma mark Reload
+#pragma mark NavigationBar Action
+
+-(void)settings {
+    
+    InfosViewController *infosViewController = [[InfosViewController alloc] init];
+    
+	[self.navigationController pushViewController:infosViewController animated:YES];
+
+    
+    [infosViewController release];
+    
+}
 
 -(void)reload
 {

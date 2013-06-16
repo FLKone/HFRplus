@@ -48,10 +48,21 @@ typedef enum {
 #import "NSDictionary+Merging.h"
 
 // Helpers
+#import "UIBarButtonItem+Extension.h"
+
+#import "MenuViewController.h"
 #import "HFRNavigationController.h"
+
+
+
+// Views
+#import "MenuButton.h"
 
 // Controllers
 #import "MenuViewController.h"
+#import "ForumsTableViewController.h"
+#import "InfosViewController.h"
+
 
 //Vendor
 #import "TestFlight.h"

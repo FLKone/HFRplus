@@ -28,6 +28,7 @@
 
 - (void)viewDidLoad
 {
+
 	self.title = [NSString stringWithFormat:@"HFR+ %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
 	
 	// Make the title of this page the same as the title of this app
