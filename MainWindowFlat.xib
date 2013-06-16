@@ -55,6 +55,7 @@
 				<object class="NSPSMatrix" key="NSFrameMatrix"/>
 				<string key="NSFrameSize">{320, 480}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSNextKeyView"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">1</int>
 					<bytes key="NSRGB">MSAxIDEAA</bytes>
@@ -70,7 +71,7 @@
 					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">1298</int>
 					<array class="NSMutableArray" key="NSSubviews">
-						<object class="IBUIView" id="520154934">
+						<object class="IBUIView" id="75530206">
 							<reference key="NSNextResponder" ref="536737539"/>
 							<int key="NSvFlags">1330</int>
 							<string key="NSFrameSize">{320, 436}</string>
@@ -115,16 +116,16 @@
 										<string key="NSResourceName">categories_on.png</string>
 									</object>
 									<reference key="IBUISelectedImage" ref="464893283"/>
-									<object class="NSCustomResource" key="IBUINormalImage" id="117449673">
+									<object class="NSCustomResource" key="IBUINormalImage">
 										<string key="NSClassName">NSImage</string>
 										<string key="NSResourceName">categories.png</string>
 									</object>
-									<object class="NSCustomResource" key="IBUIHighlightedBackgroundImage" id="7652099">
+									<object class="NSCustomResource" key="IBUIHighlightedBackgroundImage" id="920799954">
 										<string key="NSClassName">NSImage</string>
 										<string key="NSResourceName">black_dot.png</string>
 									</object>
-									<reference key="IBUISelectedBackgroundImage" ref="7652099"/>
-									<reference key="IBUINormalBackgroundImage" ref="7652099"/>
+									<reference key="IBUISelectedBackgroundImage" ref="920799954"/>
+									<reference key="IBUINormalBackgroundImage" ref="920799954"/>
 									<object class="IBUIFontDescription" key="IBUIFontDescription" id="175877066">
 										<int key="type">2</int>
 										<double key="pointSize">15</double>
@@ -154,12 +155,18 @@
 									<reference key="IBUIHighlightedTitleShadowColor" ref="354700999"/>
 									<reference key="IBUISelectedTitleShadowColor" ref="354700999"/>
 									<reference key="IBUINormalTitleShadowColor" ref="354700999"/>
-									<reference key="IBUIHighlightedImage" ref="464893283"/>
-									<reference key="IBUISelectedImage" ref="464893283"/>
-									<reference key="IBUINormalImage" ref="117449673"/>
-									<reference key="IBUIHighlightedBackgroundImage" ref="7652099"/>
-									<reference key="IBUISelectedBackgroundImage" ref="7652099"/>
-									<reference key="IBUINormalBackgroundImage" ref="7652099"/>
+									<object class="NSCustomResource" key="IBUIHighlightedImage" id="825830065">
+										<string key="NSClassName">NSImage</string>
+										<string key="NSResourceName">favoris_on.png</string>
+									</object>
+									<reference key="IBUISelectedImage" ref="825830065"/>
+									<object class="NSCustomResource" key="IBUINormalImage">
+										<string key="NSClassName">NSImage</string>
+										<string key="NSResourceName">favoris.png</string>
+									</object>
+									<reference key="IBUIHighlightedBackgroundImage" ref="920799954"/>
+									<reference key="IBUISelectedBackgroundImage" ref="920799954"/>
+									<reference key="IBUINormalBackgroundImage" ref="920799954"/>
 									<reference key="IBUIFontDescription" ref="175877066"/>
 									<reference key="IBUIFont" ref="1001807111"/>
 								</object>
@@ -182,12 +189,18 @@
 									<reference key="IBUIHighlightedTitleShadowColor" ref="354700999"/>
 									<reference key="IBUISelectedTitleShadowColor" ref="354700999"/>
 									<reference key="IBUINormalTitleShadowColor" ref="354700999"/>
-									<reference key="IBUIHighlightedImage" ref="464893283"/>
-									<reference key="IBUISelectedImage" ref="464893283"/>
-									<reference key="IBUINormalImage" ref="117449673"/>
-									<reference key="IBUIHighlightedBackgroundImage" ref="7652099"/>
-									<reference key="IBUISelectedBackgroundImage" ref="7652099"/>
-									<reference key="IBUINormalBackgroundImage" ref="7652099"/>
+									<object class="NSCustomResource" key="IBUIHighlightedImage" id="956568009">
+										<string key="NSClassName">NSImage</string>
+										<string key="NSResourceName">search_on.png</string>
+									</object>
+									<reference key="IBUISelectedImage" ref="956568009"/>
+									<object class="NSCustomResource" key="IBUINormalImage">
+										<string key="NSClassName">NSImage</string>
+										<string key="NSResourceName">search.png</string>
+									</object>
+									<reference key="IBUIHighlightedBackgroundImage" ref="920799954"/>
+									<reference key="IBUISelectedBackgroundImage" ref="920799954"/>
+									<reference key="IBUINormalBackgroundImage" ref="920799954"/>
 									<reference key="IBUIFontDescription" ref="175877066"/>
 									<reference key="IBUIFont" ref="1001807111"/>
 								</object>
@@ -196,6 +209,7 @@
 									<int key="NSvFlags">1299</int>
 									<string key="NSFrame">{{240, 0}, {80, 45}}</string>
 									<reference key="NSSuperview" ref="1029264842"/>
+									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="IBUIOpaque">NO</bool>
 									<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -209,12 +223,18 @@
 									<reference key="IBUIHighlightedTitleShadowColor" ref="354700999"/>
 									<reference key="IBUISelectedTitleShadowColor" ref="354700999"/>
 									<reference key="IBUINormalTitleShadowColor" ref="354700999"/>
-									<reference key="IBUIHighlightedImage" ref="464893283"/>
-									<reference key="IBUISelectedImage" ref="464893283"/>
-									<reference key="IBUINormalImage" ref="117449673"/>
-									<reference key="IBUIHighlightedBackgroundImage" ref="7652099"/>
-									<reference key="IBUISelectedBackgroundImage" ref="7652099"/>
-									<reference key="IBUINormalBackgroundImage" ref="7652099"/>
+									<object class="NSCustomResource" key="IBUIHighlightedImage" id="1072169844">
+										<string key="NSClassName">NSImage</string>
+										<string key="NSResourceName">tabs_on.png</string>
+									</object>
+									<reference key="IBUISelectedImage" ref="1072169844"/>
+									<object class="NSCustomResource" key="IBUINormalImage">
+										<string key="NSClassName">NSImage</string>
+										<string key="NSResourceName">tabs.png</string>
+									</object>
+									<reference key="IBUIHighlightedBackgroundImage" ref="920799954"/>
+									<reference key="IBUISelectedBackgroundImage" ref="920799954"/>
+									<reference key="IBUINormalBackgroundImage" ref="920799954"/>
 									<reference key="IBUIFontDescription" ref="175877066"/>
 									<reference key="IBUIFont" ref="1001807111"/>
 								</object>
@@ -229,7 +249,7 @@
 					<object class="NSPSMatrix" key="NSFrameMatrix"/>
 					<string key="NSFrameSize">{320, 480}</string>
 					<reference key="NSSuperview"/>
-					<reference key="NSNextKeyView" ref="520154934"/>
+					<reference key="NSNextKeyView" ref="75530206"/>
 					<object class="NSColor" key="IBUIBackgroundColor">
 						<int key="NSColorSpace">3</int>
 						<bytes key="NSWhite">MQA</bytes>
@@ -502,6 +522,7 @@
 					<object class="NSPSMatrix" key="NSFrameMatrix"/>
 					<string key="NSFrame">{{0, 431}, {320, 49}}</string>
 					<reference key="NSSuperview"/>
+					<reference key="NSNextKeyView"/>
 					<reference key="IBUIBackgroundColor" ref="354700999"/>
 					<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				</object>
@@ -586,7 +607,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">popoverView</string>
 						<reference key="source" ref="704914877"/>
-						<reference key="destination" ref="520154934"/>
+						<reference key="destination" ref="75530206"/>
 					</object>
 					<string key="id">JDW-LK-vWR</string>
 				</object>
@@ -696,7 +717,7 @@
 						<reference key="object" ref="536737539"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="1029264842"/>
-							<reference ref="520154934"/>
+							<reference ref="75530206"/>
 						</array>
 						<reference key="parent" ref="704914877"/>
 					</object>
@@ -916,7 +937,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<string key="id">NwP-O0-hhE</string>
-						<reference key="object" ref="520154934"/>
+						<reference key="object" ref="75530206"/>
 						<reference key="parent" ref="536737539"/>
 					</object>
 				</array>
@@ -1018,7 +1039,7 @@
 				<string key="NwP-O0-hhE.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="kwc-mU-X61.CustomClassName">MenuButton</string>
 				<string key="kwc-mU-X61.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="2" key="kwc-mU-X61.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="0.0" key="kwc-mU-X61.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="nyi-mM-wNS.CustomClassName">MenuButton</string>
 				<string key="nyi-mM-wNS.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="2" key="nyi-mM-wNS.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
@@ -1053,8 +1074,14 @@
 			<string key="28-star.png">{26, 26}</string>
 			<string key="44-shoebox.png">{24, 22}</string>
 			<string key="black_dot.png">{1, 1}</string>
-			<string key="categories.png">{30, 30}</string>
-			<string key="categories_on.png">{30, 30}</string>
+			<string key="categories.png">{32, 32}</string>
+			<string key="categories_on.png">{32, 32}</string>
+			<string key="favoris.png">{32, 32}</string>
+			<string key="favoris_on.png">{32, 32}</string>
+			<string key="search.png">{32, 32}</string>
+			<string key="search_on.png">{32, 32}</string>
+			<string key="tabs.png">{32, 32}</string>
+			<string key="tabs_on.png">{32, 32}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>

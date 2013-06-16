@@ -699,7 +699,7 @@
 	self.navigationItem.rightBarButtonItem = reloadBarItem;
     
     //Bouton Settings/More
-    UIBarButtonItem *settingsBarItem = [UIBarButtonItem barItemWithImageNamed:@"reload" title:@"" target:self action:@selector(settings)];
+    UIBarButtonItem *settingsBarItem = [UIBarButtonItem barItemWithImageNamed:@"more" title:@"" target:self action:@selector(settings)];
 	self.navigationItem.leftBarButtonItem = settingsBarItem;
     
 
