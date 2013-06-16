@@ -24,7 +24,7 @@
     [button setImage:imageOn forState:UIControlStateHighlighted];
     
     [button setBackgroundImage:[UIImage imageNamed:@"black_dot"] forState:UIControlStateNormal];
-    [button setBackgroundImage:[UIImage imageNamed:@"white_dot"] forState:UIControlStateHighlighted];
+    [button setBackgroundImage:[UIImage imageNamed:@"black_dot"] forState:UIControlStateHighlighted];
 
     [button setTitle:title forState:UIControlStateNormal];
     [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
