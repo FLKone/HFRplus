@@ -27,7 +27,128 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    NSLog(@"VDL");
+    
+    // scrollView init
+    _containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320 * 2 + 20 * 3, 436 * 2 + 20 * 3)];
+    
+    
+    int nbTab = 4;
+    int x = 20, y = 20;
+    _tabsViews = [[NSMutableArray alloc] init];
+    
+    for (int i = 0; i < nbTab; i++) {
+        
+        UIView *tabView = [[UIView alloc] initWithFrame:CGRectMake(x, y, 320, 436)];
+        tabView.backgroundColor = [UIColor redColor];
+        tabView.autoresizesSubviews = YES;
+        [tabView setContentMode:UIViewContentModeScaleToFill];
+        tabView.clipsToBounds = YES;
+        //[tabView setUserInteractionEnabled:NO];
+        
+        UIView *tabtouchView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 436)];
+        tabtouchView.backgroundColor = [UIColor blueColor];
+        tabtouchView.alpha = .8;
+        tabtouchView.tag = i+1;
+        
+        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(oneTap:)];
+        [singleTap setNumberOfTapsRequired:1];
+        [singleTap setNumberOfTouchesRequired:1];
+        [tabtouchView addGestureRecognizer:singleTap];
+        [singleTap release];
+        
+        [tabView addSubview:tabtouchView];
+        
+        [_containerView addSubview:tabView];
+        [_tabsViews addObject:tabView];
+        
+        x += 340;
+        
+        NSLog(@"i = %d |  mod %d", i, i%2);
+        
+        if (i%2) {
+            x = 20;
+            y+= 456;
+        }
+        
+    }
+    [_scrollView addSubview:_containerView];
+
+    _scrollView.contentSize = CGSizeMake(320 * 2 + 20 * 3, 436 * 2 + 20 * 3);
+ 
+    CGRect scrollViewFrame = _scrollView.frame;
+    CGFloat scaleWidth = scrollViewFrame.size.width / _scrollView.contentSize.width;
+    CGFloat scaleHeight = scrollViewFrame.size.height / _scrollView.contentSize.height;
+
+    
+    CGFloat minScale = MIN(scaleWidth, scaleHeight);
+    
+    _scrollView.minimumZoomScale = minScale;
+    _scrollView.maximumZoomScale = minScale;//0.3835f;
+    _scrollView.zoomScale = minScale;
+    
+    [self centerScrollViewContents];
+    
+    //NSLog(@"_tabsViews %@", _tabsViews);
+
 }
+-(void)zoomToView:(UIView *)view {
+    [UIView animateWithDuration:0.5
+                          delay:0
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         CGPoint newOffset;
+                         newOffset.x = [view superview].frame.origin.x;
+                         newOffset.y = [view superview].frame.origin.y;
+                         
+                         newOffset.x += _containerView.frame.origin.x;
+                         newOffset.y += _containerView.frame.origin.y;
+                         
+                         NSLog(@"offset %@", NSStringFromCGPoint(newOffset));
+                         
+                         
+                         _scrollView.maximumZoomScale = 1;
+                         _scrollView.zoomScale = 1;
+                         _scrollView.contentOffset = newOffset;
+                         [view setAlpha:0];
+                     }
+                     completion:^(BOOL finished){
+                         
+                         NSLog(@"finish");
+                     }];
+
+}
+
+-(void)oneTap:(UITapGestureRecognizer *)sender {
+    NSLog(@"oneTap %@", sender.view);
+    [self zoomToView:sender.view];
+}
+
+- (void)centerScrollViewContents {
+    CGSize boundsSize = self.scrollView.bounds.size;
+    CGRect contentsFrame = self.containerView.frame;
+    
+    if (contentsFrame.size.width < boundsSize.width) {
+        contentsFrame.origin.x = (boundsSize.width - contentsFrame.size.width) / 2.0f;
+    } else {
+        contentsFrame.origin.x = 0.0f;
+    }
+    
+    if (contentsFrame.size.height < boundsSize.height) {
+        contentsFrame.origin.y = (boundsSize.height - contentsFrame.size.height) / 2.0f;
+    } else {
+        contentsFrame.origin.y = 0.0f;
+    }
+    
+    _containerView.frame = contentsFrame;
+}
+
+- (UIView*)viewForZoomingInScrollView:(UIScrollView *)scrollView {
+    // Return the view that we want to zoom
+    return _containerView;
+}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -41,11 +162,20 @@
     [_popoverView release];
     [_btnFavoris release];
     [_btnSearch release];
+    [_btnTabs release];
+    
+    [_forumsController release];
+    [_favoritesController release];
+    [_searchController release];
+    
     [super dealloc];
 }
+
 - (IBAction)switchBtn:(MenuButton *)sender forEvent:(UIEvent *)event {
     NSLog(@"switchBtn");
     
+    NSLog(@"_tabsViews %@", _tabsViews);
+
     BOOL add = NO;
     
     
@@ -81,7 +211,8 @@
         
         [_activeController.view removeFromSuperview];
         //[_activeController removeFromParentViewController];
-        
+        [_popoverView setHidden:YES];
+
     }
     else
     {
@@ -102,6 +233,20 @@
             }
             else
                 navigationController = _forumsController;
+            
+            //UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+            //[navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"black_dot"] forBarMetrics:UIBarMetricsDefault];
+            //[self addChildViewController:navigationController];
+            
+            //NSLog(@"subs B %@", [[_tabsViews objectAtIndex:0] subviews]);
+            
+            //[[_tabsViews objectAtIndex:0] insertSubview:_forumsController.view belowSubview:[[[_tabsViews objectAtIndex:0] subviews] objectAtIndex:0]];
+            
+            
+            [navigationController didMoveToParentViewController:self];
+            [_popoverView addSubview:navigationController.view];
+            _activeController = navigationController;
+            [_popoverView setHidden:NO];
 
         }
         else if (sender == self.btnFavoris) {
@@ -114,10 +259,20 @@
 
                 _favoritesController = navigationController;
                 
+                
                 [self addChildViewController:_favoritesController];
+                
+                //[[_tabsViews objectAtIndex:0] addSubview:navigationController.view];
+
             }
             else
                 navigationController = _favoritesController;
+            
+            [navigationController didMoveToParentViewController:self];
+            [_popoverView addSubview:navigationController.view];
+            _activeController = navigationController;
+            [_popoverView setHidden:NO];
+            
         }
         else if (sender == self.btnSearch) {
             NSLog(@"== btnSearch");
@@ -133,15 +288,52 @@
             }
             else
                 navigationController = _searchController;
+            
+            [navigationController didMoveToParentViewController:self];
+            [_popoverView addSubview:navigationController.view];
+            _activeController = navigationController;
+            [_popoverView setHidden:NO];
+            
         }
-        else {
-            navigationController = [[UINavigationController alloc] init];
+        else if (sender == self.btnTabs) {
+            NSLog(@"== btnSearch");
+            
+            CGRect scrollViewFrame = _scrollView.frame;
+            CGSize cz = CGSizeMake(320 * 2 + 20 * 3, 436 * 2 + 20 * 3);
+            CGFloat scaleWidth = scrollViewFrame.size.width / cz.width;
+            CGFloat scaleHeight = scrollViewFrame.size.height / cz.height;
+            
+            CGFloat minScale = MIN(scaleWidth, scaleHeight);
+            if (_scrollView.zoomScale != minScale) {
+                    
+                [UIView beginAnimations:nil context:NULL];
+                [UIView setAnimationDuration: .5];
+                _scrollView.maximumZoomScale = minScale;
+                _scrollView.zoomScale = minScale;
+                _scrollView.contentOffset = CGPointMake(0, 0);
+                
+                for (UIView *view in _tabsViews) {
+                    if ([view subviews].count == 2) {
+                        NSLog(@"[view subviews] %@", [view subviews]);
+                        
+                        UIView* tapView = [[view subviews] objectAtIndex:1];
+                        if (tapView.alpha == 0) {
+                            NSLog(@"sds");
+                            tapView.alpha = .8;
+                        }
+                    }
+                }
+                [UIView commitAnimations];
+            }
+
+            
+            [_popoverView setHidden:YES];
+            
+            
         }
         
         
-        [navigationController didMoveToParentViewController:self];
-        [_popoverView addSubview:navigationController.view];
-        _activeController = navigationController;
+
     }
 
     /*
@@ -151,6 +343,38 @@
      */
     
     
+}
+
+- (void)loadTab:(id)viewController
+{
+    NSLog(@"loadTab %@", viewController);
+    
+    if ([[_tabsViews objectAtIndex:0] subviews].count == 2) {
+        [_navigationTab1Controller removeFromParentViewController];
+        [_navigationTab1Controller.view removeFromSuperview];
+        [_navigationTab1Controller release];
+    }
+    
+    _navigationTab1Controller = [[UINavigationController alloc] initWithRootViewController:viewController];
+    [_navigationTab1Controller.navigationBar setBackgroundImage:[UIImage imageNamed:@"black_dot"] forBarMetrics:UIBarMetricsDefault];
+    
+
+    
+
+
+    [self addChildViewController:_navigationTab1Controller];
+
+    NSLog(@"subs B %@", [[_tabsViews objectAtIndex:0] subviews]);
+
+    _navigationTab1Controller.view.frame = ((UIView *)[[[_tabsViews objectAtIndex:0] subviews] objectAtIndex:0]).frame;
+    [[_tabsViews objectAtIndex:0] insertSubview:_navigationTab1Controller.view belowSubview:[[[_tabsViews objectAtIndex:0] subviews] objectAtIndex:0]];
+    [self.btnTabs sendActionsForControlEvents:UIControlEventTouchUpInside];
+    [self zoomToView:[[[_tabsViews objectAtIndex:0] subviews] objectAtIndex:1]];
+
+    
+    
+
+    NSLog(@"subs A %@", [[_tabsViews objectAtIndex:0] subviews]);
 }
 
 // Override to allow orientations other than the default portrait orientation.

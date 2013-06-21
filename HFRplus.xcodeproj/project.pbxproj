@@ -2289,7 +2289,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/TestFlight\"",
 					"\"$(SRCROOT)/HFRplus/Vendor/TestFlight\"",
 				);
 				OTHER_LDFLAGS = "-licucore";
@@ -2317,7 +2316,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/TestFlight\"",
 					"\"$(SRCROOT)/HFRplus/Vendor/TestFlight\"",
 				);
 				OTHER_LDFLAGS = "-licucore";

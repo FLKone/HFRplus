@@ -43,9 +43,16 @@
     [request setDidStartSelector:@selector(fetchContentStarted:)];
     [request setDidFinishSelector:@selector(fetchContentComplete:)];
     [request setDidFailSelector:@selector(fetchContentFailed:)];
+    [request setShowAccurateProgress:YES];
+    [request setDownloadProgressDelegate:self];
     
     [request startAsynchronous];
 
+}
+
+- (void)request:(ASIHTTPRequest *)request didReceiveBytes:(long long)bytes
+{
+    NSLog(@"bytes %lld", bytes);
 }
 
 - (void)fetchContentStarted:(ASIHTTPRequest *)theRequest
@@ -67,8 +74,8 @@
 
 - (void)fetchContentComplete:(ASIHTTPRequest *)theRequest
 {    
-    NSLog(@"fetchContentComplete");
-
+    NSLog(@"fetchContentComplete %lld", [theRequest contentLength]);
+     //[theRequest siz]
     
 	//Bouton Reload
 	//self.navigationItem.rightBarButtonItem = nil;

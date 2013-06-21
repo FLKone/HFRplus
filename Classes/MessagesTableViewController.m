@@ -70,6 +70,7 @@
 	//[request setDownloadCache:[ASIDownloadCache sharedCache]];
 	
     [request setDownloadProgressDelegate:self];
+    //[request setAllowCompressedResponse:NO];
     
 	[request setDidStartSelector:@selector(fetchContentStarted:)];
 	[request setDidFinishSelector:@selector(fetchContentComplete:)];
@@ -84,7 +85,14 @@
 	
     [self.loadingView setHidden:NO];
 
+    
+    
 	[request startAsynchronous];
+}
+
+- (void)request:(ASIHTTPRequest *)request didReceiveBytes:(long long)bytes
+{
+    NSLog(@"bytes %lld", bytes);
 }
 
 - (void)fetchContentStarted:(ASIHTTPRequest *)theRequest
@@ -101,7 +109,7 @@
 
 - (void)fetchContentComplete:(ASIHTTPRequest *)theRequest
 {
-	//NSLog(@"fetchContentComplete");
+    NSLog(@"fetchContentComplete %lld", [theRequest contentLength]);
 	
 	// create the queue to run our ParseOperation
     self.queue = [[NSOperationQueue alloc] init];

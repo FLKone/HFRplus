@@ -802,7 +802,8 @@
 - (void)pushTopic {
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        [self.navigationController pushViewController:messagesTableViewController animated:YES];
+        [[[HFRplusAppDelegate sharedAppDelegate] rootController] loadTab:messagesTableViewController];
+        //[self.navigationController pushViewController:messagesTableViewController animated:YES];
     }
     else {
         [[[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] viewControllers] objectAtIndex:1] popToRootViewControllerAnimated:NO];
