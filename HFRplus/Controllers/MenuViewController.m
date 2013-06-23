@@ -56,7 +56,6 @@
         [singleTap setNumberOfTapsRequired:1];
         [singleTap setNumberOfTouchesRequired:1];
         [tabtouchView addGestureRecognizer:singleTap];
-        [singleTap release];
         
         [tabView addSubview:tabtouchView];
         
@@ -156,20 +155,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)dealloc {
-    [_btnCategories release];
-    [_scrollView release];
-    [_popoverView release];
-    [_btnFavoris release];
-    [_btnSearch release];
-    [_btnTabs release];
-    
-    [_forumsController release];
-    [_favoritesController release];
-    [_searchController release];
-    
-    [super dealloc];
-}
 
 - (IBAction)switchBtn:(MenuButton *)sender forEvent:(UIEvent *)event {
     NSLog(@"switchBtn");
@@ -352,7 +337,6 @@
     if ([[_tabsViews objectAtIndex:0] subviews].count == 2) {
         [_navigationTab1Controller removeFromParentViewController];
         [_navigationTab1Controller.view removeFromSuperview];
-        [_navigationTab1Controller release];
     }
     
     _navigationTab1Controller = [[UINavigationController alloc] initWithRootViewController:viewController];

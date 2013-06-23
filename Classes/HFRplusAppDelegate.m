@@ -63,7 +63,7 @@
 	    
     [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(reachabilityChanged:) name: kReachabilityChangedNotification object: nil];
 
-    internetReach = [[Reachability reachabilityForInternetConnection] retain];
+    internetReach = [Reachability reachabilityForInternetConnection];
 	[internetReach startNotifier];
     
 	//rootController.customizableViewControllers = nil;
@@ -81,11 +81,11 @@
     	
     [window makeKeyAndVisible];
 
-	periodicMaintenanceTimer = [[NSTimer scheduledTimerWithTimeInterval:60*10
+	periodicMaintenanceTimer = [NSTimer scheduledTimerWithTimeInterval:60*10
 																 target:self
 															   selector:@selector(periodicMaintenance)
 															   userInfo:nil
-																repeats:YES] retain];
+																repeats:YES];
 	
     return YES;
 }
@@ -123,7 +123,6 @@
     }	
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultsToRegister];    
-    [defaultsToRegister release];
 }
 
 
@@ -147,7 +146,7 @@
      */
 	NSLog(@"applicationDidEnterBackground");
     [periodicMaintenanceTimer invalidate];
-    [periodicMaintenanceTimer release], periodicMaintenanceTimer = nil;	
+    periodicMaintenanceTimer = nil;	
 }
 
 
@@ -157,11 +156,11 @@
      */
 	NSLog(@"applicationWillEnterForeground");
 
-	periodicMaintenanceTimer = [[NSTimer scheduledTimerWithTimeInterval:60*10
+	periodicMaintenanceTimer = [NSTimer scheduledTimerWithTimeInterval:60*10
 																 target:self
 															   selector:@selector(periodicMaintenance)
 															   userInfo:nil
-																repeats:YES] retain];	
+																repeats:YES];	
 }
 
 - (void)periodicMaintenance
@@ -178,9 +177,8 @@
 
 - (void)periodicMaintenanceBack
 {
-	NSAutoreleasePool * pool2;
     
-    pool2 = [[NSAutoreleasePool alloc] init];
+    @autoreleasepool {
 	
 	//NSLog(@"periodicMaintenanceBack");
 
@@ -189,97 +187,96 @@
     //[periodicMaintenanceOperation cancel];
     //self.periodicMaintenanceOperation = nil;
 
-	NSFileManager *fileManager = [NSFileManager defaultManager];
+		NSFileManager *fileManager = [NSFileManager defaultManager];
 
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-	NSString *diskCachePath = [[[paths objectAtIndex:0] stringByAppendingPathComponent:@"ImageCache"] retain];
+		NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+		NSString *diskCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"ImageCache"];
 
-	/*NSError *error = nil;
-	NSFileManager *fileManager = [NSFileManager defaultManager];
-	NSArray *URLResources = [NSArray arrayWithObject:@"NSURLCreationDateKey"];
-	
-	
-	
-	//NSArray *crashReportFiles = [[NSFileManager defaultManager] contentsOfDirectoryAtURL:[[[NSFileManager defaultManager] userLibraryURL] URLByAppendingPathComponent:@"ImageCache"] includingPropertiesForKeys:URLResources options:(NSDirectoryEnumerationSkipsHiddenFiles | NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsSubdirectoryDescendants) error:&error];
-
-	
-	*/
-	
-	if (![fileManager fileExistsAtPath:diskCachePath])
-	{
-		//NSLog(@"createDirectoryAtPath");
-		[fileManager createDirectoryAtPath:diskCachePath
-								  withIntermediateDirectories:YES
-												   attributes:nil
-														error:NULL];
-	}
-	else {
-		//NSLog(@"pas createDirectoryAtPath");
+		/*NSError *error = nil;
+		NSFileManager *fileManager = [NSFileManager defaultManager];
+		NSArray *URLResources = [NSArray arrayWithObject:@"NSURLCreationDateKey"];
 		
 		
-		NSString *directoryPath = diskCachePath;
-		NSDirectoryEnumerator *directoryEnumerator = [fileManager enumeratorAtPath:directoryPath];
 		
-		NSDate *yesterday = [NSDate dateWithTimeIntervalSinceNow:(-60*60*24*25)];
-		//NSLog(@"yesterday %@", yesterday);
+		//NSArray *crashReportFiles = [[NSFileManager defaultManager] contentsOfDirectoryAtURL:[[[NSFileManager defaultManager] userLibraryURL] URLByAppendingPathComponent:@"ImageCache"] includingPropertiesForKeys:URLResources options:(NSDirectoryEnumerationSkipsHiddenFiles | NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsSubdirectoryDescendants) error:&error];
+
 		
-		for (NSString *path in directoryEnumerator) {
+		*/
+		
+		if (![fileManager fileExistsAtPath:diskCachePath])
+		{
+			//NSLog(@"createDirectoryAtPath");
+			[fileManager createDirectoryAtPath:diskCachePath
+									  withIntermediateDirectories:YES
+													   attributes:nil
+															error:NULL];
+		}
+		else {
+			//NSLog(@"pas createDirectoryAtPath");
+			
+			
+			NSString *directoryPath = diskCachePath;
+			NSDirectoryEnumerator *directoryEnumerator = [fileManager enumeratorAtPath:directoryPath];
+			
+			NSDate *yesterday = [NSDate dateWithTimeIntervalSinceNow:(-60*60*24*25)];
+			//NSLog(@"yesterday %@", yesterday);
+			
+			for (NSString *path in directoryEnumerator) {
 
-			if ([[path pathExtension] isEqualToString:@"rtfd"]) {
-				// Don't enumerate this directory.
-				[directoryEnumerator skipDescendents];
-			}
-			else {
-				
-				NSDictionary *attributes = [directoryEnumerator fileAttributes];
-				NSDate *CreatedDate = [attributes objectForKey:NSFileCreationDate];
-
-				if ([yesterday earlierDate:CreatedDate] == CreatedDate) {
-					//NSLog(@"%@ was created %@", path, CreatedDate);
-					
-					NSError *error = nil;
-					if (![fileManager removeItemAtURL:[NSURL fileURLWithPath:[diskCachePath stringByAppendingPathComponent:path]] error:&error]) {
-						// Handle the error.
-						//NSLog(@"error %@ %@", path, error);
-					}
-					
+				if ([[path pathExtension] isEqualToString:@"rtfd"]) {
+					// Don't enumerate this directory.
+					[directoryEnumerator skipDescendents];
 				}
 				else {
-					//NSLog(@"%@ was created == %@", path, CreatedDate);
+					
+					NSDictionary *attributes = [directoryEnumerator fileAttributes];
+					NSDate *CreatedDate = [attributes objectForKey:NSFileCreationDate];
 
+					if ([yesterday earlierDate:CreatedDate] == CreatedDate) {
+						//NSLog(@"%@ was created %@", path, CreatedDate);
+						
+						NSError *error = nil;
+						if (![fileManager removeItemAtURL:[NSURL fileURLWithPath:[diskCachePath stringByAppendingPathComponent:path]] error:&error]) {
+							// Handle the error.
+							//NSLog(@"error %@ %@", path, error);
+						}
+						
+					}
+					else {
+						//NSLog(@"%@ was created == %@", path, CreatedDate);
+
+					}
 				}
+				
 			}
 			
+			/*
+			NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager]
+												 enumeratorAtURL:directoryURL
+												 includingPropertiesForKeys:keys
+												 options:(NSDirectoryEnumerationSkipsPackageDescendants |
+														  NSDirectoryEnumerationSkipsHiddenFiles)
+												 errorHandler:^(NSURL *url, NSError *error) {
+													 // Handle the error.
+													 // Return YES if the enumeration should continue after the error.
+													 return YES;
+												 }];
+			
+			for (NSURL *url in enumerator) {
+			}
+			 */
 		}
 		
-		/*
-		NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager]
-											 enumeratorAtURL:directoryURL
-											 includingPropertiesForKeys:keys
-											 options:(NSDirectoryEnumerationSkipsPackageDescendants |
-													  NSDirectoryEnumerationSkipsHiddenFiles)
-											 errorHandler:^(NSURL *url, NSError *error) {
-												 // Handle the error.
-												 // Return YES if the enumeration should continue after the error.
-												 return YES;
-											 }];
-		
-		for (NSURL *url in enumerator) {
-		}
-		 */
-	}
-	
 
-	
+		
     // If disk usage outrich capacity, run the cache eviction operation and if cacheInfo dictionnary is dirty, save it in an operation
-	/* if (diskCacheUsage > self.diskCapacity)
+		/* if (diskCacheUsage > self.diskCapacity)
     {
         self.periodicMaintenanceOperation = [[[NSInvocationOperation alloc] initWithTarget:self selector:@selector(balanceDiskUsage) object:nil] autorelease];
         [ioQueue addOperation:periodicMaintenanceOperation];
     }*/
-	//NSLog(@"end");
-    [diskCachePath release];
-	[pool2 drain];
+		//NSLog(@"end");
+	}
 
 }
 
@@ -306,6 +303,7 @@
 {
     return;
 	//NSLog(@"%@ - %d", badgeValue, [badgeValue intValue]);
+    /*
     dispatch_async(dispatch_get_main_queue(), 
                   ^{  	
         if ([badgeValue intValue] > 0) {
@@ -316,6 +314,7 @@
             
         }
                   });
+     */
 }
 
 - (void)readMPBadge;
@@ -323,7 +322,8 @@
     return;
     
 	//NSLog(@"%@ - %d", badgeValue, [badgeValue intValue]);
-    dispatch_async(dispatch_get_main_queue(), 
+    /*
+    dispatch_async(dispatch_get_main_queue(),
                   ^{ 	
 	NSString *badgeValue = [[[[[self rootController] tabBar] items] objectAtIndex:2] badgeValue];
 	
@@ -334,6 +334,7 @@
 		[[[[[self rootController] tabBar] items] objectAtIndex:2] setBadgeValue:nil];
 	}
                   });	
+     */
 }
 
 
@@ -356,7 +357,6 @@
         // The navigation controller is now owned by the current view controller
         // and the root view controller is owned by the navigation controller,
         // so both objects should be released to prevent over-retention.
-        [browserViewController release];
         
     }
     else {
@@ -367,7 +367,6 @@
         [alert setStringURL:stringUrl];
         
         [alert show];
-        [alert release];  
     }
     
 
@@ -435,7 +434,7 @@
     
     //[[[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] viewControllers] objectAtIndex:1] popToRootViewControllerAnimated:NO];
     
-    UIViewController * uivc = [[[UIViewController alloc] init] autorelease];
+    UIViewController * uivc = [[UIViewController alloc] init];
     uivc.title = @"HFR+";
     
     [[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] setViewControllers:[NSMutableArray arrayWithObjects: uivc, nil] animated:NO];
@@ -461,21 +460,13 @@
 
 - (void)dealloc {
     [periodicMaintenanceTimer invalidate];
-    [periodicMaintenanceTimer release], periodicMaintenanceTimer = nil;
+    periodicMaintenanceTimer = nil;
     //[periodicMaintenanceOperation release], periodicMaintenanceOperation = nil;
 	//[ioQueue release], ioQueue = nil;
     
-	[rootController release];
-    self.splitViewController = nil;
     
-	[forumsNavController release];
-	[favoritesNavController release];
-	[messagesNavController release];
 	
-	self.hash_check = nil;
 	
-    [window release];
-    [super dealloc];
 }
 
 

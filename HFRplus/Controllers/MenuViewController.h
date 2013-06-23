@@ -11,23 +11,23 @@
 
 @interface MenuViewController : UIViewController <UIScrollViewDelegate>
 
-@property (retain, nonatomic) UINavigationController *activeController;
-@property (retain, nonatomic) MenuButton *activeMenu;
-@property (retain, nonatomic) UINavigationController *navigationTab1Controller;
+@property (strong, nonatomic) UINavigationController *activeController;
+@property (strong, nonatomic) MenuButton *activeMenu;
+@property (strong, nonatomic) UINavigationController *navigationTab1Controller;
 
-@property (retain, nonatomic) UINavigationController *forumsController;
-@property (retain, nonatomic) UINavigationController *favoritesController;
-@property (retain, nonatomic) UINavigationController *searchController;
+@property (strong, nonatomic) UINavigationController *forumsController;
+@property (strong, nonatomic) UINavigationController *favoritesController;
+@property (strong, nonatomic) UINavigationController *searchController;
 
-@property (retain, nonatomic) IBOutlet MenuButton *btnCategories;
-@property (retain, nonatomic) IBOutlet MenuButton *btnFavoris;
-@property (retain, nonatomic) IBOutlet MenuButton *btnSearch;
-@property (retain, nonatomic) IBOutlet MenuButton *btnTabs;
+@property (strong, nonatomic) IBOutlet MenuButton *btnCategories;
+@property (strong, nonatomic) IBOutlet MenuButton *btnFavoris;
+@property (strong, nonatomic) IBOutlet MenuButton *btnSearch;
+@property (strong, nonatomic) IBOutlet MenuButton *btnTabs;
 
-@property (retain, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (retain, nonatomic) UIView *containerView;
-@property (retain, nonatomic) NSMutableArray *tabsViews;
-@property (retain, nonatomic) IBOutlet UIView *popoverView;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (strong, nonatomic) UIView *containerView;
+@property (strong, nonatomic) NSMutableArray *tabsViews;
+@property (strong, nonatomic) IBOutlet UIView *popoverView;
 
 - (IBAction)switchBtn:(id)sender forEvent:(UIEvent *)event;
 

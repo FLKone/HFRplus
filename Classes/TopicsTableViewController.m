@@ -1752,8 +1752,8 @@
         [[actionSheet viewWithTag:546] setFrame:curFrame];
         
         [UIView beginAnimations:nil context:nil];
-        [actionSheet setFrame:CGRectMake(0, [[[HFRplusAppDelegate sharedAppDelegate] rootController] tabBar].frame.size.height + self.view.frame.size.height + self.navigationController.navigationBar.frame.size.height + 20 - myPickerView.frame.size.height - 44,
-                                         self.view.frame.size.width, myPickerView.frame.size.height + 44)];
+        //[actionSheet setFrame:CGRectMake(0, [[[HFRplusAppDelegate sharedAppDelegate] rootController] tabBar].frame.size.height + self.view.frame.size.height + self.navigationController.navigationBar.frame.size.height + 20 - myPickerView.frame.size.height - 44,
+        //                               self.view.frame.size.width, myPickerView.frame.size.height + 44)];
         
         [actionSheet setBounds:CGRectMake(0, 0,
                                           self.view.frame.size.width, myPickerView.frame.size.height + 44)];

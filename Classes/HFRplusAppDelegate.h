@@ -41,22 +41,22 @@
 
 - (void)periodicMaintenance;
 
-@property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet MenuViewController *rootController;
-@property (nonatomic, retain) IBOutlet SplitViewController *splitViewController;
-@property (nonatomic, retain) IBOutlet DetailNavigationViewController *detailNavigationController;
+@property (nonatomic, strong) IBOutlet UIWindow *window;
+@property (nonatomic, strong) IBOutlet MenuViewController *rootController;
+@property (nonatomic, strong) IBOutlet SplitViewController *splitViewController;
+@property (nonatomic, strong) IBOutlet DetailNavigationViewController *detailNavigationController;
 
-@property (nonatomic, retain) IBOutlet UINavigationController *forumsNavController;
-@property (nonatomic, retain) IBOutlet UINavigationController *favoritesNavController;
-@property (nonatomic, retain) IBOutlet UINavigationController *messagesNavController;
-@property (nonatomic, retain) IBOutlet UINavigationController *searchNavController;
+@property (nonatomic, strong) IBOutlet UINavigationController *forumsNavController;
+@property (nonatomic, strong) IBOutlet UINavigationController *favoritesNavController;
+@property (nonatomic, strong) IBOutlet UINavigationController *messagesNavController;
+@property (nonatomic, strong) IBOutlet UINavigationController *searchNavController;
 
 @property BOOL isLoggedIn;
 @property BOOL statusChanged;
 
-@property (nonatomic, retain) NSString *hash_check;
+@property (nonatomic, strong) NSString *hash_check;
 
-@property (nonatomic, retain) Reachability *internetReach;
+@property (nonatomic, strong) Reachability *internetReach;
 
 + (HFRplusAppDelegate *)sharedAppDelegate;
 

@@ -261,15 +261,15 @@ finish:
     matchedRange = [self rangeOfRegex:regexString options:RKLNoOptions inRange:searchRange capture:1L error:&error2];
     
     if (matchedRange.location == NSNotFound) {
-
+        return self;
     }
     else {
-        self = [self substringToIndex:(matchedRange.location - 1)];
+        return [self substringToIndex:(matchedRange.location - 1)];
     }
 
     
     
-    return self;
+    //return self;
     
 }
 

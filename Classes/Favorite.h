@@ -6,7 +6,8 @@
 //
 
 #import <Foundation/Foundation.h>
-@class Forum;
+#import "Forum.h"
+
 @class HTMLNode;
 
 @interface Favorite : NSObject
