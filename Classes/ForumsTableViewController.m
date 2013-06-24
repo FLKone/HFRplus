@@ -709,7 +709,9 @@
     UIBarButtonItem *settingsBarItem = [UIBarButtonItem barItemWithImageNamed:@"more" title:@"" target:self action:@selector(settings)];
 	self.navigationItem.leftBarButtonItem = settingsBarItem;
     
-
+    UIImage *image = [UIImage imageNamed:@"categories_on"];
+    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:image];
+    
 	[(ShakeView*)self.view setShakeDelegate:self];
 
 	self.arrayData = [[NSMutableArray alloc] init];
@@ -776,12 +778,14 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell.selectionStyle = UITableViewCellSelectionStyleGray;
     }
     
     // Configure the cell...
 	cell.textLabel.text = [NSString stringWithFormat:@"%@", [[arrayData objectAtIndex:indexPath.row] aTitle]];
-	cell.textLabel.font = [UIFont boldSystemFontOfSize:17];
-	
+	cell.textLabel.font = [UIFont boldSystemFontOfSize:15];
+	//[cell.textLabel setTextColor:[UIColor darkGrayColor]];
+
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
@@ -829,7 +833,7 @@
 	//setup the URL
 	
 	self.navigationItem.backBarButtonItem =
-	[[UIBarButtonItem alloc] initWithTitle:@"Retour"
+	[[UIBarButtonItem alloc] initWithTitle:@"retour"
 									 style: UIBarButtonItemStyleBordered
 									target:nil
 									action:nil];

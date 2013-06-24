@@ -228,6 +228,8 @@ permittedArrowDirections:(UIPopoverArrowDirection)permittedArrowDirections
 					
 					theArrowRect = CGRectMake(xArrowOffset , yArrowOffset, downArrowImage.size.width, downArrowImage.size.height);
 					
+                    NSLog(@"rect %@", NSStringFromCGRect(theArrowRect));
+
 					break;
 				case UIPopoverArrowDirectionLeft:
 					
@@ -252,6 +254,7 @@ permittedArrowDirections:(UIPopoverArrowDirection)permittedArrowDirections
 					
 					theArrowRect = CGRectMake(xArrowOffset, yArrowOffset, leftArrowImage.size.width, leftArrowImage.size.height);
 					
+                    
 					break;
 				case UIPopoverArrowDirectionRight:
 					

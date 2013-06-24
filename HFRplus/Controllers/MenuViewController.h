@@ -30,7 +30,9 @@
 @property (strong, nonatomic) UIView *containerView;
 @property (strong, nonatomic) NSMutableArray *tabsViews;
 
-@property (strong, nonatomic) WEPopoverController *popoverView;
+@property (strong, nonatomic) IBOutlet UIView *popoverView;
+
+//@property (strong, nonatomic) WEPopoverController *popoverView;
 
 - (IBAction)switchBtn:(id)sender forEvent:(UIEvent *)event;
 

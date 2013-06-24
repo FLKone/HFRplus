@@ -12,22 +12,24 @@
 
 + (UIBarButtonItem*)barItemWithImageNamed:(NSString*)imageName title:(NSString*)title target:(id)target action:(SEL)action
 {
-    UIImage *imageOff = [UIImage imageNamed:imageName];
+
+    UIImage *imageBase = [UIImage imageNamed:imageName];
     
-    UIColor *tintColor = [UIColor whiteColor];
+//    UIColor *tintColor = [UIColor colorWithRed:242/255.f green:144/255.f blue:27/255.f alpha:1.0f];
+    UIColor *tintColor = [UIColor lightGrayColor];
     
-    UIGraphicsBeginImageContext(imageOff.size);
+    UIGraphicsBeginImageContext(imageBase.size);
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-    CGContextTranslateCTM(context, 0, imageOff.size.height);
+    CGContextTranslateCTM(context, 0, imageBase.size.height);
     CGContextScaleCTM(context, 1.0, -1.0);
     
-    CGRect rect = CGRectMake(0, 0, imageOff.size.width, imageOff.size.height);
+    CGRect rect = CGRectMake(0, 0, imageBase.size.width, imageBase.size.height);
     
     // image drawing code here
     // draw alpha-mask
     CGContextSetBlendMode(context, kCGBlendModeNormal);
-    CGContextDrawImage(context, rect, imageOff.CGImage);
+    CGContextDrawImage(context, rect, imageBase.CGImage);
     
     // draw tint color, preserving alpha values of original image
     CGContextSetBlendMode(context, kCGBlendModeSourceIn);
@@ -39,10 +41,13 @@
     UIGraphicsEndImageContext();
     
     
+    NSLog(@"imageBase %@", NSStringFromCGSize(imageBase.size));
+    NSLog(@"coloredImage %@", NSStringFromCGSize(coloredImage.size));
     
     
-    
-    UIImage *imageOn = coloredImage;//[UIImage imageNamed:[NSString stringWithFormat:@"%@_on", imageName]];
+    UIImage *imageOff = [UIImage imageNamed:[NSString stringWithFormat:@"%@_on", imageName]];
+
+    UIImage *imageOn = coloredImage;//[UIImage imageNamed:[NSString stringWithFormat:@"%@", imageName]];
     
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -51,9 +56,11 @@
     
     [button setImage:imageOff forState:UIControlStateNormal];
     [button setImage:imageOn forState:UIControlStateHighlighted];
+    [button setImage:imageOn forState:UIControlStateSelected];
     
-    [button setBackgroundImage:[UIImage imageNamed:@"orangedark_dot"] forState:UIControlStateNormal];
-    [button setBackgroundImage:[UIImage imageNamed:@"orangedark_dot"] forState:UIControlStateHighlighted];
+    [button setBackgroundImage:[UIImage imageNamed:@"grey_dot"] forState:UIControlStateNormal];
+    [button setBackgroundImage:[UIImage imageNamed:@"grey_dot"] forState:UIControlStateHighlighted];
+    [button setBackgroundImage:[UIImage imageNamed:@"grey_dot"] forState:UIControlStateSelected];
 
     [button setTitle:title forState:UIControlStateNormal];
     [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];

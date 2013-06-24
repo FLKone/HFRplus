@@ -8,6 +8,7 @@
 
 #import "MenuViewController.h"
 #import "WEPopoverController.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface MenuViewController ()
 
@@ -30,8 +31,53 @@
 	// Do any additional setup after loading the view.
     
     NSLog(@"VDL");
+    //[UIColor colorWithRed:242/255.f green:144/255.f blue:27/255.f alpha:1.0f]
+    NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                               [UIFont boldSystemFontOfSize:15.0], UITextAttributeFont,
+                                               [UIColor colorWithRed:170/255.f green:170/255.f blue:170/255.f alpha:1.0f],UITextAttributeTextColor,
+                                               [UIColor whiteColor], UITextAttributeTextShadowColor,
+                                               [NSValue valueWithUIOffset:UIOffsetMake(-2, -1)], UITextAttributeTextShadowOffset, nil];
+    
+    [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
+    [[UINavigationBar appearance] setTitleVerticalPositionAdjustment:3.0f forBarMetrics:UIBarMetricsDefault];
+    
+    
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"grey_dot"] forBarMetrics:UIBarMetricsDefault];
+
+    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"back_on"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 5.0f) resizingMode:UIImageResizingModeStretch]
+                                                      forState:UIControlStateNormal
+                                                    barMetrics:UIBarMetricsDefault];
+        
+    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[UIImage imageNamed:@"back"]
+                                                      forState:UIControlStateHighlighted
+                                                    barMetrics:UIBarMetricsDefault];
+    
+    [[UIBarButtonItem appearance] setTitleTextAttributes:
+     [NSDictionary dictionaryWithObjectsAndKeys:
+      [UIColor colorWithRed:170/255.f green:170/255.f blue:170/255.f alpha:1.0f], UITextAttributeTextColor,
+      [UIColor whiteColor], UITextAttributeTextShadowColor,
+      [NSValue valueWithUIOffset:UIOffsetMake(-2, 0)], UITextAttributeTextShadowOffset,
+      [UIFont boldSystemFontOfSize:12], UITextAttributeFont,
+      nil]
+                                                forState:UIControlStateHighlighted];
+    
+    [[UIBarButtonItem appearance] setTitleTextAttributes:
+     [NSDictionary dictionaryWithObjectsAndKeys:
+      [UIColor whiteColor], UITextAttributeTextShadowColor,
+      [NSValue valueWithUIOffset:UIOffsetMake(-2, 0)], UITextAttributeTextShadowOffset,
+      [UIColor colorWithRed:242/255.f green:144/255.f blue:27/255.f alpha:1.0f], UITextAttributeTextColor,
+      [UIFont boldSystemFontOfSize:12], UITextAttributeFont,
+      nil]
+                                                forState:UIControlStateNormal];
+        
+    
     
     //[self.menuView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"pw_maze_black"]]];
+    self.menuView.layer.masksToBounds = NO;
+    //self.menuView.layer.cornerRadius = 8; // if you like rounded corners
+    self.menuView.layer.shadowOffset = CGSizeMake(0, -1);
+    self.menuView.layer.shadowRadius = 0.5;
+    self.menuView.layer.shadowOpacity = 0.3;
     
     // scrollView init
     _containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320 * 2 + 20 * 3, 436 * 2 + 20 * 3)];
@@ -43,14 +89,14 @@
     for (int i = 0; i < nbTab; i++) {
         
         UIView *tabView = [[UIView alloc] initWithFrame:CGRectMake(x, y, 320, 436)];
-        tabView.backgroundColor = [UIColor redColor];
+        tabView.backgroundColor = [UIColor whiteColor];
         tabView.autoresizesSubviews = YES;
         [tabView setContentMode:UIViewContentModeScaleToFill];
         tabView.clipsToBounds = YES;
         //[tabView setUserInteractionEnabled:NO];
         
         UIView *tabtouchView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 436)];
-        tabtouchView.backgroundColor = [UIColor blueColor];
+        tabtouchView.backgroundColor = [UIColor darkGrayColor];
         tabtouchView.alpha = .8;
         tabtouchView.tag = i+1;
         
@@ -92,8 +138,31 @@
     [self centerScrollViewContents];
     
     //NSLog(@"_tabsViews %@", _tabsViews);
+    
+
+    
 
 }
+
+
+- (void)viewDidAppear:(BOOL)animated {
+    NSLog(@"viewDidAppear %d", animated);
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	int tab = [[defaults stringForKey:@"default_tab"] integerValue];
+    
+	switch (tab) {
+        case 1:
+            [self.btnFavoris sendActionsForControlEvents:UIControlEventTouchUpInside];
+            break;
+            
+        default:
+            [self.btnCategories sendActionsForControlEvents:UIControlEventTouchUpInside];
+            break;
+    }
+    
+}
+
 -(void)zoomToView:(UIView *)view {
     [UIView animateWithDuration:0.5
                           delay:0
@@ -192,6 +261,7 @@
 	return props;
 }
 
+
 - (IBAction)switchBtn:(MenuButton *)sender forEvent:(UIEvent *)event {
     NSLog(@"switchBtn");
     
@@ -232,10 +302,12 @@
         
         _activeMenu = nil;
         
-        //[_activeController.view removeFromSuperview];
+        [_activeController.view removeFromSuperview];
+        [_popoverView setHidden:YES];
+        
         //[_activeController removeFromParentViewController];
-        [_popoverView dismissPopoverAnimated:YES];
-        _popoverView = nil;
+        //[_popoverView dismissPopoverAnimated:YES];
+        //_popoverView = nil;
     }
     else
     {
@@ -248,18 +320,23 @@
             if (!_forumsController) {
                 ForumsTableViewController *forumsViewController = [[ForumsTableViewController alloc] initWithNibName:@"ForumsTableViewController" bundle:nil];
                 navigationController = [[UINavigationController alloc] initWithRootViewController:forumsViewController];
-                [navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"pw_maze_black"] forBarMetrics:UIBarMetricsDefault];
+
+                
+
+                
                 //[navigationController.navigationBar setTintColor:[UIColor colorWithRed:242/255.f green:144/255.f blue:27/255.f alpha:1.0]];
                 
                 _forumsController = navigationController;
                 
-                //[self addChildViewController:_forumsController];
+                [self addChildViewController:_forumsController];
             }
             else
                 navigationController = _forumsController;
             
             //UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-            //[navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"black_dot"] forBarMetrics:UIBarMetricsDefault];
+
+            
+//            [navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"categories_on"] forBarMetrics:UIBarMetricsDefault];
             //[self addChildViewController:navigationController];
             
             //NSLog(@"subs B %@", [[_tabsViews objectAtIndex:0] subviews]);
@@ -268,23 +345,26 @@
             
 //            [navigationController didMoveToParentViewController:self];
 
+            /*
             _popoverView = [[WEPopoverController alloc] initWithContentViewController:navigationController];
             
-            if ([_popoverView respondsToSelector:@selector(setContainerViewProperties:)]) {
+            //if ([_popoverView respondsToSelector:@selector(setContainerViewProperties:)]) {
                 //[_popoverView setContainerViewProperties:[self improvedContainerViewProperties]];
-            }
+            //}
             
             _popoverView.passthroughViews = [NSArray arrayWithObject:self.menuView];
             
-            [_popoverView presentPopoverFromRect:self.btnCategories.frame
+            [_popoverView presentPopoverFromRect:sender.frame
                                                     inView:self.menuView
                                   permittedArrowDirections:UIPopoverArrowDirectionDown
                                                   animated:YES];
             
-            
-            //[_popoverView addSubview:navigationController.view];
+            */
+            [navigationController didMoveToParentViewController:self];
+            [_popoverView addSubview:navigationController.view];
+
             _activeController = navigationController;
-            //[_popoverView setHidden:NO];
+            [_popoverView setHidden:NO];
 
         }
         else if (sender == self.btnFavoris) {
@@ -293,7 +373,6 @@
             if (!_favoritesController) {            
                 FavoritesTableViewController *favoritesViewController = [[FavoritesTableViewController alloc] initWithNibName:@"FavoritesTableViewController" bundle:nil];
                 navigationController = [[UINavigationController alloc] initWithRootViewController:favoritesViewController];
-                [navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"black_dot"] forBarMetrics:UIBarMetricsDefault];
 
                 _favoritesController = navigationController;
                 
@@ -306,9 +385,17 @@
             else
                 navigationController = _favoritesController;
             
-            [navigationController didMoveToParentViewController:self];
+            //[navigationController didMoveToParentViewController:self];
+            /*
+            _popoverView = [[WEPopoverController alloc] initWithContentViewController:navigationController];
+
+            _popoverView.passthroughViews = [NSArray arrayWithObject:self.menuView];
             
-            
+            [_popoverView presentPopoverFromRect:sender.frame
+                                          inView:self.menuView
+                        permittedArrowDirections:UIPopoverArrowDirectionDown
+                                        animated:YES];
+            */
             //[_popoverView addSubview:navigationController.view];
             _activeController = navigationController;
             //[_popoverView setHidden:NO];
@@ -320,7 +407,6 @@
             if (!_searchController) {
                 HFRSearchViewController *searchViewController = [[HFRSearchViewController alloc] initWithNibName:@"HFRSearchViewController" bundle:nil];
                 navigationController = [[UINavigationController alloc] initWithRootViewController:searchViewController];
-                [navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"black_dot"] forBarMetrics:UIBarMetricsDefault];
                 
                 _searchController = navigationController;
                 
@@ -329,7 +415,18 @@
             else
                 navigationController = _searchController;
             
-            [navigationController didMoveToParentViewController:self];
+            //[navigationController didMoveToParentViewController:self];
+            /*
+            _popoverView = [[WEPopoverController alloc] initWithContentViewController:navigationController];
+            
+            _popoverView.passthroughViews = [NSArray arrayWithObject:self.menuView];
+            
+            [_popoverView presentPopoverFromRect:self.btnSearch.frame
+                                          inView:self.menuView
+                        permittedArrowDirections:UIPopoverArrowDirectionDown
+                                        animated:YES];
+            */
+            
             //[_popoverView addSubview:navigationController.view];
             _activeController = navigationController;
             //[_popoverView setHidden:NO];
@@ -366,14 +463,14 @@
                 [UIView commitAnimations];
             }
 
-            
-            [_popoverView dismissPopoverAnimated:YES];
-            _popoverView = nil;
+             [_popoverView setHidden:YES];
+            //[_popoverView dismissPopoverAnimated:YES];
+            //_popoverView = nil;
 
             
         }
         
-        
+        NSLog(@"frame %@", NSStringFromCGRect(sender.frame));
 
     }
 

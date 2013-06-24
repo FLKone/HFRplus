@@ -29,7 +29,7 @@
 - (void)viewDidLoad
 {
 
-	self.title = [NSString stringWithFormat:@"HFR+ %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
+	//self.title = [NSString stringWithFormat:@"HFR+ %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
 	
 	// Make the title of this page the same as the title of this app
 	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 400, 44)];
@@ -37,8 +37,9 @@
     [label setFont:[UIFont boldSystemFontOfSize:20.0]];
 	label.textAlignment = UITextAlignmentCenter;
 	
-	label.text= [NSString stringWithFormat:@"HFR+ %@ (%@)", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
-    
+	label.text = [NSString stringWithFormat:@"HFR+ %@ (%@)", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+    self.title = [NSString stringWithFormat:@"HFR+ %@ (%@)", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         [label setTextColor:[UIColor whiteColor]];
         label.shadowColor = [UIColor darkGrayColor];
@@ -51,7 +52,7 @@
     }
     
     
-	self.navigationItem.titleView = label;		
+	//self.navigationItem.titleView = label;
 	[label release];
 	
     [self hideEmptySeparators];

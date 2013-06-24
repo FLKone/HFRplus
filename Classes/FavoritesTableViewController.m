@@ -41,12 +41,17 @@
 
 -(void) showAll:(id)sender {
     
-    //NSLog(@"showAll %d", self.showAll);
+    NSLog(@"showAll %d", self.showAll);
+    
     if (self.showAll) {
         self.showAll = NO;
+        [self.navigationItem.leftBarButtonItem.customView setHighlighted:NO];
+        [self.navigationItem.leftBarButtonItem.customView setSelected:NO];
     }
     else {
         self.showAll = YES;
+        [self.navigationItem.leftBarButtonItem.customView setHighlighted:YES];
+        [self.navigationItem.leftBarButtonItem.customView setSelected:YES];
     }
 
     if (![self.favoritesTableView isHidden]) {
@@ -96,10 +101,10 @@
 {
     NSLog(@"fetchContentStarted");
 	//Bouton Stop
-	self.navigationItem.rightBarButtonItem = nil;	
-	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(cancelFetchContent)];
-	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];	
+	//self.navigationItem.rightBarButtonItem = nil;
+	//UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(cancelFetchContent)];
+	//self.navigationItem.rightBarButtonItem = segmentBarItem;
+    //[segmentBarItem release];	
 	
 	[self.maintenanceView setHidden:YES];
 	[self.favoritesTableView setHidden:YES];
@@ -111,10 +116,10 @@
     NSLog(@"fetchContentComplete");
 
 	//Bouton Reload
-	self.navigationItem.rightBarButtonItem = nil;
-	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
-	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];
+	//self.navigationItem.rightBarButtonItem = nil;
+	//UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
+	//self.navigationItem.rightBarButtonItem = segmentBarItem;
+    //[segmentBarItem release];
 	
 	[self.arrayNewData removeAllObjects];
 	
@@ -144,10 +149,10 @@
 - (void)fetchContentFailed:(ASIHTTPRequest *)theRequest
 {
 	//Bouton Reload
-	self.navigationItem.rightBarButtonItem = nil;
-	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
-	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];
+	//self.navigationItem.rightBarButtonItem = nil;
+	//UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
+	//self.navigationItem.rightBarButtonItem = segmentBarItem;
+    //[segmentBarItem release];
 	
 	[self.loadingView setHidden:YES];
 	
@@ -386,7 +391,7 @@
 	//NSLog(@"viewDidLoad ftv");
     [super viewDidLoad];
 	
-	self.title = @"Vos Sujets";
+	self.title = @"Favoris";
     self.showAll = NO;
 
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -395,9 +400,18 @@
                                                object:nil];
     
 	// reload
-    UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
-	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];		
+    //UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
+	//self.navigationItem.rightBarButtonItem = segmentBarItem;
+    //[segmentBarItem release];
+    
+	//Bouton Reload
+    UIBarButtonItem *reloadBarItem = [UIBarButtonItem barItemWithImageNamed:@"reload" title:@"" target:self action:@selector(reload)];
+	self.navigationItem.rightBarButtonItem = reloadBarItem;
+    
+    //Bouton Settings/More
+    UIBarButtonItem *settingsBarItem = [UIBarButtonItem barItemWithImageNamed:@"categories" title:@"" target:self action:@selector(showAll:)];
+	self.navigationItem.leftBarButtonItem = settingsBarItem;
+    
     
     
     // showAll
@@ -412,7 +426,7 @@
     }
     
     UIBarButtonItem * segmentBarItem2 = [[UIBarButtonItem alloc] initWithCustomView: segmentedControl];
-    self.navigationItem.leftBarButtonItem = segmentBarItem2;
+    //self.navigationItem.leftBarButtonItem = segmentBarItem2;
     
     [segmentBarItem2 release];
 	//segmentedControl2.segmentedControlStyle = UISegmentedControlStyleBar;
