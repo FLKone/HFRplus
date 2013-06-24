@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @class MenuButton;
+@class WEPopoverController;
 
 @interface MenuViewController : UIViewController <UIScrollViewDelegate>
 
@@ -25,9 +26,11 @@
 @property (strong, nonatomic) IBOutlet MenuButton *btnTabs;
 
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (strong, nonatomic) IBOutlet UIView *menuView;
 @property (strong, nonatomic) UIView *containerView;
 @property (strong, nonatomic) NSMutableArray *tabsViews;
-@property (strong, nonatomic) IBOutlet UIView *popoverView;
+
+@property (strong, nonatomic) WEPopoverController *popoverView;
 
 - (IBAction)switchBtn:(id)sender forEvent:(UIEvent *)event;
 

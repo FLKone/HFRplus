@@ -7,6 +7,7 @@
 //
 
 #import "MenuViewController.h"
+#import "WEPopoverController.h"
 
 @interface MenuViewController ()
 
@@ -30,9 +31,10 @@
     
     NSLog(@"VDL");
     
+    //[self.menuView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"pw_maze_black"]]];
+    
     // scrollView init
     _containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320 * 2 + 20 * 3, 436 * 2 + 20 * 3)];
-    
     
     int nbTab = 4;
     int x = 20, y = 20;
@@ -155,6 +157,40 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (WEPopoverContainerViewProperties *)improvedContainerViewProperties {
+	
+	WEPopoverContainerViewProperties *props = [WEPopoverContainerViewProperties alloc];
+	NSString *bgImageName = nil;
+	CGFloat bgMargin = 0.0;
+	CGFloat bgCapSize = 0.0;
+	CGFloat contentMargin = 4.0;
+	
+	bgImageName = @"popoverBg.png";
+	
+	// These constants are determined by the popoverBg.png image file and are image dependent
+	bgMargin = 4; // margin width of 13 pixels on all sides popoverBg.png (62 pixels wide - 36 pixel background) / 2 == 26 / 2 == 13
+	bgCapSize = 23; // ImageSize/2  == 62 / 2 == 31 pixels 46/2 = 23
+	
+	props.leftBgMargin = bgMargin;
+	props.rightBgMargin = bgMargin;
+	props.topBgMargin = bgMargin;
+	props.bottomBgMargin = bgMargin;
+	props.leftBgCapSize = bgCapSize;
+	props.topBgCapSize = bgCapSize;
+	props.bgImageName = bgImageName;
+	props.leftContentMargin = contentMargin;
+	props.rightContentMargin = contentMargin - 1; // Need to shift one pixel for border to look correct
+	props.topContentMargin = contentMargin;
+	props.bottomContentMargin = contentMargin;
+	
+	props.arrowMargin = 20;
+	
+	props.upArrowImageName = @"popoverArrowUp.png";
+	props.downArrowImageName = @"popoverArrowDown.png";
+	props.leftArrowImageName = @"popoverArrowLeft.png";
+	props.rightArrowImageName = @"popoverArrowRight.png";
+	return props;
+}
 
 - (IBAction)switchBtn:(MenuButton *)sender forEvent:(UIEvent *)event {
     NSLog(@"switchBtn");
@@ -162,10 +198,12 @@
     NSLog(@"_tabsViews %@", _tabsViews);
 
     BOOL add = NO;
-    
+
+
     
     // Statut du bouton switch-like on/off
     if ([sender isSelected]) {
+        NSLog(@"OFF");
         [sender setHighlighted:NO];
         [sender setSelected:NO];
         //_activeMenu = nil;
@@ -194,10 +232,10 @@
         
         _activeMenu = nil;
         
-        [_activeController.view removeFromSuperview];
+        //[_activeController.view removeFromSuperview];
         //[_activeController removeFromParentViewController];
-        [_popoverView setHidden:YES];
-
+        [_popoverView dismissPopoverAnimated:YES];
+        _popoverView = nil;
     }
     else
     {
@@ -210,11 +248,12 @@
             if (!_forumsController) {
                 ForumsTableViewController *forumsViewController = [[ForumsTableViewController alloc] initWithNibName:@"ForumsTableViewController" bundle:nil];
                 navigationController = [[UINavigationController alloc] initWithRootViewController:forumsViewController];
-                [navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"black_dot"] forBarMetrics:UIBarMetricsDefault];
+                [navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"pw_maze_black"] forBarMetrics:UIBarMetricsDefault];
+                //[navigationController.navigationBar setTintColor:[UIColor colorWithRed:242/255.f green:144/255.f blue:27/255.f alpha:1.0]];
                 
                 _forumsController = navigationController;
                 
-                [self addChildViewController:_forumsController];
+                //[self addChildViewController:_forumsController];
             }
             else
                 navigationController = _forumsController;
@@ -227,11 +266,25 @@
             
             //[[_tabsViews objectAtIndex:0] insertSubview:_forumsController.view belowSubview:[[[_tabsViews objectAtIndex:0] subviews] objectAtIndex:0]];
             
+//            [navigationController didMoveToParentViewController:self];
+
+            _popoverView = [[WEPopoverController alloc] initWithContentViewController:navigationController];
             
-            [navigationController didMoveToParentViewController:self];
-            [_popoverView addSubview:navigationController.view];
+            if ([_popoverView respondsToSelector:@selector(setContainerViewProperties:)]) {
+                //[_popoverView setContainerViewProperties:[self improvedContainerViewProperties]];
+            }
+            
+            _popoverView.passthroughViews = [NSArray arrayWithObject:self.menuView];
+            
+            [_popoverView presentPopoverFromRect:self.btnCategories.frame
+                                                    inView:self.menuView
+                                  permittedArrowDirections:UIPopoverArrowDirectionDown
+                                                  animated:YES];
+            
+            
+            //[_popoverView addSubview:navigationController.view];
             _activeController = navigationController;
-            [_popoverView setHidden:NO];
+            //[_popoverView setHidden:NO];
 
         }
         else if (sender == self.btnFavoris) {
@@ -254,9 +307,11 @@
                 navigationController = _favoritesController;
             
             [navigationController didMoveToParentViewController:self];
-            [_popoverView addSubview:navigationController.view];
+            
+            
+            //[_popoverView addSubview:navigationController.view];
             _activeController = navigationController;
-            [_popoverView setHidden:NO];
+            //[_popoverView setHidden:NO];
             
         }
         else if (sender == self.btnSearch) {
@@ -275,9 +330,9 @@
                 navigationController = _searchController;
             
             [navigationController didMoveToParentViewController:self];
-            [_popoverView addSubview:navigationController.view];
+            //[_popoverView addSubview:navigationController.view];
             _activeController = navigationController;
-            [_popoverView setHidden:NO];
+            //[_popoverView setHidden:NO];
             
         }
         else if (sender == self.btnTabs) {
@@ -312,8 +367,9 @@
             }
 
             
-            [_popoverView setHidden:YES];
-            
+            [_popoverView dismissPopoverAnimated:YES];
+            _popoverView = nil;
+
             
         }
         
