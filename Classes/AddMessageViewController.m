@@ -478,11 +478,26 @@
 				[alertKKO release];				
 			}
 			else {
-				UIAlertView *alertOK = [[UIAlertView alloc] initWithTitle:@"Hooray !" message:[[messagesNode contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
-																  delegate:self.delegate cancelButtonTitle:nil otherButtonTitles: nil];
-				[alertOK setTag:666];
-				[alertOK show];
-
+                
+                UIAlertView *alertOK;
+               
+                if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+                
+                    alertOK = [[UIAlertView alloc] initWithTitle:@"Hooray !" message:[[messagesNode contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
+                                                                      delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                    [alertOK setTag:666];
+                    [alertOK show];
+ 
+                }
+                else
+                {
+                    
+                    alertOK = [[UIAlertView alloc] initWithTitle:@"Hooray !" message:[[messagesNode contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
+                                                                     delegate:self.delegate cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                    [alertOK setTag:666];
+                    [alertOK show];
+                    
+                }
 				UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
 				
 				// Adjust the indicator so it is up a few pixels from the bottom of the alert
