@@ -117,7 +117,7 @@ xcuserdata
 # ...none. Everything is now explained.
 
 Classes/Config.h
-
+HFRplus/Config.h
 
 # xcode noise
 *.xcodeproj/*.xcworkspace/*
