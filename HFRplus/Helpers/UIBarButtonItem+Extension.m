@@ -41,8 +41,8 @@
     UIGraphicsEndImageContext();
     
     
-    NSLog(@"imageBase %@", NSStringFromCGSize(imageBase.size));
-    NSLog(@"coloredImage %@", NSStringFromCGSize(coloredImage.size));
+    //NSLog(@"imageBase %@", NSStringFromCGSize(imageBase.size));
+    //NSLog(@"coloredImage %@", NSStringFromCGSize(coloredImage.size));
     
     
     UIImage *imageOff = [UIImage imageNamed:[NSString stringWithFormat:@"%@_on", imageName]];

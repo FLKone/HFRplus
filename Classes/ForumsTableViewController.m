@@ -709,9 +709,6 @@
     UIBarButtonItem *settingsBarItem = [UIBarButtonItem barItemWithImageNamed:@"more" title:@"" target:self action:@selector(settings)];
 	self.navigationItem.leftBarButtonItem = settingsBarItem;
     
-    UIImage *image = [UIImage imageNamed:@"categories_on"];
-    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:image];
-    
 	[(ShakeView*)self.view setShakeDelegate:self];
 
 	self.arrayData = [[NSMutableArray alloc] init];

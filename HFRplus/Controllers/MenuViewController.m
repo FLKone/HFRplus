@@ -30,6 +30,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    self.isAnimating = NO;
+    
     NSLog(@"VDL");
     //[UIColor colorWithRed:242/255.f green:144/255.f blue:27/255.f alpha:1.0f]
     NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -44,7 +46,7 @@
     
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"grey_dot"] forBarMetrics:UIBarMetricsDefault];
 
-    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"back_on"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 5.0f) resizingMode:UIImageResizingModeStretch]
+    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"back_on"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 5.0f)]
                                                       forState:UIControlStateNormal
                                                     barMetrics:UIBarMetricsDefault];
         
@@ -147,7 +149,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     NSLog(@"viewDidAppear %d", animated);
-    
+    /*
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	int tab = [[defaults stringForKey:@"default_tab"] integerValue];
     
@@ -160,7 +162,7 @@
             [self.btnCategories sendActionsForControlEvents:UIControlEventTouchUpInside];
             break;
     }
-    
+    */
 }
 
 -(void)zoomToView:(UIView *)view {
@@ -263,223 +265,268 @@
 
 
 - (IBAction)switchBtn:(MenuButton *)sender forEvent:(UIEvent *)event {
-    NSLog(@"switchBtn");
-    
-    NSLog(@"_tabsViews %@", _tabsViews);
+    NSLog(@"switchBtn %d", self.isAnimating);
 
+    if (self.isAnimating) {
+        NSLog(@"isAnimating CANCEL ANIMATION");
+        return;
+        [_popoverView.layer removeAllAnimations];
+    }
+    
     BOOL add = NO;
 
-
-    
     // Statut du bouton switch-like on/off
     if ([sender isSelected]) {
-        NSLog(@"OFF");
         [sender setHighlighted:NO];
         [sender setSelected:NO];
-        //_activeMenu = nil;
     }
     else
     {
         add = YES;
         [sender setHighlighted:NO];
         [sender setSelected:YES];
-        //_activeMenu = sender;
     }
     
-    NSLog(@"sender      %@", sender);
-    NSLog(@"_activeMenu %@", _activeMenu);    
+    //NSLog(@"sender      %@", sender);
+    //NSLog(@"_activeMenu %@", _activeMenu);
     
     //  Desactiver le bouton actif //TODO
-    if (_activeMenu && sender != _activeMenu) {
+    if (_activeMenu) {
         NSLog(@"desactiver ancien");
-        [_activeMenu sendActionsForControlEvents:UIControlEventTouchUpInside];
-
-    }
-    
-    // Action pour chaque bouton
-    if (!add) {
-        NSLog(@"REMOVE");
+        [_activeMenu setHighlighted:NO];
+        [_activeMenu setSelected:NO];
         
-        _activeMenu = nil;
         
-        [_activeController.view removeFromSuperview];
-        [_popoverView setHidden:YES];
+        float delay = 0.f;
         
-        //[_activeController removeFromParentViewController];
-        //[_popoverView dismissPopoverAnimated:YES];
-        //_popoverView = nil;
+        //if ([_activeMenu isSelected]) {
+            //NSLog(@"desactiver ancien");
+            //[_activeMenu sendActionsForControlEvents:UIControlEventTouchUpInside];
+            
+            NSLog(@"_activeMenu %@", _activeMenu);
+            
+            
+            
+            CGRect currentFrame = _popoverView.frame;
+            
+            currentFrame.origin.y = self.menuView.frame.origin.y;
+            
+            self.isAnimating = YES;
+            [UIView animateWithDuration:0.200 delay:0.0
+                                options:UIViewAnimationOptionCurveEaseInOut|UIViewAnimationOptionBeginFromCurrentState
+                             animations:^{
+                                 //uncomment this and comment out the other if you want to move UIView_2 down to show UIView_1
+                                 //UIView_2.frame = uiview2_translated_rect;
+                                 
+                                 _popoverView.frame = currentFrame;
+                             } completion:^(BOOL finished) {
+                                 
+                                 _activeMenu = nil;
+                                 
+                                 [_activeController.view removeFromSuperview];
+                                 self.isAnimating = NO;
+                                 NSLog(@"REMOVE isAnimating %d", self.isAnimating);
+                                 
+                                 [self showTool:sender];
+                             }];
+            
+            
+            delay = 0.2f;
+            
+        //}
     }
     else
     {
-        _activeMenu = sender;
-        UINavigationController *navigationController;
+                
+        [self showTool:sender];
+    }
+    
+    
+    NSLog(@"END STCH");
+}
+
+
+- (void)showTool:(MenuButton *)sender {
+    
+    if (![sender isSelected]) {
+        return;
+    }
+    
+    _activeMenu = sender;
+
+    if (sender == self.btnCategories) {
+        //NSLog(@"== btnCategories");
         
-        if (sender == self.btnCategories) {
-            NSLog(@"== btnCategories");
-            
-            if (!_forumsController) {
-                ForumsTableViewController *forumsViewController = [[ForumsTableViewController alloc] initWithNibName:@"ForumsTableViewController" bundle:nil];
-                navigationController = [[UINavigationController alloc] initWithRootViewController:forumsViewController];
+        CGRect currentFrame = _popoverView.frame;
+        currentFrame.origin.y = 0;
 
-                
+        self.isAnimating = YES;
+        [UIView animateWithDuration:0.200 delay:0
+                            options:UIViewAnimationOptionCurveEaseInOut|UIViewAnimationOptionBeginFromCurrentState
+                         animations:^{
+                             NSLog(@"START ANIMATION CATEGORIES");
 
-                
-                //[navigationController.navigationBar setTintColor:[UIColor colorWithRed:242/255.f green:144/255.f blue:27/255.f alpha:1.0]];
-                
-                _forumsController = navigationController;
-                
-                [self addChildViewController:_forumsController];
-            }
-            else
-                navigationController = _forumsController;
-            
-            //UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+                             
+                             UINavigationController *navigationController;
+                             
+                             if (!_forumsController) {
+                                 ForumsTableViewController *forumsViewController = [[ForumsTableViewController alloc] initWithNibName:@"ForumsTableViewController" bundle:nil];
+                                 navigationController = [[UINavigationController alloc] initWithRootViewController:forumsViewController];
+                                 _forumsController = navigationController;
+                                 [self addChildViewController:_forumsController];
+                             }
+                             else
+                                 navigationController = _forumsController;
+                             
+                             [navigationController didMoveToParentViewController:self];
+                             [_popoverView addSubview:navigationController.view];
+                             _activeController = navigationController;
+                             
+                             _popoverView.frame = currentFrame;
+                             
+                         } completion:^(BOOL finished) {
+                             self.isAnimating = NO;
+                             NSLog(@"ADD isAnimating %d", self.isAnimating);
+                         }];
+    }
+    else if (sender == self.btnFavoris) {
+        //NSLog(@"== btnFavoris");
+        
+        CGRect currentFrame = _popoverView.frame;
+        currentFrame.origin.y = 0;
 
+        self.isAnimating = YES;
+        [UIView animateWithDuration:0.200 delay:0
+                            options:UIViewAnimationOptionCurveEaseInOut|UIViewAnimationOptionBeginFromCurrentState
+                         animations:^{
+                             NSLog(@"START ANIMATION FAVORIS");
+                                                          
+                             UINavigationController *navigationController;
+                             
+                             if (!_favoritesController) {
+                                 FavoritesTableViewController *favoritesViewController = [[FavoritesTableViewController alloc] initWithNibName:@"FavoritesTableViewController" bundle:nil];
+                                 navigationController = [[UINavigationController alloc] initWithRootViewController:favoritesViewController];
+                                 _favoritesController = navigationController;
+                                 [self addChildViewController:_favoritesController];
+                             }
+                             else
+                                 navigationController = _favoritesController;
+                             
+                             [navigationController didMoveToParentViewController:self];
+                             [_popoverView addSubview:navigationController.view];
+                             _activeController = navigationController;
+                             
+                             _popoverView.frame = currentFrame;
+                             
+                         } completion:^(BOOL finished) {
+                             self.isAnimating = NO;
+                             NSLog(@"ADD isAnimating %d", self.isAnimating);
+                         }];
+        
+    }
+    else if (sender == self.btnSearch) {
+        //NSLog(@"== btnSearch");
+        
+        CGRect currentFrame = _popoverView.frame;
+        currentFrame.origin.y = 0;
+        
+        self.isAnimating = YES;
+        [UIView animateWithDuration:0.200 delay:0
+                            options:UIViewAnimationOptionCurveEaseInOut|UIViewAnimationOptionBeginFromCurrentState
+                         animations:^{
+                             NSLog(@"START ANIMATION SEARCH");
+                             
+                             UINavigationController *navigationController;
+                             
+                             if (!_searchController) {
+                                 HFRSearchViewController *searchViewController = [[HFRSearchViewController alloc] initWithNibName:@"HFRSearchViewController" bundle:nil];
+                                 navigationController = [[UINavigationController alloc] initWithRootViewController:searchViewController];
+                                 _searchController = navigationController;
+                                 [self addChildViewController:_searchController];
+                             }
+                             else
+                                 navigationController = _searchController;
+                             
+                             
+                             [navigationController didMoveToParentViewController:self];
+                             [_popoverView addSubview:navigationController.view];
+                             _activeController = navigationController;
+                             
+                             _popoverView.frame = currentFrame;
+                             
+                         } completion:^(BOOL finished) {
+                             self.isAnimating = NO;
+                             NSLog(@"ADD isAnimating %d", self.isAnimating);
+                         }];
+        
+    }
+    else if (sender == self.btnMessages) {
+        //NSLog(@"== btnSearch");
+        
+        CGRect currentFrame = _popoverView.frame;
+        currentFrame.origin.y = 0;
+        
+        self.isAnimating = YES;
+        [UIView animateWithDuration:0.200 delay:0
+                            options:UIViewAnimationOptionCurveEaseInOut|UIViewAnimationOptionBeginFromCurrentState
+                         animations:^{
+                             NSLog(@"START ANIMATION SEARCH");
+                             
+                             UINavigationController *navigationController;
+                             
+                             if (!_searchController) {
+                                 HFRMPViewController *messagesViewController = [[HFRMPViewController alloc] initWithNibName:@"HFRMPViewController" bundle:nil];
+                                 navigationController = [[UINavigationController alloc] initWithRootViewController:messagesViewController];
+                                 _messagesController = navigationController;
+                                 [self addChildViewController:_messagesController];
+                             }
+                             else
+                                 navigationController = _messagesController;
+                             
+                             
+                             [navigationController didMoveToParentViewController:self];
+                             [_popoverView addSubview:navigationController.view];
+                             _activeController = navigationController;
+                             
+                             _popoverView.frame = currentFrame;
+                             
+                         } completion:^(BOOL finished) {
+                             self.isAnimating = NO;
+                             NSLog(@"ADD isAnimating %d", self.isAnimating);
+                         }];
+        
+    }
+    else if (sender == self.btnTabs) {
+        //NSLog(@"== btnSearch");
+        
+        CGRect scrollViewFrame = _scrollView.frame;
+        CGSize cz = CGSizeMake(320 * 2 + 20 * 3, 436 * 2 + 20 * 3);
+        CGFloat scaleWidth = scrollViewFrame.size.width / cz.width;
+        CGFloat scaleHeight = scrollViewFrame.size.height / cz.height;
+        
+        CGFloat minScale = MIN(scaleWidth, scaleHeight);
+        if (_scrollView.zoomScale != minScale) {
             
-//            [navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"categories_on"] forBarMetrics:UIBarMetricsDefault];
-            //[self addChildViewController:navigationController];
+            [UIView beginAnimations:nil context:NULL];
+            [UIView setAnimationDuration: .5];
+            _scrollView.maximumZoomScale = minScale;
+            _scrollView.zoomScale = minScale;
+            _scrollView.contentOffset = CGPointMake(0, 0);
             
-            //NSLog(@"subs B %@", [[_tabsViews objectAtIndex:0] subviews]);
-            
-            //[[_tabsViews objectAtIndex:0] insertSubview:_forumsController.view belowSubview:[[[_tabsViews objectAtIndex:0] subviews] objectAtIndex:0]];
-            
-//            [navigationController didMoveToParentViewController:self];
-
-            /*
-            _popoverView = [[WEPopoverController alloc] initWithContentViewController:navigationController];
-            
-            //if ([_popoverView respondsToSelector:@selector(setContainerViewProperties:)]) {
-                //[_popoverView setContainerViewProperties:[self improvedContainerViewProperties]];
-            //}
-            
-            _popoverView.passthroughViews = [NSArray arrayWithObject:self.menuView];
-            
-            [_popoverView presentPopoverFromRect:sender.frame
-                                                    inView:self.menuView
-                                  permittedArrowDirections:UIPopoverArrowDirectionDown
-                                                  animated:YES];
-            
-            */
-            [navigationController didMoveToParentViewController:self];
-            [_popoverView addSubview:navigationController.view];
-
-            _activeController = navigationController;
-            [_popoverView setHidden:NO];
-
-        }
-        else if (sender == self.btnFavoris) {
-            NSLog(@"== btnFavoris");
-            
-            if (!_favoritesController) {            
-                FavoritesTableViewController *favoritesViewController = [[FavoritesTableViewController alloc] initWithNibName:@"FavoritesTableViewController" bundle:nil];
-                navigationController = [[UINavigationController alloc] initWithRootViewController:favoritesViewController];
-
-                _favoritesController = navigationController;
-                
-                
-                [self addChildViewController:_favoritesController];
-                
-                //[[_tabsViews objectAtIndex:0] addSubview:navigationController.view];
-
-            }
-            else
-                navigationController = _favoritesController;
-            
-            //[navigationController didMoveToParentViewController:self];
-            /*
-            _popoverView = [[WEPopoverController alloc] initWithContentViewController:navigationController];
-
-            _popoverView.passthroughViews = [NSArray arrayWithObject:self.menuView];
-            
-            [_popoverView presentPopoverFromRect:sender.frame
-                                          inView:self.menuView
-                        permittedArrowDirections:UIPopoverArrowDirectionDown
-                                        animated:YES];
-            */
-            //[_popoverView addSubview:navigationController.view];
-            _activeController = navigationController;
-            //[_popoverView setHidden:NO];
-            
-        }
-        else if (sender == self.btnSearch) {
-            NSLog(@"== btnSearch");
-            
-            if (!_searchController) {
-                HFRSearchViewController *searchViewController = [[HFRSearchViewController alloc] initWithNibName:@"HFRSearchViewController" bundle:nil];
-                navigationController = [[UINavigationController alloc] initWithRootViewController:searchViewController];
-                
-                _searchController = navigationController;
-                
-                [self addChildViewController:_searchController];
-            }
-            else
-                navigationController = _searchController;
-            
-            //[navigationController didMoveToParentViewController:self];
-            /*
-            _popoverView = [[WEPopoverController alloc] initWithContentViewController:navigationController];
-            
-            _popoverView.passthroughViews = [NSArray arrayWithObject:self.menuView];
-            
-            [_popoverView presentPopoverFromRect:self.btnSearch.frame
-                                          inView:self.menuView
-                        permittedArrowDirections:UIPopoverArrowDirectionDown
-                                        animated:YES];
-            */
-            
-            //[_popoverView addSubview:navigationController.view];
-            _activeController = navigationController;
-            //[_popoverView setHidden:NO];
-            
-        }
-        else if (sender == self.btnTabs) {
-            NSLog(@"== btnSearch");
-            
-            CGRect scrollViewFrame = _scrollView.frame;
-            CGSize cz = CGSizeMake(320 * 2 + 20 * 3, 436 * 2 + 20 * 3);
-            CGFloat scaleWidth = scrollViewFrame.size.width / cz.width;
-            CGFloat scaleHeight = scrollViewFrame.size.height / cz.height;
-            
-            CGFloat minScale = MIN(scaleWidth, scaleHeight);
-            if (_scrollView.zoomScale != minScale) {
+            for (UIView *view in _tabsViews) {
+                if ([view subviews].count == 2) {
+                    NSLog(@"[view subviews] %@", [view subviews]);
                     
-                [UIView beginAnimations:nil context:NULL];
-                [UIView setAnimationDuration: .5];
-                _scrollView.maximumZoomScale = minScale;
-                _scrollView.zoomScale = minScale;
-                _scrollView.contentOffset = CGPointMake(0, 0);
-                
-                for (UIView *view in _tabsViews) {
-                    if ([view subviews].count == 2) {
-                        NSLog(@"[view subviews] %@", [view subviews]);
-                        
-                        UIView* tapView = [[view subviews] objectAtIndex:1];
-                        if (tapView.alpha == 0) {
-                            NSLog(@"sds");
-                            tapView.alpha = .8;
-                        }
+                    UIView* tapView = [[view subviews] objectAtIndex:1];
+                    if (tapView.alpha == 0) {
+                        NSLog(@"sds");
+                        tapView.alpha = .8;
                     }
                 }
-                [UIView commitAnimations];
             }
-
-             [_popoverView setHidden:YES];
-            //[_popoverView dismissPopoverAnimated:YES];
-            //_popoverView = nil;
-
-            
+            [UIView commitAnimations];
         }
-        
-        NSLog(@"frame %@", NSStringFromCGRect(sender.frame));
-
     }
-
-    /*
-     //navigationController.navigationBar.alpha = .95;
-     //navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
-     //navigationController.navigationBar.translucent = YES;
-     */
-    
     
 }
 

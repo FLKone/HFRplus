@@ -19,16 +19,21 @@
 @property (strong, nonatomic) UINavigationController *forumsController;
 @property (strong, nonatomic) UINavigationController *favoritesController;
 @property (strong, nonatomic) UINavigationController *searchController;
+@property (strong, nonatomic) UINavigationController *messagesController;
 
 @property (strong, nonatomic) IBOutlet MenuButton *btnCategories;
 @property (strong, nonatomic) IBOutlet MenuButton *btnFavoris;
 @property (strong, nonatomic) IBOutlet MenuButton *btnSearch;
 @property (strong, nonatomic) IBOutlet MenuButton *btnTabs;
+@property (strong, nonatomic) IBOutlet MenuButton *btnMessages;
 
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIView *menuView;
 @property (strong, nonatomic) UIView *containerView;
 @property (strong, nonatomic) NSMutableArray *tabsViews;
+
+@property (nonatomic) BOOL isAnimating;
+
 
 @property (strong, nonatomic) IBOutlet UIView *popoverView;
 

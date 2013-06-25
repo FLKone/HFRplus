@@ -66,6 +66,7 @@ typedef enum {
 #import "FavoritesTableViewController.h"
 
 #import "HFRSearchViewController.h"
+#import "HFRMPViewController.h"
 
 //Vendor
 #import "TestFlight.h"
