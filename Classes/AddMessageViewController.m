@@ -493,7 +493,7 @@
                 {
                     
                     alertOK = [[UIAlertView alloc] initWithTitle:@"Hooray !" message:[[messagesNode contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
-                                                                     delegate:self.delegate cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                                                                     delegate:self.delegate cancelButtonTitle:nil otherButtonTitles: nil];
                     [alertOK setTag:666];
                     [alertOK show];
                     
