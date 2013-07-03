@@ -699,8 +699,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	self.title = @"Catégories";
+	//self.title = @"Catégories";
 
+    UIImage *image = [[UIImage imageNamed:@"categories"] offColor];
+    self.navigationItem.titleView = [[[UIImageView alloc] initWithImage:image] autorelease];
+    
 	//Bouton Reload
     UIBarButtonItem *reloadBarItem = [UIBarButtonItem barItemWithImageNamed:@"reload" title:@"" target:self action:@selector(reload)];
 	self.navigationItem.rightBarButtonItem = reloadBarItem;

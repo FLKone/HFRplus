@@ -193,6 +193,10 @@
 		CA25DA8F159F92A300F6D675 /* iTunesArtwork@2x in Resources */ = {isa = PBXBuildFile; fileRef = CA25DA8D159F92A300F6D675 /* iTunesArtwork@2x */; };
 		CA26862513ADE01100AC5511 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA26862313ADE01100AC5511 /* BrowserViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CA26862613ADE01100AC5511 /* BrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA26862413ADE01100AC5511 /* BrowserViewController.xib */; };
+		CA337DAC1779482B00FE1F53 /* mp_on.png in Resources */ = {isa = PBXBuildFile; fileRef = CA337DA81779482B00FE1F53 /* mp_on.png */; };
+		CA337DAD1779482B00FE1F53 /* mp_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA337DA91779482B00FE1F53 /* mp_on@2x.png */; };
+		CA337DAE1779482B00FE1F53 /* mp.png in Resources */ = {isa = PBXBuildFile; fileRef = CA337DAA1779482B00FE1F53 /* mp.png */; };
+		CA337DAF1779482B00FE1F53 /* mp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA337DAB1779482B00FE1F53 /* mp@2x.png */; };
 		CA34780B12EB557500D1BA2A /* PayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA34780912EB557500D1BA2A /* PayViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CA34780C12EB557500D1BA2A /* PayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA34780A12EB557500D1BA2A /* PayViewController.xib */; };
 		CA37D50B15A1BD19002C72C6 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA37D50A15A1BD19002C72C6 /* MainWindow-iPad.xib */; };
@@ -342,6 +346,8 @@
 		CA81D28D12281D5800AC6ADA /* EditMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA81D28C12281D5800AC6ADA /* EditMessageViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CA88EA8E124D75CA00E53E54 /* commonsmile.plist in Resources */ = {isa = PBXBuildFile; fileRef = CA88EA8D124D75CA00E53E54 /* commonsmile.plist */; };
 		CA8A79B215BB404700D8E9E7 /* Favorite.m in Sources */ = {isa = PBXBuildFile; fileRef = CA8A79B115BB404700D8E9E7 /* Favorite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CA8BCC7F1784E05D00084A93 /* grey_dot_a.png in Resources */ = {isa = PBXBuildFile; fileRef = CA8BCC7E1784E05D00084A93 /* grey_dot_a.png */; };
+		CA8BCC821784E46500084A93 /* HFRTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA8BCC811784E46500084A93 /* HFRTableView.m */; };
 		CA8DDC9C12EB30AC00635441 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8DDC9B12EB30AC00635441 /* StoreKit.framework */; };
 		CA9B06C516FF8984003584B1 /* UIWebView+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = CA9B06C416FF8984003584B1 /* UIWebView+Tools.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CA9B06C716FFA512003584B1 /* photoDefaultfailmini.png in Resources */ = {isa = PBXBuildFile; fileRef = CA9B06C616FFA50D003584B1 /* photoDefaultfailmini.png */; };
@@ -669,6 +675,10 @@
 		CA26862213ADE01100AC5511 /* BrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BrowserViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CA26862313ADE01100AC5511 /* BrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BrowserViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CA26862413ADE01100AC5511 /* BrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserViewController.xib; sourceTree = "<group>"; };
+		CA337DA81779482B00FE1F53 /* mp_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mp_on.png; path = HFRplus/Assets/UI/mp_on.png; sourceTree = "<group>"; };
+		CA337DA91779482B00FE1F53 /* mp_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mp_on@2x.png"; path = "HFRplus/Assets/UI/mp_on@2x.png"; sourceTree = "<group>"; };
+		CA337DAA1779482B00FE1F53 /* mp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mp.png; path = HFRplus/Assets/UI/mp.png; sourceTree = "<group>"; };
+		CA337DAB1779482B00FE1F53 /* mp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mp@2x.png"; path = "HFRplus/Assets/UI/mp@2x.png"; sourceTree = "<group>"; };
 		CA34780812EB557500D1BA2A /* PayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PayViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CA34780912EB557500D1BA2A /* PayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PayViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CA34780A12EB557500D1BA2A /* PayViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PayViewController.xib; sourceTree = "<group>"; };
@@ -859,6 +869,9 @@
 		CA88EA8D124D75CA00E53E54 /* commonsmile.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = commonsmile.plist; sourceTree = "<group>"; };
 		CA8A79B015BB404700D8E9E7 /* Favorite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Favorite.h; sourceTree = "<group>"; };
 		CA8A79B115BB404700D8E9E7 /* Favorite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Favorite.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		CA8BCC7E1784E05D00084A93 /* grey_dot_a.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grey_dot_a.png; path = HFRplus/Assets/UI/grey_dot_a.png; sourceTree = "<group>"; };
+		CA8BCC801784E46500084A93 /* HFRTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFRTableView.h; sourceTree = "<group>"; };
+		CA8BCC811784E46500084A93 /* HFRTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFRTableView.m; sourceTree = "<group>"; };
 		CA8DDC9B12EB30AC00635441 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		CA9B06C316FF8984003584B1 /* UIWebView+Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+Tools.h"; sourceTree = "<group>"; };
 		CA9B06C416FF8984003584B1 /* UIWebView+Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+Tools.m"; sourceTree = "<group>"; };
@@ -1751,6 +1764,8 @@
 			children = (
 				CA4D4A8E176D3E720058BBAE /* UIBarButtonItem+Extension.h */,
 				CA4D4A8F176D3E720058BBAE /* UIBarButtonItem+Extension.m */,
+				CA8BCC801784E46500084A93 /* HFRTableView.h */,
+				CA8BCC811784E46500084A93 /* HFRTableView.m */,
 			);
 			name = Helpers;
 			path = HFRplus/Helpers;
@@ -1848,9 +1863,9 @@
 		CABB835B176CFE530088F60A /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				CAA9C49C1777DF2C003FB4A3 /* back_on.png */,
 				CAA9C49D1777DF2C003FB4A3 /* back.png */,
 				CAA9C49E1777DF2C003FB4A3 /* back@2x.png */,
+				CAA9C49C1777DF2C003FB4A3 /* back_on.png */,
 				CAA9C49F1777DF2C003FB4A3 /* back_on@2x.png */,
 				CA4D4AD71777BE5F0058BBAE /* kindajean@2x.png */,
 				CA4D4AD81777BE600058BBAE /* kindajean.png */,
@@ -1866,6 +1881,7 @@
 				CA4D4AC3177799E40058BBAE /* orange_dot.png */,
 				CA4D4AC71777A17E0058BBAE /* orangedark_dot.png */,
 				CAA9C4921777D3FD003FB4A3 /* grey_dot.png */,
+				CA8BCC7E1784E05D00084A93 /* grey_dot_a.png */,
 				CABB835C176CFE630088F60A /* categories.png */,
 				CA4D4A9F176E45250058BBAE /* categories@2x.png */,
 				CA4D4AA3176E46EF0058BBAE /* favoris.png */,
@@ -1878,6 +1894,10 @@
 				CA4D4AB0176E485F0058BBAE /* categories_on@2x.png */,
 				CA4D4AAB176E485E0058BBAE /* favoris_on.png */,
 				CA4D4AB2176E485F0058BBAE /* favoris_on@2x.png */,
+				CA337DAA1779482B00FE1F53 /* mp.png */,
+				CA337DAB1779482B00FE1F53 /* mp@2x.png */,
+				CA337DA81779482B00FE1F53 /* mp_on.png */,
+				CA337DA91779482B00FE1F53 /* mp_on@2x.png */,
 				CA4D4AAC176E485E0058BBAE /* search_on.png */,
 				CA4D4AB1176E485F0058BBAE /* search_on@2x.png */,
 				CA4D4AAE176E485E0058BBAE /* tabs_on.png */,
@@ -2324,6 +2344,11 @@
 				CAA9C4A11777DF2C003FB4A3 /* back.png in Resources */,
 				CAA9C4A21777DF2C003FB4A3 /* back@2x.png in Resources */,
 				CAA9C4A31777DF2C003FB4A3 /* back_on@2x.png in Resources */,
+				CA337DAC1779482B00FE1F53 /* mp_on.png in Resources */,
+				CA337DAD1779482B00FE1F53 /* mp_on@2x.png in Resources */,
+				CA337DAE1779482B00FE1F53 /* mp.png in Resources */,
+				CA337DAF1779482B00FE1F53 /* mp@2x.png in Resources */,
+				CA8BCC7F1784E05D00084A93 /* grey_dot_a.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2438,6 +2463,7 @@
 				CA4D4AE61777C09C0058BBAE /* WEPopoverContainerView.m in Sources */,
 				CA4D4AE71777C09C0058BBAE /* WEPopoverController.m in Sources */,
 				CA4D4AE81777C09C0058BBAE /* WETouchableView.m in Sources */,
+				CA8BCC821784E46500084A93 /* HFRTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2461,7 +2487,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: julien Alexandre (F5S3AE68QG)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2480,6 +2506,7 @@
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = HFRplus;
+				PROVISIONING_PROFILE = "BCE14E4B-A1C4-4063-A203-1C71207623A3";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s";
@@ -2491,7 +2518,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: julien Alexandre";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2508,6 +2535,7 @@
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = HFRplus;
+				PROVISIONING_PROFILE = "CA915C9F-4CB8-4389-A4AA-15C17189BA5A";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -2524,7 +2552,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = HFRplus.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: julien Alexandre (F5S3AE68QG)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: julien Alexandre (F5S3AE68QG)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -2535,7 +2564,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				MACH_O_TYPE = mh_execute;
 				OTHER_LDFLAGS = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "BCE14E4B-A1C4-4063-A203-1C71207623A3";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BCE14E4B-A1C4-4063-A203-1C71207623A3";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -2549,6 +2579,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = HFRplus.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: julien Alexandre";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: julien Alexandre";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -2560,7 +2591,8 @@
 				MACH_O_TYPE = mh_execute;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F9599884-EF1D-4FD9-9A48-0F070C3DC532";
+				PROVISIONING_PROFILE = "CA915C9F-4CB8-4389-A4AA-15C17189BA5A";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CA915C9F-4CB8-4389-A4AA-15C17189BA5A";
 				SDKROOT = iphoneos;
 			};
 			name = Release;

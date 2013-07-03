@@ -34,17 +34,18 @@
     
     NSLog(@"VDL");
     //[UIColor colorWithRed:242/255.f green:144/255.f blue:27/255.f alpha:1.0f]
+    //[UIFont boldSystemFontOfSize:15.0], UITextAttributeFont,
     NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                               [UIFont boldSystemFontOfSize:15.0], UITextAttributeFont,
                                                [UIColor colorWithRed:170/255.f green:170/255.f blue:170/255.f alpha:1.0f],UITextAttributeTextColor,
                                                [UIColor whiteColor], UITextAttributeTextShadowColor,
                                                [NSValue valueWithUIOffset:UIOffsetMake(-2, -1)], UITextAttributeTextShadowOffset, nil];
     
     [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
-    [[UINavigationBar appearance] setTitleVerticalPositionAdjustment:3.0f forBarMetrics:UIBarMetricsDefault];
+    //[[UINavigationBar appearance] setTitleVerticalPositionAdjustment:3.0f forBarMetrics:UIBarMetricsDefault];
     
-    
-    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"grey_dot"] forBarMetrics:UIBarMetricsDefault];
+
+    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlackTranslucent];
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"grey_dot_a"] forBarMetrics:UIBarMetricsDefault];
 
     [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"back_on"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 5.0f)]
                                                       forState:UIControlStateNormal
@@ -77,9 +78,11 @@
     //[self.menuView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"pw_maze_black"]]];
     self.menuView.layer.masksToBounds = NO;
     //self.menuView.layer.cornerRadius = 8; // if you like rounded corners
-    self.menuView.layer.shadowOffset = CGSizeMake(0, -1);
-    self.menuView.layer.shadowRadius = 0.5;
-    self.menuView.layer.shadowOpacity = 0.3;
+    //self.menuView.layer.shadowOffset = CGSizeMake(0, -1);
+    //self.menuView.layer.shadowRadius = 0.5;
+    //self.menuView.layer.shadowOpacity = 0.3;
+    
+    //self.btnCategories.layer.borderColor = [UIColor]
     
     // scrollView init
     _containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320 * 2 + 20 * 3, 436 * 2 + 20 * 3)];
@@ -475,7 +478,7 @@
                              UINavigationController *navigationController;
                              
                              if (!_searchController) {
-                                 HFRMPViewController *messagesViewController = [[HFRMPViewController alloc] initWithNibName:@"HFRMPViewController" bundle:nil];
+                                 HFRMPViewController *messagesViewController = [[HFRMPViewController alloc] initWithNibName:@"TopicsTableViewController" bundle:nil];
                                  navigationController = [[UINavigationController alloc] initWithRootViewController:messagesViewController];
                                  _messagesController = navigationController;
                                  [self addChildViewController:_messagesController];
@@ -540,7 +543,7 @@
     }
     
     _navigationTab1Controller = [[UINavigationController alloc] initWithRootViewController:viewController];
-    [_navigationTab1Controller.navigationBar setBackgroundImage:[UIImage imageNamed:@"black_dot"] forBarMetrics:UIBarMetricsDefault];
+    //[_navigationTab1Controller.navigationBar setBackgroundImage:[UIImage imageNamed:@"black_dot"] forBarMetrics:UIBarMetricsDefault];
     
 
     

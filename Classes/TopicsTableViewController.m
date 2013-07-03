@@ -1347,8 +1347,10 @@
         {
             [self.topicActionSheet showFromRect:origFrame inView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view] animated:YES];
         }
-        else    
-            [self.topicActionSheet showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
+        else
+        {
+            [self.topicActionSheet showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] menuView]];
+        }
 
 	}
 }
@@ -1415,7 +1417,8 @@
 - (void)pushTopic {
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        [self.navigationController pushViewController:messagesTableViewController animated:YES];
+        [[[HFRplusAppDelegate sharedAppDelegate] rootController] loadTab:messagesTableViewController];
+        //[self.navigationController pushViewController:messagesTableViewController animated:YES];
     }
     else {
         [[[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] viewControllers] objectAtIndex:1] popToRootViewControllerAnimated:NO];

@@ -46,14 +46,13 @@ typedef enum {
 //Categories
 #import "UITableViewController+Ext.h"
 #import "NSDictionary+Merging.h"
-
-// Helpers
+#import "UIImage+Resize.h"
 #import "UIBarButtonItem+Extension.h"
 
+// Helpers
+#import "HFRTableView.h"
 #import "MenuViewController.h"
 #import "HFRNavigationController.h"
-
-
 
 // Views
 #import "MenuButton.h"
@@ -62,9 +61,7 @@ typedef enum {
 #import "MenuViewController.h"
 #import "ForumsTableViewController.h"
 #import "InfosViewController.h"
-
 #import "FavoritesTableViewController.h"
-
 #import "HFRSearchViewController.h"
 #import "HFRMPViewController.h"
 

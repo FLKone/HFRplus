@@ -25,5 +25,36 @@
     return scaledImage;
 }
 
-
+- (UIImage*)offColor;
+{
+    
+    UIImage *imageBase = self;
+    
+    //    UIColor *tintColor = [UIColor colorWithRed:242/255.f green:144/255.f blue:27/255.f alpha:1.0f];
+    UIColor *tintColor = [UIColor lightGrayColor];
+    
+    UIGraphicsBeginImageContext(imageBase.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextTranslateCTM(context, 0, imageBase.size.height);
+    CGContextScaleCTM(context, 1.0, -1.0);
+    
+    CGRect rect = CGRectMake(0, 0, imageBase.size.width, imageBase.size.height);
+    
+    // image drawing code here
+    // draw alpha-mask
+    CGContextSetBlendMode(context, kCGBlendModeNormal);
+    CGContextDrawImage(context, rect, imageBase.CGImage);
+    
+    // draw tint color, preserving alpha values of original image
+    CGContextSetBlendMode(context, kCGBlendModeSourceIn);
+    [tintColor setFill];
+    CGContextFillRect(context, rect);
+    
+    
+    UIImage *coloredImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return coloredImage;
+}
 @end

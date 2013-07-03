@@ -520,12 +520,18 @@
     [label setBackgroundColor:[UIColor clearColor]];
     [label setTextAlignment:UITextAlignmentCenter];
     [label setLineBreakMode:UILineBreakModeMiddleTruncation];
+    /*
+    NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                               [UIColor colorWithRed:170/255.f green:170/255.f blue:170/255.f alpha:1.0f],UITextAttributeTextColor,
+                                               [UIColor whiteColor], UITextAttributeTextShadowColor,
+                                               [NSValue valueWithUIOffset:UIOffsetMake(-2, -1)], UITextAttributeTextShadowOffset, nil];
     
+    */
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        [label setTextColor:[UIColor whiteColor]];
-        label.shadowColor = [UIColor darkGrayColor];
+        [label setTextColor:[UIColor colorWithRed:170/255.f green:170/255.f blue:170/255.f alpha:1.0f]];
+        label.shadowColor = [UIColor whiteColor];
         [label setFont:[UIFont boldSystemFontOfSize:13.0]];
-        label.shadowOffset = CGSizeMake(0.0, -1.0);
+        label.shadowOffset = CGSizeMake(-2.0, -1.0);
 
         
     }

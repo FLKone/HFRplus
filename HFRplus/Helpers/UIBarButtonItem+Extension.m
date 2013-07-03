@@ -58,9 +58,9 @@
     [button setImage:imageOn forState:UIControlStateHighlighted];
     [button setImage:imageOn forState:UIControlStateSelected];
     
-    [button setBackgroundImage:[UIImage imageNamed:@"grey_dot"] forState:UIControlStateNormal];
-    [button setBackgroundImage:[UIImage imageNamed:@"grey_dot"] forState:UIControlStateHighlighted];
-    [button setBackgroundImage:[UIImage imageNamed:@"grey_dot"] forState:UIControlStateSelected];
+    //[button setBackgroundImage:[UIImage imageNamed:@"grey_dot_a"] forState:UIControlStateNormal];
+  //  [button setBackgroundImage:[UIImage imageNamed:@"grey_dot_a"] forState:UIControlStateHighlighted];
+//    [button setBackgroundImage:[UIImage imageNamed:@"grey_dot_a"] forState:UIControlStateSelected];
 
     [button setTitle:title forState:UIControlStateNormal];
     [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
