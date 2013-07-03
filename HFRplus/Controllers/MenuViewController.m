@@ -47,10 +47,11 @@
     [[UINavigationBar appearance] setBarStyle:UIBarStyleBlackTranslucent];
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"grey_dot_a"] forBarMetrics:UIBarMetricsDefault];
 
-    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"back_on"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 5.0f)]
+    
+    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"back_on"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)]
                                                       forState:UIControlStateNormal
                                                     barMetrics:UIBarMetricsDefault];
-        
+    
     [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[UIImage imageNamed:@"back"]
                                                       forState:UIControlStateHighlighted
                                                     barMetrics:UIBarMetricsDefault];

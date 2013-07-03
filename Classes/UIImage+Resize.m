@@ -57,4 +57,31 @@
     
     return coloredImage;
 }
+
+- (UIImage*)mergeWith:(UIImage *)mergeImage
+{
+    return self;
+    
+    //UIImage *image = upperImage;
+    
+    CGSize newSize = CGSizeMake(self.size.width, self.size.height);
+    CGRect rect = CGRectMake(20, 0, 32, 32);
+    
+    UIGraphicsBeginImageContext( newSize );
+    
+    // Use existing opacity as is
+    
+    [self drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    
+    // Apply supplied opacity
+    
+    [mergeImage drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
+    
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
+
 @end

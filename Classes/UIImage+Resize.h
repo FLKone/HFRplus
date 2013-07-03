@@ -10,5 +10,6 @@
 @interface UIImage (Resize)
 - (UIImage*)scaleToSize:(CGSize)size;
 - (UIImage*)offColor;
+- (UIImage*)mergeWith:(UIImage *)mergeImage;
 
 @end

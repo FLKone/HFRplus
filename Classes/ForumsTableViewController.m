@@ -833,8 +833,8 @@
 	//setup the URL
 	
 	self.navigationItem.backBarButtonItem =
-	[[UIBarButtonItem alloc] initWithTitle:@"retour"
-									 style: UIBarButtonItemStyleBordered
+	[[UIBarButtonItem alloc] initWithTitle:@" "
+									 style: UIBarButtonItemStylePlain
 									target:nil
 									action:nil];
 	
