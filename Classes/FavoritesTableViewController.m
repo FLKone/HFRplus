@@ -391,13 +391,16 @@
 	//NSLog(@"viewDidLoad ftv");
     [super viewDidLoad];
 	
-	self.title = @"Favoris";
+	self.title = @" ";
     self.showAll = NO;
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(OrientationChanged)
                                                  name:@"UIDeviceOrientationDidChangeNotification"
                                                object:nil];
+    
+    UIImage *image = [[UIImage imageNamed:@"favoris"] offColor];
+    self.navigationItem.titleView = [[[UIImageView alloc] initWithImage:image] autorelease];
     
 	// reload
     //UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
