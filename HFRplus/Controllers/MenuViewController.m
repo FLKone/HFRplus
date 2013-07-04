@@ -170,6 +170,8 @@
 }
 
 -(void)zoomToView:(UIView *)view {
+
+    
     [UIView animateWithDuration:0.5
                           delay:0
                         options:UIViewAnimationOptionBeginFromCurrentState
@@ -274,7 +276,7 @@
     if (self.isAnimating) {
         NSLog(@"isAnimating CANCEL ANIMATION");
         return;
-        [_popoverView.layer removeAllAnimations];
+        //[_popoverView.layer removeAllAnimations];
     }
     
     BOOL add = NO;
@@ -296,7 +298,7 @@
     
     //  Desactiver le bouton actif //TODO
     if (_activeMenu) {
-        NSLog(@"desactiver ancien");
+        NSLog(@"================ desactiver ancien");
         [_activeMenu setHighlighted:NO];
         [_activeMenu setSelected:NO];
         
@@ -501,7 +503,7 @@
         
     }
     else if (sender == self.btnTabs) {
-        //NSLog(@"== btnSearch");
+        NSLog(@"== btnTabs");
         
         CGRect scrollViewFrame = _scrollView.frame;
         CGSize cz = CGSizeMake(320 * 2 + 20 * 3, 436 * 2 + 20 * 3);
@@ -556,7 +558,7 @@
 
     _navigationTab1Controller.view.frame = ((UIView *)[[[_tabsViews objectAtIndex:0] subviews] objectAtIndex:0]).frame;
     [[_tabsViews objectAtIndex:0] insertSubview:_navigationTab1Controller.view belowSubview:[[[_tabsViews objectAtIndex:0] subviews] objectAtIndex:0]];
-    [self.btnTabs sendActionsForControlEvents:UIControlEventTouchUpInside];
+    [_activeMenu sendActionsForControlEvents:UIControlEventTouchUpInside];
     [self zoomToView:[[[_tabsViews objectAtIndex:0] subviews] objectAtIndex:1]];
 
     
