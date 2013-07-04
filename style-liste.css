@@ -23,6 +23,7 @@ style='margin:0;padding:0;font-size:12;font-family:Helvetica;'
 }
 
 body {
+    padding: 44px 0 42px 0 !important;
 	width:320px;
 }
 

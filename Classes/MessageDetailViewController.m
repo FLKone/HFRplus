@@ -98,8 +98,12 @@
 		
 	}	
 	
-	[[self.parent messagesWebView] stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"window.location.hash='%@';", [[arrayData objectAtIndex:curMsg] postID]]];
-	
+    //NSLog(@"offset y BEFORE %f", [self.parent messagesWebView].scrollView.contentOffset.y);
+
+	[[self.parent messagesWebView] stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"window.location.hash='';window.location.hash='%@';", [[arrayData objectAtIndex:curMsg] postID]]];
+    //NSLog(@"offset y AFTERJ %f", [self.parent messagesWebView].scrollView.contentOffset.y);
+    [[self.parent messagesWebView].scrollView setContentOffset:CGPointMake(0, [self.parent messagesWebView].scrollView.contentOffset.y - 44)];
+    //NSLog(@"offset y AFTERO %f", [self.parent messagesWebView].scrollView.contentOffset.y);
 	
 	//<link type='text/css' rel='stylesheet' href='style-max-land.css' media='only screen and (orientation:landscape)'/>\
 	//<meta name='viewport' content='width=device-width; initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=0;' />\
@@ -212,6 +216,8 @@
 
 	[flexItem release];
 	
+    [(UILabel *)self.navigationItem.titleView setText:[NSString stringWithFormat:@"Page: %d — %d/%d", self.pageNumber, curMsg + 1, arrayData.count]];
+    //[self setTitle:[NSString stringWithFormat:@"Page: %d — %d/%d", self.pageNumber, curMsg + 1, arrayData.count]];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -439,7 +445,6 @@
 			break;
 	}
 	
-	[(UILabel *)self.navigationItem.titleView setText:[NSString stringWithFormat:@"Page: %d — %d/%d", self.pageNumber, curMsg + 1, arrayData.count]];
 
 	//[parent.messagesTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:curMsg] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
 	

@@ -74,6 +74,13 @@
       nil]
                                                 forState:UIControlStateNormal];
         
+    [[UISegmentedControl appearance] setDividerImage:[UIImage imageNamed:@"orange_dot"] forLeftSegmentState:UIControlStateNormal rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [[UISegmentedControl appearance] setDividerImage:[UIImage imageNamed:@"black_dot"] forLeftSegmentState:UIControlStateSelected rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [[UISegmentedControl appearance] setDividerImage:[UIImage imageNamed:@"grey_dot"] forLeftSegmentState:UIControlStateNormal rightSegmentState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
+    
+    [[UISegmentedControl appearance] setBackgroundImage:nil forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [[UISegmentedControl appearance] setBackgroundImage:[UIImage imageNamed:@"black_dot"] forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
+    
     
     
     //[self.menuView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"pw_maze_black"]]];
@@ -86,7 +93,7 @@
     //self.btnCategories.layer.borderColor = [UIColor]
     
     // scrollView init
-    _containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320 * 2 + 20 * 3, 436 * 2 + 20 * 3)];
+    _containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320 * 2 + 20 * 3, 460 * 2 + 20 * 3)];
     
     int nbTab = 4;
     int x = 20, y = 20;
@@ -94,14 +101,14 @@
     
     for (int i = 0; i < nbTab; i++) {
         
-        UIView *tabView = [[UIView alloc] initWithFrame:CGRectMake(x, y, 320, 436)];
+        UIView *tabView = [[UIView alloc] initWithFrame:CGRectMake(x, y, 320, 460)];
         tabView.backgroundColor = [UIColor whiteColor];
         tabView.autoresizesSubviews = YES;
         [tabView setContentMode:UIViewContentModeScaleToFill];
         tabView.clipsToBounds = YES;
         //[tabView setUserInteractionEnabled:NO];
         
-        UIView *tabtouchView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 436)];
+        UIView *tabtouchView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
         tabtouchView.backgroundColor = [UIColor darkGrayColor];
         tabtouchView.alpha = .8;
         tabtouchView.tag = i+1;
@@ -122,13 +129,13 @@
         
         if (i%2) {
             x = 20;
-            y+= 456;
+            y+= 480;
         }
         
     }
     [_scrollView addSubview:_containerView];
 
-    _scrollView.contentSize = CGSizeMake(320 * 2 + 20 * 3, 436 * 2 + 20 * 3);
+    _scrollView.contentSize = CGSizeMake(320 * 2 + 20 * 3, 460 * 2 + 20 * 3);
  
     CGRect scrollViewFrame = _scrollView.frame;
     CGFloat scaleWidth = scrollViewFrame.size.width / _scrollView.contentSize.width;
@@ -315,8 +322,8 @@
             
             CGRect currentFrame = _popoverView.frame;
             
-            currentFrame.origin.y = self.menuView.frame.origin.y;
-            
+            currentFrame.origin.y = [[[[UIApplication sharedApplication] keyWindow] screen] bounds].size.height;
+        
             self.isAnimating = YES;
             [UIView animateWithDuration:0.200 delay:0.0
                                 options:UIViewAnimationOptionCurveEaseInOut|UIViewAnimationOptionBeginFromCurrentState
@@ -467,7 +474,7 @@
         
     }
     else if (sender == self.btnMessages) {
-        //NSLog(@"== btnSearch");
+        //NSLog(@"== btnMessages");
         
         CGRect currentFrame = _popoverView.frame;
         currentFrame.origin.y = 0;
@@ -476,11 +483,11 @@
         [UIView animateWithDuration:0.200 delay:0
                             options:UIViewAnimationOptionCurveEaseInOut|UIViewAnimationOptionBeginFromCurrentState
                          animations:^{
-                             NSLog(@"START ANIMATION SEARCH");
+                             NSLog(@"START ANIMATION MP");
                              
                              UINavigationController *navigationController;
                              
-                             if (!_searchController) {
+                             if (!_messagesController) {
                                  HFRMPViewController *messagesViewController = [[HFRMPViewController alloc] initWithNibName:@"TopicsTableViewController" bundle:nil];
                                  navigationController = [[UINavigationController alloc] initWithRootViewController:messagesViewController];
                                  _messagesController = navigationController;
@@ -506,7 +513,7 @@
         NSLog(@"== btnTabs");
         
         CGRect scrollViewFrame = _scrollView.frame;
-        CGSize cz = CGSizeMake(320 * 2 + 20 * 3, 436 * 2 + 20 * 3);
+        CGSize cz = CGSizeMake(320 * 2 + 20 * 3, 460 * 2 + 20 * 3);
         CGFloat scaleWidth = scrollViewFrame.size.width / cz.width;
         CGFloat scaleHeight = scrollViewFrame.size.height / cz.height;
         

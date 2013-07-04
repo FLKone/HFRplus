@@ -45,13 +45,19 @@
     
     if (self.showAll) {
         self.showAll = NO;
-        [self.navigationItem.leftBarButtonItem.customView setHighlighted:NO];
-        [self.navigationItem.leftBarButtonItem.customView setSelected:NO];
+        UIBarButtonItem *settingsBarItem = [UIBarButtonItem barItemWithImageNamed:@"categories" title:@"switch_off" target:self action:@selector(showAll:)];
+        self.navigationItem.leftBarButtonItem = settingsBarItem;
+        
+//        [self.navigationItem.leftBarButtonItem.customView setHighlighted:NO];
+     //   [(UIBarButtonItem *)self.navigationItem.leftBarButtonItem.customView setSelected:NO];
     }
     else {
         self.showAll = YES;
-        [self.navigationItem.leftBarButtonItem.customView setHighlighted:YES];
-        [self.navigationItem.leftBarButtonItem.customView setSelected:YES];
+        UIBarButtonItem *settingsBarItem = [UIBarButtonItem barItemWithImageNamed:@"categories" title:@"switch_on" target:self action:@selector(showAll:)];
+        self.navigationItem.leftBarButtonItem = settingsBarItem;
+        
+       // [(UIBarButtonItem *)self.navigationItem.leftBarButtonItem.customView setSelected:YES];
+  //      [self.navigationItem.leftBarButtonItem.customView setSelected:YES];
     }
 
     if (![self.favoritesTableView isHidden]) {
@@ -412,7 +418,7 @@
 	self.navigationItem.rightBarButtonItem = reloadBarItem;
     
     //Bouton Settings/More
-    UIBarButtonItem *settingsBarItem = [UIBarButtonItem barItemWithImageNamed:@"categories" title:@"" target:self action:@selector(showAll:)];
+    UIBarButtonItem *settingsBarItem = [UIBarButtonItem barItemWithImageNamed:@"categories" title:@"switch_off" target:self action:@selector(showAll:)];
 	self.navigationItem.leftBarButtonItem = settingsBarItem;
     
     

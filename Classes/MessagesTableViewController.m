@@ -553,6 +553,8 @@
     // fond blanc WebView
     [self.messagesWebView setBackgroundColor:[UIColor whiteColor]];
     [self.messagesWebView hideGradientBackground];
+    //[self.messagesWebView.scrollView setContentInset:UIEdgeInsetsMake(44, 0, 42, 0)];
+    [self.messagesWebView.scrollView setScrollIndicatorInsets:UIEdgeInsetsMake(44, 0, 42, 0)];
     
 	//Gesture
 	UIGestureRecognizer *recognizer;
@@ -923,14 +925,17 @@
 		 
 		 // ...
 		 // Pass the selected object to the new view controller.
-		 self.navigationItem.backBarButtonItem =
-		 [[UIBarButtonItem alloc] initWithTitle:@"Retour"
+		 
+        
+        self.navigationItem.backBarButtonItem =
+		 [[UIBarButtonItem alloc] initWithTitle:@" "
 		 style: UIBarButtonItemStyleBordered
 		 target:nil
 		 action:nil];
 		
 		
 		///===
+        
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
         
         label.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
@@ -944,10 +949,10 @@
         [label setLineBreakMode:UILineBreakModeMiddleTruncation];
         
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-            [label setTextColor:[UIColor whiteColor]];
-            label.shadowColor = [UIColor darkGrayColor];
+            [label setTextColor:[UIColor colorWithRed:170/255.f green:170/255.f blue:170/255.f alpha:1.0f]];
+            label.shadowColor = [UIColor whiteColor];
             [label setFont:[UIFont boldSystemFontOfSize:13.0]];
-            label.shadowOffset = CGSizeMake(0.0, -1.0);
+            label.shadowOffset = CGSizeMake(-2.0, -1.0);
             
             
         }
@@ -967,6 +972,7 @@
         
 		[self.detailViewController.navigationItem setTitleView:label];
         [label release];
+        
 		///===
 		
 		 //setup the URL
@@ -1428,7 +1434,10 @@
 	
 	[self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString];
     
-    
+    //NSLog(@"offset y AFTERJ %f", [self messagesWebView].scrollView.contentOffset.y);
+    [self.messagesWebView.scrollView setContentOffset:CGPointMake(0, self.messagesWebView.scrollView.contentOffset.y - 44)];
+    //NSLog(@"offset y AFTERO %f", [self messagesWebView].scrollView.contentOffset.y);
+
     [self.loadingView setHidden:YES];
     [self.messagesWebView setHidden:NO];
 

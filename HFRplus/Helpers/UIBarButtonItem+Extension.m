@@ -54,10 +54,31 @@
     button.frame = CGRectMake(0.0, 0.0, imageOff.size.width, imageOff.size.height);
     button.titleLabel.textAlignment = UITextAlignmentCenter;
     
-    [button setImage:imageOff forState:UIControlStateNormal];
-    [button setImage:imageOn forState:UIControlStateHighlighted];
-    [button setImage:imageOn forState:UIControlStateSelected];
     
+    if ([title isEqualToString:@"switch_off"]) {
+        [button setBackgroundImage:nil forState:UIControlStateNormal];
+        [button setBackgroundImage:nil forState:UIControlStateHighlighted];
+        [button setBackgroundImage:nil forState:UIControlStateSelected];
+        
+        [button setImage:imageOff forState:UIControlStateNormal];
+        [button setImage:imageOff forState:UIControlStateHighlighted];
+        [button setImage:imageOff forState:UIControlStateSelected];
+    }
+    else if ([title isEqualToString:@"switch_on"]) {
+        [button setBackgroundImage:[UIImage imageNamed:@"black_dot"] forState:UIControlStateNormal];
+        [button setBackgroundImage:[UIImage imageNamed:@"black_dot"] forState:UIControlStateHighlighted];
+        [button setBackgroundImage:[UIImage imageNamed:@"black_dot"] forState:UIControlStateSelected];
+        
+        [button setImage:imageOff forState:UIControlStateNormal];
+        [button setImage:imageOff forState:UIControlStateHighlighted];
+        [button setImage:imageOff forState:UIControlStateSelected];
+    }
+    else
+    {
+        [button setImage:imageOff forState:UIControlStateNormal];
+        [button setImage:imageOn forState:UIControlStateHighlighted];
+        [button setImage:imageOn forState:UIControlStateSelected];
+    }
     //[button setBackgroundImage:[UIImage imageNamed:@"grey_dot_a"] forState:UIControlStateNormal];
   //  [button setBackgroundImage:[UIImage imageNamed:@"grey_dot_a"] forState:UIControlStateHighlighted];
 //    [button setBackgroundImage:[UIImage imageNamed:@"grey_dot_a"] forState:UIControlStateSelected];
