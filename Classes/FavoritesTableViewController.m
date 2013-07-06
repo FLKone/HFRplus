@@ -24,7 +24,6 @@
 #import "Favorite.h"
 #import "UIImage+Resize.h"
 
-#import "AKSingleSegmentedControl.h"
 #import "TopicsTableViewController.h"
 
 @implementation FavoritesTableViewController
@@ -408,45 +407,13 @@
     UIImage *image = [[UIImage imageNamed:@"favoris"] offColor];
     self.navigationItem.titleView = [[[UIImageView alloc] initWithImage:image] autorelease];
     
-	// reload
-    //UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
-	//self.navigationItem.rightBarButtonItem = segmentBarItem;
-    //[segmentBarItem release];
-    
 	//Bouton Reload
     UIBarButtonItem *reloadBarItem = [UIBarButtonItem barItemWithImageNamed:@"reload" title:@"" target:self action:@selector(reload)];
 	self.navigationItem.rightBarButtonItem = reloadBarItem;
     
-    //Bouton Settings/More
+    //Bouton showAll
     UIBarButtonItem *settingsBarItem = [UIBarButtonItem barItemWithImageNamed:@"categories" title:@"switch_off" target:self action:@selector(showAll:)];
 	self.navigationItem.leftBarButtonItem = settingsBarItem;
-    
-    
-    
-    // showAll
-    AKSingleSegmentedControl* segmentedControl = [[AKSingleSegmentedControl alloc] initWithItems:[NSArray array]];
-    //[segmentedControl setMomentary:YES];
-    [segmentedControl insertSegmentWithImage:[UIImage imageNamed:@"icon_list_bullets"] atIndex:0 animated:NO];
-    segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
-    [segmentedControl addTarget:self action:@selector(showAll:) forControlEvents:UIControlEventValueChanged];
-
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        segmentedControl.tintColor = [UIColor colorWithRed:156/255.f green:161/255.f blue:167/255.f alpha:1.00];
-    }
-    
-    UIBarButtonItem * segmentBarItem2 = [[UIBarButtonItem alloc] initWithCustomView: segmentedControl];
-    //self.navigationItem.leftBarButtonItem = segmentBarItem2;
-    
-    [segmentBarItem2 release];
-	//segmentedControl2.segmentedControlStyle = UISegmentedControlStyleBar;
-	//segmentedControl2.momentary = YES;
-	    
-    
-    /*
-    UIBarButtonItem *segmentBarItem2 = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_list_bullets.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showAll:)];
-	self.navigationItem.leftBarButtonItem = segmentBarItem2;
-    [segmentBarItem2 release];
-      */  
     
     
 	[(ShakeView*)self.view setShakeDelegate:self];
