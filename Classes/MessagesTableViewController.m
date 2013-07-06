@@ -1280,7 +1280,7 @@
                 initWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
                 <html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"fr\" lang=\"fr\">\
                 <head>\
-                <script type='text/javascript' src='jquery.js'></script>\
+                <script type='text/javascript' src='jquery-2.0.3.min.js'></script>\
                 <script type='text/javascript' src='jquery.doubletap.js'></script>\
                 <script type='text/javascript' src='jquery.base64.js'></script>\
                 <script type='text/javascript' src='jquery.lazyload.mini.js'></script>\
