@@ -16,8 +16,8 @@
     if (self) {
         // Initialization code
         NSLog(@"initWithCoder");
-        [self setScrollIndicatorInsets:UIEdgeInsetsMake(44.0f, 0, 42.0f, 00)];
-        [self setContentInset:UIEdgeInsetsMake(44.0f, 0, 42.0f, 00)];
+        [self setScrollIndicatorInsets:UIEdgeInsetsMake(44.0f, 0, 39.0f, 00)];
+        [self setContentInset:UIEdgeInsetsMake(44.0f, 0, 39.0f, 00)];
     }
     return self;
 }

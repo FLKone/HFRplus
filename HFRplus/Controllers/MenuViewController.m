@@ -82,14 +82,43 @@
     [[UISegmentedControl appearance] setBackgroundImage:[UIImage imageNamed:@"black_dot"] forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
     
     
+    CGColorRef darkColor = [[UIColor blackColor] colorWithAlphaComponent:.25f].CGColor;
+    CGColorRef lightColor = [UIColor clearColor].CGColor;
+    
+    CAGradientLayer *bottomShadow = [[CAGradientLayer alloc] init];
+    bottomShadow.frame = CGRectMake(0,0, self.view.frame.size.width, 2);
+    bottomShadow.colors = [NSArray arrayWithObjects:(__bridge id)(lightColor), (__bridge id)(darkColor), nil];
+    
+    [self.menuView.layer addSublayer:bottomShadow];
+    //self.tableView.tableFooterView = footerShadow;
+    
+    /*
+    //Header shadow
+    UIView *headerShadow = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 10)];
+    
+    CAGradientLayer *topShadow = [[[CAGradientLayer alloc] init] autorelease];
+    topShadow.frame = CGRectMake(0, 0, self.view.frame.size.width, 10);
+    topShadow.colors = [NSArray arrayWithObjects:(id)lightColor, (id)darkColor, nil];
+    headerShadow.alpha = 0.3;
+    
+    [headerShadow.layer addSublayer:topShadow];
+    //self.tableView.tableHeaderView = headerShadow;
+    */
     
     //[self.menuView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"pw_maze_black"]]];
-    self.menuView.layer.masksToBounds = NO;
-    //self.menuView.layer.cornerRadius = 8; // if you like rounded corners
-    //self.menuView.layer.shadowOffset = CGSizeMake(0, -1);
-    //self.menuView.layer.shadowRadius = 0.5;
-    //self.menuView.layer.shadowOpacity = 0.3;
+    /*
+    self.btnCategories.layer.masksToBounds = NO;
+    self.btnCategories.layer.cornerRadius = 8; // if you like rounded corners
+    self.btnCategories.layer.shadowOffset = CGSizeMake(0, -1);
+    self.btnCategories.layer.shadowRadius = 0.5;
+    self.btnCategories.layer.shadowOpacity = 0.3;
     
+    self.btnFavoris.layer.masksToBounds = NO;
+    self.btnFavoris.layer.cornerRadius = 8; // if you like rounded corners
+    self.btnFavoris.layer.shadowOffset = CGSizeMake(0, -1);
+    self.btnFavoris.layer.shadowRadius = 0.5;
+    self.btnFavoris.layer.shadowOpacity = 0.3;
+    */
     //self.btnCategories.layer.borderColor = [UIColor]
     
     // scrollView init
