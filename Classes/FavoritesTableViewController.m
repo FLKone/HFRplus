@@ -541,11 +541,11 @@
     */
     Forum *tmpForum = [[self.arrayNewData objectAtIndex:section] forum];
 
-	UIImage *myImage = [[UIImage imageNamed:@"pw_maze_white"] imageResizingModeTile];
+	UIImage *myImage = [[UIImage imageNamed:@"grey_dot_a"] imageResizingModeTile];
     
 	// create the imageView with the image in it
 	UIImageView *imageView = [[[UIImageView alloc] initWithImage:myImage] autorelease];
-	imageView.alpha = 0.4;
+	//imageView.alpha = 0.4;
 	imageView.frame = CGRectMake(0,0,320,30);
 	imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     

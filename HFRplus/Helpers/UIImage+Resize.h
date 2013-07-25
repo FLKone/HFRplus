@@ -12,4 +12,6 @@
 - (UIImage*)offColor;
 - (UIImage*)mergeWith:(UIImage *)mergeImage;
 -(UIImage*) imageResizingModeTile;
+- (UIImage *)imageByApplyingAlpha:(CGFloat) alpha;
+
 @end

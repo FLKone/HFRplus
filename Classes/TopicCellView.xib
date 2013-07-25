@@ -47,7 +47,7 @@
 							<object class="IBUILabel" id="775599656">
 								<reference key="NSNextResponder" ref="286149590"/>
 								<int key="NSvFlags">290</int>
-								<string key="NSFrame">{{10, 5}, {290, 30}}</string>
+								<string key="NSFrame">{{10, 5}, {300, 30}}</string>
 								<reference key="NSSuperview" ref="286149590"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="878616354"/>
@@ -81,15 +81,14 @@
 									<int key="NSfFlags">16</int>
 								</object>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
-								<double key="preferredMaxLayoutWidth">290</double>
+								<double key="preferredMaxLayoutWidth">300</double>
 							</object>
 							<object class="IBUILabel" id="745225864">
 								<reference key="NSNextResponder" ref="286149590"/>
 								<int key="NSvFlags">291</int>
-								<string key="NSFrame">{{132, 38}, {168, 18}}</string>
+								<string key="NSFrame">{{134, 37}, {176, 18}}</string>
 								<reference key="NSSuperview" ref="286149590"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<reference key="IBUIBackgroundColor" ref="276327188"/>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -116,12 +115,12 @@
 									<double key="NSSize">11</double>
 									<int key="NSfFlags">16</int>
 								</object>
-								<double key="preferredMaxLayoutWidth">168</double>
+								<double key="preferredMaxLayoutWidth">176</double>
 							</object>
 							<object class="IBUILabel" id="878616354">
 								<reference key="NSNextResponder" ref="286149590"/>
 								<int key="NSvFlags">294</int>
-								<string key="NSFrame">{{10, 37}, {120, 18}}</string>
+								<string key="NSFrame">{{10, 37}, {128, 18}}</string>
 								<reference key="NSSuperview" ref="286149590"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="745225864"/>
@@ -149,10 +148,10 @@
 									<double key="NSSize">13</double>
 									<int key="NSfFlags">16</int>
 								</object>
-								<double key="preferredMaxLayoutWidth">120</double>
+								<double key="preferredMaxLayoutWidth">128</double>
 							</object>
 						</object>
-						<string key="NSFrameSize">{300, 59}</string>
+						<string key="NSFrameSize">{320, 59}</string>
 						<reference key="NSSuperview" ref="50966149"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="775599656"/>
@@ -177,7 +176,6 @@
 				</object>
 				<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-				<int key="IBUIAccessoryType">1</int>
 				<reference key="IBUIContentView" ref="286149590"/>
 				<string key="IBUIReuseIdentifier">ApplicationCell</string>
 				<integer value="60" key="IBUIRowHeight"/>
@@ -371,6 +369,17 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">TopicsTableViewController</string>
 					<string key="superclassName">PageViewController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">segmentCatAction:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">segmentCatAction:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">segmentCatAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
 					<object class="NSMutableDictionary" key="outlets">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">

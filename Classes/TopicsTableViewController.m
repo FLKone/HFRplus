@@ -1195,7 +1195,7 @@
 
         [[NSBundle mainBundle] loadNibNamed:@"TopicCellView" owner:self options:nil];
         cell = tmpCell;
-		cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+		cell.accessoryType = UITableViewCellAccessoryNone;
 		cell.selectionStyle = UITableViewCellSelectionStyleBlue;	
 
         
@@ -1290,7 +1290,7 @@
 		// set the button's target to this table view controller so we can interpret touch events and map that to a NSIndexSet
 		[button addTarget:self action:@selector(accessoryButtonTapped:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 		
-		cell.accessoryView = button;
+		//cell.accessoryView = button;
 	}
 	else {
 		
@@ -1304,7 +1304,7 @@
 		[button setBackgroundImage:imageForUnselectedRow forState:UIControlStateHighlighted];
 		[button setUserInteractionEnabled:NO];
 		
-		cell.accessoryView = button;
+		//cell.accessoryView = button;
 		
 	}
 	//Flag	

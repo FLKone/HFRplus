@@ -45,7 +45,7 @@
     
 
     [[UINavigationBar appearance] setBarStyle:UIBarStyleBlackTranslucent];
-    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"grey_dot_a"] forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setBackgroundImage:[[[UIImage imageNamed:@"pw_maze_white"] imageByApplyingAlpha:0.7] imageResizingModeTile] forBarMetrics:UIBarMetricsDefault];
 
     
     [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"back_on"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)]

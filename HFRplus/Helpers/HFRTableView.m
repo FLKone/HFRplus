@@ -33,4 +33,10 @@
 }
 */
 
+- (BOOL) allowsHeaderViewsToFloat {
+    NSLog(@"allowsHeaderViewsToFloat");
+    
+    return NO;
+}
+
 @end
