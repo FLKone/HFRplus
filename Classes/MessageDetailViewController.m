@@ -285,6 +285,9 @@
     [self.messageView setBackgroundColor:[UIColor whiteColor]];
     [self.messageView hideGradientBackground];
 
+    [self.messageView.scrollView setContentInset:UIEdgeInsetsMake(44, 0, 39, 0)];
+    [self.messageView.scrollView setScrollIndicatorInsets:UIEdgeInsetsMake(44, 0, 39, 0)];
+    
 }
 	 
 // Override to allow orientations other than the default portrait orientation.
