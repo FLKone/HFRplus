@@ -15,16 +15,17 @@
 		
         // Initialization code
 		//Titre Topic
+        
 		
 		UILabel *labelTitle = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 300, 22)];
 		labelTitle.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
-		[labelTitle setFont:[UIFont boldSystemFontOfSize:14.0]];
+		//[labelTitle setFont:[UIFont boldSystemFontOfSize:12.0]];
 		[labelTitle setAdjustsFontSizeToFitWidth:NO];
 		[labelTitle setLineBreakMode:UILineBreakModeTailTruncation];
 		//[labelTitle setBackgroundColor:[UIColor blueColor]];
 		[labelTitle setTextAlignment:UITextAlignmentLeft];
-		[labelTitle setHighlightedTextColor:[UIColor whiteColor]];
+		[labelTitle setHighlightedTextColor:[UIColor blackColor]];
 		[labelTitle setTag:999];
 		[labelTitle setTextColor:[UIColor blackColor]];
 		[labelTitle setNumberOfLines:0];
@@ -36,12 +37,12 @@
 		UILabel *labelMsg = [[UILabel alloc] initWithFrame:CGRectMake(10, 27, 128, 18)];
 		labelMsg.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		
-		[labelMsg setFont:[UIFont systemFontOfSize:13.0]];
+		[labelMsg setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:13]];
 		[labelMsg setAdjustsFontSizeToFitWidth:NO];
 		[labelMsg setLineBreakMode:UILineBreakModeTailTruncation];
 		//[labelMsg setBackgroundColor:[UIColor blueColor]];
 		[labelMsg setTextAlignment:UITextAlignmentLeft];
-		[labelMsg setHighlightedTextColor:[UIColor whiteColor]];
+		[labelMsg setHighlightedTextColor:[UIColor grayColor]];
 		[labelMsg setTag:998];
 		[labelMsg setTextColor:[UIColor grayColor]];
 		[labelMsg setNumberOfLines:0];
@@ -53,14 +54,15 @@
 		UILabel *labelDate = [[UILabel alloc] initWithFrame:CGRectMake(140, 27, 170, 18)];
 		labelDate.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
 		
-		[labelDate setFont:[UIFont systemFontOfSize:11.0]];
+		[labelDate setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:11]];
 		[labelDate setAdjustsFontSizeToFitWidth:NO];
 		[labelDate setLineBreakMode:UILineBreakModeTailTruncation];
 		//[labelDate setBackgroundColor:[UIColor redColor]];
 		[labelDate setTextAlignment:UITextAlignmentRight];
-		[labelDate setHighlightedTextColor:[UIColor whiteColor]];
+        [labelDate setHighlightedTextColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"orange_dot"]]];
 		[labelDate setTag:997];
-		[labelDate setTextColor:[UIColor colorWithRed:42/255.f green:116/255.f blue:217/255.f alpha:1.00]];
+		//[labelDate setTextColor:[UIColor colorWithRed:42/255.f green:116/255.f blue:217/255.f alpha:1.00]];
+        [labelDate setTextColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"orange_dot"]]];
 		[labelDate setNumberOfLines:0];
 		//[label setOpaque:YES];
 		

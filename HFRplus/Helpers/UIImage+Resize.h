@@ -11,5 +11,5 @@
 - (UIImage*)scaleToSize:(CGSize)size;
 - (UIImage*)offColor;
 - (UIImage*)mergeWith:(UIImage *)mergeImage;
-
+-(UIImage*) imageResizingModeTile;
 @end

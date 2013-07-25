@@ -106,10 +106,8 @@
 {
     NSLog(@"fetchContentStarted");
 	//Bouton Stop
-	//self.navigationItem.rightBarButtonItem = nil;
-	//UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(cancelFetchContent)];
-	//self.navigationItem.rightBarButtonItem = segmentBarItem;
-    //[segmentBarItem release];	
+    UIBarButtonItem *reloadBarItem = [UIBarButtonItem barItemWithImageNamed:@"stop" title:@"" target:self action:@selector(cancelFetchContent)];
+	self.navigationItem.rightBarButtonItem = reloadBarItem;
 	
 	[self.maintenanceView setHidden:YES];
 	[self.favoritesTableView setHidden:YES];
@@ -121,10 +119,8 @@
     NSLog(@"fetchContentComplete");
 
 	//Bouton Reload
-	//self.navigationItem.rightBarButtonItem = nil;
-	//UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
-	//self.navigationItem.rightBarButtonItem = segmentBarItem;
-    //[segmentBarItem release];
+    UIBarButtonItem *reloadBarItem = [UIBarButtonItem barItemWithImageNamed:@"reload" title:@"" target:self action:@selector(reload)];
+	self.navigationItem.rightBarButtonItem = reloadBarItem;
 	
 	[self.arrayNewData removeAllObjects];
 	
@@ -154,10 +150,8 @@
 - (void)fetchContentFailed:(ASIHTTPRequest *)theRequest
 {
 	//Bouton Reload
-	//self.navigationItem.rightBarButtonItem = nil;
-	//UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
-	//self.navigationItem.rightBarButtonItem = segmentBarItem;
-    //[segmentBarItem release];
+    UIBarButtonItem *reloadBarItem = [UIBarButtonItem barItemWithImageNamed:@"reload" title:@"" target:self action:@selector(reload)];
+	self.navigationItem.rightBarButtonItem = reloadBarItem;
 	
 	[self.loadingView setHidden:YES];
 	
@@ -399,6 +393,8 @@
 	self.title = @" ";
     self.showAll = NO;
 
+    [self.favoritesTableView setSeparatorColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_dot_a"]]];
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(OrientationChanged)
                                                  name:@"UIDeviceOrientationDidChangeNotification"
@@ -507,11 +503,11 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (self.showAll) {
-        return 23;
+        return 30;
     }
     else {
         if ([[self.arrayNewData objectAtIndex:section] topics].count > 0) {
-            return 23;
+            return 30;
         }
     }
     return 0;
@@ -521,9 +517,66 @@
 	//NSLog(@"viewForHeaderInSection %d", section);
 	// create the parent view that will hold header Label
 	
-	UIView* customView = [[[UIView alloc] initWithFrame:CGRectMake(0,0,320,23)] autorelease];
+	UIView* customView = [[[UIView alloc] initWithFrame:CGRectMake(0,0,320,30)] autorelease];
 	customView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    //customView.backgroundColor = [UIColor orangeColor];
+    /*
+    UILabel *headerLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
+	headerLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+
+	headerLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:15]; //18
+	headerLabel.frame = CGRectMake(10,0,320,35);
+	headerLabel.textColor = [UIColor blackColor];
+	headerLabel.backgroundColor = [UIColor clearColor];
+    headerLabel.alpha = 0.9;
+
+	//headerLabel.shadowColor = [UIColor darkGrayColor];
+	//headerLabel.shadowOffset = CGSizeMake(0.0, 1.0);
 	
+    
+    //NSLog(@"%@", [[self.arrayNewData objectAtIndex:section] forum]);
+	headerLabel.text = [tmpForum aTitle];
+    
+    
+    */
+    Forum *tmpForum = [[self.arrayNewData objectAtIndex:section] forum];
+
+	UIImage *myImage = [[UIImage imageNamed:@"pw_maze_white"] imageResizingModeTile];
+    
+	// create the imageView with the image in it
+	UIImageView *imageView = [[[UIImageView alloc] initWithImage:myImage] autorelease];
+	imageView.alpha = 0.4;
+	imageView.frame = CGRectMake(0,0,320,30);
+	imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    
+    [customView addSubview:imageView];
+    //[customView addSubview:headerLabel];
+    
+    UIImage *backButton = [UIImage imageNamed:@"accessoryDefault"];
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
+    [button setTag:section];
+    [button setTitle:[tmpForum aTitle] forState:UIControlStateNormal];
+    [button.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:15]]; //18
+    [button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    [button addTarget:self action:@selector(loadCatForType:) forControlEvents:UIControlEventTouchUpInside];
+
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    
+    
+    if (self.showAll) {
+        [button setImage:backButton forState:UIControlStateNormal];
+        [button setTitleEdgeInsets:UIEdgeInsetsMake(0, -22, 0, 0)];
+        [button setImageEdgeInsets:UIEdgeInsetsMake(0, 282, 0, 0)];
+    }
+    else {
+        [button setTitleEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
+    }
+    
+    [customView addSubview:button];
+    
+    
+	/*
 	// create the label objects
 	UILabel *headerLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
 	headerLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -578,14 +631,8 @@
     
     
     [customView addSubview:button];
+*/
 
-	//[customView addSubview:imageView2];
-    
-	//[customView addSubview:headerLabel];
-	
-	//if ([(UISegmentedControl *)[self.navigationItem.titleView.subviews objectAtIndex:0] selectedSegmentIndex] == 0) {
-	//	[customView addSubview:detailLabel];
-	//}
 	
 	return customView;
 	
@@ -634,9 +681,15 @@
 		UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc] 
 															 initWithTarget:self action:@selector(handleLongPress:)];
 		[cell addGestureRecognizer:longPressRecognizer];
-		[longPressRecognizer release];		
+		[longPressRecognizer release];
+        
+        UIView *bgColorView = [[UIView alloc] init];
+        [bgColorView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_dot_a"]]];
+        [cell setSelectedBackgroundView:bgColorView];
+        [bgColorView release];
+
     }
-    	
+    
     Topic *tmpTopic = [[[self.arrayNewData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
 	
     // Configure the cell...
@@ -661,10 +714,12 @@
     [(UILabel *)[cell.contentView viewWithTag:997] setText:[NSString stringWithFormat:@"%@ - %@", [tmpTopic aAuthorOfLastPost], [tmpTopic aDateOfLastPost]]];
 
 	if ([tmpTopic isViewed]) {
-		[(UILabel *)[cell.contentView viewWithTag:999] setFont:[UIFont systemFontOfSize:13]];
+        [(UILabel *)[cell.contentView viewWithTag:999] setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:13]];
+		//[(UILabel *)[cell.contentView viewWithTag:999] setFont:[UIFont systemFontOfSize:13]];
 	}
 	else {
-		[(UILabel *)[cell.contentView viewWithTag:999] setFont:[UIFont boldSystemFontOfSize:13]];
+        [(UILabel *)[cell.contentView viewWithTag:999] setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:13]];
+		//[(UILabel *)[cell.contentView viewWithTag:999] setFont:[UIFont boldSystemFontOfSize:13]];
 		
 	}	
 
@@ -792,8 +847,8 @@
 - (void)pushTopic {
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        [[[HFRplusAppDelegate sharedAppDelegate] rootController] loadTab:messagesTableViewController];
-        //[self.navigationController pushViewController:messagesTableViewController animated:YES];
+        //[[[HFRplusAppDelegate sharedAppDelegate] rootController] loadTab:messagesTableViewController];
+        [self.navigationController pushViewController:messagesTableViewController animated:YES];
     }
     else {
         [[[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] viewControllers] objectAtIndex:1] popToRootViewControllerAnimated:NO];

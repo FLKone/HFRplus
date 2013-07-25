@@ -31,7 +31,7 @@
     UIImage *imageBase = self;
     
     //    UIColor *tintColor = [UIColor colorWithRed:242/255.f green:144/255.f blue:27/255.f alpha:1.0f];
-    UIColor *tintColor = [UIColor lightGrayColor];
+    UIColor *tintColor = [UIColor blackColor];
     
     UIGraphicsBeginImageContext(imageBase.size);
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -82,6 +82,20 @@
     UIGraphicsEndImageContext();
     
     return newImage;
+}
+
+-(UIImage*) imageResizingModeTile
+{
+    float iOSVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
+    
+    if( iOSVersion >= 6.0f )
+    {
+        return [self resizableImageWithCapInsets:UIEdgeInsetsZero resizingMode:UIImageResizingModeTile];
+    }
+    else
+    {
+        return [self resizableImageWithCapInsets:UIEdgeInsetsZero];
+    }
 }
 
 @end

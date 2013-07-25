@@ -401,6 +401,7 @@
         
         CGRect currentFrame = _popoverView.frame;
         currentFrame.origin.y = 0;
+        currentFrame.origin.x = 0;
 
         self.isAnimating = YES;
         [UIView animateWithDuration:0.200 delay:0
@@ -425,6 +426,7 @@
                              _activeController = navigationController;
                              
                              _popoverView.frame = currentFrame;
+                             
                              
                          } completion:^(BOOL finished) {
                              self.isAnimating = NO;
@@ -589,6 +591,7 @@
 
 
     [self addChildViewController:_navigationTab1Controller];
+    [_navigationTab1Controller didMoveToParentViewController:self];
 
     NSLog(@"subs B %@", [[_tabsViews objectAtIndex:0] subviews]);
 

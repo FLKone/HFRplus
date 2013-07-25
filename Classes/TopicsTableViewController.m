@@ -759,8 +759,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	self.title = forumName;
+    self.title = @" ";
+	//self.title = forumName;
     
+    [self.topicsTableView setSeparatorColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_dot_a"]]];
+
     //NSLog(@"viewDidLoad %d", selectedFlagIndex);
     
           
@@ -870,8 +873,8 @@
 	
 	self.forumNewTopicUrl = [[NSString alloc] init];
 	
-	self.imageForUnselectedRow = [UIImage imageNamed:@"selectedrow"];
-	self.imageForSelectedRow = [UIImage imageNamed:@"unselectedrow"];
+	self.imageForUnselectedRow = [UIImage imageNamed:@"accessoryDefault"];
+	self.imageForSelectedRow = [UIImage imageNamed:@"accessoryDefault"];
 	
 	self.imageForRedFlag = [UIImage imageNamed:@"flagred"];
 	self.imageForYellowFlag = [UIImage imageNamed:@"flagyellow"];
@@ -1195,12 +1198,29 @@
 		cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
 		cell.selectionStyle = UITableViewCellSelectionStyleBlue;	
 
-		UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc] 
+        
+        cell.titleLabel.highlightedTextColor = [UIColor blackColor];
+        cell.titleLabel.textColor = [UIColor blackColor];
+
+        cell.msgLabel.highlightedTextColor = [UIColor grayColor];
+        cell.msgLabel.textColor = [UIColor grayColor];
+        cell.msgLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13];
+
+        cell.timeLabel.highlightedTextColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"orange_dot"]];
+        cell.timeLabel.textColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"orange_dot"]];
+        cell.timeLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:11];
+
+		UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc]
 															 initWithTarget:self action:@selector(handleLongPress:)];
 		[cell addGestureRecognizer:longPressRecognizer];
 		[longPressRecognizer release];	
 		
         self.tmpCell = nil;
+        
+        UIView *bgColorView = [[UIView alloc] init];
+        [bgColorView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_dot_a"]]];
+        [cell setSelectedBackgroundView:bgColorView];
+        [bgColorView release];
 		
 	}
 		 
@@ -1235,10 +1255,14 @@
 	[cell.timeLabel setText:[NSString stringWithFormat:@"%@ - %@", [aTopic aAuthorOfLastPost], [aTopic aDateOfLastPost]]];
 
 	if ([aTopic isViewed]) {
-		[[cell titleLabel] setFont:[UIFont systemFontOfSize:13]];
+        cell.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13];
+
+//		[[cell titleLabel] setFont:[UIFont systemFontOfSize:13]];
 	}
 	else {
-		[[cell titleLabel] setFont:[UIFont boldSystemFontOfSize:13]];
+        cell.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:13];
+
+//		[[cell titleLabel] setFont:[UIFont boldSystemFontOfSize:13]];
 		
 	}	
 
@@ -1349,7 +1373,7 @@
         }
         else
         {
-            [self.topicActionSheet showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] menuView]];
+            [self.topicActionSheet showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
         }
 
 	}
@@ -1417,8 +1441,8 @@
 - (void)pushTopic {
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        [[[HFRplusAppDelegate sharedAppDelegate] rootController] loadTab:messagesTableViewController];
-        //[self.navigationController pushViewController:messagesTableViewController animated:YES];
+        //[[[HFRplusAppDelegate sharedAppDelegate] rootController] loadTab:messagesTableViewController];
+        [self.navigationController pushViewController:messagesTableViewController animated:YES];
     }
     else {
         [[[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] viewControllers] objectAtIndex:1] popToRootViewControllerAnimated:NO];

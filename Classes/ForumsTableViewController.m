@@ -60,10 +60,8 @@
     NSLog(@"fetchContentStarted");
     
 	//Bouton Stop
-	//self.navigationItem.rightBarButtonItem = nil;
-	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(cancelFetchContent)];
-	//self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];	
+    UIBarButtonItem *reloadBarItem = [UIBarButtonItem barItemWithImageNamed:@"stop" title:@"" target:self action:@selector(cancelFetchContent)];
+	self.navigationItem.rightBarButtonItem = reloadBarItem;
 
     [self.arrayData removeAllObjects];
 	[self.forumsTableView reloadData];
@@ -78,10 +76,8 @@
      //[theRequest siz]
     
 	//Bouton Reload
-	//self.navigationItem.rightBarButtonItem = nil;
-	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
-	//self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];
+    UIBarButtonItem *reloadBarItem = [UIBarButtonItem barItemWithImageNamed:@"reload" title:@"" target:self action:@selector(reload)];
+	self.navigationItem.rightBarButtonItem = reloadBarItem;
     
     [self.loadingView setHidden:YES];
 	
@@ -95,10 +91,8 @@
     NSLog(@"fetchContentFailed");
     
     //Bouton Reload
-	//self.navigationItem.rightBarButtonItem = nil;
-	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
-	//self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];
+    UIBarButtonItem *reloadBarItem = [UIBarButtonItem barItemWithImageNamed:@"reload" title:@"" target:self action:@selector(reload)];
+	self.navigationItem.rightBarButtonItem = reloadBarItem;
 	
 	[self.loadingView setHidden:YES];
     
@@ -704,7 +698,11 @@
     UIImage *image = [[UIImage imageNamed:@"categories"] offColor];
     self.navigationItem.titleView = [[[UIImageView alloc] initWithImage:image] autorelease];
     
-	//Bouton Reload
+    [self.forumsTableView setRowHeight:kTableViewCellRowHeight];
+    //[self.forumsTableView setSeparatorColor:[UIColor redColor]];
+    [self.forumsTableView setSeparatorColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_dot_a"]]];
+	
+    //Bouton Reload
     UIBarButtonItem *reloadBarItem = [UIBarButtonItem barItemWithImageNamed:@"reload" title:@"" target:self action:@selector(reload)];
 	self.navigationItem.rightBarButtonItem = reloadBarItem;
     
@@ -778,15 +776,26 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-        cell.selectionStyle = UITableViewCellSelectionStyleGray;
+        //cell.selectionStyle = UITableViewCellSelectionStyleGray;
+        
+        UIView *bgColorView = [[UIView alloc] init];
+        [bgColorView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_dot_a"]]];
+        [cell setSelectedBackgroundView:bgColorView];
+        [bgColorView release];
+        
+		//cell.accessoryView = [[ UIImageView alloc ]
+        //                        initWithImage:[UIImage imageNamed:@"accessoryDefault"]];
+        
+        cell.textLabel.highlightedTextColor = [UIColor blackColor];
+        cell.textLabel.textColor = [UIColor blackColor];
+        cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:15];
+        //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
     }
     
     // Configure the cell...
 	cell.textLabel.text = [NSString stringWithFormat:@"%@", [[arrayData objectAtIndex:indexPath.row] aTitle]];
-	cell.textLabel.font = [UIFont boldSystemFontOfSize:15];
-	//[cell.textLabel setTextColor:[UIColor darkGrayColor]];
 
-	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
 
