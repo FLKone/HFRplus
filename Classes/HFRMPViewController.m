@@ -41,6 +41,13 @@
 		
     [super viewDidLoad];
 
+    UIBarButtonItem *composeBarItem = [UIBarButtonItem barItemWithImageNamed:@"compose" title:@"" target:self action:@selector(newTopic)];
+	self.navigationItem.leftBarButtonItem = composeBarItem;
+    
+    UIBarButtonItem *reloadBarItem = [UIBarButtonItem barItemWithImageNamed:@"reload" title:@"" target:self action:@selector(fetchContent)];
+	self.navigationItem.rightBarButtonItem = reloadBarItem;
+    
+    /*
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(newTopic)];
 	self.navigationItem.leftBarButtonItem = segmentBarItem;
     [segmentBarItem release];	
@@ -48,7 +55,7 @@
 	segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(fetchContent)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
     [segmentBarItem release];		
-	
+	*/
 }
 
 /*
@@ -241,10 +248,8 @@
 - (void)fetchContentStarted:(ASIHTTPRequest *)theRequest
 {
 	//Bouton Stop
-	self.navigationItem.rightBarButtonItem = nil;	
-	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(cancelFetchContent)];
-	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];	
+    UIBarButtonItem *reloadBarItem = [UIBarButtonItem barItemWithImageNamed:@"stop" title:@"" target:self action:@selector(cancelFetchContent)];
+	self.navigationItem.rightBarButtonItem = reloadBarItem;
 	
 	[super fetchContentStarted:theRequest];
 }
@@ -252,10 +257,9 @@
 - (void)fetchContentComplete:(ASIHTTPRequest *)theRequest
 {
 	//Bouton Reload
-	self.navigationItem.rightBarButtonItem = nil;
-	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(fetchContent)];
-	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];
+    UIBarButtonItem *reloadBarItem = [UIBarButtonItem barItemWithImageNamed:@"reload" title:@"" target:self action:@selector(fetchContent)];
+	self.navigationItem.rightBarButtonItem = reloadBarItem;
+
 	
 	[super fetchContentComplete:theRequest];
 
@@ -276,10 +280,8 @@
 - (void)fetchContentFailed:(ASIHTTPRequest *)theRequest
 {
 	//Bouton Reload
-	self.navigationItem.rightBarButtonItem = nil;
-	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(fetchContent)];
-	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];
+    UIBarButtonItem *reloadBarItem = [UIBarButtonItem barItemWithImageNamed:@"reload" title:@"" target:self action:@selector(fetchContent)];
+	self.navigationItem.rightBarButtonItem = reloadBarItem;
 	
 	[super fetchContentFailed:theRequest];
 }

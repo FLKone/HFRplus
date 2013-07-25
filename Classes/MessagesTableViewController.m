@@ -574,12 +574,17 @@
 	//-- Gesture
 
 	//Bouton Repondre message
+    UIBarButtonItem *menuBarItem = [UIBarButtonItem barItemWithImageNamed:@"menu" title:@"" target:self action:@selector(optionsTopic:)];
+    menuBarItem.enabled = NO;    
+	self.navigationItem.rightBarButtonItem = menuBarItem;
+    
+    /*
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(optionsTopic:)];
     segmentBarItem.enabled = NO;
 	
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
     [segmentBarItem release];	
-
+*/
 	[(ShakeView*)self.view setShakeDelegate:self];
 	
     
@@ -687,7 +692,9 @@
     // use the same style as the nav bar
     styleAlert.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
     
-    [styleAlert showFromBarButtonItem:sender animated:YES];
+    [styleAlert showFromRect:[(UIButton *)sender frame] inView:self.view animated:YES];
+    
+    //[styleAlert showFromBarButtonItem:sender animated:YES];
     
     //[styleAlert showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
     //[styleAlert release];    

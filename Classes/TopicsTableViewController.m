@@ -859,12 +859,15 @@
 	[segmentedControl2 release];
 	[segmentedControl release];
 
+    UIBarButtonItem *composeBarItem = [UIBarButtonItem barItemWithImageNamed:@"compose" title:@"" target:self action:@selector(newTopic)];
+    composeBarItem.enabled = NO;
+	self.navigationItem.rightBarButtonItem = composeBarItem;
+    
+//	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(newTopic)];
+//    segmentBarItem.enabled = NO;
 	
-	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(newTopic)];
-    segmentBarItem.enabled = NO;
-	
-	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];	
+//	self.navigationItem.rightBarButtonItem = segmentBarItem;
+//    [segmentBarItem release];
 
 	[(ShakeView*)self.view setShakeDelegate:self];
 
