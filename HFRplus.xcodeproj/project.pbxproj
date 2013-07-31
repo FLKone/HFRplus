@@ -59,6 +59,18 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
+		CA0484B417A89464000CA138 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA0484A417A89464000CA138 /* EGORefreshTableHeaderView.m */; };
+		CA0484B517A89464000CA138 /* LoadMoreTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA0484A617A89464000CA138 /* LoadMoreTableFooterView.m */; };
+		CA0484B617A89464000CA138 /* MessageInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = CA0484A817A89464000CA138 /* MessageInterceptor.m */; };
+		CA0484B717A89464000CA138 /* PullTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA0484AA17A89464000CA138 /* PullTableView.m */; };
+		CA0484B817A89464000CA138 /* blackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = CA0484AC17A89464000CA138 /* blackArrow.png */; };
+		CA0484B917A89464000CA138 /* blackArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA0484AD17A89464000CA138 /* blackArrow@2x.png */; };
+		CA0484BA17A89464000CA138 /* blueArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = CA0484AE17A89464000CA138 /* blueArrow.png */; };
+		CA0484BB17A89464000CA138 /* blueArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA0484AF17A89464000CA138 /* blueArrow@2x.png */; };
+		CA0484BC17A89464000CA138 /* grayArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = CA0484B017A89464000CA138 /* grayArrow.png */; };
+		CA0484BD17A89464000CA138 /* grayArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA0484B117A89464000CA138 /* grayArrow@2x.png */; };
+		CA0484BE17A89464000CA138 /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = CA0484B217A89464000CA138 /* whiteArrow.png */; };
+		CA0484BF17A89464000CA138 /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA0484B317A89464000CA138 /* whiteArrow@2x.png */; };
 		CA05A37715B48B750083EB64 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CA05A37615B48B750083EB64 /* libxml2.dylib */; };
 		CA05EA5817A0CD7800CE4F0C /* menu_on.png in Resources */ = {isa = PBXBuildFile; fileRef = CA05EA5017A0CD7800CE4F0C /* menu_on.png */; };
 		CA05EA5917A0CD7800CE4F0C /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = CA05EA5117A0CD7800CE4F0C /* menu.png */; };
@@ -528,6 +540,22 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = main.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		32CA4F630368D1EE00C91783 /* HFRplus_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFRplus_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* HFRplus-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HFRplus-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		CA0484A317A89464000CA138 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
+		CA0484A417A89464000CA138 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
+		CA0484A517A89464000CA138 /* LoadMoreTableFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadMoreTableFooterView.h; sourceTree = "<group>"; };
+		CA0484A617A89464000CA138 /* LoadMoreTableFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadMoreTableFooterView.m; sourceTree = "<group>"; };
+		CA0484A717A89464000CA138 /* MessageInterceptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageInterceptor.h; sourceTree = "<group>"; };
+		CA0484A817A89464000CA138 /* MessageInterceptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageInterceptor.m; sourceTree = "<group>"; };
+		CA0484A917A89464000CA138 /* PullTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PullTableView.h; sourceTree = "<group>"; };
+		CA0484AA17A89464000CA138 /* PullTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PullTableView.m; sourceTree = "<group>"; };
+		CA0484AC17A89464000CA138 /* blackArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackArrow.png; sourceTree = "<group>"; };
+		CA0484AD17A89464000CA138 /* blackArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackArrow@2x.png"; sourceTree = "<group>"; };
+		CA0484AE17A89464000CA138 /* blueArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueArrow.png; sourceTree = "<group>"; };
+		CA0484AF17A89464000CA138 /* blueArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueArrow@2x.png"; sourceTree = "<group>"; };
+		CA0484B017A89464000CA138 /* grayArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayArrow.png; sourceTree = "<group>"; };
+		CA0484B117A89464000CA138 /* grayArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayArrow@2x.png"; sourceTree = "<group>"; };
+		CA0484B217A89464000CA138 /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteArrow.png; sourceTree = "<group>"; };
+		CA0484B317A89464000CA138 /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteArrow@2x.png"; sourceTree = "<group>"; };
 		CA05A37615B48B750083EB64 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		CA05EA5017A0CD7800CE4F0C /* menu_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menu_on.png; path = HFRplus/Assets/UI/menu_on.png; sourceTree = "<group>"; };
 		CA05EA5117A0CD7800CE4F0C /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menu.png; path = HFRplus/Assets/UI/menu.png; sourceTree = "<group>"; };
@@ -1383,6 +1411,45 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		CA0484A117A89464000CA138 /* EGOTableViewPullRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				CA0484A217A89464000CA138 /* Classes */,
+				CA0484AB17A89464000CA138 /* Resources */,
+			);
+			path = EGOTableViewPullRefresh;
+			sourceTree = "<group>";
+		};
+		CA0484A217A89464000CA138 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				CA0484A317A89464000CA138 /* EGORefreshTableHeaderView.h */,
+				CA0484A417A89464000CA138 /* EGORefreshTableHeaderView.m */,
+				CA0484A517A89464000CA138 /* LoadMoreTableFooterView.h */,
+				CA0484A617A89464000CA138 /* LoadMoreTableFooterView.m */,
+				CA0484A717A89464000CA138 /* MessageInterceptor.h */,
+				CA0484A817A89464000CA138 /* MessageInterceptor.m */,
+				CA0484A917A89464000CA138 /* PullTableView.h */,
+				CA0484AA17A89464000CA138 /* PullTableView.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		CA0484AB17A89464000CA138 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CA0484AC17A89464000CA138 /* blackArrow.png */,
+				CA0484AD17A89464000CA138 /* blackArrow@2x.png */,
+				CA0484AE17A89464000CA138 /* blueArrow.png */,
+				CA0484AF17A89464000CA138 /* blueArrow@2x.png */,
+				CA0484B017A89464000CA138 /* grayArrow.png */,
+				CA0484B117A89464000CA138 /* grayArrow@2x.png */,
+				CA0484B217A89464000CA138 /* whiteArrow.png */,
+				CA0484B317A89464000CA138 /* whiteArrow@2x.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		CA0F9774179DFD83006D33FD /* Lists */ = {
 			isa = PBXGroup;
 			children = (
@@ -2000,6 +2067,7 @@
 			isa = PBXGroup;
 			children = (
 				CAAA2BA91788A48000E0B2D2 /* ASI */,
+				CA0484A117A89464000CA138 /* EGOTableViewPullRefresh */,
 				CAAA2C651788AA2F00E0B2D2 /* HTMLParser */,
 				CAAA2BC91788A4FA00E0B2D2 /* InAppSettingsKit */,
 				CAAA2C081788A58E00E0B2D2 /* MBProgressHUD */,
@@ -2421,6 +2489,14 @@
 				CA05EA5D17A0CD7800CE4F0C /* compose_on@2x.png in Resources */,
 				CA05EA5E17A0CD7800CE4F0C /* menu@2x.png in Resources */,
 				CA05EA5F17A0CD7800CE4F0C /* menu_on@2x.png in Resources */,
+				CA0484B817A89464000CA138 /* blackArrow.png in Resources */,
+				CA0484B917A89464000CA138 /* blackArrow@2x.png in Resources */,
+				CA0484BA17A89464000CA138 /* blueArrow.png in Resources */,
+				CA0484BB17A89464000CA138 /* blueArrow@2x.png in Resources */,
+				CA0484BC17A89464000CA138 /* grayArrow.png in Resources */,
+				CA0484BD17A89464000CA138 /* grayArrow@2x.png in Resources */,
+				CA0484BE17A89464000CA138 /* whiteArrow.png in Resources */,
+				CA0484BF17A89464000CA138 /* whiteArrow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2536,6 +2612,10 @@
 				CAAA2C911788AE1E00E0B2D2 /* UITableViewController+Ext.m in Sources */,
 				CAAA2C921788AE1E00E0B2D2 /* UIWebView+Tools.m in Sources */,
 				CAAA2CB0179DCBCC00E0B2D2 /* UIFont+CustomSystemFont.m in Sources */,
+				CA0484B417A89464000CA138 /* EGORefreshTableHeaderView.m in Sources */,
+				CA0484B517A89464000CA138 /* LoadMoreTableFooterView.m in Sources */,
+				CA0484B617A89464000CA138 /* MessageInterceptor.m in Sources */,
+				CA0484B717A89464000CA138 /* PullTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
