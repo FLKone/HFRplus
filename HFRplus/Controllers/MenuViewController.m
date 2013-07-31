@@ -45,7 +45,7 @@
     
 
     [[UINavigationBar appearance] setBarStyle:UIBarStyleBlackTranslucent];
-    [[UINavigationBar appearance] setBackgroundImage:[[[UIImage imageNamed:@"pw_maze_white"] imageByApplyingAlpha:0.7] imageResizingModeTile] forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setBackgroundImage:[[[UIImage imageNamed:@"pw_maze_white"] imageByApplyingAlpha:0.8] imageResizingModeTile] forBarMetrics:UIBarMetricsDefault];
 
     
     [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"back_on"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)]
@@ -438,6 +438,7 @@
         
         CGRect currentFrame = _popoverView.frame;
         currentFrame.origin.y = 0;
+        currentFrame.origin.x = 0;
 
         self.isAnimating = YES;
         [UIView animateWithDuration:0.200 delay:0
@@ -473,6 +474,7 @@
         
         CGRect currentFrame = _popoverView.frame;
         currentFrame.origin.y = 0;
+        currentFrame.origin.x = 0;
         
         self.isAnimating = YES;
         [UIView animateWithDuration:0.200 delay:0
@@ -509,7 +511,8 @@
         
         CGRect currentFrame = _popoverView.frame;
         currentFrame.origin.y = 0;
-        
+        currentFrame.origin.x = 0;
+
         self.isAnimating = YES;
         [UIView animateWithDuration:0.200 delay:0
                             options:UIViewAnimationOptionCurveEaseInOut|UIViewAnimationOptionBeginFromCurrentState

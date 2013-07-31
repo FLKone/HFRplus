@@ -872,7 +872,7 @@
         [[[[self.arrayNewData objectAtIndex:[path section]] topics] objectAtIndex:[path row]] setIsViewed:YES];
 
         NSArray* rowsToReload = [NSArray arrayWithObjects:self.favoritesTableView.indexPathForSelectedRow, nil];
-        [self.favoritesTableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
+        [self.favoritesTableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationFade];
         
 		//[self.favoritesTableView reloadData];
 	}
@@ -882,7 +882,7 @@
         [[[[self.arrayNewData objectAtIndex:[path section]] topics] objectAtIndex:[path row]] setIsViewed:YES];
 		
         NSArray* rowsToReload = [NSArray arrayWithObjects:self.pressedIndexPath, nil];
-        [self.favoritesTableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
+        [self.favoritesTableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationFade];
 
     }
     

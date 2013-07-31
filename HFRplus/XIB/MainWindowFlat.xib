@@ -53,56 +53,12 @@
 			<object class="IBUIWindow" id="315381493">
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">1316</int>
-				<array class="NSMutableArray" key="NSSubviews">
-					<object class="IBUIButton" id="901642894">
-						<reference key="NSNextResponder" ref="315381493"/>
-						<int key="NSvFlags">1316</int>
-						<string key="NSFrame">{{0, 230}, {320, 30}}</string>
-						<reference key="NSSuperview" ref="315381493"/>
-						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<bool key="IBUIOpaque">NO</bool>
-						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<int key="IBUIContentVerticalAlignment">0</int>
-						<double key="IBUITitleEdgeInsets.top">0.0</double>
-						<double key="IBUITitleEdgeInsets.bottom">0.0</double>
-						<double key="IBUITitleEdgeInsets.left">-22</double>
-						<double key="IBUITitleEdgeInsets.right">0.0</double>
-						<double key="IBUIImageEdgeInsets.top">0.0</double>
-						<double key="IBUIImageEdgeInsets.bottom">0.0</double>
-						<double key="IBUIImageEdgeInsets.left">285</double>
-						<double key="IBUIImageEdgeInsets.right">0.0</double>
-						<string key="IBUINormalTitle">qwdqdqwdqw</string>
-						<object class="NSColor" key="IBUIHighlightedTitleColor">
-							<int key="NSColorSpace">3</int>
-							<bytes key="NSWhite">MQA</bytes>
-						</object>
-						<object class="NSColor" key="IBUINormalTitleColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
-						</object>
-						<object class="NSColor" key="IBUINormalTitleShadowColor">
-							<int key="NSColorSpace">3</int>
-							<bytes key="NSWhite">MC41AA</bytes>
-						</object>
-						<object class="NSCustomResource" key="IBUINormalImage">
-							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">accessoryDefault.png</string>
-						</object>
-						<object class="IBUIFontDescription" key="IBUIFontDescription" id="175877066">
-							<int key="type">2</int>
-							<double key="pointSize">15</double>
-						</object>
-						<object class="NSFont" key="IBUIFont" id="321218281">
-							<string key="NSName">Helvetica-Bold</string>
-							<double key="NSSize">15</double>
-							<int key="NSfFlags">16</int>
-						</object>
-					</object>
-				</array>
+				<array class="NSMutableArray" key="NSSubviews"/>
 				<object class="NSPSMatrix" key="NSFrameMatrix"/>
 				<string key="NSFrameSize">{320, 480}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSNextKeyView" ref="901642894"/>
+				<reference key="NSWindow"/>
+				<reference key="NSNextKeyView"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">1</int>
 					<bytes key="NSRGB">MSAxIDEAA</bytes>
@@ -124,6 +80,7 @@
 							<array class="NSMutableArray" key="NSSubviews"/>
 							<string key="NSFrameSize">{320, 460}</string>
 							<reference key="NSSuperview" ref="536737539"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="506037333"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<object class="NSColor" key="IBUIBackgroundColor" id="187596991">
@@ -143,6 +100,8 @@
 							<int key="NSvFlags">1330</int>
 							<string key="NSFrame">{{0, 460}, {320, 460}}</string>
 							<reference key="NSSuperview" ref="536737539"/>
+							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<reference key="IBUIBackgroundColor" ref="187596991"/>
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -152,6 +111,7 @@
 							<int key="NSvFlags">1310</int>
 							<string key="NSFrame">{{0, 420}, {80, 40}}</string>
 							<reference key="NSSuperview" ref="536737539"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="739303367"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="IBUIOpaque">NO</bool>
@@ -184,14 +144,22 @@
 							</object>
 							<reference key="IBUISelectedBackgroundImage" ref="664305725"/>
 							<reference key="IBUINormalBackgroundImage" ref="664305725"/>
-							<reference key="IBUIFontDescription" ref="175877066"/>
-							<reference key="IBUIFont" ref="321218281"/>
+							<object class="IBUIFontDescription" key="IBUIFontDescription" id="175877066">
+								<int key="type">2</int>
+								<double key="pointSize">15</double>
+							</object>
+							<object class="NSFont" key="IBUIFont" id="377340472">
+								<string key="NSName">Helvetica-Bold</string>
+								<double key="NSSize">15</double>
+								<int key="NSfFlags">16</int>
+							</object>
 						</object>
 						<object class="IBUIButton" id="739303367">
 							<reference key="NSNextResponder" ref="536737539"/>
 							<int key="NSvFlags">1311</int>
 							<string key="NSFrame">{{80, 420}, {80, 40}}</string>
 							<reference key="NSSuperview" ref="536737539"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="8340717"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="IBUIOpaque">NO</bool>
@@ -219,13 +187,14 @@
 							<reference key="IBUISelectedBackgroundImage" ref="664305725"/>
 							<reference key="IBUINormalBackgroundImage" ref="664305725"/>
 							<reference key="IBUIFontDescription" ref="175877066"/>
-							<reference key="IBUIFont" ref="321218281"/>
+							<reference key="IBUIFont" ref="377340472"/>
 						</object>
 						<object class="IBUIButton" id="8340717">
 							<reference key="NSNextResponder" ref="536737539"/>
 							<int key="NSvFlags">-2147482337</int>
 							<string key="NSFrame">{{128, 420}, {64, 40}}</string>
 							<reference key="NSSuperview" ref="536737539"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="65514877"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="IBUIOpaque">NO</bool>
@@ -256,13 +225,14 @@
 							<reference key="IBUISelectedBackgroundImage" ref="385119682"/>
 							<reference key="IBUINormalBackgroundImage" ref="664305725"/>
 							<reference key="IBUIFontDescription" ref="175877066"/>
-							<reference key="IBUIFont" ref="321218281"/>
+							<reference key="IBUIFont" ref="377340472"/>
 						</object>
 						<object class="IBUIButton" id="65514877">
 							<reference key="NSNextResponder" ref="536737539"/>
 							<int key="NSvFlags">1311</int>
 							<string key="NSFrame">{{160, 420}, {80, 40}}</string>
 							<reference key="NSSuperview" ref="536737539"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="940416538"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="IBUIOpaque">NO</bool>
@@ -290,13 +260,14 @@
 							<reference key="IBUISelectedBackgroundImage" ref="664305725"/>
 							<reference key="IBUINormalBackgroundImage" ref="664305725"/>
 							<reference key="IBUIFontDescription" ref="175877066"/>
-							<reference key="IBUIFont" ref="321218281"/>
+							<reference key="IBUIFont" ref="377340472"/>
 						</object>
 						<object class="IBUIButton" id="940416538">
 							<reference key="NSNextResponder" ref="536737539"/>
 							<int key="NSvFlags">1307</int>
 							<string key="NSFrame">{{240, 420}, {80, 40}}</string>
 							<reference key="NSSuperview" ref="536737539"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="799874679"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="IBUIOpaque">NO</bool>
@@ -324,12 +295,13 @@
 							<reference key="IBUISelectedBackgroundImage" ref="664305725"/>
 							<reference key="IBUINormalBackgroundImage" ref="664305725"/>
 							<reference key="IBUIFontDescription" ref="175877066"/>
-							<reference key="IBUIFont" ref="321218281"/>
+							<reference key="IBUIFont" ref="377340472"/>
 						</object>
 					</array>
 					<object class="NSPSMatrix" key="NSFrameMatrix"/>
 					<string key="NSFrame">{{0, 20}, {320, 460}}</string>
 					<reference key="NSSuperview"/>
+					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="82418722"/>
 					<reference key="IBUIBackgroundColor" ref="187596991"/>
 					<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -819,9 +791,7 @@
 					<object class="IBObjectRecord">
 						<string key="id">2</string>
 						<reference key="object" ref="315381493"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="901642894"/>
-						</array>
+						<array class="NSMutableArray" key="children"/>
 						<reference key="parent" ref="0"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -1065,11 +1035,6 @@
 						<reference key="object" ref="940416538"/>
 						<reference key="parent" ref="536737539"/>
 					</object>
-					<object class="IBObjectRecord">
-						<string key="id">aI8-TO-mBC</string>
-						<reference key="object" ref="901642894"/>
-						<reference key="parent" ref="315381493"/>
-					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -1167,8 +1132,6 @@
 				<string key="6s3-T8-ZMv.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="0.0" key="6s3-T8-ZMv.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="NwP-O0-hhE.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="aI8-TO-mBC.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="1" key="aI8-TO-mBC.IBUIButtonInspectorSelectedEdgeInsetMetadataKey"/>
 				<string key="kwc-mU-X61.CustomClassName">MenuButton</string>
 				<string key="kwc-mU-X61.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="2" key="kwc-mU-X61.IBUIButtonInspectorSelectedEdgeInsetMetadataKey"/>
@@ -1189,7 +1152,396 @@
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">DetailNavigationViewController</string>
+					<string key="superclassName">UINavigationController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/DetailNavigationViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">FavoritesTableViewController</string>
+					<string key="superclassName">UIViewController</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="favoritesTableView">UITableView</string>
+						<string key="loadingView">UIView</string>
+						<string key="maintenanceView">UILabel</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="favoritesTableView">
+							<string key="name">favoritesTableView</string>
+							<string key="candidateClassName">UITableView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="loadingView">
+							<string key="name">loadingView</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="maintenanceView">
+							<string key="name">maintenanceView</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/FavoritesTableViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">ForumsTableViewController</string>
+					<string key="superclassName">UIViewController</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="forumsTableView">UITableView</string>
+						<string key="loadingView">UIView</string>
+						<string key="maintenanceView">UILabel</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="forumsTableView">
+							<string key="name">forumsTableView</string>
+							<string key="candidateClassName">UITableView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="loadingView">
+							<string key="name">loadingView</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="maintenanceView">
+							<string key="name">maintenanceView</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/ForumsTableViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">HFRMPViewController</string>
+					<string key="superclassName">TopicsTableViewController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/HFRMPViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">HFRSearchViewController</string>
+					<string key="superclassName">UIViewController</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="loadingView">UIView</string>
+						<string key="maintenanceView">UILabel</string>
+						<string key="theSearchBar">UISearchBar</string>
+						<string key="theTableView">UITableView</string>
+						<string key="tmpCell">TopicSearchCellView</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="loadingView">
+							<string key="name">loadingView</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="maintenanceView">
+							<string key="name">maintenanceView</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="theSearchBar">
+							<string key="name">theSearchBar</string>
+							<string key="candidateClassName">UISearchBar</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="theTableView">
+							<string key="name">theTableView</string>
+							<string key="candidateClassName">UITableView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="tmpCell">
+							<string key="name">tmpCell</string>
+							<string key="candidateClassName">TopicSearchCellView</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/HFRSearchViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">HFRplusAppDelegate</string>
+					<string key="superclassName">NSObject</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="detailNavigationController">DetailNavigationViewController</string>
+						<string key="favoritesNavController">UINavigationController</string>
+						<string key="forumsNavController">UINavigationController</string>
+						<string key="messagesNavController">UINavigationController</string>
+						<string key="rootController">MenuViewController</string>
+						<string key="searchNavController">UINavigationController</string>
+						<string key="splitViewController">SplitViewController</string>
+						<string key="window">UIWindow</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="detailNavigationController">
+							<string key="name">detailNavigationController</string>
+							<string key="candidateClassName">DetailNavigationViewController</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="favoritesNavController">
+							<string key="name">favoritesNavController</string>
+							<string key="candidateClassName">UINavigationController</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="forumsNavController">
+							<string key="name">forumsNavController</string>
+							<string key="candidateClassName">UINavigationController</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="messagesNavController">
+							<string key="name">messagesNavController</string>
+							<string key="candidateClassName">UINavigationController</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="rootController">
+							<string key="name">rootController</string>
+							<string key="candidateClassName">MenuViewController</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="searchNavController">
+							<string key="name">searchNavController</string>
+							<string key="candidateClassName">UINavigationController</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="splitViewController">
+							<string key="name">splitViewController</string>
+							<string key="candidateClassName">SplitViewController</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="window">
+							<string key="name">window</string>
+							<string key="candidateClassName">UIWindow</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/HFRplusAppDelegate.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">IASKAppSettingsViewController</string>
+					<string key="superclassName">UITableViewController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">dismiss:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">dismiss:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">dismiss:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">delegate</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">delegate</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">delegate</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/IASKAppSettingsViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">InfosViewController</string>
+					<string key="superclassName">UITableViewController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/InfosViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MenuButton</string>
+					<string key="superclassName">UIButton</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/MenuButton.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MenuViewController</string>
+					<string key="superclassName">UIViewController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">switchBtn:forEvent:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">switchBtn:forEvent:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">switchBtn:forEvent:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="btnCategories">MenuButton</string>
+						<string key="btnFavoris">MenuButton</string>
+						<string key="btnMessages">MenuButton</string>
+						<string key="btnSearch">MenuButton</string>
+						<string key="btnTabs">MenuButton</string>
+						<string key="menuView">UIView</string>
+						<string key="popoverView">UIView</string>
+						<string key="scrollView">UIScrollView</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="btnCategories">
+							<string key="name">btnCategories</string>
+							<string key="candidateClassName">MenuButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="btnFavoris">
+							<string key="name">btnFavoris</string>
+							<string key="candidateClassName">MenuButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="btnMessages">
+							<string key="name">btnMessages</string>
+							<string key="candidateClassName">MenuButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="btnSearch">
+							<string key="name">btnSearch</string>
+							<string key="candidateClassName">MenuButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="btnTabs">
+							<string key="name">btnTabs</string>
+							<string key="candidateClassName">MenuButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="menuView">
+							<string key="name">menuView</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="popoverView">
+							<string key="name">popoverView</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="scrollView">
+							<string key="name">scrollView</string>
+							<string key="candidateClassName">UIScrollView</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/MenuViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">PageViewController</string>
+					<string key="superclassName">UIViewController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/PageViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">SettingsViewController</string>
+					<string key="superclassName">IASKAppSettingsViewController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/SettingsViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">SplitViewController</string>
+					<string key="superclassName">UISplitViewController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/SplitViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">TabBarController</string>
+					<string key="superclassName">UITabBarController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/TabBarController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">TopicCellView</string>
+					<string key="superclassName">UITableViewCell</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="msgLabel">UILabel</string>
+						<string key="timeLabel">UILabel</string>
+						<string key="titleLabel">UILabel</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="msgLabel">
+							<string key="name">msgLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="timeLabel">
+							<string key="name">timeLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="titleLabel">
+							<string key="name">titleLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/TopicCellView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">TopicSearchCellView</string>
+					<string key="superclassName">UITableViewCell</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="msgLabel">UILabel</string>
+						<string key="timeLabel">UILabel</string>
+						<string key="titleLabel">UILabel</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="msgLabel">
+							<string key="name">msgLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="timeLabel">
+							<string key="name">timeLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="titleLabel">
+							<string key="name">titleLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/TopicSearchCellView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">TopicsTableViewController</string>
+					<string key="superclassName">PageViewController</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="loadingView">UIView</string>
+						<string key="maintenanceView">UILabel</string>
+						<string key="tmpCell">TopicCellView</string>
+						<string key="topicsTableView">UITableView</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="loadingView">
+							<string key="name">loadingView</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="maintenanceView">
+							<string key="name">maintenanceView</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="tmpCell">
+							<string key="name">tmpCell</string>
+							<string key="candidateClassName">TopicCellView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="topicsTableView">
+							<string key="name">topicsTableView</string>
+							<string key="candidateClassName">UITableView</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/TopicsTableViewController.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
@@ -1203,7 +1555,6 @@
 			<string key="18-envelope.png">{24, 16}</string>
 			<string key="28-star.png">{26, 26}</string>
 			<string key="44-shoebox.png">{24, 22}</string>
-			<string key="accessoryDefault.png">{32, 32}</string>
 			<string key="black_dot.png">{1, 1}</string>
 			<string key="categories.png">{32, 32}</string>
 			<string key="categories_on.png">{32, 32}</string>
