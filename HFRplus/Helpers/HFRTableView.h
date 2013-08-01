@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PullTableView.h"
 
-@interface HFRTableView : UITableView
+@interface HFRTableView : PullTableView
 
 @end

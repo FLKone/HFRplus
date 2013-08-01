@@ -109,6 +109,47 @@
 	}
 }
 
+#pragma mark - PullTableViewDelegate
+
+- (void)pullTableViewDidTriggerRefresh:(PullTableView *)pullTableView
+{
+    NSLog(@"pullTableViewDidTriggerRefresh");
+    
+    
+    [self performSelector:@selector(refreshTable) withObject:nil afterDelay:3.0f];
+}
+
+- (void)pullTableViewDidTriggerLoadMore:(PullTableView *)pullTableView
+{
+    NSLog(@"pullTableViewDidTriggerLoadMore");
+    
+    
+    [self performSelector:@selector(loadMoreDataToTable) withObject:nil afterDelay:3.0f];
+}
+
+#pragma mark - Refresh and load more methods
+
+- (void) refreshTable
+{
+    /*
+     
+     Code to actually refresh goes here.
+     
+     */
+    self.forumsTableView.pullLastRefreshDate = [NSDate date];
+    self.forumsTableView.pullTableIsRefreshing = NO;
+}
+
+- (void) loadMoreDataToTable
+{
+    /*
+     
+     Code to actually load more data goes here.
+     
+     */
+    self.forumsTableView.pullTableIsLoadingMore = NO;
+}
+
 #pragma mark -
 #pragma mark View lifecycle
 

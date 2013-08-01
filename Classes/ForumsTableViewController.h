@@ -9,8 +9,8 @@
 #import "ASIHTTPRequest.h"
 
 @class TopicsTableViewController;
-@interface ForumsTableViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
-	IBOutlet UITableView *forumsTableView;
+@interface ForumsTableViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, PullTableViewDelegate> {
+	IBOutlet HFRTableView *forumsTableView;
 	IBOutlet UIView *loadingView;
 
 	NSMutableArray *arrayData;
@@ -23,7 +23,7 @@
 	IBOutlet UILabel *maintenanceView;	
 }
 
-@property (nonatomic, retain) IBOutlet UITableView *forumsTableView;
+@property (nonatomic, retain) IBOutlet HFRTableView *forumsTableView;
 @property (nonatomic, retain) IBOutlet UIView *loadingView;
 
 @property (nonatomic, retain) NSMutableArray *arrayData;

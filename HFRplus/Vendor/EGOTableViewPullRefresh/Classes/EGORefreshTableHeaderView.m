@@ -229,24 +229,30 @@
 
 - (void)egoRefreshScrollViewDidScroll:(UIScrollView *)scrollView {	
     
+    NSLog(@" scrollView.contentOffset.y = %f", scrollView.contentOffset.y);
+    
 	if (_state == EGOOPullLoading) {
-		CGFloat offset = MAX(scrollView.contentOffset.y * -1, 0);
+		CGFloat offset = MAX(scrollView.contentOffset.y * -1, kTableViewContentInsetTop);
+        
+        NSLog(@"offset = %f", offset);
+        
 		offset = MIN(offset, PULL_AREA_HEIGTH);
         UIEdgeInsets currentInsets = scrollView.contentInset;
         currentInsets.top = offset;
         scrollView.contentInset = currentInsets;
 		
 	} else if (scrollView.isDragging) {
-		if (_state == EGOOPullPulling && scrollView.contentOffset.y > -PULL_TRIGGER_HEIGHT && scrollView.contentOffset.y < 0.0f && !isLoading) {
+		if (_state == EGOOPullPulling && scrollView.contentOffset.y > -PULL_TRIGGER_HEIGHT && scrollView.contentOffset.y < kTableViewContentInsetTop && !isLoading) {
 			[self setState:EGOOPullNormal];
 		} else if (_state == EGOOPullNormal && scrollView.contentOffset.y < -PULL_TRIGGER_HEIGHT && !isLoading) {
 			[self setState:EGOOPullPulling];
             
 		}
 		
-		if (scrollView.contentInset.top != 0) {
+		if (scrollView.contentInset.top != kTableViewContentInsetTop) {
+            NSLog(@"=== 0");
             UIEdgeInsets currentInsets = scrollView.contentInset;
-            currentInsets.top = 0;
+            currentInsets.top = kTableViewContentInsetTop;
             scrollView.contentInset = currentInsets;
 		}
 		
@@ -255,6 +261,10 @@
 }
 
 - (void)startAnimatingWithScrollView:(UIScrollView *) scrollView {
+    
+    NSLog(@" scrollView.contentOffset.y = %f", scrollView.contentOffset.y);
+
+    
     isLoading = YES;
     
     [self setState:EGOOPullLoading];
@@ -264,13 +274,16 @@
     currentInsets.top = PULL_AREA_HEIGTH;
     scrollView.contentInset = currentInsets;
     [UIView commitAnimations];
-    if(scrollView.contentOffset.y == 0){
+    if(scrollView.contentOffset.y == kTableViewContentInsetTop){
+        NSLog(@"setContentOffset %@", NSStringFromCGPoint(CGPointMake(scrollView.contentOffset.x, -PULL_TRIGGER_HEIGHT)));
         [scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, -PULL_TRIGGER_HEIGHT) animated:YES];
     }    
 }
 
 - (void)egoRefreshScrollViewDidEndDragging:(UIScrollView *)scrollView {
 	
+    NSLog(@" scrollView.contentOffset.y = %f", scrollView.contentOffset.y);
+
 	
 	if (scrollView.contentOffset.y <= - PULL_TRIGGER_HEIGHT && !isLoading) {
         if ([_delegate respondsToSelector:@selector(egoRefreshTableHeaderDidTriggerRefresh:)]) {
@@ -288,7 +301,7 @@
 	[UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationDuration:.3];
     UIEdgeInsets currentInsets = scrollView.contentInset;
-    currentInsets.top = 0;
+    currentInsets.top = kTableViewContentInsetTop;
     scrollView.contentInset = currentInsets;
 	[UIView commitAnimations];
 	

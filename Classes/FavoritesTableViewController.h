@@ -11,8 +11,8 @@
 @class ASIHTTPRequest;
 
 @interface FavoritesTableViewController : UIViewController <UIActionSheetDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIAlertViewDelegate> {
-	UITableView *favoritesTableView;
-	UIView *loadingView;
+	IBOutlet HFRTableView *favoritesTableView;
+	IBOutlet UIView *loadingView;
 
     NSMutableArray *arrayNewData;
 

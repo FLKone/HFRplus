@@ -17,7 +17,7 @@
 #import "NewMessageViewController.h"
 
 @interface TopicsTableViewController : PageViewController <AddMessageViewControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate, UIGestureRecognizerDelegate, UITableViewDelegate, UITableViewDataSource> {
-	IBOutlet UITableView *topicsTableView;
+	IBOutlet HFRTableView *topicsTableView;
 	IBOutlet UIView *loadingView;
 
 	NSString *forumName;
@@ -72,7 +72,7 @@
 @property (nonatomic, retain) UIActionSheet *actionSheet;
 @property (nonatomic, retain) UIActionSheet *topicActionSheet;
 
-@property (nonatomic, retain) IBOutlet UITableView *topicsTableView;
+@property (nonatomic, retain) IBOutlet HFRTableView *topicsTableView;
 @property (nonatomic, retain) IBOutlet UIView *loadingView;
 
 @property (nonatomic, retain) NSString *forumName;

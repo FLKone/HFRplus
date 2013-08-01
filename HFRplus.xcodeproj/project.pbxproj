@@ -59,10 +59,10 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
-		CA0484B417A89464000CA138 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA0484A417A89464000CA138 /* EGORefreshTableHeaderView.m */; };
-		CA0484B517A89464000CA138 /* LoadMoreTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA0484A617A89464000CA138 /* LoadMoreTableFooterView.m */; };
-		CA0484B617A89464000CA138 /* MessageInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = CA0484A817A89464000CA138 /* MessageInterceptor.m */; };
-		CA0484B717A89464000CA138 /* PullTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA0484AA17A89464000CA138 /* PullTableView.m */; };
+		CA0484B417A89464000CA138 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA0484A417A89464000CA138 /* EGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CA0484B517A89464000CA138 /* LoadMoreTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA0484A617A89464000CA138 /* LoadMoreTableFooterView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CA0484B617A89464000CA138 /* MessageInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = CA0484A817A89464000CA138 /* MessageInterceptor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CA0484B717A89464000CA138 /* PullTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA0484AA17A89464000CA138 /* PullTableView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CA0484B817A89464000CA138 /* blackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = CA0484AC17A89464000CA138 /* blackArrow.png */; };
 		CA0484B917A89464000CA138 /* blackArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA0484AD17A89464000CA138 /* blackArrow@2x.png */; };
 		CA0484BA17A89464000CA138 /* blueArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = CA0484AE17A89464000CA138 /* blueArrow.png */; };
