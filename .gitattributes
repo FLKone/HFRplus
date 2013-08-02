@@ -1,3 +1,4 @@
 *.pbxproj -crlf -merge
 *.m	diff=objc
 *.mm	diff=objc
+*.string	diff=objc
