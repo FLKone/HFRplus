@@ -20,7 +20,7 @@
 
 @implementation ForumsTableViewController
 @synthesize request;
-@synthesize forumsTableView, loadingView, arrayData, topicsTableViewController;
+@synthesize forumsTableView, loadingView, arrayData, arrayNewData, topicsTableViewController;
 @synthesize status, statusMessage, maintenanceView;
 #pragma mark -
 #pragma mark Data lifecycle
@@ -29,11 +29,25 @@
 {    
     NSLog(@"cancelFetchContent");
 
-    [self.request cancel];
+    self.forumsTableView.pullTableIsRefreshing = NO;
+
+    
+    //[self.request cancel];
 }
 
 - (void)fetchContent
 {
+    NSLog(@"fetchContent");
+
+    
+    if(!self.forumsTableView.pullTableIsRefreshing) {
+        self.forumsTableView.pullTableIsRefreshing = YES;
+    }
+    
+	//Bouton Stop
+    UIBarButtonItem *reloadBarItem = [UIBarButtonItem barItemWithImageNamed:@"stop" title:@"" target:self action:@selector(cancelFetchContent)];
+	self.navigationItem.rightBarButtonItem = reloadBarItem;
+    
 	self.status = kIdle;	
 
     [ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];    
@@ -48,26 +62,24 @@
     
     [request startAsynchronous];
 
+    [self.loadingView setHidden:YES];
+    [self.maintenanceView setHidden:YES];
 }
 
 - (void)request:(ASIHTTPRequest *)request didReceiveBytes:(long long)bytes
 {
-    NSLog(@"bytes %lld", bytes);
+    //NSLog(@"bytes %lld", bytes);
 }
 
 - (void)fetchContentStarted:(ASIHTTPRequest *)theRequest
 {
     NSLog(@"fetchContentStarted");
-    
-	//Bouton Stop
-    UIBarButtonItem *reloadBarItem = [UIBarButtonItem barItemWithImageNamed:@"stop" title:@"" target:self action:@selector(cancelFetchContent)];
-	self.navigationItem.rightBarButtonItem = reloadBarItem;
 
-    [self.arrayData removeAllObjects];
-	[self.forumsTableView reloadData];
+    //[self.arrayData removeAllObjects];
+	//[self.forumsTableView reloadData];
     
-	[self.maintenanceView setHidden:YES];
-	[self.loadingView setHidden:NO];
+	//[self.maintenanceView setHidden:YES];
+	//[self.loadingView setHidden:NO];
 }
 
 - (void)fetchContentComplete:(ASIHTTPRequest *)theRequest
@@ -79,11 +91,20 @@
     UIBarButtonItem *reloadBarItem = [UIBarButtonItem barItemWithImageNamed:@"reload" title:@"" target:self action:@selector(reload)];
 	self.navigationItem.rightBarButtonItem = reloadBarItem;
     
-    [self.loadingView setHidden:YES];
+    //[self.loadingView setHidden:YES];
 	
     [self loadDataInTableView:[theRequest responseData]];
     
-	[self.forumsTableView reloadData];    
+    [self.arrayData removeAllObjects];
+    
+    self.arrayData = [NSMutableArray arrayWithArray:self.arrayNewData];
+    
+    [self.arrayNewData removeAllObjects];
+    
+	[self.forumsTableView reloadData];
+    
+    self.forumsTableView.pullLastRefreshDate = [NSDate date];
+    self.forumsTableView.pullTableIsRefreshing = NO;
 }
 
 - (void)fetchContentFailed:(ASIHTTPRequest *)theRequest
@@ -99,7 +120,9 @@
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[theRequest.error localizedDescription]
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
 	[alert show];
-	[alert release];	
+	[alert release];
+    
+    self.forumsTableView.pullTableIsRefreshing = NO;
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -115,18 +138,18 @@
 {
     NSLog(@"pullTableViewDidTriggerRefresh");
     
-    
-    [self performSelector:@selector(refreshTable) withObject:nil afterDelay:3.0f];
+    [self performSelector:@selector(fetchContent)];
+//    [self performSelector:@selector(fetchContent) withObject:nil afterDelay:0.0f];
 }
-
+/*
 - (void)pullTableViewDidTriggerLoadMore:(PullTableView *)pullTableView
 {
     NSLog(@"pullTableViewDidTriggerLoadMore");
     
     
-    [self performSelector:@selector(loadMoreDataToTable) withObject:nil afterDelay:3.0f];
+    [self performSelector:@selector(loadMoreDataToTable) withObject:nil afterDelay:0.0f];
 }
-
+*/
 #pragma mark - Refresh and load more methods
 
 - (void) refreshTable
@@ -714,7 +737,7 @@
 		//--- Sous categories
 
 		if ([aForumURL rangeOfString:@"cat=prive"].location == NSNotFound) {
-			[arrayData addObject:aForum];
+			[arrayNewData addObject:aForum];
 		}
 		else {
 			NSString *regExMP = @"[^.0-9]+([0-9]{1,})[^.0-9]+";			
@@ -736,13 +759,13 @@
     [super viewDidLoad];
 	
     self.title = @" ";
-    UIImage *image = [[UIImage imageNamed:@"categories"] offColor];
-    self.navigationItem.titleView = [[[UIImageView alloc] initWithImage:image] autorelease];
+    //UIImage *image = [[UIImage imageNamed:@"categories"] offColor];
+    //self.navigationItem.titleView = [[[UIImageView alloc] initWithImage:image] autorelease];
     
     [self.forumsTableView setRowHeight:kTableViewCellRowHeight];
     //[self.forumsTableView setSeparatorColor:[UIColor redColor]];
     [self.forumsTableView setSeparatorColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_dot_a"]]];
-	
+    
     //Bouton Reload
     UIBarButtonItem *reloadBarItem = [UIBarButtonItem barItemWithImageNamed:@"reload" title:@"" target:self action:@selector(reload)];
 	self.navigationItem.rightBarButtonItem = reloadBarItem;
@@ -754,6 +777,7 @@
 	[(ShakeView*)self.view setShakeDelegate:self];
 
 	self.arrayData = [[NSMutableArray alloc] init];
+	self.arrayNewData = [[NSMutableArray alloc] init];
 	self.statusMessage = [[NSString alloc] init];
 
     UIView *v = [[UIView alloc] initWithFrame:CGRectZero];
@@ -762,6 +786,7 @@
     [v release];
     
 	[self fetchContent];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -769,7 +794,7 @@
 
 	
     [super viewWillAppear:animated];
-	[self.view becomeFirstResponder];
+	//[self.view becomeFirstResponder];
 
 	if (self.topicsTableViewController) {
 		//NSLog(@"viewWillAppear Forums Table View RELEASE %@", topicsTableViewController);
@@ -926,6 +951,7 @@
 	[self viewDidUnload];
 
 	self.arrayData = nil;
+	self.arrayNewData = nil;
 
 	[request cancel];
 	//[request setDelegate:nil];

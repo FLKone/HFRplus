@@ -34,7 +34,10 @@
 @protocol PullTableViewDelegate <NSObject>
 
 /* After one of the delegate methods is invoked a loading animation is started, to end it use the respective status update property */
+@required
 - (void)pullTableViewDidTriggerRefresh:(PullTableView*)pullTableView;
+
+@optional
 - (void)pullTableViewDidTriggerLoadMore:(PullTableView*)pullTableView;
 
 @end
@@ -57,6 +60,9 @@
     UIColor *pullTextColor;
     NSDate *pullLastRefreshDate;
     
+    BOOL disableLoadingMore;
+
+    
     // Status
     BOOL pullTableIsRefreshing;
     BOOL pullTableIsLoadingMore;
@@ -70,6 +76,7 @@
 @property (nonatomic, retain) UIImage *pullArrowImage;
 @property (nonatomic, retain) UIColor *pullBackgroundColor;
 @property (nonatomic, retain) UIColor *pullTextColor;
+@property (nonatomic, assign) BOOL disableLoadingMore;
 
 /* Set to nil to hide last modified text */
 @property (nonatomic, retain) NSDate *pullLastRefreshDate;

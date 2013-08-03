@@ -71,6 +71,8 @@
 
 - (void) config
 {
+    NSLog(@"============== CONFIG %d", self.disableLoadingMore);
+    
     /* Message interceptor to intercept scrollView delegate messages */
     delegateInterceptor = [[MessageInterceptor alloc] init];
     delegateInterceptor.middleMan = self;
@@ -88,11 +90,13 @@
     [self addSubview:refreshView];
     
     /* Load more view init */
-    loadMoreView = [[LoadMoreTableFooterView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height, self.bounds.size.width, self.bounds.size.height)];
-    loadMoreView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
-    loadMoreView.delegate = self;
-    [self addSubview:loadMoreView];
-    
+    if (!self.disableLoadingMore) {
+        loadMoreView = [[LoadMoreTableFooterView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height, self.bounds.size.width, self.bounds.size.height)];
+        loadMoreView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+        loadMoreView.delegate = self;
+        [self addSubview:loadMoreView];
+    }
+
 }
 
 
@@ -167,6 +171,7 @@
 @synthesize pullBackgroundColor;
 @synthesize pullTextColor;
 @synthesize pullLastRefreshDate;
+@synthesize disableLoadingMore;
 
 - (void)configDisplayProperties
 {

@@ -469,9 +469,9 @@
     NSLog(@"originY %f", originY);
     NSLog(@"self.offsetY %d", self.offsetY);
     
-	self.textView.contentInset = UIEdgeInsetsMake(originY+44, 0.0f, 0.0f, 0.0f);
-	self.textView.scrollIndicatorInsets = UIEdgeInsetsMake(44.0f, 0.0f, 0.0f, 0.0f);
-	self.textView.contentOffset = CGPointMake(0.0f, self.offsetY+44);
+	self.textView.contentInset = UIEdgeInsetsMake(originY + kTableViewContentInsetTop, 0.0f, 0.0f, 0.0f);
+	self.textView.scrollIndicatorInsets = UIEdgeInsetsMake(kTableViewContentInsetTop, 0.0f, 0.0f, 0.0f);
+	self.textView.contentOffset = CGPointMake(0.0f, self.offsetY + kTableViewContentInsetTop);
 	//--- EDITOR
 	
 	//-----

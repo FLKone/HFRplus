@@ -32,7 +32,7 @@
     
     self.isAnimating = NO;
     
-    NSLog(@"VDL");
+    //NSLog(@"VDL");
     //[UIColor colorWithRed:242/255.f green:144/255.f blue:27/255.f alpha:1.0f]
     //[UIFont boldSystemFontOfSize:15.0], UITextAttributeFont,
     NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -154,7 +154,7 @@
         
         x += 340;
         
-        NSLog(@"i = %d |  mod %d", i, i%2);
+        //NSLog((@"i = %d |  mod %d", i, i%2);
         
         if (i%2) {
             x = 20;
@@ -188,7 +188,7 @@
 
 
 - (void)viewDidAppear:(BOOL)animated {
-    NSLog(@"viewDidAppear %d", animated);
+    //NSLog(@"viewDidAppear %d", animated);
     /*
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	int tab = [[defaults stringForKey:@"default_tab"] integerValue];
@@ -219,7 +219,7 @@
                          newOffset.x += _containerView.frame.origin.x;
                          newOffset.y += _containerView.frame.origin.y;
                          
-                         NSLog(@"offset %@", NSStringFromCGPoint(newOffset));
+                         //NSLog(@"offset %@", NSStringFromCGPoint(newOffset));
                          
                          
                          _scrollView.maximumZoomScale = 1;
@@ -229,13 +229,13 @@
                      }
                      completion:^(BOOL finished){
                          
-                         NSLog(@"finish");
+                         //NSLog(@"finish");
                      }];
 
 }
 
 -(void)oneTap:(UITapGestureRecognizer *)sender {
-    NSLog(@"oneTap %@", sender.view);
+    //NSLog(@"oneTap %@", sender.view);
     [self zoomToView:sender.view];
 }
 
@@ -307,10 +307,10 @@
 
 
 - (IBAction)switchBtn:(MenuButton *)sender forEvent:(UIEvent *)event {
-    NSLog(@"switchBtn %d", self.isAnimating);
+    //NSLog(@"switchBtn %d", self.isAnimating);
 
     if (self.isAnimating) {
-        NSLog(@"isAnimating CANCEL ANIMATION");
+        //NSLog(@"isAnimating CANCEL ANIMATION");
         return;
         //[_popoverView.layer removeAllAnimations];
     }
@@ -334,7 +334,7 @@
     
     //  Desactiver le bouton actif //TODO
     if (_activeMenu) {
-        NSLog(@"================ desactiver ancien");
+        //NSLog(@"================ desactiver ancien");
         [_activeMenu setHighlighted:NO];
         [_activeMenu setSelected:NO];
         
@@ -345,7 +345,7 @@
             //NSLog(@"desactiver ancien");
             //[_activeMenu sendActionsForControlEvents:UIControlEventTouchUpInside];
             
-            NSLog(@"_activeMenu %@", _activeMenu);
+            //NSLog(@"_activeMenu %@", _activeMenu);
             
             
             
@@ -367,7 +367,7 @@
                                  
                                  [_activeController.view removeFromSuperview];
                                  self.isAnimating = NO;
-                                 NSLog(@"REMOVE isAnimating %d", self.isAnimating);
+                                 //NSLog(@"REMOVE isAnimating %d", self.isAnimating);
                                  
                                  [self showTool:sender];
                              }];
@@ -384,7 +384,7 @@
     }
     
     
-    NSLog(@"END STCH");
+    //NSLog(@"END STCH");
 }
 
 
@@ -407,7 +407,7 @@
         [UIView animateWithDuration:0.200 delay:0
                             options:UIViewAnimationOptionCurveEaseInOut|UIViewAnimationOptionBeginFromCurrentState
                          animations:^{
-                             NSLog(@"START ANIMATION CATEGORIES");
+                             //NSLog(@"START ANIMATION CATEGORIES");
 
                              
                              UINavigationController *navigationController;
@@ -430,7 +430,7 @@
                              
                          } completion:^(BOOL finished) {
                              self.isAnimating = NO;
-                             NSLog(@"ADD isAnimating %d", self.isAnimating);
+                             //NSLog(@"ADD isAnimating %d", self.isAnimating);
                          }];
     }
     else if (sender == self.btnFavoris) {
@@ -444,7 +444,7 @@
         [UIView animateWithDuration:0.200 delay:0
                             options:UIViewAnimationOptionCurveEaseInOut|UIViewAnimationOptionBeginFromCurrentState
                          animations:^{
-                             NSLog(@"START ANIMATION FAVORIS");
+                             //NSLog(@"START ANIMATION FAVORIS");
                                                           
                              UINavigationController *navigationController;
                              
@@ -465,7 +465,7 @@
                              
                          } completion:^(BOOL finished) {
                              self.isAnimating = NO;
-                             NSLog(@"ADD isAnimating %d", self.isAnimating);
+                             //NSLog(@"ADD isAnimating %d", self.isAnimating);
                          }];
         
     }
@@ -480,7 +480,7 @@
         [UIView animateWithDuration:0.200 delay:0
                             options:UIViewAnimationOptionCurveEaseInOut|UIViewAnimationOptionBeginFromCurrentState
                          animations:^{
-                             NSLog(@"START ANIMATION SEARCH");
+                             //NSLog(@"START ANIMATION SEARCH");
                              
                              UINavigationController *navigationController;
                              
@@ -502,7 +502,7 @@
                              
                          } completion:^(BOOL finished) {
                              self.isAnimating = NO;
-                             NSLog(@"ADD isAnimating %d", self.isAnimating);
+                             //NSLog(@"ADD isAnimating %d", self.isAnimating);
                          }];
         
     }
@@ -517,7 +517,7 @@
         [UIView animateWithDuration:0.200 delay:0
                             options:UIViewAnimationOptionCurveEaseInOut|UIViewAnimationOptionBeginFromCurrentState
                          animations:^{
-                             NSLog(@"START ANIMATION MP");
+                             //NSLog(@"START ANIMATION MP");
                              
                              UINavigationController *navigationController;
                              
@@ -539,7 +539,7 @@
                              
                          } completion:^(BOOL finished) {
                              self.isAnimating = NO;
-                             NSLog(@"ADD isAnimating %d", self.isAnimating);
+                             //NSLog(@"ADD isAnimating %d", self.isAnimating);
                          }];
         
     }
@@ -562,11 +562,11 @@
             
             for (UIView *view in _tabsViews) {
                 if ([view subviews].count == 2) {
-                    NSLog(@"[view subviews] %@", [view subviews]);
+                    //NSLog(@"[view subviews] %@", [view subviews]);
                     
                     UIView* tapView = [[view subviews] objectAtIndex:1];
                     if (tapView.alpha == 0) {
-                        NSLog(@"sds");
+                        //NSLog(@"sds");
                         tapView.alpha = .8;
                     }
                 }
@@ -579,7 +579,7 @@
 
 - (void)loadTab:(id)viewController
 {
-    NSLog(@"loadTab %@", viewController);
+    //NSLog(@"loadTab %@", viewController);
     
     if ([[_tabsViews objectAtIndex:0] subviews].count == 2) {
         [_navigationTab1Controller removeFromParentViewController];
@@ -596,7 +596,7 @@
     [self addChildViewController:_navigationTab1Controller];
     [_navigationTab1Controller didMoveToParentViewController:self];
 
-    NSLog(@"subs B %@", [[_tabsViews objectAtIndex:0] subviews]);
+    //NSLog(@"subs B %@", [[_tabsViews objectAtIndex:0] subviews]);
 
     _navigationTab1Controller.view.frame = ((UIView *)[[[_tabsViews objectAtIndex:0] subviews] objectAtIndex:0]).frame;
     [[_tabsViews objectAtIndex:0] insertSubview:_navigationTab1Controller.view belowSubview:[[[_tabsViews objectAtIndex:0] subviews] objectAtIndex:0]];
@@ -606,12 +606,12 @@
     
     
 
-    NSLog(@"subs A %@", [[_tabsViews objectAtIndex:0] subviews]);
+    //NSLog(@"subs A %@", [[_tabsViews objectAtIndex:0] subviews]);
 }
 
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    NSLog(@"shouldAutorotateToInterfaceOrientation");
+    //NSLog(@"shouldAutorotateToInterfaceOrientation");
 
 	// Get user preference
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -628,7 +628,7 @@
 /* for iOS6 support */
 - (NSUInteger)supportedInterfaceOrientations
 {
-    NSLog(@"supportedInterfaceOrientations");
+    //NSLog(@"supportedInterfaceOrientations");
     
 	if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"landscape_mode"] isEqualToString:@"all"]) {
         //NSLog(@"All");

@@ -554,8 +554,8 @@
     [self.messagesWebView setBackgroundColor:[UIColor whiteColor]];
     //[self.messagesWebView.scrollView setScrollsToTop:NO];
     [self.messagesWebView hideGradientBackground];
-    [self.messagesWebView.scrollView setContentInset:UIEdgeInsetsMake(44, 0, 39, 0)];
-    [self.messagesWebView.scrollView setScrollIndicatorInsets:UIEdgeInsetsMake(44, 0, 39, 0)];
+    [self.messagesWebView.scrollView setContentInset:UIEdgeInsetsMake(kTableViewContentInsetTop, 0, kTableViewContentInsetBottom, 0)];
+    [self.messagesWebView.scrollView setScrollIndicatorInsets:UIEdgeInsetsMake(kTableViewContentInsetTop, 0, kTableViewContentInsetBottom, 0)];
     
 	//Gesture
 	UIGestureRecognizer *recognizer;

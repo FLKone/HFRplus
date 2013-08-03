@@ -33,14 +33,14 @@ typedef enum{
 	EGOOPullLoading,	
 } EGOPullState;
 
-#define DEFAULT_ARROW_IMAGE         [UIImage imageNamed:@"blueArrow.png"]
-#define DEFAULT_BACKGROUND_COLOR    [UIColor colorWithRed:226.0/255.0 green:231.0/255.0 blue:237.0/255.0 alpha:1.0]
-#define DEFAULT_TEXT_COLOR          [UIColor colorWithRed:87.0/255.0 green:108.0/255.0 blue:137.0/255.0 alpha:1.0]
+#define DEFAULT_ARROW_IMAGE         [UIImage imageNamed:@"grayArrow"]
+#define DEFAULT_BACKGROUND_COLOR    [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_dot_a"]]
+#define DEFAULT_TEXT_COLOR          [UIColor darkGrayColor]
 #define DEFAULT_ACTIVITY_INDICATOR_STYLE    UIActivityIndicatorViewStyleGray
 
 #define FLIP_ANIMATION_DURATION 0.18f
-
-#define PULL_AREA_HEIGTH (60.0f + kTableViewContentInsetTop)
+//60.0f
+#define PULL_AREA_HEIGTH (kTableViewContentInsetTop + kTableViewContentInsetTop)
 #define PULL_TRIGGER_HEIGHT (PULL_AREA_HEIGTH + 5.0f)
 
 

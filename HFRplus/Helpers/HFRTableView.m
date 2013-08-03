@@ -15,9 +15,22 @@
     self = [super initWithCoder:decoder];
     if (self) {
         // Initialization code
-        NSLog(@"HFRTableViewHFRTableViewHFRTableViewHFRTableViewinitWithCoder");
-        [self setScrollIndicatorInsets:UIEdgeInsetsMake(kTableViewContentInsetTop, 0, 39.0f, 00)];
-        [self setContentInset:UIEdgeInsetsMake(kTableViewContentInsetTop, 0, 39.0f, 00)];
+        NSLog(@"HFRTableView %@", self);
+
+        if (self.pagingEnabled) {
+            NSLog(@"pagingEnabled YES");
+            self.pagingEnabled = NO;
+        }
+        else
+        {
+            NSLog(@"pagingEnabled NO");
+            self.disableLoadingMore = YES;
+        }
+        
+        NSLog(@"self.disableLoadingMore %d", self.disableLoadingMore);
+        
+        [self setScrollIndicatorInsets:UIEdgeInsetsMake(kTableViewContentInsetTop, 0, kTableViewContentInsetBottom, 00)];
+        [self setContentInset:UIEdgeInsetsMake(kTableViewContentInsetTop, 0, kTableViewContentInsetBottom, 00)];
     }
     return self;
 }

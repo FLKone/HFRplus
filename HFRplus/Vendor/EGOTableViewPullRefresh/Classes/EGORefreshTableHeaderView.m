@@ -41,12 +41,17 @@
 		
         isLoading = NO;
         
-        CGFloat midY = frame.size.height - PULL_AREA_HEIGTH/2;
+        //NSLog(@"frame.size.height - PULL_AREA_HEIGTH : %f | %f",  frame.size.height, PULL_AREA_HEIGTH);
+        
+        CGFloat midY = frame.size.height - PULL_AREA_HEIGTH/2 + kTableViewContentInsetTop/2;
+        
+        //NSLog(@"midY %f", midY);
+
         
         /* Config Last Updated Label */
 		UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, midY, self.frame.size.width, 20.0f)];
 		label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		label.font = [UIFont systemFontOfSize:12.0f];
+		label.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:11];
 		label.shadowOffset = CGSizeMake(0.0f, 1.0f);
 		label.backgroundColor = [UIColor clearColor];
 		label.textAlignment = UITextAlignmentCenter;
@@ -56,7 +61,7 @@
         /* Config Status Updated Label */
 		label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, midY - 18, self.frame.size.width, 20.0f)];
 		label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		label.font = [UIFont boldSystemFontOfSize:13.0f];
+		label.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
 		label.shadowOffset = CGSizeMake(0.0f, 1.0f);
 		label.backgroundColor = [UIColor clearColor];
 		label.textAlignment = UITextAlignmentCenter;
@@ -65,7 +70,7 @@
 		
         /* Config Arrow Image */
 		CALayer *layer = [[CALayer alloc] init];
-		layer.frame = CGRectMake(25.0f,midY - 35, 30.0f, 55.0f);
+		layer.frame = CGRectMake(40.0f,midY - 22, 30.0f, 40.0f);
 		layer.contentsGravity = kCAGravityResizeAspect;
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 40000
 		if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
@@ -77,7 +82,7 @@
 		
         /* Config activity indicator */
 		UIActivityIndicatorView *view = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:DEFAULT_ACTIVITY_INDICATOR_STYLE];
-		view.frame = CGRectMake(25.0f,midY - 8, 20.0f, 20.0f);
+		view.frame = CGRectMake(40.0f,midY - 8, 20.0f, 20.0f);
 		[self addSubview:view];
 		_activityView = view;		
 		
@@ -105,6 +110,9 @@
 	if ([_delegate respondsToSelector:@selector(egoRefreshTableHeaderDataSourceLastUpdated:)]) {
 		date = [_delegate egoRefreshTableHeaderDataSourceLastUpdated:self];
 	}
+    
+    //NSLog(@"date %@", date);
+    
     if(date) {
         NSTimeInterval timeSinceLastUpdate = [date timeIntervalSinceNow];
         NSInteger timeToDisplay = 0;
@@ -113,7 +121,9 @@
         if(timeSinceLastUpdate < anHour) {
             timeToDisplay = (NSInteger) (timeSinceLastUpdate / aMinute);
             
-            if(timeToDisplay == /* Singular*/ 1) {
+            //NSLog(@"timeToDisplay %d", timeToDisplay);
+            
+            if(timeToDisplay <= /* Singular*/ 1) {
             _lastUpdatedLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTable(@"Updated %ld minute ago",@"PullTableViewLan",@"Last uppdate in minutes singular"),(long)timeToDisplay];
             } else {
                 /* Plural */
@@ -147,7 +157,7 @@
     }
     
     // Center the status label if the lastupdate is not available
-    CGFloat midY = self.frame.size.height - PULL_AREA_HEIGTH/2;
+    CGFloat midY = self.frame.size.height - PULL_AREA_HEIGTH/2 + kTableViewContentInsetTop/2;
     if(!_lastUpdatedLabel.text) {
         _statusLabel.frame = CGRectMake(0.0f, midY - 8, self.frame.size.width, 20.0f);
     } else {
@@ -229,12 +239,12 @@
 
 - (void)egoRefreshScrollViewDidScroll:(UIScrollView *)scrollView {	
     
-    NSLog(@" scrollView.contentOffset.y = %f", scrollView.contentOffset.y);
+    //NSLog(@" scrollView.contentOffset.y = %f", scrollView.contentOffset.y);
     
 	if (_state == EGOOPullLoading) {
 		CGFloat offset = MAX(scrollView.contentOffset.y * -1, kTableViewContentInsetTop);
         
-        NSLog(@"offset = %f", offset);
+       // NSLog(@"offset = %f", offset);
         
 		offset = MIN(offset, PULL_AREA_HEIGTH);
         UIEdgeInsets currentInsets = scrollView.contentInset;
@@ -250,7 +260,7 @@
 		}
 		
 		if (scrollView.contentInset.top != kTableViewContentInsetTop) {
-            NSLog(@"=== 0");
+            //NSLog(@"=== 0");
             UIEdgeInsets currentInsets = scrollView.contentInset;
             currentInsets.top = kTableViewContentInsetTop;
             scrollView.contentInset = currentInsets;
@@ -262,7 +272,7 @@
 
 - (void)startAnimatingWithScrollView:(UIScrollView *) scrollView {
     
-    NSLog(@" scrollView.contentOffset.y = %f", scrollView.contentOffset.y);
+    //NSLog(@" scrollView.contentOffset.y = %f", scrollView.contentOffset.y);
 
     
     isLoading = YES;
@@ -275,14 +285,14 @@
     scrollView.contentInset = currentInsets;
     [UIView commitAnimations];
     if(scrollView.contentOffset.y == kTableViewContentInsetTop){
-        NSLog(@"setContentOffset %@", NSStringFromCGPoint(CGPointMake(scrollView.contentOffset.x, -PULL_TRIGGER_HEIGHT)));
+        //NSLog(@"setContentOffset %@", NSStringFromCGPoint(CGPointMake(scrollView.contentOffset.x, -PULL_TRIGGER_HEIGHT)));
         [scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, -PULL_TRIGGER_HEIGHT) animated:YES];
     }    
 }
 
 - (void)egoRefreshScrollViewDidEndDragging:(UIScrollView *)scrollView {
 	
-    NSLog(@" scrollView.contentOffset.y = %f", scrollView.contentOffset.y);
+    //NSLog(@" scrollView.contentOffset.y = %f", scrollView.contentOffset.y);
 
 	
 	if (scrollView.contentOffset.y <= - PULL_TRIGGER_HEIGHT && !isLoading) {

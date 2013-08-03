@@ -26,6 +26,7 @@ typedef enum {
 
 #define kTableViewCellRowHeight     44.0f
 #define kTableViewContentInsetTop   44.0f
+#define kTableViewContentInsetBottom   39.0f
 
 
 #define MAX_HEIGHT 1200.0f 

@@ -1,13 +1,19 @@
-/* 
-  Localizable.strings
-  HFRplus
+//MK & MW
+"Dismiss" = "Annuler";
 
-  Created by FLK on 04/07/12.
-*/
-
+//InAppSettingsKit
+"This device is not configured for sending Email. Please configure the Mail settings in the Settings app." = "This device is not configured for sending Email. Please configure the Mail settings in the Settings app.";
+"OK" = "OK";
+"Mail not configured" = "Mail not configured";
 "Settings" = "Réglages";
 
-//Add for MWPhotoBrowser
+//MKStore
+"You can use this feature for reviewing the app." = "You can use this feature for reviewing the app.";
+"Review request approved" = "Review request approved";
+"In-App Purchasing disabled" = "In-App Purchasing disabled";
+"Check your parental control settings and try again later" = "Check your parental control settings and try again later";
+
+//MWPhotoBrowser
 "of" = "sur";
 "Done" = "Retour";
 "Cancel" = "Annuler";
@@ -20,4 +26,6 @@
 "Copying" = "En cours de copie";
 "Copied" = "Copiée";
 "Email failed to send. Please try again." = "Echec lors de l'envoi de l'email.";
-"Dismiss" = "Annuler";
+
+"Photo" = "Photo";
+"Email" = "Email";

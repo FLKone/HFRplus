@@ -285,8 +285,8 @@
     [self.messageView setBackgroundColor:[UIColor whiteColor]];
     [self.messageView hideGradientBackground];
 
-    [self.messageView.scrollView setContentInset:UIEdgeInsetsMake(44, 0, 39, 0)];
-    [self.messageView.scrollView setScrollIndicatorInsets:UIEdgeInsetsMake(44, 0, 39, 0)];
+    [self.messageView.scrollView setContentInset:UIEdgeInsetsMake(kTableViewContentInsetTop, 0, kTableViewContentInsetBottom, 0)];
+    [self.messageView.scrollView setScrollIndicatorInsets:UIEdgeInsetsMake(kTableViewContentInsetTop, 0, kTableViewContentInsetBottom, 0)];
     
 }
 	 
