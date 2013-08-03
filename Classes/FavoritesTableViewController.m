@@ -438,8 +438,8 @@
                                                  name:@"UIDeviceOrientationDidChangeNotification"
                                                object:nil];
     
-    UIImage *image = [[UIImage imageNamed:@"favoris"] offColor];
-    self.navigationItem.titleView = [[[UIImageView alloc] initWithImage:image] autorelease];
+    //UIImage *image = [[UIImage imageNamed:@"favoris"] offColor];
+    //self.navigationItem.titleView = [[[UIImageView alloc] initWithImage:image] autorelease];
     
 	//Bouton Reload
     UIBarButtonItem *reloadBarItem = [UIBarButtonItem barItemWithImageNamed:@"reload" title:@"" target:self action:@selector(reload)];

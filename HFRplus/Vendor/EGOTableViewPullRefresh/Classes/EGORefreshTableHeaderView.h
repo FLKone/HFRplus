@@ -34,7 +34,8 @@ typedef enum{
 } EGOPullState;
 
 #define DEFAULT_ARROW_IMAGE         [UIImage imageNamed:@"grayArrow"]
-#define DEFAULT_BACKGROUND_COLOR    [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_dot_a"]]
+#define DEFAULT_BACKGROUND_COLOR    [UIColor whiteColor]
+//#define DEFAULT_BACKGROUND_COLOR    [UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_dot_a"]]
 #define DEFAULT_TEXT_COLOR          [UIColor darkGrayColor]
 #define DEFAULT_ACTIVITY_INDICATOR_STYLE    UIActivityIndicatorViewStyleGray
 
