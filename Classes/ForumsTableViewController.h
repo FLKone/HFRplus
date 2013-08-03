@@ -9,6 +9,7 @@
 #import "ASIHTTPRequest.h"
 
 @class TopicsTableViewController;
+
 @interface ForumsTableViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, PullTableViewDelegate> {
 	IBOutlet HFRTableView *forumsTableView;
 	IBOutlet UIView *loadingView;

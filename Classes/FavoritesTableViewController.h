@@ -9,11 +9,13 @@
 
 @class MessagesTableViewController;
 @class ASIHTTPRequest;
+@class HFRTableView;
 
-@interface FavoritesTableViewController : UIViewController <UIActionSheetDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIAlertViewDelegate> {
+@interface FavoritesTableViewController : UIViewController <UIActionSheetDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIAlertViewDelegate, PullTableViewDelegate> {
 	IBOutlet HFRTableView *favoritesTableView;
 	IBOutlet UIView *loadingView;
 
+	NSMutableArray *arrayData;    
     NSMutableArray *arrayNewData;
 
 	MessagesTableViewController *messagesTableViewController;
@@ -33,11 +35,12 @@
     BOOL showAll;
 }
 
-@property (nonatomic, retain) IBOutlet UITableView *favoritesTableView;
+@property (nonatomic, retain) IBOutlet HFRTableView *favoritesTableView;
 @property (nonatomic, retain) IBOutlet UIView *loadingView;
 
 @property (nonatomic, retain) UIActionSheet *topicActionSheet;
 
+@property (nonatomic, retain) NSMutableArray *arrayData;
 @property (nonatomic, retain) NSMutableArray *arrayNewData;
 
 @property (nonatomic, retain) MessagesTableViewController *messagesTableViewController;
