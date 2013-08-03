@@ -349,7 +349,7 @@
     
     BOOL first = YES;
     Favorite *aFavorite;
-    NSLog(@"run");
+    //NSLog(@"run");
     for (HTMLNode * trNode in temporaryFavoriteArray) { //Loop through all the tags
         
         
@@ -375,7 +375,7 @@
             //NSLog(@"ELSE");
         }
     }
-    NSLog(@"run2");
+    //NSLog(@"run2");
     if (!first) {
         [self.arrayNewData addObject:aFavorite];
         [aFavorite release];
@@ -384,7 +384,7 @@
 	[myParser release];
 	self.status = kComplete;
 
-    NSLog(@"arrayNewData %@", self.arrayNewData);
+    //NSLog(@"arrayNewData %@", self.arrayNewData);
     
 }
 -(NSString*)wordAfterString:(NSString*)searchString inString:(NSString*)selfString
@@ -684,7 +684,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-	NSLog(@"NB Section %d", self.arrayData.count);
+	//NSLog(@"NB Section %d", self.arrayData.count);
 	
     return self.arrayData.count;
 }

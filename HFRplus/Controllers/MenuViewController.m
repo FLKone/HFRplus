@@ -122,6 +122,7 @@
     //self.btnCategories.layer.borderColor = [UIColor]
     
     // scrollView init
+    /*
     _containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320 * 2 + 20 * 3, 460 * 2 + 20 * 3)];
     
     int nbTab = 4;
@@ -181,7 +182,7 @@
     
     //NSLog(@"_tabsViews %@", _tabsViews);
     
-
+*/
     
 
 }
