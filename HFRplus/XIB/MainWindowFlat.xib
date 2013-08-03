@@ -75,7 +75,6 @@
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="506037333"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
-							<reference key="IBUIBackgroundColor" ref="187596991"/>
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						</object>
 						<object class="IBUIButton" id="506037333">
@@ -274,7 +273,7 @@
 					<string key="NSFrame">{{0, 20}, {320, 460}}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
-					<reference key="NSNextKeyView"/>
+					<reference key="NSNextKeyView" ref="799874679"/>
 					<reference key="IBUIBackgroundColor" ref="187596991"/>
 					<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				</object>

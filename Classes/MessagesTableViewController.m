@@ -528,10 +528,11 @@
     
     */
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        [label setTextColor:[UIColor colorWithRed:170/255.f green:170/255.f blue:170/255.f alpha:1.0f]];
-        label.shadowColor = [UIColor whiteColor];
-        [label setFont:[UIFont boldSystemFontOfSize:13.0]];
-        label.shadowOffset = CGSizeMake(-2.0, -1.0);
+        //[label setTextColor:[UIColor colorWithRed:170/255.f green:170/255.f blue:170/255.f alpha:1.0f]];
+        [label setTextColor:[UIColor darkGrayColor]];
+//        label.shadowColor = [UIColor whiteColor];
+        [label setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:10]];
+		label.shadowOffset = CGSizeMake(0.0f, 1.0f);
 
         
     }
@@ -957,10 +958,10 @@
         [label setLineBreakMode:UILineBreakModeMiddleTruncation];
         
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-            [label setTextColor:[UIColor colorWithRed:170/255.f green:170/255.f blue:170/255.f alpha:1.0f]];
-            label.shadowColor = [UIColor whiteColor];
-            [label setFont:[UIFont boldSystemFontOfSize:13.0]];
-            label.shadowOffset = CGSizeMake(-2.0, -1.0);
+            [label setTextColor:[UIColor darkGrayColor]];
+            //        label.shadowColor = [UIColor whiteColor];
+            [label setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:10]];
+            label.shadowOffset = CGSizeMake(0.0f, 1.0f);
             
             
         }

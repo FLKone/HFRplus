@@ -11,6 +11,8 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface MenuViewController ()
+- (void)setupMenuPortrait;
+- (void)setupMenuLandscape;
 
 @end
 
@@ -91,6 +93,13 @@
     
     [self.menuView.layer addSublayer:bottomShadow];
     //self.tableView.tableFooterView = footerShadow;
+    
+    if ([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortrait || [[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortraitUpsideDown) {
+        [self setupMenuPortrait];
+    } else {
+        [self setupMenuLandscape];
+    }
+    
     
     /*
     //Header shadow
@@ -187,7 +196,77 @@
 
 }
 
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
+    
 
+
+}
+
+- (void)setupMenuPortrait {
+    
+    CGRect viewFrame = self.view.frame;
+    
+    NSLog(@"viewFrame %@", NSStringFromCGRect(viewFrame));
+
+    if (self.popoverView.frame.origin.y == 0) {
+        self.popoverView.frame = CGRectMake(0, 0, viewFrame.size.width, viewFrame.size.height);
+    }
+    else
+    {
+        self.popoverView.frame = CGRectMake(0, viewFrame.size.height, viewFrame.size.width, viewFrame.size.height);
+    }
+    
+    self.forumsController.view.frame = CGRectMake(0, 0, viewFrame.size.width, viewFrame.size.height);
+    self.favoritesController.view.frame = CGRectMake(0, 0, viewFrame.size.width, viewFrame.size.height);
+    self.searchController.view.frame = CGRectMake(0, 0, viewFrame.size.width, viewFrame.size.height);
+    self.messagesController.view.frame = CGRectMake(0, 0, viewFrame.size.width, viewFrame.size.height);
+    
+    NSLog(@"popoverView %@", NSStringFromCGRect(self.popoverView.frame));
+    NSLog(@"forumsController %@", NSStringFromCGRect(self.forumsController.view.frame));
+
+    //self.btnCategories.frame = CGRectMake(<#CGFloat x#>, <#CGFloat y#>, <#CGFloat width#>, <#CGFloat height#>)
+}
+
+- (void)setupMenuLandscape {
+    CGRect viewFrame = self.view.frame;
+    
+    NSLog(@"viewFrame %@", NSStringFromCGRect(viewFrame));
+    
+    if (self.popoverView.frame.origin.y == 0) {
+        self.popoverView.frame = CGRectMake(0, 0, viewFrame.size.height, viewFrame.size.width);
+    }
+    else
+    {
+        self.popoverView.frame = CGRectMake(0, viewFrame.size.width, viewFrame.size.height, viewFrame.size.width);
+    }
+    
+    self.forumsController.view.frame = CGRectMake(0, 0, viewFrame.size.height, viewFrame.size.width);
+    self.favoritesController.view.frame = CGRectMake(0, 0, viewFrame.size.height, viewFrame.size.width);
+    self.searchController.view.frame = CGRectMake(0, 0, viewFrame.size.height, viewFrame.size.width);
+    self.messagesController.view.frame = CGRectMake(0, 0, viewFrame.size.height, viewFrame.size.width);
+
+    NSLog(@"popoverView %@", NSStringFromCGRect(self.popoverView.frame));
+    NSLog(@"forumsController %@", NSStringFromCGRect(self.forumsController.view.frame));
+    
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    //NSLog(@"will %f %f", self.scrollView.contentOffset.x, self.scrollView.contentOffset.y);
+    
+    if((fromInterfaceOrientation == UIDeviceOrientationLandscapeLeft) || (fromInterfaceOrientation == UIDeviceOrientationLandscapeRight)){
+        [self setupMenuPortrait];
+        
+    } else  if((fromInterfaceOrientation == UIDeviceOrientationPortrait) || (fromInterfaceOrientation == UIDeviceOrientationPortraitUpsideDown)){
+        [self setupMenuLandscape];
+        
+    }
+    
+    
+    NSLog(@"viewFrame %@", NSStringFromCGRect(self.popoverView.frame));
+    NSLog(@"viewFrame %d", self.popoverView.subviews.count);
+
+}
 - (void)viewDidAppear:(BOOL)animated {
     //NSLog(@"viewDidAppear %d", animated);
     /*
@@ -310,6 +389,9 @@
 - (IBAction)switchBtn:(MenuButton *)sender forEvent:(UIEvent *)event {
     //NSLog(@"switchBtn %d", self.isAnimating);
 
+    NSLog(@"_popoverView.frame %@", NSStringFromCGRect(_popoverView.frame));
+    //return;
+    
     if (self.isAnimating) {
         //NSLog(@"isAnimating CANCEL ANIMATION");
         return;
@@ -355,7 +437,7 @@
             currentFrame.origin.y = [[[[UIApplication sharedApplication] keyWindow] screen] bounds].size.height;
         
             self.isAnimating = YES;
-            [UIView animateWithDuration:0.200 delay:0.0
+            [UIView animateWithDuration:0.100 delay:0.0
                                 options:UIViewAnimationOptionCurveEaseInOut|UIViewAnimationOptionBeginFromCurrentState
                              animations:^{
                                  //uncomment this and comment out the other if you want to move UIView_2 down to show UIView_1
@@ -397,6 +479,16 @@
     
     _activeMenu = sender;
 
+    NSLog(@"_popoverView.frame %@", NSStringFromCGRect(_popoverView.frame));
+    
+    CGRect currentFrame = _popoverView.frame;
+    currentFrame.origin.y = [[[[UIApplication sharedApplication] keyWindow] screen] bounds].size.height;
+    _popoverView.frame = currentFrame;
+    [_popoverView setNeedsDisplay];
+        NSLog(@"_popoverView.frame %@", NSStringFromCGRect(_popoverView.frame));
+    
+    
+    //return;
     if (sender == self.btnCategories) {
         //NSLog(@"== btnCategories");
         
@@ -405,7 +497,7 @@
         currentFrame.origin.x = 0;
 
         self.isAnimating = YES;
-        [UIView animateWithDuration:0.200 delay:0
+        [UIView animateWithDuration:0.100 delay:0
                             options:UIViewAnimationOptionCurveEaseInOut|UIViewAnimationOptionBeginFromCurrentState
                          animations:^{
                              //NSLog(@"START ANIMATION CATEGORIES");
@@ -442,7 +534,7 @@
         currentFrame.origin.x = 0;
 
         self.isAnimating = YES;
-        [UIView animateWithDuration:0.200 delay:0
+        [UIView animateWithDuration:0.100 delay:0
                             options:UIViewAnimationOptionCurveEaseInOut|UIViewAnimationOptionBeginFromCurrentState
                          animations:^{
                              //NSLog(@"START ANIMATION FAVORIS");

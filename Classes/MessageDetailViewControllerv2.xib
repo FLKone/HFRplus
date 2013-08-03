@@ -57,7 +57,7 @@
 					<object class="IBUIToolbar" id="743962206">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">266</int>
-						<string key="NSFrame">{{0, 372}, {320, 44}}</string>
+						<string key="NSFrame">{{0, 333}, {320, 44}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<bool key="IBUIOpaque">NO</bool>
@@ -71,7 +71,7 @@
 					<object class="IBUILabel" id="984673517">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{57, 375}, {149, 20}}</string>
+						<string key="NSFrame">{{57, 336}, {149, 20}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<object class="NSColor" key="IBUIBackgroundColor" id="815342628">
@@ -108,7 +108,7 @@
 					<object class="IBUILabel" id="1015106680">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{57, 394}, {149, 20}}</string>
+						<string key="NSFrame">{{57, 355}, {149, 20}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<bool key="IBUIOpaque">NO</bool>
@@ -154,7 +154,7 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
 						</object>
-						<string key="NSFrame">{{8, 374}, {40, 40}}</string>
+						<string key="NSFrame">{{8, 335}, {40, 40}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<object class="NSColor" key="IBUIBackgroundColor">

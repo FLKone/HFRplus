@@ -175,6 +175,9 @@
     [self.smileView setBackgroundColor:[UIColor colorWithRed:46/255.f green:46/255.f blue:46/255.f alpha:1.00]];
     [self.smileView hideGradientBackground];
     
+    [self.smileView.scrollView setContentInset:UIEdgeInsetsMake(kTableViewContentInsetTop, 0, kTableViewContentInsetBottom, 0)];
+    [self.smileView.scrollView setScrollIndicatorInsets:UIEdgeInsetsMake(kTableViewContentInsetTop, 0, kTableViewContentInsetBottom, 0)];
+    
     [self.smileView loadHTMLString:[tempHTML stringByReplacingOccurrencesOfString:@"%SMILEYCUSTOM%"
                                                                        withString:[NSString stringWithFormat:@"<div id='smileperso'>%@</div>",
                                                                                    self.smileyCustom]] baseURL:baseURL];
