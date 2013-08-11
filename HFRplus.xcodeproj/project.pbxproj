@@ -425,7 +425,6 @@
 		CAAA2CA91788AFE600E0B2D2 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAAA2C9C1788AFE600E0B2D2 /* Icon-Small@2x.png */; };
 		CAAA2CAA1788AFE600E0B2D2 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CAAA2C9D1788AFE600E0B2D2 /* icon.png */; };
 		CAAA2CAB1788AFE600E0B2D2 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAAA2C9E1788AFE600E0B2D2 /* Icon@2x.png */; };
-		CAAA2CB0179DCBCC00E0B2D2 /* UIFont+CustomSystemFont.m in Sources */ = {isa = PBXBuildFile; fileRef = CAAA2CAF179DCBCC00E0B2D2 /* UIFont+CustomSystemFont.m */; };
 		CAAD3D561731EAC400DC1900 /* MessageWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = CAAD3D551731EAC400DC1900 /* MessageWebView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CAADE5841269DF6300E19F00 /* grayButton.png in Resources */ = {isa = PBXBuildFile; fileRef = CAADE5831269DF6300E19F00 /* grayButton.png */; };
 		CAADE6461269ED1800E19F00 /* alert-overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = CAADE6451269ED1800E19F00 /* alert-overlay.png */; };
@@ -999,8 +998,6 @@
 		CAAA2C9E1788AFE600E0B2D2 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		CAAA2C9F1788AFE600E0B2D2 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
 		CAAA2CA01788AFE600E0B2D2 /* iTunesArtwork@2x */ = {isa = PBXFileReference; lastKnownFileType = file; path = "iTunesArtwork@2x"; sourceTree = "<group>"; };
-		CAAA2CAE179DCBCC00E0B2D2 /* UIFont+CustomSystemFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+CustomSystemFont.h"; sourceTree = "<group>"; };
-		CAAA2CAF179DCBCC00E0B2D2 /* UIFont+CustomSystemFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+CustomSystemFont.m"; sourceTree = "<group>"; };
 		CAAD3D541731EAC400DC1900 /* MessageWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageWebView.h; sourceTree = "<group>"; };
 		CAAD3D551731EAC400DC1900 /* MessageWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageWebView.m; sourceTree = "<group>"; };
 		CAADE5831269DF6300E19F00 /* grayButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayButton.png; sourceTree = "<group>"; };
@@ -1545,8 +1542,6 @@
 				CAAA2C8D1788AE1E00E0B2D2 /* UITableViewController+Ext.m */,
 				CAAA2C8E1788AE1E00E0B2D2 /* UIWebView+Tools.h */,
 				CAAA2C8F1788AE1E00E0B2D2 /* UIWebView+Tools.m */,
-				CAAA2CAE179DCBCC00E0B2D2 /* UIFont+CustomSystemFont.h */,
-				CAAA2CAF179DCBCC00E0B2D2 /* UIFont+CustomSystemFont.m */,
 			);
 			name = Helpers;
 			path = HFRplus/Helpers;
@@ -2617,7 +2612,6 @@
 				CAAA2C901788AE1E00E0B2D2 /* UIImage+Resize.m in Sources */,
 				CAAA2C911788AE1E00E0B2D2 /* UITableViewController+Ext.m in Sources */,
 				CAAA2C921788AE1E00E0B2D2 /* UIWebView+Tools.m in Sources */,
-				CAAA2CB0179DCBCC00E0B2D2 /* UIFont+CustomSystemFont.m in Sources */,
 				CA0484B417A89464000CA138 /* EGORefreshTableHeaderView.m in Sources */,
 				CA0484B517A89464000CA138 /* LoadMoreTableFooterView.m in Sources */,
 				CA0484B617A89464000CA138 /* MessageInterceptor.m in Sources */,
@@ -2655,6 +2649,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2685,7 +2680,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: julien Alexandre";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2702,7 +2698,7 @@
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = HFRplus;
-				PROVISIONING_PROFILE = "CA915C9F-4CB8-4389-A4AA-15C17189BA5A";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

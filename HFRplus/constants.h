@@ -9,6 +9,9 @@
 #define NSLog(__FORMAT__, ...) TFLog((@"%s [Line %d] " __FORMAT__), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 
 static const NSInteger kDispatchPeriodSeconds = 20;
+float kTableViewContentInsetTop;
+float kTableViewScrollInsetTop;
+float kTableViewContentInsetBottom;
 
 typedef enum {
 	kIdle,
@@ -25,8 +28,9 @@ typedef enum {
 #define kTimeoutAvatar      10
 
 #define kTableViewCellRowHeight     44.0f
-#define kTableViewContentInsetTop   44.0f
-#define kTableViewContentInsetBottom   39.0f
+//#define kTableViewContentInsetTop   44.0f //iOS5-6
+//#define kTableViewContentInsetTop   64.0f //iOS7
+//#define kTableViewContentInsetBottom   42.0f
 
 
 #define MAX_HEIGHT 1200.0f 

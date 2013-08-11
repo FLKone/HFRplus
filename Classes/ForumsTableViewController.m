@@ -27,7 +27,7 @@
 
 - (void)cancelFetchContent
 {    
-    NSLog(@"cancelFetchContent");
+    //NSLog(@"cancelFetchContent");
 
     self.forumsTableView.pullTableIsRefreshing = NO;
 
@@ -37,7 +37,7 @@
 
 - (void)fetchContent
 {
-    NSLog(@"fetchContent");
+    //NSLog(@"fetchContent");
 
     
     if(!self.forumsTableView.pullTableIsRefreshing) {
@@ -73,7 +73,7 @@
 
 - (void)fetchContentStarted:(ASIHTTPRequest *)theRequest
 {
-    NSLog(@"fetchContentStarted");
+    //NSLog(@"fetchContentStarted");
 
     //[self.arrayData removeAllObjects];
 	//[self.forumsTableView reloadData];
@@ -84,7 +84,7 @@
 
 - (void)fetchContentComplete:(ASIHTTPRequest *)theRequest
 {    
-    NSLog(@"fetchContentComplete %lld", [theRequest contentLength]);
+    //NSLog(@"fetchContentComplete %lld", [theRequest contentLength]);
      //[theRequest siz]
     
 	//Bouton Reload
@@ -109,7 +109,7 @@
 
 - (void)fetchContentFailed:(ASIHTTPRequest *)theRequest
 {        
-    NSLog(@"fetchContentFailed");
+    //NSLog(@"fetchContentFailed");
     
     //Bouton Reload
     UIBarButtonItem *reloadBarItem = [UIBarButtonItem barItemWithImageNamed:@"reload" title:@"" target:self action:@selector(reload)];
@@ -136,7 +136,7 @@
 
 - (void)pullTableViewDidTriggerRefresh:(PullTableView *)pullTableView
 {
-    NSLog(@"pullTableViewDidTriggerRefresh");
+    //NSLog(@"pullTableViewDidTriggerRefresh");
     
     [self performSelector:@selector(fetchContent)];
 }
@@ -146,7 +146,7 @@
 
 -(void)loadDataInTableView:(NSData *)contentData
 {    
-    NSLog(@"loadDataInTableView");
+    //NSLog(@"loadDataInTableView");
     
 	HTMLParser * myParser = [[HTMLParser alloc] initWithData:contentData error:NULL];
 	HTMLNode * bodyNode = [myParser body];
@@ -754,6 +754,10 @@
     [v release];
     
 	[self fetchContent];
+
+    NSLog(@"FETCG ======== ");
+    NSLog(@"scroll %@", NSStringFromUIEdgeInsets(self.forumsTableView.scrollIndicatorInsets));
+    NSLog(@"conten %@", NSStringFromUIEdgeInsets(self.forumsTableView.contentInset));
     
 }
 
@@ -822,7 +826,9 @@
         
         cell.textLabel.highlightedTextColor = [UIColor blackColor];
         cell.textLabel.textColor = [UIColor blackColor];
-        cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:15];
+        cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:17.0f];
+
+//        cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:15];
         //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
     }

@@ -37,52 +37,59 @@
     //NSLog(@"VDL");
     //[UIColor colorWithRed:242/255.f green:144/255.f blue:27/255.f alpha:1.0f]
     //[UIFont boldSystemFontOfSize:15.0], UITextAttributeFont,
-    NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                               [UIColor colorWithRed:170/255.f green:170/255.f blue:170/255.f alpha:1.0f],UITextAttributeTextColor,
-                                               [UIColor whiteColor], UITextAttributeTextShadowColor,
-                                               [NSValue valueWithUIOffset:UIOffsetMake(-2, -1)], UITextAttributeTextShadowOffset, nil];
     
-    [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
-    //[[UINavigationBar appearance] setTitleVerticalPositionAdjustment:3.0f forBarMetrics:UIBarMetricsDefault];
-    
-
-    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlackTranslucent];
-    [[UINavigationBar appearance] setBackgroundImage:[[[UIImage imageNamed:@"pw_maze_white"] imageByApplyingAlpha:0.8] imageResizingModeTile] forBarMetrics:UIBarMetricsDefault];
-
-    
-    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"back_on"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)]
-                                                      forState:UIControlStateNormal
-                                                    barMetrics:UIBarMetricsDefault];
-    
-    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[UIImage imageNamed:@"back"]
-                                                      forState:UIControlStateHighlighted
-                                                    barMetrics:UIBarMetricsDefault];
-    
-    [[UIBarButtonItem appearance] setTitleTextAttributes:
-     [NSDictionary dictionaryWithObjectsAndKeys:
-      [UIColor colorWithRed:170/255.f green:170/255.f blue:170/255.f alpha:1.0f], UITextAttributeTextColor,
-      [UIColor whiteColor], UITextAttributeTextShadowColor,
-      [NSValue valueWithUIOffset:UIOffsetMake(-2, 0)], UITextAttributeTextShadowOffset,
-      [UIFont boldSystemFontOfSize:12], UITextAttributeFont,
-      nil]
-                                                forState:UIControlStateHighlighted];
-    
-    [[UIBarButtonItem appearance] setTitleTextAttributes:
-     [NSDictionary dictionaryWithObjectsAndKeys:
-      [UIColor whiteColor], UITextAttributeTextShadowColor,
-      [NSValue valueWithUIOffset:UIOffsetMake(-2, 0)], UITextAttributeTextShadowOffset,
-      [UIColor colorWithRed:242/255.f green:144/255.f blue:27/255.f alpha:1.0f], UITextAttributeTextColor,
-      [UIFont boldSystemFontOfSize:12], UITextAttributeFont,
-      nil]
-                                                forState:UIControlStateNormal];
+    if (SYSTEM_VERSION_LESS_THAN(@"7")) {
+        NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                   [UIColor colorWithRed:170/255.f green:170/255.f blue:170/255.f alpha:1.0f],UITextAttributeTextColor,
+                                                   [UIColor whiteColor], UITextAttributeTextShadowColor,
+                                                   [NSValue valueWithUIOffset:UIOffsetMake(-2, -1)], UITextAttributeTextShadowOffset, nil];
         
-    [[UISegmentedControl appearance] setDividerImage:[UIImage imageNamed:@"orange_dot"] forLeftSegmentState:UIControlStateNormal rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [[UISegmentedControl appearance] setDividerImage:[UIImage imageNamed:@"black_dot"] forLeftSegmentState:UIControlStateSelected rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [[UISegmentedControl appearance] setDividerImage:[UIImage imageNamed:@"grey_dot"] forLeftSegmentState:UIControlStateNormal rightSegmentState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
-    
-    [[UISegmentedControl appearance] setBackgroundImage:nil forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [[UISegmentedControl appearance] setBackgroundImage:[UIImage imageNamed:@"black_dot"] forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
-    
+        [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
+        //[[UINavigationBar appearance] setTitleVerticalPositionAdjustment:3.0f forBarMetrics:UIBarMetricsDefault];
+        
+        
+        [[UINavigationBar appearance] setBarStyle:UIBarStyleBlackTranslucent];
+        [[UINavigationBar appearance] setBackgroundImage:[[[UIImage imageNamed:@"pw_maze_white"] imageByApplyingAlpha:0.8] imageResizingModeTile] forBarMetrics:UIBarMetricsDefault];
+        
+        
+        [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"back_on"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)]
+                                                          forState:UIControlStateNormal
+                                                        barMetrics:UIBarMetricsDefault];
+        
+        [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[UIImage imageNamed:@"back"]
+                                                          forState:UIControlStateHighlighted
+                                                        barMetrics:UIBarMetricsDefault];
+        
+        [[UIBarButtonItem appearance] setTitleTextAttributes:
+         [NSDictionary dictionaryWithObjectsAndKeys:
+          [UIColor colorWithRed:170/255.f green:170/255.f blue:170/255.f alpha:1.0f], UITextAttributeTextColor,
+          [UIColor whiteColor], UITextAttributeTextShadowColor,
+          [NSValue valueWithUIOffset:UIOffsetMake(-2, 0)], UITextAttributeTextShadowOffset,
+          [UIFont boldSystemFontOfSize:12], UITextAttributeFont,
+          nil]
+                                                    forState:UIControlStateHighlighted];
+        
+        [[UIBarButtonItem appearance] setTitleTextAttributes:
+         [NSDictionary dictionaryWithObjectsAndKeys:
+          [UIColor whiteColor], UITextAttributeTextShadowColor,
+          [NSValue valueWithUIOffset:UIOffsetMake(-2, 0)], UITextAttributeTextShadowOffset,
+          [UIColor colorWithRed:242/255.f green:144/255.f blue:27/255.f alpha:1.0f], UITextAttributeTextColor,
+          [UIFont boldSystemFontOfSize:12], UITextAttributeFont,
+          nil]
+                                                    forState:UIControlStateNormal];
+        
+        [[UISegmentedControl appearance] setDividerImage:[UIImage imageNamed:@"orange_dot"] forLeftSegmentState:UIControlStateNormal rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+        [[UISegmentedControl appearance] setDividerImage:[UIImage imageNamed:@"black_dot"] forLeftSegmentState:UIControlStateSelected rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+        [[UISegmentedControl appearance] setDividerImage:[UIImage imageNamed:@"grey_dot"] forLeftSegmentState:UIControlStateNormal rightSegmentState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
+        
+        [[UISegmentedControl appearance] setBackgroundImage:nil forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+        [[UISegmentedControl appearance] setBackgroundImage:[UIImage imageNamed:@"black_dot"] forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
+    }
+    else
+    {
+
+        [[UINavigationBar appearance] setTintColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"orange_dot"]]];
+    }
     
     CGColorRef darkColor = [[UIColor blackColor] colorWithAlphaComponent:.25f].CGColor;
     CGColorRef lightColor = [UIColor clearColor].CGColor;
@@ -204,9 +211,11 @@
 
 - (void)setupMenuPortrait {
     
+    //NSLog(@"navbar %f", self.activeController.navigationBar.frame.size.height);
+    
     CGRect viewFrame = self.view.frame;
     
-    NSLog(@"viewFrame %@", NSStringFromCGRect(viewFrame));
+    //NSLog(@"viewFrame %@", NSStringFromCGRect(viewFrame));
 
     if (self.popoverView.frame.origin.y == 0) {
         self.popoverView.frame = CGRectMake(0, 0, viewFrame.size.width, viewFrame.size.height);
@@ -221,16 +230,29 @@
     self.searchController.view.frame = CGRectMake(0, 0, viewFrame.size.width, viewFrame.size.height);
     self.messagesController.view.frame = CGRectMake(0, 0, viewFrame.size.width, viewFrame.size.height);
     
-    NSLog(@"popoverView %@", NSStringFromCGRect(self.popoverView.frame));
-    NSLog(@"forumsController %@", NSStringFromCGRect(self.forumsController.view.frame));
+    float btnY = viewFrame.size.height - 42;
+    
+    self.btnCategories.frame =  CGRectMake(0,   btnY, 80, 42);
+    self.btnFavoris.frame =     CGRectMake(80,  btnY, 80, 42);
+    self.btnMessages.frame =    CGRectMake(160, btnY, 80, 42);
+    self.btnSearch.frame =      CGRectMake(240, btnY, 80, 42);
 
-    //self.btnCategories.frame = CGRectMake(<#CGFloat x#>, <#CGFloat y#>, <#CGFloat width#>, <#CGFloat height#>)
+    
+    //NSLog(@"popoverView %@", NSStringFromCGRect(self.popoverView.frame));
+    //NSLog(@"forumsController %@", NSStringFromCGRect(self.forumsController.view.frame));
+
+    UIView *rootView2 = [[[UIApplication sharedApplication] keyWindow] rootViewController].view;
+    //NSLog(@"originalFrame %@", NSStringFromCGRect(rootView2.frame));
+
 }
 
 - (void)setupMenuLandscape {
+    //NSLog(@"navbar %f", self.activeController.navigationBar.frame.size.height);
+    
     CGRect viewFrame = self.view.frame;
     
-    NSLog(@"viewFrame %@", NSStringFromCGRect(viewFrame));
+    
+    //NSLog(@"viewFrame %@", NSStringFromCGRect(viewFrame));
     
     if (self.popoverView.frame.origin.y == 0) {
         self.popoverView.frame = CGRectMake(0, 0, viewFrame.size.height, viewFrame.size.width);
@@ -245,9 +267,16 @@
     self.searchController.view.frame = CGRectMake(0, 0, viewFrame.size.height, viewFrame.size.width);
     self.messagesController.view.frame = CGRectMake(0, 0, viewFrame.size.height, viewFrame.size.width);
 
-    NSLog(@"popoverView %@", NSStringFromCGRect(self.popoverView.frame));
-    NSLog(@"forumsController %@", NSStringFromCGRect(self.forumsController.view.frame));
+    //NSLog(@"popoverView %@", NSStringFromCGRect(self.popoverView.frame));
+    //NSLog(@"forumsController %@", NSStringFromCGRect(self.forumsController.view.frame));
     
+    float btnY = viewFrame.size.width - 28;
+    
+    self.btnCategories.frame =  CGRectMake(0,   btnY, 120, 32);
+    self.btnFavoris.frame =     CGRectMake(120,  btnY, 120, 32);
+    self.btnMessages.frame =    CGRectMake(240, btnY, 120, 32);
+    self.btnSearch.frame =      CGRectMake(360, btnY, 120, 32);
+
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -263,8 +292,8 @@
     }
     
     
-    NSLog(@"viewFrame %@", NSStringFromCGRect(self.popoverView.frame));
-    NSLog(@"viewFrame %d", self.popoverView.subviews.count);
+    //NSLog(@"viewFrame %@", NSStringFromCGRect(self.popoverView.frame));
+    //NSLog(@"viewFrame %d", self.popoverView.subviews.count);
 
 }
 - (void)viewDidAppear:(BOOL)animated {
@@ -389,7 +418,7 @@
 - (IBAction)switchBtn:(MenuButton *)sender forEvent:(UIEvent *)event {
     //NSLog(@"switchBtn %d", self.isAnimating);
 
-    NSLog(@"_popoverView.frame %@", NSStringFromCGRect(_popoverView.frame));
+    //NSLog(@"_popoverView.frame %@", NSStringFromCGRect(_popoverView.frame));
     //return;
     
     if (self.isAnimating) {
@@ -479,13 +508,13 @@
     
     _activeMenu = sender;
 
-    NSLog(@"_popoverView.frame %@", NSStringFromCGRect(_popoverView.frame));
+    //NSLog(@"_popoverView.frame %@", NSStringFromCGRect(_popoverView.frame));
     
     CGRect currentFrame = _popoverView.frame;
     currentFrame.origin.y = [[[[UIApplication sharedApplication] keyWindow] screen] bounds].size.height;
     _popoverView.frame = currentFrame;
     [_popoverView setNeedsDisplay];
-        NSLog(@"_popoverView.frame %@", NSStringFromCGRect(_popoverView.frame));
+        //NSLog(@"_popoverView.frame %@", NSStringFromCGRect(_popoverView.frame));
     
     
     //return;
@@ -637,7 +666,7 @@
         
     }
     else if (sender == self.btnTabs) {
-        NSLog(@"== btnTabs");
+        //NSLog(@"== btnTabs");
         
         CGRect scrollViewFrame = _scrollView.frame;
         CGSize cz = CGSizeMake(320 * 2 + 20 * 3, 460 * 2 + 20 * 3);

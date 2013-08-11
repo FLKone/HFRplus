@@ -150,6 +150,9 @@
 	// get the view controller's info dictionary based on the indexPath's row
     NSDictionary *dataDictionary = [menuList objectAtIndex:indexPath.row];
     cell.textLabel.text = [dataDictionary valueForKey:kTitleKey];
+    cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:17.0f];
+    //NSLog(@"font %@", cell.textLabel.font.fontName);
+    //NSLog(@"font %@", cell.textLabel.font.fontDescriptor);
     
     UIImage* theImage = [UIImage imageNamed:[dataDictionary valueForKey:kImageKey]];
     cell.imageView.image = theImage;

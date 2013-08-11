@@ -41,7 +41,8 @@ typedef enum{
 
 #define FLIP_ANIMATION_DURATION 0.18f
 //60.0f
-#define PULL_AREA_HEIGTH (kTableViewContentInsetTop + kTableViewContentInsetTop)
+//#define PULL_AREA_HEIGTH (kTableViewContentInsetTop + kTableViewContentInsetTop)
+#define PULL_AREA_HEIGTH (44.0f + kTableViewContentInsetTop)
 #define PULL_TRIGGER_HEIGHT (PULL_AREA_HEIGTH + 5.0f)
 
 

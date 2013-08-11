@@ -46,11 +46,23 @@
 	NSParameterAssert([curReach isKindOfClass: [Reachability class]]);
 }
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
+
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
     //NSLog(@"didFinishLaunchingWithOptions");
-
-    
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+/*
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+        kTableViewContentInsetTop = 64.0f;
+        kTableViewContentInsetBottom = 42.0f;
+    }
+    else
+    {
+        kTableViewContentInsetTop = 20.0f;
+        kTableViewContentInsetBottom = 42.0f;
+    }
+    */
     [TestFlight takeOff:kTestFlightAPI];
     
 	//self.hash_check = [[NSString alloc] init];
