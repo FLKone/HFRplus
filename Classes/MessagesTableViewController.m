@@ -525,7 +525,7 @@
         [label setTextColor:[UIColor colorWithRed:113/255.f green:120/255.f blue:128/255.f alpha:1.00]];
         label.shadowColor = [UIColor whiteColor];
         [label setFont:[UIFont boldSystemFontOfSize:19.0]];
-        label.shadowOffset = CGSizeMake(0.0, 1.0);
+        label.shadowOffset = CGSizeMake(0.0, 0.5f);
 
     }
 
@@ -941,11 +941,10 @@
             [label setTextColor:[UIColor colorWithRed:113/255.f green:120/255.f blue:128/255.f alpha:1.00]];
             label.shadowColor = [UIColor whiteColor];
             [label setFont:[UIFont boldSystemFontOfSize:19.0]];
-            label.shadowOffset = CGSizeMake(0.0, 1.0);
+            label.shadowOffset = CGSizeMake(0.0, 0.5f);
             
         }
         
-        label.shadowOffset = CGSizeMake(0.0, -1.0);
         
         [label setNumberOfLines:0];
         
