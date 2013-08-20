@@ -176,12 +176,8 @@
 		CA00C65517C30C370067B457 /* wink.gif in Resources */ = {isa = PBXBuildFile; fileRef = CA00C57E17C30C370067B457 /* wink.gif */; };
 		CA00C65617C30C370067B457 /* aide.html in Resources */ = {isa = PBXBuildFile; fileRef = CA00C58017C30C370067B457 /* aide.html */; };
 		CA00C65717C30C370067B457 /* credits.html in Resources */ = {isa = PBXBuildFile; fileRef = CA00C58117C30C370067B457 /* credits.html */; };
-		CA00C65817C30C370067B457 /* hfr.js in Resources */ = {isa = PBXBuildFile; fileRef = CA00C58217C30C370067B457 /* hfr.js */; };
-		CA00C65917C30C370067B457 /* jquery-1.7.2.min.js in Resources */ = {isa = PBXBuildFile; fileRef = CA00C58317C30C370067B457 /* jquery-1.7.2.min.js */; };
 		CA00C65A17C30C370067B457 /* jquery.base64.js in Resources */ = {isa = PBXBuildFile; fileRef = CA00C58417C30C370067B457 /* jquery.base64.js */; };
 		CA00C65B17C30C370067B457 /* jquery.doubletap.js in Resources */ = {isa = PBXBuildFile; fileRef = CA00C58517C30C370067B457 /* jquery.doubletap.js */; };
-		CA00C65C17C30C370067B457 /* jquery.js in Resources */ = {isa = PBXBuildFile; fileRef = CA00C58617C30C370067B457 /* jquery.js */; };
-		CA00C65D17C30C370067B457 /* jquery.lazyload.mini.js in Resources */ = {isa = PBXBuildFile; fileRef = CA00C58717C30C370067B457 /* jquery.lazyload.mini.js */; };
 		CA00C65E17C30C370067B457 /* smileybase.html in Resources */ = {isa = PBXBuildFile; fileRef = CA00C58817C30C370067B457 /* smileybase.html */; };
 		CA00C65F17C30C370067B457 /* style-aide.css in Resources */ = {isa = PBXBuildFile; fileRef = CA00C58917C30C370067B457 /* style-aide.css */; };
 		CA00C66017C30C370067B457 /* style-liste-ipad-landscape.css in Resources */ = {isa = PBXBuildFile; fileRef = CA00C58A17C30C370067B457 /* style-liste-ipad-landscape.css */; };
@@ -193,7 +189,6 @@
 		CA00C66617C30C370067B457 /* style-smile.css in Resources */ = {isa = PBXBuildFile; fileRef = CA00C59017C30C370067B457 /* style-smile.css */; };
 		CA00C66717C30C370067B457 /* template.htm in Resources */ = {isa = PBXBuildFile; fileRef = CA00C59117C30C370067B457 /* template.htm */; };
 		CA00C66817C30C370067B457 /* templatev2.htm in Resources */ = {isa = PBXBuildFile; fileRef = CA00C59217C30C370067B457 /* templatev2.htm */; };
-		CA00C66917C30C370067B457 /* xui.js in Resources */ = {isa = PBXBuildFile; fileRef = CA00C59317C30C370067B457 /* xui.js */; };
 		CA00C66A17C30C370067B457 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA00C59517C30C370067B457 /* Default-568h@2x.png */; };
 		CA00C66B17C30C370067B457 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = CA00C59617C30C370067B457 /* Default.png */; };
 		CA00C66C17C30C370067B457 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA00C59717C30C370067B457 /* Default@2x.png */; };
@@ -331,6 +326,7 @@
 		CA20FA3512F15CA700EC1771 /* TopicSearchCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA20FA3312F15CA700EC1771 /* TopicSearchCellView.m */; };
 		CA20FA3612F15CA700EC1771 /* TopicSearchCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA20FA3412F15CA700EC1771 /* TopicSearchCellView.xib */; };
 		CA228CF0125CFD4500DDCD2E /* MessageDetailViewControllerv2.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA228CEF125CFD4500DDCD2E /* MessageDetailViewControllerv2.xib */; };
+		CA24233E17C3C898002888D3 /* jquery-2.0.3.min.js in Resources */ = {isa = PBXBuildFile; fileRef = CA24233D17C3C898002888D3 /* jquery-2.0.3.min.js */; };
 		CA26862513ADE01100AC5511 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA26862313ADE01100AC5511 /* BrowserViewController.m */; };
 		CA26862613ADE01100AC5511 /* BrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA26862413ADE01100AC5511 /* BrowserViewController.xib */; };
 		CA34780B12EB557500D1BA2A /* PayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA34780912EB557500D1BA2A /* PayViewController.m */; };
@@ -630,12 +626,8 @@
 		CA00C57E17C30C370067B457 /* wink.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = wink.gif; sourceTree = "<group>"; };
 		CA00C58017C30C370067B457 /* aide.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = aide.html; sourceTree = "<group>"; };
 		CA00C58117C30C370067B457 /* credits.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = credits.html; sourceTree = "<group>"; };
-		CA00C58217C30C370067B457 /* hfr.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = hfr.js; sourceTree = "<group>"; };
-		CA00C58317C30C370067B457 /* jquery-1.7.2.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-1.7.2.min.js"; sourceTree = "<group>"; };
 		CA00C58417C30C370067B457 /* jquery.base64.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.base64.js; sourceTree = "<group>"; };
 		CA00C58517C30C370067B457 /* jquery.doubletap.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.doubletap.js; sourceTree = "<group>"; };
-		CA00C58617C30C370067B457 /* jquery.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.js; sourceTree = "<group>"; };
-		CA00C58717C30C370067B457 /* jquery.lazyload.mini.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.lazyload.mini.js; sourceTree = "<group>"; };
 		CA00C58817C30C370067B457 /* smileybase.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = smileybase.html; sourceTree = "<group>"; };
 		CA00C58917C30C370067B457 /* style-aide.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "style-aide.css"; sourceTree = "<group>"; };
 		CA00C58A17C30C370067B457 /* style-liste-ipad-landscape.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "style-liste-ipad-landscape.css"; sourceTree = "<group>"; };
@@ -647,7 +639,6 @@
 		CA00C59017C30C370067B457 /* style-smile.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "style-smile.css"; sourceTree = "<group>"; };
 		CA00C59117C30C370067B457 /* template.htm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = template.htm; sourceTree = "<group>"; };
 		CA00C59217C30C370067B457 /* templatev2.htm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = templatev2.htm; sourceTree = "<group>"; };
-		CA00C59317C30C370067B457 /* xui.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = xui.js; sourceTree = "<group>"; };
 		CA00C59517C30C370067B457 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		CA00C59617C30C370067B457 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		CA00C59717C30C370067B457 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
@@ -788,6 +779,7 @@
 		CA20FA3312F15CA700EC1771 /* TopicSearchCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TopicSearchCellView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CA20FA3412F15CA700EC1771 /* TopicSearchCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TopicSearchCellView.xib; sourceTree = "<group>"; };
 		CA228CEF125CFD4500DDCD2E /* MessageDetailViewControllerv2.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageDetailViewControllerv2.xib; sourceTree = "<group>"; };
+		CA24233D17C3C898002888D3 /* jquery-2.0.3.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-2.0.3.min.js"; sourceTree = "<group>"; };
 		CA26862213ADE01100AC5511 /* BrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BrowserViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CA26862313ADE01100AC5511 /* BrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BrowserViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CA26862413ADE01100AC5511 /* BrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserViewController.xib; sourceTree = "<group>"; };
@@ -1460,12 +1452,9 @@
 			children = (
 				CA00C58017C30C370067B457 /* aide.html */,
 				CA00C58117C30C370067B457 /* credits.html */,
-				CA00C58217C30C370067B457 /* hfr.js */,
-				CA00C58317C30C370067B457 /* jquery-1.7.2.min.js */,
+				CA24233D17C3C898002888D3 /* jquery-2.0.3.min.js */,
 				CA00C58417C30C370067B457 /* jquery.base64.js */,
 				CA00C58517C30C370067B457 /* jquery.doubletap.js */,
-				CA00C58617C30C370067B457 /* jquery.js */,
-				CA00C58717C30C370067B457 /* jquery.lazyload.mini.js */,
 				CA00C58817C30C370067B457 /* smileybase.html */,
 				CA00C58917C30C370067B457 /* style-aide.css */,
 				CA00C58A17C30C370067B457 /* style-liste-ipad-landscape.css */,
@@ -1477,7 +1466,6 @@
 				CA00C59017C30C370067B457 /* style-smile.css */,
 				CA00C59117C30C370067B457 /* template.htm */,
 				CA00C59217C30C370067B457 /* templatev2.htm */,
-				CA00C59317C30C370067B457 /* xui.js */,
 			);
 			path = HTML;
 			sourceTree = "<group>";
@@ -1762,6 +1750,7 @@
 			files = (
 				CA00C6A317C30C370067B457 /* compose.png in Resources */,
 				CA00C64117C30C370067B457 /* ohill.gif in Resources */,
+				CA24233E17C3C898002888D3 /* jquery-2.0.3.min.js in Resources */,
 				CA00C6B417C30C370067B457 /* beginon.png in Resources */,
 				CA00C61617C30C370067B457 /* global.gif in Resources */,
 				CA00C66C17C30C370067B457 /* Default@2x.png in Resources */,
@@ -1999,13 +1988,8 @@
 				CA00C6BD17C30C370067B457 /* buttonendhover@2x.png in Resources */,
 				CA00C6DF17C30C370067B457 /* loading.gif in Resources */,
 				CA00C67717C30C370067B457 /* 06-magnify.png in Resources */,
-				CA00C65C17C30C370067B457 /* jquery.js in Resources */,
-				CA00C65817C30C370067B457 /* hfr.js in Resources */,
-				CA00C66917C30C370067B457 /* xui.js in Resources */,
-				CA00C65D17C30C370067B457 /* jquery.lazyload.mini.js in Resources */,
 				CA00C65B17C30C370067B457 /* jquery.doubletap.js in Resources */,
 				CA00C65A17C30C370067B457 /* jquery.base64.js in Resources */,
-				CA00C65917C30C370067B457 /* jquery-1.7.2.min.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

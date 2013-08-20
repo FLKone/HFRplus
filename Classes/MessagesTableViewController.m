@@ -54,12 +54,12 @@
 	[request cancel];
 }
 
-- (void)fetchContent
+- (void)fetchContent:(int)from
 {
     //self.firstDate = [NSDate date];
     
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMaxi];
-
+    
     //NSLog(@"URL %@", [self currentUrl]);
     
 	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]]]];
@@ -74,17 +74,36 @@
 	[request setDidStartSelector:@selector(fetchContentStarted:)];
 	[request setDidFinishSelector:@selector(fetchContentComplete:)];
 	[request setDidFailSelector:@selector(fetchContentFailed:)];
-
+    
 	[self.view removeGestureRecognizer:swipeLeftRecognizer];
 	[self.view removeGestureRecognizer:swipeRightRecognizer];
 	
 	if ([NSThread isMainThread]) {
         [self.messagesWebView setHidden:YES];
     }
-	
-    [self.loadingView setHidden:NO];
 
+    NSLog(@"from %d", from);
+    
+    switch (from) {
+        case kNewMessageFromShake:
+        case kNewMessageFromUpdate:
+        case kNewMessageFromEditor:
+            NSLog(@"hidden");
+            [self.loadingView setHidden:YES];
+            break;
+        default:
+            NSLog(@"not hidden");
+            [self.loadingView setHidden:NO];
+            break;
+    }
+    
 	[request startAsynchronous];
+}
+
+
+- (void)fetchContent
+{
+    [self fetchContent:kNewMessageFromUnkwn];
 }
 
 - (void)fetchContentStarted:(ASIHTTPRequest *)theRequest
@@ -1106,7 +1125,7 @@
             break;
     }
     
-	[self fetchContent];
+	[self fetchContent:intfrom];
 	
 	[pool2 drain];
 }
@@ -1259,10 +1278,9 @@
                 initWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
                 <html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"fr\" lang=\"fr\">\
                 <head>\
-                <script type='text/javascript' src='jquery.js'></script>\
+                <script type='text/javascript' src='jquery-2.0.3.min.js'></script>\
                 <script type='text/javascript' src='jquery.doubletap.js'></script>\
                 <script type='text/javascript' src='jquery.base64.js'></script>\
-                <script type='text/javascript' src='jquery.lazyload.mini.js'></script>\
                 <meta name='viewport' content='initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no' />\
                 <link type='text/css' rel='stylesheet' href='style-liste.css'/>\
                 <link type='text/css' rel='stylesheet' href='style-liste-retina.css' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\

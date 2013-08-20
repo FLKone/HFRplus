@@ -118,7 +118,7 @@
                             <html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"fr\" lang=\"fr\">\
                             <head>\
 							<meta name='viewport' content='initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0' />\
-                            <script type='text/javascript' src='jquery.js'></script>\
+                            <script type='text/javascript' src='jquery-2.0.3.min.js'></script>\
                             <link type='text/css' rel='stylesheet' href='style-liste.css'/>\
                             <link type='text/css' rel='stylesheet' href='style-liste-retina.css' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\
                             <link type='text/css' rel='stylesheet' href='style-liste-ipad-portrait.css' media='all and (min-width: 767px)'/>\
