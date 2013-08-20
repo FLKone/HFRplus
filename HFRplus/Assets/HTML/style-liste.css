@@ -275,6 +275,18 @@ background:-webkit-gradient(
 	font-size:9px !important;
 }
 
+table.code, table.fixed, table.quote, table.citation {
+    table-layout:fixed;
+    border: none;
+    border-left: 3px solid  silver;
+}
+
+table.code p, table.fixed p {
+    overflow:scroll;
+    -webkit-overflow-scrolling: touch;
+    white-space:nowrap;
+}
+
 table.code *, table.fixed * {
     font-family: monospace !important;
 }
