@@ -92,7 +92,15 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
+
+    self.theSearchBar = [[UISearchBar alloc] init];
+    theSearchBar.delegate = self;
+    theSearchBar.placeholder = @"Recherche";
+    
+	self.navigationItem.titleView = theSearchBar;
+    self.navigationItem.titleView.frame = CGRectMake(0, 0, 0, 44);
+    
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(OrientationChanged)
                                                  name:@"UIDeviceOrientationDidChangeNotification"
@@ -101,7 +109,7 @@
 	self.title = @"Recherche";
     self.stories =[[NSMutableArray alloc]init];
     self.disableViewOverlay = [[UIView alloc]
-							   initWithFrame:CGRectMake(0.0f,44.0f,320.0f,1000.0f)];
+							   initWithFrame:CGRectMake(0.0f,0.0f,320.0f,1000.0f)];
     self.disableViewOverlay.backgroundColor=[UIColor blackColor];
     self.disableViewOverlay.alpha = 0;
 	
@@ -116,7 +124,7 @@
 
 - (void) viewWillAppear:(BOOL)animated
 {
-	[self.navigationController setNavigationBarHidden:YES animated:animated];
+	//[self.navigationController setNavigationBarHidden:YES animated:animated];
     [super viewWillAppear:animated];
 		
 	if (self.messagesTableViewController) {
@@ -128,7 +136,7 @@
 
 - (void) viewWillDisappear:(BOOL)animated
 {
-    [self.navigationController setNavigationBarHidden:NO animated:animated];
+    //[self.navigationController setNavigationBarHidden:NO animated:animated];
     [super viewWillDisappear:animated];
 }
 
@@ -213,6 +221,7 @@
         [disableViewOverlay removeFromSuperview];
         [searchBar resignFirstResponder];
     } else {
+
         self.disableViewOverlay.alpha = 0;
         [self.view addSubview:self.disableViewOverlay];
 		
@@ -220,7 +229,7 @@
         [UIView setAnimationDuration:0.5];
         self.disableViewOverlay.alpha = 0.6;
         [UIView commitAnimations];
-		
+        
         // probably not needed if you have a details view since you 
         // will go there on selection
         NSIndexPath *selected = [self.theTableView 
@@ -241,6 +250,7 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 */
+
 
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
