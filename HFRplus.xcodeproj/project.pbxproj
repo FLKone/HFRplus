@@ -200,8 +200,6 @@
 		CA00C67217C30C370067B457 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA00C59D17C30C370067B457 /* Icon-Small@2x.png */; };
 		CA00C67317C30C370067B457 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CA00C59E17C30C370067B457 /* Icon.png */; };
 		CA00C67417C30C370067B457 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA00C59F17C30C370067B457 /* Icon@2x.png */; };
-		CA00C67517C30C370067B457 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = CA00C5A017C30C370067B457 /* iTunesArtwork */; };
-		CA00C67617C30C370067B457 /* iTunesArtwork@2x in Resources */ = {isa = PBXBuildFile; fileRef = CA00C5A117C30C370067B457 /* iTunesArtwork@2x */; };
 		CA00C67717C30C370067B457 /* 06-magnify.png in Resources */ = {isa = PBXBuildFile; fileRef = CA00C5A317C30C370067B457 /* 06-magnify.png */; };
 		CA00C67817C30C370067B457 /* 06-magnify@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA00C5A417C30C370067B457 /* 06-magnify@2x.png */; };
 		CA00C67917C30C370067B457 /* 06-magnifying-glass.png in Resources */ = {isa = PBXBuildFile; fileRef = CA00C5A517C30C370067B457 /* 06-magnifying-glass.png */; };
@@ -1794,7 +1792,6 @@
 				CA00C6DE17C30C370067B457 /* link.png in Resources */,
 				CA00C64417C30C370067B457 /* ouimaitre.gif in Resources */,
 				CA00C6BE17C30C370067B457 /* buttonendoff.png in Resources */,
-				CA00C67617C30C370067B457 /* iTunesArtwork@2x in Resources */,
 				CA00C68217C30C370067B457 /* 121-landscapebig.png in Resources */,
 				CA00C64217C30C370067B457 /* ohwell.gif in Resources */,
 				CA00C68117C30C370067B457 /* 119-piggy-bank@2x.png in Resources */,
@@ -1917,7 +1914,6 @@
 				CA00C63917C30C370067B457 /* lol.gif in Resources */,
 				CA34780C12EB557500D1BA2A /* PayViewController.xib in Resources */,
 				CA00C6BB17C30C370067B457 /* buttonbeginon@2x.png in Resources */,
-				CA00C67517C30C370067B457 /* iTunesArtwork in Resources */,
 				CA00C6E217C30C370067B457 /* photoDefault.png in Resources */,
 				CA00C64E17C30C370067B457 /* spookie.gif in Resources */,
 				CA00C45E17C301650067B457 /* MainWindow.xib in Resources */,
