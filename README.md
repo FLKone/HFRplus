@@ -33,9 +33,16 @@ Un fichier Config.h est nécessaire (dans le répertoire Classes) :
 
 ``` objective-c
 //
-//  Classes/Config.h
+//  config.h
+//  HFRplus
 //
+
+#ifndef HFRplus_config_h
+#define HFRplus_config_h
+
 static NSString *const kTestFlightAPI = @"TestFlight API Key";
+
+#endif
 ```
 
 
