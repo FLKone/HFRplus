@@ -790,40 +790,22 @@
 		[aView release];
 	}
     
-    
-/*	
-	self.navigationItem.backBarButtonItem =
-	[[UIBarButtonItem alloc] initWithTitle:@"Forums"
-									 style: UIBarButtonItemStyleBordered
-									target:nil
-									action:nil];
-	
-	
-	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 230, 44)];
-	[label setFont:[UIFont boldSystemFontOfSize:16.0]]; //16
-	[label setAdjustsFontSizeToFitWidth:YES];
-	[label setBackgroundColor:[UIColor clearColor]];
-	[label setTextAlignment:UITextAlignmentCenter];
-	
-	label.shadowColor = [UIColor darkGrayColor];
-	label.shadowOffset = CGSizeMake(0.0, -1.0);
-	
-	[label setTextColor:[UIColor whiteColor]];
-	[label setNumberOfLines:2];
-	[label setText:[[arrayData objectAtIndex:indexPath.row] aTitle]];
-	
-	[topicsTableViewController.navigationItem setTitleView:label];
-	[label release];	
-*/
 	//setup the URL
 	
+
+    
 	self.navigationItem.backBarButtonItem =
 	[[UIBarButtonItem alloc] initWithTitle:@"Retour"
 									 style: UIBarButtonItemStyleBordered
 									target:nil
 									action:nil];
 	
-	self.topicsTableViewController.forumBaseURL = [[arrayData objectAtIndex:indexPath.row] aURL];	
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+        self.navigationItem.backBarButtonItem.title = @" ";
+    }
+    
+    
+	self.topicsTableViewController.forumBaseURL = [[arrayData objectAtIndex:indexPath.row] aURL];
 	self.topicsTableViewController.forumName = [[arrayData objectAtIndex:indexPath.row] aTitle];	
 	self.topicsTableViewController.pickerViewArray = [[arrayData objectAtIndex:indexPath.row] subCats];	
 

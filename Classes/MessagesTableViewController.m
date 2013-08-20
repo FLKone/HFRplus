@@ -934,7 +934,10 @@
 		 target:nil
 		 action:nil];
 		
-		
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+            self.navigationItem.backBarButtonItem.title = @" ";
+        }
+        
 		///===
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
         

@@ -802,6 +802,17 @@
 - (void)pushTopic {
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        
+        self.navigationItem.backBarButtonItem =
+        [[UIBarButtonItem alloc] initWithTitle:@"Retour"
+                                         style: UIBarButtonItemStyleBordered
+                                        target:nil
+                                        action:nil];
+        
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+            self.navigationItem.backBarButtonItem.title = @" ";
+        }
+        
         [self.navigationController pushViewController:messagesTableViewController animated:YES];
     }
     else {
