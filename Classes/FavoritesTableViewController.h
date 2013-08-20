@@ -26,8 +26,6 @@
 	NSString *statusMessage;
 	IBOutlet UILabel *maintenanceView;	
     
-    UITextField *pageNumberField;
-    
     UIActionSheet		*topicActionSheet;
     
     BOOL showAll;
@@ -62,7 +60,6 @@
 - (void)setTopicViewed;
 - (void)pushTopic;
 
-@property (nonatomic, retain) UITextField *pageNumberField;
 - (void)chooseTopicPage;
 
 @end

@@ -34,7 +34,7 @@
 
 @synthesize request;
 
-@synthesize status, statusMessage, maintenanceView, pageNumberField, topicActionSheet;
+@synthesize status, statusMessage, maintenanceView, topicActionSheet;
 
 #pragma mark -
 #pragma mark Data lifecycle
@@ -171,7 +171,7 @@
         //NSLog(@"newUrl %@", newUrl);
         
         //On remplace le numéro de page dans le titre
-        int number = [[pageNumberField text] intValue];
+        int number = [[[alertView textFieldAtIndex:0] text] intValue];
         NSString *regexString  = @".*page=([^&]+).*";
         NSRange   matchedRange = NSMakeRange(NSNotFound, 0UL);
         NSRange   searchRange = NSMakeRange(0, newUrl.length);
@@ -192,10 +192,6 @@
             //self.pageNumber = [[self.forumUrl substringWithRange:matchedRange] intValue];
             
         }
-        
-        //newUrl = [newUrl stringByReplacingOccurrencesOfString:@"_1.htm" withString:[NSString stringWithFormat:@"_%d.htm", [[pageNumberField text] intValue]]];
-        //newUrl = [newUrl stringByReplacingOccurrencesOfString:@"page=1&" withString:[NSString stringWithFormat:@"page=%d&", [[pageNumberField text] intValue]]];
-        
         
         newUrl = [newUrl stringByRemovingAnchor];
 
@@ -862,46 +858,24 @@
     NSIndexPath *indexPath = self.pressedIndexPath;
     Topic *tmpTopic = [[[self.arrayNewData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
     
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Aller à la page" message:[NSString stringWithFormat:@"\n\n(numéro entre 1 et %d)\n", [tmpTopic maxTopicPage]]
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Aller à la page" message:nil
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"OK", nil];
 	
-	pageNumberField = [[UITextField alloc] initWithFrame:CGRectZero];
-	[pageNumberField setBackgroundColor:[UIColor whiteColor]];
-	[pageNumberField setPlaceholder:@"numéro de la page"];
-	//pageNumberField.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-	[pageNumberField setBackground:[UIImage imageNamed:@"bginput"]];
-	
-	//[pageNumberField textRectForBounds:CGRectMake(5.0, 5.0, 258.0, 28.0)];
-	
-	
-	[pageNumberField.layer setBorderColor: [[UIColor blackColor] CGColor]];
-	[pageNumberField.layer setBorderWidth: 1.0];
-	
-	pageNumberField.font = [UIFont systemFontOfSize:15];
-	pageNumberField.textAlignment = UITextAlignmentCenter;
-	pageNumberField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-	pageNumberField.keyboardAppearance = UIKeyboardAppearanceAlert;
-	pageNumberField.keyboardType = UIKeyboardTypeNumberPad;
-	pageNumberField.delegate = self;
-	[pageNumberField addTarget:self action:@selector(textFieldTopicDidChange:) forControlEvents:UIControlEventEditingChanged];
-	
-	[alert setTag:669];
-	[alert addSubview:pageNumberField];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     
-	
+    UITextField *textField = [alert textFieldAtIndex:0];
+    textField.placeholder = [NSString stringWithFormat:@"(numéro entre 1 et %d)", [tmpTopic maxTopicPage]];
+    textField.textAlignment = UITextAlignmentCenter;
+    textField.delegate = self;
+    [textField addTarget:self action:@selector(textFieldTopicDidChange:) forControlEvents:UIControlEventEditingChanged];
+    textField.keyboardAppearance = UIKeyboardAppearanceAlert;
+    textField.keyboardType = UIKeyboardTypeNumberPad;
+    
+	[alert setTag:669];
 	[alert show];
     
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-    {
-        UILabel* tmpLbl = [alert.subviews objectAtIndex:1];
-        pageNumberField.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-        pageNumberField.frame = CGRectMake(12.0, tmpLbl.frame.origin.y + tmpLbl.frame.size.height + 10, 260.0, 30.0);
-    }
-    else {
-        pageNumberField.frame = CGRectMake(12.0, 50.0, 260.0, 30.0);
-    }
-    
 	[alert release];
+
 }
 
 -(void)textFieldTopicDidChange:(id)sender {
@@ -948,7 +922,7 @@
 	//NSLog(@"didPresentAlertView PT %@", alertView);
 	
 	if (([alertView tag] == 669)) {
-		[pageNumberField becomeFirstResponder];
+
 	}
 }
 
@@ -957,8 +931,7 @@
 	//NSLog(@"willDismissWithButtonIndex PT %@", alertView);
     
 	if (([alertView tag] == 669)) {
-		[self.pageNumberField resignFirstResponder];
-		self.pageNumberField = nil;
+
 	}
 }
 

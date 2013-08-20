@@ -1472,49 +1472,25 @@
 
 -(void)chooseTopicPage {
     //NSLog(@"chooseTopicPage Topics");
-    
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Aller à la page" message:[NSString stringWithFormat:@"\n\n(numéro entre 1 et %d)\n", [[arrayData objectAtIndex:pressedIndexPath.row] maxTopicPage]]
+
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Aller à la page" message:nil
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"OK", nil];
 	
-	pageNumberField = [[UITextField alloc] initWithFrame:CGRectZero];
-	[pageNumberField setBackgroundColor:[UIColor whiteColor]];
-	[pageNumberField setPlaceholder:@"numéro de la page"];
-	//pageNumberField.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;    
-
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     
-	[pageNumberField setBackground:[UIImage imageNamed:@"bginput"]];
-	
-	//[pageNumberField textRectForBounds:CGRectMake(5.0, 5.0, 258.0, 28.0)];
-	
-	[pageNumberField.layer setBorderColor: [[UIColor blackColor] CGColor]];
-	[pageNumberField.layer setBorderWidth: 1.0];
-	
-	pageNumberField.font = [UIFont systemFontOfSize:15];
-	pageNumberField.textAlignment = UITextAlignmentCenter;
-	pageNumberField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-	pageNumberField.keyboardAppearance = UIKeyboardAppearanceAlert;
-	pageNumberField.keyboardType = UIKeyboardTypeNumberPad;
-	pageNumberField.delegate = self;
-	[pageNumberField addTarget:self action:@selector(textFieldTopicDidChange:) forControlEvents:UIControlEventEditingChanged];
-	
+    UITextField *textField = [alert textFieldAtIndex:0];
+    textField.placeholder = [NSString stringWithFormat:@"(numéro entre 1 et %d)", [[arrayData objectAtIndex:pressedIndexPath.row] maxTopicPage]];
+    textField.textAlignment = UITextAlignmentCenter;
+    textField.delegate = self;
+    [textField addTarget:self action:@selector(textFieldTopicDidChange:) forControlEvents:UIControlEventEditingChanged];
+    textField.keyboardAppearance = UIKeyboardAppearanceAlert;
+    textField.keyboardType = UIKeyboardTypeNumberPad;
+    
 	[alert setTag:669];
-	[alert addSubview:pageNumberField];
-    
-	
 	[alert show];
     
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-    {
-        UILabel* tmpLbl = [alert.subviews objectAtIndex:1];
-        pageNumberField.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-        pageNumberField.frame = CGRectMake(12.0, tmpLbl.frame.origin.y + tmpLbl.frame.size.height + 10, 260.0, 30.0);
-    }
-    else {
-        pageNumberField.frame = CGRectMake(12.0, 50.0, 260.0, 30.0);
-    }
-	
 	[alert release];
-     
+    
 }
 
 -(void)textFieldTopicDidChange:(id)sender {
@@ -1561,7 +1537,7 @@
 	//NSLog(@"didPresentAlertView PT %@", alertView);
 	
 	if (([alertView tag] == 669)) {
-		[pageNumberField becomeFirstResponder];
+
 	}
 }
 
@@ -1572,8 +1548,7 @@
 	//NSLog(@"willDismissWithButtonIndex PT %@", alertView);
     
 	if (([alertView tag] == 669)) {
-		[self.pageNumberField resignFirstResponder];
-		self.pageNumberField = nil;
+
 	}
 }
 
@@ -1587,8 +1562,8 @@
        
         //NSLog(@"newUrl %@", newUrl);
 
-        newUrl = [newUrl stringByReplacingOccurrencesOfString:@"_1.htm" withString:[NSString stringWithFormat:@"_%d.htm", [[pageNumberField text] intValue]]];
-        newUrl = [newUrl stringByReplacingOccurrencesOfString:@"page=1&" withString:[NSString stringWithFormat:@"page=%d&", [[pageNumberField text] intValue]]];
+        newUrl = [newUrl stringByReplacingOccurrencesOfString:@"_1.htm" withString:[NSString stringWithFormat:@"_%d.htm", [[[alertView textFieldAtIndex:0] text] intValue]]];
+        newUrl = [newUrl stringByReplacingOccurrencesOfString:@"page=1&" withString:[NSString stringWithFormat:@"page=%d&", [[[alertView textFieldAtIndex:0] text] intValue]]];
         
         //NSLog(@"newUrl %@", newUrl);
 
