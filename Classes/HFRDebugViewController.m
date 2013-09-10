@@ -39,6 +39,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.title = @"Des Bugs";
     // Do any additional setup after loading the view from its nib.
 }
 

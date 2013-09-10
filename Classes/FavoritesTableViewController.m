@@ -29,7 +29,7 @@
 
 @implementation FavoritesTableViewController
 @synthesize pressedIndexPath, favoritesTableView, loadingView, showAll;
-@synthesize arrayNewData; //v2 remplace arrayData, arrayDataID, arrayDataID2, arraySection
+@synthesize arrayNewData, arrayCategories; //v2 remplace arrayData, arrayDataID, arrayDataID2, arraySection
 @synthesize messagesTableViewController;
 
 @synthesize request;
@@ -41,18 +41,23 @@
 
 -(void) showAll:(id)sender {
     
-    //NSLog(@"showAll %d", self.showAll);
+    NSLog(@"showAll %d", self.showAll);
+
     if (self.showAll) {
         self.showAll = NO;
+        [sender setSelected:NO];
+        [sender setHighlighted:NO];
     }
     else {
         self.showAll = YES;
+        [sender setSelected:YES];
+        [sender setHighlighted:YES];
     }
-
+    
     if (![self.favoritesTableView isHidden]) {
-        [self.favoritesTableView beginUpdates];
+//        [self.favoritesTableView beginUpdates];
         [self.favoritesTableView reloadData];
-        [self.favoritesTableView endUpdates];
+//        [self.favoritesTableView endUpdates];
     }
     
 }
@@ -117,7 +122,8 @@
     [segmentBarItem release];
 	
 	[self.arrayNewData removeAllObjects];
-	
+    [self.arrayCategories removeAllObjects];
+
 	//[self.favoritesTableView reloadData];
 	
 	[self loadDataInTableView:[request responseData]];
@@ -240,6 +246,7 @@
 -(void)loadDataInTableView:(NSData *)contentData {
 
 	[self.arrayNewData removeAllObjects];
+	[self.arrayCategories removeAllObjects];
 	
     NSLog(@"loadDataInTableView");
 
@@ -313,7 +320,10 @@
             //NSLog(@"HEADER // SECTION");
 
             if (!first) {
-                [self.arrayNewData addObject:aFavorite];
+                if (aFavorite.topics.count > 0) {
+                    [self.arrayNewData addObject:aFavorite];
+                }
+                [self.arrayCategories addObject:aFavorite];
                 [aFavorite release];
             }
 
@@ -333,7 +343,10 @@
     }
     NSLog(@"run2");
     if (!first) {
-        [self.arrayNewData addObject:aFavorite];
+        if (aFavorite.topics.count > 0) {
+            [self.arrayNewData addObject:aFavorite];
+        }
+        [self.arrayCategories addObject:aFavorite];
         [aFavorite release];
     }
     
@@ -378,10 +391,41 @@
     }
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    NSLog(@"initWithNibName");
+    
+    
+    self = [super initWithCoder:aDecoder];
+    if (self)
+    {
+        
+
+    }
+    
+    return self;
+}
+
 - (void)viewDidLoad {
 	//NSLog(@"viewDidLoad ftv");
     [super viewDidLoad];
 	
+
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+        //NSLog(@"%@", self.favoritesTableView.tableHeaderView);
+    }
+    else
+    {
+        self.favoritesTableView = nil;
+        self.favoritesTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        self.favoritesTableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+        self.favoritesTableView.rowHeight = 50.0f;
+        
+        self.favoritesTableView.dataSource = self;
+        self.favoritesTableView.delegate = self;
+        [self.view addSubview:self.favoritesTableView];
+    }
+    
 	self.title = @"Vos Sujets";
     self.showAll = NO;
 
@@ -397,24 +441,57 @@
     
     
     // showAll
-    AKSingleSegmentedControl* segmentedControl = [[AKSingleSegmentedControl alloc] initWithItems:[NSArray array]];
-    //[segmentedControl setMomentary:YES];
-    [segmentedControl insertSegmentWithImage:[UIImage imageNamed:@"icon_list_bullets"] atIndex:0 animated:NO];
-    segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
-    [segmentedControl addTarget:self action:@selector(showAll:) forControlEvents:UIControlEventValueChanged];
+    /*
+ //   UIBarButtonItem *segmentBarItem3 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemOrganize target:self action:@selector(reload)];
 
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        segmentedControl.tintColor = [UIColor colorWithRed:156/255.f green:161/255.f blue:167/255.f alpha:1.00];
-    }
-    
-    UIBarButtonItem * segmentBarItem2 = [[UIBarButtonItem alloc] initWithCustomView: segmentedControl];
-    self.navigationItem.leftBarButtonItem = segmentBarItem2;
-    
+    UIBarButtonItem *segmentBarItem2 = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"categories"] landscapeImagePhone:[UIImage imageNamed:@"categories"] style:UIBarButtonItemStyleDone target:self action:@selector(showAll:)];
+    //segmentBarItem2.frame = CGRectMake(0, 0, 40, 40);
+	self.navigationItem.leftBarButtonItem = segmentBarItem2;
     [segmentBarItem2 release];
-	//segmentedControl2.segmentedControlStyle = UISegmentedControlStyleBar;
+   */
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+    
+        UIImage *buttonImage = [UIImage imageNamed:@"categories"];
+        UIButton *aButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [aButton setAdjustsImageWhenHighlighted:NO];
+        
+        [aButton setImage:buttonImage forState:UIControlStateNormal];
+        [aButton setImage:buttonImage forState:UIControlStateSelected];
+        [aButton setImage:buttonImage forState:UIControlStateHighlighted];
+        [aButton setBackgroundImage:[UIImage imageNamed:@"lightBlue.png"] forState:UIControlStateSelected];
+        [aButton setBackgroundImage:[UIImage imageNamed:@"lightBlue.png"] forState:UIControlStateHighlighted];
+        //[aButton setBackgroundImage:[UIImage imageNamed:@"lightBlue.png"] forState:UIControlStateNormal];
+        
+        aButton.frame = CGRectMake(0.0,0.0,buttonImage.size.width,buttonImage.size.height);
+        [aButton addTarget:self action:@selector(showAll:) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:aButton];
+        
+        self.navigationItem.leftBarButtonItem = backButton;
+    }
+    else
+    {
+        AKSingleSegmentedControl* segmentedControl = [[AKSingleSegmentedControl alloc] initWithItems:[NSArray array]];
+        //[segmentedControl setMomentary:YES];
+        [segmentedControl insertSegmentWithImage:[UIImage imageNamed:@"icon_list_bullets"] atIndex:0 animated:NO];
+        segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+        [segmentedControl addTarget:self action:@selector(showAll:) forControlEvents:UIControlEventValueChanged];
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+            segmentedControl.tintColor = [UIColor colorWithRed:156/255.f green:161/255.f blue:167/255.f alpha:1.00];
+        }
+        
+        UIBarButtonItem * segmentBarItem2 = [[UIBarButtonItem alloc] initWithCustomView: segmentedControl];
+        self.navigationItem.leftBarButtonItem = segmentBarItem2;
+        
+        [segmentBarItem2 release];
+    }
+/*
+
+
+     //segmentedControl2.segmentedControlStyle = UISegmentedControlStyleBar;
 	//segmentedControl2.momentary = YES;
 	    
-    
+    */
     /*
     UIBarButtonItem *segmentBarItem2 = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_list_bullets.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showAll:)];
 	self.navigationItem.leftBarButtonItem = segmentBarItem2;
@@ -425,6 +502,7 @@
 	[(ShakeView*)self.view setShakeDelegate:self];
 	
     self.arrayNewData = [[NSMutableArray alloc] init];
+    self.arrayCategories = [[NSMutableArray alloc] init];
     
 	self.statusMessage = [[NSString alloc] init];
 	
@@ -448,6 +526,11 @@
     {
 		self.pressedIndexPath = nil;
     }
+    
+    if (favoritesTableView.indexPathForSelectedRow) {
+        [favoritesTableView deselectRowAtIndexPath:favoritesTableView.indexPathForSelectedRow animated:NO];
+    }
+
 }
 
 
@@ -471,13 +554,7 @@
 	//    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-
-- (void)loadCatForType:(id)sender {
-    
-    
-    //NSLog(@"loadCatForType %d", [sender tag]);
-    int section = [sender tag];
-    
+- (void)loadCatForSection:(int)section {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSInteger vos_sujets = [defaults integerForKey:@"vos_sujets"];
     
@@ -488,32 +565,62 @@
     switch (vos_sujets) {
         case 0:
             aView = [[TopicsTableViewController alloc] initWithNibName:@"TopicsTableViewController" bundle:nil flag:2];
-            aView.forumFlag1URL = [[[arrayNewData objectAtIndex:section] forum] aURL];
+            aView.forumFlag1URL = [[[arrayCategories objectAtIndex:section] forum] aURL];
             break;
         case 1:
             aView = [[TopicsTableViewController alloc] initWithNibName:@"TopicsTableViewController" bundle:nil flag:1];
-            aView.forumFavorisURL = [[[arrayNewData objectAtIndex:section] forum] aURL];
+            aView.forumFavorisURL = [[[arrayCategories objectAtIndex:section] forum] aURL];
             break;
         default:
             aView = [[TopicsTableViewController alloc] initWithNibName:@"TopicsTableViewController" bundle:nil flag:2];
-            aView.forumFlag1URL = [[[arrayNewData objectAtIndex:section] forum] aURL];            
+            aView.forumFlag1URL = [[[arrayCategories objectAtIndex:section] forum] aURL];
             break;
     }
-
-	aView.forumName = [[[arrayNewData objectAtIndex:section] forum] aTitle];	
-	//aView.pickerViewArray = [[arrayNewData objectAtIndex:section] forum] subCats];	
+    
+	aView.forumName = [[[arrayCategories objectAtIndex:section] forum] aTitle];
+	//aView.pickerViewArray = [[arrayNewData objectAtIndex:section] forum] subCats];
     
 	[self.navigationController pushViewController:aView animated:YES];
+}
+
+- (void)loadCatForType:(id)sender {
+    
+    
+    //NSLog(@"loadCatForType %d", [sender tag]);
+    int section = [sender tag];
+    
+    [self loadCatForSection:section];
+
     
 }
 
 #pragma mark -
 #pragma mark Table view data source
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.showAll) {
+        return 44;
+    }
+    else {
+        return 50;
+    }
+}
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+        if (self.showAll) {
+            return 0;
+        }
+        else {
+            return UITableViewAutomaticDimension;
+        }
+
+    }
+    
     if (self.showAll) {
-        return 23;
+        return 0;
     }
     else {
         if ([[self.arrayNewData objectAtIndex:section] topics].count > 0) {
@@ -523,10 +630,15 @@
     return 0;
 }
 
+
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7") || self.showAll) {
+        return nil;
+    }
+    
 	//NSLog(@"viewForHeaderInSection %d", section);
 	// create the parent view that will hold header Label
-	
+    
 	UIView* customView = [[[UIView alloc] initWithFrame:CGRectMake(0,0,320,23)] autorelease];
 	customView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	
@@ -566,7 +678,7 @@
     UIImage *backButton = [[UIImage imageNamed:@"arrowR"] scaleToSize:CGSizeMake(15, 15)];
     
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 320, 23)];
-    [button setTag:section];
+    [button setTag:[self.arrayCategories indexOfObject:[self.arrayNewData objectAtIndex:section]]];
     [button setTitle:[tmpForum aTitle] forState:UIControlStateNormal];
     [button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
     if (self.showAll) {
@@ -600,15 +712,25 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
 	//NSLog(@"NB Section %d", self.arrayNewData.count);
-	
-    return self.arrayNewData.count;
+
+    if (self.showAll) {
+        return 1;
+    }
+    else {
+        return self.arrayNewData.count;
+    }
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
 	//NSLog(@"%d", section);
 	//NSLog(@"titleForHeaderInSection %d %@", section, [[self.arrayNewData objectAtIndex:section] aTitle]);
-	return [[[self.arrayNewData objectAtIndex:section] forum] aTitle];
+    if (self.showAll) {
+        return @"";
+    }
+    else {
+        return [[[self.arrayNewData objectAtIndex:section] forum] aTitle];
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -621,60 +743,84 @@
 	
 	//NSLog(@"numberOfRowsInSection %d %d", section, [[self.arrayNewData objectAtIndex:section] topics].count);
 	
-    return [[self.arrayNewData objectAtIndex:section] topics].count;
+    if (self.showAll) {
+        return self.arrayCategories.count;
+    }
+    else {
+        return [[self.arrayNewData objectAtIndex:section] topics].count;
+    }
+        
 }
 
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"FavoriteCell";
-	
     
-	
-    FavoriteCell *cell = (FavoriteCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-	
-	
-    if (cell == nil) {
-        cell = [[[FavoriteCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-		
-		UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc] 
-															 initWithTarget:self action:@selector(handleLongPress:)];
-		[cell addGestureRecognizer:longPressRecognizer];
-		[longPressRecognizer release];		
+    if (self.showAll) {
+        static NSString *CellIdentifier = @"Cell";
+        
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        }
+        
+        // Configure the cell...
+        cell.textLabel.text = [NSString stringWithFormat:@"%@", [[[arrayCategories objectAtIndex:indexPath.row] forum] aTitle]];
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:17];
+        
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        return cell;
     }
+    else {
+        static NSString *CellIdentifier = @"FavoriteCell";
+        
+        
+        
+        FavoriteCell *cell = (FavoriteCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        
+        
+        if (cell == nil) {
+            cell = [[[FavoriteCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+            
+            UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc]
+                                                                 initWithTarget:self action:@selector(handleLongPress:)];
+            [cell addGestureRecognizer:longPressRecognizer];
+            [longPressRecognizer release];
+        }
     	
-    Topic *tmpTopic = [[[self.arrayNewData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
-	
-    // Configure the cell...
-	[(UILabel *)[cell.contentView viewWithTag:999] setText:[tmpTopic aTitle]];
-	//[(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"%d messages", ([[arrayData objectAtIndex:theRow] aRepCount] + 1)]];
-	
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSInteger vos_sujets = [defaults integerForKey:@"vos_sujets"];
-    
-    switch (vos_sujets) {
-        case 0:
-            [(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"⚑ %d/%d", [tmpTopic curTopicPage], [tmpTopic maxTopicPage] ]];
-            break;
-        case 1:
-            [(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"★ %d/%d", [tmpTopic curTopicPage], [tmpTopic maxTopicPage] ]];
-            break;
-        default:
-            [(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"⚑ %d/%d", [tmpTopic curTopicPage], [tmpTopic maxTopicPage] ]];
-            break;
+        Topic *tmpTopic = [[[self.arrayNewData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
+        
+        // Configure the cell...
+        [(UILabel *)[cell.contentView viewWithTag:999] setText:[tmpTopic aTitle]];
+        //[(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"%d messages", ([[arrayData objectAtIndex:theRow] aRepCount] + 1)]];
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSInteger vos_sujets = [defaults integerForKey:@"vos_sujets"];
+        
+        switch (vos_sujets) {
+            case 0:
+                [(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"⚑ %d/%d", [tmpTopic curTopicPage], [tmpTopic maxTopicPage] ]];
+                break;
+            case 1:
+                [(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"★ %d/%d", [tmpTopic curTopicPage], [tmpTopic maxTopicPage] ]];
+                break;
+            default:
+                [(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"⚑ %d/%d", [tmpTopic curTopicPage], [tmpTopic maxTopicPage] ]];
+                break;
+        }
+        
+        [(UILabel *)[cell.contentView viewWithTag:997] setText:[NSString stringWithFormat:@"%@ - %@", [tmpTopic aAuthorOfLastPost], [tmpTopic aDateOfLastPost]]];
+        
+        if ([tmpTopic isViewed]) {
+            [(UILabel *)[cell.contentView viewWithTag:999] setFont:[UIFont systemFontOfSize:13]];
+        }
+        else {
+            [(UILabel *)[cell.contentView viewWithTag:999] setFont:[UIFont boldSystemFontOfSize:13]];
+            
+        }	
+        
+        return cell;
     }
-    
-    [(UILabel *)[cell.contentView viewWithTag:997] setText:[NSString stringWithFormat:@"%@ - %@", [tmpTopic aAuthorOfLastPost], [tmpTopic aDateOfLastPost]]];
-
-	if ([tmpTopic isViewed]) {
-		[(UILabel *)[cell.contentView viewWithTag:999] setFont:[UIFont systemFontOfSize:13]];
-	}
-	else {
-		[(UILabel *)[cell.contentView viewWithTag:999] setFont:[UIFont boldSystemFontOfSize:13]];
-		
-	}	
-
-    return cell;
 }
 
 #pragma mark -
@@ -682,17 +828,25 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    Topic *aTopic = [[[self.arrayNewData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
-    
-	MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[aTopic aURL]];
-	self.messagesTableViewController = aView;
-	[aView release];
-	
-	//setup the URL
-	self.messagesTableViewController.topicName = [aTopic aTitle];	
-	
-	//NSLog(@"push message liste");
-	 [self pushTopic];
+    if (self.showAll) {
+        [self loadCatForSection:indexPath.row];
+    }
+    else {
+        
+        Topic *aTopic = [[[self.arrayNewData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
+        
+        MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[aTopic aURL]];
+        self.messagesTableViewController = aView;
+        [aView release];
+        
+        //setup the URL
+        self.messagesTableViewController.topicName = [aTopic aTitle];
+        
+        //NSLog(@"push message liste");
+        [self pushTopic];
+        
+    }
+
 	
 }
 

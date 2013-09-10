@@ -59,9 +59,9 @@
 	NSString *result = (NSString *) CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)self.theSearchBar.text, NULL, CFSTR(":/?#[]@!$&’()*+,;="), kCFStringEncodingUTF8);
 
 	
-    NSURL *xmlURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.google.com/cse?cx=005221696873136977783:gnqtncc8bu8&client=google-csbe&output=xml_no_dtd&num=20&q=%@", result]];
+    NSURL *xmlURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.google.com/cse?cx=%@&client=google-csbe&output=xml_no_dtd&num=20&q=%@", kGoogleCSEAPI, result]];
 
-	NSLog(@"xmlURL %@", xmlURL);
+	//NSLog(@"xmlURL %@", xmlURL);
 
 	
     // here, for some reason you have to use NSClassFromString when trying to alloc NSXMLParser, otherwise you will get an object not found error

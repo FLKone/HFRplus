@@ -15,6 +15,7 @@
 	UIView *loadingView;
 
     NSMutableArray *arrayNewData;
+    NSMutableArray *arrayCategories;
 
 	MessagesTableViewController *messagesTableViewController;
 
@@ -37,6 +38,7 @@
 @property (nonatomic, retain) UIActionSheet *topicActionSheet;
 
 @property (nonatomic, retain) NSMutableArray *arrayNewData;
+@property (nonatomic, retain) NSMutableArray *arrayCategories;
 
 @property (nonatomic, retain) MessagesTableViewController *messagesTableViewController;
 
