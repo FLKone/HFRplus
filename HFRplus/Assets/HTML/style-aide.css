@@ -1,21 +1,21 @@
 * {
-	padding:0;
-	margin:0;
-	font-family:Helvetica;
+    padding:0;
+    margin:0;
+    font-family:Helvetica;
 }
 
 body {
-	padding:10px;
+    padding:10px;
 }
 
 h1 {
-	font-size:15px;
+    font-size:15px;
 }
 
 ul {
-	font-size:12px;
-	margin:10px 5px 10px 10px;
-	list-style:disc outside none;
+    font-size:12px;
+    margin:10px 5px 10px 10px;
+    list-style:disc outside none;
 }
 
 li {
@@ -25,6 +25,54 @@ li {
 }
 
 p {
-	font-size:12px;
-	margin:10px 5px 10px 0px;
+    font-size:12px;
+    margin:10px 5px 10px 0px;
+}
+
+.ios7, .ios7 * {
+	font-family:HelveticaNeue-Light;
+}
+
+body.ios7  {
+    background:#efeff4;
+    padding:0 0 38px 0;
+}
+
+.ios7 h1.first {
+    margin-top:18px;
+}
+
+.ios7 h1 {
+    text-transform:uppercase;
+    background:#efeff4;
+    font-family:HelveticaNeue;
+    font-weight: normal; 
+    font-style: normal; 
+    font-size: 14.00px;
+    padding:0 0 0 15px;
+    color: rgba(109, 109, 114, 1);
+    letter-spacing:0px;
+    height:37px;
+    line-height: 45px;
+}
+
+.ios7 ul {
+    margin:0;
+    font-size:12px;
+    list-style:disc outside none;
+    padding:10px;    
+    background:#fff;
+    padding-left: 20px
+}
+
+.ios7 li {
+	margin-left:10px;
+	margin-bottom:5px;	
+}
+
+.ios7 p {
+    margin:0;
+    font-size:12px;
+    padding:10px;
+    background:#fff;
 }

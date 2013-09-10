@@ -41,6 +41,7 @@ Un fichier config.h est nécessaire (dans le répertoire HFRplus) :
 #define HFRplus_config_h
 
 static NSString *const kTestFlightAPI = @"TestFlight API Key";
+static NSString *const kGoogleCSEAPI = @"Google Custom Search Engine API Key";
 
 #endif
 ```
