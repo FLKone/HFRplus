@@ -42,6 +42,11 @@
     
     self.title = @"Des Bugs";
     // Do any additional setup after loading the view from its nib.
+    
+	
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
 }
 
 - (void)viewDidUnload
