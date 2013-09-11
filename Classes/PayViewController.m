@@ -8,6 +8,7 @@
 #import "PayViewController.h"
 
 #import "MKStoreManager.h"
+#import "Constants.h"
 #import <StoreKit/StoreKit.h>
 #import <StoreKit/SKPaymentTransaction.h>
 
@@ -33,7 +34,9 @@
 	
 	self.title = @"Faire un don";
 	
-
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
 	
 }
 
