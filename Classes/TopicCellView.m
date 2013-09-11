@@ -6,6 +6,7 @@
 //
 
 #import "TopicCellView.h"
+#import "Constants.h"
 
 
 @implementation TopicCellView
@@ -14,18 +15,19 @@
 @synthesize msgLabel;
 @synthesize timeLabel;
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    if ((self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])) {
-        // Initialization code
+
+- (void)awakeFromNib {
+    NSLog(@"awakeFromNibawakeFromNibawakeFromNib");
+    
+    [super awakeFromNib];
+    
+    
+    if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        [titleLabel setHighlightedTextColor:[UIColor whiteColor]];
+        [msgLabel setHighlightedTextColor:[UIColor whiteColor]];
+        [timeLabel setHighlightedTextColor:[UIColor whiteColor]];
+
     }
-    return self;
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 

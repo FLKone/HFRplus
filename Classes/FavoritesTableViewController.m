@@ -611,10 +611,10 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
         if (self.showAll) {
-            return 0;
+            return 10;
         }
         else {
-            return UITableViewAutomaticDimension;
+            return 35.5f;
         }
 
     }
@@ -629,7 +629,6 @@
     }
     return 0;
 }
-
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7") || self.showAll) {
