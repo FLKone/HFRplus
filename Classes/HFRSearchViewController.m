@@ -113,6 +113,8 @@
     self.disableViewOverlay.backgroundColor=[UIColor blackColor];
     self.disableViewOverlay.alpha = 0;
 	
+    self.disableViewOverlay.autoresizingMask = (UIViewAutoresizingFlexibleWidth);
+    
 	UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] 
 														 initWithTarget:self action:@selector(handleTap:)];
 	[self.disableViewOverlay addGestureRecognizer:tapRecognizer];
