@@ -179,7 +179,7 @@
 		
 	}
 	else {
-		[authorAvatar setImage:[UIImage imageNamed:@"avatar_male_gray_on_light_48x48.png"]];
+		[authorAvatar setImage:[UIImage imageNamed:@"avatar_male_gray_on_light_48x48"]];
 	}
 	
 	//Btn Quote & Edit

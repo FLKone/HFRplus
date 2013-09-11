@@ -336,6 +336,7 @@
 		CA4AA6DD15B2553C00E53A1F /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA4AA6DC15B2553C00E53A1F /* CoreText.framework */; };
 		CA4CE81515B185CA0039FC3B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CA4CE81415B185CA0039FC3B /* libz.dylib */; };
 		CA4CE89215B1B30B0039FC3B /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA4CE89115B1B30B0039FC3B /* ImageIO.framework */; };
+		CA7472D217E1262F00B45E15 /* avatar_male_gray_on_light_48x48@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7472D117E1262E00B45E15 /* avatar_male_gray_on_light_48x48@2x.png */; };
 		CA77D0F51261424D00271D62 /* PageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA77D0F41261424D00271D62 /* PageViewController.m */; };
 		CA79581B12836B24007C4E02 /* HFRSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA79581912836B24007C4E02 /* HFRSearchViewController.m */; };
 		CA79581C12836B24007C4E02 /* HFRSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA79581A12836B24007C4E02 /* HFRSearchViewController.xib */; };
@@ -795,6 +796,7 @@
 		CA4AA6DC15B2553C00E53A1F /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		CA4CE81415B185CA0039FC3B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		CA4CE89115B1B30B0039FC3B /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		CA7472D117E1262E00B45E15 /* avatar_male_gray_on_light_48x48@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatar_male_gray_on_light_48x48@2x.png"; sourceTree = "<group>"; };
 		CA77D0F31261424D00271D62 /* PageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageViewController.h; sourceTree = "<group>"; };
 		CA77D0F41261424D00271D62 /* PageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PageViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CA79581812836B24007C4E02 /* HFRSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = HFRSearchViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -1536,6 +1538,7 @@
 				CA00C5C717C30C370067B457 /* arrowR@2x.png */,
 				CA00C5C817C30C370067B457 /* avatar_male_gray_on_light_32x32.png */,
 				CA00C5C917C30C370067B457 /* avatar_male_gray_on_light_48x48.png */,
+				CA7472D117E1262E00B45E15 /* avatar_male_gray_on_light_48x48@2x.png */,
 				CA00C5CA17C30C370067B457 /* bgbigiPad.png */,
 				CA00C5CB17C30C370067B457 /* bginput.png */,
 				CA00C5CC17C30C370067B457 /* bginput@2x.png */,
@@ -1791,6 +1794,7 @@
 				CA00C63217C30C370067B457 /* hebe.gif in Resources */,
 				CA00C68A17C30C370067B457 /* 20-gear2.png in Resources */,
 				CA00C6B117C30C370067B457 /* bar2.png in Resources */,
+				CA7472D217E1262F00B45E15 /* avatar_male_gray_on_light_48x48@2x.png in Resources */,
 				CA00C64617C30C370067B457 /* pouah.gif in Resources */,
 				CA00C6DB17C30C370067B457 /* icon_text_align_justify.png in Resources */,
 				CA00C66817C30C370067B457 /* templatev2.htm in Resources */,

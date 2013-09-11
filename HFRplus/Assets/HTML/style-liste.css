@@ -146,6 +146,10 @@ background:-webkit-gradient(
 	*/
 	background-position:center;
 }
+.message .header .left2.noavatar {
+    background-image:url('avatar_male_gray_on_light_48x48.png');
+}
+
 
 .message .header .left {
 	margin-left:10px !important;

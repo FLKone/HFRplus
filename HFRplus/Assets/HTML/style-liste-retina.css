@@ -60,3 +60,8 @@
 	background-image:url(08-chat@2x.png) !important; 
     background-size: 24px 22px;	
 }
+
+.message .header .left2.noavatar {
+        background-image:url('avatar_male_gray_on_light_48x48@2x.png');
+
+}
