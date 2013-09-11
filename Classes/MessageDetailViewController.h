@@ -16,6 +16,7 @@
 	IBOutlet UILabel *messageAuthor;
 	IBOutlet UILabel *messageDate;
 	IBOutlet UIImageView *authorAvatar;
+    IBOutlet UIView *messageAvatar;
 
 	IBOutlet UILabel *messageTitle;
 
@@ -44,6 +45,7 @@
 @property (nonatomic, retain) IBOutlet UILabel *messageDate;
 @property (nonatomic, retain) IBOutlet UIImageView *authorAvatar;
 @property (nonatomic, retain) IBOutlet UILabel *messageTitle;
+@property (nonatomic, retain) IBOutlet UIView *messageAvatar;
 
 @property (nonatomic, retain) IBOutlet UIToolbar *toolbarBtn;
 @property (nonatomic, retain) UIBarButtonItem *quoteBtn;
