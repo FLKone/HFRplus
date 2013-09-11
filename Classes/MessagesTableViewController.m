@@ -532,20 +532,35 @@
     [label setTextAlignment:UITextAlignmentCenter];
     [label setLineBreakMode:UILineBreakModeMiddleTruncation];
     
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        [label setTextColor:[UIColor whiteColor]];
-        label.shadowColor = [UIColor darkGrayColor];
-        [label setFont:[UIFont boldSystemFontOfSize:13.0]];
-        label.shadowOffset = CGSizeMake(0.0, -1.0);
-
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        [label setTextColor:[UIColor blackColor]];
         
-    }
-    else {
-        [label setTextColor:[UIColor colorWithRed:113/255.f green:120/255.f blue:128/255.f alpha:1.00]];
-        label.shadowColor = [UIColor whiteColor];
-        [label setFont:[UIFont boldSystemFontOfSize:19.0]];
-        label.shadowOffset = CGSizeMake(0.0, 0.5f);
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            [label setFont:[UIFont boldSystemFontOfSize:13.0]];
+        }
+        else {
+            [label setFont:[UIFont boldSystemFontOfSize:17.0]];
+        }
 
+    }
+    else
+    {
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            [label setTextColor:[UIColor whiteColor]];
+            label.shadowColor = [UIColor darkGrayColor];
+            [label setFont:[UIFont boldSystemFontOfSize:13.0]];
+            label.shadowOffset = CGSizeMake(0.0, -1.0);
+            
+            
+        }
+        else {
+            [label setTextColor:[UIColor colorWithRed:113/255.f green:120/255.f blue:128/255.f alpha:1.00]];
+            label.shadowColor = [UIColor whiteColor];
+            [label setFont:[UIFont boldSystemFontOfSize:19.0]];
+            label.shadowOffset = CGSizeMake(0.0, 0.5f);
+            
+        }
+        
     }
 
     [label setNumberOfLines:0];
@@ -951,21 +966,35 @@
         [label setTextAlignment:UITextAlignmentCenter];
         [label setLineBreakMode:UILineBreakModeMiddleTruncation];
         
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-            [label setTextColor:[UIColor whiteColor]];
-            label.shadowColor = [UIColor darkGrayColor];
-            [label setFont:[UIFont boldSystemFontOfSize:13.0]];
-            label.shadowOffset = CGSizeMake(0.0, -1.0);
-            
-            
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+                [label setFont:[UIFont boldSystemFontOfSize:13.0]];
+            }
+            else {
+                [label setFont:[UIFont boldSystemFontOfSize:17.0]];
+            }
         }
-        else {
-            [label setTextColor:[UIColor colorWithRed:113/255.f green:120/255.f blue:128/255.f alpha:1.00]];
-            label.shadowColor = [UIColor whiteColor];
-            [label setFont:[UIFont boldSystemFontOfSize:19.0]];
-            label.shadowOffset = CGSizeMake(0.0, 0.5f);
-            
+        else
+        {
+            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+                [label setTextColor:[UIColor whiteColor]];
+                label.shadowColor = [UIColor darkGrayColor];
+                [label setFont:[UIFont boldSystemFontOfSize:13.0]];
+                label.shadowOffset = CGSizeMake(0.0, -1.0);
+                
+                
+            }
+            else {
+                [label setTextColor:[UIColor colorWithRed:113/255.f green:120/255.f blue:128/255.f alpha:1.00]];
+                label.shadowColor = [UIColor whiteColor];
+                [label setFont:[UIFont boldSystemFontOfSize:19.0]];
+                label.shadowOffset = CGSizeMake(0.0, 0.5f);
+                
+            }
         }
+        
+        
+
         
         
         [label setNumberOfLines:0];

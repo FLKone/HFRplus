@@ -580,6 +580,16 @@
 	aView.forumName = [[[arrayCategories objectAtIndex:section] forum] aTitle];
 	//aView.pickerViewArray = [[arrayNewData objectAtIndex:section] forum] subCats];
     
+    self.navigationItem.backBarButtonItem =
+    [[UIBarButtonItem alloc] initWithTitle:@"Retour"
+                                     style: UIBarButtonItemStyleBordered
+                                    target:nil
+                                    action:nil];
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+        self.navigationItem.backBarButtonItem.title = @" ";
+    }
+    
 	[self.navigationController pushViewController:aView animated:YES];
 }
 

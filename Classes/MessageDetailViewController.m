@@ -49,6 +49,11 @@
 																action:@selector(EditMessage)];
 		self.editBtn.style = UIBarButtonItemStyleBordered;
 		
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            self.actionBtn.tintColor = [UIColor whiteColor];
+            self.quoteBtn.tintColor = [UIColor whiteColor];
+            self.editBtn.tintColor = [UIColor whiteColor];
+        }
 
     }
     return self;
@@ -67,10 +72,13 @@
 
     
 	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        segmentedControl.tintColor = defaultTintColor;
+        //segmentedControl.tintColor = defaultTintColor;
     }
     else {
-        segmentedControl.tintColor = [UIColor colorWithRed:144/255.f green:152/255.f blue:159/255.f alpha:0.51];
+        if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            segmentedControl.tintColor = [UIColor colorWithRed:144/255.f green:152/255.f blue:159/255.f alpha:0.51];
+        }
+
 
     }
 }
@@ -279,7 +287,7 @@
 	segmentedControl.momentary = YES;
 	segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 
-	defaultTintColor = [segmentedControl.tintColor retain];	// keep track of this for later
+	//defaultTintColor = [segmentedControl.tintColor retain];	// keep track of this for later
 	
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithCustomView:segmentedControl];
     [segmentedControl release];
@@ -397,6 +405,15 @@
                 [aView release];
                 //}
                 
+                self.navigationItem.backBarButtonItem =
+                [[UIBarButtonItem alloc] initWithTitle:@"Retour"
+                                                 style: UIBarButtonItemStyleBordered
+                                                target:nil
+                                                action:nil];
+                
+                if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+                    self.navigationItem.backBarButtonItem.title = @" ";
+                }
                 
                 //setup the URL
                 self.messagesTableViewController.topicName = @"";	
@@ -416,6 +433,16 @@
             MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[aRequest.URL absoluteString] stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@", kForumURL] withString:@""]];
             self.messagesTableViewController = aView;
             [aView release];
+            
+            self.navigationItem.backBarButtonItem =
+            [[UIBarButtonItem alloc] initWithTitle:@"Retour"
+                                             style: UIBarButtonItemStyleBordered
+                                            target:nil
+                                            action:nil];
+            
+            if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+                self.navigationItem.backBarButtonItem.title = @" ";
+            }
             
             //setup the URL
             self.messagesTableViewController.topicName = @"";
