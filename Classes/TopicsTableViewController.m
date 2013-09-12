@@ -879,50 +879,56 @@
 
     
 	//SubCats Control
-    UISegmentedControl *segmentedControl2;
-    
-	if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-        segmentedControl2 = [[UISegmentedControl alloc] initWithItems:
-                              [NSArray arrayWithObjects:
-                               [UIImage imageNamed:@"categories"],
-                               nil]];
+    if (self.pickerViewArray.count) {
+        
+        UISegmentedControl *segmentedControl2;
+        
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            segmentedControl2 = [[UISegmentedControl alloc] initWithItems:
+                                  [NSArray arrayWithObjects:
+                                   [UIImage imageNamed:@"categories"],
+                                   nil]];
+        }
+        else
+        {
+            segmentedControl2 = [[UISegmentedControl alloc] initWithItems:
+                                                     [NSArray arrayWithObjects:
+                                                      [UIImage imageNamed:@"icon_list_bullets"],
+                                                      nil]];
+        }
+
+        [segmentedControl2 addTarget:self action:@selector(segmentCatAction:) forControlEvents:UIControlEventValueChanged];
+        segmentedControl2.segmentedControlStyle = UISegmentedControlStyleBar;
+        segmentedControl2.momentary = YES;
+
+        
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad && SYSTEM_VERSION_LESS_THAN(@"7.0")) {
+            segmentedControl2.tintColor = [UIColor colorWithRed:156/255.f green:161/255.f blue:167/255.f alpha:1.00];
+        }
+
+         
+        segmentedControl2.frame = CGRectMake(segmentedControl.frame.size.width + 15, 0, segmentedControl2.frame.size.width, segmentedControl2.frame.size.height);
+        segmentedControl.frame = CGRectMake(5, 0, segmentedControl.frame.size.width, segmentedControl.frame.size.height);
+
+
+        [self.navigationItem.titleView insertSubview:segmentedControl2 atIndex:1];
+        self.navigationItem.titleView.frame = CGRectMake(0, 0, segmentedControl.frame.size.width + 20 + segmentedControl2.frame.size.width, segmentedControl.frame.size.height);
+
+        segmentedControl.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin);
+        segmentedControl2.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin);
+        self.navigationItem.titleView.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin);
+
+        [segmentedControl2 release];
+            
     }
     else
     {
-        segmentedControl2 = [[UISegmentedControl alloc] initWithItems:
-                                                 [NSArray arrayWithObjects:
-                                                  [UIImage imageNamed:@"icon_list_bullets"],
-                                                  nil]];
+        segmentedControl.frame = CGRectMake(5, 0, segmentedControl.frame.size.width, segmentedControl.frame.size.height);
+        self.navigationItem.titleView.frame = CGRectMake(0, 0, segmentedControl.frame.size.width, segmentedControl.frame.size.height);
+        segmentedControl.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin);
+        self.navigationItem.titleView.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin);
+
     }
-
-    [segmentedControl2 addTarget:self action:@selector(segmentCatAction:) forControlEvents:UIControlEventValueChanged];
-    segmentedControl2.segmentedControlStyle = UISegmentedControlStyleBar;
-    segmentedControl2.momentary = YES;
-
-    
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad && SYSTEM_VERSION_LESS_THAN(@"7.0")) {
-        segmentedControl2.tintColor = [UIColor colorWithRed:156/255.f green:161/255.f blue:167/255.f alpha:1.00];
-    }
-
-     
-    segmentedControl2.frame = CGRectMake(segmentedControl.frame.size.width + 15, 0, segmentedControl2.frame.size.width, segmentedControl2.frame.size.height);
-    segmentedControl.frame = CGRectMake(5, 0, segmentedControl.frame.size.width, segmentedControl.frame.size.height);
-
-    if (self.pickerViewArray.count == 0) {
-        segmentedControl2.enabled = NO;
-        segmentedControl2.alpha = 0;
-    }
-
-    [self.navigationItem.titleView insertSubview:segmentedControl2 atIndex:1];
-    self.navigationItem.titleView.frame = CGRectMake(0, 0, segmentedControl.frame.size.width + 20 + segmentedControl2.frame.size.width, segmentedControl.frame.size.height);
-
-    segmentedControl.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin);
-    segmentedControl2.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin);
-    self.navigationItem.titleView.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin);
-
-    [segmentedControl2 release];
-
-
 
 	
 	[segmentedControl release];
