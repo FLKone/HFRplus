@@ -143,7 +143,6 @@
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
 
-    
 	//Bouton Annuler
 	UIBarButtonItem *cancelBarItem = [[UIBarButtonItem alloc] initWithTitle:@"Annuler" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
 	self.navigationItem.leftBarButtonItem = cancelBarItem;
@@ -239,7 +238,7 @@
 														   textSpoilerItem, textFixeItem, textQuoteItem, textLinkItem, textImgItem, nil]];
 
 	
-	[segmentControler setEnabled:NO forSegmentAtIndex:1];		
+	[segmentControler setEnabled:NO forSegmentAtIndex:1];
 	//[segmentControler setEnabled:NO forSegmentAtIndex:2];		
 
 }
@@ -269,6 +268,7 @@
 	//	//NSLog(@"contentOffset 1");
 		self.textView.contentOffset = CGPointMake(0, self.offsetY);
 	}
+
 }
 
 - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
@@ -292,6 +292,8 @@
 	
 		self.textView.contentOffset = CGPointMake(0, self.offsetY);
 	}
+    
+
 }
 
 #pragma mark -
@@ -307,6 +309,9 @@
 	else {
 		[self.navigationItem.rightBarButtonItem setEnabled:NO];
 	}
+    
+    [ftextView scrollRangeToVisible:NSMakeRange([ftextView.text length], 0)];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -616,7 +621,13 @@
 				break;
 			}
 			case 1:
-				break;					
+            {
+                CGPoint offset = CGPointMake(0, self.textView.contentSize.height - self.textView.frame.size.height);
+                NSLog(@"SUPPPPP %@", NSStringFromCGPoint(offset));
+                [self.textView setContentOffset:offset animated:YES];
+
+				break;
+            }
 			default:
 				break;
 		}
