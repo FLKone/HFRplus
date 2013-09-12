@@ -1568,7 +1568,7 @@
     
     UITextField *textField = [alert textFieldAtIndex:0];
     textField.placeholder = [NSString stringWithFormat:@"(numéro entre 1 et %d)", [[arrayData objectAtIndex:pressedIndexPath.row] maxTopicPage]];
-    textField.textAlignment = UITextAlignmentCenter;
+    textField.textAlignment = NSTextAlignmentCenter;
     textField.delegate = self;
     [textField addTarget:self action:@selector(textFieldTopicDidChange:) forControlEvents:UIControlEventEditingChanged];
     textField.keyboardAppearance = UIKeyboardAppearanceAlert;

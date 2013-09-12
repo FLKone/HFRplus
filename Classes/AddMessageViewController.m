@@ -1067,9 +1067,9 @@
 		
 		[labelTitle setFont:[UIFont systemFontOfSize:14.0]];
 		[labelTitle setAdjustsFontSizeToFitWidth:NO];
-		[labelTitle setLineBreakMode:UILineBreakModeTailTruncation];
+		[labelTitle setLineBreakMode:NSLineBreakByTruncatingTail];
 		//[labelTitle setBackgroundColor:[UIColor blueColor]];
-		[labelTitle setTextAlignment:UITextAlignmentCenter];
+		[labelTitle setTextAlignment:NSTextAlignmentCenter];
 		[labelTitle setHighlightedTextColor:[UIColor whiteColor]];
 		[labelTitle setTag:999];
 		[labelTitle setText:@"Pas de résultats"];

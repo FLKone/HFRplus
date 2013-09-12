@@ -307,8 +307,8 @@
 			[label setFont:[UIFont boldSystemFontOfSize:15.0]];
 			[label setAdjustsFontSizeToFitWidth:YES];
 			[label setBackgroundColor:[UIColor clearColor]];
-			[label setTextAlignment:UITextAlignmentCenter];
-			[label setLineBreakMode:UILineBreakModeMiddleTruncation];
+			[label setTextAlignment:NSTextAlignmentCenter];
+			[label setLineBreakMode:NSLineBreakByTruncatingMiddle];
 			[label setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
 			
 			[label setTextColor:[UIColor whiteColor]];
@@ -529,8 +529,8 @@
     
     [label setAdjustsFontSizeToFitWidth:YES];
     [label setBackgroundColor:[UIColor clearColor]];
-    [label setTextAlignment:UITextAlignmentCenter];
-    [label setLineBreakMode:UILineBreakModeMiddleTruncation];
+    [label setTextAlignment:NSTextAlignmentCenter];
+    [label setLineBreakMode:NSLineBreakByTruncatingMiddle];
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         [label setTextColor:[UIColor blackColor]];
@@ -970,8 +970,8 @@
         
         [label setAdjustsFontSizeToFitWidth:YES];
         [label setBackgroundColor:[UIColor clearColor]];
-        [label setTextAlignment:UITextAlignmentCenter];
-        [label setLineBreakMode:UILineBreakModeMiddleTruncation];
+        [label setTextAlignment:NSTextAlignmentCenter];
+        [label setLineBreakMode:NSLineBreakByTruncatingMiddle];
         
         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
             if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {

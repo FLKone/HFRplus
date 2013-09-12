@@ -50,7 +50,7 @@
     
     UITextField *textField = [alert textFieldAtIndex:0];
     textField.placeholder = [NSString stringWithFormat:@"(numéro entre %d et %d)", [self firstPageNumber], [self lastPageNumber]];
-    textField.textAlignment = UITextAlignmentCenter;
+    textField.textAlignment = NSTextAlignmentCenter;
     textField.delegate = self;
     [textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     textField.keyboardAppearance = UIKeyboardAppearanceAlert;
