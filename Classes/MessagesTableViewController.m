@@ -571,8 +571,15 @@
     [label release];
 
     // fond blanc WebView
-    [self.messagesWebView setBackgroundColor:[UIColor whiteColor]];
     [self.messagesWebView hideGradientBackground];
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+        [self.messagesWebView setBackgroundColor:[UIColor colorWithRed:239/255.0f green:239/255.0f blue:244/255.0f alpha:1.0f]];
+    }
+    else
+    {
+        [self.messagesWebView setBackgroundColor:[UIColor whiteColor]];
+    }
     
 	//Gesture
 	UIGestureRecognizer *recognizer;
@@ -1305,9 +1312,9 @@
 	for (i = 0; i < [self.arrayData count]; i++) { //Loop through all the tags
 		tmpHTML = [tmpHTML stringByAppendingString:[[self.arrayData objectAtIndex:i] toHTML:i]];
 	}
-	
-	NSString *HTMLString = [[NSString alloc] 
-                initWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
+    
+	NSString *HTMLString = [NSString
+                stringWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
                 <html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"fr\" lang=\"fr\">\
                 <head>\
                 <script type='text/javascript' src='jquery-2.0.3.min.js'></script>\
@@ -1318,7 +1325,7 @@
                 <link type='text/css' rel='stylesheet' href='style-liste-retina.css' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\
                 <link type='text/css' rel='stylesheet' href='style-liste-ipad-portrait.css' media='all and (min-width: 767px)'/>\
                 <link type='text/css' rel='stylesheet' href='style-liste-ipad-landscape.css' media='all and (min-width: 700px) and (max-width: 750px)'/>\
-                </head><body>\
+                </head><body class='iosversion'>\
                 <div class='bunselected nosig' id='qsdoiqjsdkjhqkjhqsdqdilkjqsd2'>%@</div>\
                 <div id='endofpage'></div>\
                 <div id='endofpagetoolbar'></div>\
@@ -1335,6 +1342,12 @@
                 </script>\
                 </body></html>", tmpHTML];
 	
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"iosversion" withString:@"ios7"];
+    }
+  //  HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"hfrplusiosversion" withString:@""];
+
+    
 	NSString *path = [[NSBundle mainBundle] bundlePath];
 	NSURL *baseURL = [NSURL fileURLWithPath:path];
 	//NSLog(@"baseURL %@", baseURL);
@@ -1350,7 +1363,7 @@
 	
 	[self.messagesWebView setUserInteractionEnabled:YES];
 
-	[HTMLString release];
+	//[HTMLString release];
 	//[tmpHTML release];
 
 }
@@ -1543,6 +1556,16 @@
                 self.messagesTableViewController.topicName = @"";	
                 self.messagesTableViewController.isViewed = YES;	
                 
+                self.navigationItem.backBarButtonItem =
+                [[UIBarButtonItem alloc] initWithTitle:@"Retour"
+                                                 style: UIBarButtonItemStyleBordered
+                                                target:nil
+                                                action:nil];
+                
+                if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+                    self.navigationItem.backBarButtonItem.title = @" ";
+                }
+                
                 //NSLog(@"push message liste");
                 [self.navigationController pushViewController:messagesTableViewController animated:YES];  
             }
@@ -1567,6 +1590,16 @@
             //setup the URL
             self.messagesTableViewController.topicName = @"";
             self.messagesTableViewController.isViewed = YES;
+            
+            self.navigationItem.backBarButtonItem =
+            [[UIBarButtonItem alloc] initWithTitle:@"Retour"
+                                             style: UIBarButtonItemStyleBordered
+                                            target:nil
+                                            action:nil];
+            
+            if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+                self.navigationItem.backBarButtonItem.title = @" ";
+            }
             
             [self.navigationController pushViewController:messagesTableViewController animated:YES];
 

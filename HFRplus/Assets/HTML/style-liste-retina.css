@@ -65,3 +65,31 @@
         background-image:url('avatar_male_gray_on_light_48x48@2x.png');
 
 }
+
+.ios7 #toolbarpage .button.begin {
+	background-image:url(ToolBarFastRewind_off@2x.png);
+}
+.ios7 #toolbarpage .button.begin.active {
+	background-image:url(ToolBarFastRewind_on@2x.png);
+}
+
+.ios7 #toolbarpage .button.end {
+	background-image:url(ToolBarFastForward_off@2x.png);
+}
+.ios7 #toolbarpage .button.end.active {
+	background-image:url(ToolBarFastForward_on@2x.png);
+}
+
+.ios7 #toolbarpage .button2.begin {
+	background-image:url(ToolBarPrevious_off@2x.png);
+}
+.ios7 #toolbarpage .button2.begin.active {
+	background-image:url(ToolBarPrevious_on@2x.png);
+}
+
+.ios7 #toolbarpage .button2.end {
+	background-image:url(ToolBarPlay_off@2x.png);
+}
+.ios7 #toolbarpage .button2.end.active {
+	background-image:url(ToolBarPlay_on@2x.png);
+}

@@ -337,6 +337,22 @@
 		CA4CE81515B185CA0039FC3B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CA4CE81415B185CA0039FC3B /* libz.dylib */; };
 		CA4CE89215B1B30B0039FC3B /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA4CE89115B1B30B0039FC3B /* ImageIO.framework */; };
 		CA7472D217E1262F00B45E15 /* avatar_male_gray_on_light_48x48@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7472D117E1262E00B45E15 /* avatar_male_gray_on_light_48x48@2x.png */; };
+		CA7472D817E14D4500B45E15 /* ToolBarPlay_off.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7472D417E14D4500B45E15 /* ToolBarPlay_off.png */; };
+		CA7472D917E14D4500B45E15 /* ToolBarPlay_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7472D517E14D4500B45E15 /* ToolBarPlay_off@2x.png */; };
+		CA7472DA17E14D4500B45E15 /* ToolBarPlay_on.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7472D617E14D4500B45E15 /* ToolBarPlay_on.png */; };
+		CA7472DB17E14D4500B45E15 /* ToolBarPlay_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7472D717E14D4500B45E15 /* ToolBarPlay_on@2x.png */; };
+		CA7472E817E15FE300B45E15 /* ToolBarFastForward_off.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7472DC17E15FE200B45E15 /* ToolBarFastForward_off.png */; };
+		CA7472E917E15FE300B45E15 /* ToolBarFastForward_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7472DD17E15FE200B45E15 /* ToolBarFastForward_off@2x.png */; };
+		CA7472EA17E15FE300B45E15 /* ToolBarFastForward_on.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7472DE17E15FE200B45E15 /* ToolBarFastForward_on.png */; };
+		CA7472EB17E15FE300B45E15 /* ToolBarFastForward_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7472DF17E15FE200B45E15 /* ToolBarFastForward_on@2x.png */; };
+		CA7472EC17E15FE300B45E15 /* ToolBarFastRewind_off.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7472E017E15FE200B45E15 /* ToolBarFastRewind_off.png */; };
+		CA7472ED17E15FE300B45E15 /* ToolBarFastRewind_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7472E117E15FE200B45E15 /* ToolBarFastRewind_off@2x.png */; };
+		CA7472EE17E15FE300B45E15 /* ToolBarFastRewind_on.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7472E217E15FE200B45E15 /* ToolBarFastRewind_on.png */; };
+		CA7472EF17E15FE300B45E15 /* ToolBarFastRewind_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7472E317E15FE200B45E15 /* ToolBarFastRewind_on@2x.png */; };
+		CA7472F017E15FE300B45E15 /* ToolBarPrevious_off.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7472E417E15FE200B45E15 /* ToolBarPrevious_off.png */; };
+		CA7472F117E15FE300B45E15 /* ToolBarPrevious_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7472E517E15FE200B45E15 /* ToolBarPrevious_off@2x.png */; };
+		CA7472F217E15FE300B45E15 /* ToolBarPrevious_on.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7472E617E15FE200B45E15 /* ToolBarPrevious_on.png */; };
+		CA7472F317E15FE300B45E15 /* ToolBarPrevious_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7472E717E15FE300B45E15 /* ToolBarPrevious_on@2x.png */; };
 		CA77D0F51261424D00271D62 /* PageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA77D0F41261424D00271D62 /* PageViewController.m */; };
 		CA79581B12836B24007C4E02 /* HFRSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA79581912836B24007C4E02 /* HFRSearchViewController.m */; };
 		CA79581C12836B24007C4E02 /* HFRSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA79581A12836B24007C4E02 /* HFRSearchViewController.xib */; };
@@ -797,6 +813,22 @@
 		CA4CE81415B185CA0039FC3B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		CA4CE89115B1B30B0039FC3B /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		CA7472D117E1262E00B45E15 /* avatar_male_gray_on_light_48x48@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatar_male_gray_on_light_48x48@2x.png"; sourceTree = "<group>"; };
+		CA7472D417E14D4500B45E15 /* ToolBarPlay_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ToolBarPlay_off.png; sourceTree = "<group>"; };
+		CA7472D517E14D4500B45E15 /* ToolBarPlay_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ToolBarPlay_off@2x.png"; sourceTree = "<group>"; };
+		CA7472D617E14D4500B45E15 /* ToolBarPlay_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ToolBarPlay_on.png; sourceTree = "<group>"; };
+		CA7472D717E14D4500B45E15 /* ToolBarPlay_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ToolBarPlay_on@2x.png"; sourceTree = "<group>"; };
+		CA7472DC17E15FE200B45E15 /* ToolBarFastForward_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ToolBarFastForward_off.png; sourceTree = "<group>"; };
+		CA7472DD17E15FE200B45E15 /* ToolBarFastForward_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ToolBarFastForward_off@2x.png"; sourceTree = "<group>"; };
+		CA7472DE17E15FE200B45E15 /* ToolBarFastForward_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ToolBarFastForward_on.png; sourceTree = "<group>"; };
+		CA7472DF17E15FE200B45E15 /* ToolBarFastForward_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ToolBarFastForward_on@2x.png"; sourceTree = "<group>"; };
+		CA7472E017E15FE200B45E15 /* ToolBarFastRewind_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ToolBarFastRewind_off.png; sourceTree = "<group>"; };
+		CA7472E117E15FE200B45E15 /* ToolBarFastRewind_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ToolBarFastRewind_off@2x.png"; sourceTree = "<group>"; };
+		CA7472E217E15FE200B45E15 /* ToolBarFastRewind_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ToolBarFastRewind_on.png; sourceTree = "<group>"; };
+		CA7472E317E15FE200B45E15 /* ToolBarFastRewind_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ToolBarFastRewind_on@2x.png"; sourceTree = "<group>"; };
+		CA7472E417E15FE200B45E15 /* ToolBarPrevious_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ToolBarPrevious_off.png; sourceTree = "<group>"; };
+		CA7472E517E15FE200B45E15 /* ToolBarPrevious_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ToolBarPrevious_off@2x.png"; sourceTree = "<group>"; };
+		CA7472E617E15FE200B45E15 /* ToolBarPrevious_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ToolBarPrevious_on.png; sourceTree = "<group>"; };
+		CA7472E717E15FE300B45E15 /* ToolBarPrevious_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ToolBarPrevious_on@2x.png"; sourceTree = "<group>"; };
 		CA77D0F31261424D00271D62 /* PageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageViewController.h; sourceTree = "<group>"; };
 		CA77D0F41261424D00271D62 /* PageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PageViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CA79581812836B24007C4E02 /* HFRSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = HFRSearchViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -1499,6 +1531,7 @@
 		CA00C5A217C30C370067B457 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				CA7472D317E14D4500B45E15 /* iOS7 */,
 				CA00C5A317C30C370067B457 /* 06-magnify.png */,
 				CA00C5A417C30C370067B457 /* 06-magnify@2x.png */,
 				CA00C5A517C30C370067B457 /* 06-magnifying-glass.png */,
@@ -1656,6 +1689,29 @@
 			name = inApp;
 			sourceTree = "<group>";
 		};
+		CA7472D317E14D4500B45E15 /* iOS7 */ = {
+			isa = PBXGroup;
+			children = (
+				CA7472DC17E15FE200B45E15 /* ToolBarFastForward_off.png */,
+				CA7472DD17E15FE200B45E15 /* ToolBarFastForward_off@2x.png */,
+				CA7472DE17E15FE200B45E15 /* ToolBarFastForward_on.png */,
+				CA7472DF17E15FE200B45E15 /* ToolBarFastForward_on@2x.png */,
+				CA7472E017E15FE200B45E15 /* ToolBarFastRewind_off.png */,
+				CA7472E117E15FE200B45E15 /* ToolBarFastRewind_off@2x.png */,
+				CA7472E217E15FE200B45E15 /* ToolBarFastRewind_on.png */,
+				CA7472E317E15FE200B45E15 /* ToolBarFastRewind_on@2x.png */,
+				CA7472E417E15FE200B45E15 /* ToolBarPrevious_off.png */,
+				CA7472E517E15FE200B45E15 /* ToolBarPrevious_off@2x.png */,
+				CA7472E617E15FE200B45E15 /* ToolBarPrevious_on.png */,
+				CA7472E717E15FE300B45E15 /* ToolBarPrevious_on@2x.png */,
+				CA7472D417E14D4500B45E15 /* ToolBarPlay_off.png */,
+				CA7472D517E14D4500B45E15 /* ToolBarPlay_off@2x.png */,
+				CA7472D617E14D4500B45E15 /* ToolBarPlay_on.png */,
+				CA7472D717E14D4500B45E15 /* ToolBarPlay_on@2x.png */,
+			);
+			path = iOS7;
+			sourceTree = "<group>";
+		};
 		CA9E8275124364E8000EE882 /* PhotoViewer */ = {
 			isa = PBXGroup;
 			children = (
@@ -1769,6 +1825,7 @@
 				CA00C6CD17C30C370067B457 /* buttonpreviouson@2x.png in Resources */,
 				CA00C62717C30C370067B457 /* eek.gif in Resources */,
 				01BF8788121C4407007624B6 /* AideViewController.xib in Resources */,
+				CA7472F017E15FE300B45E15 /* ToolBarPrevious_off.png in Resources */,
 				CA00C69A17C30C370067B457 /* arrowR.png in Resources */,
 				CA00C63117C30C370067B457 /* hap.gif in Resources */,
 				01BF8789121C4407007624B6 /* CreditsViewController.xib in Resources */,
@@ -1803,8 +1860,10 @@
 				CA00C64C17C30C370067B457 /* sol.gif in Resources */,
 				CA00C69B17C30C370067B457 /* arrowR@2x.png in Resources */,
 				CA00C66017C30C370067B457 /* style-liste-ipad-landscape.css in Resources */,
+				CA7472F317E15FE300B45E15 /* ToolBarPrevious_on@2x.png in Resources */,
 				CA00C6DE17C30C370067B457 /* link.png in Resources */,
 				CA00C64417C30C370067B457 /* ouimaitre.gif in Resources */,
+				CA7472DB17E14D4500B45E15 /* ToolBarPlay_on@2x.png in Resources */,
 				CA00C6BE17C30C370067B457 /* buttonendoff.png in Resources */,
 				CA00C68217C30C370067B457 /* 121-landscapebig.png in Resources */,
 				CA00C64217C30C370067B457 /* ohwell.gif in Resources */,
@@ -1820,6 +1879,7 @@
 				CA00C67117C30C370067B457 /* Icon-Small.png in Resources */,
 				CA00C6C017C30C370067B457 /* buttonendon.png in Resources */,
 				CA00C62B17C30C370067B457 /* foudtag.gif in Resources */,
+				CA7472EB17E15FE300B45E15 /* ToolBarFastForward_on@2x.png in Resources */,
 				CA00C6E617C30C370067B457 /* previousIcon@2x.png in Resources */,
 				CA00C6CB17C30C370067B457 /* buttonpreviousoff@2x.png in Resources */,
 				CA00C6E517C30C370067B457 /* previousIcon.png in Resources */,
@@ -1845,18 +1905,23 @@
 				013F0EAF121E117900BEBEB1 /* MessageDetailViewController.xib in Resources */,
 				CA00C68517C30C370067B457 /* 122-stats@2x.png in Resources */,
 				CA00C6D317C30C370067B457 /* loadinfo.net.gif in Resources */,
+				CA7472DA17E14D4500B45E15 /* ToolBarPlay_on.png in Resources */,
 				CA00C68D17C30C370067B457 /* 28-star@2x.png in Resources */,
 				CA00C63417C30C370067B457 /* hello.gif in Resources */,
 				013F0EB3121E117900BEBEB1 /* AddMessageViewController.xib in Resources */,
 				CA00C6C617C30C370067B457 /* buttonnexton.png in Resources */,
+				CA7472EF17E15FE300B45E15 /* ToolBarFastRewind_on@2x.png in Resources */,
 				CA00C65F17C30C370067B457 /* style-aide.css in Resources */,
 				CA00C69F17C30C370067B457 /* bginput.png in Resources */,
 				CA00C6E717C30C370067B457 /* up.png in Resources */,
+				CA7472E917E15FE300B45E15 /* ToolBarFastForward_off@2x.png in Resources */,
 				CA00C6D217C30C370067B457 /* loadinfo.gif in Resources */,
 				CA00C6E417C30C370067B457 /* photoDefaultfailmini.png in Resources */,
 				CA00C66A17C30C370067B457 /* Default-568h@2x.png in Resources */,
 				CA00C62817C30C370067B457 /* eek2.gif in Resources */,
 				CA00C61B17C30C370067B457 /* ange.gif in Resources */,
+				CA7472F117E15FE300B45E15 /* ToolBarPrevious_off@2x.png in Resources */,
+				CA7472ED17E15FE300B45E15 /* ToolBarFastRewind_off@2x.png in Resources */,
 				CA00C63E17C30C370067B457 /* mouais.gif in Resources */,
 				CA00C64D17C30C370067B457 /* spamafote.gif in Resources */,
 				CA00C6BF17C30C370067B457 /* buttonendoff@2x.png in Resources */,
@@ -1872,11 +1937,13 @@
 				CA00C6E917C310B50067B457 /* InAppSettings.bundle in Resources */,
 				CA00C63C17C30C370067B457 /* miam.gif in Resources */,
 				CA00C6A417C30C370067B457 /* down.png in Resources */,
+				CA7472D817E14D4500B45E15 /* ToolBarPlay_off.png in Resources */,
 				CA00C62917C30C370067B457 /* evil.gif in Resources */,
 				CA00C67B17C30C370067B457 /* 08-chat@2x.png in Resources */,
 				CA00C68E17C30C370067B457 /* 44-shoebox.png in Resources */,
 				CA00C6E017C30C370067B457 /* nextIcon.png in Resources */,
 				CA00C67A17C30C370067B457 /* 08-chat.png in Resources */,
+				CA7472D917E14D4500B45E15 /* ToolBarPlay_off@2x.png in Resources */,
 				CA00C66417C30C370067B457 /* style-max-land.css in Resources */,
 				CA00C6B217C30C370067B457 /* beginhover.png in Resources */,
 				CA228CF0125CFD4500DDCD2E /* MessageDetailViewControllerv2.xib in Resources */,
@@ -1907,6 +1974,7 @@
 				CA00C68F17C30C370067B457 /* 44-shoebox@2x.png in Resources */,
 				CA00C67817C30C370067B457 /* 06-magnify@2x.png in Resources */,
 				CA00C64517C30C370067B457 /* pfff.gif in Resources */,
+				CA7472F217E15FE300B45E15 /* ToolBarPrevious_on.png in Resources */,
 				CA00C63817C30C370067B457 /* kaola.gif in Resources */,
 				CA00C63B17C30C370067B457 /* mad.gif in Resources */,
 				CA00C6DA17C30C370067B457 /* icon_smile_face.png in Resources */,
@@ -1918,6 +1986,7 @@
 				CA00C6A117C30C370067B457 /* bgiPad.png in Resources */,
 				CA00C62317C30C370067B457 /* crazy.gif in Resources */,
 				CA00C62C17C30C370067B457 /* fouyaya.gif in Resources */,
+				CA7472EC17E15FE300B45E15 /* ToolBarFastRewind_off.png in Resources */,
 				CA00C66B17C30C370067B457 /* Default.png in Resources */,
 				CA00C68617C30C370067B457 /* 18-envelope.png in Resources */,
 				CA40DA1112845A360051E3A9 /* NewsViewController.xib in Resources */,
@@ -1952,7 +2021,9 @@
 				CA00C6EB17C310E90067B457 /* commonsmile.plist in Resources */,
 				CA10706E15A4BFB1002E6C19 /* PhotoViewController-iPad.xib in Resources */,
 				CA00C6A517C30C370067B457 /* flagblue2.png in Resources */,
+				CA7472EE17E15FE300B45E15 /* ToolBarFastRewind_on.png in Resources */,
 				CA00C3F717C2FE1B0067B457 /* IASKAppSettingsWebView.xib in Resources */,
+				CA7472E817E15FE300B45E15 /* ToolBarFastForward_off.png in Resources */,
 				CA00C69717C30C370067B457 /* arrowend@2x.png in Resources */,
 				CA00C66117C30C370067B457 /* style-liste-ipad-portrait.css in Resources */,
 				CA00C69017C30C370067B457 /* 60-signpost.png in Resources */,
@@ -1993,6 +2064,7 @@
 				CA00C6D017C30C370067B457 /* endon.png in Resources */,
 				CA00C6A817C30C370067B457 /* flagred@2x.png in Resources */,
 				CA00C65E17C30C370067B457 /* smileybase.html in Resources */,
+				CA7472EA17E15FE300B45E15 /* ToolBarFastForward_on.png in Resources */,
 				CA00C65617C30C370067B457 /* aide.html in Resources */,
 				CA00C61717C30C370067B457 /* multiplefavoris.gif in Resources */,
 				CA00C6B917C30C370067B457 /* buttonbeginoff@2x.png in Resources */,
