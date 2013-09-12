@@ -331,7 +331,17 @@
 			
 			//TableFooter
 			UIToolbar *tmptoolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-			tmptoolbar.barStyle = UIBarStyleDefault;
+            
+            if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+                tmptoolbar.barStyle = -1;
+                
+                tmptoolbar.opaque = NO;
+                tmptoolbar.translucent = YES;
+                
+                [[tmptoolbar.subviews objectAtIndex:1] setHidden:YES];
+                
+            }
+            
 			[tmptoolbar sizeToFit];
 
 			UIBarButtonItem *systemItemNext = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrowforward"] 
