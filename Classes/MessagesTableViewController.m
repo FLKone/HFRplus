@@ -768,7 +768,7 @@
     if ([position isEqualToString:@"top"])
         script = @"$('html, body').animate({scrollTop:0}, 'slow');";
     else if ([position isEqualToString:@"bottom"])
-        script = @"$('html, body').animate({scrollTop:$('body').attr('scrollHeight')}, 'slow');";
+        script = @"$('html, body').animate({scrollTop:$(document).height()}, 'slow');";
     else {
         script = @"";
     }
