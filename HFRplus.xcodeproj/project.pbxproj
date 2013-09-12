@@ -327,6 +327,7 @@
 		CA24233E17C3C898002888D3 /* jquery-2.0.3.min.js in Resources */ = {isa = PBXBuildFile; fileRef = CA24233D17C3C898002888D3 /* jquery-2.0.3.min.js */; };
 		CA26862513ADE01100AC5511 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA26862313ADE01100AC5511 /* BrowserViewController.m */; };
 		CA26862613ADE01100AC5511 /* BrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA26862413ADE01100AC5511 /* BrowserViewController.xib */; };
+		CA2E4C0A17E21EC700E95622 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA2E4C0917E21EC700E95622 /* Images.xcassets */; };
 		CA34780B12EB557500D1BA2A /* PayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA34780912EB557500D1BA2A /* PayViewController.m */; };
 		CA34780C12EB557500D1BA2A /* PayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA34780A12EB557500D1BA2A /* PayViewController.xib */; };
 		CA37D50D15A1BD5F002C72C6 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CA37D50C15A1BD5F002C72C6 /* libsqlite3.dylib */; };
@@ -801,6 +802,7 @@
 		CA26862213ADE01100AC5511 /* BrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BrowserViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CA26862313ADE01100AC5511 /* BrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BrowserViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CA26862413ADE01100AC5511 /* BrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserViewController.xib; sourceTree = "<group>"; };
+		CA2E4C0917E21EC700E95622 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		CA34780812EB557500D1BA2A /* PayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PayViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CA34780912EB557500D1BA2A /* PayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PayViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CA34780A12EB557500D1BA2A /* PayViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PayViewController.xib; sourceTree = "<group>"; };
@@ -1140,6 +1142,7 @@
 				CA00C6EA17C310E90067B457 /* commonsmile.plist */,
 				CA00C3A217C2FD1F0067B457 /* config.h */,
 				CA00C6E817C310B50067B457 /* InAppSettings.bundle */,
+				CA2E4C0917E21EC700E95622 /* Images.xcassets */,
 			);
 			path = HFRplus;
 			sourceTree = "<group>";
@@ -1985,6 +1988,7 @@
 				CA00C6D817C30C370067B457 /* toolbar3@2x.png in Resources */,
 				CA00C6A117C30C370067B457 /* bgiPad.png in Resources */,
 				CA00C62317C30C370067B457 /* crazy.gif in Resources */,
+				CA2E4C0A17E21EC700E95622 /* Images.xcassets in Resources */,
 				CA00C62C17C30C370067B457 /* fouyaya.gif in Resources */,
 				CA7472EC17E15FE300B45E15 /* ToolBarFastRewind_off.png in Resources */,
 				CA00C66B17C30C370067B457 /* Default.png in Resources */,
@@ -2203,6 +2207,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -2231,6 +2237,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
