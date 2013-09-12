@@ -51,9 +51,10 @@
     NSString *htmlString = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"credits" ofType:@"html"] encoding:NSUTF8StringEncoding error:NULL];
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
-        htmlString = [htmlString stringByReplacingOccurrencesOfString:@"iosversion" withString:@"ios7"];
+        htmlString = [htmlString stringByReplacingOccurrencesOfString:@"%%iosversion%%" withString:@"ios7"];
     }
-    
+    htmlString = [htmlString stringByReplacingOccurrencesOfString:@"%%iosversion%%" withString:@""];
+
 	[myWebView loadHTMLString:htmlString baseURL:baseURL];
 	
 }
