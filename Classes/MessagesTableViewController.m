@@ -1769,16 +1769,27 @@
 	[menuAction release];
 	//NSLog(@"menuAction %d", menuAction.count);
 	
-	//NSLog(@"ypos %d", ypos);
+	NSLog(@"ypos %d", ypos);
 	
+
+    
 	if (ypos < 40) {
 
 		ypos +=34;
+        
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7,0")) {
+            ypos +=10;
+        }
 		[menuController setArrowDirection:UIMenuControllerArrowUp];
 	}
 	else {
 		[menuController setArrowDirection:UIMenuControllerArrowDown];
 	}
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7,0")) {
+        ypos += 66;
+    }
+    
 	//NSLog(@"oijlkajsdoihjlkjasdopopup 0");
 	
 	//CGRect myFrame = [[self.view superview] frame];
