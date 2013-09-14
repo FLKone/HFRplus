@@ -43,15 +43,24 @@
     
     NSLog(@"showAll %d", self.showAll);
 
+    UIButton *btn = (UIButton *)[self.navigationController.navigationBar viewWithTag:237];
+    UIButton *btn2 = (UIButton *)[self.navigationController.navigationBar viewWithTag:238];
+    
     if (self.showAll) {
         self.showAll = NO;
-        [sender setSelected:NO];
-        [sender setHighlighted:NO];
+        [btn setSelected:NO];
+        //[btn setHighlighted:NO];
+        
+        [btn2 setSelected:NO];
+        //[btn2 setHighlighted:NO];
     }
     else {
         self.showAll = YES;
-        [sender setSelected:YES];
-        [sender setHighlighted:YES];
+        [btn setSelected:YES];
+        //[btn setHighlighted:YES];
+        
+        [btn2 setSelected:YES];
+        //[btn2 setHighlighted:YES];
     }
     
     if (![self.favoritesTableView isHidden]) {
@@ -386,9 +395,42 @@
 
 -(void)OrientationChanged
 {
+    NSLog(@"OrientationChanged");
+    
+    
     if (self.topicActionSheet) {
         [self.topicActionSheet dismissWithClickedButtonIndex:[self.topicActionSheet cancelButtonIndex] animated:YES];
     }
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        UIView *btn;
+        UIView *btn2;
+        
+        UIInterfaceOrientation o = [[UIApplication sharedApplication] statusBarOrientation];
+        if (UIDeviceOrientationIsLandscape(o)) {
+            NSLog(@"LAND IPHONE");
+            btn = [self.navigationController.navigationBar viewWithTag:238];
+            btn2 = [self.navigationController.navigationBar viewWithTag:237];
+
+        }
+        else {
+            btn = [self.navigationController.navigationBar viewWithTag:237];
+            btn2 = [self.navigationController.navigationBar viewWithTag:238];
+
+        }
+        
+        [btn2 setHidden:YES];
+        [btn setHidden:NO];
+        CGRect frame = btn.frame;
+        frame.origin.y = (self.navigationController.navigationBar.frame.size.height - frame.size.height)/2;
+        btn.frame = frame;
+        
+    }
+    
+    
+    
+
+//    [[[self.navigationController.navigationBar subviews] objectAtIndex:0] setFrame:CGRect]
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -436,6 +478,7 @@
     
 	// reload
     UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
+    //UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"categories"] style:UIBarButtonItemStyleBordered target:self action:@selector(reload)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
     [segmentBarItem release];		
     
@@ -452,6 +495,27 @@
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
     
+        UIImage *buttonImage2 = [UIImage imageNamed:@"categories_land"];
+        UIButton *aButton2 = [UIButton buttonWithType:UIButtonTypeCustom];
+        [aButton2 setAdjustsImageWhenHighlighted:NO];
+        
+        [aButton2 setImage:buttonImage2 forState:UIControlStateNormal];
+        [aButton2 setImage:buttonImage2 forState:UIControlStateSelected];
+        [aButton2 setImage:buttonImage2 forState:UIControlStateHighlighted];
+        [aButton2 setBackgroundImage:[UIImage imageNamed:@"lightBlue.png"] forState:UIControlStateSelected];
+        [aButton2 setBackgroundImage:[UIImage imageNamed:@"lightBlue.png"] forState:UIControlStateHighlighted];
+        //[aButton setBackgroundImage:[UIImage imageNamed:@"lightBlue.png"] forState:UIControlStateNormal];
+        
+        
+        
+        aButton2.frame = CGRectMake(12.0f,(self.navigationController.navigationBar.frame.size.height - buttonImage2.size.height)/2,buttonImage2.size.width,buttonImage2.size.height);
+        aButton2.tag = 238;
+        
+        [aButton2 addTarget:self action:@selector(showAll:) forControlEvents:UIControlEventTouchUpInside];
+        [self.navigationController.navigationBar insertSubview:aButton2 atIndex:1];
+        
+        
+        
         UIImage *buttonImage = [UIImage imageNamed:@"categories"];
         UIButton *aButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [aButton setAdjustsImageWhenHighlighted:NO];
@@ -463,11 +527,45 @@
         [aButton setBackgroundImage:[UIImage imageNamed:@"lightBlue.png"] forState:UIControlStateHighlighted];
         //[aButton setBackgroundImage:[UIImage imageNamed:@"lightBlue.png"] forState:UIControlStateNormal];
         
-        aButton.frame = CGRectMake(0.0,0.0,buttonImage.size.width,buttonImage.size.height);
-        [aButton addTarget:self action:@selector(showAll:) forControlEvents:UIControlEventTouchUpInside];
-        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:aButton];
         
+        
+        aButton.frame = CGRectMake(8.0f,(self.navigationController.navigationBar.frame.size.height - buttonImage.size.height)/2,buttonImage.size.width,buttonImage.size.height);
+        aButton.tag = 237;
+        
+        [aButton addTarget:self action:@selector(showAll:) forControlEvents:UIControlEventTouchUpInside];
+        [self.navigationController.navigationBar insertSubview:aButton atIndex:1];
+        
+        
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+            UIInterfaceOrientation o = [[UIApplication sharedApplication] statusBarOrientation];
+            if (UIDeviceOrientationIsLandscape(o)) {
+                NSLog(@"LAND IPHONE");
+                [[self.navigationController.navigationBar viewWithTag:237] setHidden:YES];
+                [[self.navigationController.navigationBar viewWithTag:238] setHidden:NO];
+            }
+            else {
+                [[self.navigationController.navigationBar viewWithTag:237] setHidden:NO];
+                [[self.navigationController.navigationBar viewWithTag:238] setHidden:YES];
+            }
+            
+        }
+        else
+        {
+            [[self.navigationController.navigationBar viewWithTag:238] setHidden:YES];
+        }
+        
+        /*
+        
+        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:aButton];
+        backButton.customView.frame = CGRectMake(-10.0f,0.0f,backButton.customView.frame.size.width,backButton.customView.frame.size.height);
+        NSLog(@"frame %@", NSStringFromCGRect(self.navigationItem.leftBarButtonItem.customView.frame));
+
         self.navigationItem.leftBarButtonItem = backButton;
+        //backButton.customView.frame = CGRectMake(0.0f,0.0f,backButton.customView.frame.size.width,backButton.customView.frame.size.height);
+
+        NSLog(@"frame %@", NSStringFromCGRect(self.navigationItem.leftBarButtonItem.customView.frame));
+        //NSLog(@"frame %@", NSStringFromCGRect(self.navigationItem.rightBarButtonItem.frame));
+         */
     }
     else
     {
@@ -531,15 +629,36 @@
         [favoritesTableView deselectRowAtIndexPath:favoritesTableView.indexPathForSelectedRow animated:NO];
     }
 
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+    
+        UIInterfaceOrientation o = [[UIApplication sharedApplication] statusBarOrientation];
+        if (UIDeviceOrientationIsLandscape(o)) {
+            [[self.navigationController.navigationBar viewWithTag:237] setHidden:YES];
+            [[self.navigationController.navigationBar viewWithTag:238] setHidden:NO];
+        }
+        else
+        {
+            [[self.navigationController.navigationBar viewWithTag:237] setHidden:NO];
+            [[self.navigationController.navigationBar viewWithTag:238] setHidden:YES];
+        }
+    }
+    else {
+        [[self.navigationController.navigationBar viewWithTag:237] setHidden:NO];
+    }
 }
+- (void)viewWillDisappear:(BOOL)animated {
+    
+    [super viewWillDisappear:animated];
 
+    [[self.navigationController.navigationBar viewWithTag:237] setHidden:YES];
+    [[self.navigationController.navigationBar viewWithTag:238] setHidden:YES];
+}
 
 - (void)viewDidDisappear:(BOOL)animated {
 	//NSLog(@"FT viewDidDisappear %@", self.favoritesTableView.indexPathForSelectedRow);
 
 	[super viewDidDisappear:animated];
 	[self.view resignFirstResponder];
-
 	//[(UILabel *)[[favoritesTableView cellForRowAtIndexPath:favoritesTableView.indexPathForSelectedRow].contentView viewWithTag:999] setFont:[UIFont systemFontOfSize:13]];
 
     

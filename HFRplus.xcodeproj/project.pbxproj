@@ -328,6 +328,8 @@
 		CA26862513ADE01100AC5511 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA26862313ADE01100AC5511 /* BrowserViewController.m */; };
 		CA26862613ADE01100AC5511 /* BrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA26862413ADE01100AC5511 /* BrowserViewController.xib */; };
 		CA2E4C0A17E21EC700E95622 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA2E4C0917E21EC700E95622 /* Images.xcassets */; };
+		CA2E4C0D17E5095000E95622 /* categories_land@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA2E4C0B17E5095000E95622 /* categories_land@2x.png */; };
+		CA2E4C0E17E5095000E95622 /* categories_land.png in Resources */ = {isa = PBXBuildFile; fileRef = CA2E4C0C17E5095000E95622 /* categories_land.png */; };
 		CA34780B12EB557500D1BA2A /* PayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA34780912EB557500D1BA2A /* PayViewController.m */; };
 		CA34780C12EB557500D1BA2A /* PayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA34780A12EB557500D1BA2A /* PayViewController.xib */; };
 		CA37D50D15A1BD5F002C72C6 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CA37D50C15A1BD5F002C72C6 /* libsqlite3.dylib */; };
@@ -803,6 +805,8 @@
 		CA26862313ADE01100AC5511 /* BrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BrowserViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CA26862413ADE01100AC5511 /* BrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserViewController.xib; sourceTree = "<group>"; };
 		CA2E4C0917E21EC700E95622 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		CA2E4C0B17E5095000E95622 /* categories_land@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "categories_land@2x.png"; sourceTree = "<group>"; };
+		CA2E4C0C17E5095000E95622 /* categories_land.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = categories_land.png; sourceTree = "<group>"; };
 		CA34780812EB557500D1BA2A /* PayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PayViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CA34780912EB557500D1BA2A /* PayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PayViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CA34780A12EB557500D1BA2A /* PayViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PayViewController.xib; sourceTree = "<group>"; };
@@ -1588,6 +1592,8 @@
 				CAAFF8AC17DF89DA00C120BC /* lightBlue.png */,
 				CAAFF8A817DF7A0900C120BC /* categories@2x.png */,
 				CAAFF8A917DF7A0900C120BC /* categories.png */,
+				CA2E4C0B17E5095000E95622 /* categories_land@2x.png */,
+				CA2E4C0C17E5095000E95622 /* categories_land.png */,
 				CA00C60817C30C370067B457 /* icon_smile_face.png */,
 				CA00C60917C30C370067B457 /* icon_text_align_justify.png */,
 				CA00C60A17C30C370067B457 /* image.png */,
@@ -1830,6 +1836,7 @@
 				01BF8788121C4407007624B6 /* AideViewController.xib in Resources */,
 				CA7472F017E15FE300B45E15 /* ToolBarPrevious_off.png in Resources */,
 				CA00C69A17C30C370067B457 /* arrowR.png in Resources */,
+				CA2E4C0E17E5095000E95622 /* categories_land.png in Resources */,
 				CA00C63117C30C370067B457 /* hap.gif in Resources */,
 				01BF8789121C4407007624B6 /* CreditsViewController.xib in Resources */,
 				CA00C65717C30C370067B457 /* credits.html in Resources */,
@@ -1948,6 +1955,7 @@
 				CA00C67A17C30C370067B457 /* 08-chat.png in Resources */,
 				CA7472D917E14D4500B45E15 /* ToolBarPlay_off@2x.png in Resources */,
 				CA00C66417C30C370067B457 /* style-max-land.css in Resources */,
+				CA2E4C0D17E5095000E95622 /* categories_land@2x.png in Resources */,
 				CA00C6B217C30C370067B457 /* beginhover.png in Resources */,
 				CA228CF0125CFD4500DDCD2E /* MessageDetailViewControllerv2.xib in Resources */,
 				CA00C62A17C30C370067B457 /* fou.gif in Resources */,
