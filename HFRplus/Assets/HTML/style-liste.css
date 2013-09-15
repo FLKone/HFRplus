@@ -456,7 +456,7 @@ table.code *, table.fixed * {
 /* iOS7 */
 
 .ios7 * {
-    font-family:HelveticaNeue-Light !important;
+    font-family:HelveticaNeue !important;
 }
 
 body.ios7 {
