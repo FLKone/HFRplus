@@ -108,8 +108,9 @@
 	else {
 		[(UISegmentedControl *)self.navigationItem.rightBarButtonItem.customView setEnabled:NO forSegmentAtIndex:1];
 		
-	}	
-	
+	}
+    
+
 	[[self.parent messagesWebView] stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"window.location.hash='%@';", [[arrayData objectAtIndex:curMsg] postID]]];
 	
 	
@@ -228,12 +229,12 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-	//NSLog(@"MDV viewDidAppear");	
+	//NSLog(@"MDV viewDidAppear");
 	
     [super viewDidAppear:animated];
 	self.parent.isAnimating = NO;
 	
-	[self setupData];
+
 
 }
 
@@ -247,6 +248,7 @@
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
+    //NSLog(@"MDV viewDidLoad");
     [super viewDidLoad];
 
 	self.styleAlert = [[UIActionSheet alloc] init];
@@ -265,11 +267,23 @@
         [self.messageDate setFont:[UIFont boldSystemFontOfSize:8.0f]];
     }
     
-	UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:
-											[NSArray arrayWithObjects:
-											 [UIImage imageNamed:@"up.png"],
-											 [UIImage imageNamed:@"down.png"],
-											 nil]];
+    UISegmentedControl *segmentedControl;
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        segmentedControl = [[UISegmentedControl alloc] initWithItems:
+                                                [NSArray arrayWithObjects:
+                                                 [UIImage imageNamed:@"upsmall7"],
+                                                 [UIImage imageNamed:@"downsmall7"],
+                                                 nil]];
+    }
+    else {
+        segmentedControl = [[UISegmentedControl alloc] initWithItems:
+                                                [NSArray arrayWithObjects:
+                                                 [UIImage imageNamed:@"upsmall"],
+                                                 [UIImage imageNamed:@"downsmall"],
+                                                 nil]];
+    }
+
 	[segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -303,6 +317,9 @@
     [self.messageView setBackgroundColor:[UIColor whiteColor]];
     [self.messageView hideGradientBackground];
 
+    //[self segmentAction:self.navigationItem.rightBarButtonItem];
+    
+    [self setupData];
 }
 	 
 // Override to allow orientations other than the default portrait orientation.
