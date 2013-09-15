@@ -402,33 +402,35 @@
         [self.topicActionSheet dismissWithClickedButtonIndex:[self.topicActionSheet cancelButtonIndex] animated:YES];
     }
     
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        UIView *btn;
-        UIView *btn2;
-        
-        UIInterfaceOrientation o = [[UIApplication sharedApplication] statusBarOrientation];
-        if (UIDeviceOrientationIsLandscape(o)) {
-            NSLog(@"LAND IPHONE");
-            btn = [self.navigationController.navigationBar viewWithTag:238];
-            btn2 = [self.navigationController.navigationBar viewWithTag:237];
-
+    
+    if (self.navigationController.visibleViewController == self) {
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+            UIView *btn;
+            UIView *btn2;
+            
+            UIInterfaceOrientation o = [[UIApplication sharedApplication] statusBarOrientation];
+            if (UIDeviceOrientationIsLandscape(o)) {
+                NSLog(@"LAND IPHONE");
+                btn = [self.navigationController.navigationBar viewWithTag:238];
+                btn2 = [self.navigationController.navigationBar viewWithTag:237];
+                
+            }
+            else {
+                btn = [self.navigationController.navigationBar viewWithTag:237];
+                btn2 = [self.navigationController.navigationBar viewWithTag:238];
+                
+            }
+            
+            [btn2 setHidden:YES];
+            [btn setHidden:NO];
+            CGRect frame = btn.frame;
+            frame.origin.y = (self.navigationController.navigationBar.frame.size.height - frame.size.height)/2;
+            btn.frame = frame;
+            
         }
-        else {
-            btn = [self.navigationController.navigationBar viewWithTag:237];
-            btn2 = [self.navigationController.navigationBar viewWithTag:238];
-
-        }
-        
-        [btn2 setHidden:YES];
-        [btn setHidden:NO];
-        CGRect frame = btn.frame;
-        frame.origin.y = (self.navigationController.navigationBar.frame.size.height - frame.size.height)/2;
-        btn.frame = frame;
         
     }
-    
-    
-    
+
 
 //    [[[self.navigationController.navigationBar subviews] objectAtIndex:0] setFrame:CGRect]
 }
