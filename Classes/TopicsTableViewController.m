@@ -755,6 +755,7 @@
 		}
 		else {
 			[(UISegmentedControl *)[self.navigationItem.titleView.subviews objectAtIndex:0] setSelectedSegmentIndex:0];
+            [self segmentFilterAction];
 		}
 	}
 	else {
