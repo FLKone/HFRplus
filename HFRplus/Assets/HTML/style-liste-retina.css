@@ -66,6 +66,11 @@
 
 }
 
+.ios7 .message .header .right {
+    background-size: 100%;
+    background-image:url(plus@2x.png);
+}
+
 .ios7 #toolbarpage .button.begin {
 	background-image:url(ToolBarFastRewind_off@2x.png);
 }

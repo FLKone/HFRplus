@@ -481,15 +481,15 @@ body.ios7 {
     font-weight:normal
 }
 
+.ios7 .message .header .right {
+    height:32px;
+    width: 32px;
+    float:right;
+    background:#efeff4 url(plus.png) no-repeat 0 3px;
+}
+
 .ios7 .message .header .right a.awesome {
-    border:none;
-    color: #007aff;
-    background:none;
-    -webkit-box-shadow:none;
-    text-shadow:none;
-    font-size: 25px !important;
-    padding: 0 !important;
-    display: inline;
+    display:none;
 }
 
 .ios7 #toolbarpage {

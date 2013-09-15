@@ -371,6 +371,8 @@
 		CA9E851D1243A0E1000EE882 /* UIImageViewCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = CA9E851C1243A0E1000EE882 /* UIImageViewCustom.m */; };
 		CA9E86891243C11A000EE882 /* TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA9E86881243C11A000EE882 /* TabBarController.m */; };
 		CAA1B092125C0A53009C80E3 /* AKSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA1B091125C0A53009C80E3 /* AKSegmentedControl.m */; };
+		CAA1F69117E5DFA20006E785 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA1F68F17E5DFA20006E785 /* plus.png */; };
+		CAA1F69217E5DFA20006E785 /* plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA1F69017E5DFA20006E785 /* plus@2x.png */; };
 		CAAD3D561731EAC400DC1900 /* MessageWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = CAAD3D551731EAC400DC1900 /* MessageWebView.m */; };
 		CAAFAFDC125E2A58001B90EC /* NewMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAAFAFDB125E2A58001B90EC /* NewMessageViewController.m */; };
 		CAAFF8AA17DF7A0900C120BC /* categories@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAAFF8A817DF7A0900C120BC /* categories@2x.png */; };
@@ -862,6 +864,8 @@
 		CA9E86881243C11A000EE882 /* TabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarController.m; sourceTree = "<group>"; };
 		CAA1B090125C0A53009C80E3 /* AKSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKSegmentedControl.h; sourceTree = "<group>"; };
 		CAA1B091125C0A53009C80E3 /* AKSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKSegmentedControl.m; sourceTree = "<group>"; };
+		CAA1F68F17E5DFA20006E785 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
+		CAA1F69017E5DFA20006E785 /* plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus@2x.png"; sourceTree = "<group>"; };
 		CAAD3D541731EAC400DC1900 /* MessageWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageWebView.h; sourceTree = "<group>"; };
 		CAAD3D551731EAC400DC1900 /* MessageWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageWebView.m; sourceTree = "<group>"; };
 		CAAFAFDA125E2A58001B90EC /* NewMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewMessageViewController.h; sourceTree = "<group>"; };
@@ -1586,6 +1590,8 @@
 				CA00C5CE17C30C370067B457 /* bgiPad@2x.png */,
 				CA00C5CF17C30C370067B457 /* compose.png */,
 				CA00C5D017C30C370067B457 /* down.png */,
+				CAA1F68F17E5DFA20006E785 /* plus.png */,
+				CAA1F69017E5DFA20006E785 /* plus@2x.png */,
 				CA00C5D117C30C370067B457 /* flags */,
 				CA00C5DD17C30C370067B457 /* html */,
 				CA00C60717C30C370067B457 /* icon_list_bullets.png */,
@@ -2054,6 +2060,7 @@
 				CA00C64817C30C370067B457 /* redface.gif in Resources */,
 				CA00C6C417C30C370067B457 /* buttonnextoff.png in Resources */,
 				CA00C6D517C30C370067B457 /* toolbar.png in Resources */,
+				CAA1F69217E5DFA20006E785 /* plus@2x.png in Resources */,
 				CAAFF8AD17DF89DA00C120BC /* lightBlue.png in Resources */,
 				CA00C6D917C30C370067B457 /* icon_list_bullets.png in Resources */,
 				CA1070BF15A4DA1E002E6C19 /* Localizable.strings in Resources */,
@@ -2062,6 +2069,7 @@
 				CA45B60915B89F4F00380CA0 /* README.md in Resources */,
 				CA00C61E17C30C370067B457 /* biggrin.gif in Resources */,
 				CA00C6BA17C30C370067B457 /* buttonbeginon.png in Resources */,
+				CAA1F69117E5DFA20006E785 /* plus.png in Resources */,
 				CA00C64917C30C370067B457 /* sarcastic.gif in Resources */,
 				CAFD004415B9B665003CA3FC /* HFRDebugViewController.xib in Resources */,
 				CA00C3F617C2FE1B0067B457 /* IASKAppSettingsView.xib in Resources */,
