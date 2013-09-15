@@ -1166,11 +1166,11 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
-        return 35.5f;
+        return 36.0f;
     }
     else
     {
-        return 23;
+        return 23.0f;
     }
 
 }
@@ -1315,27 +1315,14 @@
 	
 	[cell.timeLabel setText:[NSString stringWithFormat:@"%@ - %@", [aTopic aAuthorOfLastPost], [aTopic aDateOfLastPost]]];
 
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-
+    if ([aTopic isViewed]) {
+        [[cell titleLabel] setFont:[UIFont systemFontOfSize:13]];
+    }
+    else {
+        [[cell titleLabel] setFont:[UIFont boldSystemFontOfSize:13]];
         
-        if ([aTopic isViewed]) {
-            [[cell titleLabel] setFont:[UIFont systemFontOfSize:12]];
-        }
-        else {
-            [[cell titleLabel] setFont:[UIFont boldSystemFontOfSize:12]];
-            
-        }	
     }
-    else
-    {
-        if ([aTopic isViewed]) {
-            [[cell titleLabel] setFont:[UIFont systemFontOfSize:13]];
-        }
-        else {
-            [[cell titleLabel] setFont:[UIFont boldSystemFontOfSize:13]];
-            
-        }
-    }
+
 	//Flag
 	if ([aTopic aTypeOfFlag].length > 0) {
 		

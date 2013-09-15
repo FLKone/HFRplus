@@ -745,7 +745,7 @@
             return 10;
         }
         else {
-            return 35.5f;
+            return 36.0f;
         }
 
     }
