@@ -310,7 +310,7 @@
 		[self.navigationItem.rightBarButtonItem setEnabled:NO];
 	}
     
-    [ftextView scrollRangeToVisible:NSMakeRange([ftextView.text length], 0)];
+    //[ftextView scrollRangeToVisible:NSMakeRange([ftextView.text length], 0)];
 
 }
 
@@ -622,9 +622,9 @@
 			}
 			case 1:
             {
-                CGPoint offset = CGPointMake(0, self.textView.contentSize.height - self.textView.frame.size.height);
-                NSLog(@"SUPPPPP %@", NSStringFromCGPoint(offset));
-                [self.textView setContentOffset:offset animated:YES];
+                //CGPoint offset = CGPointMake(0, self.textView.contentSize.height - self.textView.frame.size.height);
+                //NSLog(@"SUPPPPP %@", NSStringFromCGPoint(offset));
+                //[self.textView setContentOffset:offset animated:YES];
 
 				break;
             }
