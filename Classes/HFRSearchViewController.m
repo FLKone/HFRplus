@@ -98,7 +98,7 @@
     theSearchBar.placeholder = @"Recherche";
     
 	self.navigationItem.titleView = theSearchBar;
-    self.navigationItem.titleView.frame = CGRectMake(0, 0, 0, 44);
+    self.navigationItem.titleView.frame = CGRectMake(0, 0, 320, 44);
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -109,7 +109,7 @@
 	self.title = @"Recherche";
     self.stories =[[NSMutableArray alloc]init];
     self.disableViewOverlay = [[UIView alloc]
-							   initWithFrame:CGRectMake(0.0f,0.0f,320.0f,1000.0f)];
+							   initWithFrame:CGRectMake(0.0f,0.0f,1000.0f,1000.0f)];
     self.disableViewOverlay.backgroundColor=[UIColor blackColor];
     self.disableViewOverlay.alpha = 0;
 	
