@@ -14,7 +14,6 @@
 @synthesize currentUrl, pageNumber;
 @synthesize firstPageNumber, lastPageNumber;
 @synthesize firstPageUrl, lastPageUrl;
-@synthesize pageNumberField;
 
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -44,45 +43,22 @@
 -(void)choosePage {
 	//NSLog(@"choosePage");
 	
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Aller à la page" message:[NSString stringWithFormat:@"\n\n(numéro entre %d et %d)\n", [self firstPageNumber], [self lastPageNumber]]
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Aller à la page" message:nil
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"OK", nil];
 	
-	pageNumberField = [[UITextField alloc] initWithFrame:CGRectZero];
-	[pageNumberField setBackgroundColor:[UIColor whiteColor]];
-	[pageNumberField setPlaceholder:@"numéro de la page"];
-	//pageNumberField.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-	[pageNumberField setBackground:[UIImage imageNamed:@"bginput"]];
-	
-	//[pageNumberField textRectForBounds:CGRectMake(5.0, 5.0, 258.0, 28.0)];
-	
-	
-	[pageNumberField.layer setBorderColor: [[UIColor blackColor] CGColor]];
-	[pageNumberField.layer setBorderWidth: 1.0];
-	
-	pageNumberField.font = [UIFont systemFontOfSize:15];
-	pageNumberField.textAlignment = UITextAlignmentCenter;
-	pageNumberField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-	pageNumberField.keyboardAppearance = UIKeyboardAppearanceAlert;
-	pageNumberField.keyboardType = UIKeyboardTypeNumberPad;
-	pageNumberField.delegate = self;
-	[pageNumberField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-	
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    
+    UITextField *textField = [alert textFieldAtIndex:0];
+    textField.placeholder = [NSString stringWithFormat:@"(numéro entre %d et %d)", [self firstPageNumber], [self lastPageNumber]];
+    textField.textAlignment = NSTextAlignmentCenter;
+    textField.delegate = self;
+    [textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    textField.keyboardAppearance = UIKeyboardAppearanceAlert;
+    textField.keyboardType = UIKeyboardTypeNumberPad;
+    
 	[alert setTag:668];
-	[alert addSubview:pageNumberField];
-
-	
 	[alert show];
 
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-    {
-        UILabel* tmpLbl = [alert.subviews objectAtIndex:1];
-        pageNumberField.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-        pageNumberField.frame = CGRectMake(12.0, tmpLbl.frame.origin.y + tmpLbl.frame.size.height + 10, 260.0, 30.0);
-    }
-    else {
-        pageNumberField.frame = CGRectMake(12.0, 50.0, 260.0, 30.0);
-    }
-	
 	[alert release];
 	
 }
@@ -231,8 +207,6 @@
 	self.firstPageUrl = nil;
 	self.lastPageUrl = nil;
 	
-	self.pageNumberField = nil;
-
 	
     [super dealloc];
 	
@@ -250,7 +224,6 @@
 	}
 	else if (([alertView tag] == 668)) {
 		//NSLog(@"keud");
-		[pageNumberField becomeFirstResponder];
 	}
 	
 	
@@ -261,22 +234,19 @@
 	//NSLog(@"willDismissWithButtonIndex PT %@", alertView);
     
 	if (([alertView tag] == 668)) {
-		[self.pageNumberField resignFirstResponder];
-		self.pageNumberField = nil;
+
 	}
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-	//NSLog(@"clickedButtonAtIndex PT %@", alertView);
-	
-    
+	//NSLog(@"clickedButtonAtIndex PT %@ index : %d", alertView, buttonIndex);
     
 	if (buttonIndex == 1 && alertView.tag == 667) {
 		[self fetchContent];
 	}
 	else if (buttonIndex == 1 && alertView.tag == 668) {
-		[self gotoPageNumber:[[pageNumberField text] intValue]];
+		[self gotoPageNumber:[[[alertView textFieldAtIndex:0] text] intValue]];
 	}
 }
 

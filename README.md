@@ -29,26 +29,36 @@ Roadmap
 Utilisation
 -------------------------
 
-Un fichier Config.h est nécessaire (dans le répertoire Classes) :
+Un fichier config.h est nécessaire (dans le répertoire HFRplus) :
 
 ``` objective-c
 //
-//  Classes/Config.h
+//  config.h
+//  HFRplus
 //
+
+#ifndef HFRplus_config_h
+#define HFRplus_config_h
+
 static NSString *const kTestFlightAPI = @"TestFlight API Key";
+static NSString *const kGoogleCSEAPI = @"Google Custom Search Engine API Key";
+
+#endif
 ```
 
 
 Crédits
 -------------------------
 
-* [MWPhotoBrowser](https://github.com/mwaterfall/MWPhotoBrowser)
-* [SDWebImage](https://github.com/rs/SDWebImage)
-* [MBProgressHUD](https://github.com/jdg/MBProgressHUD)
-* [InAppSettingKit](https://github.com/futuretap/InAppSettingsKit)
-* [MKStoreKit](https://github.com/MugunthKumar/MKStoreKit)
 * [ASIHTTPRequest](https://github.com/pokeb/asi-http-request)
 * [Objective-C-HMTL-Parser](https://github.com/zootreeves/Objective-C-HMTL-Parser)
+* [InAppSettingKit](https://github.com/futuretap/InAppSettingsKit)
+* [MBProgressHUD](https://github.com/jdg/MBProgressHUD)
+* [MKStoreKit](https://github.com/MugunthKumar/MKStoreKit)
+* [MWPhotoBrowser](https://github.com/mwaterfall/MWPhotoBrowser)
+* [SDWebImage](https://github.com/rs/SDWebImage)
+* [RegexKitLite](http://regexkit.sourceforge.net/RegexKitLite/)
+
 
 
 Soutenir le développement

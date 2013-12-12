@@ -272,9 +272,9 @@
     
 	float originY = 0;
 	
-	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 0)];
+	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320 + offsetforiPad, 0)];
 	headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-
+    
 	if (self.haveTo) {
 		UITextField *titleLabel = [[UITextField alloc] initWithFrame:CGRectMake(8, originY, 25, 43)];
 		titleLabel.text = @"À :";
@@ -324,7 +324,7 @@
 		titleLabel.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 		
 		textFieldTitle = [[UITextField alloc] initWithFrame:CGRectMake(58, originY, 245 + offsetforiPad, 43)];
-        textFieldTitle.tag = 2;        
+        textFieldTitle.tag = 2;
 		textFieldTitle.backgroundColor = [UIColor whiteColor];
 		textFieldTitle.font = [UIFont systemFontOfSize:15];
 		textFieldTitle.delegate = self;
@@ -363,12 +363,18 @@
 		titleLabel.backgroundColor = [UIColor whiteColor];
 		titleLabel.textColor = [UIColor colorWithWhite:0.5 alpha:1];
 		titleLabel.font = [UIFont systemFontOfSize:15];
+        NSLog(@"font %@", titleLabel.font);
+        [titleLabel sizeToFit];
+        CGRect tmpFrame = titleLabel.frame;
+        tmpFrame.size.height = 43.0f;
+        
+        titleLabel.frame = tmpFrame;
 		titleLabel.userInteractionEnabled = NO;
 		titleLabel.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 		
 		catButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-		catButton.frame = CGRectMake(88, originY + 5, 215 + offsetforiPad, 33);
-		
+		catButton.frame = CGRectMake(8 + titleLabel.frame.size.width + 5, originY + 5, 215 + offsetforiPad, 33);
+        
 		int row = 0;
 		for(Forum *aForum in pickerViewArray){
 			if ([[aForum aID] isEqualToString:[self.arrayInputData valueForKey:@"subcat"]]) {
@@ -381,7 +387,7 @@
 		[catButton setContentEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 15)];
 		[catButton addTarget:self action:@selector(showPicker:) forControlEvents:UIControlEventTouchUpInside];
 		catButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-
+        
 		
 		textFieldCat = [[UITextField alloc] initWithFrame:CGRectMake(88, originY, 215, 43)];
 		textFieldCat.backgroundColor = [UIColor whiteColor];
@@ -390,12 +396,14 @@
 		textFieldCat.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 		textFieldCat.keyboardAppearance = UIKeyboardAppearanceAlert;
 		textFieldCat.returnKeyType = UIReturnKeyNext;
+        textFieldCat.userInteractionEnabled = NO;
 		//NSLog(@"CAT %@", [self.arrayInputData valueForKey:@"subcat"]);
 		[textFieldCat setText:[self.arrayInputData valueForKey:@"subcat"]];
 		textFieldCat.userInteractionEnabled = NO;
 		textFieldCat.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         textFieldCat.keyboardType = UIKeyboardTypeASCIICapable;
-
+        textFieldCat.hidden = YES;
+        
 		originY += textFieldCat.frame.size.height;
 		
 		UIView* separator = [[[UIView alloc] initWithFrame:CGRectMake(0, originY, 320 + offsetforiPad, 1)] autorelease];
@@ -613,7 +621,7 @@
 
         self.popover = [[[UIPopoverController alloc] initWithContentViewController:subCatTableViewController] autorelease];
         
-        [_popover presentPopoverFromRect:[(UIButton *)sender frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];        
+        [_popover presentPopoverFromRect:[(UIButton *)sender frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
         
     } else {
         CGSize pickerSize = [myPickerView sizeThatFits:CGSizeZero];

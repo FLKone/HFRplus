@@ -139,6 +139,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
+
 	//Bouton Annuler
 	UIBarButtonItem *cancelBarItem = [[UIBarButtonItem alloc] initWithTitle:@"Annuler" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
 	self.navigationItem.leftBarButtonItem = cancelBarItem;
@@ -156,6 +160,13 @@
 	[self.segmentControlerPage setWidth:40.0 forSegmentAtIndex:2];	
 
 	[self.segmentControlerPage setEnabled:NO forSegmentAtIndex:2];
+    
+    
+    if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        self.segmentControlerPage.tintColor = [UIColor darkGrayColor];
+        self.segmentControler.tintColor = [UIColor darkGrayColor];
+    }
+    
 }
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)initData { //- (void)viewDidLoad {
@@ -227,7 +238,7 @@
 														   textSpoilerItem, textFixeItem, textQuoteItem, textLinkItem, textImgItem, nil]];
 
 	
-	[segmentControler setEnabled:NO forSegmentAtIndex:1];		
+	[segmentControler setEnabled:NO forSegmentAtIndex:1];
 	//[segmentControler setEnabled:NO forSegmentAtIndex:2];		
 
 }
@@ -257,6 +268,7 @@
 	//	//NSLog(@"contentOffset 1");
 		self.textView.contentOffset = CGPointMake(0, self.offsetY);
 	}
+
 }
 
 - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
@@ -280,6 +292,8 @@
 	
 		self.textView.contentOffset = CGPointMake(0, self.offsetY);
 	}
+    
+
 }
 
 #pragma mark -
@@ -295,6 +309,9 @@
 	else {
 		[self.navigationItem.rightBarButtonItem setEnabled:NO];
 	}
+    
+    [ftextView scrollRangeToVisible:NSMakeRange([ftextView.text length], 0)];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -381,6 +398,10 @@
 		[UIView commitAnimations];	
 		
 		[self.textView becomeFirstResponder];
+        
+        [self segmentToBlue];
+        
+        //NSLog(@"====== 666666");
 	}
 	else if (self.commonTableView.alpha != 0) {
 		[UIView beginAnimations:nil context:nil];
@@ -393,6 +414,10 @@
 		[UIView commitAnimations];	
 		
 		[self.textView becomeFirstResponder];
+        
+        [self segmentToBlue];
+        
+        //NSLog(@"====== 777777");
 	}
 	else {
 		if ([self.textView text].length > 0) {
@@ -525,6 +550,21 @@
 	
 }
 
+-(void)segmentToWhite {
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7,0")) {
+        self.segmentControler.tintColor = [UIColor whiteColor];
+        self.segmentControlerPage.tintColor = [UIColor whiteColor];
+    }
+
+}
+
+-(void)segmentToBlue {
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7,0")) {
+        self.segmentControler.tintColor = [UIColor colorWithRed:0 green:122/255.0f blue:255/255.0f alpha:1.0f];
+        self.segmentControlerPage.tintColor = [UIColor colorWithRed:0 green:122/255.0f blue:255/255.0f alpha:1.0f];
+    }
+}
+
 - (IBAction)segmentFilterAction:(id)sender
 {
 	
@@ -546,6 +586,11 @@
 					textView.selectedRange = newRange;
 					
 					[self.smileView setHidden:NO];
+                    
+                    [self segmentToWhite];
+                    
+
+                    
 					[UIView beginAnimations:nil context:nil];
 					[UIView setAnimationDuration:0.2];		
 					[self.smileView setAlpha:1];
@@ -555,6 +600,8 @@
 					[self.segmentControlerPage setAlpha:1];	
 					
 					[UIView commitAnimations];
+                    
+                    //NSLog(@"======= 2222");
 				}
 				else {
 					[UIView beginAnimations:nil context:nil];
@@ -563,11 +610,24 @@
 					[UIView commitAnimations];	
 					[(UISegmentedControl *)sender setSelectedSegmentIndex:UISegmentedControlNoSegment];
 					[self.textView becomeFirstResponder];
+                    
+                    [self segmentToBlue];
+
+                    
+
+                    
+                    //NSLog(@"======= 3333");
 				}			
 				break;
 			}
 			case 1:
-				break;					
+            {
+                CGPoint offset = CGPointMake(0, self.textView.contentSize.height - self.textView.frame.size.height);
+                NSLog(@"SUPPPPP %@", NSStringFromCGPoint(offset));
+                [self.textView setContentOffset:offset animated:YES];
+
+				break;
+            }
 			default:
 				break;
 		}
@@ -702,9 +762,11 @@
 	
 	[UIView commitAnimations];	
 	
+    [self segmentToBlue];
+    
 	[self.textView becomeFirstResponder];
 	
-
+    //NSLog(@"===== 444444");
 	
 }
 
@@ -909,6 +971,10 @@
 			[UIView setAnimationDuration:0.2];		
 			[self.commonTableView setAlpha:1];
 			[UIView commitAnimations];
+            
+            [self segmentToBlue];
+            
+            //NSLog(@"======= 5555");
 		}
 
 
@@ -955,6 +1021,10 @@
 				[UIView setAnimationDuration:0.2];		
 				[self.smileView setAlpha:1];
 				[UIView commitAnimations];
+                
+                [self segmentToWhite];
+                
+                //NSLog(@"====== 1111");
 			}
 			
 			[self.commonTableView setAlpha:0];
@@ -1008,9 +1078,9 @@
 		
 		[labelTitle setFont:[UIFont systemFontOfSize:14.0]];
 		[labelTitle setAdjustsFontSizeToFitWidth:NO];
-		[labelTitle setLineBreakMode:UILineBreakModeTailTruncation];
+		[labelTitle setLineBreakMode:NSLineBreakByTruncatingTail];
 		//[labelTitle setBackgroundColor:[UIColor blueColor]];
-		[labelTitle setTextAlignment:UITextAlignmentCenter];
+		[labelTitle setTextAlignment:NSTextAlignmentCenter];
 		[labelTitle setHighlightedTextColor:[UIColor whiteColor]];
 		[labelTitle setTag:999];
 		[labelTitle setText:@"Pas de résultats"];

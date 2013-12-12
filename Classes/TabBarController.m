@@ -34,7 +34,7 @@
 	label.backgroundColor = [UIColor clearColor];
 	label.font = [UIFont boldSystemFontOfSize:20.0];
 	label.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
-	label.textAlignment = UITextAlignmentCenter;
+	label.textAlignment = NSTextAlignmentCenter;
 	label.textColor =[UIColor whiteColor];
 	//label.text= @"HFR+ 1.1 (1.1.0.7)";
 	label.text= [NSString stringWithFormat:@"HFR+ %@ (%@)", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];	

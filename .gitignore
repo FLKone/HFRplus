@@ -122,3 +122,4 @@ Classes/Config.h
 # xcode noise
 *.xcodeproj/*.xcworkspace/*
 *.xcodeproj/*.perspectivev3
+HFRplus/config.h

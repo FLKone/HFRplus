@@ -6,7 +6,8 @@
 //
 
 #import "AideViewController.h"
-
+#import "UIWebView+Tools.h"
+#import "HFRplusAppDelegate.h"
 
 @implementation AideViewController
 @synthesize myWebView;
@@ -26,16 +27,35 @@
 	self.title = @"Aide";
 
     [super viewDidLoad];
+    
+	[self.myWebView hideGradientBackground];
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+        [self.myWebView setBackgroundColor:[UIColor colorWithRed:239/255.0f green:239/255.0f blue:244/255.0f alpha:1.0f]];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
 	
 	[super viewDidAppear:animated];
-	
-	//[myWebView loadHTMLString:[NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"credits" ofType:@"html"]  encoding:NSASCIIStringEncoding error:NULL] baseURL:nil];
-	[myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"aide" ofType:@"html"]isDirectory:NO]]];
-	
+
+    //v1
+	//[myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"aide" ofType:@"html"] isDirectory:NO]]];
+
+    //v2
+    NSString *path = [[NSBundle mainBundle] bundlePath];
+	NSURL *baseURL = [NSURL fileURLWithPath:path];
+    
+    NSString *htmlString = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"aide" ofType:@"html"] encoding:NSUTF8StringEncoding error:NULL];
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+        htmlString = [htmlString stringByReplacingOccurrencesOfString:@"%%iosversion%%" withString:@"ios7"];
+    }
+    htmlString = [htmlString stringByReplacingOccurrencesOfString:@"%%iosversion%%" withString:@""];
+    
+	[myWebView loadHTMLString:htmlString baseURL:baseURL];
+    
 }
 
 // Override to allow orientations other than the default portrait orientation.

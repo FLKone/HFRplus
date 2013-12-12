@@ -19,7 +19,7 @@
 #import "LinkItem.h"
 
 @implementation MessageDetailViewController
-@synthesize messageView, messageAuthor, messageDate, authorAvatar, messageTitle, messageTitleString;
+@synthesize messageView, messageAuthor, messageDate, authorAvatar, messageTitle, messageTitleString, messageAvatar;
 @synthesize pageNumber, curMsg, arrayData;
 @synthesize parent, defaultTintColor, messagesTableViewController;
 @synthesize toolbarBtn, quoteBtn, editBtn, actionBtn, arrayAction, styleAlert;
@@ -49,8 +49,12 @@
 																action:@selector(EditMessage)];
 		self.editBtn.style = UIBarButtonItemStyleBordered;
 		
-		
-		
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            self.actionBtn.tintColor = [UIColor whiteColor];
+            self.quoteBtn.tintColor = [UIColor whiteColor];
+            self.editBtn.tintColor = [UIColor whiteColor];
+        }
+
     }
     return self;
 }
@@ -64,11 +68,17 @@
 	// Before we show this view make sure the segmentedControl matches the nav bar style
 	//if (self.navigationController.navigationBar.barStyle == UIBarStyleBlackTranslucent ||
 	//	self.navigationController.navigationBar.barStyle == UIBarStyleBlackOpaque)
+    
+
+    
 	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        segmentedControl.tintColor = defaultTintColor;
+        //segmentedControl.tintColor = defaultTintColor;
     }
     else {
-        segmentedControl.tintColor = [UIColor colorWithRed:144/255.f green:152/255.f blue:159/255.f alpha:0.51];
+        if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            segmentedControl.tintColor = [UIColor colorWithRed:144/255.f green:152/255.f blue:159/255.f alpha:0.51];
+        }
+
 
     }
 }
@@ -78,6 +88,8 @@
 	//NSLog(@"curmsg");
 	//NSLog(@"curmsg %d - arraydata %d", curMsg, arrayData.count);
 	
+
+    
 	if (curMsg > 0) {
 		[(UISegmentedControl *)self.navigationItem.rightBarButtonItem.customView setEnabled:YES forSegmentAtIndex:0];
 
@@ -96,8 +108,9 @@
 	else {
 		[(UISegmentedControl *)self.navigationItem.rightBarButtonItem.customView setEnabled:NO forSegmentAtIndex:1];
 		
-	}	
-	
+	}
+    
+
 	[[self.parent messagesWebView] stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"window.location.hash='%@';", [[arrayData objectAtIndex:curMsg] postID]]];
 	
 	
@@ -118,7 +131,7 @@
                             <html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"fr\" lang=\"fr\">\
                             <head>\
 							<meta name='viewport' content='initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0' />\
-                            <script type='text/javascript' src='jquery.js'></script>\
+                            <script type='text/javascript' src='jquery-2.0.3.min.js'></script>\
                             <link type='text/css' rel='stylesheet' href='style-liste.css'/>\
                             <link type='text/css' rel='stylesheet' href='style-liste-retina.css' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\
                             <link type='text/css' rel='stylesheet' href='style-liste-ipad-portrait.css' media='all and (min-width: 767px)'/>\
@@ -175,7 +188,7 @@
 		
 	}
 	else {
-		[authorAvatar setImage:[UIImage imageNamed:@"avatar_male_gray_on_light_48x48.png"]];
+		[authorAvatar setImage:[UIImage imageNamed:@"avatar_male_gray_on_light_48x48"]];
 	}
 	
 	//Btn Quote & Edit
@@ -216,12 +229,12 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-	//NSLog(@"MDV viewDidAppear");	
+	//NSLog(@"MDV viewDidAppear");
 	
     [super viewDidAppear:animated];
 	self.parent.isAnimating = NO;
 	
-	[self setupData];
+
 
 }
 
@@ -235,17 +248,42 @@
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
+    //NSLog(@"MDV viewDidLoad");
     [super viewDidLoad];
 
 	self.styleAlert = [[UIActionSheet alloc] init];
 	
 	// "Segmented" control to the right
-	
-	UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:
-											[NSArray arrayWithObjects:
-											 [UIImage imageNamed:@"up.png"],
-											 [UIImage imageNamed:@"down.png"],
-											 nil]];
+
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        self.toolbarBtn.frame = CGRectMake(self.toolbarBtn.frame.origin.x, self.toolbarBtn.frame.origin.y - 49, self.toolbarBtn.frame.size.width, self.toolbarBtn.frame.size.height);
+        self.messageAuthor.frame = CGRectMake(self.messageAuthor.frame.origin.x, self.messageAuthor.frame.origin.y - 49, self.messageAuthor.frame.size.width, self.messageAuthor.frame.size.height);
+        self.messageDate.frame = CGRectMake(self.messageDate.frame.origin.x, self.messageDate.frame.origin.y - 49, self.messageDate.frame.size.width, self.messageDate.frame.size.height);
+        self.messageAvatar.frame = CGRectMake(self.messageAvatar.frame.origin.x, self.messageAvatar.frame.origin.y - 49, self.messageAvatar.frame.size.width, self.messageAvatar.frame.size.height);
+    }
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        [self.messageAuthor setFont:[UIFont boldSystemFontOfSize:17.0f]];
+        [self.messageDate setFont:[UIFont boldSystemFontOfSize:8.0f]];
+    }
+    
+    UISegmentedControl *segmentedControl;
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        segmentedControl = [[UISegmentedControl alloc] initWithItems:
+                                                [NSArray arrayWithObjects:
+                                                 [UIImage imageNamed:@"upsmall7"],
+                                                 [UIImage imageNamed:@"downsmall7"],
+                                                 nil]];
+    }
+    else {
+        segmentedControl = [[UISegmentedControl alloc] initWithItems:
+                                                [NSArray arrayWithObjects:
+                                                 [UIImage imageNamed:@"upsmall"],
+                                                 [UIImage imageNamed:@"downsmall"],
+                                                 nil]];
+    }
+
 	[segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -263,7 +301,7 @@
 	segmentedControl.momentary = YES;
 	segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 
-	defaultTintColor = [segmentedControl.tintColor retain];	// keep track of this for later
+	//defaultTintColor = [segmentedControl.tintColor retain];	// keep track of this for later
 	
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithCustomView:segmentedControl];
     [segmentedControl release];
@@ -279,6 +317,9 @@
     [self.messageView setBackgroundColor:[UIColor whiteColor]];
     [self.messageView hideGradientBackground];
 
+    //[self segmentAction:self.navigationItem.rightBarButtonItem];
+    
+    [self setupData];
 }
 	 
 // Override to allow orientations other than the default portrait orientation.
@@ -306,6 +347,8 @@
 - (void)viewDidUnload {
 	//NSLog(@"viewDidUnload MessageDetailView");
 	
+    [messageAvatar release];
+    messageAvatar = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -343,6 +386,7 @@
 
 	self.defaultTintColor = nil;
 
+    [messageAvatar release];
     [super dealloc];
 }
 
@@ -378,6 +422,15 @@
                 [aView release];
                 //}
                 
+                self.navigationItem.backBarButtonItem =
+                [[UIBarButtonItem alloc] initWithTitle:@"Retour"
+                                                 style: UIBarButtonItemStyleBordered
+                                                target:nil
+                                                action:nil];
+                
+                if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+                    self.navigationItem.backBarButtonItem.title = @" ";
+                }
                 
                 //setup the URL
                 self.messagesTableViewController.topicName = @"";	
@@ -397,6 +450,16 @@
             MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[aRequest.URL absoluteString] stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@", kForumURL] withString:@""]];
             self.messagesTableViewController = aView;
             [aView release];
+            
+            self.navigationItem.backBarButtonItem =
+            [[UIBarButtonItem alloc] initWithTitle:@"Retour"
+                                             style: UIBarButtonItemStyleBordered
+                                            target:nil
+                                            action:nil];
+            
+            if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+                self.navigationItem.backBarButtonItem.title = @" ";
+            }
             
             //setup the URL
             self.messagesTableViewController.topicName = @"";

@@ -32,6 +32,10 @@
 
     [super viewDidLoad];
 	
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
+    
 	//Bouton Finish
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(finish)];
 	

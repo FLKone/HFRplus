@@ -21,6 +21,10 @@
  
 	self.title = @"Mon Compte";
 	
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
+    
 	//On check si il est logged
 	[self checkLogin];
 }

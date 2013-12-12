@@ -15,6 +15,7 @@
 	UIView *loadingView;
 
     NSMutableArray *arrayNewData;
+    NSMutableArray *arrayCategories;
 
 	MessagesTableViewController *messagesTableViewController;
 
@@ -25,8 +26,6 @@
 	STATUS status;
 	NSString *statusMessage;
 	IBOutlet UILabel *maintenanceView;	
-    
-    UITextField *pageNumberField;
     
     UIActionSheet		*topicActionSheet;
     
@@ -39,6 +38,7 @@
 @property (nonatomic, retain) UIActionSheet *topicActionSheet;
 
 @property (nonatomic, retain) NSMutableArray *arrayNewData;
+@property (nonatomic, retain) NSMutableArray *arrayCategories;
 
 @property (nonatomic, retain) MessagesTableViewController *messagesTableViewController;
 
@@ -62,7 +62,6 @@
 - (void)setTopicViewed;
 - (void)pushTopic;
 
-@property (nonatomic, retain) UITextField *pageNumberField;
 - (void)chooseTopicPage;
 
 @end

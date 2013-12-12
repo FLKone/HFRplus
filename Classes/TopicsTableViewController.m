@@ -8,6 +8,7 @@
 #import "HFRplusAppDelegate.h"
 
 #import "ASIHTTPRequest.h"
+#import "Constants.h"
 #import "HTMLParser.h"
 
 #import "ShakeView.h"
@@ -330,7 +331,17 @@
 			
 			//TableFooter
 			UIToolbar *tmptoolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-			tmptoolbar.barStyle = UIBarStyleDefault;
+            
+            if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+                tmptoolbar.barStyle = -1;
+                
+                tmptoolbar.opaque = NO;
+                tmptoolbar.translucent = YES;
+                
+                [[tmptoolbar.subviews objectAtIndex:1] setHidden:YES];
+                
+            }
+            
 			[tmptoolbar sizeToFit];
 
 			UIBarButtonItem *systemItemNext = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrowforward"] 
@@ -382,19 +393,23 @@
 			
             [[labelBtn titleLabel] setFont:[UIFont boldSystemFontOfSize:16.0]];
 
-            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-                [labelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                [labelBtn setTitleShadowColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-                [labelBtn titleLabel].shadowOffset = CGSizeMake(0.0, -1.0);
+            if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+                if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+                    [labelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                    [labelBtn setTitleShadowColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+                    [labelBtn titleLabel].shadowOffset = CGSizeMake(0.0, -1.0);
+                }
+                else {
+                    [labelBtn setTitleColor:[UIColor colorWithRed:113/255.0 green:120/255.0 blue:128/255.0 alpha:1.0] forState:UIControlStateNormal];
+                    [labelBtn setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                    [labelBtn titleLabel].shadowColor = [UIColor whiteColor];
+                    [labelBtn titleLabel].shadowOffset = CGSizeMake(0.0, 1.0);
+                }
             }
-            else {
-                [labelBtn setTitleColor:[UIColor colorWithRed:113/255.0 green:120/255.0 blue:128/255.0 alpha:1.0] forState:UIControlStateNormal];
-                [labelBtn setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                [labelBtn titleLabel].shadowColor = [UIColor whiteColor];
-                [labelBtn titleLabel].shadowOffset = CGSizeMake(0.0, 1.0);
+            else
+            {
+                [labelBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             }
-            
-
 			UIBarButtonItem *systemItem3 = [[UIBarButtonItem alloc] initWithCustomView:labelBtn];
 			
 			//Use this to put space in between your toolbox buttons
@@ -740,6 +755,7 @@
 		}
 		else {
 			[(UISegmentedControl *)[self.navigationItem.titleView.subviews objectAtIndex:0] setSelectedSegmentIndex:0];
+            [self segmentFilterAction];
 		}
 	}
 	else {
@@ -761,11 +777,27 @@
     [super viewDidLoad];
 	self.title = forumName;
     
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+        //NSLog(@"%@", self.favoritesTableView.tableHeaderView);
+    }
+    else
+    {
+        self.topicsTableView = nil;
+        self.topicsTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        self.topicsTableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+        self.topicsTableView.rowHeight = 60.0f;
+        
+        self.topicsTableView.dataSource = self;
+        self.topicsTableView.delegate = self;
+        [self.view addSubview:self.topicsTableView];
+    }
+    
+    
     //NSLog(@"viewDidLoad %d", selectedFlagIndex);
     
           
 	//NSLog(@"viewDidLoad %@ - %@", [[UIDevice currentDevice] systemName], [[UIDevice currentDevice] systemVersion]);
-
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(OrientationChanged)
                                                  name:@"UIDeviceOrientationDidChangeNotification"
@@ -800,14 +832,44 @@
 	self.navigationItem.titleView = [[UIView alloc] init];//WithFrame:CGRectMake(0, 0, 120, self.navigationController.navigationBar.frame.size.height - 14)];
 	
 	//Filter Control
-	UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:
-											[NSArray arrayWithObjects:
-											 [UIImage imageNamed:@"global.gif"],
-											 [UIImage imageNamed:@"multiplefavoris.gif"],
-											 [UIImage imageNamed:@"multipleflag1.gif"],
-											 [UIImage imageNamed:@"multipleflag0.gif"],												 
-											 nil]];
-
+    UISegmentedControl *segmentedControl;
+    
+	if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        
+         segmentedControl = [[UISegmentedControl alloc] initWithItems:
+                                                [NSArray arrayWithObjects:
+                                                 @"Tous",
+                                                 @"Favoris",
+                                                 @"Suivis",
+                                                 @"Lus",
+                                                 nil]];
+        
+        [segmentedControl setWidth:40.0f forSegmentAtIndex:0];
+        [segmentedControl setWidth:45.0f forSegmentAtIndex:1];
+        [segmentedControl setWidth:40.0f forSegmentAtIndex:2];
+        [segmentedControl setWidth:35.0f forSegmentAtIndex:3];
+        
+        
+        
+        UIFont *font = [UIFont systemFontOfSize:10.0f];
+        NSDictionary *attributes = [NSDictionary dictionaryWithObject:font
+                                                               forKey:UITextAttributeFont];
+        [segmentedControl setTitleTextAttributes:attributes
+                                        forState:UIControlStateNormal];
+        
+    }
+    else
+    {
+        segmentedControl = [[UISegmentedControl alloc] initWithItems:
+                                                [NSArray arrayWithObjects:
+                                                 [UIImage imageNamed:@"global.gif"],
+                                                 [UIImage imageNamed:@"multiplefavoris.gif"],
+                                                 [UIImage imageNamed:@"multipleflag1.gif"],
+                                                 [UIImage imageNamed:@"multipleflag0.gif"],												 
+                                                 nil]];
+    }
+    
+    
     [segmentedControl setUserInteractionEnabled:NO];
 
 	[segmentedControl addTarget:self action:@selector(segmentFilterAction) forControlEvents:UIControlEventValueChanged];
@@ -818,42 +880,58 @@
 
     
 	//SubCats Control
-	UISegmentedControl *segmentedControl2 = [[UISegmentedControl alloc] initWithItems:
-											[NSArray arrayWithObjects:
-											 [UIImage imageNamed:@"icon_list_bullets.png"],
-											 nil]];
-	
-    
-	[segmentedControl2 addTarget:self action:@selector(segmentCatAction:) forControlEvents:UIControlEventValueChanged];
-	segmentedControl2.segmentedControlStyle = UISegmentedControlStyleBar;
-	segmentedControl2.momentary = YES;
+    if (self.pickerViewArray.count) {
+        
+        UISegmentedControl *segmentedControl2;
+        
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            segmentedControl2 = [[UISegmentedControl alloc] initWithItems:
+                                  [NSArray arrayWithObjects:
+                                   [UIImage imageNamed:@"categories"],
+                                   nil]];
+        }
+        else
+        {
+            segmentedControl2 = [[UISegmentedControl alloc] initWithItems:
+                                                     [NSArray arrayWithObjects:
+                                                      [UIImage imageNamed:@"icon_list_bullets"],
+                                                      nil]];
+        }
 
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        segmentedControl2.tintColor = [UIColor colorWithRed:156/255.f green:161/255.f blue:167/255.f alpha:1.00];
+        [segmentedControl2 addTarget:self action:@selector(segmentCatAction:) forControlEvents:UIControlEventValueChanged];
+        segmentedControl2.segmentedControlStyle = UISegmentedControlStyleBar;
+        segmentedControl2.momentary = YES;
+
+        
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad && SYSTEM_VERSION_LESS_THAN(@"7.0")) {
+            segmentedControl2.tintColor = [UIColor colorWithRed:156/255.f green:161/255.f blue:167/255.f alpha:1.00];
+        }
+
+         
+        segmentedControl2.frame = CGRectMake(segmentedControl.frame.size.width + 15, 0, segmentedControl2.frame.size.width, segmentedControl2.frame.size.height);
+        segmentedControl.frame = CGRectMake(5, 0, segmentedControl.frame.size.width, segmentedControl.frame.size.height);
+
+
+        [self.navigationItem.titleView insertSubview:segmentedControl2 atIndex:1];
+        self.navigationItem.titleView.frame = CGRectMake(0, 0, segmentedControl.frame.size.width + 20 + segmentedControl2.frame.size.width, segmentedControl.frame.size.height);
+
+        segmentedControl.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin);
+        segmentedControl2.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin);
+        self.navigationItem.titleView.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin);
+
+        [segmentedControl2 release];
+            
     }
-    
-	segmentedControl2.frame = CGRectMake(segmentedControl.frame.size.width + 15, 0, segmentedControl2.frame.size.width, segmentedControl2.frame.size.height);
-	segmentedControl.frame = CGRectMake(5, 0, segmentedControl.frame.size.width, segmentedControl.frame.size.height);
+    else
+    {
+        segmentedControl.frame = CGRectMake(5, 0, segmentedControl.frame.size.width, segmentedControl.frame.size.height);
+        self.navigationItem.titleView.frame = CGRectMake(0, 0, segmentedControl.frame.size.width, segmentedControl.frame.size.height);
+        segmentedControl.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin);
+        self.navigationItem.titleView.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin);
 
-	if (self.pickerViewArray.count == 0) {
-		segmentedControl2.enabled = NO;
-		segmentedControl2.alpha = 0;		
-	}
-	
-	//NSLog(@"sg2	%@", segmentedControl2);
-	[self.navigationItem.titleView insertSubview:segmentedControl2 atIndex:1];
+    }
 
 	
-	self.navigationItem.titleView.frame = CGRectMake(0, 0, segmentedControl.frame.size.width + 20 + segmentedControl2.frame.size.width, segmentedControl.frame.size.height);
-	//NSLog(@"tv	%@", self.navigationItem.titleView);
-	//NSLog(@"tv	%d", self.navigationItem.titleView.subviews.count);
-	
-	segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-	segmentedControl2.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-	self.navigationItem.titleView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-
-	
-	[segmentedControl2 release];
 	[segmentedControl release];
 
 	
@@ -985,7 +1063,9 @@
 
 - (IBAction)segmentCatAction:(id)sender
 {
-	
+	[self showPicker:sender];
+    return;
+    
 	// The segmented control was clicked, handle it here 
 	UISegmentedControl *segmentedControl = (UISegmentedControl *)sender;
 	//NSLog(@"Segment clicked: %d", segmentedControl.selectedSegmentIndex);
@@ -993,7 +1073,7 @@
 	switch (segmentedControl.selectedSegmentIndex) {
 		case 0:
 			//NSLog(@"segmentCatAction");
-			[self showPicker:sender];
+			
 			break;		
 		default:
 			break;
@@ -1080,17 +1160,31 @@
 
 #pragma mark -
 #pragma mark Table view data source
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+	return [NSString stringWithFormat:@"%@", self.forumName];
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-	return 23;
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+        return 36.0f;
+    }
+    else
+    {
+        return 23.0f;
+    }
+
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-	//NSLog(@"viewForHeaderInSection %d", section);
-	// create the parent view that will hold header Label
-
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+        return nil;
+    }
+    
 	UIView* customView = [[[UIView alloc] initWithFrame:CGRectMake(0,0,320,23)] autorelease];
 	customView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	
+
+    
 	// create the label objects
 	UILabel *headerLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
 	headerLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -1112,27 +1206,14 @@
 	[detailLabel setTitle:[NSString stringWithFormat:@"page %d", self.pageNumber] forState:UIControlStateNormal];
 	[[detailLabel titleLabel] setFont:[UIFont boldSystemFontOfSize:10]];
 	[[detailLabel titleLabel] setTextColor:[UIColor whiteColor]];
-	[[detailLabel titleLabel] setTextAlignment:UITextAlignmentRight];
+	[[detailLabel titleLabel] setTextAlignment:NSTextAlignmentRight];
 	[[detailLabel titleLabel] setBackgroundColor:[UIColor clearColor]];
 	[[detailLabel titleLabel] setShadowColor:[UIColor darkGrayColor]];
 	[[detailLabel titleLabel] setShadowOffset:CGSizeMake(0.0, 1.0)];
 	[[detailLabel titleLabel] setFrame:CGRectMake(260, 0, 50, 23)];
 
 	
-	/*
-	UILabel *detailLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
-	detailLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
 
-	detailLabel.font = [UIFont boldSystemFontOfSize:10];
-	detailLabel.frame = CGRectMake(260,0,50,23);
-	detailLabel.textColor = [UIColor whiteColor];
-	detailLabel.textAlignment = UITextAlignmentRight;
-	detailLabel.backgroundColor = [UIColor clearColor];
-	detailLabel.shadowColor = [UIColor darkGrayColor];
-	detailLabel.shadowOffset = CGSizeMake(0.0, 1.0);	
-	
-	detailLabel.text = [NSString stringWithFormat:@"page %d", self.pageNumber];
-		*/
 	
 	// create image object
 	UIImage *myImage = [UIImage imageNamed:@"bar2.png"];
@@ -1153,6 +1234,7 @@
 	return customView;
  
  }
+
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
@@ -1234,13 +1316,13 @@
 	
 	[cell.timeLabel setText:[NSString stringWithFormat:@"%@ - %@", [aTopic aAuthorOfLastPost], [aTopic aDateOfLastPost]]];
 
-	if ([aTopic isViewed]) {
-		[[cell titleLabel] setFont:[UIFont systemFontOfSize:13]];
-	}
-	else {
-		[[cell titleLabel] setFont:[UIFont boldSystemFontOfSize:13]];
-		
-	}	
+    if ([aTopic isViewed]) {
+        [[cell titleLabel] setFont:[UIFont systemFontOfSize:13]];
+    }
+    else {
+        [[cell titleLabel] setFont:[UIFont boldSystemFontOfSize:13]];
+        
+    }
 
 	//Flag
 	if ([aTopic aTypeOfFlag].length > 0) {
@@ -1262,7 +1344,7 @@
 			[button setBackgroundImage:imageForYellowFlag forState:UIControlStateNormal];
 			[button setBackgroundImage:imageForYellowFlag forState:UIControlStateHighlighted];
 		}
-
+        
 		// set the button's target to this table view controller so we can interpret touch events and map that to a NSIndexSet
 		[button addTarget:self action:@selector(accessoryButtonTapped:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 		
@@ -1284,7 +1366,7 @@
 		
 	}
 	//Flag	
-
+    
 	return cell;
 	
 }
@@ -1415,6 +1497,17 @@
 - (void)pushTopic {
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        
+        self.navigationItem.backBarButtonItem =
+        [[UIBarButtonItem alloc] initWithTitle:@"Retour"
+                                         style: UIBarButtonItemStyleBordered
+                                        target:nil
+                                        action:nil];
+        
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+            self.navigationItem.backBarButtonItem.title = @" ";
+        }
+        
         [self.navigationController pushViewController:messagesTableViewController animated:YES];
     }
     else {
@@ -1438,20 +1531,20 @@
 		
 		[[self.arrayData objectAtIndex:[self.pressedIndexPath row]] setIsViewed:YES];
         
-        NSArray* rowsToReload = [NSArray arrayWithObjects:self.pressedIndexPath, nil];
-        [self.topicsTableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
+        //NSArray* rowsToReload = [NSArray arrayWithObjects:self.pressedIndexPath, nil];
+        //[self.topicsTableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
         
-        //[self.topicsTableView reloadData];
+        [self.topicsTableView reloadData];
 	}
 	else if (self.topicsTableView.indexPathForSelectedRow && self.arrayData.count > 0) {
 		//NSLog(@"TT indexPathForSelectedRow");
         
 		[[self.arrayData objectAtIndex:[self.topicsTableView.indexPathForSelectedRow row]] setIsViewed:YES];
         
-        NSArray* rowsToReload = [NSArray arrayWithObjects:self.topicsTableView.indexPathForSelectedRow, nil];
-        [self.topicsTableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
+        //NSArray* rowsToReload = [NSArray arrayWithObjects:self.topicsTableView.indexPathForSelectedRow, nil];
+        //[self.topicsTableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
         
-		//[self.topicsTableView reloadData];
+		[self.topicsTableView reloadData];
 	}
     
 }
@@ -1461,49 +1554,25 @@
 
 -(void)chooseTopicPage {
     //NSLog(@"chooseTopicPage Topics");
-    
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Aller à la page" message:[NSString stringWithFormat:@"\n\n(numéro entre 1 et %d)\n", [[arrayData objectAtIndex:pressedIndexPath.row] maxTopicPage]]
+
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Aller à la page" message:nil
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"OK", nil];
 	
-	pageNumberField = [[UITextField alloc] initWithFrame:CGRectZero];
-	[pageNumberField setBackgroundColor:[UIColor whiteColor]];
-	[pageNumberField setPlaceholder:@"numéro de la page"];
-	//pageNumberField.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;    
-
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     
-	[pageNumberField setBackground:[UIImage imageNamed:@"bginput"]];
-	
-	//[pageNumberField textRectForBounds:CGRectMake(5.0, 5.0, 258.0, 28.0)];
-	
-	[pageNumberField.layer setBorderColor: [[UIColor blackColor] CGColor]];
-	[pageNumberField.layer setBorderWidth: 1.0];
-	
-	pageNumberField.font = [UIFont systemFontOfSize:15];
-	pageNumberField.textAlignment = UITextAlignmentCenter;
-	pageNumberField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-	pageNumberField.keyboardAppearance = UIKeyboardAppearanceAlert;
-	pageNumberField.keyboardType = UIKeyboardTypeNumberPad;
-	pageNumberField.delegate = self;
-	[pageNumberField addTarget:self action:@selector(textFieldTopicDidChange:) forControlEvents:UIControlEventEditingChanged];
-	
+    UITextField *textField = [alert textFieldAtIndex:0];
+    textField.placeholder = [NSString stringWithFormat:@"(numéro entre 1 et %d)", [[arrayData objectAtIndex:pressedIndexPath.row] maxTopicPage]];
+    textField.textAlignment = NSTextAlignmentCenter;
+    textField.delegate = self;
+    [textField addTarget:self action:@selector(textFieldTopicDidChange:) forControlEvents:UIControlEventEditingChanged];
+    textField.keyboardAppearance = UIKeyboardAppearanceAlert;
+    textField.keyboardType = UIKeyboardTypeNumberPad;
+    
 	[alert setTag:669];
-	[alert addSubview:pageNumberField];
-    
-	
 	[alert show];
     
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-    {
-        UILabel* tmpLbl = [alert.subviews objectAtIndex:1];
-        pageNumberField.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-        pageNumberField.frame = CGRectMake(12.0, tmpLbl.frame.origin.y + tmpLbl.frame.size.height + 10, 260.0, 30.0);
-    }
-    else {
-        pageNumberField.frame = CGRectMake(12.0, 50.0, 260.0, 30.0);
-    }
-	
 	[alert release];
-     
+    
 }
 
 -(void)textFieldTopicDidChange:(id)sender {
@@ -1550,7 +1619,7 @@
 	//NSLog(@"didPresentAlertView PT %@", alertView);
 	
 	if (([alertView tag] == 669)) {
-		[pageNumberField becomeFirstResponder];
+
 	}
 }
 
@@ -1561,8 +1630,7 @@
 	//NSLog(@"willDismissWithButtonIndex PT %@", alertView);
     
 	if (([alertView tag] == 669)) {
-		[self.pageNumberField resignFirstResponder];
-		self.pageNumberField = nil;
+
 	}
 }
 
@@ -1576,8 +1644,8 @@
        
         //NSLog(@"newUrl %@", newUrl);
 
-        newUrl = [newUrl stringByReplacingOccurrencesOfString:@"_1.htm" withString:[NSString stringWithFormat:@"_%d.htm", [[pageNumberField text] intValue]]];
-        newUrl = [newUrl stringByReplacingOccurrencesOfString:@"page=1&" withString:[NSString stringWithFormat:@"page=%d&", [[pageNumberField text] intValue]]];
+        newUrl = [newUrl stringByReplacingOccurrencesOfString:@"_1.htm" withString:[NSString stringWithFormat:@"_%d.htm", [[[alertView textFieldAtIndex:0] text] intValue]]];
+        newUrl = [newUrl stringByReplacingOccurrencesOfString:@"page=1&" withString:[NSString stringWithFormat:@"page=%d&", [[[alertView textFieldAtIndex:0] text] intValue]]];
         
         //NSLog(@"newUrl %@", newUrl);
 
@@ -1623,6 +1691,7 @@
     //NSLog(@"b4 %@", self.navigationController);
 
 	//setup the URL
+    
     
     [self.messagesTableViewController setTopicName:[[arrayData objectAtIndex:indexPath.row] aTitle]];
 	self.messagesTableViewController.isViewed = [[arrayData objectAtIndex:indexPath.row] isViewed];	
@@ -1736,10 +1805,12 @@
         //origFrame.origin.x += 80;
         
         
-        origFrame.origin.x += 75;
-        origFrame.origin.y += 10;
+        //origFrame.origin.x += 75;
+        //origFrame.origin.y += 10;
         
-        [_popover presentPopoverFromRect:origFrame inView:[[self navigationController] view] permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];        
+        //[_popover presentPopoverFromBarButtonItem:self.navigationItem.rightBarButtonItem permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        
+        [_popover presentPopoverFromRect:origFrame inView:self.navigationItem.titleView permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
      
     } else {
         CGSize pickerSize = [myPickerView sizeThatFits:CGSizeZero];
@@ -1751,9 +1822,18 @@
         curFrame.origin.x =  self.view.frame.size.width - curFrame.size.width - 10;
         [[actionSheet viewWithTag:546] setFrame:curFrame];
         
+        
         [UIView beginAnimations:nil context:nil];
-        [actionSheet setFrame:CGRectMake(0, [[[HFRplusAppDelegate sharedAppDelegate] rootController] tabBar].frame.size.height + self.view.frame.size.height + self.navigationController.navigationBar.frame.size.height + 20 - myPickerView.frame.size.height - 44,
-                                         self.view.frame.size.width, myPickerView.frame.size.height + 44)];
+        
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+            [actionSheet setFrame:CGRectMake(0, self.view.frame.size.height - myPickerView.frame.size.height - 44,
+                                             self.view.frame.size.width, myPickerView.frame.size.height + 44)];
+        }
+        else
+        {
+            [actionSheet setFrame:CGRectMake(0, [[[HFRplusAppDelegate sharedAppDelegate] rootController] tabBar].frame.size.height + self.view.frame.size.height + self.navigationController.navigationBar.frame.size.height + 20 - myPickerView.frame.size.height - 44,
+                                             self.view.frame.size.width, myPickerView.frame.size.height + 44)];
+        }
         
         [actionSheet setBounds:CGRectMake(0, 0,
                                           self.view.frame.size.width, myPickerView.frame.size.height + 44)];

@@ -54,12 +54,12 @@
 	[request cancel];
 }
 
-- (void)fetchContent
+- (void)fetchContent:(int)from
 {
     //self.firstDate = [NSDate date];
     
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMaxi];
-
+    
     //NSLog(@"URL %@", [self currentUrl]);
     
 	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]]]];
@@ -74,17 +74,36 @@
 	[request setDidStartSelector:@selector(fetchContentStarted:)];
 	[request setDidFinishSelector:@selector(fetchContentComplete:)];
 	[request setDidFailSelector:@selector(fetchContentFailed:)];
-
+    
 	[self.view removeGestureRecognizer:swipeLeftRecognizer];
 	[self.view removeGestureRecognizer:swipeRightRecognizer];
 	
 	if ([NSThread isMainThread]) {
         [self.messagesWebView setHidden:YES];
     }
-	
-    [self.loadingView setHidden:NO];
 
+    NSLog(@"from %d", from);
+    
+    switch (from) {
+        case kNewMessageFromShake:
+        case kNewMessageFromUpdate:
+        case kNewMessageFromEditor:
+            NSLog(@"hidden");
+            [self.loadingView setHidden:YES];
+            break;
+        default:
+            NSLog(@"not hidden");
+            [self.loadingView setHidden:NO];
+            break;
+    }
+    
 	[request startAsynchronous];
+}
+
+
+- (void)fetchContent
+{
+    [self fetchContent:kNewMessageFromUnkwn];
 }
 
 - (void)fetchContentStarted:(ASIHTTPRequest *)theRequest
@@ -288,8 +307,8 @@
 			[label setFont:[UIFont boldSystemFontOfSize:15.0]];
 			[label setAdjustsFontSizeToFitWidth:YES];
 			[label setBackgroundColor:[UIColor clearColor]];
-			[label setTextAlignment:UITextAlignmentCenter];
-			[label setLineBreakMode:UILineBreakModeMiddleTruncation];
+			[label setTextAlignment:NSTextAlignmentCenter];
+			[label setLineBreakMode:NSLineBreakByTruncatingMiddle];
 			[label setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
 			
 			[label setTextColor:[UIColor whiteColor]];
@@ -510,23 +529,38 @@
     
     [label setAdjustsFontSizeToFitWidth:YES];
     [label setBackgroundColor:[UIColor clearColor]];
-    [label setTextAlignment:UITextAlignmentCenter];
-    [label setLineBreakMode:UILineBreakModeMiddleTruncation];
+    [label setTextAlignment:NSTextAlignmentCenter];
+    [label setLineBreakMode:NSLineBreakByTruncatingMiddle];
     
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        [label setTextColor:[UIColor whiteColor]];
-        label.shadowColor = [UIColor darkGrayColor];
-        [label setFont:[UIFont boldSystemFontOfSize:13.0]];
-        label.shadowOffset = CGSizeMake(0.0, -1.0);
-
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        [label setTextColor:[UIColor blackColor]];
         
-    }
-    else {
-        [label setTextColor:[UIColor colorWithRed:113/255.f green:120/255.f blue:128/255.f alpha:1.00]];
-        label.shadowColor = [UIColor whiteColor];
-        [label setFont:[UIFont boldSystemFontOfSize:19.0]];
-        label.shadowOffset = CGSizeMake(0.0, 1.0);
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            [label setFont:[UIFont boldSystemFontOfSize:13.0]];
+        }
+        else {
+            [label setFont:[UIFont boldSystemFontOfSize:17.0]];
+        }
 
+    }
+    else
+    {
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            [label setTextColor:[UIColor whiteColor]];
+            label.shadowColor = [UIColor darkGrayColor];
+            [label setFont:[UIFont boldSystemFontOfSize:13.0]];
+            label.shadowOffset = CGSizeMake(0.0, -1.0);
+            
+            
+        }
+        else {
+            [label setTextColor:[UIColor colorWithRed:113/255.f green:120/255.f blue:128/255.f alpha:1.00]];
+            label.shadowColor = [UIColor whiteColor];
+            [label setFont:[UIFont boldSystemFontOfSize:19.0]];
+            label.shadowOffset = CGSizeMake(0.0, 0.5f);
+            
+        }
+        
     }
 
     [label setNumberOfLines:0];
@@ -537,8 +571,15 @@
     [label release];
 
     // fond blanc WebView
-    [self.messagesWebView setBackgroundColor:[UIColor whiteColor]];
     [self.messagesWebView hideGradientBackground];
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+        [self.messagesWebView setBackgroundColor:[UIColor colorWithRed:239/255.0f green:239/255.0f blue:244/255.0f alpha:1.0f]];
+    }
+    else
+    {
+        [self.messagesWebView setBackgroundColor:[UIColor whiteColor]];
+    }
     
 	//Gesture
 	UIGestureRecognizer *recognizer;
@@ -727,7 +768,7 @@
     if ([position isEqualToString:@"top"])
         script = @"$('html, body').animate({scrollTop:0}, 'slow');";
     else if ([position isEqualToString:@"bottom"])
-        script = @"$('html, body').animate({scrollTop:$('body').attr('scrollHeight')}, 'slow');";
+        script = @"$('html, body').animate({scrollTop:$(document).height()}, 'slow');";
     else {
         script = @"";
     }
@@ -915,7 +956,10 @@
 		 target:nil
 		 action:nil];
 		
-		
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+            self.navigationItem.backBarButtonItem.title = @" ";
+        }
+        
 		///===
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
         
@@ -926,26 +970,39 @@
         
         [label setAdjustsFontSizeToFitWidth:YES];
         [label setBackgroundColor:[UIColor clearColor]];
-        [label setTextAlignment:UITextAlignmentCenter];
-        [label setLineBreakMode:UILineBreakModeMiddleTruncation];
+        [label setTextAlignment:NSTextAlignmentCenter];
+        [label setLineBreakMode:NSLineBreakByTruncatingMiddle];
         
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-            [label setTextColor:[UIColor whiteColor]];
-            label.shadowColor = [UIColor darkGrayColor];
-            [label setFont:[UIFont boldSystemFontOfSize:13.0]];
-            label.shadowOffset = CGSizeMake(0.0, -1.0);
-            
-            
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+                [label setFont:[UIFont boldSystemFontOfSize:13.0]];
+            }
+            else {
+                [label setFont:[UIFont boldSystemFontOfSize:17.0]];
+            }
         }
-        else {
-            [label setTextColor:[UIColor colorWithRed:113/255.f green:120/255.f blue:128/255.f alpha:1.00]];
-            label.shadowColor = [UIColor whiteColor];
-            [label setFont:[UIFont boldSystemFontOfSize:19.0]];
-            label.shadowOffset = CGSizeMake(0.0, 1.0);
-            
+        else
+        {
+            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+                [label setTextColor:[UIColor whiteColor]];
+                label.shadowColor = [UIColor darkGrayColor];
+                [label setFont:[UIFont boldSystemFontOfSize:13.0]];
+                label.shadowOffset = CGSizeMake(0.0, -1.0);
+                
+                
+            }
+            else {
+                [label setTextColor:[UIColor colorWithRed:113/255.f green:120/255.f blue:128/255.f alpha:1.00]];
+                label.shadowColor = [UIColor whiteColor];
+                [label setFont:[UIFont boldSystemFontOfSize:19.0]];
+                label.shadowOffset = CGSizeMake(0.0, 0.5f);
+                
+            }
         }
         
-        label.shadowOffset = CGSizeMake(0.0, -1.0);
+        
+
+        
         
         [label setNumberOfLines:0];
         
@@ -1107,7 +1164,7 @@
             break;
     }
     
-	[self fetchContent];
+	[self fetchContent:intfrom];
 	
 	[pool2 drain];
 }
@@ -1255,21 +1312,20 @@
 	for (i = 0; i < [self.arrayData count]; i++) { //Loop through all the tags
 		tmpHTML = [tmpHTML stringByAppendingString:[[self.arrayData objectAtIndex:i] toHTML:i]];
 	}
-	
-	NSString *HTMLString = [[NSString alloc] 
-                initWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
+    
+	NSString *HTMLString = [NSString
+                stringWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
                 <html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"fr\" lang=\"fr\">\
                 <head>\
-                <script type='text/javascript' src='jquery.js'></script>\
+                <script type='text/javascript' src='jquery-2.0.3.min.js'></script>\
                 <script type='text/javascript' src='jquery.doubletap.js'></script>\
                 <script type='text/javascript' src='jquery.base64.js'></script>\
-                <script type='text/javascript' src='jquery.lazyload.mini.js'></script>\
                 <meta name='viewport' content='initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no' />\
                 <link type='text/css' rel='stylesheet' href='style-liste.css'/>\
                 <link type='text/css' rel='stylesheet' href='style-liste-retina.css' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\
                 <link type='text/css' rel='stylesheet' href='style-liste-ipad-portrait.css' media='all and (min-width: 767px)'/>\
                 <link type='text/css' rel='stylesheet' href='style-liste-ipad-landscape.css' media='all and (min-width: 700px) and (max-width: 750px)'/>\
-                </head><body>\
+                </head><body class='iosversion'>\
                 <div class='bunselected nosig' id='qsdoiqjsdkjhqkjhqsdqdilkjqsd2'>%@</div>\
                 <div id='endofpage'></div>\
                 <div id='endofpagetoolbar'></div>\
@@ -1286,6 +1342,12 @@
                 </script>\
                 </body></html>", tmpHTML];
 	
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"iosversion" withString:@"ios7"];
+    }
+  //  HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"hfrplusiosversion" withString:@""];
+
+    
 	NSString *path = [[NSBundle mainBundle] bundlePath];
 	NSURL *baseURL = [NSURL fileURLWithPath:path];
 	//NSLog(@"baseURL %@", baseURL);
@@ -1301,7 +1363,7 @@
 	
 	[self.messagesWebView setUserInteractionEnabled:YES];
 
-	[HTMLString release];
+	//[HTMLString release];
 	//[tmpHTML release];
 
 }
@@ -1494,6 +1556,16 @@
                 self.messagesTableViewController.topicName = @"";	
                 self.messagesTableViewController.isViewed = YES;	
                 
+                self.navigationItem.backBarButtonItem =
+                [[UIBarButtonItem alloc] initWithTitle:@"Retour"
+                                                 style: UIBarButtonItemStyleBordered
+                                                target:nil
+                                                action:nil];
+                
+                if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+                    self.navigationItem.backBarButtonItem.title = @" ";
+                }
+                
                 //NSLog(@"push message liste");
                 [self.navigationController pushViewController:messagesTableViewController animated:YES];  
             }
@@ -1518,6 +1590,16 @@
             //setup the URL
             self.messagesTableViewController.topicName = @"";
             self.messagesTableViewController.isViewed = YES;
+            
+            self.navigationItem.backBarButtonItem =
+            [[UIBarButtonItem alloc] initWithTitle:@"Retour"
+                                             style: UIBarButtonItemStyleBordered
+                                            target:nil
+                                            action:nil];
+            
+            if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+                self.navigationItem.backBarButtonItem.title = @" ";
+            }
             
             [self.navigationController pushViewController:messagesTableViewController animated:YES];
 
@@ -1687,16 +1769,27 @@
 	[menuAction release];
 	//NSLog(@"menuAction %d", menuAction.count);
 	
-	//NSLog(@"ypos %d", ypos);
+	NSLog(@"ypos %d", ypos);
 	
+
+    
 	if (ypos < 40) {
 
 		ypos +=34;
+        
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7,0")) {
+            ypos +=10;
+        }
 		[menuController setArrowDirection:UIMenuControllerArrowUp];
 	}
 	else {
 		[menuController setArrowDirection:UIMenuControllerArrowDown];
 	}
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7,0")) {
+        ypos += 66;
+    }
+    
 	//NSLog(@"oijlkajsdoihjlkjasdopopup 0");
 	
 	//CGRect myFrame = [[self.view superview] frame];

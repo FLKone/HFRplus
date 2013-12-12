@@ -24,8 +24,8 @@
 		
 		[labelTitle setFont:[UIFont boldSystemFontOfSize:14.0]];
 		[labelTitle setAdjustsFontSizeToFitWidth:NO];
-		[labelTitle setLineBreakMode:UILineBreakModeTailTruncation];
-		[labelTitle setTextAlignment:UITextAlignmentLeft];
+		[labelTitle setLineBreakMode:NSLineBreakByTruncatingTail];
+		[labelTitle setTextAlignment:NSTextAlignmentLeft];
 		[labelTitle setHighlightedTextColor:[UIColor whiteColor]];
 		[labelTitle setTag:999];
 		[labelTitle setTextColor:[UIColor blackColor]];
@@ -44,8 +44,8 @@
 
 		[labelMsg setFont:[UIFont systemFontOfSize:13.0]];
 		[labelMsg setAdjustsFontSizeToFitWidth:NO];
-		[labelMsg setLineBreakMode:UILineBreakModeTailTruncation];
-		[labelMsg setTextAlignment:UITextAlignmentLeft];
+		[labelMsg setLineBreakMode:NSLineBreakByTruncatingTail];
+		[labelMsg setTextAlignment:NSTextAlignmentLeft];
 		[labelMsg setHighlightedTextColor:[UIColor whiteColor]];
 		[labelMsg setTag:998];
 		[labelMsg setTextColor:[UIColor grayColor]];
@@ -63,8 +63,8 @@
 
 		[labelDate setFont:[UIFont systemFontOfSize:11.0]];
 		[labelDate setAdjustsFontSizeToFitWidth:NO];
-		[labelDate setLineBreakMode:UILineBreakModeTailTruncation];
-		[labelDate setTextAlignment:UITextAlignmentRight];
+		[labelDate setLineBreakMode:NSLineBreakByTruncatingTail];
+		[labelDate setTextAlignment:NSTextAlignmentRight];
 		[labelDate setHighlightedTextColor:[UIColor whiteColor]];
 		[labelDate setTag:997];
 		[labelDate setTextColor:[UIColor colorWithRed:42/255.f green:116/255.f blue:217/255.f alpha:1.00]];

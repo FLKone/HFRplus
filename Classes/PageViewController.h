@@ -24,9 +24,8 @@
 	//Right Toolbar Items
 	NSString *nextPageUrl;
 	NSString *previousPageUrl;
-	
-	UITextField *pageNumberField;
 }
+
 @property (nonatomic, retain) NSString *currentUrl;
 @property int pageNumber;
 
@@ -37,8 +36,6 @@
 
 @property (nonatomic, retain) NSString *nextPageUrl;
 @property (nonatomic, retain) NSString *previousPageUrl;
-
-@property (nonatomic, retain) UITextField *pageNumberField;
 
 
 -(void)choosePage;

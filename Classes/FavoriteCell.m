@@ -6,6 +6,7 @@
 //
 
 #import "FavoriteCell.h"
+#import "Constants.h"
 
 
 @implementation FavoriteCell
@@ -21,10 +22,12 @@
 
 		[labelTitle setFont:[UIFont boldSystemFontOfSize:14.0]];
 		[labelTitle setAdjustsFontSizeToFitWidth:NO];
-		[labelTitle setLineBreakMode:UILineBreakModeTailTruncation];
+		[labelTitle setLineBreakMode:NSLineBreakByTruncatingTail];
 		//[labelTitle setBackgroundColor:[UIColor blueColor]];
-		[labelTitle setTextAlignment:UITextAlignmentLeft];
-		[labelTitle setHighlightedTextColor:[UIColor whiteColor]];
+		[labelTitle setTextAlignment:NSTextAlignmentLeft];
+        if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+            [labelTitle setHighlightedTextColor:[UIColor whiteColor]];
+        }
 		[labelTitle setTag:999];
 		[labelTitle setTextColor:[UIColor blackColor]];
 		[labelTitle setNumberOfLines:0];
@@ -38,10 +41,12 @@
 		
 		[labelMsg setFont:[UIFont systemFontOfSize:13.0]];
 		[labelMsg setAdjustsFontSizeToFitWidth:NO];
-		[labelMsg setLineBreakMode:UILineBreakModeTailTruncation];
+		[labelMsg setLineBreakMode:NSLineBreakByTruncatingTail];
 		//[labelMsg setBackgroundColor:[UIColor blueColor]];
-		[labelMsg setTextAlignment:UITextAlignmentLeft];
-		[labelMsg setHighlightedTextColor:[UIColor whiteColor]];
+		[labelMsg setTextAlignment:NSTextAlignmentLeft];
+        if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+            [labelMsg setHighlightedTextColor:[UIColor whiteColor]];
+        }
 		[labelMsg setTag:998];
 		[labelMsg setTextColor:[UIColor grayColor]];
 		[labelMsg setNumberOfLines:0];
@@ -55,10 +60,12 @@
 		
 		[labelDate setFont:[UIFont systemFontOfSize:11.0]];
 		[labelDate setAdjustsFontSizeToFitWidth:NO];
-		[labelDate setLineBreakMode:UILineBreakModeTailTruncation];
+		[labelDate setLineBreakMode:NSLineBreakByTruncatingTail];
 		//[labelDate setBackgroundColor:[UIColor redColor]];
-		[labelDate setTextAlignment:UITextAlignmentRight];
-		[labelDate setHighlightedTextColor:[UIColor whiteColor]];
+		[labelDate setTextAlignment:NSTextAlignmentRight];
+        if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+            [labelDate setHighlightedTextColor:[UIColor whiteColor]];
+        }
 		[labelDate setTag:997];
 		[labelDate setTextColor:[UIColor colorWithRed:42/255.f green:116/255.f blue:217/255.f alpha:1.00]];
 		[labelDate setNumberOfLines:0];
