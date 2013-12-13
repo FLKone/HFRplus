@@ -82,6 +82,8 @@
 	
     //NSLog(@"display %@", display);
     
+    myRawContent = [myRawContent stringByReplacingOccurrencesOfString:@"hfr-rehost.net" withString:@"reho.st"]; // changement de domaine hfr-rehost
+    
 	if ([display isEqualToString:@"no"]) {
         
 		//Replacing Links with IMG with custom IMG
@@ -92,7 +94,7 @@
 		//External Images			
 		NSString *regEx = @"<img src=\"([^\"]+)\" alt=\"[^\"]+\" title=\"[^\"]+\" onload=\"[^\"]+\" style=\"[^\"]+\">";			
 		myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx
-															  withString:@"<img class=\"hfrplusimg\" title=\"%%ID%%\" src=\"121-landscapebig.png\" alt=\"$1\" longdesc=\"\">"];	
+															  withString:@"<img class=\"hfrplusimg\" title=\"%%ID%%\" src=\"121-landscapebig.png\" alt=\"$1\" longdesc=\"\">"];
 		
 		
 	} else if ([display isEqualToString:@"yes"]) {
