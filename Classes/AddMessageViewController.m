@@ -299,6 +299,45 @@
 #pragma mark -
 #pragma mark Responding to keyboard events
 
+- (void)textViewDidChange:(UITextView *)ftextView {
+
+	if ([ftextView text].length > 0) {
+		[self.navigationItem.rightBarButtonItem setEnabled:YES];
+	}
+	else {
+		[self.navigationItem.rightBarButtonItem setEnabled:NO];
+	}
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7,0")) {
+
+        
+        CGRect line = [ftextView caretRectForPosition:ftextView.selectedTextRange.start];
+        CGFloat overflow = line.origin.y + line.size.height
+                            - ( ftextView.contentOffset.y + ftextView.bounds.size.height - ftextView.contentInset.bottom - ftextView.contentInset.top ) + self.offsetY;
+        
+        //NSLog(@"offsetY %d", self.offsetY);
+
+        
+        if ( overflow > 0 ) {
+            //NSLog(@"overflow %f", overflow);
+            // We are at the bottom of the visible text and introduced a line feed, scroll down (iOS 7 does not do it)
+            // Scroll caret to visible area
+            CGPoint offset = ftextView.contentOffset;
+            
+            //NSLog(@"offset %@", NSStringFromCGPoint(offset));
+            offset.y += overflow + 7; // leave 7 pixels margin
+            
+            
+            // Cannot animate with setContentOffset:animated: or caret will not appear
+            [UIView animateWithDuration:.2 animations:^{
+                [ftextView setContentOffset:offset];
+            }];
+        }
+    
+    }
+}
+/*
+
 - (void)textViewDidChange:(UITextView *)ftextView
 {
 	//NSLog(@"textViewDidChange");
@@ -314,6 +353,7 @@
 
 }
 
+*/
 - (void)viewWillAppear:(BOOL)animated{
 	NSLog(@"viewWillAppear");
     [[NSNotificationCenter defaultCenter] postNotificationName:@"VisibilityChanged" object:@"SHOW"];
