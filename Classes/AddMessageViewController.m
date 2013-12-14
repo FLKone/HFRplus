@@ -484,8 +484,8 @@
 
 - (IBAction)done {
 	//NSLog(@"done %@", self.formSubmit);
-	
-	ASIFormDataRequest  *arequest =  
+    
+	ASIFormDataRequest  *arequest =
 	[[[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:self.formSubmit]] autorelease];
 	//delete
 	NSString *key;
@@ -503,8 +503,10 @@
 			[arequest setPostValue:[self.arrayInputData objectForKey:key] forKey:key];
 	}	
 	
+    NSString* txtTW = [[textView text] removeEmoji];
+    txtTW = [txtTW stringByReplacingOccurrencesOfString:@"\n" withString:@"\r\n"];
     
-    [arequest setPostValue:[[textView text] removeEmoji] forKey:@"content_form"];
+    [arequest setPostValue:txtTW forKey:@"content_form"];
     
 	if (self.haveTitle) {
 		[arequest setPostValue:[textFieldTitle text] forKey:@"sujet"];

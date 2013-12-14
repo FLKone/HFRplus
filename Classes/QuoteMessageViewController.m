@@ -484,9 +484,10 @@
 	//-----
 
 	
-	
-	
-	[self.textView setText:[[fastAnswerNode findChildWithAttribute:@"id" matchingName:@"content_form" allowPartial:NO] contents]];
+	NSString* txtTW = [[fastAnswerNode findChildWithAttribute:@"id" matchingName:@"content_form" allowPartial:NO] contents];
+    txtTW = [txtTW stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"];
+    
+	[self.textView setText:txtTW];
 	//textView.contentOffset = CGPointMake(0, 0);
 
 	[self textViewDidChange:self.textView];
