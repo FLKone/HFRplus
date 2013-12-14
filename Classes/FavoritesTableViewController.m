@@ -62,11 +62,23 @@
         [btn2 setSelected:YES];
         //[btn2 setHighlighted:YES];
     }
+
+    if(self.status == kNoResults)
+    {
+        if (self.showAll) {
+            [self.favoritesTableView setHidden:NO];
+            [self.maintenanceView setHidden:YES];
+            [self.navigationItem.rightBarButtonItem setEnabled:NO];
+        }
+        else {
+            [self.favoritesTableView setHidden:YES];
+            [self.maintenanceView setHidden:NO];
+            [self.navigationItem.rightBarButtonItem setEnabled:YES];
+        }
+    }
     
     if (![self.favoritesTableView isHidden]) {
-//        [self.favoritesTableView beginUpdates];
         [self.favoritesTableView reloadData];
-//        [self.favoritesTableView endUpdates];
     }
     
 }
@@ -315,8 +327,8 @@
 		//NSLog(@"Aucun nouveau message %d", self.arrayDataID.count);
 		self.status = kNoResults;
 		self.statusMessage = @"Aucun nouveau message";
-		[myParser release];
-		return;
+		//[myParser release];
+		//return;
 	}
 	
 	//hash_check
@@ -369,7 +381,11 @@
     }
     
 	[myParser release];
-	self.status = kComplete;
+	if (self.status != kNoResults) {
+        self.status = kComplete;
+    }
+    
+    NSLog(@"self.arrayCategories %@", self.arrayCategories);
 
 }
 -(NSString*)wordAfterString:(NSString*)searchString inString:(NSString*)selfString
