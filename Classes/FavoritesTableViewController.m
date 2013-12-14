@@ -137,19 +137,24 @@
 	
 	[self loadDataInTableView:[request responseData]];
 	
-	[self.loadingView setHidden:YES];	
-    
+	[self.loadingView setHidden:YES];
+
 	switch (self.status) {
 		case kMaintenance:
 		case kNoResults:
-		case kNoAuth:            
-			[self.maintenanceView setText:self.statusMessage];
+		case kNoAuth:
+            [self.maintenanceView setText:self.statusMessage];
+
+            [self.loadingView setHidden:YES];
 			[self.maintenanceView setHidden:NO];
 			[self.favoritesTableView setHidden:YES];
 			break;
 		default:
-			[self.favoritesTableView reloadData];			
-			[self.favoritesTableView setHidden:NO];			
+            [self.favoritesTableView reloadData];
+
+            [self.loadingView setHidden:YES];
+            [self.maintenanceView setHidden:YES];
+			[self.favoritesTableView setHidden:NO];
 			break;
 	}
 	
@@ -164,7 +169,11 @@
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
     [segmentBarItem release];
 	
-	[self.loadingView setHidden:YES];
+    [self.maintenanceView setText:@"oops :o"];
+    
+    [self.loadingView setHidden:YES];
+    [self.maintenanceView setHidden:NO];
+    [self.favoritesTableView setHidden:YES];
 	
 	//NSLog(@"theRequest.error %@", theRequest.error);
 	
@@ -269,7 +278,7 @@
 			self.status = kMaintenance;
 			self.statusMessage = [[[bodyNode firstChild] contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 			[myParser release];
-			return;
+            return;
 		}
 		
 		NSLog(@"id");
@@ -464,7 +473,7 @@
         self.favoritesTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
         self.favoritesTableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
         self.favoritesTableView.rowHeight = 50.0f;
-        
+
         self.favoritesTableView.dataSource = self;
         self.favoritesTableView.delegate = self;
         [self.view addSubview:self.favoritesTableView];

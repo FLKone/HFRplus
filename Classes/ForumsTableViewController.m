@@ -77,10 +77,13 @@
     [segmentBarItem release];
     
     [self.loadingView setHidden:YES];
+    [self.maintenanceView setHidden:YES];
 	
     [self loadDataInTableView:[theRequest responseData]];
     
-	[self.forumsTableView reloadData];    
+	[self.forumsTableView reloadData];
+    [self.forumsTableView setHidden:NO];
+
 }
 
 - (void)fetchContentFailed:(ASIHTTPRequest *)theRequest
@@ -93,7 +96,11 @@
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
     [segmentBarItem release];
 	
-	[self.loadingView setHidden:YES];
+    [self.maintenanceView setText:@"oops :o"];
+    
+    [self.loadingView setHidden:YES];
+    [self.maintenanceView setHidden:NO];
+    [self.forumsTableView setHidden:YES];
     
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[theRequest.error localizedDescription]
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];

@@ -78,7 +78,6 @@
 - (void)fetchContentStarted:(ASIHTTPRequest *)theRequest
 {
 	[self.maintenanceView setHidden:YES];
-	usleep(50000);
 	[self.topicsTableView setHidden:YES];
 	[self.loadingView setHidden:NO];
 	
@@ -100,12 +99,17 @@
 		case kNoResults:
 		case kNoAuth:            
 			[self.maintenanceView setText:self.statusMessage];
+            
+            [self.loadingView setHidden:YES];
 			[self.maintenanceView setHidden:NO];
 			[self.topicsTableView setHidden:YES];
 			break;
 		default:
-			[self.topicsTableView reloadData];			
-			[self.topicsTableView setHidden:NO];			
+			[self.topicsTableView reloadData];
+            
+            [self.loadingView setHidden:YES];
+            [self.maintenanceView setHidden:YES];
+			[self.topicsTableView setHidden:NO];
 			break;
 	}
 
@@ -116,8 +120,11 @@
 - (void)fetchContentFailed:(ASIHTTPRequest *)theRequest
 {
 
-	[self.loadingView setHidden:YES];
-	[self.maintenanceView setHidden:YES];
+    [self.maintenanceView setText:@"oops :o"];
+    
+    [self.loadingView setHidden:YES];
+    [self.maintenanceView setHidden:NO];
+    [self.topicsTableView setHidden:YES];
 	
 	[(UISegmentedControl *)[self.navigationItem.titleView.subviews objectAtIndex:0] setUserInteractionEnabled:YES];
 	
@@ -786,7 +793,7 @@
         self.topicsTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
         self.topicsTableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
         self.topicsTableView.rowHeight = 60.0f;
-        
+
         self.topicsTableView.dataSource = self;
         self.topicsTableView.delegate = self;
         [self.view addSubview:self.topicsTableView];
