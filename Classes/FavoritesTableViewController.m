@@ -53,6 +53,8 @@
         
         [btn2 setSelected:NO];
         //[btn2 setHighlighted:NO];
+        
+        [self.navigationItem.rightBarButtonItem setEnabled:YES];
     }
     else {
         self.showAll = YES;
@@ -61,6 +63,9 @@
         
         [btn2 setSelected:YES];
         //[btn2 setHighlighted:YES];
+        
+        [self.navigationItem.rightBarButtonItem setEnabled:NO];
+
     }
 
     if(self.status == kNoResults)
@@ -68,12 +73,10 @@
         if (self.showAll) {
             [self.favoritesTableView setHidden:NO];
             [self.maintenanceView setHidden:YES];
-            [self.navigationItem.rightBarButtonItem setEnabled:NO];
         }
         else {
             [self.favoritesTableView setHidden:YES];
             [self.maintenanceView setHidden:NO];
-            [self.navigationItem.rightBarButtonItem setEnabled:YES];
         }
     }
     
