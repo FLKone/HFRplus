@@ -46,3 +46,6 @@ typedef enum {
 #define kNewMessageFromShake    2
 #define kNewMessageFromEditor   3
 #define kNewMessageFromUnkwn    4
+
+// iOS7
+#define HEIGHT_FOR_HEADER_IN_SECTION              ((SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") ? 36.0f : 23.0f))

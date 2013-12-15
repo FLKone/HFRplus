@@ -449,7 +449,7 @@
 				self.topicsTableView.tableFooterView = tmptoolbar;
 			}
 			else {
-				self.topicsTableView.tableFooterView = nil;
+				self.topicsTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 			}
 
 			//self.aToolbar = tmptoolbar;
@@ -784,26 +784,6 @@
     [super viewDidLoad];
 	self.title = forumName;
     
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
-        //NSLog(@"%@", self.favoritesTableView.tableHeaderView);
-    }
-    else
-    {
-        self.topicsTableView = nil;
-        self.topicsTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-        self.topicsTableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-        self.topicsTableView.rowHeight = 60.0f;
-
-        self.topicsTableView.dataSource = self;
-        self.topicsTableView.delegate = self;
-        [self.view addSubview:self.topicsTableView];
-    }
-    
-    
-    //NSLog(@"viewDidLoad %d", selectedFlagIndex);
-    
-          
-	//NSLog(@"viewDidLoad %@ - %@", [[UIDevice currentDevice] systemName], [[UIDevice currentDevice] systemVersion]);
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(OrientationChanged)
@@ -964,6 +944,7 @@
 	
 	
 	//self.forumBaseURL = self.currentUrl;
+    
 
 	
 	if([self isKindOfClass:[HFRMPViewController class]]) [(UISegmentedControl *)self.navigationItem.titleView setHidden:YES];
@@ -1173,21 +1154,68 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
-        return 36.0f;
-    }
-    else
-    {
-        return 23.0f;
-    }
-
+    return HEIGHT_FOR_HEADER_IN_SECTION;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
-        return nil;
+    
+    
+    //On récupère la section (forum)
+    CGFloat curWidth = self.view.frame.size.width;
+    
+    //UIView globale
+	UIView* customView = [[[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,HEIGHT_FOR_HEADER_IN_SECTION)] autorelease];
+    customView.backgroundColor = [UIColor colorWithRed:239/255.0f green:239/255.0f blue:244/255.0f alpha:0.7];
+	customView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    
+	//UIImageView de fond
+    if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        UIImage *myImage = [UIImage imageNamed:@"bar2.png"];
+        UIImageView *imageView = [[[UIImageView alloc] initWithImage:myImage] autorelease];
+        imageView.alpha = 0.9;
+        imageView.frame = CGRectMake(0,0,curWidth,HEIGHT_FOR_HEADER_IN_SECTION);
+        imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        
+        [customView addSubview:imageView];
+    }
+    else {
+        //bordures/iOS7
+        UIView* borderView = [[[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,1/[[UIScreen mainScreen] scale])] autorelease];
+        borderView.backgroundColor = [UIColor colorWithRed:158/255.0f green:158/255.0f blue:114/162.0f alpha:0.7];
+        
+        //[customView addSubview:borderView];
+        
+        UIView* borderView2 = [[[UIView alloc] initWithFrame:CGRectMake(0,HEIGHT_FOR_HEADER_IN_SECTION-1/[[UIScreen mainScreen] scale],curWidth,1/[[UIScreen mainScreen] scale])] autorelease];
+        borderView2.backgroundColor = [UIColor colorWithRed:158/255.0f green:158/255.0f blue:114/162.0f alpha:0.7];
+        
+        //[customView addSubview:borderView2];
+        
     }
     
+    //UIButton clickable pour accéder à la catégorie
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, curWidth, HEIGHT_FOR_HEADER_IN_SECTION)];
+    [button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        [button setTitleColor:[UIColor colorWithRed:109/255.0f green:109/255.0f blue:114/255.0f alpha:1] forState:UIControlStateNormal];
+        [button setTitle:[[self forumName] uppercaseString] forState:UIControlStateNormal];
+        [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        [button setTitleEdgeInsets:UIEdgeInsetsMake(10, 16, 0, 0)];
+    }
+    else
+    {
+        [button setTitleEdgeInsets:UIEdgeInsetsMake(0, 8, 0, 0)];
+        [button setTitle:[self forumName] forState:UIControlStateNormal];
+        [button.titleLabel setFont:[UIFont boldSystemFontOfSize:15]];
+        [button.titleLabel setShadowColor:[UIColor darkGrayColor]];
+        [button.titleLabel setShadowOffset:CGSizeMake(0.0, 1.0)];
+    }
+    
+    [customView addSubview:button];
+	
+	return customView;
+    
+    /*
 	UIView* customView = [[[UIView alloc] initWithFrame:CGRectMake(0,0,320,23)] autorelease];
 	customView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
@@ -1239,7 +1267,7 @@
 	}
 	
 	return customView;
- 
+ */
  }
 
 

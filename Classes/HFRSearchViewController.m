@@ -311,7 +311,7 @@
 		NSString *currentUrl = [[item valueForKey:@"link"] copy];
 		int pageNumber;
 		
-        NSLog(@"currentUrl %@", currentUrl);
+        //NSLog(@"currentUrl %@", currentUrl);
         
 		NSString *regexString  = @".*page=([^&]+).*";
 		NSRange   matchedRange;// = NSMakeRange(NSNotFound, 0UL);
