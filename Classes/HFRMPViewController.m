@@ -41,6 +41,9 @@
 		
     [super viewDidLoad];
 
+    self.navigationItem.titleView = nil;
+    //if([self isKindOfClass:[HFRMPViewController class]]) 
+    
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(newTopic)];
 	self.navigationItem.leftBarButtonItem = segmentBarItem;
     [segmentBarItem release];	
@@ -138,6 +141,10 @@
     [self pushTopic];
 	//NSLog(@"push message liste");
 
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 0;
 }
 
 -(void)handleLongPress:(UILongPressGestureRecognizer*)longPressRecognizer {

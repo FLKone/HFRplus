@@ -946,9 +946,6 @@
 	//self.forumBaseURL = self.currentUrl;
     
 
-	
-	if([self isKindOfClass:[HFRMPViewController class]]) [(UISegmentedControl *)self.navigationItem.titleView setHidden:YES];
-
 	self.topicsTableView.contentOffset = CGPointMake(0, self.searchDisplayController.searchBar.frame.size.height);
 	
 	//NSLog(@"%f", self.searchDisplayController.searchBar.frame.size.height);
