@@ -81,8 +81,7 @@
 	NSString *display = [defaults stringForKey:@"display_images"];
 	
     //NSLog(@"display %@", display);
-   
-    myRawContent = [myRawContent stringByReplacingOccurrencesOfString:@"hfr-rehost.dev.syn.fr" withString:@"reho.st"]; // changement de domaine hfr-rehost
+    
     myRawContent = [myRawContent stringByReplacingOccurrencesOfString:@"hfr-rehost.net" withString:@"reho.st"]; // changement de domaine hfr-rehost
     
 	if ([display isEqualToString:@"no"]) {
