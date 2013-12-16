@@ -339,6 +339,9 @@
 		CA4AA6DD15B2553C00E53A1F /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA4AA6DC15B2553C00E53A1F /* CoreText.framework */; };
 		CA4CE81515B185CA0039FC3B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CA4CE81415B185CA0039FC3B /* libz.dylib */; };
 		CA4CE89215B1B30B0039FC3B /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA4CE89115B1B30B0039FC3B /* ImageIO.framework */; };
+		CA63F389185E09B20092E9F9 /* RehostImage.m in Sources */ = {isa = PBXBuildFile; fileRef = CA63F388185E09B20092E9F9 /* RehostImage.m */; };
+		CA63F38C185EC1220092E9F9 /* RehostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CA63F38B185EC1220092E9F9 /* RehostCell.m */; };
+		CA63F38E185EC18B0092E9F9 /* RehostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA63F38D185EC18B0092E9F9 /* RehostCell.xib */; };
 		CA7472D217E1262F00B45E15 /* avatar_male_gray_on_light_48x48@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7472D117E1262E00B45E15 /* avatar_male_gray_on_light_48x48@2x.png */; };
 		CA7472D817E14D4500B45E15 /* ToolBarPlay_off.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7472D417E14D4500B45E15 /* ToolBarPlay_off.png */; };
 		CA7472D917E14D4500B45E15 /* ToolBarPlay_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7472D517E14D4500B45E15 /* ToolBarPlay_off@2x.png */; };
@@ -830,6 +833,11 @@
 		CA4AA6DC15B2553C00E53A1F /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		CA4CE81415B185CA0039FC3B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		CA4CE89115B1B30B0039FC3B /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		CA63F387185E09B20092E9F9 /* RehostImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RehostImage.h; sourceTree = "<group>"; };
+		CA63F388185E09B20092E9F9 /* RehostImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RehostImage.m; sourceTree = "<group>"; };
+		CA63F38A185EC1220092E9F9 /* RehostCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RehostCell.h; sourceTree = "<group>"; };
+		CA63F38B185EC1220092E9F9 /* RehostCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RehostCell.m; sourceTree = "<group>"; };
+		CA63F38D185EC18B0092E9F9 /* RehostCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RehostCell.xib; sourceTree = "<group>"; };
 		CA7472D117E1262E00B45E15 /* avatar_male_gray_on_light_48x48@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatar_male_gray_on_light_48x48@2x.png"; sourceTree = "<group>"; };
 		CA7472D417E14D4500B45E15 /* ToolBarPlay_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ToolBarPlay_off.png; sourceTree = "<group>"; };
 		CA7472D517E14D4500B45E15 /* ToolBarPlay_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ToolBarPlay_off@2x.png"; sourceTree = "<group>"; };
@@ -1775,6 +1783,11 @@
 		CABB3127121EF3B0009CE100 /* Forms */ = {
 			isa = PBXGroup;
 			children = (
+				CA63F387185E09B20092E9F9 /* RehostImage.h */,
+				CA63F388185E09B20092E9F9 /* RehostImage.m */,
+				CA63F38A185EC1220092E9F9 /* RehostCell.h */,
+				CA63F38B185EC1220092E9F9 /* RehostCell.m */,
+				CA63F38D185EC18B0092E9F9 /* RehostCell.xib */,
 				013F0E9F121E117900BEBEB1 /* AddMessageViewController.h */,
 				013F0EA0121E117900BEBEB1 /* AddMessageViewController.m */,
 				013F0EA1121E117900BEBEB1 /* QuoteMessageViewController.h */,
@@ -2103,6 +2116,7 @@
 				CA1070BF15A4DA1E002E6C19 /* Localizable.strings in Resources */,
 				CA00C61F17C30C370067B457 /* bounce.gif in Resources */,
 				CA00C61817C30C370067B457 /* multipleflag0.gif in Resources */,
+				CA63F38E185EC18B0092E9F9 /* RehostCell.xib in Resources */,
 				CA45B60915B89F4F00380CA0 /* README.md in Resources */,
 				CA00C61E17C30C370067B457 /* biggrin.gif in Resources */,
 				CA00C6BA17C30C370067B457 /* buttonbeginon.png in Resources */,
@@ -2178,6 +2192,7 @@
 				CA00C3B617C2FDB00067B457 /* MWTapDetectingImageView.m in Sources */,
 				013F0EAE121E117900BEBEB1 /* MessageDetailViewController.m in Sources */,
 				013F0EB0121E117900BEBEB1 /* ParseMessagesOperation.m in Sources */,
+				CA63F389185E09B20092E9F9 /* RehostImage.m in Sources */,
 				CA00C3EE17C2FE1B0067B457 /* IASKSpecifier.m in Sources */,
 				CA00C44F17C2FF4E0067B457 /* MKStoreObserver.m in Sources */,
 				013F0EB1121E117900BEBEB1 /* AddMessageViewController.m in Sources */,
@@ -2185,6 +2200,7 @@
 				013F0EB2121E117900BEBEB1 /* QuoteMessageViewController.m in Sources */,
 				CA00C41F17C2FE240067B457 /* UIButton+WebCache.m in Sources */,
 				CA81D28D12281D5800AC6ADA /* EditMessageViewController.m in Sources */,
+				CA63F38C185EC1220092E9F9 /* RehostCell.m in Sources */,
 				CA00C3EF17C2FE1B0067B457 /* IASKPSSliderSpecifierViewCell.m in Sources */,
 				CA9E82791243650F000EE882 /* PhotoViewController.m in Sources */,
 				CA00C44E17C2FF4E0067B457 /* MKStoreManager.m in Sources */,

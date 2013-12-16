@@ -619,7 +619,9 @@
         subCatTableViewController.suPicker = myPickerView;
         subCatTableViewController.arrayData = pickerViewArray;
         subCatTableViewController.notification = @"CatSelected";
-
+        
+        self.popover = nil;
+        
         self.popover = [[[UIPopoverController alloc] initWithContentViewController:subCatTableViewController] autorelease];
         
         [_popover presentPopoverFromRect:[(UIButton *)sender frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];

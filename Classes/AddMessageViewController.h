@@ -11,7 +11,7 @@
 
 @protocol AddMessageViewControllerDelegate;
 
-@interface AddMessageViewController : UIViewController <UITextViewDelegate, UITextFieldDelegate, UIWebViewDelegate> {
+@interface AddMessageViewController : UIViewController <UITextViewDelegate, UITextFieldDelegate, UIWebViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
 	id <AddMessageViewControllerDelegate> delegate;
 	
 	//bb
@@ -41,6 +41,11 @@
     
     NSString *smileyCustom;
 	
+    //HFR REHOST
+    UITableView *rehostTableView;
+    NSMutableArray *rehostImagesArray;
+    NSMutableArray* rehostImagesSortedArray;
+    
 	BOOL haveTitle;
 	UITextField *textFieldTitle;
 
@@ -88,6 +93,10 @@
 @property (nonatomic, retain) IBOutlet UITableView *commonTableView;
 @property (nonatomic, retain) NSMutableDictionary *usedSearchDict;
 @property (nonatomic, retain) NSMutableArray *usedSearchSortedArray;
+
+@property (nonatomic, retain) IBOutlet UITableView *rehostTableView;
+@property (nonatomic, retain) NSMutableArray *rehostImagesArray;
+@property (nonatomic, retain) NSMutableArray *rehostImagesSortedArray;
 
 //@property (nonatomic, retain) IBOutlet UIScrollView *scrollViewer;
 @property (nonatomic, retain) id popover;
