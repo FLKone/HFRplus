@@ -50,13 +50,22 @@
 
     NSLog(@"didFinishLaunchingWithOptions");
 
-    
-    [TestFlight takeOff:kTestFlightAPI];
-    
+        
 	//self.hash_check = [[NSString alloc] init];
 	
-	[MKStoreManager sharedManager];
-	    
+    
+    NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+    if ([bundleIdentifier isEqualToString:@"hfrplus.red"]) {
+        [TestFlight takeOff:kTestFlightAPIRE];
+
+    }
+    else
+    {
+        [TestFlight takeOff:kTestFlightAPI];
+        [MKStoreManager sharedManager];
+
+    }
+	   
     [self registerDefaultsFromSettingsBundle];
     
     //UserAgent
