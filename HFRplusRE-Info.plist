@@ -5,15 +5,15 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>fr_FR</string>
 	<key>CFBundleDisplayName</key>
-	<string>HFR+</string>
+	<string>:o</string>
 	<key>CFBundleExecutable</key>
-	<string>HFRplus</string>
+	<string>HFRplusRED</string>
 	<key>CFBundleIdentifier</key>
-	<string>hfrplus</string>
+	<string>hfrplus.red</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>HFRplus</string>
+	<string>HFRplusRED</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
