@@ -53,6 +53,8 @@
         
         [btn2 setSelected:NO];
         //[btn2 setHighlighted:NO];
+        
+        [self.navigationItem.rightBarButtonItem setEnabled:YES];
     }
     else {
         self.showAll = YES;
@@ -61,12 +63,25 @@
         
         [btn2 setSelected:YES];
         //[btn2 setHighlighted:YES];
+        
+        [self.navigationItem.rightBarButtonItem setEnabled:NO];
+
+    }
+
+    if(self.status == kNoResults)
+    {
+        if (self.showAll) {
+            [self.favoritesTableView setHidden:NO];
+            [self.maintenanceView setHidden:YES];
+        }
+        else {
+            [self.favoritesTableView setHidden:YES];
+            [self.maintenanceView setHidden:NO];
+        }
     }
     
     if (![self.favoritesTableView isHidden]) {
-//        [self.favoritesTableView beginUpdates];
         [self.favoritesTableView reloadData];
-//        [self.favoritesTableView endUpdates];
     }
     
 }
@@ -137,19 +152,24 @@
 	
 	[self loadDataInTableView:[request responseData]];
 	
-	[self.loadingView setHidden:YES];	
-    
+	[self.loadingView setHidden:YES];
+
 	switch (self.status) {
 		case kMaintenance:
 		case kNoResults:
-		case kNoAuth:            
-			[self.maintenanceView setText:self.statusMessage];
+		case kNoAuth:
+            [self.maintenanceView setText:self.statusMessage];
+
+            [self.loadingView setHidden:YES];
 			[self.maintenanceView setHidden:NO];
 			[self.favoritesTableView setHidden:YES];
 			break;
 		default:
-			[self.favoritesTableView reloadData];			
-			[self.favoritesTableView setHidden:NO];			
+            [self.favoritesTableView reloadData];
+
+            [self.loadingView setHidden:YES];
+            [self.maintenanceView setHidden:YES];
+			[self.favoritesTableView setHidden:NO];
 			break;
 	}
 	
@@ -164,7 +184,11 @@
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
     [segmentBarItem release];
 	
-	[self.loadingView setHidden:YES];
+    [self.maintenanceView setText:@"oops :o"];
+    
+    [self.loadingView setHidden:YES];
+    [self.maintenanceView setHidden:NO];
+    [self.favoritesTableView setHidden:YES];
 	
 	//NSLog(@"theRequest.error %@", theRequest.error);
 	
@@ -269,7 +293,7 @@
 			self.status = kMaintenance;
 			self.statusMessage = [[[bodyNode firstChild] contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 			[myParser release];
-			return;
+            return;
 		}
 		
 		NSLog(@"id");
@@ -306,8 +330,8 @@
 		//NSLog(@"Aucun nouveau message %d", self.arrayDataID.count);
 		self.status = kNoResults;
 		self.statusMessage = @"Aucun nouveau message";
-		[myParser release];
-		return;
+		//[myParser release];
+		//return;
 	}
 	
 	//hash_check
@@ -360,7 +384,11 @@
     }
     
 	[myParser release];
-	self.status = kComplete;
+	if (self.status != kNoResults) {
+        self.status = kComplete;
+    }
+    
+    //NSLog(@"self.arrayCategories %@", self.arrayCategories);
 
 }
 -(NSString*)wordAfterString:(NSString*)searchString inString:(NSString*)selfString
@@ -453,23 +481,7 @@
 - (void)viewDidLoad {
 	//NSLog(@"viewDidLoad ftv");
     [super viewDidLoad];
-	
 
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
-        //NSLog(@"%@", self.favoritesTableView.tableHeaderView);
-    }
-    else
-    {
-        self.favoritesTableView = nil;
-        self.favoritesTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-        self.favoritesTableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-        self.favoritesTableView.rowHeight = 50.0f;
-        
-        self.favoritesTableView.dataSource = self;
-        self.favoritesTableView.delegate = self;
-        [self.view addSubview:self.favoritesTableView];
-    }
-    
 	self.title = @"Vos Sujets";
     self.showAll = NO;
 
@@ -597,6 +609,9 @@
 	self.navigationItem.leftBarButtonItem = segmentBarItem2;
     [segmentBarItem2 release];
       */  
+    
+    //Supprime les lignes vides à la fin de la liste
+    self.favoritesTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     
 	[(ShakeView*)self.view setShakeDelegate:self];
@@ -740,100 +755,76 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
-        if (self.showAll) {
-            return 10;
-        }
-        else {
-            return 36.0f;
-        }
-
-    }
-    
+    //
     if (self.showAll) {
         return 0;
     }
     else {
         if ([[self.arrayNewData objectAtIndex:section] topics].count > 0) {
-            return 23;
+            return HEIGHT_FOR_HEADER_IN_SECTION;
         }
     }
     return 0;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7") || self.showAll) {
-        return nil;
-    }
-    
-	//NSLog(@"viewForHeaderInSection %d", section);
-	// create the parent view that will hold header Label
-    
-	UIView* customView = [[[UIView alloc] initWithFrame:CGRectMake(0,0,320,23)] autorelease];
-	customView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	
-	// create the label objects
-	UILabel *headerLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
-	headerLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	
-	headerLabel.font = [UIFont boldSystemFontOfSize:15]; //18
-	headerLabel.frame = CGRectMake(10,0,249,23);
-	headerLabel.textColor = [UIColor whiteColor];
-	headerLabel.backgroundColor = [UIColor clearColor];
-	headerLabel.shadowColor = [UIColor darkGrayColor];
-	headerLabel.shadowOffset = CGSizeMake(0.0, 1.0);
-	
 
-    //NSLog(@"%@", [[self.arrayNewData objectAtIndex:section] forum]);
+    //On récupère la section (forum)
     Forum *tmpForum = [[self.arrayNewData objectAtIndex:section] forum];
-	headerLabel.text = [tmpForum aTitle];
-												   
-	// create image object
-	UIImage *myImage = [UIImage imageNamed:@"bar2.png"];
+    CGFloat curWidth = self.view.frame.size.width;
     
-	// create the imageView with the image in it
-	UIImageView *imageView = [[[UIImageView alloc] initWithImage:myImage] autorelease];
-	imageView.alpha = 0.9;
-	imageView.frame = CGRectMake(0,0,320,23);
-	imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	
-	// create the imageView with the image in it
-	UIImageView *imageView2 = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrowR"]] autorelease];
-	imageView2.alpha = 1;
-	imageView2.frame = CGRectMake(295,5,15,15);
-	imageView2.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    
-	[customView addSubview:imageView];
-    
-    UIImage *backButton = [[UIImage imageNamed:@"arrowR"] scaleToSize:CGSizeMake(15, 15)];
-    
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 320, 23)];
-    [button setTag:[self.arrayCategories indexOfObject:[self.arrayNewData objectAtIndex:section]]];
-    [button setTitle:[tmpForum aTitle] forState:UIControlStateNormal];
-    [button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
-    if (self.showAll) {
-        [button setImage:backButton forState:UIControlStateNormal];
-        [button setTitleEdgeInsets:UIEdgeInsetsMake(0, -7, 0, 0)];
-        [button setImageEdgeInsets:UIEdgeInsetsMake(2, 297, 0, 0)]; 
+    //UIView globale
+	UIView* customView = [[[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,HEIGHT_FOR_HEADER_IN_SECTION)] autorelease];
+    customView.backgroundColor = [UIColor colorWithRed:239/255.0f green:239/255.0f blue:244/255.0f alpha:0.7];
+	customView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+
+	//UIImageView de fond
+    if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        UIImage *myImage = [UIImage imageNamed:@"bar2.png"];
+        UIImageView *imageView = [[[UIImageView alloc] initWithImage:myImage] autorelease];
+        imageView.alpha = 0.9;
+        imageView.frame = CGRectMake(0,0,curWidth,HEIGHT_FOR_HEADER_IN_SECTION);
+        imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        
+        [customView addSubview:imageView];
     }
     else {
-        [button setTitleEdgeInsets:UIEdgeInsetsMake(0, 8, 0, 0)];
+        //bordures/iOS7
+        UIView* borderView = [[[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,1/[[UIScreen mainScreen] scale])] autorelease];
+        borderView.backgroundColor = [UIColor colorWithRed:158/255.0f green:158/255.0f blue:114/162.0f alpha:0.7];
+        
+        //[customView addSubview:borderView];
+        
+        UIView* borderView2 = [[[UIView alloc] initWithFrame:CGRectMake(0,HEIGHT_FOR_HEADER_IN_SECTION-1/[[UIScreen mainScreen] scale],curWidth,1/[[UIScreen mainScreen] scale])] autorelease];
+        borderView2.backgroundColor = [UIColor colorWithRed:158/255.0f green:158/255.0f blue:114/162.0f alpha:0.7];
+        
+        //[customView addSubview:borderView2];
+        
     }
-    [button.titleLabel setFont:[UIFont boldSystemFontOfSize:15]]; //18
-    [button.titleLabel setShadowColor:[UIColor darkGrayColor]]; //18
-    [button.titleLabel setShadowOffset:CGSizeMake(0.0, 1.0)]; //18
+    
+    //UIButton clickable pour accéder à la catégorie
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, curWidth, HEIGHT_FOR_HEADER_IN_SECTION)];
+    [button setTag:[self.arrayCategories indexOfObject:[self.arrayNewData objectAtIndex:section]]];
+    [button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        [button setTitleColor:[UIColor colorWithRed:109/255.0f green:109/255.0f blue:114/255.0f alpha:1] forState:UIControlStateNormal];
+        [button setTitle:[[tmpForum aTitle] uppercaseString] forState:UIControlStateNormal];
+        [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        [button setTitleEdgeInsets:UIEdgeInsetsMake(10, 16, 0, 0)];
+    }
+    else
+    {
+        [button setTitleEdgeInsets:UIEdgeInsetsMake(0, 8, 0, 0)];
+        [button setTitle:[tmpForum aTitle] forState:UIControlStateNormal];
+        [button.titleLabel setFont:[UIFont boldSystemFontOfSize:15]];
+        [button.titleLabel setShadowColor:[UIColor darkGrayColor]];
+        [button.titleLabel setShadowOffset:CGSizeMake(0.0, 1.0)];
+    }
+    
     [button addTarget:self action:@selector(loadCatForType:) forControlEvents:UIControlEventTouchUpInside];
     
-    
     [customView addSubview:button];
-
-	//[customView addSubview:imageView2];
-    
-	//[customView addSubview:headerLabel];
-	
-	//if ([(UISegmentedControl *)[self.navigationItem.titleView.subviews objectAtIndex:0] selectedSegmentIndex] == 0) {
-	//	[customView addSubview:detailLabel];
-	//}
 	
 	return customView;
 	
@@ -864,15 +855,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // Return the number of rows in the section.
-	
-	//NSLog(@"Nb Dans la Section %d %d", section, [[[arrayDataID objectForKey:[arrayDataID2 objectAtIndex:section]] length] intValue]);
-	
-	
-	//return [arrayDataID objectForKey:[arrayDataID2 objectAtIndex:section]];
-	
-	//NSLog(@"numberOfRowsInSection %d %d", section, [[self.arrayNewData objectAtIndex:section] topics].count);
-	
+
     if (self.showAll) {
         return self.arrayCategories.count;
     }

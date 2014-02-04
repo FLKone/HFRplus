@@ -133,7 +133,9 @@
     //NSLog(@"2 displayImage BEGIN bounds.size %f - %f", self.bounds.size.width, self.bounds.size.height);
     
 	//NSLog(@"displayImage %@", image);
-	image = [image stringByReplacingOccurrencesOfString:@"http://hfr-rehost.net/thumb/" withString:@"http://hfr-rehost.net/preview/"];
+	image = [image stringByReplacingOccurrencesOfString:@"hfr-rehost.net" withString:@"reho.st"]; // changement de domaine hfr-rehost
+    
+	image = [image stringByReplacingOccurrencesOfString:@"reho.st/thumb/" withString:@"reho.st/preview/"];
     
     // clear the previous imageView
     [imageView removeFromSuperview];

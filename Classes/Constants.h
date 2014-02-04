@@ -36,6 +36,10 @@ typedef enum {
 	#define DEBUG_LOGS 0
 #endif
 
+#define REHOST_IMAGE_FILE @"rehostImages.plist"
+#define USED_SMILEYS_FILE @"usedSmilieys.plist"
+
+
 #define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
 #define SYSTEM_VERSION_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)
 #define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
@@ -46,3 +50,6 @@ typedef enum {
 #define kNewMessageFromShake    2
 #define kNewMessageFromEditor   3
 #define kNewMessageFromUnkwn    4
+
+// iOS7
+#define HEIGHT_FOR_HEADER_IN_SECTION              ((SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") ? 36.0f : 23.0f))

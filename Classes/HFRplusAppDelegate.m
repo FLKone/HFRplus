@@ -50,14 +50,30 @@
 
     NSLog(@"didFinishLaunchingWithOptions");
 
-    
-    [TestFlight takeOff:kTestFlightAPI];
-    
+        
 	//self.hash_check = [[NSString alloc] init];
 	
-	[MKStoreManager sharedManager];
-	    
+    
+    NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+    if ([bundleIdentifier isEqualToString:@"hfrplus.red"]) {
+        [TestFlight takeOff:kTestFlightAPIRE];
+
+    }
+    else
+    {
+        [TestFlight takeOff:kTestFlightAPI];
+        [MKStoreManager sharedManager];
+
+    }
+	   
     [self registerDefaultsFromSettingsBundle];
+    
+    //UserAgent
+    NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                @"Mozilla/5.0 (HFRplus) AppleWebKit (KHTML, like Gecko)",
+                                @"UserAgent", nil];
+    
+    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
     
 	// Override point for customization after application launch.
 	    

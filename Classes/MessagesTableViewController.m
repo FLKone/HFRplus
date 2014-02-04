@@ -1049,12 +1049,12 @@
     
 	for (HTMLNode * imgNode in tmpImageArray) { //Loop through all the tags
 		//NSLog(@"======\nalt %@", [imgNode getAttributeNamed:@"alt"]);
-		//NSLog(@"longdesc %@", [imgNode getAttributeNamed:@"longdesc"]);		
+        //NSLog(@"longdesc %@", [imgNode getAttributeNamed:@"longdesc"]);
         
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-            [imageArray addObject:[MWPhoto photoWithURL:[NSURL URLWithString:[[imgNode getAttributeNamed:@"alt"] stringByReplacingOccurrencesOfString:@"http://hfr-rehost.net/thumb/" withString:@"http://hfr-rehost.net/"]]]];
+            [imageArray addObject:[MWPhoto photoWithURL:[NSURL URLWithString:[[imgNode getAttributeNamed:@"alt"] stringByReplacingOccurrencesOfString:@"reho.st/thumb/" withString:@"reho.st/"]]]];
         else
-            [imageArray addObject:[MWPhoto photoWithURL:[NSURL URLWithString:[[imgNode getAttributeNamed:@"alt"] stringByReplacingOccurrencesOfString:@"http://hfr-rehost.net/thumb/" withString:@"http://hfr-rehost.net/preview/"]]]];
+            [imageArray addObject:[MWPhoto photoWithURL:[NSURL URLWithString:[[imgNode getAttributeNamed:@"alt"] stringByReplacingOccurrencesOfString:@"reho.st/thumb/" withString:@"reho.st/preview/"]]]];
             
             
         if ([selectedURL isEqualToString:[imgNode getAttributeNamed:@"alt"]]) {
@@ -1076,10 +1076,9 @@
 	// The new view controller configures a Cancel and Done button for the
 	// navigation bar.
 	
-	//selectedURL = [selectedURL stringByReplacingOccurrencesOfString:@"http://hfr-rehost.net/preview/" withString:@"http://hfr-rehost.net/"];
+
 	
     /*
-    selectedURL = [selectedURL stringByReplacingOccurrencesOfString:@"http://hfr-rehost.net/thumb/" withString:@"http://hfr-rehost.net/preview/"];
 
     
     PhotoViewController *photoViewController;

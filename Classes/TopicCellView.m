@@ -17,7 +17,6 @@
 
 
 - (void)awakeFromNib {
-    NSLog(@"awakeFromNibawakeFromNibawakeFromNib");
     
     [super awakeFromNib];
     

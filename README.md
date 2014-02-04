@@ -15,13 +15,10 @@ Roadmap
     <th>Version</th><th>Type</th><th>Sortie</th>
   </tr>
 <tr>
-    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=12&page=1&sort=created&state=open">1.7</a></td><td>Fonctionnalités</td><td>2013</td>
+    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=16&page=1&sort=created&state=open">1.7.2</a></td><td>Fonctionnalités</td><td>2014</td>
   </tr>
 <tr>
-    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=13&page=1&sort=created&state=open">1.7.1</a></td><td>UI</td><td>2013</td>
-  </tr>
-<tr>
-    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=9&page=1&sort=created&state=open">1.8</a></td><td>Fonctionnalités avancées</td><td>2013</td>
+    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=9&page=1&sort=created&state=open">1.8</a></td><td>Fonctionnalités avancées</td><td>2014</td>
   </tr>   
 </table>
 
