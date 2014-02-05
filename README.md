@@ -15,10 +15,10 @@ Roadmap
     <th>Version</th><th>Type</th><th>Sortie</th>
   </tr>
 <tr>
-    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=16&page=1&sort=created&state=open">1.7.2</a></td><td>Fonctionnalités</td><td>2014</td>
+    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=16&page=1&sort=created&state=open">1.7.2</a></td><td>Fonctionnalités</td><td>early-2014</td>
   </tr>
 <tr>
-    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=9&page=1&sort=created&state=open">1.8</a></td><td>Fonctionnalités avancées</td><td>2014</td>
+    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=17&page=1&sort=created&state=open">x.0</a></td><td>Fonctionnalités avancées</td><td>TBD</td>
   </tr>   
 </table>
 
@@ -38,6 +38,7 @@ Un fichier config.h est nécessaire (dans le répertoire HFRplus) :
 #define HFRplus_config_h
 
 static NSString *const kTestFlightAPI = @"TestFlight API Key";
+static NSString *const kTestFlightAPIRE = @"TestFlight API Key (used for REDFACE Edition)";
 static NSString *const kGoogleCSEAPI = @"Google Custom Search Engine API Key";
 
 #endif
