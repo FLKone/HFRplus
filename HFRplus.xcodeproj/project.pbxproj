@@ -339,6 +339,10 @@
 		CA4AA6DD15B2553C00E53A1F /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA4AA6DC15B2553C00E53A1F /* CoreText.framework */; };
 		CA4CE81515B185CA0039FC3B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CA4CE81415B185CA0039FC3B /* libz.dylib */; };
 		CA4CE89215B1B30B0039FC3B /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA4CE89115B1B30B0039FC3B /* ImageIO.framework */; };
+		CA5E109518AC2A4F00C481A9 /* PollTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E109318AC2A4F00C481A9 /* PollTableViewController.m */; };
+		CA5E109618AC2A4F00C481A9 /* PollTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E109318AC2A4F00C481A9 /* PollTableViewController.m */; };
+		CA5E109718AC2A4F00C481A9 /* PollTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA5E109418AC2A4F00C481A9 /* PollTableViewController.xib */; };
+		CA5E109818AC2A4F00C481A9 /* PollTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA5E109418AC2A4F00C481A9 /* PollTableViewController.xib */; };
 		CA63F389185E09B20092E9F9 /* RehostImage.m in Sources */ = {isa = PBXBuildFile; fileRef = CA63F388185E09B20092E9F9 /* RehostImage.m */; };
 		CA63F38C185EC1220092E9F9 /* RehostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CA63F38B185EC1220092E9F9 /* RehostCell.m */; };
 		CA63F38E185EC18B0092E9F9 /* RehostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA63F38D185EC18B0092E9F9 /* RehostCell.xib */; };
@@ -1225,6 +1229,9 @@
 		CA4AA6DC15B2553C00E53A1F /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		CA4CE81415B185CA0039FC3B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		CA4CE89115B1B30B0039FC3B /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		CA5E109218AC2A4F00C481A9 /* PollTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PollTableViewController.h; sourceTree = "<group>"; };
+		CA5E109318AC2A4F00C481A9 /* PollTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PollTableViewController.m; sourceTree = "<group>"; };
+		CA5E109418AC2A4F00C481A9 /* PollTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PollTableViewController.xib; sourceTree = "<group>"; };
 		CA63F387185E09B20092E9F9 /* RehostImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RehostImage.h; sourceTree = "<group>"; };
 		CA63F388185E09B20092E9F9 /* RehostImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RehostImage.m; sourceTree = "<group>"; };
 		CA63F38A185EC1220092E9F9 /* RehostCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RehostCell.h; sourceTree = "<group>"; };
@@ -1367,6 +1374,7 @@
 			children = (
 				CABB3127121EF3B0009CE100 /* Forms */,
 				CA9E8275124364E8000EE882 /* PhotoViewer */,
+				CA5E109118AC290C00C481A9 /* Poll */,
 				013F0E95121E117800BEBEB1 /* LinkItem.h */,
 				013F0E96121E117800BEBEB1 /* LinkItem.m */,
 				013F0E97121E117800BEBEB1 /* MessagesTableViewController.h */,
@@ -2162,6 +2170,16 @@
 			name = inApp;
 			sourceTree = "<group>";
 		};
+		CA5E109118AC290C00C481A9 /* Poll */ = {
+			isa = PBXGroup;
+			children = (
+				CA5E109218AC2A4F00C481A9 /* PollTableViewController.h */,
+				CA5E109318AC2A4F00C481A9 /* PollTableViewController.m */,
+				CA5E109418AC2A4F00C481A9 /* PollTableViewController.xib */,
+			);
+			name = Poll;
+			sourceTree = "<group>";
+		};
 		CA7472D317E14D4500B45E15 /* iOS7 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2582,6 +2600,7 @@
 				CABC726717E60537003E722E /* down@2x.png in Resources */,
 				CA00C65617C30C370067B457 /* aide.html in Resources */,
 				CA00C61717C30C370067B457 /* multiplefavoris.gif in Resources */,
+				CA5E109718AC2A4F00C481A9 /* PollTableViewController.xib in Resources */,
 				CA00C6B917C30C370067B457 /* buttonbeginoff@2x.png in Resources */,
 				CA00C66217C30C370067B457 /* style-liste-retina.css in Resources */,
 				CA00C6BD17C30C370067B457 /* buttonendhover@2x.png in Resources */,
@@ -2865,6 +2884,7 @@
 				CA7C70AF185EF50E00B348BA /* down@2x.png in Resources */,
 				CA7C70B0185EF50E00B348BA /* aide.html in Resources */,
 				CA7C70B1185EF50E00B348BA /* multiplefavoris.gif in Resources */,
+				CA5E109818AC2A4F00C481A9 /* PollTableViewController.xib in Resources */,
 				CA7C70B2185EF50E00B348BA /* buttonbeginoff@2x.png in Resources */,
 				CA7C70B3185EF50E00B348BA /* style-liste-retina.css in Resources */,
 				CA7C70B4185EF50E00B348BA /* buttonendhover@2x.png in Resources */,
@@ -2960,6 +2980,7 @@
 				CA00C41E17C2FE240067B457 /* SDWebImagePrefetcher.m in Sources */,
 				CA00C3F117C2FE1B0067B457 /* IASKPSTitleValueSpecifierViewCell.m in Sources */,
 				CA00C3B817C2FDB00067B457 /* MWZoomingScrollView.m in Sources */,
+				CA5E109518AC2A4F00C481A9 /* PollTableViewController.m in Sources */,
 				CA00C3EC17C2FE1B0067B457 /* IASKSettingsStoreFile.m in Sources */,
 				CA00C3B717C2FDB00067B457 /* MWTapDetectingView.m in Sources */,
 				CA00C44617C2FF3F0067B457 /* Reachability.m in Sources */,
@@ -3066,6 +3087,7 @@
 				CA7C7105185EF50E00B348BA /* SDWebImagePrefetcher.m in Sources */,
 				CA7C7106185EF50E00B348BA /* IASKPSTitleValueSpecifierViewCell.m in Sources */,
 				CA7C7107185EF50E00B348BA /* MWZoomingScrollView.m in Sources */,
+				CA5E109618AC2A4F00C481A9 /* PollTableViewController.m in Sources */,
 				CA7C7108185EF50E00B348BA /* IASKSettingsStoreFile.m in Sources */,
 				CA7C7109185EF50E00B348BA /* MWTapDetectingView.m in Sources */,
 				CA7C710A185EF50E00B348BA /* Reachability.m in Sources */,

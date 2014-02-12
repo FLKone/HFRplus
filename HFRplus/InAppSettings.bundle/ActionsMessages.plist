@@ -78,6 +78,16 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
+			<string>Sondage</string>
+			<key>Key</key>
+			<string>actionsmesages_poll</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
 			<string>Marquer comme non lu</string>
 			<key>Key</key>
 			<string>actionsmesages_unread</string>

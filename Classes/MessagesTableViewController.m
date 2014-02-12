@@ -10,6 +10,8 @@
 #import "MessagesTableViewController.h"
 #import "MessageDetailViewController.h"
 #import "TopicsTableViewController.h"
+#import "PollTableViewController.h"
+
 
 #import "RegexKitLite.h"
 #import "HTMLParser.h"
@@ -25,6 +27,8 @@
 #import "HFRMenuItem.h"
 #import "LinkItem.h"
 #import <CommonCrypto/CommonDigest.h>
+
+
 
 @implementation MessagesTableViewController
 @synthesize loaded, isLoading, topicName, topicAnswerUrl, loadingView, messagesWebView, arrayData, updatedArrayData, detailViewController, messagesTableViewController;
@@ -664,6 +668,10 @@
     if(actionsmesages_bottompage) 
         [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Bas de la page", @"goToPagePositionBottom", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
     
+    BOOL actionsmesages_poll  = [defaults boolForKey:@"actionsmesages_poll"];
+    if(actionsmesages_poll)
+        [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Sondage", @"showPoll", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+    
     BOOL actionsmesages_unread      = [defaults boolForKey:@"actionsmesages_unread"];
     if(actionsmesages_unread && self.isUnreadable) 
         [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Marquer comme non lu", @"markUnread", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
@@ -723,7 +731,7 @@
     //NSLog(@"clickedButtonAtIndex %d", buttonIndex);
 
     if (buttonIndex < self.arrayActionsMessages.count) {
-        //NSLog(@"action %@", [self.arrayActionsMessages objectAtIndex:buttonIndex]);
+        NSLog(@"action %@", [self.arrayActionsMessages objectAtIndex:buttonIndex]);
         if ([self respondsToSelector:NSSelectorFromString([[self.arrayActionsMessages objectAtIndex:buttonIndex] objectForKey:@"code"])]) 
         {
             [self performSelector:NSSelectorFromString([[self.arrayActionsMessages objectAtIndex:buttonIndex] objectForKey:@"code"])];
@@ -736,6 +744,23 @@
 
 }
 
+-(void)showPoll {
+    PollTableViewController *pollVC = [[PollTableViewController alloc] init];
+    
+    // Set options
+    pollVC.wantsFullScreenLayout = YES; // Decide if you want the photo browser full screen, i.e. whether the status bar is affected (defaults to YES)
+
+    HFRNavigationController *nc = [[HFRNavigationController alloc] initWithRootViewController:pollVC];
+    nc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self presentModalViewController:nc animated:YES];
+    [nc release];
+    
+    
+    //[self.navigationController pushViewController:browser animated:YES];
+    
+    [pollVC release];
+    
+}
 
 -(void)markUnread {
     ASIHTTPRequest  *delrequest =  
