@@ -69,11 +69,13 @@
     [self registerDefaultsFromSettingsBundle];
     
     //UserAgent
+    /*
     NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:
                                 @"Mozilla/5.0 (HFRplus) AppleWebKit (KHTML, like Gecko)",
                                 @"UserAgent", nil];
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
+    */
     
 	// Override point for customization after application launch.
 	    
