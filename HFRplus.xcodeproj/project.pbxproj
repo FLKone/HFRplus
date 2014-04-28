@@ -791,6 +791,10 @@
 		CABC727717E6077A003E722E /* upsmall7.png in Resources */ = {isa = PBXBuildFile; fileRef = CABC727317E6077A003E722E /* upsmall7.png */; };
 		CABC727817E6077A003E722E /* upsmall7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CABC727417E6077A003E722E /* upsmall7@2x.png */; };
 		CAC4966915B77357009128BC /* HFRNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAC4966815B77357009128BC /* HFRNavigationController.m */; };
+		CAC7FCD0190DBD450083BB4E /* PollResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CAC7FCCE190DBD450083BB4E /* PollResultTableViewCell.m */; };
+		CAC7FCD1190DBD450083BB4E /* PollResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CAC7FCCE190DBD450083BB4E /* PollResultTableViewCell.m */; };
+		CAC7FCD2190DBD450083BB4E /* PollResultTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAC7FCCF190DBD450083BB4E /* PollResultTableViewCell.xib */; };
+		CAC7FCD3190DBD450083BB4E /* PollResultTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAC7FCCF190DBD450083BB4E /* PollResultTableViewCell.xib */; };
 		CAF03C561245612800897C3B /* AccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAF03C551245612800897C3B /* AccessoryView.xib */; };
 		CAF6C0121607B62300B4B70C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAF6C0111607B62300B4B70C /* CoreData.framework */; };
 		CAFD004315B9B665003CA3FC /* HFRDebugViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAFD004115B9B665003CA3FC /* HFRDebugViewController.m */; };
@@ -1310,6 +1314,9 @@
 		CAC4966715B77357009128BC /* HFRNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFRNavigationController.h; sourceTree = "<group>"; };
 		CAC4966815B77357009128BC /* HFRNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HFRNavigationController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CAC593C115A63F5100913CFB /* HFRplus.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = HFRplus.entitlements; sourceTree = "<group>"; };
+		CAC7FCCD190DBD450083BB4E /* PollResultTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PollResultTableViewCell.h; sourceTree = "<group>"; };
+		CAC7FCCE190DBD450083BB4E /* PollResultTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PollResultTableViewCell.m; sourceTree = "<group>"; };
+		CAC7FCCF190DBD450083BB4E /* PollResultTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PollResultTableViewCell.xib; sourceTree = "<group>"; };
 		CAF03C551245612800897C3B /* AccessoryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccessoryView.xib; sourceTree = "<group>"; };
 		CAF6C0111607B62300B4B70C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		CAFD004015B9B665003CA3FC /* HFRDebugViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFRDebugViewController.h; sourceTree = "<group>"; };
@@ -2176,6 +2183,9 @@
 				CA5E109218AC2A4F00C481A9 /* PollTableViewController.h */,
 				CA5E109318AC2A4F00C481A9 /* PollTableViewController.m */,
 				CA5E109418AC2A4F00C481A9 /* PollTableViewController.xib */,
+				CAC7FCCD190DBD450083BB4E /* PollResultTableViewCell.h */,
+				CAC7FCCE190DBD450083BB4E /* PollResultTableViewCell.m */,
+				CAC7FCCF190DBD450083BB4E /* PollResultTableViewCell.xib */,
 			);
 			name = Poll;
 			sourceTree = "<group>";
@@ -2496,6 +2506,7 @@
 				CABC727017E605E5003E722E /* upsmall@2x.png in Resources */,
 				CA00C6C117C30C370067B457 /* buttonendon@2x.png in Resources */,
 				CA00C68F17C30C370067B457 /* 44-shoebox@2x.png in Resources */,
+				CAC7FCD2190DBD450083BB4E /* PollResultTableViewCell.xib in Resources */,
 				CA00C67817C30C370067B457 /* 06-magnify@2x.png in Resources */,
 				CA00C64517C30C370067B457 /* pfff.gif in Resources */,
 				CA7472F217E15FE300B45E15 /* ToolBarPrevious_on.png in Resources */,
@@ -2780,6 +2791,7 @@
 				CA7C7047185EF50E00B348BA /* upsmall@2x.png in Resources */,
 				CA7C7048185EF50E00B348BA /* buttonendon@2x.png in Resources */,
 				CA7C7049185EF50E00B348BA /* 44-shoebox@2x.png in Resources */,
+				CAC7FCD3190DBD450083BB4E /* PollResultTableViewCell.xib in Resources */,
 				CA7C704A185EF50E00B348BA /* 06-magnify@2x.png in Resources */,
 				CA7C704B185EF50E00B348BA /* pfff.gif in Resources */,
 				CA7C704C185EF50E00B348BA /* ToolBarPrevious_on.png in Resources */,
@@ -2997,6 +3009,7 @@
 				CA00C3E917C2FE1B0067B457 /* IASKSpecifierValuesViewController.m in Sources */,
 				CA00C3E817C2FE1B0067B457 /* IASKAppSettingsWebViewController.m in Sources */,
 				CA00C46D17C302610067B457 /* NSDictionary+Merging.m in Sources */,
+				CAC7FCD0190DBD450083BB4E /* PollResultTableViewCell.m in Sources */,
 				CA00C41A17C2FE240067B457 /* SDImageCache.m in Sources */,
 				CA00C46C17C302610067B457 /* AKSingleSegmentedControl.m in Sources */,
 				CA00C3F017C2FE1B0067B457 /* IASKPSTextFieldSpecifierViewCell.m in Sources */,
@@ -3104,6 +3117,7 @@
 				CA7C7115185EF50E00B348BA /* IASKSpecifierValuesViewController.m in Sources */,
 				CA7C7116185EF50E00B348BA /* IASKAppSettingsWebViewController.m in Sources */,
 				CA7C7117185EF50E00B348BA /* NSDictionary+Merging.m in Sources */,
+				CAC7FCD1190DBD450083BB4E /* PollResultTableViewCell.m in Sources */,
 				CA7C7118185EF50E00B348BA /* SDImageCache.m in Sources */,
 				CA7C7119185EF50E00B348BA /* AKSingleSegmentedControl.m in Sources */,
 				CA7C711A185EF50E00B348BA /* IASKPSTextFieldSpecifierViewCell.m in Sources */,

@@ -31,7 +31,7 @@
 
 
 @implementation MessagesTableViewController
-@synthesize loaded, isLoading, topicName, topicAnswerUrl, loadingView, messagesWebView, arrayData, updatedArrayData, detailViewController, messagesTableViewController;
+@synthesize loaded, isLoading, topicName, topicAnswerUrl, loadingView, messagesWebView, arrayData, updatedArrayData, detailViewController, messagesTableViewController, pollNode;
 @synthesize swipeLeftRecognizer, swipeRightRecognizer, overview, arrayActionsMessages;
 
 @synthesize queue; //v3
@@ -407,8 +407,24 @@
 		self.aToolbar = nil;
 	}
 	//NSLog(@"Fin setupPageToolbar");
-	
+
 	//--Pages
+}
+
+-(void)setupPoll:(HTMLNode *)bodyNode andP:(HTMLParser *)myParser {
+    NSLog(@"setupPoll");
+	HTMLNode * tmpPollNode = [[bodyNode findChildWithAttribute:@"class" matchingName:@"sondage" allowPartial:NO] retain];
+	if(tmpPollNode)
+    {
+        NSLog(@"POPOLL");
+        [self setPollNode:rawContentsOfNode([tmpPollNode _node], [myParser _doc])];
+    
+    }
+    else {
+        NSLog(@"POD'POLL");
+        self.pollNode = nil;
+    }
+    
 }
 
 -(void)loadDataInTableView:(HTMLParser *)myParser
@@ -449,12 +465,14 @@
 	//form to fast answer
 	[self setupFastAnswer:bodyNode];
 
+    //prep' Poll view
+	[self setupPoll:bodyNode andP:myParser];
+    
 	//if(topicAnswerUrl.length > 0) 
 	//-	
 
-	//--Pages	
+	//--Pages
 	[self setupPageToolbar:bodyNode andP:myParser];
-
     self.navigationItem.rightBarButtonItem.enabled = YES;
 
 	
@@ -514,7 +532,7 @@
 }
 
 - (void)viewDidLoad {
-	//NSLog(@"viewDidLoad");
+	NSLog(@"viewDidLoad");
 
     [super viewDidLoad];
 	self.isAnimating = NO;
@@ -636,7 +654,8 @@
 
 
 -(void)optionsTopic:(id)sender
-{	
+{
+    
     [self.arrayActionsMessages removeAllObjects];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -669,7 +688,7 @@
         [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Bas de la page", @"goToPagePositionBottom", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
     
     BOOL actionsmesages_poll  = [defaults boolForKey:@"actionsmesages_poll"];
-    if(actionsmesages_poll)
+    if(actionsmesages_poll && self.pollNode)
         [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Sondage", @"showPoll", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
     
     BOOL actionsmesages_unread      = [defaults boolForKey:@"actionsmesages_unread"];
@@ -745,7 +764,9 @@
 }
 
 -(void)showPoll {
-    PollTableViewController *pollVC = [[PollTableViewController alloc] init];
+    
+    PollTableViewController *pollVC = [[PollTableViewController alloc] initWithPollNode:self.pollNode];
+    pollVC.delegate = self;
     
     // Set options
     pollVC.wantsFullScreenLayout = YES; // Decide if you want the photo browser full screen, i.e. whether the status bar is affected (defaults to YES)
@@ -2115,6 +2136,8 @@
 	self.topicAnswerUrl = nil;
 	self.topicName = nil;
 	
+    self.pollNode = nil;
+    
 	//[self.arrayData removeAllObjects];
 	[self.arrayData release], self.arrayData = nil;
 	[self.updatedArrayData release], self.updatedArrayData = nil;

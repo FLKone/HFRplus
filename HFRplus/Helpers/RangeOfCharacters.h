@@ -34,5 +34,6 @@
 -(NSString*)wordAfterString:(NSString*)searchString;
 
 - (NSString*)removeEmoji;
+- (NSString *)stripHTML;
 
 @end

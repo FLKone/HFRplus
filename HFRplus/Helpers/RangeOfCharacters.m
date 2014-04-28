@@ -327,5 +327,13 @@ finish:
     return temp;
 }
 
+- (NSString *)stripHTML
+{
+    NSRange range;
+    NSString *str = [self copy];
+    while ((range = [str rangeOfString:@"<[^>]+>" options:NSRegularExpressionSearch]).location != NSNotFound)
+        str = [str stringByReplacingCharactersInRange:range withString:@""];
+    return str;
+}
 
 @end

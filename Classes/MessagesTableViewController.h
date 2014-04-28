@@ -78,7 +78,10 @@
 
 	NSDate *firstDate;
     
-    UIActionSheet *styleAlert;    
+    UIActionSheet *styleAlert;
+    
+    //Poll
+    NSString *pollNode;
 }
 
 
@@ -125,6 +128,9 @@
 
 @property BOOL isAnimating;
 
+@property (nonatomic, retain) NSString *pollNode;
+
+
 @property (retain, nonatomic) NSMutableArray *arrayActionsMessages;
 
 
@@ -143,6 +149,7 @@
 
 -(void)setupFastAnswer:(HTMLNode *)bodyNode;
 -(void)setupPageToolbar:(HTMLNode *)bodyNode andP:(HTMLParser *)myParser;
+-(void)setupPoll:(HTMLNode *)bodyNode andP:(HTMLParser *)myParser;
 
 -(void)searchNewMessages:(int)from;
 -(void)searchNewMessages;
