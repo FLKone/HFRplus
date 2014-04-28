@@ -776,6 +776,7 @@
 -(void)OrientationChanged
 {
     if (self.topicActionSheet) {
+        
         [self.topicActionSheet dismissWithClickedButtonIndex:[self.topicActionSheet cancelButtonIndex] animated:YES];
     }
 }
@@ -787,7 +788,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(OrientationChanged)
-                                                 name:@"UIDeviceOrientationDidChangeNotification"
+                                                 name:UIApplicationDidChangeStatusBarOrientationNotification
                                                object:nil];
     
 	//Gesture
@@ -1909,7 +1910,7 @@
 	[self viewDidUnload];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"SubCatSelected" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UIDeviceOrientationDidChangeNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
 
 	[request cancel];
 	[request setDelegate:nil];

@@ -103,7 +103,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(OrientationChanged)
-                                                 name:@"UIDeviceOrientationDidChangeNotification"
+                                                 name:UIApplicationDidChangeStatusBarOrientationNotification
                                                object:nil];
     
 	self.title = @"Recherche";
@@ -572,7 +572,7 @@
     [stories dealloc];	
 	[disableViewOverlay dealloc];
 
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UIDeviceOrientationDidChangeNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
 
     self.pressedIndexPath = nil;
     self.topicActionSheet = nil;

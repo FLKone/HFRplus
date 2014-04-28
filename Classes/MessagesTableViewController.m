@@ -938,9 +938,6 @@
     [super viewWillAppear:animated];
 	[self.view becomeFirstResponder];
 
-	//[[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedRotate:) name:UIDeviceOrientationDidChangeNotification object:nil];
-	
 	
 	if(self.detailViewController) self.detailViewController = nil;
 	if(self.messagesTableViewController) self.messagesTableViewController = nil;
