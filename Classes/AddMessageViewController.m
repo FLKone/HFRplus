@@ -944,6 +944,9 @@
     [text release];
 	
 	[self cancel];
+    
+    [self textViewDidChange:self.textView];
+
 }
 
 
