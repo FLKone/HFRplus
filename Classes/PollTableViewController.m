@@ -186,59 +186,7 @@
     
     [self.navigationItem.rightBarButtonItem setEnabled:NO];
     
-    // Get the text so we can measure it
-    NSString *text = self.stringFooter;
-    // Get a CGSize for the width and, effectively, unlimited height
-    CGSize constraint = CGSizeMake(self.view.frame.size.width - (15 * 2), 20000.0f);
-    // Get the size of the text given the CGSize we just made as a constraint
-    CGSize size = [text sizeWithFont:[UIFont boldSystemFontOfSize:11] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
-    // Get the height of our measurement, with a minimum of 44 (standard cell size)
-    CGFloat height = MAX(size.height, 25.0f) + 10;
-    // return the height, with a bit of extra padding in
-    //NSLog(@"height %f - %@", height, NSStringFromCGSize(constraint));
-    
-    UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, height)];
-    v.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    v.backgroundColor = [UIColor clearColor];
-    
-    UILabel* titleLabel = [[[UILabel alloc] initWithFrame:CGRectMake(15, 0, self.view.frame.size.width - 30, height)] autorelease];
-    [titleLabel setText:text];
-    [titleLabel setNumberOfLines:0];
-    [titleLabel setFont:[UIFont boldSystemFontOfSize:11]];
-    
-    [v addSubview:titleLabel];
-    
-    [self.tableViewPoll setTableFooterView:v];
-    //[self.tableView setTableHeaderView:v];
-    [v release];
-    
-    // Get the text so we can measure it
-    NSString *text2 = self.stringQuestion;
-    // Get a CGSize for the width and, effectively, unlimited height
-    CGSize constraint2 = CGSizeMake(self.view.frame.size.width - (15 * 2), 20000.0f);
-    // Get the size of the text given the CGSize we just made as a constraint
-    CGSize size2 = [text2 sizeWithFont:[UIFont boldSystemFontOfSize:13] constrainedToSize:constraint2 lineBreakMode:NSLineBreakByWordWrapping];
-    // Get the height of our measurement, with a minimum of 44 (standard cell size)
-    CGFloat height2 = MAX(size2.height, 25.0f) + 10;
-    // return the height, with a bit of extra padding in
-    //NSLog(@"height %f - %@", height, NSStringFromCGSize(constraint));
-    
-    UIView *v2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, height2)];
-    v2.backgroundColor = [UIColor colorWithRed:239/255.0f green:239/255.0f blue:244/255.0f alpha:0.7];
-    
-    v2.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    //    v2.backgroundColor = [UIColor clearColor];
-    
-    UILabel* titleLabel2 = [[[UILabel alloc] initWithFrame:CGRectMake(15, 0, self.view.frame.size.width - 30, height2)] autorelease];
-    [titleLabel2 setText:text2];
-    [titleLabel2 setNumberOfLines:0];
-    [titleLabel2 setFont:[UIFont boldSystemFontOfSize:13]];
-    
-    [v2 addSubview:titleLabel2];
-    
-    [self.tableViewPoll setTableHeaderView:v2];
-    //[self.tableView setTableHeaderView:v];
-    [v2 release];
+
 }
 
 #pragma mark -
@@ -289,6 +237,7 @@
     {
         NSString *pollNode = rawContentsOfNode([tmpPollNode _node], [myParser _doc]);
         [self setupFromPollString:pollNode];
+        [self setupHeaders];
         [self.delegate setPollNode:pollNode];
     }
     
@@ -361,7 +310,72 @@
     self.navigationItem.rightBarButtonItem = voteButton;
     [self.navigationItem.rightBarButtonItem setEnabled:NO];
     
-  
+    [self setupHeaders];
+    NSLog(@"WIDTH %f", self.view.frame.size.width);
+
+}
+
+-(void)setupHeaders {
+    // Get the text so we can measure it
+    NSString *text = self.stringFooter;
+    // Get a CGSize for the width and, effectively, unlimited height
+    CGSize constraint = CGSizeMake(self.view.frame.size.width - (15 * 2), 20000.0f);
+    // Get the size of the text given the CGSize we just made as a constraint
+    CGSize size = [text sizeWithFont:[UIFont boldSystemFontOfSize:11] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+    // Get the height of our measurement, with a minimum of 44 (standard cell size)
+    CGFloat height = MAX(size.height, 25.0f) + 10;
+    // return the height, with a bit of extra padding in
+    //NSLog(@"height %f - %@", height, NSStringFromCGSize(constraint));
+    
+    UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, height)];
+    v.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    v.backgroundColor = [UIColor clearColor];
+    
+    UILabel* titleLabel = [[[UILabel alloc] initWithFrame:CGRectMake(15, 0, self.view.frame.size.width - 30, height)] autorelease];
+    [titleLabel setText:text];
+    [titleLabel setNumberOfLines:0];
+    [titleLabel setFont:[UIFont boldSystemFontOfSize:11]];
+    [titleLabel setBackgroundColor:[UIColor clearColor]];
+    titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+
+    [v addSubview:titleLabel];
+    
+    [self.tableViewPoll setTableFooterView:v];
+    //[self.tableView setTableHeaderView:v];
+    [v release];
+    
+    // Get the text so we can measure it
+    NSString *text2 = self.stringQuestion;
+    // Get a CGSize for the width and, effectively, unlimited height
+    CGSize constraint2 = CGSizeMake(self.view.frame.size.width - (15 * 2), 20000.0f);
+
+    // Get the size of the text given the CGSize we just made as a constraint
+    CGSize size2 = [text2 sizeWithFont:[UIFont boldSystemFontOfSize:13] constrainedToSize:constraint2 lineBreakMode:NSLineBreakByWordWrapping];
+    // Get the height of our measurement, with a minimum of 44 (standard cell size)
+    CGFloat height2 = MAX(size2.height, 25.0f) + 10;
+    // return the height, with a bit of extra padding in
+    //NSLog(@"height %f - %@", height, NSStringFromCGSize(constraint));
+    
+    UIView *v2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, height2)];
+    v2.backgroundColor = [UIColor colorWithRed:239/255.0f green:239/255.0f blue:244/255.0f alpha:0.7];
+    
+    v2.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    //    v2.backgroundColor = [UIColor clearColor];
+    
+    UILabel* titleLabel2 = [[[UILabel alloc] initWithFrame:CGRectMake(15, 0, self.view.frame.size.width - 30, height2)] autorelease];
+    [titleLabel2 setText:text2];
+    [titleLabel2 setNumberOfLines:0];
+    [titleLabel2 setFont:[UIFont boldSystemFontOfSize:13]];
+    [titleLabel2 setBackgroundColor:[UIColor clearColor]];
+    titleLabel2.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+
+    [v2 addSubview:titleLabel2];
+    
+    [self.tableViewPoll setTableHeaderView:v2];
+    //[self.tableView setTableHeaderView:v];
+    [v2 release];
+    
+
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -426,19 +440,7 @@
             else {
                 UIAlertView *alertOK = [[UIAlertView alloc] initWithTitle:@"Hooray !" message:[[messagesNode contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
                                                                  delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-                [alertOK setTag:666];
-                
-                UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-                
-                // Adjust the indicator so it is up a few pixels from the bottom of the alert
-                indicator.center = CGPointMake(alertOK.bounds.size.width / 2, alertOK.bounds.size.height - 50);
-                [indicator startAnimating];
-                [alertOK addSubview:indicator];
-                [indicator release];
 
-                CGRect oldFrame = [alertOK frame];
-                oldFrame.size.height += indicator.frame.size.height + 10;
-                
                 [alertOK show];
 
                 [alertOK release];
@@ -578,10 +580,8 @@
         
         // Configure the cell...
         [cell.labelLabel setText:[[arrayResults objectAtIndex:indexPath.row] valueForKey:@"labelVote"]];
-        [cell.pcLabelView setFrame:CGRectMake(  cell.pcLabelView.frame.origin.x,
-                                            cell.pcLabelView.frame.origin.y,
-                                            cell.frame.size.width * [[[arrayResults objectAtIndex:indexPath.row] valueForKey:@"pcVote"] intValue] / 100,
-                                            cell.pcLabelView.frame.size.height)];
+
+        
         [cell.pcLabel setText:[NSString stringWithFormat:@"%@%%", [[arrayResults objectAtIndex:indexPath.row] valueForKey:@"pcVote"]]];
         if ([[[arrayResults objectAtIndex:indexPath.row] valueForKey:@"nbVote"] intValue] > 1) {
             [cell.nbLabel setText:[NSString stringWithFormat:@"%@ votes", [[arrayResults objectAtIndex:indexPath.row] valueForKey:@"nbVote"]]];
@@ -589,11 +589,33 @@
         else
             [cell.nbLabel setText:[NSString stringWithFormat:@"%@ vote", [[arrayResults objectAtIndex:indexPath.row] valueForKey:@"nbVote"]]];
         
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            cell.pcLabelView.backgroundColor = [UIColor colorWithRed:0 green:0.478431 blue:1.0 alpha:1.0];
+        }
+        else {
+            [cell.pcLabelView setBackgroundColor:[UIColor colorWithRed:42/255.f green:116/255.f blue:217/255.f alpha:1.00]];
+            
+        }
+        
+        
 //        [cell.textLabel setText:[[arrayResults objectAtIndex:indexPath.row] valueForKey:@"labelVote"]];
   //      [cell.detailTextLabel setText:[NSString stringWithFormat:@"%@ vote(s) - %@%%", [[arrayResults objectAtIndex:indexPath.row] valueForKey:@"nbVote"], [[arrayResults objectAtIndex:indexPath.row] valueForKey:@"pcVote"]]];
         return cell;
     }
 
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(PollResultTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.arrayOptions.count) {
+    }
+    else {
+        [cell.pcLabelView setFrame:CGRectMake(  cell.pcLabelView.frame.origin.x,
+                                              cell.pcLabelView.frame.origin.y,
+                                              MAX(cell.frame.size.width * [[[arrayResults objectAtIndex:indexPath.row] valueForKey:@"pcVote"] intValue] / 100, 0),
+                                              cell.pcLabelView.frame.size.height)];
+
+    
+    }
 }
 
 /*
@@ -640,6 +662,9 @@
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (self.arrayResults.count > 0) {
+        return;
+    }
     UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
     
     if (cell.accessoryType == UITableViewCellAccessoryNone && self.arraySelectedRows.count < self.intNombreChoix) {

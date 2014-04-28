@@ -772,7 +772,9 @@
     pollVC.wantsFullScreenLayout = YES; // Decide if you want the photo browser full screen, i.e. whether the status bar is affected (defaults to YES)
 
     HFRNavigationController *nc = [[HFRNavigationController alloc] initWithRootViewController:pollVC];
-    nc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    //nc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    nc.modalPresentationStyle = UIModalPresentationFormSheet;
+
     [self presentModalViewController:nc animated:YES];
     [nc release];
     
