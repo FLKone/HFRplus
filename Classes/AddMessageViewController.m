@@ -1359,7 +1359,15 @@
 	
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];
 	
-	[self setRequestSmile:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/message-smi-mp-aj.php?config=hfr.inc&findsmilies=%@", kForumURL, self.textFieldSmileys.text]]]];
+    NSString *newString = [NSString stringWithFormat:@"+%@", [[self.textFieldSmileys.text componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] componentsJoinedByString:@" +"]];
+    NSString * encodedString = (NSString *)CFURLCreateStringByAddingPercentEscapes(
+                                                                                   NULL,
+                                                                                   (CFStringRef)newString,
+                                                                                   NULL,
+                                                                                   (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                   kCFStringEncodingUTF8 );
+    
+	[self setRequestSmile:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/message-smi-mp-aj.php?config=hfr.inc&findsmilies=%@", kForumURL, encodedString]]]];
 	[requestSmile setDelegate:self];
 	
 	[requestSmile setDidStartSelector:@selector(fetchSmileContentStarted:)];
