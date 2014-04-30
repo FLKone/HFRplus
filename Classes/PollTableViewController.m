@@ -68,14 +68,29 @@
     
     if (myStringMatchesRegEx) {
         NSString* stringHeader = [aPollNodeString stringByMatching:regularExpressionString capture:1L];
-        NSString* regularExpressionString2 = @".* ([0-9]{1,2}) .*";
-        NSString* stringNombreChoix = [stringHeader stringByMatching:regularExpressionString2 capture:1L];
+        NSLog(@"stringHeader %@", stringHeader);
         
-        self.intNombreChoix = [stringNombreChoix integerValue];
+        NSString* regularExpressionString2 = @".* ([0-9]{1,2}) .*";
+        NSPredicate *regExPredicate2 = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regularExpressionString];
+
+        BOOL myStringMatchesRegEx2 = [regExPredicate2 evaluateWithObject:stringHeader];
+        if (myStringMatchesRegEx2) {
+            
+            NSString* stringNombreChoix = [stringHeader stringByMatching:regularExpressionString2 capture:1L];
+            self.intNombreChoix = [stringNombreChoix integerValue];
+
+        }
+        else {
+            self.intNombreChoix = 1;
+
+        }
+        
     }
     else {
         self.intNombreChoix = 1;
     }
+    
+    NSLog(@"intNombreChoix %d", self.intNombreChoix);
     
     //Footer infos
     self.stringFooter = rawContentsOfNode([[[aPollNode children] objectAtIndex:[aPollNode children].count-2] _node], [myParser _doc]);
@@ -662,10 +677,19 @@
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    //NSLog(@"aR %d aSR %d nbChoix %d", self.arrayResults.count, self.arraySelectedRows.count, self.intNombreChoix);
+    
     if (self.arrayResults.count > 0) {
         return;
     }
+    
     UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
+    
+    if (self.intNombreChoix == 1 && self.arraySelectedRows.count == 1 && cell.accessoryType == UITableViewCellAccessoryNone) {
+        //on vire la checkmark
+        [[self.tableViewPoll cellForRowAtIndexPath:[self.arraySelectedRows objectAtIndex:0]] setAccessoryType:UITableViewCellAccessoryNone];
+        [self.arraySelectedRows removeAllObjects];
+    }
     
     if (cell.accessoryType == UITableViewCellAccessoryNone && self.arraySelectedRows.count < self.intNombreChoix) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -683,6 +707,10 @@
         [self.navigationItem.rightBarButtonItem setEnabled:YES];
     else
         [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    
+    
+    //NSLog(@"aR %d aSR %d nbChoix %d", self.arrayResults.count, self.arraySelectedRows.count, self.intNombreChoix);
+    //NSLog(@"arraySelectedRows %@", self.arraySelectedRows);
 
 }
 
