@@ -13,5 +13,6 @@
 @property (retain, nonatomic) IBOutlet UILabel *pcLabel;
 @property (retain, nonatomic) IBOutlet UILabel *nbLabel;
 @property (retain, nonatomic) IBOutlet UILabel *pcLabelView;
+@property (retain, nonatomic) IBOutlet UILabel *pcLabelBgView;
 
 @end

@@ -22,6 +22,10 @@
     // Configure the view for the selected state
 }
 
+-(void)setup {
+    
+}
+
 - (void)dealloc {
     [_labelLabel release];
     [_pcLabel release];

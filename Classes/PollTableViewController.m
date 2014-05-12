@@ -186,6 +186,10 @@
         //NSLog(@"arrayResults %@", arrayResults);
     }
     
+    //NSLog(@"arrayResults %@", arrayResults);
+
+    //NSLog(@"arrayOptions %@", arrayOptions);
+
     //SONDAGE PARSE
     
     
@@ -201,6 +205,17 @@
     
     [self.navigationItem.rightBarButtonItem setEnabled:NO];
     
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // do work here
+        if (self.arrayOptions.count) {
+            self.tableViewPoll.separatorColor = [UIColor lightGrayColor];
+        }
+        else {
+            self.tableViewPoll.separatorColor = [UIColor clearColor];
+        }
+        
+    });
 
 }
 
@@ -312,13 +327,26 @@
     
     [self.maintenanceView setHidden:YES];
     [self.loadingView setHidden:YES];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // do work here
+        if (self.arrayOptions.count) {
+            self.tableViewPoll.separatorColor = [UIColor lightGrayColor];
+        }
+        else {
+             self.tableViewPoll.separatorColor = [UIColor clearColor];
+        }
+
+    });
+    
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Done", nil) style:UIBarButtonItemStylePlain target:self action:@selector(doneButtonPressed:)] autorelease];
+    UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(doneButtonPressed:)] autorelease];
     self.navigationItem.leftBarButtonItem = doneButton;
     
     UIBarButtonItem *voteButton = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Vote", nil) style:UIBarButtonItemStyleDone target:self action:@selector(voteButtonPressed:)] autorelease];
@@ -326,7 +354,10 @@
     [self.navigationItem.rightBarButtonItem setEnabled:NO];
     
     [self setupHeaders];
-    NSLog(@"WIDTH %f", self.view.frame.size.width);
+    
+    NSLog(@"viewDidLoad");
+    
+
 
 }
 
@@ -570,6 +601,8 @@
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+            [cell.textLabel setBackgroundColor:[UIColor redColor]];
+            cell.textLabel.numberOfLines = 0;
         }
         
         if([self.arraySelectedRows containsObject:indexPath]) {
@@ -580,6 +613,8 @@
         
         // Configure the cell...
         [cell.textLabel setText:[[arrayOptions objectAtIndex:indexPath.row] objectAtIndex:0]];
+        [cell.textLabel setFont:[UIFont systemFontOfSize:15.0]];
+
         return cell;
     }
     else
@@ -612,6 +647,35 @@
             
         }
         
+        // Get the text so we can measure it
+        NSString *text = [[arrayResults objectAtIndex:indexPath.row] valueForKey:@"labelVote"];
+        CGSize constraint = CGSizeMake(self.view.frame.size.width - (15 * 2), 20000.0f);
+        CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:15] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+        CGFloat height = size.height + 10;
+        
+        //NSLog(@"indexPath %d %f %f", indexPath.row, self.view.frame.size.width, size.height);
+
+        
+        CGFloat heightDiff = height - cell.labelLabel.frame.size.height;
+        
+        CGRect oldLabelFrame = cell.labelLabel.frame;
+        CGRect newLabelFrame = oldLabelFrame;
+        
+        newLabelFrame.size.height = height;
+        
+        cell.labelLabel.frame = newLabelFrame;
+        
+        cell.pcLabelView.frame = CGRectMake(cell.pcLabelView.frame.origin.x, cell.pcLabelView.frame.origin.y + heightDiff,
+                                            cell.pcLabelView.frame.size.width, cell.pcLabelView.frame.size.height);
+
+        cell.pcLabelBgView.frame = CGRectMake(cell.pcLabelBgView.frame.origin.x, cell.pcLabelBgView.frame.origin.y + heightDiff,
+                                            cell.pcLabelBgView.frame.size.width, cell.pcLabelBgView.frame.size.height);
+
+        cell.pcLabel.frame = CGRectMake(cell.pcLabel.frame.origin.x, cell.pcLabel.frame.origin.y + heightDiff,
+                                            cell.pcLabel.frame.size.width, cell.pcLabel.frame.size.height);
+
+        cell.nbLabel.frame = CGRectMake(cell.nbLabel.frame.origin.x, cell.nbLabel.frame.origin.y + heightDiff,
+                                        cell.nbLabel.frame.size.width, cell.nbLabel.frame.size.height);
         
 //        [cell.textLabel setText:[[arrayResults objectAtIndex:indexPath.row] valueForKey:@"labelVote"]];
   //      [cell.detailTextLabel setText:[NSString stringWithFormat:@"%@ vote(s) - %@%%", [[arrayResults objectAtIndex:indexPath.row] valueForKey:@"nbVote"], [[arrayResults objectAtIndex:indexPath.row] valueForKey:@"pcVote"]]];
@@ -673,6 +737,32 @@
 
 
 #pragma mark - Table view delegate
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    CGFloat height = 0;
+    
+    if (self.arrayOptions.count) {
+        NSString *text = [[arrayOptions objectAtIndex:indexPath.row] objectAtIndex:0];
+        CGSize constraint = CGSizeMake(self.view.frame.size.width - (15 * 2), 20000.0f);
+        CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:15] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+        height = MAX(size.height + 10, 50);
+        
+    }
+    else {
+        NSString *text = [[arrayResults objectAtIndex:indexPath.row] valueForKey:@"labelVote"];
+        CGSize constraint = CGSizeMake(self.view.frame.size.width - (15 * 2), 20000.0f);
+        CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:15] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+        height = size.height + 10;
+
+        //NSLog(@"indexPath %d %f %f", indexPath.row, self.view.frame.size.width, size.height);
+
+        
+        height += 18.0f;
+        height += 11.0f;
+    }
+    return height;
+}
+
 
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
