@@ -122,6 +122,7 @@
             }
         }
         
+        int nbO = 1;
         //Choix du sondage
         NSArray *temporaryAllRadioArray = [aPollNode findChildTags:@"li"];
         for (HTMLNode * inputallRadio in temporaryAllRadioArray) { //Loop through all the tags
@@ -134,10 +135,10 @@
             //                                    [[inputallRadio findChildTag:@"input"] getAttributeNamed:@"type"]);
             //NSLog(@"text %@", [[inputallRadio findChildTag:@"label"] allContents]);
             
-            [self.arrayOptions addObject:[NSArray arrayWithObjects:[[inputallRadio findChildTag:@"label"] allContents], [[inputallRadio findChildTag:@"input"] getAttributeNamed:@"name"], nil]];
+            [self.arrayOptions addObject:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d. %@", nbO, [[inputallRadio findChildTag:@"label"] allContents]], [[inputallRadio findChildTag:@"input"] getAttributeNamed:@"name"], nil]];
             
             //setObject:[[[inputallRadio children] objectAtIndex:1] allContents] forKey:[[[inputallRadio children] objectAtIndex:0] getAttributeNamed:@"name"]];
-            
+            nbO++;
         }
     }
     else
