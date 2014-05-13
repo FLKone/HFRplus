@@ -11,9 +11,10 @@
 @class ASIHTTPRequest;
 
 @interface FavoritesTableViewController : UIViewController <UIActionSheetDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIAlertViewDelegate> {
-	UITableView *favoritesTableView;
-	UIView *loadingView;
+	IBOutlet UITableView *favoritesTableView;
+	IBOutlet UIView *loadingView;
 
+    NSMutableArray *arrayData;
     NSMutableArray *arrayNewData;
     NSMutableArray *arrayCategories;
 
@@ -37,6 +38,7 @@
 
 @property (nonatomic, retain) UIActionSheet *topicActionSheet;
 
+@property (nonatomic, retain) NSMutableArray *arrayData;
 @property (nonatomic, retain) NSMutableArray *arrayNewData;
 @property (nonatomic, retain) NSMutableArray *arrayCategories;
 

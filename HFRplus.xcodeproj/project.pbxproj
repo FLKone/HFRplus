@@ -795,6 +795,10 @@
 		CAC7FCD1190DBD450083BB4E /* PollResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CAC7FCCE190DBD450083BB4E /* PollResultTableViewCell.m */; };
 		CAC7FCD2190DBD450083BB4E /* PollResultTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAC7FCCF190DBD450083BB4E /* PollResultTableViewCell.xib */; };
 		CAC7FCD3190DBD450083BB4E /* PollResultTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAC7FCCF190DBD450083BB4E /* PollResultTableViewCell.xib */; };
+		CACADFD719217CCA0071D2DA /* UIScrollView+SVInfiniteScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = CACADFD419217CCA0071D2DA /* UIScrollView+SVInfiniteScrolling.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		CACADFD819217CCA0071D2DA /* UIScrollView+SVInfiniteScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = CACADFD419217CCA0071D2DA /* UIScrollView+SVInfiniteScrolling.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		CACADFD919217CCA0071D2DA /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = CACADFD619217CCA0071D2DA /* UIScrollView+SVPullToRefresh.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		CACADFDA19217CCA0071D2DA /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = CACADFD619217CCA0071D2DA /* UIScrollView+SVPullToRefresh.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		CAF03C561245612800897C3B /* AccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAF03C551245612800897C3B /* AccessoryView.xib */; };
 		CAF6C0121607B62300B4B70C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAF6C0111607B62300B4B70C /* CoreData.framework */; };
 		CAFD004315B9B665003CA3FC /* HFRDebugViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAFD004115B9B665003CA3FC /* HFRDebugViewController.m */; };
@@ -1317,6 +1321,11 @@
 		CAC7FCCD190DBD450083BB4E /* PollResultTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PollResultTableViewCell.h; sourceTree = "<group>"; };
 		CAC7FCCE190DBD450083BB4E /* PollResultTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PollResultTableViewCell.m; sourceTree = "<group>"; };
 		CAC7FCCF190DBD450083BB4E /* PollResultTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PollResultTableViewCell.xib; sourceTree = "<group>"; };
+		CACADFD219217CCA0071D2DA /* SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPullToRefresh.h; sourceTree = "<group>"; };
+		CACADFD319217CCA0071D2DA /* UIScrollView+SVInfiniteScrolling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SVInfiniteScrolling.h"; sourceTree = "<group>"; };
+		CACADFD419217CCA0071D2DA /* UIScrollView+SVInfiniteScrolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVInfiniteScrolling.m"; sourceTree = "<group>"; };
+		CACADFD519217CCA0071D2DA /* UIScrollView+SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SVPullToRefresh.h"; sourceTree = "<group>"; };
+		CACADFD619217CCA0071D2DA /* UIScrollView+SVPullToRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVPullToRefresh.m"; sourceTree = "<group>"; };
 		CAF03C551245612800897C3B /* AccessoryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccessoryView.xib; sourceTree = "<group>"; };
 		CAF6C0111607B62300B4B70C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		CAFD004015B9B665003CA3FC /* HFRDebugViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFRDebugViewController.h; sourceTree = "<group>"; };
@@ -1622,6 +1631,7 @@
 			isa = PBXGroup;
 			children = (
 				CA00C42217C2FF3F0067B457 /* ASIHTTPRequest */,
+				CACADFD119217CCA0071D2DA /* SVPullToRefresh */,
 				CA00C43917C2FF3F0067B457 /* HTMLParser */,
 				CA00C3B917C2FE1B0067B457 /* InAppSettingsKit */,
 				CA00C3E317C2FE1B0067B457 /* MBProgressHUD */,
@@ -2250,6 +2260,18 @@
 				CAA1B091125C0A53009C80E3 /* AKSegmentedControl.m */,
 			);
 			name = Forms;
+			sourceTree = "<group>";
+		};
+		CACADFD119217CCA0071D2DA /* SVPullToRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				CACADFD219217CCA0071D2DA /* SVPullToRefresh.h */,
+				CACADFD319217CCA0071D2DA /* UIScrollView+SVInfiniteScrolling.h */,
+				CACADFD419217CCA0071D2DA /* UIScrollView+SVInfiniteScrolling.m */,
+				CACADFD519217CCA0071D2DA /* UIScrollView+SVPullToRefresh.h */,
+				CACADFD619217CCA0071D2DA /* UIScrollView+SVPullToRefresh.m */,
+			);
+			path = SVPullToRefresh;
 			sourceTree = "<group>";
 		};
 		CAFD003915B9B4FF003CA3FC /* Debug */ = {
@@ -2942,6 +2964,7 @@
 				CA00C46F17C302610067B457 /* UIImage+Resize.m in Sources */,
 				CA00C45917C300140067B457 /* RegexKitLite.m in Sources */,
 				013F0EAB121E117900BEBEB1 /* LinkItem.m in Sources */,
+				CACADFD919217CCA0071D2DA /* UIScrollView+SVPullToRefresh.m in Sources */,
 				CA00C3ED17C2FE1B0067B457 /* IASKSettingsStoreUserDefaults.m in Sources */,
 				CA00C44417C2FF3F0067B457 /* ASIInputStream.m in Sources */,
 				013F0EAC121E117900BEBEB1 /* MessagesTableViewController.m in Sources */,
@@ -2967,6 +2990,7 @@
 				CA9E86891243C11A000EE882 /* TabBarController.m in Sources */,
 				CAB16278124B9F8300D12569 /* TopicCellView.m in Sources */,
 				CAA1B092125C0A53009C80E3 /* AKSegmentedControl.m in Sources */,
+				CACADFD719217CCA0071D2DA /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				CA00C44317C2FF3F0067B457 /* ASIHTTPRequest.m in Sources */,
 				CAAFAFDC125E2A58001B90EC /* NewMessageViewController.m in Sources */,
 				CA00C3B517C2FDB00067B457 /* MWPhotoBrowser.m in Sources */,
@@ -3050,6 +3074,7 @@
 				CA7C70D3185EF50E00B348BA /* UIImage+Resize.m in Sources */,
 				CA7C70D4185EF50E00B348BA /* RegexKitLite.m in Sources */,
 				CA7C70D5185EF50E00B348BA /* LinkItem.m in Sources */,
+				CACADFDA19217CCA0071D2DA /* UIScrollView+SVPullToRefresh.m in Sources */,
 				CA7C70D6185EF50E00B348BA /* IASKSettingsStoreUserDefaults.m in Sources */,
 				CA7C70D7185EF50E00B348BA /* ASIInputStream.m in Sources */,
 				CA7C70D8185EF50E00B348BA /* MessagesTableViewController.m in Sources */,
@@ -3075,6 +3100,7 @@
 				CA7C70EC185EF50E00B348BA /* TabBarController.m in Sources */,
 				CA7C70ED185EF50E00B348BA /* TopicCellView.m in Sources */,
 				CA7C70EE185EF50E00B348BA /* AKSegmentedControl.m in Sources */,
+				CACADFD819217CCA0071D2DA /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				CA7C70EF185EF50E00B348BA /* ASIHTTPRequest.m in Sources */,
 				CA7C70F0185EF50E00B348BA /* NewMessageViewController.m in Sources */,
 				CA7C70F1185EF50E00B348BA /* MWPhotoBrowser.m in Sources */,

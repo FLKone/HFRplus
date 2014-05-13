@@ -27,9 +27,11 @@
 #import "AKSingleSegmentedControl.h"
 #import "TopicsTableViewController.h"
 
+#import "UIScrollView+SVPullToRefresh.h"
+
 @implementation FavoritesTableViewController
 @synthesize pressedIndexPath, favoritesTableView, loadingView, showAll;
-@synthesize arrayNewData, arrayCategories; //v2 remplace arrayData, arrayDataID, arrayDataID2, arraySection
+@synthesize arrayData, arrayNewData, arrayCategories; //v2 remplace arrayData, arrayDataID, arrayDataID2, arraySection
 @synthesize messagesTableViewController;
 
 @synthesize request;
@@ -53,8 +55,6 @@
         
         [btn2 setSelected:NO];
         //[btn2 setHighlighted:NO];
-        
-        [self.navigationItem.rightBarButtonItem setEnabled:YES];
     }
     else {
         self.showAll = YES;
@@ -63,9 +63,6 @@
         
         [btn2 setSelected:YES];
         //[btn2 setHighlighted:YES];
-        
-        [self.navigationItem.rightBarButtonItem setEnabled:NO];
-
     }
 
     if(self.status == kNoResults)
@@ -88,14 +85,20 @@
 
 - (void)cancelFetchContent
 {
-	[request cancel];
+    //[self.favoritesTableView.pullToRefreshView stopAnimating];
+    [request cancel];
 }
 
 - (void)fetchContent
 {
+    NSLog(@"fetchContent");
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSInteger vos_sujets = [defaults integerForKey:@"vos_sujets"];
 
+    if (self.showAll) {
+        [self showAll:nil];
+    }
     
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];
 	self.status = kIdle;
@@ -108,7 +111,7 @@
             [self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/forum1f.php?owntopic=3", kForumURL]]]];
             break;
         default:
-            [self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/forum1f.php?owntopic=1", kForumURL]]]];            
+            [self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/forum1f.php?owntopic=1", kForumURL]]]];
             break;
     }
     
@@ -125,14 +128,19 @@
 {
     NSLog(@"fetchContentStarted");
 	//Bouton Stop
+
 	self.navigationItem.rightBarButtonItem = nil;	
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(cancelFetchContent)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];	
-	
+    [segmentBarItem release];
+
+    //[self.favoritesTableView.pullToRefreshView stopAnimating];
+
+    /*
 	[self.maintenanceView setHidden:YES];
 	[self.favoritesTableView setHidden:YES];
 	[self.loadingView setHidden:NO];	
+     */
 }
 
 - (void)fetchContentComplete:(ASIHTTPRequest *)theRequest
@@ -145,13 +153,23 @@
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
     [segmentBarItem release];
 	
-	[self.arrayNewData removeAllObjects];
-    [self.arrayCategories removeAllObjects];
+	//[self.arrayNewData removeAllObjects];
+    //[self.arrayCategories removeAllObjects];
 
 	//[self.favoritesTableView reloadData];
 	
 	[self loadDataInTableView:[request responseData]];
 	
+    [self.arrayData removeAllObjects];
+    
+    self.arrayData = [NSMutableArray arrayWithArray:self.arrayNewData];
+    
+    [self.arrayNewData removeAllObjects];
+    
+	[self.favoritesTableView reloadData];
+    
+    [self.favoritesTableView.pullToRefreshView stopAnimating];
+    /*
 	[self.loadingView setHidden:YES];
 
 	switch (self.status) {
@@ -172,12 +190,14 @@
 			[self.favoritesTableView setHidden:NO];
 			break;
 	}
-	
+	*/
 	//NSLog(@"fetchContentCompletefetchContentCompletefetchContentComplete");
 }
 
 - (void)fetchContentFailed:(ASIHTTPRequest *)theRequest
 {
+    NSLog(@"fetchContentFailed");
+
 	//Bouton Reload
 	self.navigationItem.rightBarButtonItem = nil;
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
@@ -187,15 +207,17 @@
     [self.maintenanceView setText:@"oops :o"];
     
     [self.loadingView setHidden:YES];
-    [self.maintenanceView setHidden:NO];
-    [self.favoritesTableView setHidden:YES];
+    //[self.maintenanceView setHidden:NO];
+    //[self.favoritesTableView setHidden:YES];
 	
 	//NSLog(@"theRequest.error %@", theRequest.error);
-	
+    [self.favoritesTableView.pullToRefreshView stopAnimating];
+
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[theRequest.error localizedDescription]
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
 	[alert show];
-	[alert release];	
+	[alert release];
+    
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -203,7 +225,7 @@
 	if (buttonIndex == 1 && alertView.tag == 669) {
         
         NSIndexPath *path = self.pressedIndexPath;
-        Topic *aTopic = [[[self.arrayNewData objectAtIndex:[path section]] topics] objectAtIndex:[path row]];
+        Topic *aTopic = [[[self.arrayData objectAtIndex:[path section]] topics] objectAtIndex:[path row]];
         
         NSString * newUrl = [aTopic aURL];
         
@@ -255,15 +277,19 @@
         
     }    
 	else if (buttonIndex == 1) {
-		[self fetchContent];
+		[self.favoritesTableView triggerPullToRefresh];
 	}
 }
+
+#pragma mark - PullTableViewDelegate
+
+
 
 -(void)reset {
 	/*
 	[self fetchContent];
 	*/
-	[self.arrayNewData removeAllObjects];
+	[self.arrayData removeAllObjects];
 	
 	[self.favoritesTableView reloadData];
 	[self.favoritesTableView setHidden:YES];
@@ -278,7 +304,7 @@
 
 -(void)loadDataInTableView:(NSData *)contentData {
 
-	[self.arrayNewData removeAllObjects];
+	//[self.arrayNewData removeAllObjects];
 	[self.arrayCategories removeAllObjects];
 	
     NSLog(@"loadDataInTableView");
@@ -482,7 +508,8 @@
 
 	self.title = @"Vos Sujets";
     self.showAll = NO;
-
+    self.navigationController.navigationBar.translucent = NO;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(OrientationChanged)
                                                  name:UIApplicationDidChangeStatusBarOrientationNotification
@@ -614,6 +641,7 @@
     
 	[(ShakeView*)self.view setShakeDelegate:self];
 	
+    self.arrayData = [[NSMutableArray alloc] init];
     self.arrayNewData = [[NSMutableArray alloc] init];
     self.arrayCategories = [[NSMutableArray alloc] init];
     
@@ -621,13 +649,23 @@
 	
 	//NSLog(@"viewDidLoad %d", self.arrayDataID.count);
 
-	[self fetchContent];
+    // setup pull-to-refresh
+    
+    [self.favoritesTableView addPullToRefreshWithActionHandler:^{
+        NSLog(@"=== BEGIN");
+        [self fetchContent];
+        NSLog(@"=== END");
+    }];
+    
+    [self.favoritesTableView triggerPullToRefresh];
+    
+    //[self fetchContent];
 }
 
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-	[self.view becomeFirstResponder];
+	//[self.view becomeFirstResponder];
 
 	if (self.messagesTableViewController) {
 		//NSLog(@"viewWillAppear Favorites Table View Dealloc MTV");
@@ -758,7 +796,7 @@
         return 0;
     }
     else {
-        if ([[self.arrayNewData objectAtIndex:section] topics].count > 0) {
+        if ([[self.arrayData objectAtIndex:section] topics].count > 0) {
             return HEIGHT_FOR_HEADER_IN_SECTION;
         }
     }
@@ -768,7 +806,7 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 
     //On récupère la section (forum)
-    Forum *tmpForum = [[self.arrayNewData objectAtIndex:section] forum];
+    Forum *tmpForum = [[self.arrayData objectAtIndex:section] forum];
     CGFloat curWidth = self.view.frame.size.width;
     
     //UIView globale
@@ -802,7 +840,7 @@
     
     //UIButton clickable pour accéder à la catégorie
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, curWidth, HEIGHT_FOR_HEADER_IN_SECTION)];
-    [button setTag:[self.arrayCategories indexOfObject:[self.arrayNewData objectAtIndex:section]]];
+    [button setTag:[self.arrayCategories indexOfObject:[self.arrayData objectAtIndex:section]]];
     [button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
@@ -836,7 +874,7 @@
         return 1;
     }
     else {
-        return self.arrayNewData.count;
+        return self.arrayData.count;
     }
 }
 
@@ -848,7 +886,7 @@
         return @"";
     }
     else {
-        return [[[self.arrayNewData objectAtIndex:section] forum] aTitle];
+        return [[[self.arrayData objectAtIndex:section] forum] aTitle];
     }
 }
 
@@ -858,7 +896,7 @@
         return self.arrayCategories.count;
     }
     else {
-        return [[self.arrayNewData objectAtIndex:section] topics].count;
+        return [[self.arrayData objectAtIndex:section] topics].count;
     }
         
 }
@@ -899,7 +937,7 @@
             [longPressRecognizer release];
         }
     	
-        Topic *tmpTopic = [[[self.arrayNewData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
+        Topic *tmpTopic = [[[self.arrayData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
         
         // Configure the cell...
         [(UILabel *)[cell.contentView viewWithTag:999] setText:[tmpTopic aTitle]];
@@ -944,7 +982,7 @@
     }
     else {
         
-        Topic *aTopic = [[[self.arrayNewData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
+        Topic *aTopic = [[[self.arrayData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
         
         MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[aTopic aURL]];
         self.messagesTableViewController = aView;
@@ -1000,7 +1038,7 @@
 		case 0:
 		{
 			NSIndexPath *indexPath = pressedIndexPath;
-            Topic *tmpTopic = [[[self.arrayNewData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
+            Topic *tmpTopic = [[[self.arrayData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
             
 			MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[tmpTopic aURLOfLastPage]];
 			self.messagesTableViewController = aView;
@@ -1016,7 +1054,7 @@
 		case 1:
 		{
 			NSIndexPath *indexPath = pressedIndexPath;
-            Topic *tmpTopic = [[[self.arrayNewData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
+            Topic *tmpTopic = [[[self.arrayData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
             
 			MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[tmpTopic aURLOfLastPost]];
 			self.messagesTableViewController = aView;
@@ -1041,7 +1079,7 @@
 		{
 			NSLog(@"copier lien page 1");
 			NSIndexPath *indexPath = pressedIndexPath;
-            Topic *tmpTopic = [[[self.arrayNewData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
+            Topic *tmpTopic = [[[self.arrayData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
             
             UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
             pasteboard.string = [NSString stringWithFormat:@"%@%@", kForumURL, [tmpTopic aURLOfFirstPage]];
@@ -1092,10 +1130,10 @@
 
 -(void)setTopicViewed {
     
-	if (self.favoritesTableView.indexPathForSelectedRow && self.arrayNewData.count > 0) {
+	if (self.favoritesTableView.indexPathForSelectedRow && self.arrayData.count > 0) {
 
         NSIndexPath *path = self.favoritesTableView.indexPathForSelectedRow;
-        [[[[self.arrayNewData objectAtIndex:[path section]] topics] objectAtIndex:[path row]] setIsViewed:YES];
+        [[[[self.arrayData objectAtIndex:[path section]] topics] objectAtIndex:[path row]] setIsViewed:YES];
 
         //NSArray* rowsToReload = [NSArray arrayWithObjects:self.favoritesTableView.indexPathForSelectedRow, nil];
         //[self.favoritesTableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
@@ -1103,10 +1141,10 @@
 		[self.favoritesTableView reloadData];
         
 	}
-    else if (pressedIndexPath && self.arrayNewData.count > 0) 
+    else if (pressedIndexPath && self.arrayData.count > 0)
     {
         NSIndexPath *path = self.pressedIndexPath;
-        [[[[self.arrayNewData objectAtIndex:[path section]] topics] objectAtIndex:[path row]] setIsViewed:YES];
+        [[[[self.arrayData objectAtIndex:[path section]] topics] objectAtIndex:[path row]] setIsViewed:YES];
 		
         //NSArray* rowsToReload = [NSArray arrayWithObjects:self.pressedIndexPath, nil];
         //[self.favoritesTableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
@@ -1123,7 +1161,7 @@
     //NSLog(@"chooseTopicPage Favs");
 
     NSIndexPath *indexPath = self.pressedIndexPath;
-    Topic *tmpTopic = [[[self.arrayNewData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
+    Topic *tmpTopic = [[[self.arrayData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
     
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Aller à la page" message:nil
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"OK", nil];
@@ -1149,7 +1187,7 @@
 	//NSLog(@"textFieldDidChange %d %@", [[(UITextField *)sender text] intValue], sender);	
 	
     NSIndexPath *indexPath = self.pressedIndexPath;
-    Topic *tmpTopic = [[[self.arrayNewData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
+    Topic *tmpTopic = [[[self.arrayData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
 
 	if ([[(UITextField *)sender text] length] > 0) {
 		int val; 
@@ -1229,7 +1267,7 @@
 		
 		[arequest setPostValue:@"forum1f" forKey:@"type_page"];
 
-        Topic *tmpTopic = [[[self.arrayNewData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
+        Topic *tmpTopic = [[[self.arrayData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
         
 		[arequest setPostValue:[NSString stringWithFormat:@"%d", [tmpTopic postID]] forKey:@"topic0"];
 		[arequest setPostValue:[NSString stringWithFormat:@"%d", [tmpTopic catID]] forKey:@"valuecat0"];
@@ -1237,9 +1275,9 @@
 		[arequest setPostValue:@"hardwarefr" forKey:@"valueforum0"];
 		[arequest startAsynchronous]; 
         
-        [[[self.arrayNewData objectAtIndex:indexPath.section] topics] removeObjectAtIndex:indexPath.row];
+        [[[self.arrayData objectAtIndex:indexPath.section] topics] removeObjectAtIndex:indexPath.row];
         [self.favoritesTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
-        if ([[self.arrayNewData objectAtIndex:indexPath.section] topics].count == 0) {
+        if ([[self.arrayData objectAtIndex:indexPath.section] topics].count == 0) {
             [self.favoritesTableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationNone];
 
         }
@@ -1261,8 +1299,9 @@
 
 	}
 
+    [self.favoritesTableView triggerPullToRefresh];
 
-	[self fetchContent];
+//	[self fetchContent];
 }
 
 
@@ -1310,7 +1349,8 @@
     self.topicActionSheet = nil;
     
 	self.arrayNewData = nil;
-	
+    self.arrayData = nil;
+
     [super dealloc];
 }
 
