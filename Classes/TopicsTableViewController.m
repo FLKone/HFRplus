@@ -784,7 +784,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	self.title = forumName;
-    
+    self.navigationController.navigationBar.translucent = NO;
+
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(OrientationChanged)

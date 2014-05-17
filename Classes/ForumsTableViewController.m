@@ -700,6 +700,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	self.title = @"Catégories";
+    self.navigationController.navigationBar.translucent = NO;
 
 	//Bouton Reload
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
