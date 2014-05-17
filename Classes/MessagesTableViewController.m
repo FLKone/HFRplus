@@ -1900,7 +1900,8 @@
 			
 			if (isRegExMsg) {
 				//KO
-				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[responseString stringByMatching:regExMsg capture:1L]
+                //NSLog(@"%@", [responseString stringByMatching:regExMsg capture:1L]);
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[[responseString stringByMatching:regExMsg capture:1L] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
 															   delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 				[alert show];	
 				[alert release];
