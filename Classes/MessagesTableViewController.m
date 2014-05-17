@@ -1813,7 +1813,7 @@
 	[menuAction release];
 	//NSLog(@"menuAction %d", menuAction.count);
 	
-	NSLog(@"ypos %d", ypos);
+	//NSLog(@"ypos %d", ypos);
 	
 
     
@@ -1831,7 +1831,7 @@
 	}
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7,0")) {
-        ypos += 66;
+        //ypos += 66;
     }
     
 	//NSLog(@"oijlkajsdoihjlkjasdopopup 0");
