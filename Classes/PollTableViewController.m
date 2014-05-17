@@ -68,15 +68,17 @@
     
     if (myStringMatchesRegEx) {
         NSString* stringHeader = [aPollNodeString stringByMatching:regularExpressionString capture:1L];
-        NSLog(@"stringHeader %@", stringHeader);
+        //NSLog(@"stringHeader %@", stringHeader);
         
         NSString* regularExpressionString2 = @".* ([0-9]{1,2}) .*";
-        NSPredicate *regExPredicate2 = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regularExpressionString];
+        NSPredicate *regExPredicate2 = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regularExpressionString2];
 
         BOOL myStringMatchesRegEx2 = [regExPredicate2 evaluateWithObject:stringHeader];
         if (myStringMatchesRegEx2) {
             
             NSString* stringNombreChoix = [stringHeader stringByMatching:regularExpressionString2 capture:1L];
+            //NSLog(@"stringNombreChoix %@", stringNombreChoix);
+
             self.intNombreChoix = [stringNombreChoix integerValue];
 
         }
@@ -90,7 +92,7 @@
         self.intNombreChoix = 1;
     }
     
-    NSLog(@"intNombreChoix %d", self.intNombreChoix);
+    //NSLog(@"intNombreChoix %d", self.intNombreChoix);
     
     //Footer infos
     self.stringFooter = rawContentsOfNode([[[aPollNode children] objectAtIndex:[aPollNode children].count-2] _node], [myParser _doc]);
@@ -452,7 +454,13 @@
     
     for(NSIndexPath *indexPath in self.arraySelectedRows)
     {
-        [arequest setPostValue:@"1" forKey:[[self.arrayOptions objectAtIndex:indexPath.row] objectAtIndex:1]];
+        if (self.intNombreChoix == 1) {
+            [arequest setPostValue:[NSString stringWithFormat:@"%d", (indexPath.row+1)] forKey:[[self.arrayOptions objectAtIndex:indexPath.row] objectAtIndex:1]];
+        }
+        else{
+            [arequest setPostValue:@"1" forKey:[[self.arrayOptions objectAtIndex:indexPath.row] objectAtIndex:1]];
+        }
+
     }
     
     [arequest startSynchronous];
@@ -777,6 +785,7 @@
     UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
     
     if (self.intNombreChoix == 1 && self.arraySelectedRows.count == 1 && cell.accessoryType == UITableViewCellAccessoryNone) {
+        //NSLog(@"on vire");
         //on vire la checkmark
         [[self.tableViewPoll cellForRowAtIndexPath:[self.arraySelectedRows objectAtIndex:0]] setAccessoryType:UITableViewCellAccessoryNone];
         [self.arraySelectedRows removeAllObjects];
