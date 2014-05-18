@@ -269,6 +269,9 @@ static char UIScrollViewPullToRefreshView;
                 break;
         }
         
+        //NSLog(@"refreshLastUpdatedDate");
+        //[self refreshLastUpdatedDate];
+        
         CGFloat leftViewWidth = MAX(self.arrow.bounds.size.width,self.activityIndicatorView.bounds.size.width);
         
         CGFloat margin = 10;
@@ -279,7 +282,8 @@ static char UIScrollViewPullToRefreshView;
         
         NSString *subtitle = [self.subtitles objectAtIndex:self.state];
         self.subtitleLabel.text = subtitle.length > 0 ? subtitle : nil;
-        
+        //NSLog(@"subtitleLabel TXT %@", self.subtitleLabel.text);
+
         
         CGSize titleSize = [self.titleLabel.text sizeWithFont:self.titleLabel.font
                                             constrainedToSize:CGSizeMake(labelMaxWidth,self.titleLabel.font.lineHeight)
@@ -307,7 +311,7 @@ static char UIScrollViewPullToRefreshView;
             
             CGFloat titleY = minY;
             self.titleLabel.frame = CGRectIntegral(CGRectMake(labelX, titleY, titleSize.width, titleSize.height));
-            self.subtitleLabel.frame = CGRectIntegral(CGRectMake(labelX, titleY + titleSize.height + marginY, subtitleSize.width, subtitleSize.height));
+            self.subtitleLabel.frame = CGRectIntegral(CGRectMake(labelX, titleY + titleSize.height + marginY, subtitleSize.width + 200, subtitleSize.height));
         }else{
             CGFloat totalHeight = titleSize.height;
             CGFloat minY = (self.bounds.size.height / 2)  - (totalHeight / 2);
@@ -369,6 +373,8 @@ static char UIScrollViewPullToRefreshView;
 #pragma mark - Observing
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    //NSLog(@"keyPath %@", keyPath);
+    
     if([keyPath isEqualToString:@"contentOffset"])
         [self scrollViewDidScroll:[[change valueForKey:NSKeyValueChangeNewKey] CGPointValue]];
     else if([keyPath isEqualToString:@"contentSize"]) {
@@ -393,6 +399,9 @@ static char UIScrollViewPullToRefreshView;
 - (void)scrollViewDidScroll:(CGPoint)contentOffset {
     if(self.state != SVPullToRefreshStateLoading) {
         CGFloat scrollOffsetThreshold = 0;
+        
+        [self refreshLastUpdatedDate];
+        
         switch (self.position) {
             case SVPullToRefreshPositionTop:
                 scrollOffsetThreshold = self.frame.origin.y - self.originalTopInset;
@@ -415,6 +424,8 @@ static char UIScrollViewPullToRefreshView;
     } else {
         CGFloat offset;
         UIEdgeInsets contentInset;
+        
+
         switch (self.position) {
             case SVPullToRefreshPositionTop:
                 offset = MAX(self.scrollView.contentOffset.y * -1, 0.0f);
@@ -435,6 +446,7 @@ static char UIScrollViewPullToRefreshView;
                 }
                 break;
         }
+        
     }
 }
 
@@ -539,6 +551,8 @@ static char UIScrollViewPullToRefreshView;
     else
         [self.subtitles replaceObjectAtIndex:state withObject:subtitle];
     
+    //NSLog(@"subtitle %@", subtitle);
+    
     [self setNeedsLayout];
 }
 
@@ -570,14 +584,74 @@ static char UIScrollViewPullToRefreshView;
     self.activityIndicatorView.activityIndicatorViewStyle = viewStyle;
 }
 
+#define aMinute 60
+#define anHour 3600
+#define aDay 86400
+
+- (void)refreshLastUpdatedDate {
+    
+    NSString *dateString = nil;
+    NSDate * date = nil;
+    NSDate *now = [NSDate date];
+    
+    date = self.lastUpdatedDate;
+    
+    if (!date || date == now) {
+        return;
+    }
+    
+    NSTimeInterval timeSinceLastUpdate = [date timeIntervalSinceDate:now];
+    NSInteger timeToDisplay = 0;
+    timeSinceLastUpdate *= -1;
+    
+    //NSLog(@"timeSinceLastUpdate %f", timeSinceLastUpdate);
+    
+    if(timeSinceLastUpdate < anHour) {
+        timeToDisplay = (NSInteger) (timeSinceLastUpdate / aMinute);
+        
+        if(timeToDisplay <= /* Singular*/ 1) {
+            dateString = [NSString stringWithFormat:NSLocalizedStringFromTable(@"Updated %ld minute ago",@"Localizable",@"Last uppdate in minutes singular"),(long)timeToDisplay];
+        } else {
+            /* Plural */
+            dateString = [NSString stringWithFormat:NSLocalizedStringFromTable(@"Updated %ld minutes ago",@"Localizable",@"Last uppdate in minutes plural"), (long)timeToDisplay];
+            
+        }
+        
+    } else if (timeSinceLastUpdate < aDay) {
+        timeToDisplay = (NSInteger) (timeSinceLastUpdate / anHour);
+        if(timeToDisplay == /* Singular*/ 1) {
+            dateString = [NSString stringWithFormat:NSLocalizedStringFromTable(@"Updated %ld hour ago",@"Localizable",@"Last uppdate in hours singular"), (long)timeToDisplay];
+        } else {
+            /* Plural */
+            dateString = [NSString stringWithFormat:NSLocalizedStringFromTable(@"Updated %ld hours ago",@"Localizable",@"Last uppdate in hours plural"), (long)timeToDisplay];
+            
+        }
+        
+    } else {
+        timeToDisplay = (NSInteger) (timeSinceLastUpdate / aDay);
+        if(timeToDisplay == /* Singular*/ 1) {
+            dateString = [NSString stringWithFormat:NSLocalizedStringFromTable(@"Updated %ld day ago",@"Localizable",@"Last uppdate in days singular"), (long)timeToDisplay];
+        } else {
+            /* Plural */
+            dateString = [NSString stringWithFormat:NSLocalizedStringFromTable(@"Updated %ld days ago",@"Localizable",@"Last uppdate in days plural"), (long)timeToDisplay];
+        }
+        
+    }
+    
+    [self setSubtitle:dateString forState:SVPullToRefreshStateAll];
+
+    //NSLog(@"dateString %@", dateString);
+}
+
 - (void)setLastUpdatedDate:(NSDate *)newLastUpdatedDate {
     self.showsDateLabel = YES;
-    self.dateLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Last Updated: %@",), newLastUpdatedDate?[self.dateFormatter stringFromDate:newLastUpdatedDate]:NSLocalizedString(@"Never",)];
+    lastUpdatedDate = newLastUpdatedDate;
+    //self.dateLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Last Updated: %@",), newLastUpdatedDate?[self.dateFormatter stringFromDate:newLastUpdatedDate]:NSLocalizedString(@"Never",)];
 }
 
 - (void)setDateFormatter:(NSDateFormatter *)newDateFormatter {
 	dateFormatter = newDateFormatter;
-    self.dateLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Last Updated: %@",), self.lastUpdatedDate?[newDateFormatter stringFromDate:self.lastUpdatedDate]:NSLocalizedString(@"Never",)];
+    //self.dateLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Last Updated: %@",), self.lastUpdatedDate?[newDateFormatter stringFromDate:self.lastUpdatedDate]:NSLocalizedString(@"Never",)];
 }
 
 #pragma mark -

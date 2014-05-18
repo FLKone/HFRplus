@@ -169,6 +169,8 @@
 	[self.favoritesTableView reloadData];
     
     [self.favoritesTableView.pullToRefreshView stopAnimating];
+    [self.favoritesTableView.pullToRefreshView setLastUpdatedDate:[NSDate date]];
+    
     /*
 	[self.loadingView setHidden:YES];
 

@@ -30,3 +30,36 @@
 "Loading..." = "Chargement...";
 "Last Updated: %@" = "Actualisé le %@";
 "Never" = "Jamais";
+
+/* Loading Status */
+"Loading..." = "Chargement...";
+
+/* Pull down to refresh status */
+"Pull down to refresh..." = "Tirer pour rafraîchir...";
+
+/* Pull down to load more status */
+"Pull up to load more..." = "Pull up to load more...";
+
+/* Release to load more status */
+"Release to load more..." = "Release to load more...";
+
+/* Release to refresh status */
+"Release to refresh..." = "Lâcher pour rafraîchir...";
+
+/* Last uppdate in days singular */
+"Updated %ld day ago" = "Actualisé  %ld day ago";
+
+/* Last uppdate in days plural */
+"Updated %ld days ago" = "Actualisé %ld days ago";
+
+/* Last uppdate in hours singular */
+"Updated %ld hour ago" = "Actualisé %ld hour ago";
+
+/* Last uppdate in hours plural */
+"Updated %ld hours ago" = "Actualisé %ld hours ago";
+
+/* Last uppdate in minutes singular */
+"Updated %ld minute ago" = "Actualisé il y a moins d'une minute";
+
+/* Last uppdate in minutes plural */
+"Updated %ld minutes ago" = "Actualisé il y a %ld minutes";

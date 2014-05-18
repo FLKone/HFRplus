@@ -11,3 +11,38 @@
 
 
 //PullToRefresh
+/* Loading Status */
+"Loading..." = "Loading...";
+
+/* Pull down to refresh status */
+"Pull down to refresh..." = "Pull down to refresh...";
+
+/* Pull down to load more status */
+"Pull up to load more..." = "Pull up to load more...";
+
+/* Release to load more status */
+"Release to load more..." = "Release to load more...";
+
+/* Release to refresh status */
+"Release to refresh..." = "Release to refresh...";
+
+/* Last uppdate in days singular */
+"Updated %ld day ago" = "Updated %ld day ago";
+
+/* Last uppdate in days plural */
+"Updated %ld days ago" = "Updated %ld days ago";
+
+/* Last uppdate in hours singular */
+"Updated %ld hour ago" = "Updated %ld hour ago";
+
+/* Last uppdate in hours plural */
+"Updated %ld hours ago" = "Updated %ld hours ago";
+
+/* Last uppdate in minutes singular */
+"Updated %ld minute ago" = "Updated less than a minute ago";
+
+/* Last uppdate in minutes plural */
+"Updated %ld minutes ago" = "Updated %ld minutes ago";
+
+/* Last uppdate in minutes singular */
+"Updated now" = "Updated now";
