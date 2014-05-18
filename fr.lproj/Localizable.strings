@@ -34,6 +34,7 @@
 /* Loading Status */
 "Loading..." = "Chargement...";
 
+
 /* Pull down to refresh status */
 "Pull down to refresh..." = "Tirer pour rafraîchir...";
 
@@ -47,16 +48,16 @@
 "Release to refresh..." = "Lâcher pour rafraîchir...";
 
 /* Last uppdate in days singular */
-"Updated %ld day ago" = "Actualisé  %ld day ago";
+"Updated %ld day ago" = "Actualisé il y a %ld jour";
 
 /* Last uppdate in days plural */
-"Updated %ld days ago" = "Actualisé %ld days ago";
+"Updated %ld days ago" = "Actualisé il y a %ld jours";
 
 /* Last uppdate in hours singular */
-"Updated %ld hour ago" = "Actualisé %ld hour ago";
+"Updated %ld hour ago" = "Actualisé il y a %ld heure";
 
 /* Last uppdate in hours plural */
-"Updated %ld hours ago" = "Actualisé %ld hours ago";
+"Updated %ld hours ago" = "Actualisé il y a %ld heures";
 
 /* Last uppdate in minutes singular */
 "Updated %ld minute ago" = "Actualisé il y a moins d'une minute";
