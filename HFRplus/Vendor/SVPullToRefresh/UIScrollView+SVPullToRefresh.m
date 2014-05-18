@@ -9,6 +9,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "UIScrollView+SVPullToRefresh.h"
+#import "Constants.h"
 
 //fequal() and fequalzro() from http://stackoverflow.com/a/1614761/184130
 #define fequal(a,b) (fabs((a) - (b)) < FLT_EPSILON)
@@ -175,7 +176,13 @@ static char UIScrollViewPullToRefreshView;
         
         // default styling values
         self.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
-        self.textColor = [UIColor darkGrayColor];
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            self.textColor = [UIColor blackColor];
+        }
+        else
+        {
+            self.textColor = [UIColor darkGrayColor];
+        }
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         self.state = SVPullToRefreshStateStopped;
         self.showsDateLabel = NO;
@@ -751,7 +758,16 @@ static char UIScrollViewPullToRefreshView;
 
 - (UIColor *)arrowColor {
 	if (arrowColor) return arrowColor;
-	return [UIColor grayColor]; // default Color
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        return [UIColor blackColor]; // default Color
+
+    }
+    else
+    {
+        return [UIColor grayColor]; // default Color
+
+    }
 }
 
 - (void)drawRect:(CGRect)rect {
