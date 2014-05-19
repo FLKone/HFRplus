@@ -773,6 +773,10 @@
 		CAA1F69117E5DFA20006E785 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA1F68F17E5DFA20006E785 /* plus.png */; };
 		CAA1F69217E5DFA20006E785 /* plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA1F69017E5DFA20006E785 /* plus@2x.png */; };
 		CAAD3D561731EAC400DC1900 /* MessageWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = CAAD3D551731EAC400DC1900 /* MessageWebView.m */; };
+		CAADF6C71929681300ECA4C1 /* ProfilViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAADF6C51929681300ECA4C1 /* ProfilViewController.m */; };
+		CAADF6C81929681300ECA4C1 /* ProfilViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAADF6C51929681300ECA4C1 /* ProfilViewController.m */; };
+		CAADF6C91929681300ECA4C1 /* ProfilViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAADF6C61929681300ECA4C1 /* ProfilViewController.xib */; };
+		CAADF6CA1929681300ECA4C1 /* ProfilViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAADF6C61929681300ECA4C1 /* ProfilViewController.xib */; };
 		CAAFAFDC125E2A58001B90EC /* NewMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAAFAFDB125E2A58001B90EC /* NewMessageViewController.m */; };
 		CAAFF8AA17DF7A0900C120BC /* categories@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAAFF8A817DF7A0900C120BC /* categories@2x.png */; };
 		CAAFF8AB17DF7A0900C120BC /* categories.png in Resources */ = {isa = PBXBuildFile; fileRef = CAAFF8A917DF7A0900C120BC /* categories.png */; };
@@ -1295,6 +1299,9 @@
 		CAA1F69017E5DFA20006E785 /* plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus@2x.png"; sourceTree = "<group>"; };
 		CAAD3D541731EAC400DC1900 /* MessageWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageWebView.h; sourceTree = "<group>"; };
 		CAAD3D551731EAC400DC1900 /* MessageWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageWebView.m; sourceTree = "<group>"; };
+		CAADF6C41929681300ECA4C1 /* ProfilViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilViewController.h; sourceTree = "<group>"; };
+		CAADF6C51929681300ECA4C1 /* ProfilViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilViewController.m; sourceTree = "<group>"; };
+		CAADF6C61929681300ECA4C1 /* ProfilViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfilViewController.xib; sourceTree = "<group>"; };
 		CAAFAFDA125E2A58001B90EC /* NewMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewMessageViewController.h; sourceTree = "<group>"; };
 		CAAFAFDB125E2A58001B90EC /* NewMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewMessageViewController.m; sourceTree = "<group>"; };
 		CAAFF8A817DF7A0900C120BC /* categories@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "categories@2x.png"; sourceTree = "<group>"; };
@@ -1549,6 +1556,7 @@
 				0140ABA6121E011D001C35C4 /* Favorites */,
 				0140AA83121DF25F001C35C4 /* MP */,
 				013F0E94121E117800BEBEB1 /* Messages */,
+				CAADF6C3192967CC00ECA4C1 /* Profil */,
 				01BF8775121C4407007624B6 /* Infos */,
 			);
 			path = Classes;
@@ -2238,6 +2246,16 @@
 			name = PhotoViewer;
 			sourceTree = "<group>";
 		};
+		CAADF6C3192967CC00ECA4C1 /* Profil */ = {
+			isa = PBXGroup;
+			children = (
+				CAADF6C41929681300ECA4C1 /* ProfilViewController.h */,
+				CAADF6C51929681300ECA4C1 /* ProfilViewController.m */,
+				CAADF6C61929681300ECA4C1 /* ProfilViewController.xib */,
+			);
+			name = Profil;
+			sourceTree = "<group>";
+		};
 		CABB3127121EF3B0009CE100 /* Forms */ = {
 			isa = PBXGroup;
 			children = (
@@ -2421,6 +2439,7 @@
 				CA00C68117C30C370067B457 /* 119-piggy-bank@2x.png in Resources */,
 				CA00C61C17C30C370067B457 /* benetton.gif in Resources */,
 				CA00C6E317C30C370067B457 /* photoDefaultfail.png in Resources */,
+				CAADF6C91929681300ECA4C1 /* ProfilViewController.xib in Resources */,
 				CA00C67E17C30C370067B457 /* 113-navigation.png in Resources */,
 				CA00C68017C30C370067B457 /* 119-piggy-bank.png in Resources */,
 				CA00C66517C30C370067B457 /* style-max.css in Resources */,
@@ -2706,6 +2725,7 @@
 				CA7C6FDC185EF50E00B348BA /* 119-piggy-bank@2x.png in Resources */,
 				CA7C6FDD185EF50E00B348BA /* benetton.gif in Resources */,
 				CA7C6FDE185EF50E00B348BA /* photoDefaultfail.png in Resources */,
+				CAADF6CA1929681300ECA4C1 /* ProfilViewController.xib in Resources */,
 				CA7C6FDF185EF50E00B348BA /* 113-navigation.png in Resources */,
 				CA7C6FE0185EF50E00B348BA /* 119-piggy-bank.png in Resources */,
 				CA7C6FE1185EF50E00B348BA /* style-max.css in Resources */,
@@ -2940,6 +2960,7 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				CA00C47117C302610067B457 /* UIWebView+Tools.m in Sources */,
 				CA00C42017C2FE240067B457 /* UIImageView+WebCache.m in Sources */,
+				CAADF6C71929681300ECA4C1 /* ProfilViewController.m in Sources */,
 				1D3623260D0F684500981E51 /* HFRplusAppDelegate.m in Sources */,
 				01BF8785121C4407007624B6 /* InfosViewController.m in Sources */,
 				01BF8786121C4407007624B6 /* AideViewController.m in Sources */,
@@ -3050,6 +3071,7 @@
 				CA7C70BB185EF50E00B348BA /* main.m in Sources */,
 				CA7C70BC185EF50E00B348BA /* UIWebView+Tools.m in Sources */,
 				CA7C70BD185EF50E00B348BA /* UIImageView+WebCache.m in Sources */,
+				CAADF6C81929681300ECA4C1 /* ProfilViewController.m in Sources */,
 				CA7C70BE185EF50E00B348BA /* HFRplusAppDelegate.m in Sources */,
 				CA7C70BF185EF50E00B348BA /* InfosViewController.m in Sources */,
 				CA7C70C0185EF50E00B348BA /* AideViewController.m in Sources */,
