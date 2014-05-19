@@ -18,10 +18,35 @@
 
 #import "ASIHTTPRequest.h"
 
+#import "ProfilViewController.h" //test
+
 @implementation ForumsTableViewController
 @synthesize request;
 @synthesize forumsTableView, loadingView, arrayData, topicsTableViewController;
 @synthesize status, statusMessage, maintenanceView;
+
+#pragma mark -
+#pragma mark Test BTN
+
+- (void)testBtn {
+
+    ProfilViewController *profilVC = [[ProfilViewController alloc] initWithNibName:@"ProfilViewController" bundle:nil andUrl:@"/hfr/profil-89386.htm"];
+
+    
+    // Set options
+    profilVC.wantsFullScreenLayout = YES;
+    
+    HFRNavigationController *nc = [[HFRNavigationController alloc] initWithRootViewController:profilVC];
+    nc.modalPresentationStyle = UIModalPresentationFormSheet;
+    
+    [self presentModalViewController:nc animated:YES];
+    [nc release];
+    
+    
+    [profilVC release];
+    
+}
+
 #pragma mark -
 #pragma mark Data lifecycle
 
@@ -707,6 +732,11 @@
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
     [segmentBarItem release];	
 
+    // test BTN
+	UIBarButtonItem *segmentBarItem2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(testBtn)];
+	self.navigationItem.leftBarButtonItem = segmentBarItem2;
+    [segmentBarItem2 release];
+    
 	[(ShakeView*)self.view setShakeDelegate:self];
 
 	self.arrayData = [[NSMutableArray alloc] init];
