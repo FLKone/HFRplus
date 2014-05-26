@@ -29,6 +29,8 @@
 
 #import "UIScrollView+SVPullToRefresh.h"
 
+#import "PullToRefreshErrorViewController.h"
+
 @implementation FavoritesTableViewController
 @synthesize pressedIndexPath, favoritesTableView, loadingView, showAll;
 @synthesize arrayData, arrayNewData, arrayCategories; //v2 remplace arrayData, arrayDataID, arrayDataID2, arraySection
@@ -55,6 +57,9 @@
         
         [btn2 setSelected:NO];
         //[btn2 setHighlighted:NO];
+        
+        [self.favoritesTableView setTableHeaderView:((PullToRefreshErrorViewController *)[self.childViewControllers objectAtIndex:0]).view];
+        
     }
     else {
         self.showAll = YES;
@@ -63,6 +68,8 @@
         
         [btn2 setSelected:YES];
         //[btn2 setHighlighted:YES];
+        
+        [self.favoritesTableView setTableHeaderView:nil];
     }
 
     if(self.status == kNoResults)
@@ -315,18 +322,22 @@
 	HTMLNode * bodyNode = [myParser body];
 
 	if (![bodyNode getAttributeNamed:@"id"]) {
+        NSDictionary *notif;
+        
 		if ([[[bodyNode firstChild] tagName] isEqualToString:@"p"]) {
-			NSLog(@"p");
-			
-			self.status = kMaintenance;
-			self.statusMessage = [[[bodyNode firstChild] contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-			[myParser release];
-            return;
+            
+            notif = [NSDictionary dictionaryWithObjectsAndKeys:   [NSNumber numberWithInt:kMaintenance], @"status",
+                     [[[bodyNode firstChild] contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]], @"message", nil];
+
 		}
-		
-		NSLog(@"id");
-		self.status = kNoAuth;
-		self.statusMessage = [[[bodyNode findChildWithAttribute:@"class" matchingName:@"hop" allowPartial:NO] contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        else {
+            notif = [NSDictionary dictionaryWithObjectsAndKeys:   [NSNumber numberWithInt:kNoAuth], @"status",
+                     [[[bodyNode findChildWithAttribute:@"class" matchingName:@"hop" allowPartial:NO] contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]], @"message", nil];
+            
+        }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kStatusChangedNotification object:self userInfo:notif];
+
 		[myParser release];
 		return;		
 	}
@@ -355,11 +366,14 @@
     NSArray *temporaryTopicsArray = [bodyNode findChildrenWithAttribute:@"class" matchingName:@"sujet ligne_booleen" allowPartial:YES]; //Get topics for cat
     
 	if (temporaryTopicsArray.count == 0) {
-		//NSLog(@"Aucun nouveau message %d", self.arrayDataID.count);
-		self.status = kNoResults;
-		self.statusMessage = @"Aucun nouveau message";
-		//[myParser release];
-		//return;
+
+        NSLog(@"kNoResults");
+        
+        NSDictionary *notif = [NSDictionary dictionaryWithObjectsAndKeys:   [NSNumber numberWithInt:kNoResults], @"status",
+                 @"Aucun nouveau message", @"message", nil];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kStatusChangedNotification object:self userInfo:notif];
+
 	}
 	
 	//hash_check
@@ -413,7 +427,10 @@
     
 	[myParser release];
 	if (self.status != kNoResults) {
-        self.status = kComplete;
+        
+        NSDictionary *notif = [NSDictionary dictionaryWithObjectsAndKeys:   [NSNumber numberWithInt:kComplete], @"status", nil];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kStatusChangedNotification object:self userInfo:notif];
     }
     
     //NSLog(@"self.arrayCategories %@", self.arrayCategories);
@@ -499,6 +516,29 @@
 //    [[[self.navigationController.navigationBar subviews] objectAtIndex:0] setFrame:CGRect]
 }
 
+-(void)StatusChanged:(NSNotification *)notification {
+    NSLog(@"StatusChanged %@", notification);
+    
+    NSDictionary *notif = [notification userInfo];
+    
+    self.status = [[notif valueForKey:@"status"] intValue];
+    
+    if (self.status == kComplete || self.status == kIdle) {
+
+        self.favoritesTableView.tableHeaderView = nil;
+    }
+    else
+    {
+        PullToRefreshErrorViewController *ErrorVC = [[PullToRefreshErrorViewController alloc] initWithNibName:nil bundle:nil andDico:notif];
+        [self addChildViewController:ErrorVC];
+        
+        
+        self.favoritesTableView.tableHeaderView = ErrorVC.view;
+        [ErrorVC sizeToFit];
+    }
+    
+}
+
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     NSLog(@"initWithNibName");
@@ -525,6 +565,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(OrientationChanged)
                                                  name:UIApplicationDidChangeStatusBarOrientationNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(StatusChanged:)
+                                                 name:kStatusChangedNotification
                                                object:nil];
     
 	// reload
@@ -1351,6 +1396,7 @@
 	[self viewDidUnload];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kStatusChangedNotification object:nil];
 
 	[request cancel];
 	[request setDelegate:nil];

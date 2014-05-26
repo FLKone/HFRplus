@@ -804,6 +804,20 @@
 		CACADFD919217CCA0071D2DA /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = CACADFD619217CCA0071D2DA /* UIScrollView+SVPullToRefresh.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		CACADFDA19217CCA0071D2DA /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = CACADFD619217CCA0071D2DA /* UIScrollView+SVPullToRefresh.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		CAF03C561245612800897C3B /* AccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAF03C551245612800897C3B /* AccessoryView.xib */; };
+		CAF5DB5819328EB4000B5215 /* PullToRefreshErrorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF5DB5719328EB4000B5215 /* PullToRefreshErrorViewController.m */; };
+		CAF5DB5919328EB4000B5215 /* PullToRefreshErrorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF5DB5719328EB4000B5215 /* PullToRefreshErrorViewController.m */; };
+		CAF5DB601932BA58000B5215 /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB5A1932BA58000B5215 /* check.png */; };
+		CAF5DB611932BA58000B5215 /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB5A1932BA58000B5215 /* check.png */; };
+		CAF5DB621932BA58000B5215 /* check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB5B1932BA58000B5215 /* check@2x.png */; };
+		CAF5DB631932BA58000B5215 /* check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB5B1932BA58000B5215 /* check@2x.png */; };
+		CAF5DB641932BA58000B5215 /* error.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB5C1932BA58000B5215 /* error.png */; };
+		CAF5DB651932BA58000B5215 /* error.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB5C1932BA58000B5215 /* error.png */; };
+		CAF5DB661932BA58000B5215 /* error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB5D1932BA58000B5215 /* error@2x.png */; };
+		CAF5DB671932BA58000B5215 /* error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB5D1932BA58000B5215 /* error@2x.png */; };
+		CAF5DB681932BA58000B5215 /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB5E1932BA58000B5215 /* info.png */; };
+		CAF5DB691932BA58000B5215 /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB5E1932BA58000B5215 /* info.png */; };
+		CAF5DB6A1932BA58000B5215 /* info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB5F1932BA58000B5215 /* info@2x.png */; };
+		CAF5DB6B1932BA58000B5215 /* info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB5F1932BA58000B5215 /* info@2x.png */; };
 		CAF6C0121607B62300B4B70C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAF6C0111607B62300B4B70C /* CoreData.framework */; };
 		CAFD004315B9B665003CA3FC /* HFRDebugViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAFD004115B9B665003CA3FC /* HFRDebugViewController.m */; };
 		CAFD004415B9B665003CA3FC /* HFRDebugViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAFD004215B9B665003CA3FC /* HFRDebugViewController.xib */; };
@@ -1334,6 +1348,14 @@
 		CACADFD519217CCA0071D2DA /* UIScrollView+SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SVPullToRefresh.h"; sourceTree = "<group>"; };
 		CACADFD619217CCA0071D2DA /* UIScrollView+SVPullToRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVPullToRefresh.m"; sourceTree = "<group>"; };
 		CAF03C551245612800897C3B /* AccessoryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccessoryView.xib; sourceTree = "<group>"; };
+		CAF5DB5619328EB4000B5215 /* PullToRefreshErrorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PullToRefreshErrorViewController.h; sourceTree = "<group>"; };
+		CAF5DB5719328EB4000B5215 /* PullToRefreshErrorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PullToRefreshErrorViewController.m; sourceTree = "<group>"; };
+		CAF5DB5A1932BA58000B5215 /* check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check.png; sourceTree = "<group>"; };
+		CAF5DB5B1932BA58000B5215 /* check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check@2x.png"; sourceTree = "<group>"; };
+		CAF5DB5C1932BA58000B5215 /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = error.png; sourceTree = "<group>"; };
+		CAF5DB5D1932BA58000B5215 /* error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "error@2x.png"; sourceTree = "<group>"; };
+		CAF5DB5E1932BA58000B5215 /* info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info.png; sourceTree = "<group>"; };
+		CAF5DB5F1932BA58000B5215 /* info@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info@2x.png"; sourceTree = "<group>"; };
 		CAF6C0111607B62300B4B70C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		CAFD004015B9B665003CA3FC /* HFRDebugViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFRDebugViewController.h; sourceTree = "<group>"; };
 		CAFD004115B9B665003CA3FC /* HFRDebugViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFRDebugViewController.m; sourceTree = "<group>"; };
@@ -1502,6 +1524,8 @@
 				CA1070C815A5F407002E6C19 /* SettingsViewController.m */,
 				CAC4966715B77357009128BC /* HFRNavigationController.h */,
 				CAC4966815B77357009128BC /* HFRNavigationController.m */,
+				CAF5DB5619328EB4000B5215 /* PullToRefreshErrorViewController.h */,
+				CAF5DB5719328EB4000B5215 /* PullToRefreshErrorViewController.m */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -2024,6 +2048,12 @@
 			isa = PBXGroup;
 			children = (
 				CA7472D317E14D4500B45E15 /* iOS7 */,
+				CAF5DB5A1932BA58000B5215 /* check.png */,
+				CAF5DB5B1932BA58000B5215 /* check@2x.png */,
+				CAF5DB5C1932BA58000B5215 /* error.png */,
+				CAF5DB5D1932BA58000B5215 /* error@2x.png */,
+				CAF5DB5E1932BA58000B5215 /* info.png */,
+				CAF5DB5F1932BA58000B5215 /* info@2x.png */,
 				CA00C5A317C30C370067B457 /* 06-magnify.png */,
 				CA00C5A417C30C370067B457 /* 06-magnify@2x.png */,
 				CA00C5A517C30C370067B457 /* 06-magnifying-glass.png */,
@@ -2558,10 +2588,12 @@
 				CA00C6B317C30C370067B457 /* beginoff.png in Resources */,
 				CA79581C12836B24007C4E02 /* HFRSearchViewController.xib in Resources */,
 				CA00C64317C30C370067B457 /* ouch.gif in Resources */,
+				CAF5DB6A1932BA58000B5215 /* info@2x.png in Resources */,
 				CA00C6D817C30C370067B457 /* toolbar3@2x.png in Resources */,
 				CA00C6A117C30C370067B457 /* bgiPad.png in Resources */,
 				CA00C62317C30C370067B457 /* crazy.gif in Resources */,
 				CA2E4C0A17E21EC700E95622 /* Images.xcassets in Resources */,
+				CAF5DB621932BA58000B5215 /* check@2x.png in Resources */,
 				CA00C62C17C30C370067B457 /* fouyaya.gif in Resources */,
 				CA7472EC17E15FE300B45E15 /* ToolBarFastRewind_off.png in Resources */,
 				CA00C66B17C30C370067B457 /* Default.png in Resources */,
@@ -2575,6 +2607,7 @@
 				CA00C63917C30C370067B457 /* lol.gif in Resources */,
 				CA34780C12EB557500D1BA2A /* PayViewController.xib in Resources */,
 				CA00C6BB17C30C370067B457 /* buttonbeginon@2x.png in Resources */,
+				CAF5DB681932BA58000B5215 /* info.png in Resources */,
 				CA00C6E217C30C370067B457 /* photoDefault.png in Resources */,
 				CA00C64E17C30C370067B457 /* spookie.gif in Resources */,
 				CA00C45E17C301650067B457 /* MainWindow.xib in Resources */,
@@ -2607,6 +2640,7 @@
 				CA00C66117C30C370067B457 /* style-liste-ipad-portrait.css in Resources */,
 				CA00C69017C30C370067B457 /* 60-signpost.png in Resources */,
 				CA00C67F17C30C370067B457 /* 113-navigation@2x.png in Resources */,
+				CAF5DB601932BA58000B5215 /* check.png in Resources */,
 				CA00C6C517C30C370067B457 /* buttonnextoff@2x.png in Resources */,
 				CA00C68817C30C370067B457 /* 19-gear.png in Resources */,
 				CA00C6C717C30C370067B457 /* buttonnexton@2x.png in Resources */,
@@ -2633,12 +2667,14 @@
 				CA00C6BA17C30C370067B457 /* buttonbeginon.png in Resources */,
 				CAA1F69117E5DFA20006E785 /* plus.png in Resources */,
 				CABC726D17E605E5003E722E /* downsmall.png in Resources */,
+				CAF5DB641932BA58000B5215 /* error.png in Resources */,
 				CA00C64917C30C370067B457 /* sarcastic.gif in Resources */,
 				CAFD004415B9B665003CA3FC /* HFRDebugViewController.xib in Resources */,
 				CA00C3F617C2FE1B0067B457 /* IASKAppSettingsView.xib in Resources */,
 				CA00C66617C30C370067B457 /* style-smile.css in Resources */,
 				CA00C61A17C30C370067B457 /* 24.gif in Resources */,
 				CA00C69617C30C370067B457 /* arrowend.png in Resources */,
+				CAF5DB661932BA58000B5215 /* error@2x.png in Resources */,
 				CA00C67917C30C370067B457 /* 06-magnifying-glass.png in Resources */,
 				CA00C68317C30C370067B457 /* 121-lanscape.png in Resources */,
 				CA00C69817C30C370067B457 /* arrowforward.png in Resources */,
@@ -2844,10 +2880,12 @@
 				CA7C7051185EF50E00B348BA /* beginoff.png in Resources */,
 				CA7C7052185EF50E00B348BA /* HFRSearchViewController.xib in Resources */,
 				CA7C7053185EF50E00B348BA /* ouch.gif in Resources */,
+				CAF5DB6B1932BA58000B5215 /* info@2x.png in Resources */,
 				CA7C7054185EF50E00B348BA /* toolbar3@2x.png in Resources */,
 				CA7C7055185EF50E00B348BA /* bgiPad.png in Resources */,
 				CA7C7056185EF50E00B348BA /* crazy.gif in Resources */,
 				CA7C7057185EF50E00B348BA /* Images.xcassets in Resources */,
+				CAF5DB631932BA58000B5215 /* check@2x.png in Resources */,
 				CA7C7058185EF50E00B348BA /* fouyaya.gif in Resources */,
 				CA7C7059185EF50E00B348BA /* ToolBarFastRewind_off.png in Resources */,
 				CA7C705A185EF50E00B348BA /* Default.png in Resources */,
@@ -2861,6 +2899,7 @@
 				CA7C7062185EF50E00B348BA /* lol.gif in Resources */,
 				CA7C7063185EF50E00B348BA /* PayViewController.xib in Resources */,
 				CA7C7064185EF50E00B348BA /* buttonbeginon@2x.png in Resources */,
+				CAF5DB691932BA58000B5215 /* info.png in Resources */,
 				CA7C7065185EF50E00B348BA /* photoDefault.png in Resources */,
 				CA7C7066185EF50E00B348BA /* spookie.gif in Resources */,
 				CA7C7067185EF50E00B348BA /* MainWindow.xib in Resources */,
@@ -2893,6 +2932,7 @@
 				CA7C7082185EF50E00B348BA /* style-liste-ipad-portrait.css in Resources */,
 				CA7C7083185EF50E00B348BA /* 60-signpost.png in Resources */,
 				CA7C7084185EF50E00B348BA /* 113-navigation@2x.png in Resources */,
+				CAF5DB611932BA58000B5215 /* check.png in Resources */,
 				CA7C7085185EF50E00B348BA /* buttonnextoff@2x.png in Resources */,
 				CA7C7086185EF50E00B348BA /* 19-gear.png in Resources */,
 				CA7C7087185EF50E00B348BA /* buttonnexton@2x.png in Resources */,
@@ -2919,12 +2959,14 @@
 				CA7C709C185EF50E00B348BA /* buttonbeginon.png in Resources */,
 				CA7C709D185EF50E00B348BA /* plus.png in Resources */,
 				CA7C709E185EF50E00B348BA /* downsmall.png in Resources */,
+				CAF5DB651932BA58000B5215 /* error.png in Resources */,
 				CA7C709F185EF50E00B348BA /* sarcastic.gif in Resources */,
 				CA7C70A0185EF50E00B348BA /* HFRDebugViewController.xib in Resources */,
 				CA7C70A1185EF50E00B348BA /* IASKAppSettingsView.xib in Resources */,
 				CA7C70A2185EF50E00B348BA /* style-smile.css in Resources */,
 				CA7C70A3185EF50E00B348BA /* 24.gif in Resources */,
 				CA7C70A4185EF50E00B348BA /* arrowend.png in Resources */,
+				CAF5DB671932BA58000B5215 /* error@2x.png in Resources */,
 				CA7C70A5185EF50E00B348BA /* 06-magnifying-glass.png in Resources */,
 				CA7C70A6185EF50E00B348BA /* 121-lanscape.png in Resources */,
 				CA7C70A7185EF50E00B348BA /* arrowforward.png in Resources */,
@@ -2973,6 +3015,7 @@
 				CA00C3F517C2FE1B0067B457 /* IASKTextField.m in Sources */,
 				CA00C3FC17C2FE1B0067B457 /* MBProgressHUD.m in Sources */,
 				01BF8A54121D7945007624B6 /* Forum.m in Sources */,
+				CAF5DB5819328EB4000B5215 /* PullToRefreshErrorViewController.m in Sources */,
 				01BF8B45121DAD33007624B6 /* TopicsTableViewController.m in Sources */,
 				01BF8B70121DAEF3007624B6 /* Topic.m in Sources */,
 				01BF8C4C121DBB09007624B6 /* UIAlertViewURL.m in Sources */,
@@ -3084,6 +3127,7 @@
 				CA7C70C7185EF50E00B348BA /* IASKTextField.m in Sources */,
 				CA7C70C8185EF50E00B348BA /* MBProgressHUD.m in Sources */,
 				CA7C70C9185EF50E00B348BA /* Forum.m in Sources */,
+				CAF5DB5919328EB4000B5215 /* PullToRefreshErrorViewController.m in Sources */,
 				CA7C70CA185EF50E00B348BA /* TopicsTableViewController.m in Sources */,
 				CA7C70CB185EF50E00B348BA /* Topic.m in Sources */,
 				CA7C70CC185EF50E00B348BA /* UIAlertViewURL.m in Sources */,

@@ -22,6 +22,8 @@ typedef enum {
 	kComplete
 } STATUS;
 
+#define kStatusChangedNotification  @"kStatusChangedNotification"
+
 #define kForumURL				@"http://forum.hardware.fr"
 
 #define kTimeoutMini		30
