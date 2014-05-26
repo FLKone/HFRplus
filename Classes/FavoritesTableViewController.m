@@ -463,6 +463,8 @@
             UIView *btn2;
             
             UIInterfaceOrientation o = [[UIApplication sharedApplication] statusBarOrientation];
+            
+
             if (UIDeviceOrientationIsLandscape(o)) {
                 NSLog(@"LAND IPHONE");
                 btn = [self.navigationController.navigationBar viewWithTag:238];
@@ -477,8 +479,16 @@
             
             [btn2 setHidden:YES];
             [btn setHidden:NO];
+            
             CGRect frame = btn.frame;
-            frame.origin.y = (self.navigationController.navigationBar.frame.size.height - frame.size.height)/2;
+
+            if (UIDeviceOrientationIsLandscape(o)) {
+                frame.origin.y = (32 - frame.size.height)/2;
+            }
+            else {
+                frame.origin.y = (44 - frame.size.height)/2;
+            }
+            
             btn.frame = frame;
             
         }
