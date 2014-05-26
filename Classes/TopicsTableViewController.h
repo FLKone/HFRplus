@@ -30,6 +30,8 @@
 	NSString *forumNewTopicUrl;
 
 	NSMutableArray *arrayData;
+    NSMutableArray *arrayNewData;
+
 
 	MessagesTableViewController *messagesTableViewController;
 
@@ -86,6 +88,7 @@
 @property (nonatomic, retain) NSString *forumFlag0URL;
 
 @property (nonatomic, retain) NSMutableArray *arrayData;
+@property (nonatomic, retain) NSMutableArray *arrayNewData;
 @property (nonatomic, retain) MessagesTableViewController *messagesTableViewController;
 
 @property (nonatomic, retain) NSIndexPath *pressedIndexPath;

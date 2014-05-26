@@ -15,6 +15,7 @@
 	IBOutlet UIView *loadingView;
 
 	NSMutableArray *arrayData;
+	NSMutableArray *arrayNewData;
 	ASIHTTPRequest *request;
 	
 	TopicsTableViewController *topicsTableViewController;
@@ -28,6 +29,7 @@
 @property (nonatomic, retain) IBOutlet UIView *loadingView;
 
 @property (nonatomic, retain) NSMutableArray *arrayData;
+@property (nonatomic, retain) NSMutableArray *arrayNewData;
 @property (nonatomic, retain) TopicsTableViewController *topicsTableViewController;
 
 @property (retain, nonatomic) ASIHTTPRequest *request;

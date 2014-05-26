@@ -28,7 +28,6 @@
 #import "TopicsTableViewController.h"
 
 #import "UIScrollView+SVPullToRefresh.h"
-
 #import "PullToRefreshErrorViewController.h"
 
 @implementation FavoritesTableViewController
@@ -165,7 +164,7 @@
 
 	//[self.favoritesTableView reloadData];
 	
-	[self loadDataInTableView:[request responseData]];
+	[self loadDataInTableView:[theRequest responseData]];
 	
     [self.arrayData removeAllObjects];
     
@@ -518,6 +517,10 @@
 
 -(void)StatusChanged:(NSNotification *)notification {
     NSLog(@"StatusChanged %@", notification);
+    
+    if ([[notification object] class] != [self class]) {
+        return;
+    }
     
     NSDictionary *notif = [notification userInfo];
     

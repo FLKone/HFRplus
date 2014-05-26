@@ -63,6 +63,7 @@
     //self.label.backgroundColor = [UIColor redColor];
     [self.label setTextAlignment:NSTextAlignmentCenter];
     [self.label setFont:[UIFont systemFontOfSize:14]];
+    [self.label setNumberOfLines:0];
     
     [bgView addSubview:self.image];
     [bgView addSubview:self.label];
