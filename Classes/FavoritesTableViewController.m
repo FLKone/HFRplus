@@ -68,12 +68,12 @@
     if(self.status == kNoResults)
     {
         if (self.showAll) {
-            [self.favoritesTableView setHidden:NO];
-            [self.maintenanceView setHidden:YES];
+            //[self.favoritesTableView setHidden:NO];
+            //[self.maintenanceView setHidden:YES];
         }
         else {
-            [self.favoritesTableView setHidden:YES];
-            [self.maintenanceView setHidden:NO];
+            //[self.favoritesTableView setHidden:YES];
+            //[self.maintenanceView setHidden:NO];
         }
     }
     
@@ -208,7 +208,7 @@
 	
     [self.maintenanceView setText:@"oops :o"];
     
-    [self.loadingView setHidden:YES];
+    //[self.loadingView setHidden:YES];
     //[self.maintenanceView setHidden:NO];
     //[self.favoritesTableView setHidden:YES];
 	
@@ -294,9 +294,9 @@
 	[self.arrayData removeAllObjects];
 	
 	[self.favoritesTableView reloadData];
-	[self.favoritesTableView setHidden:YES];
-	[self.maintenanceView setHidden:YES];	
-	[self.loadingView setHidden:YES];
+	//[self.favoritesTableView setHidden:YES];
+	//[self.maintenanceView setHidden:YES];
+	//[self.loadingView setHidden:YES];
 	
 }
 //-- V2
