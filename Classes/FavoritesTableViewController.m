@@ -57,7 +57,10 @@
         [btn2 setSelected:NO];
         //[btn2 setHighlighted:NO];
         
-        [self.favoritesTableView setTableHeaderView:((PullToRefreshErrorViewController *)[self.childViewControllers objectAtIndex:0]).view];
+        //On réaffiche le header
+        if (self.childViewControllers.count > 0) {
+            [self.favoritesTableView setTableHeaderView:((PullToRefreshErrorViewController *)[self.childViewControllers objectAtIndex:0]).view];
+        }
         
     }
     else {
@@ -516,9 +519,9 @@
 }
 
 -(void)StatusChanged:(NSNotification *)notification {
-    NSLog(@"StatusChanged %@", notification);
     
     if ([[notification object] class] != [self class]) {
+        //NSLog(@"KO");
         return;
     }
     
@@ -526,15 +529,22 @@
     
     self.status = [[notif valueForKey:@"status"] intValue];
     
-    if (self.status == kComplete || self.status == kIdle) {
+    //NSLog(@"StatusChanged %d = %u", self.childViewControllers.count, self.status);
 
+    //on vire l'eventuel header actuel
+    if (self.childViewControllers.count > 0) {
+        [[self.childViewControllers objectAtIndex:0] removeFromParentViewController];
         self.favoritesTableView.tableHeaderView = nil;
+    }
+    
+    if (self.status == kComplete || self.status == kIdle) {
+        NSLog(@"COMPLETE %d", self.childViewControllers.count);
+
     }
     else
     {
         PullToRefreshErrorViewController *ErrorVC = [[PullToRefreshErrorViewController alloc] initWithNibName:nil bundle:nil andDico:notif];
         [self addChildViewController:ErrorVC];
-        
         
         self.favoritesTableView.tableHeaderView = ErrorVC.view;
         [ErrorVC sizeToFit];

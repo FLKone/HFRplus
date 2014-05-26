@@ -815,9 +815,9 @@
 }
 
 -(void)StatusChanged:(NSNotification *)notification {
-    NSLog(@"StatusChanged %@", notification);
     
     if ([[notification object] class] != [self class]) {
+        //NSLog(@"KO");
         return;
     }
     
@@ -825,20 +825,22 @@
     
     self.status = [[notif valueForKey:@"status"] intValue];
     
-    if (self.status == kComplete || self.status == kIdle) {
-        
+    //NSLog(@"StatusChanged %d = %u", self.childViewControllers.count, self.status);
+    
+    //on vire l'eventuel header actuel
+    if (self.childViewControllers.count > 0) {
+        [[self.childViewControllers objectAtIndex:0] removeFromParentViewController];
         self.topicsTableView.tableHeaderView = nil;
+    }
+    
+    if (self.status == kComplete || self.status == kIdle) {
+        NSLog(@"COMPLETE %d", self.childViewControllers.count);
+        
     }
     else
     {
-        
-        if (self.status == kNoAuth) {
-            self.topicsTableView.tableFooterView = nil;
-        }
-        
         PullToRefreshErrorViewController *ErrorVC = [[PullToRefreshErrorViewController alloc] initWithNibName:nil bundle:nil andDico:notif];
         [self addChildViewController:ErrorVC];
-        
         
         self.topicsTableView.tableHeaderView = ErrorVC.view;
         [ErrorVC sizeToFit];
