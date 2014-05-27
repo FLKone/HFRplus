@@ -556,7 +556,7 @@ background-size:100% 100%;
 }
 
 .ios7 #toolbarpage .button2.begin {
-	left:44px;
+	left:54px;
 	background-image:url(ToolBarPrevious_off.png);
 }
 .ios7 #toolbarpage .button2.begin.active {
@@ -566,7 +566,7 @@ background-size:100% 100%;
     opacity:0.4;
 }
 .ios7 #toolbarpage .button2.end {
-	right:44px;
+	right:54px;
 	background-image:url(ToolBarPlay_off.png);
 }
 .ios7 #toolbarpage .button2.end.active {
