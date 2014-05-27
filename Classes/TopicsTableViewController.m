@@ -474,6 +474,23 @@
 			[tmptoolbar setItems:items animated:NO];
 			
 			if ([self firstPageNumber] != [self lastPageNumber]) {
+                
+                
+                
+                if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+                    if (![self.topicsTableView viewWithTag:666777]) {
+                        CGRect frame = self.topicsTableView.bounds;
+                        frame.origin.y = -frame.size.height;
+                        UIView* grayView = [[UIView alloc] initWithFrame:frame];
+                        grayView.tag = 666777;
+                        grayView.backgroundColor = [UIColor whiteColor];
+                        [self.topicsTableView insertSubview:grayView atIndex:0];
+                        [grayView release];
+                    }
+
+                    [self.topicsTableView setBackgroundColor:[UIColor colorWithRed:239/255.0f green:239/255.0f blue:244/255.0f alpha:1.0f]];
+                }
+                
 				self.topicsTableView.tableFooterView = tmptoolbar;
 			}
 			else {
