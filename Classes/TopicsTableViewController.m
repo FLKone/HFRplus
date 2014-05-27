@@ -1235,11 +1235,14 @@
 #pragma mark Table view data source
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-	return [NSString stringWithFormat:@"%@", self.forumName];
+	return [[self forumName] stringByAppendingString:[NSString stringWithFormat:@" p.%d", [self pageNumber]]];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return HEIGHT_FOR_HEADER_IN_SECTION;
+    if (arrayData.count)
+        return HEIGHT_FOR_HEADER_IN_SECTION;
+    else
+        return 0;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -1280,17 +1283,24 @@
     //UIButton clickable pour accéder à la catégorie
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, curWidth, HEIGHT_FOR_HEADER_IN_SECTION)];
     [button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+
+    NSString *title = [self tableView:tableView titleForHeaderInSection:section];
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         [button setTitleColor:[UIColor colorWithRed:109/255.0f green:109/255.0f blue:114/255.0f alpha:1] forState:UIControlStateNormal];
-        [button setTitle:[[self forumName] uppercaseString] forState:UIControlStateNormal];
+        [button setTitle:[title uppercaseString] forState:UIControlStateNormal];
         [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
         [button setTitleEdgeInsets:UIEdgeInsetsMake(10, 16, 0, 0)];
+        [button.titleLabel setMinimumFontSize:10];
+        button.titleLabel.adjustsFontSizeToFitWidth = YES;
+        [button.titleLabel setNumberOfLines:1];
+
+
     }
     else
     {
         [button setTitleEdgeInsets:UIEdgeInsetsMake(0, 8, 0, 0)];
-        [button setTitle:[self forumName] forState:UIControlStateNormal];
+        [button setTitle:title forState:UIControlStateNormal];
         [button.titleLabel setFont:[UIFont boldSystemFontOfSize:15]];
         [button.titleLabel setShadowColor:[UIColor darkGrayColor]];
         [button.titleLabel setShadowOffset:CGSizeMake(0.0, 1.0)];
