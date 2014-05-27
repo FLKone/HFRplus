@@ -79,6 +79,8 @@
 	[self.view removeGestureRecognizer:swipeLeftRecognizer];
 	[self.view removeGestureRecognizer:swipeRightRecognizer];
 	
+    [self.topicsTableView setContentOffset:CGPointZero animated:YES];
+
 	[request startAsynchronous];
 }
 
