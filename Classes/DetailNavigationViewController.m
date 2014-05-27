@@ -29,7 +29,11 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    self.navigationBar.translucent = NO;
+
+    
     [[self topViewController] setTitle:@"HFR+"];
+    
 }
 
 - (void)viewDidUnload
