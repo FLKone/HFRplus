@@ -591,7 +591,6 @@
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
     [segmentBarItem release];		
     
-    
     // showAll
     /*
  //   UIBarButtonItem *segmentBarItem3 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemOrganize target:self action:@selector(reload)];
@@ -917,7 +916,7 @@
         [button setTitleColor:[UIColor colorWithRed:109/255.0f green:109/255.0f blue:114/255.0f alpha:1] forState:UIControlStateNormal];
         [button setTitle:[[tmpForum aTitle] uppercaseString] forState:UIControlStateNormal];
         [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
-        [button setTitleEdgeInsets:UIEdgeInsetsMake(10, 16, 0, 0)];
+        [button setTitleEdgeInsets:UIEdgeInsetsMake(10, 10, 0, 0)];
     }
     else
     {

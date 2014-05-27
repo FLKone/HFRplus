@@ -469,7 +469,7 @@
 			[flexItem release];
 			
 			[fixItem release];	
-			
+
 			//add array of buttons to toolbar
 			[tmptoolbar setItems:items animated:NO];
 			
@@ -883,6 +883,10 @@
                                                  name:kStatusChangedNotification
                                                object:nil];
     
+
+    
+
+
 	//Gesture
 	UIGestureRecognizer *recognizer;
 	
@@ -1307,12 +1311,12 @@
         [button setTitleColor:[UIColor colorWithRed:109/255.0f green:109/255.0f blue:114/255.0f alpha:1] forState:UIControlStateNormal];
         [button setTitle:[title uppercaseString] forState:UIControlStateNormal];
         [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
-        [button setTitleEdgeInsets:UIEdgeInsetsMake(10, 16, 0, 0)];
         [button.titleLabel setMinimumFontSize:10];
         button.titleLabel.adjustsFontSizeToFitWidth = YES;
         [button.titleLabel setNumberOfLines:1];
 
 
+        [button setTitleEdgeInsets:UIEdgeInsetsMake(10, 10, 0, 10)];
     }
     else
     {
