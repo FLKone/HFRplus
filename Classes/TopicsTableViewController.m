@@ -1944,7 +1944,7 @@
         [UIView beginAnimations:nil context:nil];
         
         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
-            [actionSheet setFrame:CGRectMake(0, self.view.frame.size.height - myPickerView.frame.size.height - 44,
+            [actionSheet setFrame:CGRectMake(0, self.view.frame.size.height - myPickerView.frame.size.height + 20,
                                              self.view.frame.size.width, myPickerView.frame.size.height + 44)];
         }
         else
