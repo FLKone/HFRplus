@@ -30,10 +30,10 @@
 
 - (void)loadView {
     
-    NSLog(@"loadView %d %d", (int)[self.dico objectForKey:@"status"], kNoAuth);
+    //NSLog(@"loadView %d %d", (int)[self.dico objectForKey:@"status"], kNoAuth);
     
     UIView* bgView = [[UIView alloc] initWithFrame:CGRectZero];
-    //bgView.backgroundColor = [UIColor greenColor];
+    bgView.backgroundColor = [UIColor whiteColor];
     
     NSString *imageNamed;
     
@@ -70,12 +70,12 @@
     
     self.view = bgView;
     
-    NSLog(@"END");
+    //NSLog(@"END");
 }
 
 -(void)sizeToFit {
     
-    NSLog(@"=============== sizeToFit");
+    //NSLog(@"=============== sizeToFit");
 
     UIInterfaceOrientation o = [[UIApplication sharedApplication] statusBarOrientation];
 
@@ -124,9 +124,9 @@
     //iOS6/iPad   Status : 20 - Nav : 44 - Tab : 49
 
     
-    NSLog(@"status %f", MIN([[UIApplication sharedApplication] statusBarFrame].size.height, [[UIApplication sharedApplication] statusBarFrame].size.width));
-    NSLog(@"naviga %f", self.navigationController.navigationBar.frame.size.height);
-    NSLog(@"tabbar %f", self.tabBarController.tabBar.frame.size.height);
+    //NSLog(@"status %f", MIN([[UIApplication sharedApplication] statusBarFrame].size.height, [[UIApplication sharedApplication] statusBarFrame].size.width));
+    //NSLog(@"naviga %f", self.navigationController.navigationBar.frame.size.height);
+    //NSLog(@"tabbar %f", self.tabBarController.tabBar.frame.size.height);
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
 
