@@ -28,7 +28,7 @@
 #import "LinkItem.h"
 #import <CommonCrypto/CommonDigest.h>
 
-
+#import "ProfilViewController.h"
 
 @implementation MessagesTableViewController
 @synthesize loaded, isLoading, topicName, topicAnswerUrl, loadingView, messagesWebView, arrayData, updatedArrayData, detailViewController, messagesTableViewController, pollNode;
@@ -1726,16 +1726,16 @@
 		[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Editer", @"EditMessage", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
 		
 		if (self.navigationItem.rightBarButtonItem.enabled) {
-			[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Répondre", @"QuoteMessage", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+			[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Rép.", @"QuoteMessage", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
 		}
 
 	}
 	else {
 		//NSLog(@"profil");
 		if (self.navigationItem.rightBarButtonItem.enabled) {
-			[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Répondre", @"QuoteMessage", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+			[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Rép.", @"QuoteMessage", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
 		}
-		//[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Profil", @"actionProfil", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+
 		
 		if([[arrayData objectAtIndex:curMsg] MPUrl]){
 			//NSLog(@"MPUrl");
@@ -1745,6 +1745,7 @@
 		
 
 	}
+
 
 	
 	//"Citer ☑"@"Citer ☒"@"Citer ☐"	
@@ -1768,13 +1769,16 @@
 		}
 		
 	}
-	
+
+    
 	if ([self canBeFavorite]) {
 		//NSLog(@"isRedFlagged ★");
 		[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"★", @"actionFavoris", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
 	}
 	
 	
+    [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Profil", @"actionProfil", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+
  			
 	
 	
@@ -1912,11 +1916,20 @@
 	
 }
 -(void)actionProfil:(NSNumber *)curMsgN {
-	//NSLog(@"actionProfil");
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Minute papillon !"
-												   delegate:self cancelButtonTitle:@"OK OK..." otherButtonTitles: nil];
-	[alert show];	
-	[alert release];
+    int curMsg = [curMsgN intValue];
+
+    ProfilViewController *profilVC = [[ProfilViewController alloc] initWithNibName:@"ProfilViewController" bundle:nil andUrl:[[arrayData objectAtIndex:curMsg] urlProfil]];
+    
+    // Set options
+    profilVC.wantsFullScreenLayout = YES;
+    
+    HFRNavigationController *nc = [[HFRNavigationController alloc] initWithRootViewController:profilVC];
+    nc.modalPresentationStyle = UIModalPresentationFormSheet;
+    
+    [self presentModalViewController:nc animated:YES];
+    [nc release];
+    
+    
 	
 }
 -(void)actionMessage:(NSNumber *)curMsgN {
