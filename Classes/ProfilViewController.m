@@ -369,6 +369,77 @@
 
 }
 
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    //
+    if ([[[self.arrayData objectAtIndex:section] objectForKey:@"rows"] count]) {
+        return HEIGHT_FOR_HEADER_IN_SECTION;
+    }
+    else
+        return 0;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    
+    //On récupère la section (forum)
+    NSString *title = [[self.arrayData objectAtIndex:section] objectForKey:@"section"];
+    CGFloat curWidth = self.view.frame.size.width;
+    
+    //UIView globale
+	UIView* customView = [[[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,HEIGHT_FOR_HEADER_IN_SECTION)] autorelease];
+    customView.backgroundColor = [UIColor colorWithRed:239/255.0f green:239/255.0f blue:244/255.0f alpha:0.7];
+	customView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    
+	//UIImageView de fond
+    if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        UIImage *myImage = [UIImage imageNamed:@"bar2.png"];
+        UIImageView *imageView = [[[UIImageView alloc] initWithImage:myImage] autorelease];
+        imageView.alpha = 0.9;
+        imageView.frame = CGRectMake(0,0,curWidth,HEIGHT_FOR_HEADER_IN_SECTION);
+        imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        
+        [customView addSubview:imageView];
+    }
+    else {
+        //bordures/iOS7
+        UIView* borderView = [[[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,1/[[UIScreen mainScreen] scale])] autorelease];
+        borderView.backgroundColor = [UIColor colorWithRed:158/255.0f green:158/255.0f blue:114/162.0f alpha:0.7];
+        
+        //[customView addSubview:borderView];
+        
+        UIView* borderView2 = [[[UIView alloc] initWithFrame:CGRectMake(0,HEIGHT_FOR_HEADER_IN_SECTION-1/[[UIScreen mainScreen] scale],curWidth,1/[[UIScreen mainScreen] scale])] autorelease];
+        borderView2.backgroundColor = [UIColor colorWithRed:158/255.0f green:158/255.0f blue:114/162.0f alpha:0.7];
+        
+        //[customView addSubview:borderView2];
+        
+    }
+    
+    //UIButton clickable pour accéder à la catégorie
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, curWidth, HEIGHT_FOR_HEADER_IN_SECTION)];
+    [button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        [button setTitleColor:[UIColor colorWithRed:109/255.0f green:109/255.0f blue:114/255.0f alpha:1] forState:UIControlStateNormal];
+        [button setTitle:[title uppercaseString] forState:UIControlStateNormal];
+        [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        [button setTitleEdgeInsets:UIEdgeInsetsMake(10, 16, 0, 0)];
+    }
+    else
+    {
+        [button setTitleEdgeInsets:UIEdgeInsetsMake(0, 8, 0, 0)];
+        [button setTitle:title forState:UIControlStateNormal];
+        [button.titleLabel setFont:[UIFont boldSystemFontOfSize:15]];
+        [button.titleLabel setShadowColor:[UIColor darkGrayColor]];
+        [button.titleLabel setShadowOffset:CGSizeMake(0.0, 1.0)];
+    }
+    
+    [customView addSubview:button];
+	
+	return customView;
+	
+}
+
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
 	//NSLog(@"Count Forums Table View: %d", arrayData.count);
@@ -461,33 +532,27 @@
         }
         
         cell.textLabel.text = [theRow objectForKey:@"data"];
-        NSLog(@"theRow %@", theRow);
+        //NSLog(@"theRow %@", theRow);
 
         
         [cell.imageView setImageWithURL:[theRow objectForKey:@"url"] placeholderImage:[UIImage imageNamed:@"avatar_male_gray_on_light_48x48"] success:^(UIImage *image) {
 
-            NSLog(@"frame base %@", NSStringFromCGRect(cell.imageView.frame));
-            NSLog(@"image base %@", NSStringFromCGSize(image.size));
+            //NSLog(@"frame base %@", NSStringFromCGRect(cell.imageView.frame));
+            //NSLog(@"image base %@", NSStringFromCGSize(image.size));
             
             float newW = image.size.width / ( image.size.height / cell.imageView.frame.size.height );
             CGRect oldFrame = cell.imageView.frame;
 
             oldFrame.size.width = newW;
             cell.imageView.frame = oldFrame;
-            
-            NSLog(@"frame base %@", NSStringFromCGRect(cell.imageView.frame));
 
-            //[cell setSelected:YES animated:NO];
-            //[cell setSelected:NO animated:NO];
-            
-            //[cell.imageView setFrame:<#(CGRect)#>]
             [cell layoutSubviews];
             
-            NSLog(@"frame base %@", NSStringFromCGRect(cell.imageView.frame));
+            //NSLog(@"frame base %@", NSStringFromCGRect(cell.imageView.frame));
 
 
         } failure:^(NSError *error) {
-            NSLog(@"err");
+            //NSLog(@"err");
         }];
         
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -1015,7 +1080,9 @@
 			UIBarButtonItem *fixItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
                                                                                      target:nil
                                                                                      action:nil];
-			fixItem.width = 0.0;
+            
+            fixItem.width = SPACE_FOR_BARBUTTON;
+
 			
 			//Add buttons to the array
 			NSArray *items = [NSArray arrayWithObjects: systemItem1, fixItem, systemItemPrevious, flexItem, systemItem3, flexItem, systemItemNext, fixItem, systemItem2, nil];
@@ -1073,21 +1140,12 @@
 	if (temporaryTopicsArray.count == 0) {
 		//NSLog(@"Aucun nouveau message %d", self.arrayDataID.count);
 		self.status = kNoResults;
-		self.statusMessage = @"Aucun nouveau message";
+		self.statusMessage = @"Aucun feedback";
 		//[myParser release];
 		//return;
 	}
 	
 	
-	//Date du jour
-	NSDate *nowTopic = [[NSDate alloc] init];
-	NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-	[dateFormat setDateFormat:@"dd-MM-yyyy"];
-	NSString *theDate = [dateFormat stringFromDate:nowTopic];
-	
-	int countViewed = 0;
-	
-    
 	for (HTMLNode * topicNode in temporaryTopicsArray) { //Loop through all the tags
         
         if ([[[topicNode firstChild] className] isEqualToString:@"col7"]) {
@@ -1107,6 +1165,7 @@
         
         //Avis
         HTMLNode * avisNode = [nodes objectAtIndex:2];
+        //NSLog(@"avis %@", [[avisNode className] stringByReplacingOccurrencesOfString:@"col3 " withString:@""]);
         
         //Date
         HTMLNode * dateNode = [nodes objectAtIndex:3];
@@ -1117,7 +1176,7 @@
         
         NSDictionary *feedDic = [NSDictionary dictionaryWithObjectsAndKeys: [pseudoNode allContents], @"pseudo",
                                                                             [statusNode allContents], @"status",
-                                                                            [avisNode allContents], @"avis",
+                                                                            [[avisNode className] stringByReplacingOccurrencesOfString:@"col3 " withString:@""], @"avis",
                                                                             [dateNode allContents], @"date",
                                                                             [commsNode allContents], @"comm", nil];
         
@@ -1130,8 +1189,7 @@
 	
     //NSLog(@"self.arrayData %@", self.arrayData);
     
-	[dateFormat release];
-	[nowTopic release];
+
 	[myParser release];
 	
 	//NSDate *now = [NSDate date]; // Create a current date
@@ -1200,9 +1258,32 @@
     
 	NSDictionary *dic = [arrayData objectAtIndex:indexPath.row];
     
-		
-	[cell.pseudoLabel setText:[dic valueForKey:@"pseudo"]];
-	[cell.avisLabel setText:[dic valueForKey:@"avis"]];
+    if (((NSString *)[dic objectForKey:@"pseudo"]).length) {
+        [cell.pseudoLabel setText:[dic valueForKey:@"pseudo"]];
+    }
+    else {
+        [cell.pseudoLabel setText:@"pseudo supprimé"];
+    }
+
+    
+    if ([[dic valueForKey:@"avis"] isEqualToString:@"positive"]) {
+        [cell.avisLabel setTextColor:[UIColor colorWithRed:0.27f green:0.85f blue:0.46f alpha:1.0f]];
+        [cell.avisLabel setText:@"positif"];
+        [cell.avisLabel setFont:[UIFont boldSystemFontOfSize:13.0f]];
+
+    }
+    else if ([[dic valueForKey:@"avis"] isEqualToString:@"negative"]) {
+        [cell.avisLabel setTextColor:[UIColor colorWithRed:1.0f green:0.22f blue:0.22f alpha:1.0f]];
+        [cell.avisLabel setText:@"negatif"];
+        [cell.avisLabel setFont:[UIFont boldSystemFontOfSize:13.0f]];
+        
+    }
+    else {
+        [cell.avisLabel setTextColor:[UIColor colorWithRed:0.78f green:0.78f blue:0.8f alpha:1.0f]];
+        [cell.avisLabel setText:@"neutre"];
+        [cell.avisLabel setFont:[UIFont systemFontOfSize:13.0f]];
+    }
+
 	[cell.commLabel setText:[dic valueForKey:@"comm"]];
 	[cell.dateLabel setText:[dic valueForKey:@"date"]];
     
@@ -1210,6 +1291,10 @@
 	
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
 
 
 @end
