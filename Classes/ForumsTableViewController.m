@@ -32,7 +32,10 @@
 #pragma mark Test BTN
 
 - (void)testBtn {
-
+    /*
+     /hfr/profil-918540.htm //testreview
+     /hfr/profil-89386.htm //flk
+     */
     ProfilViewController *profilVC = [[ProfilViewController alloc] initWithNibName:@"ProfilViewController" bundle:nil andUrl:@"/hfr/profil-89386.htm"];
 
     
@@ -789,9 +792,9 @@
     [segmentBarItem release];	
 
     // test BTN
-	UIBarButtonItem *segmentBarItem2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(testBtn)];
-	self.navigationItem.leftBarButtonItem = segmentBarItem2;
-    [segmentBarItem2 release];
+	//UIBarButtonItem *segmentBarItem2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(testBtn)];
+	//self.navigationItem.leftBarButtonItem = segmentBarItem2;
+    //[segmentBarItem2 release];
     
 	[(ShakeView*)self.view setShakeDelegate:self];
 
