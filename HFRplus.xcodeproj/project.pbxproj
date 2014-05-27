@@ -818,6 +818,18 @@
 		CAF5DB691932BA58000B5215 /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB5E1932BA58000B5215 /* info.png */; };
 		CAF5DB6A1932BA58000B5215 /* info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB5F1932BA58000B5215 /* info@2x.png */; };
 		CAF5DB6B1932BA58000B5215 /* info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB5F1932BA58000B5215 /* info@2x.png */; };
+		CAF5DB701933D3D8000B5215 /* FeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB6F1933D3D8000B5215 /* FeedbackViewController.xib */; };
+		CAF5DB711933D3D8000B5215 /* FeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB6F1933D3D8000B5215 /* FeedbackViewController.xib */; };
+		CAF5DB731933D408000B5215 /* PersonnalLinkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB721933D408000B5215 /* PersonnalLinkViewController.xib */; };
+		CAF5DB741933D408000B5215 /* PersonnalLinkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB721933D408000B5215 /* PersonnalLinkViewController.xib */; };
+		CAF5DB761933D422000B5215 /* ConfigurationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB751933D422000B5215 /* ConfigurationViewController.xib */; };
+		CAF5DB771933D422000B5215 /* ConfigurationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB751933D422000B5215 /* ConfigurationViewController.xib */; };
+		CAF5DB7B19340741000B5215 /* FeedbackTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF5DB7919340741000B5215 /* FeedbackTableViewCell.m */; };
+		CAF5DB7C19340741000B5215 /* FeedbackTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF5DB7919340741000B5215 /* FeedbackTableViewCell.m */; };
+		CAF5DB7D19340741000B5215 /* FeedbackTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB7A19340741000B5215 /* FeedbackTableViewCell.xib */; };
+		CAF5DB7E19340741000B5215 /* FeedbackTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB7A19340741000B5215 /* FeedbackTableViewCell.xib */; };
+		CAF5DB8119341BBB000B5215 /* AvatarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF5DB8019341BBB000B5215 /* AvatarTableViewCell.m */; };
+		CAF5DB8219341BBB000B5215 /* AvatarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF5DB8019341BBB000B5215 /* AvatarTableViewCell.m */; };
 		CAF6C0121607B62300B4B70C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAF6C0111607B62300B4B70C /* CoreData.framework */; };
 		CAFD004315B9B665003CA3FC /* HFRDebugViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAFD004115B9B665003CA3FC /* HFRDebugViewController.m */; };
 		CAFD004415B9B665003CA3FC /* HFRDebugViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAFD004215B9B665003CA3FC /* HFRDebugViewController.xib */; };
@@ -1356,6 +1368,14 @@
 		CAF5DB5D1932BA58000B5215 /* error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "error@2x.png"; sourceTree = "<group>"; };
 		CAF5DB5E1932BA58000B5215 /* info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info.png; sourceTree = "<group>"; };
 		CAF5DB5F1932BA58000B5215 /* info@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info@2x.png"; sourceTree = "<group>"; };
+		CAF5DB6F1933D3D8000B5215 /* FeedbackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedbackViewController.xib; sourceTree = "<group>"; };
+		CAF5DB721933D408000B5215 /* PersonnalLinkViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonnalLinkViewController.xib; sourceTree = "<group>"; };
+		CAF5DB751933D422000B5215 /* ConfigurationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfigurationViewController.xib; sourceTree = "<group>"; };
+		CAF5DB7819340741000B5215 /* FeedbackTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackTableViewCell.h; sourceTree = "<group>"; };
+		CAF5DB7919340741000B5215 /* FeedbackTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackTableViewCell.m; sourceTree = "<group>"; };
+		CAF5DB7A19340741000B5215 /* FeedbackTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedbackTableViewCell.xib; sourceTree = "<group>"; };
+		CAF5DB7F19341BBB000B5215 /* AvatarTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvatarTableViewCell.h; sourceTree = "<group>"; };
+		CAF5DB8019341BBB000B5215 /* AvatarTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvatarTableViewCell.m; sourceTree = "<group>"; };
 		CAF6C0111607B62300B4B70C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		CAFD004015B9B665003CA3FC /* HFRDebugViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFRDebugViewController.h; sourceTree = "<group>"; };
 		CAFD004115B9B665003CA3FC /* HFRDebugViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFRDebugViewController.m; sourceTree = "<group>"; };
@@ -2282,6 +2302,14 @@
 				CAADF6C41929681300ECA4C1 /* ProfilViewController.h */,
 				CAADF6C51929681300ECA4C1 /* ProfilViewController.m */,
 				CAADF6C61929681300ECA4C1 /* ProfilViewController.xib */,
+				CAF5DB6F1933D3D8000B5215 /* FeedbackViewController.xib */,
+				CAF5DB721933D408000B5215 /* PersonnalLinkViewController.xib */,
+				CAF5DB751933D422000B5215 /* ConfigurationViewController.xib */,
+				CAF5DB7819340741000B5215 /* FeedbackTableViewCell.h */,
+				CAF5DB7919340741000B5215 /* FeedbackTableViewCell.m */,
+				CAF5DB7A19340741000B5215 /* FeedbackTableViewCell.xib */,
+				CAF5DB7F19341BBB000B5215 /* AvatarTableViewCell.h */,
+				CAF5DB8019341BBB000B5215 /* AvatarTableViewCell.m */,
 			);
 			name = Profil;
 			sourceTree = "<group>";
@@ -2441,6 +2469,7 @@
 				CA00C6D617C30C370067B457 /* toolbar2.png in Resources */,
 				CA00C68417C30C370067B457 /* 122-stats.png in Resources */,
 				01BF878D121C4407007624B6 /* CompteViewController.xib in Resources */,
+				CAF5DB7D19340741000B5215 /* FeedbackTableViewCell.xib in Resources */,
 				CA00C63317C30C370067B457 /* heink.gif in Resources */,
 				CA00C62617C30C370067B457 /* dtc.gif in Resources */,
 				CA00C6CF17C30C370067B457 /* endoff.png in Resources */,
@@ -2478,6 +2507,7 @@
 				CABC726E17E605E5003E722E /* downsmall@2x.png in Resources */,
 				CA00C3F917C2FE1B0067B457 /* IASKPSTextFieldSpecifierViewCell.xib in Resources */,
 				CA00C67117C30C370067B457 /* Icon-Small.png in Resources */,
+				CAF5DB731933D408000B5215 /* PersonnalLinkViewController.xib in Resources */,
 				CA00C6C017C30C370067B457 /* buttonendon.png in Resources */,
 				CA00C62B17C30C370067B457 /* foudtag.gif in Resources */,
 				CA7472EB17E15FE300B45E15 /* ToolBarFastForward_on@2x.png in Resources */,
@@ -2513,6 +2543,7 @@
 				013F0EB3121E117900BEBEB1 /* AddMessageViewController.xib in Resources */,
 				CA00C6C617C30C370067B457 /* buttonnexton.png in Resources */,
 				CABC727617E6077A003E722E /* downsmall7@2x.png in Resources */,
+				CAF5DB761933D422000B5215 /* ConfigurationViewController.xib in Resources */,
 				CA7472EF17E15FE300B45E15 /* ToolBarFastRewind_on@2x.png in Resources */,
 				CA00C65F17C30C370067B457 /* style-aide.css in Resources */,
 				CA00C69F17C30C370067B457 /* bginput.png in Resources */,
@@ -2648,6 +2679,7 @@
 				CA00C6B617C30C370067B457 /* buttonbeginhover.png in Resources */,
 				CA00C6AD17C30C370067B457 /* selectedrow@2x.png in Resources */,
 				CA00C6A617C30C370067B457 /* flagblue2@2x.png in Resources */,
+				CAF5DB701933D3D8000B5215 /* FeedbackViewController.xib in Resources */,
 				CA00C6C917C30C370067B457 /* buttonprevioushover@2x.png in Resources */,
 				CA00C67C17C30C370067B457 /* 111-user.png in Resources */,
 				CA00C6CC17C30C370067B457 /* buttonpreviouson.png in Resources */,
@@ -2733,6 +2765,7 @@
 				CA7C6FC0185EF50E00B348BA /* toolbar2.png in Resources */,
 				CA7C6FC1185EF50E00B348BA /* 122-stats.png in Resources */,
 				CA7C6FC2185EF50E00B348BA /* CompteViewController.xib in Resources */,
+				CAF5DB7E19340741000B5215 /* FeedbackTableViewCell.xib in Resources */,
 				CA7C6FC3185EF50E00B348BA /* heink.gif in Resources */,
 				CA7C6FC4185EF50E00B348BA /* dtc.gif in Resources */,
 				CA7C6FC5185EF50E00B348BA /* endoff.png in Resources */,
@@ -2770,6 +2803,7 @@
 				CA7C6FE4185EF50E00B348BA /* downsmall@2x.png in Resources */,
 				CA7C6FE5185EF50E00B348BA /* IASKPSTextFieldSpecifierViewCell.xib in Resources */,
 				CA7C6FE6185EF50E00B348BA /* Icon-Small.png in Resources */,
+				CAF5DB741933D408000B5215 /* PersonnalLinkViewController.xib in Resources */,
 				CA7C6FE7185EF50E00B348BA /* buttonendon.png in Resources */,
 				CA7C6FE8185EF50E00B348BA /* foudtag.gif in Resources */,
 				CA7C6FE9185EF50E00B348BA /* ToolBarFastForward_on@2x.png in Resources */,
@@ -2805,6 +2839,7 @@
 				CA7C7007185EF50E00B348BA /* AddMessageViewController.xib in Resources */,
 				CA7C7008185EF50E00B348BA /* buttonnexton.png in Resources */,
 				CA7C7009185EF50E00B348BA /* downsmall7@2x.png in Resources */,
+				CAF5DB771933D422000B5215 /* ConfigurationViewController.xib in Resources */,
 				CA7C700A185EF50E00B348BA /* ToolBarFastRewind_on@2x.png in Resources */,
 				CA7C700B185EF50E00B348BA /* style-aide.css in Resources */,
 				CA7C700C185EF50E00B348BA /* bginput.png in Resources */,
@@ -2940,6 +2975,7 @@
 				CA7C7089185EF50E00B348BA /* buttonbeginhover.png in Resources */,
 				CA7C708A185EF50E00B348BA /* selectedrow@2x.png in Resources */,
 				CA7C708B185EF50E00B348BA /* flagblue2@2x.png in Resources */,
+				CAF5DB711933D3D8000B5215 /* FeedbackViewController.xib in Resources */,
 				CA7C708C185EF50E00B348BA /* buttonprevioushover@2x.png in Resources */,
 				CA7C708D185EF50E00B348BA /* 111-user.png in Resources */,
 				CA7C708E185EF50E00B348BA /* buttonpreviouson.png in Resources */,
@@ -3002,6 +3038,7 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				CA00C47117C302610067B457 /* UIWebView+Tools.m in Sources */,
 				CA00C42017C2FE240067B457 /* UIImageView+WebCache.m in Sources */,
+				CAF5DB8119341BBB000B5215 /* AvatarTableViewCell.m in Sources */,
 				CAADF6C71929681300ECA4C1 /* ProfilViewController.m in Sources */,
 				1D3623260D0F684500981E51 /* HFRplusAppDelegate.m in Sources */,
 				01BF8785121C4407007624B6 /* InfosViewController.m in Sources */,
@@ -3076,6 +3113,7 @@
 				CA7E25E315A1D17500721F6D /* SplitViewController.m in Sources */,
 				CA7E25F115A1F4AA00721F6D /* DetailNavigationViewController.m in Sources */,
 				CA00C44117C2FF3F0067B457 /* ASIDownloadCache.m in Sources */,
+				CAF5DB7B19340741000B5215 /* FeedbackTableViewCell.m in Sources */,
 				CA7E260215A24A9B00721F6D /* SubCatTableViewController.m in Sources */,
 				CA00C41E17C2FE240067B457 /* SDWebImagePrefetcher.m in Sources */,
 				CA00C3F117C2FE1B0067B457 /* IASKPSTitleValueSpecifierViewCell.m in Sources */,
@@ -3114,6 +3152,7 @@
 				CA7C70BB185EF50E00B348BA /* main.m in Sources */,
 				CA7C70BC185EF50E00B348BA /* UIWebView+Tools.m in Sources */,
 				CA7C70BD185EF50E00B348BA /* UIImageView+WebCache.m in Sources */,
+				CAF5DB8219341BBB000B5215 /* AvatarTableViewCell.m in Sources */,
 				CAADF6C81929681300ECA4C1 /* ProfilViewController.m in Sources */,
 				CA7C70BE185EF50E00B348BA /* HFRplusAppDelegate.m in Sources */,
 				CA7C70BF185EF50E00B348BA /* InfosViewController.m in Sources */,
@@ -3188,6 +3227,7 @@
 				CA7C7101185EF50E00B348BA /* SplitViewController.m in Sources */,
 				CA7C7102185EF50E00B348BA /* DetailNavigationViewController.m in Sources */,
 				CA7C7103185EF50E00B348BA /* ASIDownloadCache.m in Sources */,
+				CAF5DB7C19340741000B5215 /* FeedbackTableViewCell.m in Sources */,
 				CA7C7104185EF50E00B348BA /* SubCatTableViewController.m in Sources */,
 				CA7C7105185EF50E00B348BA /* SDWebImagePrefetcher.m in Sources */,
 				CA7C7106185EF50E00B348BA /* IASKPSTitleValueSpecifierViewCell.m in Sources */,
