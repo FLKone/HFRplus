@@ -195,6 +195,8 @@ static char UIScrollViewPullToRefreshView;
         self.subtitles = [NSMutableArray arrayWithObjects:@"", @"", @"", @"", nil];
         self.viewForState = [NSMutableArray arrayWithObjects:@"", @"", @"", @"", nil];
         self.wasTriggeredByUser = YES;
+        
+        self.backgroundColor = [UIColor whiteColor];
     }
     
     return self;

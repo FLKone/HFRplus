@@ -454,7 +454,7 @@
 			UIBarButtonItem *fixItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
 																					  target:nil
 																					  action:nil];
-			fixItem.width = 0.0;
+			fixItem.width = SPACE_FOR_BARBUTTON;
 			
 			//Add buttons to the array
 			NSArray *items = [NSArray arrayWithObjects: systemItem1, fixItem, systemItemPrevious, flexItem, systemItem3, flexItem, systemItemNext, fixItem, systemItem2, nil];
