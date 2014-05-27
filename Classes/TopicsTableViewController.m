@@ -1121,9 +1121,9 @@
     // setup pull-to-refresh
     
     [self.topicsTableView addPullToRefreshWithActionHandler:^{
-        NSLog(@"=== BEGIN");
+        //NSLog(@"=== BEGIN");
         [self fetchContentTrigger];
-        NSLog(@"=== END");
+        //NSLog(@"=== END");
     }];
     
     [self fetchContent];

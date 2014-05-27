@@ -99,7 +99,7 @@
 
 - (void)fetchContentComplete:(ASIHTTPRequest *)theRequest
 {    
-    NSLog(@"fetchContentComplete");
+    //NSLog(@"fetchContentComplete");
 
     
 	//Bouton Reload
@@ -129,7 +129,7 @@
 
 - (void)fetchContentFailed:(ASIHTTPRequest *)theRequest
 {        
-    NSLog(@"fetchContentFailed");
+    //NSLog(@"fetchContentFailed");
     
     //Bouton Reload
 	self.navigationItem.rightBarButtonItem = nil;
@@ -808,9 +808,9 @@
     [v release];
     
     [self.forumsTableView addPullToRefreshWithActionHandler:^{
-        NSLog(@"=== BEGIN");
+        //NSLog(@"=== BEGIN");
         [self fetchContent];
-        NSLog(@"=== END");
+        //NSLog(@"=== END");
     }];
     
     [self.forumsTableView triggerPullToRefresh];

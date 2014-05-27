@@ -259,7 +259,7 @@
 
 - (void)fetchContentComplete:(ASIHTTPRequest *)theRequest
 {
-	NSLog(@"fetchContentComplete");
+	//NSLog(@"fetchContentComplete");
 
     
     HTMLParser * myParser = [[HTMLParser alloc] initWithString:[request responseString] error:NULL];

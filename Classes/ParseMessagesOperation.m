@@ -284,7 +284,7 @@
                     
                     ASIHTTPRequest *operation = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:tmpURL]];
                     [operation setCompletionBlock:^{
-                        NSLog(@"setCompletionBlock");
+                        //NSLog(@"setCompletionBlock");
                         [fileManager createFileAtPath:key contents:[operation responseData] attributes:nil];
                         fasTest.imageUI = key;
                     }];

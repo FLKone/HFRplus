@@ -721,9 +721,9 @@
     // setup pull-to-refresh
     
     [self.favoritesTableView addPullToRefreshWithActionHandler:^{
-        NSLog(@"=== BEGIN");
+        //NSLog(@"=== BEGIN");
         [self fetchContent];
-        NSLog(@"=== END");
+        //NSLog(@"=== END");
     }];
     
     [self.favoritesTableView triggerPullToRefresh];
