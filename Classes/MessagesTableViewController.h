@@ -62,6 +62,7 @@
 	// the queue to run our "ParseOperation"
     NSOperationQueue		*queue;
 	
+	NSString * lastStringFlagTopic;
 	NSString * stringFlagTopic;
 	NSString * editFlagTopic;
 	
@@ -115,6 +116,7 @@
 
 @property (nonatomic, retain) NSOperationQueue *queue; //v3
 
+@property (nonatomic, retain) NSString *lastStringFlagTopic;
 @property (nonatomic, retain) NSString *stringFlagTopic;
 @property (nonatomic, retain) NSString *editFlagTopic;
 

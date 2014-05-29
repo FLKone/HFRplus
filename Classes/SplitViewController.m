@@ -72,11 +72,15 @@
     
     if ([leftNavController.topViewController isMemberOfClass:[MessagesTableViewController class]]) {
         MessagesTableViewController *leftMessageController = (MessagesTableViewController *)leftNavController.topViewController;
-        NSString *currentUrl = leftMessageController.currentUrl;
+        
+        NSLog(@"old url  %@", leftMessageController.currentUrl);
+        NSLog(@"old lastStringFlagTopic %@", leftMessageController.lastStringFlagTopic);
+        
+        NSString *theUrl = [leftMessageController.currentUrl stringByAppendingString:leftMessageController.lastStringFlagTopic];
         
         [leftNavController popViewControllerAnimated:YES];
         
-        MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:currentUrl];
+        MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:theUrl];
         [rightNavController setViewControllers:[NSMutableArray arrayWithObjects:aView, nil] animated:YES];
         [aView release];
 
@@ -111,7 +115,12 @@
         rightMessageController.navigationItem.backBarButtonItem.title = @" ";
     }
     
-    MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:rightMessageController.currentUrl];
+    NSLog(@"old url  %@", rightMessageController.currentUrl);
+    NSLog(@"old lastStringFlagTopic %@", rightMessageController.lastStringFlagTopic);
+    
+    NSString *theUrl = [rightMessageController.currentUrl stringByAppendingString:rightMessageController.lastStringFlagTopic];
+    
+    MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:theUrl];
     [leftNavController pushViewController:aView animated:YES];
     [aView release];
     

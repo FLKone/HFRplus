@@ -32,7 +32,7 @@
 
 @implementation MessagesTableViewController
 @synthesize loaded, isLoading, topicName, topicAnswerUrl, loadingView, messagesWebView, arrayData, updatedArrayData, detailViewController, messagesTableViewController, pollNode;
-@synthesize swipeLeftRecognizer, swipeRightRecognizer, overview, arrayActionsMessages;
+@synthesize swipeLeftRecognizer, swipeRightRecognizer, overview, arrayActionsMessages, lastStringFlagTopic;
 
 @synthesize queue; //v3
 @synthesize stringFlagTopic;
@@ -65,6 +65,9 @@
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMaxi];
     
     //NSLog(@"URL %@", [self currentUrl]);
+    
+    NSLog(@"[self currentUrl] %@", [self currentUrl]);
+    NSLog(@"[self stringFlagTopic] %@", [self stringFlagTopic]);
     
 	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]]]];
 	[request setDelegate:self];
@@ -647,6 +650,7 @@
 	self.arrayInputData = [[NSMutableDictionary alloc] init];
 	self.editFlagTopic = [[NSString	alloc] init];
 	self.stringFlagTopic = [[NSString	alloc] init];
+	self.lastStringFlagTopic = [[NSString	alloc] init];
 
 	self.isFavoritesOrRead = [[NSString	alloc] init];
 	self.isUnreadable = NO;
@@ -1539,6 +1543,7 @@
     
 	//jsString = [jsString stringByAppendingString:[NSString stringWithFormat:@"$('html, body').animate({scrollTop:$('a[name=\"%@\"]').offset().top }, 'slow');", [self.stringFlagTopic stringByReplacingOccurrencesOfString:@"#" withString:@""]]];
     
+    self.lastStringFlagTopic = self.stringFlagTopic;
     self.stringFlagTopic = @"";
 	
 	[self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString];
@@ -2198,6 +2203,7 @@
     
     self.styleAlert = nil;
     
+    self.lastStringFlagTopic = nil;
 	self.stringFlagTopic = nil;
 	self.arrayInputData = nil;
 		
