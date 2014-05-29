@@ -142,15 +142,7 @@
 {
     [suPicker selectRow:indexPath.row inComponent:0 animated:NO];
     [[NSNotificationCenter defaultCenter] postNotificationName:notification object:self];
-    
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+
 }
 
 @end

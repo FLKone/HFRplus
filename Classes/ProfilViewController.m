@@ -689,46 +689,6 @@
 }
 
 
-
-
- /*
-  NSString *html = [yourWebView stringByEvaluatingJavaScriptFromString:
-  @"document.body.innerHTML"];
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	
-    
-   
-    self.topicsTableViewController = nil;
-    
-	if (self.topicsTableViewController == nil) {
-		TopicsTableViewController *aView = [[TopicsTableViewController alloc] initWithNibName:@"TopicsTableViewController" bundle:nil];
-		self.topicsTableViewController = aView;
-		[aView release];
-	}
-    
-	//setup the URL
-	
-    
-    
-	self.navigationItem.backBarButtonItem =
-	[[UIBarButtonItem alloc] initWithTitle:@"Retour"
-									 style: UIBarButtonItemStyleBordered
-									target:nil
-									action:nil];
-	
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
-        self.navigationItem.backBarButtonItem.title = @" ";
-    }
-    
-    
-	self.topicsTableViewController.forumBaseURL = [[arrayData objectAtIndex:indexPath.row] aURL];
-	self.topicsTableViewController.forumName = [[arrayData objectAtIndex:indexPath.row] aTitle];
-	self.topicsTableViewController.pickerViewArray = [[arrayData objectAtIndex:indexPath.row] subCats];
-    
-	[self.navigationController pushViewController:topicsTableViewController animated:YES];
-  
-}
-*/
 #pragma mark -
 #pragma mark Memory management
 
