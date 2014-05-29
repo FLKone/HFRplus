@@ -78,8 +78,7 @@
             [[HFRplusAppDelegate sharedAppDelegate].splitViewController MoveRightToLeft:self.myWebView.request.URL.absoluteString];
 
         }
-        [self dismissModalViewControllerAnimated:NO];
-
+        [self cancel];
     }
 }
 
