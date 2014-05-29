@@ -830,6 +830,16 @@
 		CAF5DB7E19340741000B5215 /* FeedbackTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB7A19340741000B5215 /* FeedbackTableViewCell.xib */; };
 		CAF5DB8119341BBB000B5215 /* AvatarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF5DB8019341BBB000B5215 /* AvatarTableViewCell.m */; };
 		CAF5DB8219341BBB000B5215 /* AvatarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF5DB8019341BBB000B5215 /* AvatarTableViewCell.m */; };
+		CAF5DB871936CD7B000B5215 /* 09-arrows-out@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB831936CD7B000B5215 /* 09-arrows-out@2x.png */; };
+		CAF5DB881936CD7B000B5215 /* 09-arrows-out@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB831936CD7B000B5215 /* 09-arrows-out@2x.png */; };
+		CAF5DB891936CD7B000B5215 /* 10-arrows-in@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB841936CD7B000B5215 /* 10-arrows-in@2x.png */; };
+		CAF5DB8A1936CD7B000B5215 /* 10-arrows-in@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB841936CD7B000B5215 /* 10-arrows-in@2x.png */; };
+		CAF5DB8B1936CD7B000B5215 /* 09-arrows-out.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB851936CD7B000B5215 /* 09-arrows-out.png */; };
+		CAF5DB8C1936CD7B000B5215 /* 09-arrows-out.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB851936CD7B000B5215 /* 09-arrows-out.png */; };
+		CAF5DB8D1936CD7B000B5215 /* 10-arrows-in.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB861936CD7B000B5215 /* 10-arrows-in.png */; };
+		CAF5DB8E1936CD7B000B5215 /* 10-arrows-in.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB861936CD7B000B5215 /* 10-arrows-in.png */; };
+		CAF5DB901936D013000B5215 /* 71-compass@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB8F1936D013000B5215 /* 71-compass@2x.png */; };
+		CAF5DB911936D013000B5215 /* 71-compass@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB8F1936D013000B5215 /* 71-compass@2x.png */; };
 		CAF6C0121607B62300B4B70C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAF6C0111607B62300B4B70C /* CoreData.framework */; };
 		CAFD004315B9B665003CA3FC /* HFRDebugViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAFD004115B9B665003CA3FC /* HFRDebugViewController.m */; };
 		CAFD004415B9B665003CA3FC /* HFRDebugViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAFD004215B9B665003CA3FC /* HFRDebugViewController.xib */; };
@@ -1376,6 +1386,11 @@
 		CAF5DB7A19340741000B5215 /* FeedbackTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedbackTableViewCell.xib; sourceTree = "<group>"; };
 		CAF5DB7F19341BBB000B5215 /* AvatarTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvatarTableViewCell.h; sourceTree = "<group>"; };
 		CAF5DB8019341BBB000B5215 /* AvatarTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvatarTableViewCell.m; sourceTree = "<group>"; };
+		CAF5DB831936CD7B000B5215 /* 09-arrows-out@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "09-arrows-out@2x.png"; sourceTree = "<group>"; };
+		CAF5DB841936CD7B000B5215 /* 10-arrows-in@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "10-arrows-in@2x.png"; sourceTree = "<group>"; };
+		CAF5DB851936CD7B000B5215 /* 09-arrows-out.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "09-arrows-out.png"; sourceTree = "<group>"; };
+		CAF5DB861936CD7B000B5215 /* 10-arrows-in.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "10-arrows-in.png"; sourceTree = "<group>"; };
+		CAF5DB8F1936D013000B5215 /* 71-compass@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "71-compass@2x.png"; sourceTree = "<group>"; };
 		CAF6C0111607B62300B4B70C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		CAFD004015B9B665003CA3FC /* HFRDebugViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFRDebugViewController.h; sourceTree = "<group>"; };
 		CAFD004115B9B665003CA3FC /* HFRDebugViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFRDebugViewController.m; sourceTree = "<group>"; };
@@ -2101,6 +2116,7 @@
 				CA00C5BB17C30C370067B457 /* 44-shoebox@2x.png */,
 				CA00C5BC17C30C370067B457 /* 60-signpost.png */,
 				CA00C5BD17C30C370067B457 /* 71-compass.png */,
+				CAF5DB8F1936D013000B5215 /* 71-compass@2x.png */,
 				CA00C5BE17C30C370067B457 /* arrowback.png */,
 				CA00C5BF17C30C370067B457 /* arrowback@2x.png */,
 				CA00C5C017C30C370067B457 /* arrowbegin.png */,
@@ -2261,6 +2277,10 @@
 		CA7472D317E14D4500B45E15 /* iOS7 */ = {
 			isa = PBXGroup;
 			children = (
+				CAF5DB831936CD7B000B5215 /* 09-arrows-out@2x.png */,
+				CAF5DB841936CD7B000B5215 /* 10-arrows-in@2x.png */,
+				CAF5DB851936CD7B000B5215 /* 09-arrows-out.png */,
+				CAF5DB861936CD7B000B5215 /* 10-arrows-in.png */,
 				CA7472DC17E15FE200B45E15 /* ToolBarFastForward_off.png */,
 				CA7472DD17E15FE200B45E15 /* ToolBarFastForward_off@2x.png */,
 				CA7472DE17E15FE200B45E15 /* ToolBarFastForward_on.png */,
@@ -2463,6 +2483,7 @@
 				CA00C6D417C30C370067B457 /* loadinfo@2x.gif in Resources */,
 				CA00C6CA17C30C370067B457 /* buttonpreviousoff.png in Resources */,
 				CA00C62017C30C370067B457 /* bug.gif in Resources */,
+				CAF5DB8D1936CD7B000B5215 /* 10-arrows-in.png in Resources */,
 				CA00C65117C30C370067B457 /* tongue.gif in Resources */,
 				CA00C6AB17C30C370067B457 /* flagyellowcopie@2x.png in Resources */,
 				CA00C6BC17C30C370067B457 /* buttonendhover.png in Resources */,
@@ -2517,9 +2538,11 @@
 				CA00C67317C30C370067B457 /* Icon.png in Resources */,
 				CA00C6B817C30C370067B457 /* buttonbeginoff.png in Resources */,
 				CA00C45D17C301650067B457 /* MainWindow-iPad.xib in Resources */,
+				CAF5DB901936D013000B5215 /* 71-compass@2x.png in Resources */,
 				CA00C3F817C2FE1B0067B457 /* IASKPSSliderSpecifierViewCell.xib in Resources */,
 				CA00C65217C30C370067B457 /* vomi.gif in Resources */,
 				CA00C6E117C30C370067B457 /* nextIcon@2x.png in Resources */,
+				CAF5DB8B1936CD7B000B5215 /* 09-arrows-out.png in Resources */,
 				CA00C65517C30C370067B457 /* wink.gif in Resources */,
 				CA00C67017C30C370067B457 /* Icon-Small-50@2x.png in Resources */,
 				CA00C69317C30C370067B457 /* arrowback@2x.png in Resources */,
@@ -2575,6 +2598,7 @@
 				CA00C62917C30C370067B457 /* evil.gif in Resources */,
 				CA00C67B17C30C370067B457 /* 08-chat@2x.png in Resources */,
 				CA00C68E17C30C370067B457 /* 44-shoebox.png in Resources */,
+				CAF5DB891936CD7B000B5215 /* 10-arrows-in@2x.png in Resources */,
 				CA00C6E017C30C370067B457 /* nextIcon.png in Resources */,
 				CA00C67A17C30C370067B457 /* 08-chat.png in Resources */,
 				CA7472D917E14D4500B45E15 /* ToolBarPlay_off@2x.png in Resources */,
@@ -2669,6 +2693,7 @@
 				CA7472E817E15FE300B45E15 /* ToolBarFastForward_off.png in Resources */,
 				CA00C69717C30C370067B457 /* arrowend@2x.png in Resources */,
 				CA00C66117C30C370067B457 /* style-liste-ipad-portrait.css in Resources */,
+				CAF5DB871936CD7B000B5215 /* 09-arrows-out@2x.png in Resources */,
 				CA00C69017C30C370067B457 /* 60-signpost.png in Resources */,
 				CA00C67F17C30C370067B457 /* 113-navigation@2x.png in Resources */,
 				CAF5DB601932BA58000B5215 /* check.png in Resources */,
@@ -2759,6 +2784,7 @@
 				CA7C6FBA185EF50E00B348BA /* loadinfo@2x.gif in Resources */,
 				CA7C6FBB185EF50E00B348BA /* buttonpreviousoff.png in Resources */,
 				CA7C6FBC185EF50E00B348BA /* bug.gif in Resources */,
+				CAF5DB8E1936CD7B000B5215 /* 10-arrows-in.png in Resources */,
 				CA7C6FBD185EF50E00B348BA /* tongue.gif in Resources */,
 				CA7C6FBE185EF50E00B348BA /* flagyellowcopie@2x.png in Resources */,
 				CA7C6FBF185EF50E00B348BA /* buttonendhover.png in Resources */,
@@ -2813,9 +2839,11 @@
 				CA7C6FED185EF50E00B348BA /* Icon.png in Resources */,
 				CA7C6FEE185EF50E00B348BA /* buttonbeginoff.png in Resources */,
 				CA7C6FEF185EF50E00B348BA /* MainWindow-iPad.xib in Resources */,
+				CAF5DB911936D013000B5215 /* 71-compass@2x.png in Resources */,
 				CA7C6FF0185EF50E00B348BA /* IASKPSSliderSpecifierViewCell.xib in Resources */,
 				CA7C6FF1185EF50E00B348BA /* vomi.gif in Resources */,
 				CA7C6FF2185EF50E00B348BA /* nextIcon@2x.png in Resources */,
+				CAF5DB8C1936CD7B000B5215 /* 09-arrows-out.png in Resources */,
 				CA7C6FF3185EF50E00B348BA /* wink.gif in Resources */,
 				CA7C6FF4185EF50E00B348BA /* Icon-Small-50@2x.png in Resources */,
 				CA7C6FF5185EF50E00B348BA /* arrowback@2x.png in Resources */,
@@ -2871,6 +2899,7 @@
 				CA7C7026185EF50E00B348BA /* evil.gif in Resources */,
 				CA7C7027185EF50E00B348BA /* 08-chat@2x.png in Resources */,
 				CA7C7028185EF50E00B348BA /* 44-shoebox.png in Resources */,
+				CAF5DB8A1936CD7B000B5215 /* 10-arrows-in@2x.png in Resources */,
 				CA7C7029185EF50E00B348BA /* nextIcon.png in Resources */,
 				CA7C702A185EF50E00B348BA /* 08-chat.png in Resources */,
 				CA7C702B185EF50E00B348BA /* ToolBarPlay_off@2x.png in Resources */,
@@ -2965,6 +2994,7 @@
 				CA7C7080185EF50E00B348BA /* ToolBarFastForward_off.png in Resources */,
 				CA7C7081185EF50E00B348BA /* arrowend@2x.png in Resources */,
 				CA7C7082185EF50E00B348BA /* style-liste-ipad-portrait.css in Resources */,
+				CAF5DB881936CD7B000B5215 /* 09-arrows-out@2x.png in Resources */,
 				CA7C7083185EF50E00B348BA /* 60-signpost.png in Resources */,
 				CA7C7084185EF50E00B348BA /* 113-navigation@2x.png in Resources */,
 				CAF5DB611932BA58000B5215 /* check.png in Resources */,
