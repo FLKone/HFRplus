@@ -132,4 +132,6 @@
 - (void)setTopicViewed;
 - (void)pushTopic;
 
+-(void)test;
+
 @end

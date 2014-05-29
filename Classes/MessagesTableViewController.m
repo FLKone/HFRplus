@@ -214,7 +214,10 @@
 	//On check si y'a page=2323
 
 	[(UILabel *)[self navigationItem].titleView setText:[NSString stringWithFormat:@"%@ — %d", self.topicName, self.pageNumber]];
-	self.title = [NSString stringWithFormat:@"%@ — %d", self.topicName, self.pageNumber];
+	[(UILabel *)[self navigationItem].titleView adjustFontSizeToFit];
+
+
+	//self.title = [NSString stringWithFormat:@"%@ — %d", self.topicName, self.pageNumber];
     
 	//[self navigationItem].titleView.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
 	
@@ -229,7 +232,9 @@
 		//NSLog(@"setupPageToolbar titleNode %@", [titleNode allContents]);
 		self.topicName = [titleNode allContents];
 		[(UILabel *)[self navigationItem].titleView setText:[NSString stringWithFormat:@"%@ — %d", self.topicName, self.pageNumber]];
-        self.title = [NSString stringWithFormat:@"%@ — %d", self.topicName, self.pageNumber];
+        [(UILabel *)[self navigationItem].titleView adjustFontSizeToFit];
+
+        //self.title = [NSString stringWithFormat:@"%@ — %d", self.topicName, self.pageNumber];
 
 		//[self navigationItem].titleView.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
 	}
@@ -475,7 +480,6 @@
 	[self setupPageToolbar:bodyNode andP:myParser];
     self.navigationItem.rightBarButtonItem.enabled = YES;
 
-	
 }
 
 // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -584,11 +588,11 @@
         }
         
     }
-
-    [label setNumberOfLines:0];
+    
+    [label setNumberOfLines:2];
     
     [label setText:self.topicName];
-    
+    [label adjustFontSizeToFit];
     [self.navigationItem setTitleView:label];
     [label release];
 
@@ -620,11 +624,14 @@
 	//-- Gesture
 
 	//Bouton Repondre message
-	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(optionsTopic:)];
-    segmentBarItem.enabled = NO;
+
+	UIBarButtonItem *optionsBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(optionsTopic:)];
+    optionsBarItem.enabled = NO;
 	
-	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];	
+    NSMutableArray *myButtonArray = [[NSMutableArray alloc] initWithObjects:optionsBarItem, nil];
+    [optionsBarItem release];
+    
+	self.navigationItem.rightBarButtonItems = myButtonArray;
 
 	[(ShakeView*)self.view setShakeDelegate:self];
 	
@@ -652,7 +659,17 @@
 	
 }
 
+-(void)fullScreen {
+    [self fullScreen:nil];
+}
 
+-(void)fullScreen:(id)sender {
+    
+    if ([(SplitViewController *)[HFRplusAppDelegate sharedAppDelegate].window.rootViewController respondsToSelector:@selector(MoveRightToLeft)]) {
+        [(SplitViewController *)[HFRplusAppDelegate sharedAppDelegate].window.rootViewController MoveRightToLeft];
+    }
+    
+}
 -(void)optionsTopic:(id)sender
 {
     
@@ -697,6 +714,12 @@
     
     if (self.arrayActionsMessages.count == 0) {
         return;
+    }
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && ![self.parentViewController isMemberOfClass:[UINavigationController class]]) {
+        
+        [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Navigateur✚", @"fullScreen", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+        
     }
     //UIActionSheet *styleAlert;
 
@@ -1721,19 +1744,31 @@
 	int curMsg = [curMsgN intValue];
 	int ypos = [posN intValue];
 	
+    
+    NSString *answString = nil;
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        answString = @"Répondre";
+    }
+    else
+    {
+        answString = @"Rép.";
+    }
+    
 	if([[arrayData objectAtIndex:curMsg] urlEdit]){
 		//NSLog(@"urlEdit");
 		[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Editer", @"EditMessage", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
 		
 		if (self.navigationItem.rightBarButtonItem.enabled) {
-			[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Rép.", @"QuoteMessage", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+			[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:answString, @"QuoteMessage", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
 		}
 
 	}
 	else {
 		//NSLog(@"profil");
 		if (self.navigationItem.rightBarButtonItem.enabled) {
-			[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Rép.", @"QuoteMessage", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+			[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:answString, @"QuoteMessage", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
 		}
 
 		
@@ -2131,7 +2166,7 @@
 }
 
 - (void)dealloc {
-	//NSLog(@"dealloc Messages Table View");
+	NSLog(@"dealloc Messages Table View");
 	
 	[self viewDidUnload];
 	

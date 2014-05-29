@@ -7,6 +7,9 @@
 
 #import "SplitViewController.h"
 #import "HFRplusAppDelegate.h"
+#import "MessagesTableViewController.h"
+
+#import "AideViewController.h"
 
 @interface SplitViewController ()
 
@@ -33,9 +36,11 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    
     if ([self respondsToSelector:@selector(setPresentsWithGesture:)]) {
         [self setPresentsWithGesture:NO];
     }
+
     
 }
 
@@ -44,6 +49,81 @@
     
     [super viewDidUnload];
     // Release any retained subviews of the main view.
+}
+
+-(void)MoveLeftToRight {
+    
+    //Les deux controllers
+    TabBarController *leftTabBarController = [self.viewControllers objectAtIndex:0];
+    UINavigationController *rightNavController = [self.viewControllers objectAtIndex:1];
+    
+    [rightNavController popToRootViewControllerAnimated:YES];
+    
+    [rightNavController setViewControllers:nil];
+    UIViewController * uivc = [[[UIViewController alloc] init] autorelease];
+    uivc.title = @"HFR+";
+    [rightNavController setViewControllers:[NSMutableArray arrayWithObjects:uivc, nil]];
+
+    
+    
+    //Première tab > navController > msgController
+    //leftTabBarController.selectedIndex = 0;
+    UINavigationController *leftNavController= (UINavigationController *)leftTabBarController.selectedViewController;
+    
+    if ([leftNavController.topViewController isMemberOfClass:[MessagesTableViewController class]]) {
+        MessagesTableViewController *leftMessageController = (MessagesTableViewController *)leftNavController.topViewController;
+        NSString *currentUrl = leftMessageController.currentUrl;
+        
+        [leftNavController popViewControllerAnimated:YES];
+        
+        MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:currentUrl];
+        [rightNavController setViewControllers:[NSMutableArray arrayWithObjects:aView, nil] animated:YES];
+        [aView release];
+
+    }
+
+    NSLog(@"END MoveLeftToRight");
+}
+
+-(void)MoveRightToLeft {
+    NSLog(@"MoveRightToLeft");
+    
+    //Les deux controllers
+    TabBarController *leftTabBarController = [self.viewControllers objectAtIndex:0];
+    UINavigationController *rightNavController = [self.viewControllers objectAtIndex:1];
+    
+    //Première tab > navController
+    //leftTabBarController.selectedIndex = 0;
+    UINavigationController *leftNavController= (UINavigationController *)leftTabBarController.selectedViewController;
+    
+    //deuxième tab > msgController
+    MessagesTableViewController *rightMessageController = (MessagesTableViewController *)rightNavController.topViewController;
+
+    [rightMessageController.navigationItem setLeftBarButtonItem:nil animated:NO];
+    
+    rightMessageController.navigationItem.backBarButtonItem =
+    [[UIBarButtonItem alloc] initWithTitle:@"Retour"
+                                     style: UIBarButtonItemStyleBordered
+                                    target:nil
+                                    action:nil];
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+        rightMessageController.navigationItem.backBarButtonItem.title = @" ";
+    }
+    
+    MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:rightMessageController.currentUrl];
+    [leftNavController pushViewController:aView animated:YES];
+    [aView release];
+    
+    BrowserViewController *browserViewController = [[BrowserViewController alloc] initWithNibName:@"BrowserViewController" bundle:nil andURL:@"http://google.com"];
+    [browserViewController setFullBrowser:YES];
+    
+    [rightNavController popToRootViewControllerAnimated:YES];
+    [rightNavController setViewControllers:[NSMutableArray arrayWithObjects:browserViewController, nil] animated:NO];
+
+    [browserViewController release];
+    NSLog(@"END MoveRightToLeft");
+
 }
 
 /* for iOS6 support */
@@ -92,14 +172,17 @@
         
         [aViewController setSelectedIndex:4]; // bugfix select dernière puis reselectionne le bon.
         [aViewController setSelectedIndex:selected];
-        
+
     }
 
 }
 
 - (void)splitViewController: (SplitViewController *)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem*)barButtonItem forPopoverController: (UIPopoverController*)pc {
     
-    barButtonItem.title = @"Menu";    
+    barButtonItem.title = @"Menu";
+    
+    NSLog(@"%@", [[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] viewControllers]);
+
     
     UINavigationItem *navItem = [[[[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] viewControllers] objectAtIndex:0] navigationItem];
 
@@ -108,11 +191,12 @@
     svc.popOver = pc;
     [svc setMybarButtonItem:barButtonItem];
 
-
 }
 
-- (void)splitViewController: (SplitViewController *)svc willShowViewController:(UIViewController *)aViewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem {    
+- (void)splitViewController: (SplitViewController *)svc willShowViewController:(UIViewController *)aViewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem {
    
+    NSLog(@"%@", [[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] viewControllers]);
+    
     UINavigationItem *navItem = [[[[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] viewControllers] objectAtIndex:0] navigationItem];
     [navItem setLeftBarButtonItem:nil animated:YES];
     

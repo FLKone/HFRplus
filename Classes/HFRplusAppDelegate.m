@@ -362,11 +362,17 @@
     
 	if ([web isEqualToString:@"internal"]) {
         BrowserViewController *browserViewController = [[BrowserViewController alloc]
-                                                        initWithNibName:@"BrowserViewController" bundle:nil];
+                                                        initWithNibName:@"BrowserViewController" bundle:nil andURL:stringUrl];
         browserViewController.delegate = self.rootController;
         
-        [self.rootController presentModalViewController:browserViewController animated:YES];
-        [browserViewController.myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:stringUrl]]];
+        
+        HFRNavigationController *nc = [[HFRNavigationController alloc] initWithRootViewController:browserViewController];
+        
+        
+        nc.modalPresentationStyle = UIModalPresentationFormSheet;
+        
+        [self.rootController presentModalViewController:nc animated:YES];
+        [nc release];
         
         // The navigation controller is now owned by the current view controller
         // and the root view controller is owned by the navigation controller,

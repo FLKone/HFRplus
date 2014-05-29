@@ -25,6 +25,8 @@
 #import "UIScrollView+SVPullToRefresh.h"
 #import "PullToRefreshErrorViewController.h"
 
+#import "AideViewController.h"
+
 @implementation TopicsTableViewController
 @synthesize forumNewTopicUrl, forumName, loadingView, topicsTableView, arrayData, arrayNewData;
 @synthesize messagesTableViewController;
@@ -872,7 +874,8 @@
 	self.title = forumName;
     self.navigationController.navigationBar.translucent = NO;
 
-    
+    NSLog(@"self nav %@", self.navigationController);
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(OrientationChanged)
                                                  name:UIApplicationDidChangeStatusBarOrientationNotification
@@ -915,6 +918,17 @@
 	//Title View
 	self.navigationItem.titleView = [[UIView alloc] init];//WithFrame:CGRectMake(0, 0, 120, self.navigationController.navigationBar.frame.size.height - 14)];
 	
+    self.navigationItem.backBarButtonItem =
+    [[UIBarButtonItem alloc] initWithTitle:@"Retour"
+                                     style: UIBarButtonItemStyleBordered
+                                    target:nil
+                                    action:nil];
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+        self.navigationItem.backBarButtonItem.title = @" ";
+    }
+    
+    
 	//Filter Control
     UISegmentedControl *segmentedControl;
     
@@ -1645,19 +1659,22 @@
 	}
 }
 
+-(void)test {
+    AideViewController *avc = [[AideViewController alloc] initWithNibName:@"AideViewController" bundle:nil];
+    [avc awakeFromNib];
+    
+    //[rightMessageController removeFromParentViewController];
+    
+    NSLog(@"avc %@", avc);
+    
+    [self.navigationController pushViewController:avc animated:YES];
+}
+
 - (void)pushTopic {
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         
-        self.navigationItem.backBarButtonItem =
-        [[UIBarButtonItem alloc] initWithTitle:@"Retour"
-                                         style: UIBarButtonItemStyleBordered
-                                        target:nil
-                                        action:nil];
-        
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
-            self.navigationItem.backBarButtonItem.title = @" ";
-        }
+
         
         [self.navigationController pushViewController:messagesTableViewController animated:YES];
     }
