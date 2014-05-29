@@ -37,3 +37,7 @@
 - (NSString *)stripHTML;
 
 @end
+
+@interface UILabel (MultiLineAutoSize)
+- (void)adjustFontSizeToFit;
+@end
