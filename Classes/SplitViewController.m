@@ -118,7 +118,8 @@
     BrowserViewController *browserViewController = [[BrowserViewController alloc] initWithNibName:@"BrowserViewController" bundle:nil andURL:url];
     [browserViewController setFullBrowser:YES];
     
-    [rightNavController popToRootViewControllerAnimated:YES];
+    [rightNavController popToRootViewControllerAnimated:NO];
+    [rightNavController setViewControllers:nil animated:NO];
     [rightNavController setViewControllers:[NSMutableArray arrayWithObjects:browserViewController, nil] animated:NO];
     
     [browserViewController release];
