@@ -361,34 +361,52 @@
     //NSLog(@"display %@", display);
     
 	if ([web isEqualToString:@"internal"]) {
-        BrowserViewController *browserViewController = [[BrowserViewController alloc]
-                                                        initWithNibName:@"BrowserViewController" bundle:nil andURL:stringUrl];
-        browserViewController.delegate = self.rootController;
+        if ([self.detailNavigationController.topViewController isMemberOfClass:[BrowserViewController class]]) {
+            //on load
+            [((BrowserViewController *)self.detailNavigationController.topViewController).myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:stringUrl]]];
+        }
+        else
+        {
         
-        
-        HFRNavigationController *nc = [[HFRNavigationController alloc] initWithRootViewController:browserViewController];
-        
-        
-        nc.modalPresentationStyle = UIModalPresentationFormSheet;
-        
-        [self.rootController presentModalViewController:nc animated:YES];
-        [nc release];
-        
-        // The navigation controller is now owned by the current view controller
-        // and the root view controller is owned by the navigation controller,
-        // so both objects should be released to prevent over-retention.
-        [browserViewController release];
-        
+            BrowserViewController *browserViewController = [[BrowserViewController alloc]
+                                                            initWithNibName:@"BrowserViewController" bundle:nil andURL:stringUrl];
+            
+            HFRNavigationController *nc = [[HFRNavigationController alloc] initWithRootViewController:browserViewController];
+            
+            
+            nc.modalPresentationStyle = UIModalPresentationFormSheet;
+            
+            [self.rootController presentModalViewController:nc animated:YES];
+            [nc release];
+            
+            // The navigation controller is now owned by the current view controller
+            // and the root view controller is owned by the navigation controller,
+            // so both objects should be released to prevent over-retention.
+            [browserViewController release];
+        }
     }
     else {
-        NSString *msg = [NSString stringWithFormat:@"Vous allez quitter HFR+ et être redirigé vers :\n %@\n", stringUrl];
-        
-        UIAlertViewURL *alert = [[UIAlertViewURL alloc] initWithTitle:@"Attention !" message:msg
-                                                             delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Confirmer", nil];
-        [alert setStringURL:stringUrl];
-        
-        [alert show];
-        [alert release];  
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            NSString *msg = [NSString stringWithFormat:@"Vous allez quitter HFR+ et être redirigé vers :\n %@\n", stringUrl];
+            
+            UIAlertViewURL *alert = [[UIAlertViewURL alloc] initWithTitle:@"Attention !" message:msg
+                                                                 delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Confirmer", @"Navigateur✚",  nil];
+            [alert setStringURL:stringUrl];
+            
+            [alert show];
+            [alert release];
+        }
+        else
+        {
+            NSString *msg = [NSString stringWithFormat:@"Vous allez quitter HFR+ et être redirigé vers :\n %@\n", stringUrl];
+            
+            UIAlertViewURL *alert = [[UIAlertViewURL alloc] initWithTitle:@"Attention !" message:msg
+                                                                 delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Confirmer", nil];
+            [alert setStringURL:stringUrl];
+            
+            [alert show];
+            [alert release];
+        }
     }
     
 
@@ -417,6 +435,18 @@
         }
 		
 	}
+    else if (buttonIndex == 2) {
+        if ([[HFRplusAppDelegate sharedAppDelegate].detailNavigationController.topViewController isMemberOfClass:[BrowserViewController class]]) {
+            //on load
+            [((BrowserViewController *)[HFRplusAppDelegate sharedAppDelegate].detailNavigationController.topViewController).myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[alertView stringURL]]]];
+        }
+        else {
+            //on move/decale
+            //[self cancel];
+            [[HFRplusAppDelegate sharedAppDelegate].splitViewController MoveRightToLeft:[alertView stringURL]];
+            
+        }
+    }
 }
 
 - (void)login

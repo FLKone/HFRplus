@@ -27,9 +27,3 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andURL:(NSString *)theURL;
 
 @end
-
-
-
-@protocol BrowserViewControllerDelegate
-- (void)browserViewControllerDidFinish:(BrowserViewController *)controller;
-@end

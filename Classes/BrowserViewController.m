@@ -60,7 +60,26 @@
     }
     else
     {
-        [self.delegate browserViewControllerDidFinish:self];
+        [self dismissModalViewControllerAnimated:YES];
+        //[self.delegate browserViewControllerDidFinish:self];
+    }
+}
+
+- (void)navPlus {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && [[HFRplusAppDelegate sharedAppDelegate].splitViewController respondsToSelector:@selector(MoveRightToLeft:)])
+    {
+        if ([[HFRplusAppDelegate sharedAppDelegate].detailNavigationController.topViewController isMemberOfClass:[BrowserViewController class]]) {
+            //on load
+            [((BrowserViewController *)[HFRplusAppDelegate sharedAppDelegate].detailNavigationController.topViewController).myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.myWebView.request.URL.absoluteString]]];
+        }
+        else {
+            //on move/decale
+            //[self cancel];
+            [[HFRplusAppDelegate sharedAppDelegate].splitViewController MoveRightToLeft:self.myWebView.request.URL.absoluteString];
+
+        }
+        [self dismissModalViewControllerAnimated:NO];
+
     }
 }
 
@@ -106,6 +125,12 @@
         [myButtonArray addObject:doneButton];
         [doneButton release];
         
+    }
+    else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
+        UIBarButtonItem *navPButton = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Navigateur✚", nil) style:UIBarButtonItemStylePlain target:self action:@selector(navPlus)] autorelease];
+        
+        [myButtonArray addObject:navPButton];
+        [navPButton release];
     }
     
 	self.navigationItem.rightBarButtonItems = myButtonArray;

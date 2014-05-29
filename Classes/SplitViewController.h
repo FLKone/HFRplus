@@ -17,6 +17,8 @@
 @property (nonatomic, retain) UIBarButtonItem *mybarButtonItem;
 
 -(void)MoveRightToLeft;
+-(void)MoveRightToLeft:(NSString *)url;
+
 -(void)MoveLeftToRight;
 
 @end

@@ -85,7 +85,7 @@
     NSLog(@"END MoveLeftToRight");
 }
 
--(void)MoveRightToLeft {
+-(void)MoveRightToLeft:(NSString *)url {
     NSLog(@"MoveRightToLeft");
     
     //Les deux controllers
@@ -98,7 +98,7 @@
     
     //deuxième tab > msgController
     MessagesTableViewController *rightMessageController = (MessagesTableViewController *)rightNavController.topViewController;
-
+    
     [rightMessageController.navigationItem setLeftBarButtonItem:nil animated:NO];
     
     rightMessageController.navigationItem.backBarButtonItem =
@@ -115,15 +115,18 @@
     [leftNavController pushViewController:aView animated:YES];
     [aView release];
     
-    BrowserViewController *browserViewController = [[BrowserViewController alloc] initWithNibName:@"BrowserViewController" bundle:nil andURL:@"http://google.com"];
+    BrowserViewController *browserViewController = [[BrowserViewController alloc] initWithNibName:@"BrowserViewController" bundle:nil andURL:url];
     [browserViewController setFullBrowser:YES];
     
     [rightNavController popToRootViewControllerAnimated:YES];
     [rightNavController setViewControllers:[NSMutableArray arrayWithObjects:browserViewController, nil] animated:NO];
-
+    
     [browserViewController release];
     NSLog(@"END MoveRightToLeft");
+}
 
+-(void)MoveRightToLeft {
+    [self MoveRightToLeft:@"http://www.google.com"];
 }
 
 /* for iOS6 support */
