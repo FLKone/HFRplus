@@ -76,7 +76,11 @@
         NSLog(@"old url  %@", leftMessageController.currentUrl);
         NSLog(@"old lastStringFlagTopic %@", leftMessageController.lastStringFlagTopic);
         
-        NSString *theUrl = [leftMessageController.currentUrl stringByAppendingString:leftMessageController.lastStringFlagTopic];
+        NSString *theUrl = leftMessageController.currentUrl;
+        if (leftMessageController.lastStringFlagTopic) {
+            theUrl = [theUrl stringByAppendingString:leftMessageController.lastStringFlagTopic];
+
+        }
         
         [leftNavController popViewControllerAnimated:YES];
         
@@ -118,7 +122,10 @@
     NSLog(@"old url  %@", rightMessageController.currentUrl);
     NSLog(@"old lastStringFlagTopic %@", rightMessageController.lastStringFlagTopic);
     
-    NSString *theUrl = [rightMessageController.currentUrl stringByAppendingString:rightMessageController.lastStringFlagTopic];
+    NSString *theUrl = rightMessageController.currentUrl;
+    if (rightMessageController.lastStringFlagTopic) {
+        theUrl = [theUrl stringByAppendingString:rightMessageController.lastStringFlagTopic];
+    }
     
     MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:theUrl];
     [leftNavController pushViewController:aView animated:YES];
