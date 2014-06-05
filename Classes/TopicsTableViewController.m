@@ -2063,8 +2063,8 @@
 	self.forumFlag1URL = nil;
 	self.forumFlag0URL = nil;
 	
-	[self.arrayData release], self.arrayData = nil;
-	[self.arrayNewData release], self.arrayNewData = nil;
+	[self.arrayData release];
+	[self.arrayNewData release];
 	
 	if(self.messagesTableViewController) self.messagesTableViewController = nil;
 	
