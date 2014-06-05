@@ -70,6 +70,13 @@
     //leftTabBarController.selectedIndex = 0;
     UINavigationController *leftNavController= (UINavigationController *)leftTabBarController.selectedViewController;
     
+    while (![leftNavController.topViewController isMemberOfClass:[MessagesTableViewController class]]) {
+        
+        [leftNavController popViewControllerAnimated:NO];
+
+    }
+    
+    
     if ([leftNavController.topViewController isMemberOfClass:[MessagesTableViewController class]]) {
         MessagesTableViewController *leftMessageController = (MessagesTableViewController *)leftNavController.topViewController;
         
@@ -105,6 +112,11 @@
     UINavigationController *leftNavController= (UINavigationController *)leftTabBarController.selectedViewController;
     
     //deuxième tab > msgController
+    while (![rightNavController.topViewController isMemberOfClass:[MessagesTableViewController class]]) {
+        
+        [rightNavController popViewControllerAnimated:NO];
+    }
+    
     MessagesTableViewController *rightMessageController = (MessagesTableViewController *)rightNavController.topViewController;
     
     [rightMessageController.navigationItem setLeftBarButtonItem:nil animated:NO];
