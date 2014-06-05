@@ -443,7 +443,7 @@
         else {
             //on move/decale
             //[self cancel];
-            [[HFRplusAppDelegate sharedAppDelegate].splitViewController MoveRightToLeft:[alertView stringURL]];
+            [[HFRplusAppDelegate sharedAppDelegate].splitViewController NavPlus:[alertView stringURL]];
             
         }
     }

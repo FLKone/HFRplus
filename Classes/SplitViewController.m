@@ -70,10 +70,9 @@
     //leftTabBarController.selectedIndex = 0;
     UINavigationController *leftNavController= (UINavigationController *)leftTabBarController.selectedViewController;
     
-    while (![leftNavController.topViewController isMemberOfClass:[MessagesTableViewController class]]) {
+    while (![leftNavController.topViewController isMemberOfClass:[MessagesTableViewController class]] && leftNavController.viewControllers.count > 1) {
         
         [leftNavController popViewControllerAnimated:NO];
-
     }
     
     
@@ -99,6 +98,43 @@
 
     NSLog(@"END MoveLeftToRight");
 }
+
+-(void)NavPlus:(NSString *)url {
+    //Les deux controllers
+    TabBarController *leftTabBarController = [self.viewControllers objectAtIndex:0];
+    UINavigationController *rightNavController = [self.viewControllers objectAtIndex:1];
+    
+    //Première tab > navController
+    //leftTabBarController.selectedIndex = 0;
+
+    //on check à droite s'il y a un MessageTVC
+    while (![rightNavController.topViewController isMemberOfClass:[MessagesTableViewController class]]) {
+        
+        [rightNavController popViewControllerAnimated:NO];
+        
+        if (rightNavController.viewControllers.count == 1) {
+            break;
+        }
+    }
+    
+    //on a un MessageTVC à droite
+    if ([rightNavController.topViewController isMemberOfClass:[MessagesTableViewController class]]) {
+        [self MoveRightToLeft:url];
+    }
+    else
+    {
+        BrowserViewController *browserViewController = [[BrowserViewController alloc] initWithNibName:@"BrowserViewController" bundle:nil andURL:url];
+        [browserViewController setFullBrowser:YES];
+        
+        [rightNavController popToRootViewControllerAnimated:NO];
+        [rightNavController setViewControllers:nil animated:NO];
+        [rightNavController setViewControllers:[NSMutableArray arrayWithObjects:browserViewController, nil] animated:NO];
+        
+        [browserViewController release];
+    }
+    
+}
+
 
 -(void)MoveRightToLeft:(NSString *)url {
     NSLog(@"MoveRightToLeft");

@@ -18,6 +18,7 @@
 
 -(void)MoveRightToLeft;
 -(void)MoveRightToLeft:(NSString *)url;
+-(void)NavPlus:(NSString *)url;
 
 -(void)MoveLeftToRight;
 
