@@ -22,6 +22,8 @@ typedef enum {
 	kComplete
 } STATUS;
 
+#define kStatusChangedNotification  @"kStatusChangedNotification"
+
 #define kForumURL				@"http://forum.hardware.fr"
 
 #define kTimeoutMini		30
@@ -52,4 +54,5 @@ typedef enum {
 #define kNewMessageFromUnkwn    4
 
 // iOS7
-#define HEIGHT_FOR_HEADER_IN_SECTION              ((SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") ? 36.0f : 23.0f))
+#define HEIGHT_FOR_HEADER_IN_SECTION                ((SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") ? 36.0f : 23.0f))
+#define SPACE_FOR_BARBUTTON                         ((SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") ? 10.0f : 0.0f))

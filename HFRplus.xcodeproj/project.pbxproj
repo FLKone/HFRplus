@@ -339,6 +339,10 @@
 		CA4AA6DD15B2553C00E53A1F /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA4AA6DC15B2553C00E53A1F /* CoreText.framework */; };
 		CA4CE81515B185CA0039FC3B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CA4CE81415B185CA0039FC3B /* libz.dylib */; };
 		CA4CE89215B1B30B0039FC3B /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA4CE89115B1B30B0039FC3B /* ImageIO.framework */; };
+		CA5E109518AC2A4F00C481A9 /* PollTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E109318AC2A4F00C481A9 /* PollTableViewController.m */; };
+		CA5E109618AC2A4F00C481A9 /* PollTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E109318AC2A4F00C481A9 /* PollTableViewController.m */; };
+		CA5E109718AC2A4F00C481A9 /* PollTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA5E109418AC2A4F00C481A9 /* PollTableViewController.xib */; };
+		CA5E109818AC2A4F00C481A9 /* PollTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA5E109418AC2A4F00C481A9 /* PollTableViewController.xib */; };
 		CA63F389185E09B20092E9F9 /* RehostImage.m in Sources */ = {isa = PBXBuildFile; fileRef = CA63F388185E09B20092E9F9 /* RehostImage.m */; };
 		CA63F38C185EC1220092E9F9 /* RehostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CA63F38B185EC1220092E9F9 /* RehostCell.m */; };
 		CA63F38E185EC18B0092E9F9 /* RehostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA63F38D185EC18B0092E9F9 /* RehostCell.xib */; };
@@ -769,6 +773,10 @@
 		CAA1F69117E5DFA20006E785 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA1F68F17E5DFA20006E785 /* plus.png */; };
 		CAA1F69217E5DFA20006E785 /* plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA1F69017E5DFA20006E785 /* plus@2x.png */; };
 		CAAD3D561731EAC400DC1900 /* MessageWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = CAAD3D551731EAC400DC1900 /* MessageWebView.m */; };
+		CAADF6C71929681300ECA4C1 /* ProfilViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAADF6C51929681300ECA4C1 /* ProfilViewController.m */; };
+		CAADF6C81929681300ECA4C1 /* ProfilViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAADF6C51929681300ECA4C1 /* ProfilViewController.m */; };
+		CAADF6C91929681300ECA4C1 /* ProfilViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAADF6C61929681300ECA4C1 /* ProfilViewController.xib */; };
+		CAADF6CA1929681300ECA4C1 /* ProfilViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAADF6C61929681300ECA4C1 /* ProfilViewController.xib */; };
 		CAAFAFDC125E2A58001B90EC /* NewMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAAFAFDB125E2A58001B90EC /* NewMessageViewController.m */; };
 		CAAFF8AA17DF7A0900C120BC /* categories@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAAFF8A817DF7A0900C120BC /* categories@2x.png */; };
 		CAAFF8AB17DF7A0900C120BC /* categories.png in Resources */ = {isa = PBXBuildFile; fileRef = CAAFF8A917DF7A0900C120BC /* categories.png */; };
@@ -787,7 +795,51 @@
 		CABC727717E6077A003E722E /* upsmall7.png in Resources */ = {isa = PBXBuildFile; fileRef = CABC727317E6077A003E722E /* upsmall7.png */; };
 		CABC727817E6077A003E722E /* upsmall7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CABC727417E6077A003E722E /* upsmall7@2x.png */; };
 		CAC4966915B77357009128BC /* HFRNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAC4966815B77357009128BC /* HFRNavigationController.m */; };
+		CAC7FCD0190DBD450083BB4E /* PollResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CAC7FCCE190DBD450083BB4E /* PollResultTableViewCell.m */; };
+		CAC7FCD1190DBD450083BB4E /* PollResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CAC7FCCE190DBD450083BB4E /* PollResultTableViewCell.m */; };
+		CAC7FCD2190DBD450083BB4E /* PollResultTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAC7FCCF190DBD450083BB4E /* PollResultTableViewCell.xib */; };
+		CAC7FCD3190DBD450083BB4E /* PollResultTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAC7FCCF190DBD450083BB4E /* PollResultTableViewCell.xib */; };
+		CACADFD719217CCA0071D2DA /* UIScrollView+SVInfiniteScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = CACADFD419217CCA0071D2DA /* UIScrollView+SVInfiniteScrolling.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		CACADFD819217CCA0071D2DA /* UIScrollView+SVInfiniteScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = CACADFD419217CCA0071D2DA /* UIScrollView+SVInfiniteScrolling.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		CACADFD919217CCA0071D2DA /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = CACADFD619217CCA0071D2DA /* UIScrollView+SVPullToRefresh.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		CACADFDA19217CCA0071D2DA /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = CACADFD619217CCA0071D2DA /* UIScrollView+SVPullToRefresh.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		CAF03C561245612800897C3B /* AccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAF03C551245612800897C3B /* AccessoryView.xib */; };
+		CAF5DB5819328EB4000B5215 /* PullToRefreshErrorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF5DB5719328EB4000B5215 /* PullToRefreshErrorViewController.m */; };
+		CAF5DB5919328EB4000B5215 /* PullToRefreshErrorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF5DB5719328EB4000B5215 /* PullToRefreshErrorViewController.m */; };
+		CAF5DB601932BA58000B5215 /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB5A1932BA58000B5215 /* check.png */; };
+		CAF5DB611932BA58000B5215 /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB5A1932BA58000B5215 /* check.png */; };
+		CAF5DB621932BA58000B5215 /* check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB5B1932BA58000B5215 /* check@2x.png */; };
+		CAF5DB631932BA58000B5215 /* check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB5B1932BA58000B5215 /* check@2x.png */; };
+		CAF5DB641932BA58000B5215 /* error.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB5C1932BA58000B5215 /* error.png */; };
+		CAF5DB651932BA58000B5215 /* error.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB5C1932BA58000B5215 /* error.png */; };
+		CAF5DB661932BA58000B5215 /* error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB5D1932BA58000B5215 /* error@2x.png */; };
+		CAF5DB671932BA58000B5215 /* error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB5D1932BA58000B5215 /* error@2x.png */; };
+		CAF5DB681932BA58000B5215 /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB5E1932BA58000B5215 /* info.png */; };
+		CAF5DB691932BA58000B5215 /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB5E1932BA58000B5215 /* info.png */; };
+		CAF5DB6A1932BA58000B5215 /* info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB5F1932BA58000B5215 /* info@2x.png */; };
+		CAF5DB6B1932BA58000B5215 /* info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB5F1932BA58000B5215 /* info@2x.png */; };
+		CAF5DB701933D3D8000B5215 /* FeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB6F1933D3D8000B5215 /* FeedbackViewController.xib */; };
+		CAF5DB711933D3D8000B5215 /* FeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB6F1933D3D8000B5215 /* FeedbackViewController.xib */; };
+		CAF5DB731933D408000B5215 /* PersonnalLinkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB721933D408000B5215 /* PersonnalLinkViewController.xib */; };
+		CAF5DB741933D408000B5215 /* PersonnalLinkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB721933D408000B5215 /* PersonnalLinkViewController.xib */; };
+		CAF5DB761933D422000B5215 /* ConfigurationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB751933D422000B5215 /* ConfigurationViewController.xib */; };
+		CAF5DB771933D422000B5215 /* ConfigurationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB751933D422000B5215 /* ConfigurationViewController.xib */; };
+		CAF5DB7B19340741000B5215 /* FeedbackTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF5DB7919340741000B5215 /* FeedbackTableViewCell.m */; };
+		CAF5DB7C19340741000B5215 /* FeedbackTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF5DB7919340741000B5215 /* FeedbackTableViewCell.m */; };
+		CAF5DB7D19340741000B5215 /* FeedbackTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB7A19340741000B5215 /* FeedbackTableViewCell.xib */; };
+		CAF5DB7E19340741000B5215 /* FeedbackTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB7A19340741000B5215 /* FeedbackTableViewCell.xib */; };
+		CAF5DB8119341BBB000B5215 /* AvatarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF5DB8019341BBB000B5215 /* AvatarTableViewCell.m */; };
+		CAF5DB8219341BBB000B5215 /* AvatarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF5DB8019341BBB000B5215 /* AvatarTableViewCell.m */; };
+		CAF5DB871936CD7B000B5215 /* 09-arrows-out@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB831936CD7B000B5215 /* 09-arrows-out@2x.png */; };
+		CAF5DB881936CD7B000B5215 /* 09-arrows-out@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB831936CD7B000B5215 /* 09-arrows-out@2x.png */; };
+		CAF5DB891936CD7B000B5215 /* 10-arrows-in@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB841936CD7B000B5215 /* 10-arrows-in@2x.png */; };
+		CAF5DB8A1936CD7B000B5215 /* 10-arrows-in@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB841936CD7B000B5215 /* 10-arrows-in@2x.png */; };
+		CAF5DB8B1936CD7B000B5215 /* 09-arrows-out.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB851936CD7B000B5215 /* 09-arrows-out.png */; };
+		CAF5DB8C1936CD7B000B5215 /* 09-arrows-out.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB851936CD7B000B5215 /* 09-arrows-out.png */; };
+		CAF5DB8D1936CD7B000B5215 /* 10-arrows-in.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB861936CD7B000B5215 /* 10-arrows-in.png */; };
+		CAF5DB8E1936CD7B000B5215 /* 10-arrows-in.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB861936CD7B000B5215 /* 10-arrows-in.png */; };
+		CAF5DB901936D013000B5215 /* 71-compass@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB8F1936D013000B5215 /* 71-compass@2x.png */; };
+		CAF5DB911936D013000B5215 /* 71-compass@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF5DB8F1936D013000B5215 /* 71-compass@2x.png */; };
 		CAF6C0121607B62300B4B70C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAF6C0111607B62300B4B70C /* CoreData.framework */; };
 		CAFD004315B9B665003CA3FC /* HFRDebugViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CAFD004115B9B665003CA3FC /* HFRDebugViewController.m */; };
 		CAFD004415B9B665003CA3FC /* HFRDebugViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAFD004215B9B665003CA3FC /* HFRDebugViewController.xib */; };
@@ -1225,6 +1277,9 @@
 		CA4AA6DC15B2553C00E53A1F /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		CA4CE81415B185CA0039FC3B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		CA4CE89115B1B30B0039FC3B /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		CA5E109218AC2A4F00C481A9 /* PollTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PollTableViewController.h; sourceTree = "<group>"; };
+		CA5E109318AC2A4F00C481A9 /* PollTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PollTableViewController.m; sourceTree = "<group>"; };
+		CA5E109418AC2A4F00C481A9 /* PollTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PollTableViewController.xib; sourceTree = "<group>"; };
 		CA63F387185E09B20092E9F9 /* RehostImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RehostImage.h; sourceTree = "<group>"; };
 		CA63F388185E09B20092E9F9 /* RehostImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RehostImage.m; sourceTree = "<group>"; };
 		CA63F38A185EC1220092E9F9 /* RehostCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RehostCell.h; sourceTree = "<group>"; };
@@ -1280,6 +1335,9 @@
 		CAA1F69017E5DFA20006E785 /* plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus@2x.png"; sourceTree = "<group>"; };
 		CAAD3D541731EAC400DC1900 /* MessageWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageWebView.h; sourceTree = "<group>"; };
 		CAAD3D551731EAC400DC1900 /* MessageWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageWebView.m; sourceTree = "<group>"; };
+		CAADF6C41929681300ECA4C1 /* ProfilViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilViewController.h; sourceTree = "<group>"; };
+		CAADF6C51929681300ECA4C1 /* ProfilViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilViewController.m; sourceTree = "<group>"; };
+		CAADF6C61929681300ECA4C1 /* ProfilViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfilViewController.xib; sourceTree = "<group>"; };
 		CAAFAFDA125E2A58001B90EC /* NewMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewMessageViewController.h; sourceTree = "<group>"; };
 		CAAFAFDB125E2A58001B90EC /* NewMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewMessageViewController.m; sourceTree = "<group>"; };
 		CAAFF8A817DF7A0900C120BC /* categories@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "categories@2x.png"; sourceTree = "<group>"; };
@@ -1303,7 +1361,36 @@
 		CAC4966715B77357009128BC /* HFRNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFRNavigationController.h; sourceTree = "<group>"; };
 		CAC4966815B77357009128BC /* HFRNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HFRNavigationController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CAC593C115A63F5100913CFB /* HFRplus.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = HFRplus.entitlements; sourceTree = "<group>"; };
+		CAC7FCCD190DBD450083BB4E /* PollResultTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PollResultTableViewCell.h; sourceTree = "<group>"; };
+		CAC7FCCE190DBD450083BB4E /* PollResultTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PollResultTableViewCell.m; sourceTree = "<group>"; };
+		CAC7FCCF190DBD450083BB4E /* PollResultTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PollResultTableViewCell.xib; sourceTree = "<group>"; };
+		CACADFD219217CCA0071D2DA /* SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPullToRefresh.h; sourceTree = "<group>"; };
+		CACADFD319217CCA0071D2DA /* UIScrollView+SVInfiniteScrolling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SVInfiniteScrolling.h"; sourceTree = "<group>"; };
+		CACADFD419217CCA0071D2DA /* UIScrollView+SVInfiniteScrolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVInfiniteScrolling.m"; sourceTree = "<group>"; };
+		CACADFD519217CCA0071D2DA /* UIScrollView+SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SVPullToRefresh.h"; sourceTree = "<group>"; };
+		CACADFD619217CCA0071D2DA /* UIScrollView+SVPullToRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVPullToRefresh.m"; sourceTree = "<group>"; };
 		CAF03C551245612800897C3B /* AccessoryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccessoryView.xib; sourceTree = "<group>"; };
+		CAF5DB5619328EB4000B5215 /* PullToRefreshErrorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PullToRefreshErrorViewController.h; sourceTree = "<group>"; };
+		CAF5DB5719328EB4000B5215 /* PullToRefreshErrorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PullToRefreshErrorViewController.m; sourceTree = "<group>"; };
+		CAF5DB5A1932BA58000B5215 /* check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check.png; sourceTree = "<group>"; };
+		CAF5DB5B1932BA58000B5215 /* check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check@2x.png"; sourceTree = "<group>"; };
+		CAF5DB5C1932BA58000B5215 /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = error.png; sourceTree = "<group>"; };
+		CAF5DB5D1932BA58000B5215 /* error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "error@2x.png"; sourceTree = "<group>"; };
+		CAF5DB5E1932BA58000B5215 /* info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info.png; sourceTree = "<group>"; };
+		CAF5DB5F1932BA58000B5215 /* info@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info@2x.png"; sourceTree = "<group>"; };
+		CAF5DB6F1933D3D8000B5215 /* FeedbackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedbackViewController.xib; sourceTree = "<group>"; };
+		CAF5DB721933D408000B5215 /* PersonnalLinkViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonnalLinkViewController.xib; sourceTree = "<group>"; };
+		CAF5DB751933D422000B5215 /* ConfigurationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfigurationViewController.xib; sourceTree = "<group>"; };
+		CAF5DB7819340741000B5215 /* FeedbackTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackTableViewCell.h; sourceTree = "<group>"; };
+		CAF5DB7919340741000B5215 /* FeedbackTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackTableViewCell.m; sourceTree = "<group>"; };
+		CAF5DB7A19340741000B5215 /* FeedbackTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedbackTableViewCell.xib; sourceTree = "<group>"; };
+		CAF5DB7F19341BBB000B5215 /* AvatarTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvatarTableViewCell.h; sourceTree = "<group>"; };
+		CAF5DB8019341BBB000B5215 /* AvatarTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvatarTableViewCell.m; sourceTree = "<group>"; };
+		CAF5DB831936CD7B000B5215 /* 09-arrows-out@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "09-arrows-out@2x.png"; sourceTree = "<group>"; };
+		CAF5DB841936CD7B000B5215 /* 10-arrows-in@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "10-arrows-in@2x.png"; sourceTree = "<group>"; };
+		CAF5DB851936CD7B000B5215 /* 09-arrows-out.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "09-arrows-out.png"; sourceTree = "<group>"; };
+		CAF5DB861936CD7B000B5215 /* 10-arrows-in.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "10-arrows-in.png"; sourceTree = "<group>"; };
+		CAF5DB8F1936D013000B5215 /* 71-compass@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "71-compass@2x.png"; sourceTree = "<group>"; };
 		CAF6C0111607B62300B4B70C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		CAFD004015B9B665003CA3FC /* HFRDebugViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFRDebugViewController.h; sourceTree = "<group>"; };
 		CAFD004115B9B665003CA3FC /* HFRDebugViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFRDebugViewController.m; sourceTree = "<group>"; };
@@ -1367,6 +1454,7 @@
 			children = (
 				CABB3127121EF3B0009CE100 /* Forms */,
 				CA9E8275124364E8000EE882 /* PhotoViewer */,
+				CA5E109118AC290C00C481A9 /* Poll */,
 				013F0E95121E117800BEBEB1 /* LinkItem.h */,
 				013F0E96121E117800BEBEB1 /* LinkItem.m */,
 				013F0E97121E117800BEBEB1 /* MessagesTableViewController.h */,
@@ -1471,6 +1559,8 @@
 				CA1070C815A5F407002E6C19 /* SettingsViewController.m */,
 				CAC4966715B77357009128BC /* HFRNavigationController.h */,
 				CAC4966815B77357009128BC /* HFRNavigationController.m */,
+				CAF5DB5619328EB4000B5215 /* PullToRefreshErrorViewController.h */,
+				CAF5DB5719328EB4000B5215 /* PullToRefreshErrorViewController.m */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -1525,6 +1615,7 @@
 				0140ABA6121E011D001C35C4 /* Favorites */,
 				0140AA83121DF25F001C35C4 /* MP */,
 				013F0E94121E117800BEBEB1 /* Messages */,
+				CAADF6C3192967CC00ECA4C1 /* Profil */,
 				01BF8775121C4407007624B6 /* Infos */,
 			);
 			path = Classes;
@@ -1607,6 +1698,7 @@
 			isa = PBXGroup;
 			children = (
 				CA00C42217C2FF3F0067B457 /* ASIHTTPRequest */,
+				CACADFD119217CCA0071D2DA /* SVPullToRefresh */,
 				CA00C43917C2FF3F0067B457 /* HTMLParser */,
 				CA00C3B917C2FE1B0067B457 /* InAppSettingsKit */,
 				CA00C3E317C2FE1B0067B457 /* MBProgressHUD */,
@@ -1991,6 +2083,12 @@
 			isa = PBXGroup;
 			children = (
 				CA7472D317E14D4500B45E15 /* iOS7 */,
+				CAF5DB5A1932BA58000B5215 /* check.png */,
+				CAF5DB5B1932BA58000B5215 /* check@2x.png */,
+				CAF5DB5C1932BA58000B5215 /* error.png */,
+				CAF5DB5D1932BA58000B5215 /* error@2x.png */,
+				CAF5DB5E1932BA58000B5215 /* info.png */,
+				CAF5DB5F1932BA58000B5215 /* info@2x.png */,
 				CA00C5A317C30C370067B457 /* 06-magnify.png */,
 				CA00C5A417C30C370067B457 /* 06-magnify@2x.png */,
 				CA00C5A517C30C370067B457 /* 06-magnifying-glass.png */,
@@ -2018,6 +2116,7 @@
 				CA00C5BB17C30C370067B457 /* 44-shoebox@2x.png */,
 				CA00C5BC17C30C370067B457 /* 60-signpost.png */,
 				CA00C5BD17C30C370067B457 /* 71-compass.png */,
+				CAF5DB8F1936D013000B5215 /* 71-compass@2x.png */,
 				CA00C5BE17C30C370067B457 /* arrowback.png */,
 				CA00C5BF17C30C370067B457 /* arrowback@2x.png */,
 				CA00C5C017C30C370067B457 /* arrowbegin.png */,
@@ -2162,9 +2261,26 @@
 			name = inApp;
 			sourceTree = "<group>";
 		};
+		CA5E109118AC290C00C481A9 /* Poll */ = {
+			isa = PBXGroup;
+			children = (
+				CA5E109218AC2A4F00C481A9 /* PollTableViewController.h */,
+				CA5E109318AC2A4F00C481A9 /* PollTableViewController.m */,
+				CA5E109418AC2A4F00C481A9 /* PollTableViewController.xib */,
+				CAC7FCCD190DBD450083BB4E /* PollResultTableViewCell.h */,
+				CAC7FCCE190DBD450083BB4E /* PollResultTableViewCell.m */,
+				CAC7FCCF190DBD450083BB4E /* PollResultTableViewCell.xib */,
+			);
+			name = Poll;
+			sourceTree = "<group>";
+		};
 		CA7472D317E14D4500B45E15 /* iOS7 */ = {
 			isa = PBXGroup;
 			children = (
+				CAF5DB831936CD7B000B5215 /* 09-arrows-out@2x.png */,
+				CAF5DB841936CD7B000B5215 /* 10-arrows-in@2x.png */,
+				CAF5DB851936CD7B000B5215 /* 09-arrows-out.png */,
+				CAF5DB861936CD7B000B5215 /* 10-arrows-in.png */,
 				CA7472DC17E15FE200B45E15 /* ToolBarFastForward_off.png */,
 				CA7472DD17E15FE200B45E15 /* ToolBarFastForward_off@2x.png */,
 				CA7472DE17E15FE200B45E15 /* ToolBarFastForward_on.png */,
@@ -2200,6 +2316,24 @@
 			name = PhotoViewer;
 			sourceTree = "<group>";
 		};
+		CAADF6C3192967CC00ECA4C1 /* Profil */ = {
+			isa = PBXGroup;
+			children = (
+				CAADF6C41929681300ECA4C1 /* ProfilViewController.h */,
+				CAADF6C51929681300ECA4C1 /* ProfilViewController.m */,
+				CAADF6C61929681300ECA4C1 /* ProfilViewController.xib */,
+				CAF5DB6F1933D3D8000B5215 /* FeedbackViewController.xib */,
+				CAF5DB721933D408000B5215 /* PersonnalLinkViewController.xib */,
+				CAF5DB751933D422000B5215 /* ConfigurationViewController.xib */,
+				CAF5DB7819340741000B5215 /* FeedbackTableViewCell.h */,
+				CAF5DB7919340741000B5215 /* FeedbackTableViewCell.m */,
+				CAF5DB7A19340741000B5215 /* FeedbackTableViewCell.xib */,
+				CAF5DB7F19341BBB000B5215 /* AvatarTableViewCell.h */,
+				CAF5DB8019341BBB000B5215 /* AvatarTableViewCell.m */,
+			);
+			name = Profil;
+			sourceTree = "<group>";
+		};
 		CABB3127121EF3B0009CE100 /* Forms */ = {
 			isa = PBXGroup;
 			children = (
@@ -2222,6 +2356,18 @@
 				CAA1B091125C0A53009C80E3 /* AKSegmentedControl.m */,
 			);
 			name = Forms;
+			sourceTree = "<group>";
+		};
+		CACADFD119217CCA0071D2DA /* SVPullToRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				CACADFD219217CCA0071D2DA /* SVPullToRefresh.h */,
+				CACADFD319217CCA0071D2DA /* UIScrollView+SVInfiniteScrolling.h */,
+				CACADFD419217CCA0071D2DA /* UIScrollView+SVInfiniteScrolling.m */,
+				CACADFD519217CCA0071D2DA /* UIScrollView+SVPullToRefresh.h */,
+				CACADFD619217CCA0071D2DA /* UIScrollView+SVPullToRefresh.m */,
+			);
+			path = SVPullToRefresh;
 			sourceTree = "<group>";
 		};
 		CAFD003915B9B4FF003CA3FC /* Debug */ = {
@@ -2277,7 +2423,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = 4Z4VCUMET3;
@@ -2337,12 +2483,14 @@
 				CA00C6D417C30C370067B457 /* loadinfo@2x.gif in Resources */,
 				CA00C6CA17C30C370067B457 /* buttonpreviousoff.png in Resources */,
 				CA00C62017C30C370067B457 /* bug.gif in Resources */,
+				CAF5DB8D1936CD7B000B5215 /* 10-arrows-in.png in Resources */,
 				CA00C65117C30C370067B457 /* tongue.gif in Resources */,
 				CA00C6AB17C30C370067B457 /* flagyellowcopie@2x.png in Resources */,
 				CA00C6BC17C30C370067B457 /* buttonendhover.png in Resources */,
 				CA00C6D617C30C370067B457 /* toolbar2.png in Resources */,
 				CA00C68417C30C370067B457 /* 122-stats.png in Resources */,
 				01BF878D121C4407007624B6 /* CompteViewController.xib in Resources */,
+				CAF5DB7D19340741000B5215 /* FeedbackTableViewCell.xib in Resources */,
 				CA00C63317C30C370067B457 /* heink.gif in Resources */,
 				CA00C62617C30C370067B457 /* dtc.gif in Resources */,
 				CA00C6CF17C30C370067B457 /* endoff.png in Resources */,
@@ -2371,6 +2519,7 @@
 				CA00C68117C30C370067B457 /* 119-piggy-bank@2x.png in Resources */,
 				CA00C61C17C30C370067B457 /* benetton.gif in Resources */,
 				CA00C6E317C30C370067B457 /* photoDefaultfail.png in Resources */,
+				CAADF6C91929681300ECA4C1 /* ProfilViewController.xib in Resources */,
 				CA00C67E17C30C370067B457 /* 113-navigation.png in Resources */,
 				CA00C68017C30C370067B457 /* 119-piggy-bank.png in Resources */,
 				CA00C66517C30C370067B457 /* style-max.css in Resources */,
@@ -2379,6 +2528,7 @@
 				CABC726E17E605E5003E722E /* downsmall@2x.png in Resources */,
 				CA00C3F917C2FE1B0067B457 /* IASKPSTextFieldSpecifierViewCell.xib in Resources */,
 				CA00C67117C30C370067B457 /* Icon-Small.png in Resources */,
+				CAF5DB731933D408000B5215 /* PersonnalLinkViewController.xib in Resources */,
 				CA00C6C017C30C370067B457 /* buttonendon.png in Resources */,
 				CA00C62B17C30C370067B457 /* foudtag.gif in Resources */,
 				CA7472EB17E15FE300B45E15 /* ToolBarFastForward_on@2x.png in Resources */,
@@ -2388,9 +2538,11 @@
 				CA00C67317C30C370067B457 /* Icon.png in Resources */,
 				CA00C6B817C30C370067B457 /* buttonbeginoff.png in Resources */,
 				CA00C45D17C301650067B457 /* MainWindow-iPad.xib in Resources */,
+				CAF5DB901936D013000B5215 /* 71-compass@2x.png in Resources */,
 				CA00C3F817C2FE1B0067B457 /* IASKPSSliderSpecifierViewCell.xib in Resources */,
 				CA00C65217C30C370067B457 /* vomi.gif in Resources */,
 				CA00C6E117C30C370067B457 /* nextIcon@2x.png in Resources */,
+				CAF5DB8B1936CD7B000B5215 /* 09-arrows-out.png in Resources */,
 				CA00C65517C30C370067B457 /* wink.gif in Resources */,
 				CA00C67017C30C370067B457 /* Icon-Small-50@2x.png in Resources */,
 				CA00C69317C30C370067B457 /* arrowback@2x.png in Resources */,
@@ -2414,6 +2566,7 @@
 				013F0EB3121E117900BEBEB1 /* AddMessageViewController.xib in Resources */,
 				CA00C6C617C30C370067B457 /* buttonnexton.png in Resources */,
 				CABC727617E6077A003E722E /* downsmall7@2x.png in Resources */,
+				CAF5DB761933D422000B5215 /* ConfigurationViewController.xib in Resources */,
 				CA7472EF17E15FE300B45E15 /* ToolBarFastRewind_on@2x.png in Resources */,
 				CA00C65F17C30C370067B457 /* style-aide.css in Resources */,
 				CA00C69F17C30C370067B457 /* bginput.png in Resources */,
@@ -2445,6 +2598,7 @@
 				CA00C62917C30C370067B457 /* evil.gif in Resources */,
 				CA00C67B17C30C370067B457 /* 08-chat@2x.png in Resources */,
 				CA00C68E17C30C370067B457 /* 44-shoebox.png in Resources */,
+				CAF5DB891936CD7B000B5215 /* 10-arrows-in@2x.png in Resources */,
 				CA00C6E017C30C370067B457 /* nextIcon.png in Resources */,
 				CA00C67A17C30C370067B457 /* 08-chat.png in Resources */,
 				CA7472D917E14D4500B45E15 /* ToolBarPlay_off@2x.png in Resources */,
@@ -2478,6 +2632,7 @@
 				CABC727017E605E5003E722E /* upsmall@2x.png in Resources */,
 				CA00C6C117C30C370067B457 /* buttonendon@2x.png in Resources */,
 				CA00C68F17C30C370067B457 /* 44-shoebox@2x.png in Resources */,
+				CAC7FCD2190DBD450083BB4E /* PollResultTableViewCell.xib in Resources */,
 				CA00C67817C30C370067B457 /* 06-magnify@2x.png in Resources */,
 				CA00C64517C30C370067B457 /* pfff.gif in Resources */,
 				CA7472F217E15FE300B45E15 /* ToolBarPrevious_on.png in Resources */,
@@ -2488,10 +2643,12 @@
 				CA00C6B317C30C370067B457 /* beginoff.png in Resources */,
 				CA79581C12836B24007C4E02 /* HFRSearchViewController.xib in Resources */,
 				CA00C64317C30C370067B457 /* ouch.gif in Resources */,
+				CAF5DB6A1932BA58000B5215 /* info@2x.png in Resources */,
 				CA00C6D817C30C370067B457 /* toolbar3@2x.png in Resources */,
 				CA00C6A117C30C370067B457 /* bgiPad.png in Resources */,
 				CA00C62317C30C370067B457 /* crazy.gif in Resources */,
 				CA2E4C0A17E21EC700E95622 /* Images.xcassets in Resources */,
+				CAF5DB621932BA58000B5215 /* check@2x.png in Resources */,
 				CA00C62C17C30C370067B457 /* fouyaya.gif in Resources */,
 				CA7472EC17E15FE300B45E15 /* ToolBarFastRewind_off.png in Resources */,
 				CA00C66B17C30C370067B457 /* Default.png in Resources */,
@@ -2505,6 +2662,7 @@
 				CA00C63917C30C370067B457 /* lol.gif in Resources */,
 				CA34780C12EB557500D1BA2A /* PayViewController.xib in Resources */,
 				CA00C6BB17C30C370067B457 /* buttonbeginon@2x.png in Resources */,
+				CAF5DB681932BA58000B5215 /* info.png in Resources */,
 				CA00C6E217C30C370067B457 /* photoDefault.png in Resources */,
 				CA00C64E17C30C370067B457 /* spookie.gif in Resources */,
 				CA00C45E17C301650067B457 /* MainWindow.xib in Resources */,
@@ -2535,8 +2693,10 @@
 				CA7472E817E15FE300B45E15 /* ToolBarFastForward_off.png in Resources */,
 				CA00C69717C30C370067B457 /* arrowend@2x.png in Resources */,
 				CA00C66117C30C370067B457 /* style-liste-ipad-portrait.css in Resources */,
+				CAF5DB871936CD7B000B5215 /* 09-arrows-out@2x.png in Resources */,
 				CA00C69017C30C370067B457 /* 60-signpost.png in Resources */,
 				CA00C67F17C30C370067B457 /* 113-navigation@2x.png in Resources */,
+				CAF5DB601932BA58000B5215 /* check.png in Resources */,
 				CA00C6C517C30C370067B457 /* buttonnextoff@2x.png in Resources */,
 				CA00C68817C30C370067B457 /* 19-gear.png in Resources */,
 				CA00C6C717C30C370067B457 /* buttonnexton@2x.png in Resources */,
@@ -2544,6 +2704,7 @@
 				CA00C6B617C30C370067B457 /* buttonbeginhover.png in Resources */,
 				CA00C6AD17C30C370067B457 /* selectedrow@2x.png in Resources */,
 				CA00C6A617C30C370067B457 /* flagblue2@2x.png in Resources */,
+				CAF5DB701933D3D8000B5215 /* FeedbackViewController.xib in Resources */,
 				CA00C6C917C30C370067B457 /* buttonprevioushover@2x.png in Resources */,
 				CA00C67C17C30C370067B457 /* 111-user.png in Resources */,
 				CA00C6CC17C30C370067B457 /* buttonpreviouson.png in Resources */,
@@ -2563,12 +2724,14 @@
 				CA00C6BA17C30C370067B457 /* buttonbeginon.png in Resources */,
 				CAA1F69117E5DFA20006E785 /* plus.png in Resources */,
 				CABC726D17E605E5003E722E /* downsmall.png in Resources */,
+				CAF5DB641932BA58000B5215 /* error.png in Resources */,
 				CA00C64917C30C370067B457 /* sarcastic.gif in Resources */,
 				CAFD004415B9B665003CA3FC /* HFRDebugViewController.xib in Resources */,
 				CA00C3F617C2FE1B0067B457 /* IASKAppSettingsView.xib in Resources */,
 				CA00C66617C30C370067B457 /* style-smile.css in Resources */,
 				CA00C61A17C30C370067B457 /* 24.gif in Resources */,
 				CA00C69617C30C370067B457 /* arrowend.png in Resources */,
+				CAF5DB661932BA58000B5215 /* error@2x.png in Resources */,
 				CA00C67917C30C370067B457 /* 06-magnifying-glass.png in Resources */,
 				CA00C68317C30C370067B457 /* 121-lanscape.png in Resources */,
 				CA00C69817C30C370067B457 /* arrowforward.png in Resources */,
@@ -2582,6 +2745,7 @@
 				CABC726717E60537003E722E /* down@2x.png in Resources */,
 				CA00C65617C30C370067B457 /* aide.html in Resources */,
 				CA00C61717C30C370067B457 /* multiplefavoris.gif in Resources */,
+				CA5E109718AC2A4F00C481A9 /* PollTableViewController.xib in Resources */,
 				CA00C6B917C30C370067B457 /* buttonbeginoff@2x.png in Resources */,
 				CA00C66217C30C370067B457 /* style-liste-retina.css in Resources */,
 				CA00C6BD17C30C370067B457 /* buttonendhover@2x.png in Resources */,
@@ -2620,12 +2784,14 @@
 				CA7C6FBA185EF50E00B348BA /* loadinfo@2x.gif in Resources */,
 				CA7C6FBB185EF50E00B348BA /* buttonpreviousoff.png in Resources */,
 				CA7C6FBC185EF50E00B348BA /* bug.gif in Resources */,
+				CAF5DB8E1936CD7B000B5215 /* 10-arrows-in.png in Resources */,
 				CA7C6FBD185EF50E00B348BA /* tongue.gif in Resources */,
 				CA7C6FBE185EF50E00B348BA /* flagyellowcopie@2x.png in Resources */,
 				CA7C6FBF185EF50E00B348BA /* buttonendhover.png in Resources */,
 				CA7C6FC0185EF50E00B348BA /* toolbar2.png in Resources */,
 				CA7C6FC1185EF50E00B348BA /* 122-stats.png in Resources */,
 				CA7C6FC2185EF50E00B348BA /* CompteViewController.xib in Resources */,
+				CAF5DB7E19340741000B5215 /* FeedbackTableViewCell.xib in Resources */,
 				CA7C6FC3185EF50E00B348BA /* heink.gif in Resources */,
 				CA7C6FC4185EF50E00B348BA /* dtc.gif in Resources */,
 				CA7C6FC5185EF50E00B348BA /* endoff.png in Resources */,
@@ -2654,6 +2820,7 @@
 				CA7C6FDC185EF50E00B348BA /* 119-piggy-bank@2x.png in Resources */,
 				CA7C6FDD185EF50E00B348BA /* benetton.gif in Resources */,
 				CA7C6FDE185EF50E00B348BA /* photoDefaultfail.png in Resources */,
+				CAADF6CA1929681300ECA4C1 /* ProfilViewController.xib in Resources */,
 				CA7C6FDF185EF50E00B348BA /* 113-navigation.png in Resources */,
 				CA7C6FE0185EF50E00B348BA /* 119-piggy-bank.png in Resources */,
 				CA7C6FE1185EF50E00B348BA /* style-max.css in Resources */,
@@ -2662,6 +2829,7 @@
 				CA7C6FE4185EF50E00B348BA /* downsmall@2x.png in Resources */,
 				CA7C6FE5185EF50E00B348BA /* IASKPSTextFieldSpecifierViewCell.xib in Resources */,
 				CA7C6FE6185EF50E00B348BA /* Icon-Small.png in Resources */,
+				CAF5DB741933D408000B5215 /* PersonnalLinkViewController.xib in Resources */,
 				CA7C6FE7185EF50E00B348BA /* buttonendon.png in Resources */,
 				CA7C6FE8185EF50E00B348BA /* foudtag.gif in Resources */,
 				CA7C6FE9185EF50E00B348BA /* ToolBarFastForward_on@2x.png in Resources */,
@@ -2671,9 +2839,11 @@
 				CA7C6FED185EF50E00B348BA /* Icon.png in Resources */,
 				CA7C6FEE185EF50E00B348BA /* buttonbeginoff.png in Resources */,
 				CA7C6FEF185EF50E00B348BA /* MainWindow-iPad.xib in Resources */,
+				CAF5DB911936D013000B5215 /* 71-compass@2x.png in Resources */,
 				CA7C6FF0185EF50E00B348BA /* IASKPSSliderSpecifierViewCell.xib in Resources */,
 				CA7C6FF1185EF50E00B348BA /* vomi.gif in Resources */,
 				CA7C6FF2185EF50E00B348BA /* nextIcon@2x.png in Resources */,
+				CAF5DB8C1936CD7B000B5215 /* 09-arrows-out.png in Resources */,
 				CA7C6FF3185EF50E00B348BA /* wink.gif in Resources */,
 				CA7C6FF4185EF50E00B348BA /* Icon-Small-50@2x.png in Resources */,
 				CA7C6FF5185EF50E00B348BA /* arrowback@2x.png in Resources */,
@@ -2697,6 +2867,7 @@
 				CA7C7007185EF50E00B348BA /* AddMessageViewController.xib in Resources */,
 				CA7C7008185EF50E00B348BA /* buttonnexton.png in Resources */,
 				CA7C7009185EF50E00B348BA /* downsmall7@2x.png in Resources */,
+				CAF5DB771933D422000B5215 /* ConfigurationViewController.xib in Resources */,
 				CA7C700A185EF50E00B348BA /* ToolBarFastRewind_on@2x.png in Resources */,
 				CA7C700B185EF50E00B348BA /* style-aide.css in Resources */,
 				CA7C700C185EF50E00B348BA /* bginput.png in Resources */,
@@ -2728,6 +2899,7 @@
 				CA7C7026185EF50E00B348BA /* evil.gif in Resources */,
 				CA7C7027185EF50E00B348BA /* 08-chat@2x.png in Resources */,
 				CA7C7028185EF50E00B348BA /* 44-shoebox.png in Resources */,
+				CAF5DB8A1936CD7B000B5215 /* 10-arrows-in@2x.png in Resources */,
 				CA7C7029185EF50E00B348BA /* nextIcon.png in Resources */,
 				CA7C702A185EF50E00B348BA /* 08-chat.png in Resources */,
 				CA7C702B185EF50E00B348BA /* ToolBarPlay_off@2x.png in Resources */,
@@ -2761,6 +2933,7 @@
 				CA7C7047185EF50E00B348BA /* upsmall@2x.png in Resources */,
 				CA7C7048185EF50E00B348BA /* buttonendon@2x.png in Resources */,
 				CA7C7049185EF50E00B348BA /* 44-shoebox@2x.png in Resources */,
+				CAC7FCD3190DBD450083BB4E /* PollResultTableViewCell.xib in Resources */,
 				CA7C704A185EF50E00B348BA /* 06-magnify@2x.png in Resources */,
 				CA7C704B185EF50E00B348BA /* pfff.gif in Resources */,
 				CA7C704C185EF50E00B348BA /* ToolBarPrevious_on.png in Resources */,
@@ -2771,10 +2944,12 @@
 				CA7C7051185EF50E00B348BA /* beginoff.png in Resources */,
 				CA7C7052185EF50E00B348BA /* HFRSearchViewController.xib in Resources */,
 				CA7C7053185EF50E00B348BA /* ouch.gif in Resources */,
+				CAF5DB6B1932BA58000B5215 /* info@2x.png in Resources */,
 				CA7C7054185EF50E00B348BA /* toolbar3@2x.png in Resources */,
 				CA7C7055185EF50E00B348BA /* bgiPad.png in Resources */,
 				CA7C7056185EF50E00B348BA /* crazy.gif in Resources */,
 				CA7C7057185EF50E00B348BA /* Images.xcassets in Resources */,
+				CAF5DB631932BA58000B5215 /* check@2x.png in Resources */,
 				CA7C7058185EF50E00B348BA /* fouyaya.gif in Resources */,
 				CA7C7059185EF50E00B348BA /* ToolBarFastRewind_off.png in Resources */,
 				CA7C705A185EF50E00B348BA /* Default.png in Resources */,
@@ -2788,6 +2963,7 @@
 				CA7C7062185EF50E00B348BA /* lol.gif in Resources */,
 				CA7C7063185EF50E00B348BA /* PayViewController.xib in Resources */,
 				CA7C7064185EF50E00B348BA /* buttonbeginon@2x.png in Resources */,
+				CAF5DB691932BA58000B5215 /* info.png in Resources */,
 				CA7C7065185EF50E00B348BA /* photoDefault.png in Resources */,
 				CA7C7066185EF50E00B348BA /* spookie.gif in Resources */,
 				CA7C7067185EF50E00B348BA /* MainWindow.xib in Resources */,
@@ -2818,8 +2994,10 @@
 				CA7C7080185EF50E00B348BA /* ToolBarFastForward_off.png in Resources */,
 				CA7C7081185EF50E00B348BA /* arrowend@2x.png in Resources */,
 				CA7C7082185EF50E00B348BA /* style-liste-ipad-portrait.css in Resources */,
+				CAF5DB881936CD7B000B5215 /* 09-arrows-out@2x.png in Resources */,
 				CA7C7083185EF50E00B348BA /* 60-signpost.png in Resources */,
 				CA7C7084185EF50E00B348BA /* 113-navigation@2x.png in Resources */,
+				CAF5DB611932BA58000B5215 /* check.png in Resources */,
 				CA7C7085185EF50E00B348BA /* buttonnextoff@2x.png in Resources */,
 				CA7C7086185EF50E00B348BA /* 19-gear.png in Resources */,
 				CA7C7087185EF50E00B348BA /* buttonnexton@2x.png in Resources */,
@@ -2827,6 +3005,7 @@
 				CA7C7089185EF50E00B348BA /* buttonbeginhover.png in Resources */,
 				CA7C708A185EF50E00B348BA /* selectedrow@2x.png in Resources */,
 				CA7C708B185EF50E00B348BA /* flagblue2@2x.png in Resources */,
+				CAF5DB711933D3D8000B5215 /* FeedbackViewController.xib in Resources */,
 				CA7C708C185EF50E00B348BA /* buttonprevioushover@2x.png in Resources */,
 				CA7C708D185EF50E00B348BA /* 111-user.png in Resources */,
 				CA7C708E185EF50E00B348BA /* buttonpreviouson.png in Resources */,
@@ -2846,12 +3025,14 @@
 				CA7C709C185EF50E00B348BA /* buttonbeginon.png in Resources */,
 				CA7C709D185EF50E00B348BA /* plus.png in Resources */,
 				CA7C709E185EF50E00B348BA /* downsmall.png in Resources */,
+				CAF5DB651932BA58000B5215 /* error.png in Resources */,
 				CA7C709F185EF50E00B348BA /* sarcastic.gif in Resources */,
 				CA7C70A0185EF50E00B348BA /* HFRDebugViewController.xib in Resources */,
 				CA7C70A1185EF50E00B348BA /* IASKAppSettingsView.xib in Resources */,
 				CA7C70A2185EF50E00B348BA /* style-smile.css in Resources */,
 				CA7C70A3185EF50E00B348BA /* 24.gif in Resources */,
 				CA7C70A4185EF50E00B348BA /* arrowend.png in Resources */,
+				CAF5DB671932BA58000B5215 /* error@2x.png in Resources */,
 				CA7C70A5185EF50E00B348BA /* 06-magnifying-glass.png in Resources */,
 				CA7C70A6185EF50E00B348BA /* 121-lanscape.png in Resources */,
 				CA7C70A7185EF50E00B348BA /* arrowforward.png in Resources */,
@@ -2865,6 +3046,7 @@
 				CA7C70AF185EF50E00B348BA /* down@2x.png in Resources */,
 				CA7C70B0185EF50E00B348BA /* aide.html in Resources */,
 				CA7C70B1185EF50E00B348BA /* multiplefavoris.gif in Resources */,
+				CA5E109818AC2A4F00C481A9 /* PollTableViewController.xib in Resources */,
 				CA7C70B2185EF50E00B348BA /* buttonbeginoff@2x.png in Resources */,
 				CA7C70B3185EF50E00B348BA /* style-liste-retina.css in Resources */,
 				CA7C70B4185EF50E00B348BA /* buttonendhover@2x.png in Resources */,
@@ -2886,6 +3068,8 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				CA00C47117C302610067B457 /* UIWebView+Tools.m in Sources */,
 				CA00C42017C2FE240067B457 /* UIImageView+WebCache.m in Sources */,
+				CAF5DB8119341BBB000B5215 /* AvatarTableViewCell.m in Sources */,
+				CAADF6C71929681300ECA4C1 /* ProfilViewController.m in Sources */,
 				1D3623260D0F684500981E51 /* HFRplusAppDelegate.m in Sources */,
 				01BF8785121C4407007624B6 /* InfosViewController.m in Sources */,
 				01BF8786121C4407007624B6 /* AideViewController.m in Sources */,
@@ -2898,6 +3082,7 @@
 				CA00C3F517C2FE1B0067B457 /* IASKTextField.m in Sources */,
 				CA00C3FC17C2FE1B0067B457 /* MBProgressHUD.m in Sources */,
 				01BF8A54121D7945007624B6 /* Forum.m in Sources */,
+				CAF5DB5819328EB4000B5215 /* PullToRefreshErrorViewController.m in Sources */,
 				01BF8B45121DAD33007624B6 /* TopicsTableViewController.m in Sources */,
 				01BF8B70121DAEF3007624B6 /* Topic.m in Sources */,
 				01BF8C4C121DBB09007624B6 /* UIAlertViewURL.m in Sources */,
@@ -2910,6 +3095,7 @@
 				CA00C46F17C302610067B457 /* UIImage+Resize.m in Sources */,
 				CA00C45917C300140067B457 /* RegexKitLite.m in Sources */,
 				013F0EAB121E117900BEBEB1 /* LinkItem.m in Sources */,
+				CACADFD919217CCA0071D2DA /* UIScrollView+SVPullToRefresh.m in Sources */,
 				CA00C3ED17C2FE1B0067B457 /* IASKSettingsStoreUserDefaults.m in Sources */,
 				CA00C44417C2FF3F0067B457 /* ASIInputStream.m in Sources */,
 				013F0EAC121E117900BEBEB1 /* MessagesTableViewController.m in Sources */,
@@ -2935,6 +3121,7 @@
 				CA9E86891243C11A000EE882 /* TabBarController.m in Sources */,
 				CAB16278124B9F8300D12569 /* TopicCellView.m in Sources */,
 				CAA1B092125C0A53009C80E3 /* AKSegmentedControl.m in Sources */,
+				CACADFD719217CCA0071D2DA /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				CA00C44317C2FF3F0067B457 /* ASIHTTPRequest.m in Sources */,
 				CAAFAFDC125E2A58001B90EC /* NewMessageViewController.m in Sources */,
 				CA00C3B517C2FDB00067B457 /* MWPhotoBrowser.m in Sources */,
@@ -2956,10 +3143,12 @@
 				CA7E25E315A1D17500721F6D /* SplitViewController.m in Sources */,
 				CA7E25F115A1F4AA00721F6D /* DetailNavigationViewController.m in Sources */,
 				CA00C44117C2FF3F0067B457 /* ASIDownloadCache.m in Sources */,
+				CAF5DB7B19340741000B5215 /* FeedbackTableViewCell.m in Sources */,
 				CA7E260215A24A9B00721F6D /* SubCatTableViewController.m in Sources */,
 				CA00C41E17C2FE240067B457 /* SDWebImagePrefetcher.m in Sources */,
 				CA00C3F117C2FE1B0067B457 /* IASKPSTitleValueSpecifierViewCell.m in Sources */,
 				CA00C3B817C2FDB00067B457 /* MWZoomingScrollView.m in Sources */,
+				CA5E109518AC2A4F00C481A9 /* PollTableViewController.m in Sources */,
 				CA00C3EC17C2FE1B0067B457 /* IASKSettingsStoreFile.m in Sources */,
 				CA00C3B717C2FDB00067B457 /* MWTapDetectingView.m in Sources */,
 				CA00C44617C2FF3F0067B457 /* Reachability.m in Sources */,
@@ -2976,6 +3165,7 @@
 				CA00C3E917C2FE1B0067B457 /* IASKSpecifierValuesViewController.m in Sources */,
 				CA00C3E817C2FE1B0067B457 /* IASKAppSettingsWebViewController.m in Sources */,
 				CA00C46D17C302610067B457 /* NSDictionary+Merging.m in Sources */,
+				CAC7FCD0190DBD450083BB4E /* PollResultTableViewCell.m in Sources */,
 				CA00C41A17C2FE240067B457 /* SDImageCache.m in Sources */,
 				CA00C46C17C302610067B457 /* AKSingleSegmentedControl.m in Sources */,
 				CA00C3F017C2FE1B0067B457 /* IASKPSTextFieldSpecifierViewCell.m in Sources */,
@@ -2992,6 +3182,8 @@
 				CA7C70BB185EF50E00B348BA /* main.m in Sources */,
 				CA7C70BC185EF50E00B348BA /* UIWebView+Tools.m in Sources */,
 				CA7C70BD185EF50E00B348BA /* UIImageView+WebCache.m in Sources */,
+				CAF5DB8219341BBB000B5215 /* AvatarTableViewCell.m in Sources */,
+				CAADF6C81929681300ECA4C1 /* ProfilViewController.m in Sources */,
 				CA7C70BE185EF50E00B348BA /* HFRplusAppDelegate.m in Sources */,
 				CA7C70BF185EF50E00B348BA /* InfosViewController.m in Sources */,
 				CA7C70C0185EF50E00B348BA /* AideViewController.m in Sources */,
@@ -3004,6 +3196,7 @@
 				CA7C70C7185EF50E00B348BA /* IASKTextField.m in Sources */,
 				CA7C70C8185EF50E00B348BA /* MBProgressHUD.m in Sources */,
 				CA7C70C9185EF50E00B348BA /* Forum.m in Sources */,
+				CAF5DB5919328EB4000B5215 /* PullToRefreshErrorViewController.m in Sources */,
 				CA7C70CA185EF50E00B348BA /* TopicsTableViewController.m in Sources */,
 				CA7C70CB185EF50E00B348BA /* Topic.m in Sources */,
 				CA7C70CC185EF50E00B348BA /* UIAlertViewURL.m in Sources */,
@@ -3016,6 +3209,7 @@
 				CA7C70D3185EF50E00B348BA /* UIImage+Resize.m in Sources */,
 				CA7C70D4185EF50E00B348BA /* RegexKitLite.m in Sources */,
 				CA7C70D5185EF50E00B348BA /* LinkItem.m in Sources */,
+				CACADFDA19217CCA0071D2DA /* UIScrollView+SVPullToRefresh.m in Sources */,
 				CA7C70D6185EF50E00B348BA /* IASKSettingsStoreUserDefaults.m in Sources */,
 				CA7C70D7185EF50E00B348BA /* ASIInputStream.m in Sources */,
 				CA7C70D8185EF50E00B348BA /* MessagesTableViewController.m in Sources */,
@@ -3041,6 +3235,7 @@
 				CA7C70EC185EF50E00B348BA /* TabBarController.m in Sources */,
 				CA7C70ED185EF50E00B348BA /* TopicCellView.m in Sources */,
 				CA7C70EE185EF50E00B348BA /* AKSegmentedControl.m in Sources */,
+				CACADFD819217CCA0071D2DA /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				CA7C70EF185EF50E00B348BA /* ASIHTTPRequest.m in Sources */,
 				CA7C70F0185EF50E00B348BA /* NewMessageViewController.m in Sources */,
 				CA7C70F1185EF50E00B348BA /* MWPhotoBrowser.m in Sources */,
@@ -3062,10 +3257,12 @@
 				CA7C7101185EF50E00B348BA /* SplitViewController.m in Sources */,
 				CA7C7102185EF50E00B348BA /* DetailNavigationViewController.m in Sources */,
 				CA7C7103185EF50E00B348BA /* ASIDownloadCache.m in Sources */,
+				CAF5DB7C19340741000B5215 /* FeedbackTableViewCell.m in Sources */,
 				CA7C7104185EF50E00B348BA /* SubCatTableViewController.m in Sources */,
 				CA7C7105185EF50E00B348BA /* SDWebImagePrefetcher.m in Sources */,
 				CA7C7106185EF50E00B348BA /* IASKPSTitleValueSpecifierViewCell.m in Sources */,
 				CA7C7107185EF50E00B348BA /* MWZoomingScrollView.m in Sources */,
+				CA5E109618AC2A4F00C481A9 /* PollTableViewController.m in Sources */,
 				CA7C7108185EF50E00B348BA /* IASKSettingsStoreFile.m in Sources */,
 				CA7C7109185EF50E00B348BA /* MWTapDetectingView.m in Sources */,
 				CA7C710A185EF50E00B348BA /* Reachability.m in Sources */,
@@ -3082,6 +3279,7 @@
 				CA7C7115185EF50E00B348BA /* IASKSpecifierValuesViewController.m in Sources */,
 				CA7C7116185EF50E00B348BA /* IASKAppSettingsWebViewController.m in Sources */,
 				CA7C7117185EF50E00B348BA /* NSDictionary+Merging.m in Sources */,
+				CAC7FCD1190DBD450083BB4E /* PollResultTableViewCell.m in Sources */,
 				CA7C7118185EF50E00B348BA /* SDImageCache.m in Sources */,
 				CA7C7119185EF50E00B348BA /* AKSingleSegmentedControl.m in Sources */,
 				CA7C711A185EF50E00B348BA /* IASKPSTextFieldSpecifierViewCell.m in Sources */,
@@ -3160,7 +3358,7 @@
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = HFRplus;
-				PROVISIONING_PROFILE = "741636B4-898E-4433-A9C9-6D8D1021CFC3";
+				PROVISIONING_PROFILE = "E6EEA92B-0443-49CC-A9F9-4ED5994268AD";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -3183,6 +3381,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -3191,7 +3390,7 @@
 				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				MACH_O_TYPE = mh_execute;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				PROVISIONING_PROFILE = "47B1A3A3-C38C-4F58-A3D6-AC28D57D9A7C";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "47B1A3A3-C38C-4F58-A3D6-AC28D57D9A7C";
@@ -3213,6 +3412,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;

@@ -18,10 +18,41 @@
 
 #import "ASIHTTPRequest.h"
 
+#import "UIScrollView+SVPullToRefresh.h"
+#import "PullToRefreshErrorViewController.h"
+
+#import "ProfilViewController.h" //test
+
 @implementation ForumsTableViewController
 @synthesize request;
-@synthesize forumsTableView, loadingView, arrayData, topicsTableViewController;
+@synthesize forumsTableView, loadingView, arrayData, arrayNewData, topicsTableViewController;
 @synthesize status, statusMessage, maintenanceView;
+
+#pragma mark -
+#pragma mark Test BTN
+
+- (void)testBtn {
+    /*
+     /hfr/profil-918540.htm //testreview
+     /hfr/profil-89386.htm //flk
+     */
+    ProfilViewController *profilVC = [[ProfilViewController alloc] initWithNibName:@"ProfilViewController" bundle:nil andUrl:@"/hfr/profil-89386.htm"];
+
+    
+    // Set options
+    profilVC.wantsFullScreenLayout = YES;
+    
+    HFRNavigationController *nc = [[HFRNavigationController alloc] initWithRootViewController:profilVC];
+    nc.modalPresentationStyle = UIModalPresentationFormSheet;
+    
+    [self presentModalViewController:nc animated:YES];
+    [nc release];
+    
+    
+    [profilVC release];
+    
+}
+
 #pragma mark -
 #pragma mark Data lifecycle
 
@@ -57,17 +88,18 @@
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(cancelFetchContent)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
     [segmentBarItem release];	
-
+/*
     [self.arrayData removeAllObjects];
 	[self.forumsTableView reloadData];
     
 	[self.maintenanceView setHidden:YES];
 	[self.loadingView setHidden:NO];
+    */
 }
 
 - (void)fetchContentComplete:(ASIHTTPRequest *)theRequest
 {    
-    NSLog(@"fetchContentComplete");
+    //NSLog(@"fetchContentComplete");
 
     
 	//Bouton Reload
@@ -76,19 +108,28 @@
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
     [segmentBarItem release];
     
-    [self.loadingView setHidden:YES];
-    [self.maintenanceView setHidden:YES];
+    //[self.loadingView setHidden:YES];
+    //[self.maintenanceView setHidden:YES];
 	
     [self loadDataInTableView:[theRequest responseData]];
     
+    [self.arrayData removeAllObjects];
+    
+    self.arrayData = [NSMutableArray arrayWithArray:self.arrayNewData];
+    
+    [self.arrayNewData removeAllObjects];
+    
 	[self.forumsTableView reloadData];
-    [self.forumsTableView setHidden:NO];
+    //[self.forumsTableView setHidden:NO];
+    
+    [self.forumsTableView.pullToRefreshView stopAnimating];
+    [self.forumsTableView.pullToRefreshView setLastUpdatedDate:[NSDate date]];
 
 }
 
 - (void)fetchContentFailed:(ASIHTTPRequest *)theRequest
 {        
-    NSLog(@"fetchContentFailed");
+    //NSLog(@"fetchContentFailed");
     
     //Bouton Reload
 	self.navigationItem.rightBarButtonItem = nil;
@@ -98,9 +139,11 @@
 	
     [self.maintenanceView setText:@"oops :o"];
     
-    [self.loadingView setHidden:YES];
-    [self.maintenanceView setHidden:NO];
-    [self.forumsTableView setHidden:YES];
+    //[self.loadingView setHidden:YES];
+    //[self.maintenanceView setHidden:NO];
+    //[self.forumsTableView setHidden:YES];
+    
+    [self.forumsTableView.pullToRefreshView stopAnimating];
     
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[theRequest.error localizedDescription]
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
@@ -111,7 +154,7 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
 	if (buttonIndex == 1) {
-		[self fetchContent];
+		[self.forumsTableView triggerPullToRefresh];
 	}
 }
 
@@ -128,13 +171,15 @@
 	NSArray *temporaryForumsArray = [bodyNode findChildrenWithAttribute:@"class" matchingName:@"cat" allowPartial:YES];
 
 	if ([[[bodyNode firstChild] tagName] isEqualToString:@"p"]) {
-		self.status = kMaintenance;
-		self.statusMessage = [[[bodyNode firstChild] contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-		[myParser release];
         
+        
+        NSDictionary *notif = [NSDictionary dictionaryWithObjectsAndKeys:   [NSNumber numberWithInt:kMaintenance], @"status",
+                               [[[bodyNode firstChild] contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]], @"message", nil];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kStatusChangedNotification object:self userInfo:notif];
 
-          [self.maintenanceView setText:self.statusMessage];
-          [self.maintenanceView setHidden:NO];
+		[myParser release];
+
     
 		return;
 	}
@@ -679,7 +724,7 @@
 		//--- Sous categories
 
 		if ([aForumURL rangeOfString:@"cat=prive"].location == NSNotFound) {
-			[arrayData addObject:aForum];
+			[arrayNewData addObject:aForum];
 		}
 		else {
 			NSString *regExMP = @"[^.0-9]+([0-9]{1,})[^.0-9]+";			
@@ -697,18 +742,64 @@
 	[myParser release];
 }
 
+-(void)StatusChanged:(NSNotification *)notification {
+    
+    if ([[notification object] class] != [self class]) {
+        //NSLog(@"KO");
+        return;
+    }
+    
+    NSDictionary *notif = [notification userInfo];
+    
+    self.status = [[notif valueForKey:@"status"] intValue];
+    
+    //NSLog(@"StatusChanged %d = %u", self.childViewControllers.count, self.status);
+    
+    //on vire l'eventuel header actuel
+    if (self.childViewControllers.count > 0) {
+        [[self.childViewControllers objectAtIndex:0] removeFromParentViewController];
+        self.forumsTableView.tableHeaderView = nil;
+    }
+    
+    if (self.status == kComplete || self.status == kIdle) {
+        NSLog(@"COMPLETE %d", self.childViewControllers.count);
+        
+    }
+    else
+    {
+        PullToRefreshErrorViewController *ErrorVC = [[PullToRefreshErrorViewController alloc] initWithNibName:nil bundle:nil andDico:notif];
+        [self addChildViewController:ErrorVC];
+        
+        self.forumsTableView.tableHeaderView = ErrorVC.view;
+        [ErrorVC sizeToFit];
+    }
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 	self.title = @"Catégories";
+    self.navigationController.navigationBar.translucent = NO;
 
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(StatusChanged:)
+                                                 name:kStatusChangedNotification
+                                               object:nil];
+    
 	//Bouton Reload
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
     [segmentBarItem release];	
 
+    // test BTN
+	//UIBarButtonItem *segmentBarItem2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(testBtn)];
+	//self.navigationItem.leftBarButtonItem = segmentBarItem2;
+    //[segmentBarItem2 release];
+    
 	[(ShakeView*)self.view setShakeDelegate:self];
 
 	self.arrayData = [[NSMutableArray alloc] init];
+	self.arrayNewData = [[NSMutableArray alloc] init];
 	self.statusMessage = [[NSString alloc] init];
 
     UIView *v = [[UIView alloc] initWithFrame:CGRectZero];
@@ -716,7 +807,15 @@
     [self.forumsTableView setTableFooterView:v];
     [v release];
     
-	[self fetchContent];
+    [self.forumsTableView addPullToRefreshWithActionHandler:^{
+        //NSLog(@"=== BEGIN");
+        [self fetchContent];
+        //NSLog(@"=== END");
+    }];
+    
+    [self.forumsTableView triggerPullToRefresh];
+    
+	//[self fetchContent];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -834,7 +933,9 @@
 
 	}
 
-	[self fetchContent];
+    [self.forumsTableView triggerPullToRefresh];
+    
+	//[self fetchContent];
 }
 
 
@@ -871,8 +972,11 @@
 	//NSLog(@"dealloc Forums Table View");
 	[self viewDidUnload];
 
-	self.arrayData = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kStatusChangedNotification object:nil];
 
+	self.arrayData = nil;
+    self.arrayNewData = nil;
+    
 	[request cancel];
 	//[request setDelegate:nil];
 	self.request = nil;

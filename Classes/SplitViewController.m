@@ -7,6 +7,9 @@
 
 #import "SplitViewController.h"
 #import "HFRplusAppDelegate.h"
+#import "MessagesTableViewController.h"
+
+#import "AideViewController.h"
 
 @interface SplitViewController ()
 
@@ -33,9 +36,11 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    
     if ([self respondsToSelector:@selector(setPresentsWithGesture:)]) {
         [self setPresentsWithGesture:NO];
     }
+
     
 }
 
@@ -44,6 +49,149 @@
     
     [super viewDidUnload];
     // Release any retained subviews of the main view.
+}
+
+-(void)MoveLeftToRight {
+    
+    //Les deux controllers
+    TabBarController *leftTabBarController = [self.viewControllers objectAtIndex:0];
+    UINavigationController *rightNavController = [self.viewControllers objectAtIndex:1];
+    
+    [rightNavController popToRootViewControllerAnimated:YES];
+    
+    [rightNavController setViewControllers:nil];
+    UIViewController * uivc = [[[UIViewController alloc] init] autorelease];
+    uivc.title = @"HFR+";
+    [rightNavController setViewControllers:[NSMutableArray arrayWithObjects:uivc, nil]];
+
+    
+    
+    //Première tab > navController > msgController
+    //leftTabBarController.selectedIndex = 0;
+    UINavigationController *leftNavController= (UINavigationController *)leftTabBarController.selectedViewController;
+    
+    while (![leftNavController.topViewController isMemberOfClass:[MessagesTableViewController class]] && leftNavController.viewControllers.count > 1) {
+        
+        [leftNavController popViewControllerAnimated:NO];
+    }
+    
+    
+    if ([leftNavController.topViewController isMemberOfClass:[MessagesTableViewController class]]) {
+        MessagesTableViewController *leftMessageController = (MessagesTableViewController *)leftNavController.topViewController;
+        
+        NSLog(@"old url  %@", leftMessageController.currentUrl);
+        NSLog(@"old lastStringFlagTopic %@", leftMessageController.lastStringFlagTopic);
+        
+        NSString *theUrl = leftMessageController.currentUrl;
+        if (leftMessageController.lastStringFlagTopic) {
+            theUrl = [theUrl stringByAppendingString:leftMessageController.lastStringFlagTopic];
+
+        }
+        
+        [leftNavController popViewControllerAnimated:YES];
+        
+        MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:theUrl];
+        [rightNavController setViewControllers:[NSMutableArray arrayWithObjects:aView, nil] animated:YES];
+        [aView release];
+
+    }
+
+    NSLog(@"END MoveLeftToRight");
+}
+
+-(void)NavPlus:(NSString *)url {
+    //Les deux controllers
+    TabBarController *leftTabBarController = [self.viewControllers objectAtIndex:0];
+    UINavigationController *rightNavController = [self.viewControllers objectAtIndex:1];
+    
+    //Première tab > navController
+    //leftTabBarController.selectedIndex = 0;
+
+    //on check à droite s'il y a un MessageTVC
+    while (![rightNavController.topViewController isMemberOfClass:[MessagesTableViewController class]]) {
+        
+        [rightNavController popViewControllerAnimated:NO];
+        
+        if (rightNavController.viewControllers.count == 1) {
+            break;
+        }
+    }
+    
+    //on a un MessageTVC à droite
+    if ([rightNavController.topViewController isMemberOfClass:[MessagesTableViewController class]]) {
+        [self MoveRightToLeft:url];
+    }
+    else
+    {
+        BrowserViewController *browserViewController = [[BrowserViewController alloc] initWithNibName:@"BrowserViewController" bundle:nil andURL:url];
+        [browserViewController setFullBrowser:YES];
+        
+        [rightNavController popToRootViewControllerAnimated:NO];
+        [rightNavController setViewControllers:nil animated:NO];
+        [rightNavController setViewControllers:[NSMutableArray arrayWithObjects:browserViewController, nil] animated:NO];
+        
+        [browserViewController release];
+    }
+    
+}
+
+
+-(void)MoveRightToLeft:(NSString *)url {
+    NSLog(@"MoveRightToLeft");
+    
+    //Les deux controllers
+    TabBarController *leftTabBarController = [self.viewControllers objectAtIndex:0];
+    UINavigationController *rightNavController = [self.viewControllers objectAtIndex:1];
+    
+    //Première tab > navController
+    //leftTabBarController.selectedIndex = 0;
+    UINavigationController *leftNavController= (UINavigationController *)leftTabBarController.selectedViewController;
+    
+    //deuxième tab > msgController
+    while (![rightNavController.topViewController isMemberOfClass:[MessagesTableViewController class]]) {
+        
+        [rightNavController popViewControllerAnimated:NO];
+    }
+    
+    MessagesTableViewController *rightMessageController = (MessagesTableViewController *)rightNavController.topViewController;
+    
+    [rightMessageController.navigationItem setLeftBarButtonItem:nil animated:NO];
+    
+    rightMessageController.navigationItem.backBarButtonItem =
+    [[UIBarButtonItem alloc] initWithTitle:@"Retour"
+                                     style: UIBarButtonItemStyleBordered
+                                    target:nil
+                                    action:nil];
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+        rightMessageController.navigationItem.backBarButtonItem.title = @" ";
+    }
+    
+    NSLog(@"old url  %@", rightMessageController.currentUrl);
+    NSLog(@"old lastStringFlagTopic %@", rightMessageController.lastStringFlagTopic);
+    
+    NSString *theUrl = rightMessageController.currentUrl;
+    if (rightMessageController.lastStringFlagTopic) {
+        theUrl = [theUrl stringByAppendingString:rightMessageController.lastStringFlagTopic];
+    }
+    
+    MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:theUrl];
+    [leftNavController pushViewController:aView animated:YES];
+    [aView release];
+    
+    BrowserViewController *browserViewController = [[BrowserViewController alloc] initWithNibName:@"BrowserViewController" bundle:nil andURL:url];
+    [browserViewController setFullBrowser:YES];
+    
+    [rightNavController popToRootViewControllerAnimated:NO];
+    [rightNavController setViewControllers:nil animated:NO];
+    [rightNavController setViewControllers:[NSMutableArray arrayWithObjects:browserViewController, nil] animated:NO];
+    
+    [browserViewController release];
+    NSLog(@"END MoveRightToLeft");
+}
+
+-(void)MoveRightToLeft {
+    [self MoveRightToLeft:@"http://www.google.com"];
 }
 
 /* for iOS6 support */
@@ -92,14 +240,17 @@
         
         [aViewController setSelectedIndex:4]; // bugfix select dernière puis reselectionne le bon.
         [aViewController setSelectedIndex:selected];
-        
+
     }
 
 }
 
 - (void)splitViewController: (SplitViewController *)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem*)barButtonItem forPopoverController: (UIPopoverController*)pc {
     
-    barButtonItem.title = @"Menu";    
+    barButtonItem.title = @"Menu";
+    
+    NSLog(@"%@", [[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] viewControllers]);
+
     
     UINavigationItem *navItem = [[[[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] viewControllers] objectAtIndex:0] navigationItem];
 
@@ -108,11 +259,12 @@
     svc.popOver = pc;
     [svc setMybarButtonItem:barButtonItem];
 
-
 }
 
-- (void)splitViewController: (SplitViewController *)svc willShowViewController:(UIViewController *)aViewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem {    
+- (void)splitViewController: (SplitViewController *)svc willShowViewController:(UIViewController *)aViewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem {
    
+    NSLog(@"%@", [[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] viewControllers]);
+    
     UINavigationItem *navItem = [[[[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] viewControllers] objectAtIndex:0] navigationItem];
     [navItem setLeftBarButtonItem:nil animated:YES];
     

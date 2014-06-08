@@ -34,5 +34,10 @@
 -(NSString*)wordAfterString:(NSString*)searchString;
 
 - (NSString*)removeEmoji;
+- (NSString *)stripHTML;
 
+@end
+
+@interface UILabel (MultiLineAutoSize)
+- (void)adjustFontSizeToFit;
 @end

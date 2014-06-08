@@ -92,6 +92,7 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationController.navigationBar.translucent = NO;
 
     self.theSearchBar = [[UISearchBar alloc] init];
     theSearchBar.delegate = self;
@@ -103,7 +104,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(OrientationChanged)
-                                                 name:@"UIDeviceOrientationDidChangeNotification"
+                                                 name:UIApplicationDidChangeStatusBarOrientationNotification
                                                object:nil];
     
 	self.title = @"Recherche";
@@ -448,7 +449,7 @@
 	[cell.titleLabel setText:[[stories objectAtIndex: storyIndex] objectForKey: @"title"]];
 	[cell.msgLabel setText:[[stories objectAtIndex: storyIndex] objectForKey: @"summary"]];
 	[cell.timeLabel setText:[[stories objectAtIndex: storyIndex] objectForKey: @"page"]];
-
+    
 	// Set up the cell
 
 //	[cell setText:[(NSString *)[[stories objectAtIndex: storyIndex] objectForKey: @"title"] stringByReplacingOccurrencesOfRegex:pattern
@@ -486,7 +487,7 @@
 	self.messagesTableViewController.topicName = [[stories objectAtIndex: storyIndex] objectForKey: @"title"];	
 	self.messagesTableViewController.isViewed = NO;	
 	
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone || [[HFRplusAppDelegate sharedAppDelegate].detailNavigationController.topViewController isMemberOfClass:[BrowserViewController class]]) {
         [self.navigationController pushViewController:messagesTableViewController animated:YES];
     }
     else {
@@ -572,7 +573,7 @@
     [stories dealloc];	
 	[disableViewOverlay dealloc];
 
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UIDeviceOrientationDidChangeNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
 
     self.pressedIndexPath = nil;
     self.topicActionSheet = nil;

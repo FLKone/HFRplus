@@ -16,4 +16,10 @@
 @property (nonatomic, retain) UIPopoverController *popOver;
 @property (nonatomic, retain) UIBarButtonItem *mybarButtonItem;
 
+-(void)MoveRightToLeft;
+-(void)MoveRightToLeft:(NSString *)url;
+-(void)NavPlus:(NSString *)url;
+
+-(void)MoveLeftToRight;
+
 @end

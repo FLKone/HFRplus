@@ -22,9 +22,13 @@
 
 #import "SubCatTableViewController.h"
 
+#import "UIScrollView+SVPullToRefresh.h"
+#import "PullToRefreshErrorViewController.h"
+
+#import "AideViewController.h"
 
 @implementation TopicsTableViewController
-@synthesize forumNewTopicUrl, forumName, loadingView, topicsTableView, arrayData;
+@synthesize forumNewTopicUrl, forumName, loadingView, topicsTableView, arrayData, arrayNewData;
 @synthesize messagesTableViewController;
 
 @synthesize swipeLeftRecognizer, swipeRightRecognizer;
@@ -56,6 +60,12 @@
 
 - (void)fetchContent
 {
+    [self.topicsTableView setContentOffset:CGPointZero animated:YES];
+    [self.topicsTableView triggerPullToRefresh];
+}
+
+- (void)fetchContentTrigger
+{
 	//NSLog(@"fetchContent %@", [NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]);
 	self.status = kIdle;
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];
@@ -72,21 +82,35 @@
 	[self.view removeGestureRecognizer:swipeLeftRecognizer];
 	[self.view removeGestureRecognizer:swipeRightRecognizer];
 	
+
 	[request startAsynchronous];
 }
 
 - (void)fetchContentStarted:(ASIHTTPRequest *)theRequest
 {
-	[self.maintenanceView setHidden:YES];
-	[self.topicsTableView setHidden:YES];
-	[self.loadingView setHidden:NO];
+	//[self.maintenanceView setHidden:YES];
+	//[self.topicsTableView setHidden:YES];
+	//[self.loadingView setHidden:NO];
 	
 	//--
 }
 
 - (void)fetchContentComplete:(ASIHTTPRequest *)theRequest
 {
+    [self loadDataInTableView:[theRequest responseData]];
 	
+    [self.arrayData removeAllObjects];
+    
+    self.arrayData = [NSMutableArray arrayWithArray:self.arrayNewData];
+    
+    [self.arrayNewData removeAllObjects];
+    
+	[self.topicsTableView reloadData];
+    
+    [self.topicsTableView.pullToRefreshView stopAnimating];
+    [self.topicsTableView.pullToRefreshView setLastUpdatedDate:[NSDate date]];
+    
+    /*
 	[self.arrayData removeAllObjects];
 	[self.topicsTableView reloadData];
 	
@@ -112,7 +136,7 @@
 			[self.topicsTableView setHidden:NO];
 			break;
 	}
-
+    */
 	
 	[(UISegmentedControl *)[self.navigationItem.titleView.subviews objectAtIndex:0] setUserInteractionEnabled:YES];
 }
@@ -122,10 +146,12 @@
 
     [self.maintenanceView setText:@"oops :o"];
     
-    [self.loadingView setHidden:YES];
-    [self.maintenanceView setHidden:NO];
-    [self.topicsTableView setHidden:YES];
+    //[self.loadingView setHidden:YES];
+    //[self.maintenanceView setHidden:NO];
+    //[self.topicsTableView setHidden:YES];
 	
+    [self.topicsTableView.pullToRefreshView stopAnimating];
+    
 	[(UISegmentedControl *)[self.navigationItem.titleView.subviews objectAtIndex:0] setUserInteractionEnabled:YES];
 	
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[theRequest.error localizedDescription]
@@ -174,20 +200,24 @@
 	//NSLog(@"rawContentsOfNode %@", rawContentsOfNode([bodyNode _node], [myParser _doc]));
 	
 	if (![bodyNode getAttributeNamed:@"id"]) {
-		//NSLog(@"kNoResults"); 
+        NSDictionary *notif;
+        
 		if ([[[bodyNode firstChild] tagName] isEqualToString:@"p"]) {
-			//NSLog(@"p");
-			
-			self.status = kMaintenance;
-			self.statusMessage = [[[bodyNode firstChild] contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-			[myParser release];
-			return;
+            
+            notif = [NSDictionary dictionaryWithObjectsAndKeys:   [NSNumber numberWithInt:kMaintenance], @"status",
+                     [[[bodyNode firstChild] contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]], @"message", nil];
+            
 		}
-		
-		self.status = kNoAuth;
-		self.statusMessage = [[[bodyNode findChildWithAttribute:@"class" matchingName:@"hop" allowPartial:NO] contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        else {
+            notif = [NSDictionary dictionaryWithObjectsAndKeys:   [NSNumber numberWithInt:kNoAuth], @"status",
+                     [[[bodyNode findChildWithAttribute:@"class" matchingName:@"hop" allowPartial:NO] contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]], @"message", nil];
+            
+        }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kStatusChangedNotification object:self userInfo:notif];
+        
 		[myParser release];
-		return;		
+		return;
 	}
 
 	
@@ -426,7 +456,7 @@
 			UIBarButtonItem *fixItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
 																					  target:nil
 																					  action:nil];
-			fixItem.width = 0.0;
+			fixItem.width = SPACE_FOR_BARBUTTON;
 			
 			//Add buttons to the array
 			NSArray *items = [NSArray arrayWithObjects: systemItem1, fixItem, systemItemPrevious, flexItem, systemItem3, flexItem, systemItemNext, fixItem, systemItem2, nil];
@@ -441,11 +471,28 @@
 			[flexItem release];
 			
 			[fixItem release];	
-			
+
 			//add array of buttons to toolbar
 			[tmptoolbar setItems:items animated:NO];
 			
 			if ([self firstPageNumber] != [self lastPageNumber]) {
+                
+                
+                
+                if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+                    if (![self.topicsTableView viewWithTag:666777]) {
+                        CGRect frame = self.topicsTableView.bounds;
+                        frame.origin.y = -frame.size.height;
+                        UIView* grayView = [[UIView alloc] initWithFrame:frame];
+                        grayView.tag = 666777;
+                        grayView.backgroundColor = [UIColor whiteColor];
+                        [self.topicsTableView insertSubview:grayView atIndex:0];
+                        [grayView release];
+                    }
+
+                    [self.topicsTableView setBackgroundColor:[UIColor colorWithRed:239/255.0f green:239/255.0f blue:244/255.0f alpha:1.0f]];
+                }
+                
 				self.topicsTableView.tableFooterView = tmptoolbar;
 			}
 			else {
@@ -508,8 +555,12 @@
 
 	if (temporaryTopicsArray.count == 0) {
 		//NSLog(@"Aucun nouveau message %d", self.arrayDataID.count);
-		self.status = kNoResults;
-		self.statusMessage = @"Aucun message";
+        NSLog(@"kNoResults");
+        
+        NSDictionary *notif = [NSDictionary dictionaryWithObjectsAndKeys:   [NSNumber numberWithInt:kNoResults], @"status",
+                               @"Aucun message", @"message", nil];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kStatusChangedNotification object:self userInfo:notif];
 		[myParser release];
 		return;
 	}
@@ -667,7 +718,7 @@
             
 		}
         
-		[self.arrayData addObject:aTopic];
+		[self.arrayNewData addObject:aTopic];
 
 		[aTopic release];		
 		[pool2 drain];
@@ -690,8 +741,11 @@
 	//NSLog(@"TOPICS Time elapsed myParser              : %f", [then2 timeIntervalSinceDate:then1]);
 	//NSLog(@"TOPICS Time elapsed arraydata             : %f", [now timeIntervalSinceDate:then2]);
 	//NSLog(@"TOPICS Time elapsed Total                 : %f", [now timeIntervalSinceDate:then]);
-	self.status = kComplete;
-
+    if (self.status != kNoResults) {
+        NSDictionary *notif = [NSDictionary dictionaryWithObjectsAndKeys:   [NSNumber numberWithInt:kComplete], @"status", nil];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kStatusChangedNotification object:self userInfo:notif];
+    }
 }
 
 -(void)reset
@@ -702,9 +756,9 @@
 	
 	[self.topicsTableView reloadData];
 	
-	[self.topicsTableView setHidden:YES];
-	[self.maintenanceView setHidden:YES];	
-	[self.loadingView setHidden:YES];		
+	//[self.topicsTableView setHidden:YES];
+	//[self.maintenanceView setHidden:YES];
+	//[self.loadingView setHidden:YES];
 }
 
 -(NSString *)newTopicTitle
@@ -776,20 +830,66 @@
 -(void)OrientationChanged
 {
     if (self.topicActionSheet) {
+        
         [self.topicActionSheet dismissWithClickedButtonIndex:[self.topicActionSheet cancelButtonIndex] animated:YES];
     }
+}
+
+-(void)StatusChanged:(NSNotification *)notification {
+    
+    if ([[notification object] class] != [self class]) {
+        //NSLog(@"KO");
+        return;
+    }
+    
+    NSDictionary *notif = [notification userInfo];
+    
+    self.status = [[notif valueForKey:@"status"] intValue];
+    
+    //NSLog(@"StatusChanged %d = %u", self.childViewControllers.count, self.status);
+    
+    //on vire l'eventuel header actuel
+    if (self.childViewControllers.count > 0) {
+        [[self.childViewControllers objectAtIndex:0] removeFromParentViewController];
+        self.topicsTableView.tableHeaderView = nil;
+    }
+    
+    if (self.status == kComplete || self.status == kIdle) {
+        NSLog(@"COMPLETE %d", self.childViewControllers.count);
+        
+    }
+    else
+    {
+        PullToRefreshErrorViewController *ErrorVC = [[PullToRefreshErrorViewController alloc] initWithNibName:nil bundle:nil andDico:notif];
+        [self addChildViewController:ErrorVC];
+        
+        self.topicsTableView.tableHeaderView = ErrorVC.view;
+        [ErrorVC sizeToFit];
+    }
+    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 	self.title = forumName;
-    
-    
+    self.navigationController.navigationBar.translucent = NO;
+
+    NSLog(@"self nav %@", self.navigationController);
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(OrientationChanged)
-                                                 name:@"UIDeviceOrientationDidChangeNotification"
+                                                 name:UIApplicationDidChangeStatusBarOrientationNotification
+                                               object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(StatusChanged:)
+                                                 name:kStatusChangedNotification
                                                object:nil];
     
+
+    
+
+
 	//Gesture
 	UIGestureRecognizer *recognizer;
 	
@@ -818,6 +918,17 @@
 	//Title View
 	self.navigationItem.titleView = [[UIView alloc] init];//WithFrame:CGRectMake(0, 0, 120, self.navigationController.navigationBar.frame.size.height - 14)];
 	
+    self.navigationItem.backBarButtonItem =
+    [[UIBarButtonItem alloc] initWithTitle:@"Retour"
+                                     style: UIBarButtonItemStyleBordered
+                                    target:nil
+                                    action:nil];
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+        self.navigationItem.backBarButtonItem.title = @" ";
+    }
+    
+    
 	//Filter Control
     UISegmentedControl *segmentedControl;
     
@@ -931,6 +1042,7 @@
 	[(ShakeView*)self.view setShakeDelegate:self];
 
 	self.arrayData = [[NSMutableArray alloc] init];
+	self.arrayNewData = [[NSMutableArray alloc] init];
 	self.statusMessage = [[NSString alloc] init];
 	
 	self.forumNewTopicUrl = [[NSString alloc] init];
@@ -944,7 +1056,10 @@
 	
 	
 	//self.forumBaseURL = self.currentUrl;
-    
+    UIView *v = [[UIView alloc] initWithFrame:CGRectZero];
+    v.backgroundColor = [UIColor clearColor];
+    [self.topicsTableView setTableFooterView:v];
+    [v release];
 
 	self.topicsTableView.contentOffset = CGPointMake(0, self.searchDisplayController.searchBar.frame.size.height);
 	
@@ -1017,7 +1132,15 @@
 	}
     
     
-	[self fetchContent];
+    // setup pull-to-refresh
+    
+    [self.topicsTableView addPullToRefreshWithActionHandler:^{
+        //NSLog(@"=== BEGIN");
+        [self fetchContentTrigger];
+        //NSLog(@"=== END");
+    }];
+    
+    [self fetchContent];
 
 }
 
@@ -1147,11 +1270,14 @@
 #pragma mark Table view data source
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-	return [NSString stringWithFormat:@"%@", self.forumName];
+	return [[self forumName] stringByAppendingString:[NSString stringWithFormat:@" p.%d", [self pageNumber]]];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return HEIGHT_FOR_HEADER_IN_SECTION;
+    if (arrayData.count)
+        return HEIGHT_FOR_HEADER_IN_SECTION;
+    else
+        return 0;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -1192,17 +1318,24 @@
     //UIButton clickable pour accéder à la catégorie
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, curWidth, HEIGHT_FOR_HEADER_IN_SECTION)];
     [button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+
+    NSString *title = [self tableView:tableView titleForHeaderInSection:section];
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         [button setTitleColor:[UIColor colorWithRed:109/255.0f green:109/255.0f blue:114/255.0f alpha:1] forState:UIControlStateNormal];
-        [button setTitle:[[self forumName] uppercaseString] forState:UIControlStateNormal];
+        [button setTitle:[title uppercaseString] forState:UIControlStateNormal];
         [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
-        [button setTitleEdgeInsets:UIEdgeInsetsMake(10, 16, 0, 0)];
+        [button.titleLabel setMinimumFontSize:10];
+        button.titleLabel.adjustsFontSizeToFitWidth = YES;
+        [button.titleLabel setNumberOfLines:1];
+
+
+        [button setTitleEdgeInsets:UIEdgeInsetsMake(10, 10, 0, 10)];
     }
     else
     {
         [button setTitleEdgeInsets:UIEdgeInsetsMake(0, 8, 0, 0)];
-        [button setTitle:[self forumName] forState:UIControlStateNormal];
+        [button setTitle:title forState:UIControlStateNormal];
         [button.titleLabel setFont:[UIFont boldSystemFontOfSize:15]];
         [button.titleLabel setShadowColor:[UIColor darkGrayColor]];
         [button.titleLabel setShadowOffset:CGSizeMake(0.0, 1.0)];
@@ -1526,19 +1659,22 @@
 	}
 }
 
+-(void)test {
+    AideViewController *avc = [[AideViewController alloc] initWithNibName:@"AideViewController" bundle:nil];
+    [avc awakeFromNib];
+    
+    //[rightMessageController removeFromParentViewController];
+    
+    NSLog(@"avc %@", avc);
+    
+    [self.navigationController pushViewController:avc animated:YES];
+}
+
 - (void)pushTopic {
     
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone || [[HFRplusAppDelegate sharedAppDelegate].detailNavigationController.topViewController isMemberOfClass:[BrowserViewController class]]) {
         
-        self.navigationItem.backBarButtonItem =
-        [[UIBarButtonItem alloc] initWithTitle:@"Retour"
-                                         style: UIBarButtonItemStyleBordered
-                                        target:nil
-                                        action:nil];
-        
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
-            self.navigationItem.backBarButtonItem.title = @" ";
-        }
+
         
         [self.navigationController pushViewController:messagesTableViewController animated:YES];
     }
@@ -1858,7 +1994,7 @@
         [UIView beginAnimations:nil context:nil];
         
         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
-            [actionSheet setFrame:CGRectMake(0, self.view.frame.size.height - myPickerView.frame.size.height - 44,
+            [actionSheet setFrame:CGRectMake(0, self.view.frame.size.height - myPickerView.frame.size.height + 20,
                                              self.view.frame.size.width, myPickerView.frame.size.height + 44)];
         }
         else
@@ -1909,7 +2045,8 @@
 	[self viewDidUnload];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"SubCatSelected" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UIDeviceOrientationDidChangeNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kStatusChangedNotification object:nil];
 
 	[request cancel];
 	[request setDelegate:nil];
@@ -1926,7 +2063,8 @@
 	self.forumFlag1URL = nil;
 	self.forumFlag0URL = nil;
 	
-	[self.arrayData release], self.arrayData = nil;
+	[self.arrayData release];
+	[self.arrayNewData release];
 	
 	if(self.messagesTableViewController) self.messagesTableViewController = nil;
 	

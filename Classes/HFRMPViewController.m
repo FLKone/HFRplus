@@ -143,8 +143,9 @@
 
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 0;
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+	return [NSString stringWithFormat:@"page %d", [self pageNumber]];
 }
 
 -(void)handleLongPress:(UILongPressGestureRecognizer*)longPressRecognizer {

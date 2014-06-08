@@ -327,5 +327,39 @@ finish:
     return temp;
 }
 
+- (NSString *)stripHTML
+{
+    NSRange range;
+    NSString *str = [self copy];
+    while ((range = [str rangeOfString:@"<[^>]+>" options:NSRegularExpressionSearch]).location != NSNotFound)
+        str = [str stringByReplacingCharactersInRange:range withString:@""];
+    return str;
+}
+
+@end
+
+@implementation UILabel (MultiLineAutoSize)
+
+- (void)adjustFontSizeToFit
+{
+    UIFont *font = self.font;
+    CGSize size = self.frame.size;
+    
+    for (CGFloat maxSize = self.font.pointSize; maxSize >= self.minimumFontSize; maxSize -= 1.f)
+    {
+        font = [font fontWithSize:maxSize];
+        CGSize constraintSize = CGSizeMake(size.width, MAXFLOAT);
+        CGSize labelSize = [self.text sizeWithFont:font constrainedToSize:constraintSize lineBreakMode:NSLineBreakByWordWrapping];
+        if(labelSize.height <= size.height)
+        {
+            self.font = font;
+            [self setNeedsLayout];
+            break;
+        }
+    }
+    // set the font to the minimum size anyway
+    self.font = font;
+    [self setNeedsLayout];
+}
 
 @end

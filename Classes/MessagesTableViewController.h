@@ -62,6 +62,7 @@
 	// the queue to run our "ParseOperation"
     NSOperationQueue		*queue;
 	
+	NSString * lastStringFlagTopic;
 	NSString * stringFlagTopic;
 	NSString * editFlagTopic;
 	
@@ -78,7 +79,10 @@
 
 	NSDate *firstDate;
     
-    UIActionSheet *styleAlert;    
+    UIActionSheet *styleAlert;
+    
+    //Poll
+    NSString *pollNode;
 }
 
 
@@ -112,6 +116,7 @@
 
 @property (nonatomic, retain) NSOperationQueue *queue; //v3
 
+@property (nonatomic, retain) NSString *lastStringFlagTopic;
 @property (nonatomic, retain) NSString *stringFlagTopic;
 @property (nonatomic, retain) NSString *editFlagTopic;
 
@@ -124,6 +129,9 @@
 @property int curPostID;
 
 @property BOOL isAnimating;
+
+@property (nonatomic, retain) NSString *pollNode;
+
 
 @property (retain, nonatomic) NSMutableArray *arrayActionsMessages;
 
@@ -143,6 +151,7 @@
 
 -(void)setupFastAnswer:(HTMLNode *)bodyNode;
 -(void)setupPageToolbar:(HTMLNode *)bodyNode andP:(HTMLParser *)myParser;
+-(void)setupPoll:(HTMLNode *)bodyNode andP:(HTMLParser *)myParser;
 
 -(void)searchNewMessages:(int)from;
 -(void)searchNewMessages;

@@ -48,7 +48,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
 
-    NSLog(@"didFinishLaunchingWithOptions");
+    //NSLog(@"didFinishLaunchingWithOptions");
 
         
 	//self.hash_check = [[NSString alloc] init];
@@ -69,11 +69,13 @@
     [self registerDefaultsFromSettingsBundle];
     
     //UserAgent
+    /*
     NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:
                                 @"Mozilla/5.0 (HFRplus) AppleWebKit (KHTML, like Gecko)",
                                 @"UserAgent", nil];
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
+    */
     
 	// Override point for customization after application launch.
 	    
@@ -305,7 +307,7 @@
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
     
-    NSLog(@"applicationDidBecomeActive");
+    //NSLog(@"applicationDidBecomeActive");
 
 }
 
@@ -359,28 +361,52 @@
     //NSLog(@"display %@", display);
     
 	if ([web isEqualToString:@"internal"]) {
-        BrowserViewController *browserViewController = [[BrowserViewController alloc]
-                                                        initWithNibName:@"BrowserViewController" bundle:nil];
-        browserViewController.delegate = self.rootController;
+        if ([self.detailNavigationController.topViewController isMemberOfClass:[BrowserViewController class]]) {
+            //on load
+            [((BrowserViewController *)self.detailNavigationController.topViewController).myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:stringUrl]]];
+        }
+        else
+        {
         
-        [self.rootController presentModalViewController:browserViewController animated:YES];
-        [browserViewController.myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:stringUrl]]];
-        
-        // The navigation controller is now owned by the current view controller
-        // and the root view controller is owned by the navigation controller,
-        // so both objects should be released to prevent over-retention.
-        [browserViewController release];
-        
+            BrowserViewController *browserViewController = [[BrowserViewController alloc]
+                                                            initWithNibName:@"BrowserViewController" bundle:nil andURL:stringUrl];
+            
+            HFRNavigationController *nc = [[HFRNavigationController alloc] initWithRootViewController:browserViewController];
+            
+            
+            nc.modalPresentationStyle = UIModalPresentationFormSheet;
+            
+            [self.rootController presentModalViewController:nc animated:YES];
+            [nc release];
+            
+            // The navigation controller is now owned by the current view controller
+            // and the root view controller is owned by the navigation controller,
+            // so both objects should be released to prevent over-retention.
+            [browserViewController release];
+        }
     }
     else {
-        NSString *msg = [NSString stringWithFormat:@"Vous allez quitter HFR+ et être redirigé vers :\n %@\n", stringUrl];
-        
-        UIAlertViewURL *alert = [[UIAlertViewURL alloc] initWithTitle:@"Attention !" message:msg
-                                                             delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Confirmer", nil];
-        [alert setStringURL:stringUrl];
-        
-        [alert show];
-        [alert release];  
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            NSString *msg = [NSString stringWithFormat:@"Vous allez quitter HFR+ et être redirigé vers :\n %@\n", stringUrl];
+            
+            UIAlertViewURL *alert = [[UIAlertViewURL alloc] initWithTitle:@"Attention !" message:msg
+                                                                 delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Confirmer", @"Navigateur✚",  nil];
+            [alert setStringURL:stringUrl];
+            
+            [alert show];
+            [alert release];
+        }
+        else
+        {
+            NSString *msg = [NSString stringWithFormat:@"Vous allez quitter HFR+ et être redirigé vers :\n %@\n", stringUrl];
+            
+            UIAlertViewURL *alert = [[UIAlertViewURL alloc] initWithTitle:@"Attention !" message:msg
+                                                                 delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Confirmer", nil];
+            [alert setStringURL:stringUrl];
+            
+            [alert show];
+            [alert release];
+        }
     }
     
 
@@ -409,6 +435,18 @@
         }
 		
 	}
+    else if (buttonIndex == 2) {
+        if ([[HFRplusAppDelegate sharedAppDelegate].detailNavigationController.topViewController isMemberOfClass:[BrowserViewController class]]) {
+            //on load
+            [((BrowserViewController *)[HFRplusAppDelegate sharedAppDelegate].detailNavigationController.topViewController).myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[alertView stringURL]]]];
+        }
+        else {
+            //on move/decale
+            //[self cancel];
+            [[HFRplusAppDelegate sharedAppDelegate].splitViewController NavPlus:[alertView stringURL]];
+            
+        }
+    }
 }
 
 - (void)login
@@ -459,7 +497,7 @@
 #pragma mark login management
 
 - (void)checkLogin {
-	NSLog(@"checkLogin");
+	//NSLog(@"checkLogin");
 }
 
 #pragma mark -

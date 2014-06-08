@@ -8,14 +8,15 @@
 #import <UIKit/UIKit.h>
 
 @class TopicsTableViewController;
-@class AFHTTPRequestOperation;
+@class ASIHTTPRequest;
 
 @interface ForumsTableViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
 	IBOutlet UITableView *forumsTableView;
 	IBOutlet UIView *loadingView;
 
 	NSMutableArray *arrayData;
-	AFHTTPRequestOperation *request;
+	NSMutableArray *arrayNewData;
+	ASIHTTPRequest *request;
 	
 	TopicsTableViewController *topicsTableViewController;
 	
@@ -28,9 +29,10 @@
 @property (nonatomic, retain) IBOutlet UIView *loadingView;
 
 @property (nonatomic, retain) NSMutableArray *arrayData;
+@property (nonatomic, retain) NSMutableArray *arrayNewData;
 @property (nonatomic, retain) TopicsTableViewController *topicsTableViewController;
 
-@property (retain, nonatomic) AFHTTPRequestOperation *request;
+@property (retain, nonatomic) ASIHTTPRequest *request;
 
 @property STATUS status;
 @property (nonatomic, retain) NSString *statusMessage;

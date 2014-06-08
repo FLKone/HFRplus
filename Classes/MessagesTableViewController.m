@@ -10,6 +10,8 @@
 #import "MessagesTableViewController.h"
 #import "MessageDetailViewController.h"
 #import "TopicsTableViewController.h"
+#import "PollTableViewController.h"
+
 
 #import "RegexKitLite.h"
 #import "HTMLParser.h"
@@ -26,9 +28,11 @@
 #import "LinkItem.h"
 #import <CommonCrypto/CommonDigest.h>
 
+#import "ProfilViewController.h"
+
 @implementation MessagesTableViewController
-@synthesize loaded, isLoading, topicName, topicAnswerUrl, loadingView, messagesWebView, arrayData, updatedArrayData, detailViewController, messagesTableViewController;
-@synthesize swipeLeftRecognizer, swipeRightRecognizer, overview, arrayActionsMessages;
+@synthesize loaded, isLoading, topicName, topicAnswerUrl, loadingView, messagesWebView, arrayData, updatedArrayData, detailViewController, messagesTableViewController, pollNode;
+@synthesize swipeLeftRecognizer, swipeRightRecognizer, overview, arrayActionsMessages, lastStringFlagTopic;
 
 @synthesize queue; //v3
 @synthesize stringFlagTopic;
@@ -61,6 +65,9 @@
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMaxi];
     
     //NSLog(@"URL %@", [self currentUrl]);
+    
+    NSLog(@"[self currentUrl] %@", [self currentUrl]);
+    NSLog(@"[self stringFlagTopic] %@", [self stringFlagTopic]);
     
 	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]]]];
 	[request setDelegate:self];
@@ -210,7 +217,10 @@
 	//On check si y'a page=2323
 
 	[(UILabel *)[self navigationItem].titleView setText:[NSString stringWithFormat:@"%@ — %d", self.topicName, self.pageNumber]];
-	self.title = [NSString stringWithFormat:@"%@ — %d", self.topicName, self.pageNumber];
+	[(UILabel *)[self navigationItem].titleView adjustFontSizeToFit];
+
+
+	//self.title = [NSString stringWithFormat:@"%@ — %d", self.topicName, self.pageNumber];
     
 	//[self navigationItem].titleView.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
 	
@@ -225,7 +235,9 @@
 		//NSLog(@"setupPageToolbar titleNode %@", [titleNode allContents]);
 		self.topicName = [titleNode allContents];
 		[(UILabel *)[self navigationItem].titleView setText:[NSString stringWithFormat:@"%@ — %d", self.topicName, self.pageNumber]];
-        self.title = [NSString stringWithFormat:@"%@ — %d", self.topicName, self.pageNumber];
+        [(UILabel *)[self navigationItem].titleView adjustFontSizeToFit];
+
+        //self.title = [NSString stringWithFormat:@"%@ — %d", self.topicName, self.pageNumber];
 
 		//[self navigationItem].titleView.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
 	}
@@ -403,8 +415,24 @@
 		self.aToolbar = nil;
 	}
 	//NSLog(@"Fin setupPageToolbar");
-	
+
 	//--Pages
+}
+
+-(void)setupPoll:(HTMLNode *)bodyNode andP:(HTMLParser *)myParser {
+    NSLog(@"setupPoll");
+	HTMLNode * tmpPollNode = [[bodyNode findChildWithAttribute:@"class" matchingName:@"sondage" allowPartial:NO] retain];
+	if(tmpPollNode)
+    {
+        NSLog(@"POPOLL");
+        [self setPollNode:rawContentsOfNode([tmpPollNode _node], [myParser _doc])];
+    
+    }
+    else {
+        NSLog(@"POD'POLL");
+        self.pollNode = nil;
+    }
+    
 }
 
 -(void)loadDataInTableView:(HTMLParser *)myParser
@@ -445,15 +473,16 @@
 	//form to fast answer
 	[self setupFastAnswer:bodyNode];
 
+    //prep' Poll view
+	[self setupPoll:bodyNode andP:myParser];
+    
 	//if(topicAnswerUrl.length > 0) 
 	//-	
 
-	//--Pages	
+	//--Pages
 	[self setupPageToolbar:bodyNode andP:myParser];
-
     self.navigationItem.rightBarButtonItem.enabled = YES;
 
-	
 }
 
 // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -510,7 +539,7 @@
 }
 
 - (void)viewDidLoad {
-	//NSLog(@"viewDidLoad");
+	NSLog(@"viewDidLoad");
 
     [super viewDidLoad];
 	self.isAnimating = NO;
@@ -562,11 +591,11 @@
         }
         
     }
-
-    [label setNumberOfLines:0];
+    
+    [label setNumberOfLines:2];
     
     [label setText:self.topicName];
-    
+    [label adjustFontSizeToFit];
     [self.navigationItem setTitleView:label];
     [label release];
 
@@ -598,11 +627,14 @@
 	//-- Gesture
 
 	//Bouton Repondre message
-	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(optionsTopic:)];
-    segmentBarItem.enabled = NO;
+
+	UIBarButtonItem *optionsBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(optionsTopic:)];
+    optionsBarItem.enabled = NO;
 	
-	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];	
+    NSMutableArray *myButtonArray = [[NSMutableArray alloc] initWithObjects:optionsBarItem, nil];
+    [optionsBarItem release];
+    
+	self.navigationItem.rightBarButtonItems = myButtonArray;
 
 	[(ShakeView*)self.view setShakeDelegate:self];
 	
@@ -618,6 +650,7 @@
 	self.arrayInputData = [[NSMutableDictionary alloc] init];
 	self.editFlagTopic = [[NSString	alloc] init];
 	self.stringFlagTopic = [[NSString	alloc] init];
+	self.lastStringFlagTopic = [[NSString	alloc] init];
 
 	self.isFavoritesOrRead = [[NSString	alloc] init];
 	self.isUnreadable = NO;
@@ -630,9 +663,20 @@
 	
 }
 
+-(void)fullScreen {
+    [self fullScreen:nil];
+}
 
+-(void)fullScreen:(id)sender {
+    
+    if ([(SplitViewController *)[HFRplusAppDelegate sharedAppDelegate].window.rootViewController respondsToSelector:@selector(MoveRightToLeft)]) {
+        [(SplitViewController *)[HFRplusAppDelegate sharedAppDelegate].window.rootViewController MoveRightToLeft];
+    }
+    
+}
 -(void)optionsTopic:(id)sender
-{	
+{
+    
     [self.arrayActionsMessages removeAllObjects];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -664,12 +708,22 @@
     if(actionsmesages_bottompage) 
         [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Bas de la page", @"goToPagePositionBottom", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
     
+    BOOL actionsmesages_poll  = [defaults boolForKey:@"actionsmesages_poll"];
+    if(actionsmesages_poll && self.pollNode)
+        [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Sondage", @"showPoll", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+    
     BOOL actionsmesages_unread      = [defaults boolForKey:@"actionsmesages_unread"];
     if(actionsmesages_unread && self.isUnreadable) 
         [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Marquer comme non lu", @"markUnread", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
     
     if (self.arrayActionsMessages.count == 0) {
         return;
+    }
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && ![self.parentViewController isMemberOfClass:[UINavigationController class]]) {
+        
+        [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Navigateur✚", @"fullScreen", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+        
     }
     //UIActionSheet *styleAlert;
 
@@ -723,7 +777,7 @@
     //NSLog(@"clickedButtonAtIndex %d", buttonIndex);
 
     if (buttonIndex < self.arrayActionsMessages.count) {
-        //NSLog(@"action %@", [self.arrayActionsMessages objectAtIndex:buttonIndex]);
+        NSLog(@"action %@", [self.arrayActionsMessages objectAtIndex:buttonIndex]);
         if ([self respondsToSelector:NSSelectorFromString([[self.arrayActionsMessages objectAtIndex:buttonIndex] objectForKey:@"code"])]) 
         {
             [self performSelector:NSSelectorFromString([[self.arrayActionsMessages objectAtIndex:buttonIndex] objectForKey:@"code"])];
@@ -736,6 +790,27 @@
 
 }
 
+-(void)showPoll {
+    
+    PollTableViewController *pollVC = [[PollTableViewController alloc] initWithPollNode:self.pollNode];
+    pollVC.delegate = self;
+    
+    // Set options
+    pollVC.wantsFullScreenLayout = YES; // Decide if you want the photo browser full screen, i.e. whether the status bar is affected (defaults to YES)
+
+    HFRNavigationController *nc = [[HFRNavigationController alloc] initWithRootViewController:pollVC];
+    //nc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    nc.modalPresentationStyle = UIModalPresentationFormSheet;
+
+    [self presentModalViewController:nc animated:YES];
+    [nc release];
+    
+    
+    //[self.navigationController pushViewController:browser animated:YES];
+    
+    [pollVC release];
+    
+}
 
 -(void)markUnread {
     ASIHTTPRequest  *delrequest =  
@@ -890,9 +965,6 @@
     [super viewWillAppear:animated];
 	[self.view becomeFirstResponder];
 
-	//[[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedRotate:) name:UIDeviceOrientationDidChangeNotification object:nil];
-	
 	
 	if(self.detailViewController) self.detailViewController = nil;
 	if(self.messagesTableViewController) self.messagesTableViewController = nil;
@@ -1471,6 +1543,7 @@
     
 	//jsString = [jsString stringByAppendingString:[NSString stringWithFormat:@"$('html, body').animate({scrollTop:$('a[name=\"%@\"]').offset().top }, 'slow');", [self.stringFlagTopic stringByReplacingOccurrencesOfString:@"#" withString:@""]]];
     
+    self.lastStringFlagTopic = self.stringFlagTopic;
     self.stringFlagTopic = @"";
 	
 	[self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString];
@@ -1676,21 +1749,33 @@
 	int curMsg = [curMsgN intValue];
 	int ypos = [posN intValue];
 	
+    
+    NSString *answString = nil;
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        answString = @"Répondre";
+    }
+    else
+    {
+        answString = @"Rép.";
+    }
+    
 	if([[arrayData objectAtIndex:curMsg] urlEdit]){
 		//NSLog(@"urlEdit");
 		[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Editer", @"EditMessage", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
 		
 		if (self.navigationItem.rightBarButtonItem.enabled) {
-			[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Répondre", @"QuoteMessage", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+			[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:answString, @"QuoteMessage", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
 		}
 
 	}
 	else {
 		//NSLog(@"profil");
 		if (self.navigationItem.rightBarButtonItem.enabled) {
-			[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Répondre", @"QuoteMessage", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+			[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:answString, @"QuoteMessage", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
 		}
-		//[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Profil", @"actionProfil", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+
 		
 		if([[arrayData objectAtIndex:curMsg] MPUrl]){
 			//NSLog(@"MPUrl");
@@ -1700,6 +1785,7 @@
 		
 
 	}
+
 
 	
 	//"Citer ☑"@"Citer ☒"@"Citer ☐"	
@@ -1723,13 +1809,16 @@
 		}
 		
 	}
-	
+
+    
 	if ([self canBeFavorite]) {
 		//NSLog(@"isRedFlagged ★");
 		[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"★", @"actionFavoris", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
 	}
 	
 	
+    [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Profil", @"actionProfil", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+
  			
 	
 	
@@ -1768,7 +1857,7 @@
 	[menuAction release];
 	//NSLog(@"menuAction %d", menuAction.count);
 	
-	NSLog(@"ypos %d", ypos);
+	//NSLog(@"ypos %d", ypos);
 	
 
     
@@ -1786,7 +1875,7 @@
 	}
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7,0")) {
-        ypos += 66;
+        //ypos += 66;
     }
     
 	//NSLog(@"oijlkajsdoihjlkjasdopopup 0");
@@ -1855,7 +1944,8 @@
 			
 			if (isRegExMsg) {
 				//KO
-				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[responseString stringByMatching:regExMsg capture:1L]
+                //NSLog(@"%@", [responseString stringByMatching:regExMsg capture:1L]);
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[[responseString stringByMatching:regExMsg capture:1L] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
 															   delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 				[alert show];	
 				[alert release];
@@ -1866,11 +1956,20 @@
 	
 }
 -(void)actionProfil:(NSNumber *)curMsgN {
-	//NSLog(@"actionProfil");
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Minute papillon !"
-												   delegate:self cancelButtonTitle:@"OK OK..." otherButtonTitles: nil];
-	[alert show];	
-	[alert release];
+    int curMsg = [curMsgN intValue];
+
+    ProfilViewController *profilVC = [[ProfilViewController alloc] initWithNibName:@"ProfilViewController" bundle:nil andUrl:[[arrayData objectAtIndex:curMsg] urlProfil]];
+    
+    // Set options
+    profilVC.wantsFullScreenLayout = YES;
+    
+    HFRNavigationController *nc = [[HFRNavigationController alloc] initWithRootViewController:profilVC];
+    nc.modalPresentationStyle = UIModalPresentationFormSheet;
+    
+    [self presentModalViewController:nc animated:YES];
+    [nc release];
+    
+    
 	
 }
 -(void)actionMessage:(NSNumber *)curMsgN {
@@ -2072,7 +2171,7 @@
 }
 
 - (void)dealloc {
-	//NSLog(@"dealloc Messages Table View");
+	NSLog(@"dealloc Messages Table View");
 	
 	[self viewDidUnload];
 	
@@ -2090,6 +2189,8 @@
 	self.topicAnswerUrl = nil;
 	self.topicName = nil;
 	
+    self.pollNode = nil;
+    
 	//[self.arrayData removeAllObjects];
 	[self.arrayData release], self.arrayData = nil;
 	[self.updatedArrayData release], self.updatedArrayData = nil;
@@ -2102,6 +2203,7 @@
     
     self.styleAlert = nil;
     
+    self.lastStringFlagTopic = nil;
 	self.stringFlagTopic = nil;
 	self.arrayInputData = nil;
 		

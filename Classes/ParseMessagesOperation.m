@@ -197,6 +197,11 @@
 			
 			HTMLNode * editNode = [[messageNode findChildWithAttribute:@"alt" matchingName:@"edit" allowPartial:NO] parent];
 			fasTest.urlEdit = [editNode className];
+
+			HTMLNode * profilNode = [[messageNode findChildWithAttribute:@"alt" matchingName:@"profil" allowPartial:NO] parent];
+			fasTest.urlProfil = [profilNode getAttributeNamed:@"href"];
+            
+            
 			
 			HTMLNode * addFlagNode = [messageNode findChildWithAttribute:@"href" matchingName:@"addflag" allowPartial:YES];
 			fasTest.addFlagUrl = [addFlagNode getAttributeNamed:@"href"];
@@ -279,7 +284,7 @@
                     
                     ASIHTTPRequest *operation = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:tmpURL]];
                     [operation setCompletionBlock:^{
-                        NSLog(@"setCompletionBlock");
+                        //NSLog(@"setCompletionBlock");
                         [fileManager createFileAtPath:key contents:[operation responseData] attributes:nil];
                         fasTest.imageUI = key;
                     }];
