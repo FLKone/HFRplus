@@ -101,16 +101,17 @@
 	
 	NSString *jsString = [[[NSString alloc] initWithString:@""] autorelease];
 	//jsString = [jsString stringByAppendingString:@"$('body').bind('touchmove', function(e){e.preventDefault()});"];
-	jsString = [jsString stringByAppendingString:@"$('.button').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+$.base64.encode(this.title); });"];
+	jsString = [jsString stringByAppendingString:@"$('.button').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+encodeURIComponent(this.title); });"];
     
-	jsString = [jsString stringByAppendingString:@"$('#smileperso img.smile').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+$.base64.encode(this.alt); });"];    
+	jsString = [jsString stringByAppendingString:@"$('#smileperso img.smile').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+encodeURIComponent(this.alt); });"];
+    
 	[webView stringByEvaluatingJavaScriptFromString:jsString];
 	
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)aRequest navigationType:(UIWebViewNavigationType)navigationType {
-	//NSLog(@"expected:%d, got:%d | url:%@", UIWebViewNavigationTypeLinkClicked, navigationType, [aRequest.URL absoluteString]);
+	//NSLog(@"expected:%ld, got:%ld | url:%@", (long)UIWebViewNavigationTypeLinkClicked, navigationType, [aRequest.URL absoluteString]);
 	
 	if (navigationType == UIWebViewNavigationTypeLinkClicked) {
 		return NO;
@@ -118,8 +119,13 @@
 	else if (navigationType == UIWebViewNavigationTypeOther) {
 		if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdosmile"]) {
 			NSString *regularExpressionString = @"oijlkajsdoihjlkjasdosmile://(.*)";
-			[self didSelectSmile:[[[NSString alloc] initWithData:[NSData dataFromBase64String:[[[aRequest.URL absoluteString] stringByMatching:regularExpressionString capture:1L] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]] encoding:NSASCIIStringEncoding] autorelease]];
+
+            [self didSelectSmile:[[[[aRequest.URL absoluteString] stringByMatching:regularExpressionString capture:1L] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByRemovingPercentEncoding]];
+            
+			//[self didSelectSmile:[[[NSString alloc] initWithData:[NSData dataFromBase64String:] encoding:NSASCIIStringEncoding] autorelease]];
 			
+      //      NSLog(@"UIWebViewNavigationTypeOther");
+            
 			return NO;
 		}		
 	}
@@ -1549,7 +1555,7 @@
 	[self.smileView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"\
 															$('#container').hide();\
 															$('#container_ajax').html('%@');\
-															$('#container_ajax img').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+$.base64.encode(this.alt); });\
+															$('#container_ajax img').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+encodeURIComponent(this.alt); });\
 															", tmpHTML]];	
 }
 
