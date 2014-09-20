@@ -278,7 +278,7 @@
 	float originY = 0;
 	
 	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frameWidth, 0)];
-    [headerView setBackgroundColor:[UIColor greenColor]];
+    //[headerView setBackgroundColor:[UIColor greenColor]];
     
 	headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     
