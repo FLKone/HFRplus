@@ -591,8 +591,11 @@
 	if (buttonIndex < [self.arrayAction count]) {
 		//NSLog(@"clickedButtonAtIndex %d %@", buttonIndex, [NSNumber numberWithInt:curMsg]);
 
-		[self.parent performSelector:NSSelectorFromString([[self.arrayAction objectAtIndex:buttonIndex] objectForKey:@"code"]) withObject:[NSNumber numberWithInt:curMsg]];
-	}
+
+        
+        [self.parent performSelectorOnMainThread:NSSelectorFromString([[self.arrayAction objectAtIndex:buttonIndex] objectForKey:@"code"]) withObject:[NSNumber numberWithInt:curMsg] waitUntilDone:NO];
+        
+    }
 	
 }
 
