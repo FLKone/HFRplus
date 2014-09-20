@@ -575,61 +575,27 @@ background-size:100% 100%;
 .ios7 #toolbarpage .button2.end.hover {
     opacity:0.4;
 }
+/* -- iOS7 */
 
 
-/* iOS7 */
-
+/* iPhone 3.4 landscape */
 @media only screen and (orientation:landscape) {
-	 /* landscape styles here */
 	
-	body {
-		width:480px;
-	}
-
-	.message {
+	body, .message, #toolbarpage, #actualiserbtn {
 		width:480px;
 	}
 	
-	.message .header {
-		width:460px;
-	}
-	
-	.message .content .right {
+	.message .header, .message .content .right {
 		width:460px;
 	}
 
-    img {
+    img, table, table p {
         max-width:460px;
     }
     
-	table 
-	{ 
-		max-width:460px;
-		
-	}
-
-	
-	table p
-	{
-		max-width:460px;
-	}
-	
-
-    
-    table p img
-    {
+    table p img {
         max-width:440px;
     }
-    
-	#toolbarpage {
-		
-		width:480px;
-	}
-	
-	#actualiserbtn {
-
-		width:480px;
-	}
 
 	#actualiserbtn.loading {
 		background-position: 180px 14px;
@@ -637,66 +603,195 @@ background-size:100% 100%;
 
 }
 
-@media only screen and (orientation:landscape) and (min-width: 568px) and (max-width: 568px) {
-	 /* landscape styles here */
+/* iPhone 5 landscape */
+@media only screen and (orientation:landscape) and (device-height: 568px) {
 	
-	body {
-		width:568px;
-	}
-
-	.message {
-		width:568px;
-	}
-	
-	.message .header {
+    body, .message, #toolbarpage, #actualiserbtn {
+        width:568px;
+    }
+    
+    .message .header, .message .content .right {
 		width:548px;
 	}
 	
-	.message .content .right {
-		width:548px;
-	}
-
-    img {
+    img, table, table p {
         max-width:548px;
     }
     
-	table 
-	{ 
-		max-width:548px;
-		
-	}
-
-	
-	table p
-	{
-		max-width:548px;
+	table p img {
+		max-width:528px;
 	}
 	
-
-    
-    table p img
-    {
-        max-width:548px;
-    }
-    
-    
-    
     .message .header .left {
         width: 270px;
     }
     
-	#toolbarpage {
-		
-		width:568px;
-	}
-	
-	#actualiserbtn {
-
-		width:568px;
-	}
-
 	#actualiserbtn.loading {
 		background-position: 225px 14px;
 	}	
 
+}
+
+/* iPhone 6 portrait */
+@media only screen and (orientation:portrait) and (device-width: 375px) {
+    
+    body, .message, #toolbarpage, #actualiserbtn {
+        width:375px;
+    }
+    
+    .message .header, .message .content .right {
+        width:355px;
+    }
+    
+    img, table, table p {
+        max-width:355px;
+    }
+    
+    table p img {
+        max-width:335px;
+    }
+    
+    #actualiserbtn.loading {
+        background-position: 130px 14px;
+    }	
+    
+}
+
+/* iPhone 6 landscape */
+@media only screen and (orientation:landscape) and (device-width: 375px) {
+    
+    body, .message, #toolbarpage, #actualiserbtn {
+        width:667px;
+    }
+    
+    .message .header, .message .content .right {
+        width:647px;
+    }
+    
+    img, table, table p {
+        max-width:647px;
+    }
+    
+    table p img {
+        max-width:627px;
+    }
+    
+    #actualiserbtn.loading {
+        background-position: 275px 14px;
+    }
+    
+}
+
+/* iPhone 6+ portrait */
+@media only screen and (orientation:portrait) and (device-width: 414px) {
+    
+    body, .message, #toolbarpage, #actualiserbtn {
+        width:414px;
+    }
+    
+    .message .header, .message .content .right {
+        width:394px;
+    }
+    
+    img, table, table p {
+        max-width:394px;
+    }
+    
+    table p img {
+        max-width:374px;
+    }
+    
+    #actualiserbtn.loading {
+        background-position: 145px 14px;
+    }
+    
+}
+
+/* iPhone 6+ landscape */
+@media only screen and (orientation:landscape) and (device-width: 414px) {
+    
+    body, .message, #toolbarpage, #actualiserbtn {
+        width:736px;
+    }
+    
+    .message .header, .message .content .right {
+        width:716px;
+    }
+    
+    img, table, table p {
+        max-width:716px;
+    }
+    
+    table p img {
+        max-width:696px;
+    }
+    
+    #actualiserbtn.loading {
+        background-position: 275px 14px;
+    }
+    
+}
+
+/* iPad Portrait */
+@media only screen and (device-width: 768px) and (min-width: 767px) {
+    body, .message, #toolbarpage, #actualiserbtn {
+        width:768px;
+    }
+
+    .message .header, .message .content .right {
+        width:748px;
+    }
+
+    img, table, table p {
+        max-width:748px;
+    }
+
+    table p img {
+        max-width:728px;
+    }
+
+    #actualiserbtn.loading {
+        background-position: 325px 14px;
+    }
+
+    .message .header .left, .message .header .leftdate {
+        width:380px;
+    }
+
+    .message .content .right * {
+        font-size:13px !important;
+    }
+}
+
+/* iPad Landscape */
+@media only screen and (device-width: 768px) and (min-width: 700px) and (max-width: 750px) {
+    body, .message, #toolbarpage, #actualiserbtn {
+        width:703px;
+    }
+    
+    .message .header, .message .content .right {
+        width:683px;
+    }
+    
+    img, table, table p {
+        max-width:683px;
+        
+    }
+    
+    table p img {
+        max-width:663px;
+    }
+    
+    #actualiserbtn.loading {
+        background-position: 295px 14px;
+    }
+    
+    .message .header .left, .message .header .leftdate {
+        width:380px;
+    }
+    
+    .message .content .right * {
+        font-size:13px !important;	
+    }
+    
 }

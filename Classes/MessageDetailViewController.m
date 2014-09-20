@@ -129,8 +129,6 @@
                             <script type='text/javascript' src='jquery-2.1.1.min.js'></script>\
                             <link type='text/css' rel='stylesheet' href='style-liste.css'/>\
                             <link type='text/css' rel='stylesheet' href='style-liste-retina.css' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\
-                            <link type='text/css' rel='stylesheet' href='style-liste-ipad-portrait.css' media='all and (min-width: 767px)'/>\
-                            <link type='text/css' rel='stylesheet' href='style-liste-ipad-landscape.css' media='all and (min-width: 700px) and (max-width: 750px)'/>\
 							</head><body><div class='bunselected maxmessage' id='qsdoiqjsdkjhqkjhqsdqdilkjqsd2'><div class='message' id='1'><div class='content'><div class='right'>%@</div></div></div></div></body></html><script type='text/javascript'>\
 							function HLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bselected'; } function UHLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bunselected'; } function swap_spoiler_states(obj){var div=obj.getElementsByTagName('div');if(div[0]){if(div[0].style.visibility==\"visible\"){div[0].style.visibility='hidden';}else if(div[0].style.visibility==\"hidden\"||!div[0].style.visibility){div[0].style.visibility='visible';}}} $('img').error(function(){\
                             $(this).attr('src', 'photoDefaultfailmini.png');}); </script>",
