@@ -16,7 +16,7 @@
 #import "AddMessageViewController.h"
 #import "NewMessageViewController.h"
 
-@interface TopicsTableViewController : PageViewController <AddMessageViewControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate, UIGestureRecognizerDelegate, UITableViewDelegate, UITableViewDataSource> {
+@interface TopicsTableViewController : PageViewController <AddMessageViewControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate, UIGestureRecognizerDelegate, UITableViewDelegate, UITableViewDataSource, UIPopoverPresentationControllerDelegate, UIAdaptivePresentationControllerDelegate> {
 	IBOutlet UITableView *topicsTableView;
 	IBOutlet UIView *loadingView;
 
@@ -54,7 +54,8 @@
 	UIActionSheet		*actionSheet;
 	
     UIActionSheet		*topicActionSheet;
-
+    
+    UISegmentedControl  *subCatSegmentedControl;
 	TopicCellView *tmpCell;
 	
 	STATUS status;
@@ -74,6 +75,7 @@
 @property (nonatomic, retain) UIActionSheet *actionSheet;
 @property (nonatomic, retain) UIActionSheet *topicActionSheet;
 
+@property (nonatomic, retain) UISegmentedControl  *subCatSegmentedControl;
 @property (nonatomic, retain) IBOutlet UITableView *topicsTableView;
 @property (nonatomic, retain) IBOutlet UIView *loadingView;
 

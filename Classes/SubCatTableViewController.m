@@ -30,11 +30,36 @@
 {
     [super viewDidLoad];
 
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        [self setContentSizeForViewInPopover:CGSizeMake(200.0, 35*(MIN(10, arrayData.count)))];
-    }
+    //if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        [self setContentSizeForViewInPopover:CGSizeMake(250.0, 35*(MIN(10, arrayData.count)))];
+        
+        if ([self respondsToSelector:@selector(setPreferredContentSize:)]) { //iOS7+
+            [self setPreferredContentSize:CGSizeMake(250.0, 35*(MIN(10, arrayData.count)))];
+        }
+    //}
     
     [self hideEmptySeparators];
+    
+    /*
+    if(!UIAccessibilityIsReduceTransparencyEnabled())
+    {
+        self.tableView.backgroundColor = [UIColor clearColor];
+        self.navigationController.popoverPresentationController.backgroundColor = [UIColor clearColor];
+
+        UIBlurEffect* be = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+        UIVisualEffectView* vev = [[UIVisualEffectView alloc] initWithEffect:be];
+        vev.frame = self.tableView.frame;
+        self.tableView.backgroundView = vev;
+        
+        self.tableView.separatorEffect = [UIVibrancyEffect effectForBlurEffect:be];
+        
+        //if (self.navigationController.popoverPresentationController) {
+        NSLog(@"inpopOver");
+        //}
+    }
+    */
+
+    
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -87,8 +112,14 @@
     }
     else
         cell.textLabel.text = [NSString stringWithFormat:@"- %@", [(Forum *)[arrayData objectAtIndex:indexPath.row] aTitle]];
-    
+    cell.backgroundColor = [UIColor clearColor];
     cell.textLabel.font = [UIFont boldSystemFontOfSize:15.0];
+    
+    UIView * selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    [selectedBackgroundView setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.6]]; // set color here
+    [cell setSelectedBackgroundView:selectedBackgroundView];
+    [selectedBackgroundView release];
+    
     return cell;
 }
 

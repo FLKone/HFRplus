@@ -270,9 +270,16 @@
         offsetforiPad += 220;
     }
     
+    float frameWidth = self.view.frame.size.width;
+    
+    NSLog(@"self %f", self.view.frame.size.width);
+    NSLog(@"hard %f", 320 + offsetforiPad);
+    
 	float originY = 0;
 	
-	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320 + offsetforiPad, 0)];
+	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frameWidth, 0)];
+    [headerView setBackgroundColor:[UIColor greenColor]];
+    
 	headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     
 	if (self.haveTo) {
@@ -284,7 +291,7 @@
 		titleLabel.userInteractionEnabled = NO;
 		titleLabel.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 		
-		textFieldTo = [[UITextField alloc] initWithFrame:CGRectMake(38, originY, 265 + offsetforiPad, 43)];
+		textFieldTo = [[UITextField alloc] initWithFrame:CGRectMake(38, originY, frameWidth - 55, 43)];
         textFieldTo.tag = 1;
 		textFieldTo.backgroundColor = [UIColor whiteColor];
 		textFieldTo.font = [UIFont systemFontOfSize:15];
@@ -299,7 +306,7 @@
         
 		originY += textFieldTo.frame.size.height;
 		
-		UIView* separator = [[[UIView alloc] initWithFrame:CGRectMake(0, originY, 320 + offsetforiPad, 1)] autorelease];
+		UIView* separator = [[[UIView alloc] initWithFrame:CGRectMake(0, originY, frameWidth, 1)] autorelease];
 		separator.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
 		separator.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		
@@ -323,7 +330,7 @@
 		titleLabel.userInteractionEnabled = NO;
 		titleLabel.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 		
-		textFieldTitle = [[UITextField alloc] initWithFrame:CGRectMake(58, originY, 245 + offsetforiPad, 43)];
+		textFieldTitle = [[UITextField alloc] initWithFrame:CGRectMake(58, originY, frameWidth - 75, 43)];
         textFieldTitle.tag = 2;
 		textFieldTitle.backgroundColor = [UIColor whiteColor];
 		textFieldTitle.font = [UIFont systemFontOfSize:15];
@@ -339,7 +346,7 @@
 
 		originY += textFieldTitle.frame.size.height;
 		
-		UIView* separator = [[[UIView alloc] initWithFrame:CGRectMake(0, originY, 320 + offsetforiPad, 1)] autorelease];
+		UIView* separator = [[[UIView alloc] initWithFrame:CGRectMake(0, originY, frameWidth, 1)] autorelease];
 		separator.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
 		separator.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		
@@ -373,7 +380,7 @@
 		titleLabel.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 		
 		catButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-		catButton.frame = CGRectMake(8 + titleLabel.frame.size.width + 5, originY + 5, 215 + offsetforiPad, 33);
+		catButton.frame = CGRectMake(8 + titleLabel.frame.size.width + 5, originY + 5, frameWidth - 105, 33);
         
 		int row = 0;
 		for(Forum *aForum in pickerViewArray){
@@ -406,7 +413,7 @@
         
 		originY += textFieldCat.frame.size.height;
 		
-		UIView* separator = [[[UIView alloc] initWithFrame:CGRectMake(0, originY, 320 + offsetforiPad, 1)] autorelease];
+		UIView* separator = [[[UIView alloc] initWithFrame:CGRectMake(0, originY, frameWidth, 1)] autorelease];
 		separator.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
 		separator.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		
@@ -518,6 +525,9 @@
 -(void)loadSubCat
 {
     [_popover dismissPopoverAnimated:YES];
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8")) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
     
 	[catButton setTitle:[[pickerViewArray objectAtIndex:[myPickerView selectedRowInComponent:0]] aTitle] forState:UIControlStateNormal];
 	[textFieldCat setText:[[pickerViewArray objectAtIndex:[myPickerView selectedRowInComponent:0]] aID]];
@@ -610,9 +620,25 @@
 	[actionSheet dismissWithClickedButtonIndex:0 animated:YES];
 }
 
+-(UIViewController *)presentationController:(UIPresentationController *)controller viewControllerForAdaptivePresentationStyle:(UIModalPresentationStyle)style   {
+    
+    UINavigationController *uvc = [[UINavigationController alloc] initWithRootViewController:controller.presentedViewController];
+    return uvc;
+    
+}
+
+- (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller {
+    return UIModalPresentationNone;
+}
+
 -(void)showPicker:(id)sender{
 	
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad || SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8")) {
+        
+        [textFieldTitle resignFirstResponder];
+        [textView resignFirstResponder];
+        [textFieldSmileys resignFirstResponder];
+        
         //NSLog(@"TT %@", [[pickerViewArray objectAtIndex:[myPickerView selectedRowInComponent:0]] aTitle]);
         
         SubCatTableViewController *subCatTableViewController = [[[SubCatTableViewController alloc] initWithStyle:UITableViewStylePlain] autorelease];
@@ -620,11 +646,25 @@
         subCatTableViewController.arrayData = pickerViewArray;
         subCatTableViewController.notification = @"CatSelected";
         
-        self.popover = nil;
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8")) {
+            subCatTableViewController.modalPresentationStyle = UIModalPresentationPopover;
+            UIPopoverPresentationController *pc = [subCatTableViewController popoverPresentationController];
+            pc.permittedArrowDirections = UIPopoverArrowDirectionUp;
+            pc.delegate = self;
+            pc.sourceView = (UIButton *)sender;
+            pc.sourceRect = CGRectMake(0, 0, ((UIButton *)sender).frame.size.width, 35);
+            
+            [self presentViewController:subCatTableViewController animated:YES completion:nil];
+        }
+        else {
+            self.popover = nil;
+            self.popover = [[[UIPopoverController alloc] initWithContentViewController:subCatTableViewController] autorelease];
+            [_popover presentPopoverFromRect:[(UIButton *)sender frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
+
+        }
+
+    
         
-        self.popover = [[[UIPopoverController alloc] initWithContentViewController:subCatTableViewController] autorelease];
-        
-        [_popover presentPopoverFromRect:[(UIButton *)sender frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
         
     } else {
         CGSize pickerSize = [myPickerView sizeThatFits:CGSizeZero];
