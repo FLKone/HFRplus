@@ -184,8 +184,6 @@
 		CA00C66117C30C370067B457 /* style-liste-ipad-portrait.css in Resources */ = {isa = PBXBuildFile; fileRef = CA00C58B17C30C370067B457 /* style-liste-ipad-portrait.css */; };
 		CA00C66217C30C370067B457 /* style-liste-retina.css in Resources */ = {isa = PBXBuildFile; fileRef = CA00C58C17C30C370067B457 /* style-liste-retina.css */; };
 		CA00C66317C30C370067B457 /* style-liste.css in Resources */ = {isa = PBXBuildFile; fileRef = CA00C58D17C30C370067B457 /* style-liste.css */; };
-		CA00C66417C30C370067B457 /* style-max-land.css in Resources */ = {isa = PBXBuildFile; fileRef = CA00C58E17C30C370067B457 /* style-max-land.css */; };
-		CA00C66517C30C370067B457 /* style-max.css in Resources */ = {isa = PBXBuildFile; fileRef = CA00C58F17C30C370067B457 /* style-max.css */; };
 		CA00C66617C30C370067B457 /* style-smile.css in Resources */ = {isa = PBXBuildFile; fileRef = CA00C59017C30C370067B457 /* style-smile.css */; };
 		CA00C66717C30C370067B457 /* template.htm in Resources */ = {isa = PBXBuildFile; fileRef = CA00C59117C30C370067B457 /* template.htm */; };
 		CA00C66817C30C370067B457 /* templatev2.htm in Resources */ = {isa = PBXBuildFile; fileRef = CA00C59217C30C370067B457 /* templatev2.htm */; };
@@ -315,6 +313,10 @@
 		CA00C6E717C30C370067B457 /* up.png in Resources */ = {isa = PBXBuildFile; fileRef = CA00C61517C30C370067B457 /* up.png */; };
 		CA00C6E917C310B50067B457 /* InAppSettings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CA00C6E817C310B50067B457 /* InAppSettings.bundle */; };
 		CA00C6EB17C310E90067B457 /* commonsmile.plist in Resources */ = {isa = PBXBuildFile; fileRef = CA00C6EA17C310E90067B457 /* commonsmile.plist */; };
+		CA019F1719CD77D500F67C47 /* jquery-2.1.1.min.js in Resources */ = {isa = PBXBuildFile; fileRef = CA019F1619CD77D500F67C47 /* jquery-2.1.1.min.js */; };
+		CA019F1819CD77D500F67C47 /* jquery-2.1.1.min.js in Resources */ = {isa = PBXBuildFile; fileRef = CA019F1619CD77D500F67C47 /* jquery-2.1.1.min.js */; };
+		CA019F1B19CD7A9200F67C47 /* style-list-iphone6.css in Resources */ = {isa = PBXBuildFile; fileRef = CA019F1919CD7A9200F67C47 /* style-list-iphone6.css */; };
+		CA019F1C19CD7A9200F67C47 /* style-list-iphone6.css in Resources */ = {isa = PBXBuildFile; fileRef = CA019F1919CD7A9200F67C47 /* style-list-iphone6.css */; };
 		CA05A37715B48B750083EB64 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CA05A37615B48B750083EB64 /* libxml2.dylib */; };
 		CA10706E15A4BFB1002E6C19 /* PhotoViewController-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA10706D15A4BFB1002E6C19 /* PhotoViewController-iPad.xib */; };
 		CA1070B415A4CEFE002E6C19 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA1070B315A4CEFD002E6C19 /* MessageUI.framework */; };
@@ -426,7 +428,6 @@
 		CA7C6FDE185EF50E00B348BA /* photoDefaultfail.png in Resources */ = {isa = PBXBuildFile; fileRef = CA00C61117C30C370067B457 /* photoDefaultfail.png */; };
 		CA7C6FDF185EF50E00B348BA /* 113-navigation.png in Resources */ = {isa = PBXBuildFile; fileRef = CA00C5AA17C30C370067B457 /* 113-navigation.png */; };
 		CA7C6FE0185EF50E00B348BA /* 119-piggy-bank.png in Resources */ = {isa = PBXBuildFile; fileRef = CA00C5AC17C30C370067B457 /* 119-piggy-bank.png */; };
-		CA7C6FE1185EF50E00B348BA /* style-max.css in Resources */ = {isa = PBXBuildFile; fileRef = CA00C58F17C30C370067B457 /* style-max.css */; };
 		CA7C6FE2185EF50E00B348BA /* arrowforward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA00C5C517C30C370067B457 /* arrowforward@2x.png */; };
 		CA7C6FE3185EF50E00B348BA /* calimero.gif in Resources */ = {isa = PBXBuildFile; fileRef = CA00C54A17C30C360067B457 /* calimero.gif */; };
 		CA7C6FE4185EF50E00B348BA /* downsmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CABC726A17E605E5003E722E /* downsmall@2x.png */; };
@@ -501,7 +502,6 @@
 		CA7C7029185EF50E00B348BA /* nextIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = CA00C60E17C30C370067B457 /* nextIcon.png */; };
 		CA7C702A185EF50E00B348BA /* 08-chat.png in Resources */ = {isa = PBXBuildFile; fileRef = CA00C5A617C30C370067B457 /* 08-chat.png */; };
 		CA7C702B185EF50E00B348BA /* ToolBarPlay_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7472D517E14D4500B45E15 /* ToolBarPlay_off@2x.png */; };
-		CA7C702C185EF50E00B348BA /* style-max-land.css in Resources */ = {isa = PBXBuildFile; fileRef = CA00C58E17C30C370067B457 /* style-max-land.css */; };
 		CA7C702D185EF50E00B348BA /* categories_land@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA2E4C0B17E5095000E95622 /* categories_land@2x.png */; };
 		CA7C702E185EF50E00B348BA /* beginhover.png in Resources */ = {isa = PBXBuildFile; fileRef = CA00C5E017C30C370067B457 /* beginhover.png */; };
 		CA7C702F185EF50E00B348BA /* MessageDetailViewControllerv2.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA228CEF125CFD4500DDCD2E /* MessageDetailViewControllerv2.xib */; };
@@ -1114,8 +1114,6 @@
 		CA00C58B17C30C370067B457 /* style-liste-ipad-portrait.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "style-liste-ipad-portrait.css"; sourceTree = "<group>"; };
 		CA00C58C17C30C370067B457 /* style-liste-retina.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "style-liste-retina.css"; sourceTree = "<group>"; };
 		CA00C58D17C30C370067B457 /* style-liste.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "style-liste.css"; sourceTree = "<group>"; };
-		CA00C58E17C30C370067B457 /* style-max-land.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "style-max-land.css"; sourceTree = "<group>"; };
-		CA00C58F17C30C370067B457 /* style-max.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "style-max.css"; sourceTree = "<group>"; };
 		CA00C59017C30C370067B457 /* style-smile.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "style-smile.css"; sourceTree = "<group>"; };
 		CA00C59117C30C370067B457 /* template.htm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = template.htm; sourceTree = "<group>"; };
 		CA00C59217C30C370067B457 /* templatev2.htm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = templatev2.htm; sourceTree = "<group>"; };
@@ -1247,6 +1245,8 @@
 		CA00C61517C30C370067B457 /* up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = up.png; sourceTree = "<group>"; };
 		CA00C6E817C310B50067B457 /* InAppSettings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = InAppSettings.bundle; sourceTree = "<group>"; };
 		CA00C6EA17C310E90067B457 /* commonsmile.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = commonsmile.plist; sourceTree = "<group>"; };
+		CA019F1619CD77D500F67C47 /* jquery-2.1.1.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-2.1.1.min.js"; sourceTree = "<group>"; };
+		CA019F1919CD7A9200F67C47 /* style-list-iphone6.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "style-list-iphone6.css"; sourceTree = "<group>"; };
 		CA05A37615B48B750083EB64 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		CA10706D15A4BFB1002E6C19 /* PhotoViewController-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "PhotoViewController-iPad.xib"; sourceTree = "<group>"; };
 		CA1070B315A4CEFD002E6C19 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -2042,19 +2042,19 @@
 				CA00C58017C30C370067B457 /* aide.html */,
 				CA00C58117C30C370067B457 /* credits.html */,
 				CA24233D17C3C898002888D3 /* jquery-2.0.3.min.js */,
+				CA019F1619CD77D500F67C47 /* jquery-2.1.1.min.js */,
 				CA00C58417C30C370067B457 /* jquery.base64.js */,
 				CA00C58517C30C370067B457 /* jquery.doubletap.js */,
 				CA00C58817C30C370067B457 /* smileybase.html */,
 				CA00C58917C30C370067B457 /* style-aide.css */,
-				CA00C58A17C30C370067B457 /* style-liste-ipad-landscape.css */,
-				CA00C58B17C30C370067B457 /* style-liste-ipad-portrait.css */,
-				CA00C58C17C30C370067B457 /* style-liste-retina.css */,
-				CA00C58D17C30C370067B457 /* style-liste.css */,
-				CA00C58E17C30C370067B457 /* style-max-land.css */,
-				CA00C58F17C30C370067B457 /* style-max.css */,
 				CA00C59017C30C370067B457 /* style-smile.css */,
 				CA00C59117C30C370067B457 /* template.htm */,
 				CA00C59217C30C370067B457 /* templatev2.htm */,
+				CA00C58D17C30C370067B457 /* style-liste.css */,
+				CA00C58C17C30C370067B457 /* style-liste-retina.css */,
+				CA00C58B17C30C370067B457 /* style-liste-ipad-portrait.css */,
+				CA00C58A17C30C370067B457 /* style-liste-ipad-landscape.css */,
+				CA019F1919CD7A9200F67C47 /* style-list-iphone6.css */,
 			);
 			path = HTML;
 			sourceTree = "<group>";
@@ -2522,7 +2522,6 @@
 				CAADF6C91929681300ECA4C1 /* ProfilViewController.xib in Resources */,
 				CA00C67E17C30C370067B457 /* 113-navigation.png in Resources */,
 				CA00C68017C30C370067B457 /* 119-piggy-bank.png in Resources */,
-				CA00C66517C30C370067B457 /* style-max.css in Resources */,
 				CA00C69917C30C370067B457 /* arrowforward@2x.png in Resources */,
 				CA00C62117C30C370067B457 /* calimero.gif in Resources */,
 				CABC726E17E605E5003E722E /* downsmall@2x.png in Resources */,
@@ -2602,7 +2601,6 @@
 				CA00C6E017C30C370067B457 /* nextIcon.png in Resources */,
 				CA00C67A17C30C370067B457 /* 08-chat.png in Resources */,
 				CA7472D917E14D4500B45E15 /* ToolBarPlay_off@2x.png in Resources */,
-				CA00C66417C30C370067B457 /* style-max-land.css in Resources */,
 				CA2E4C0D17E5095000E95622 /* categories_land@2x.png in Resources */,
 				CA00C6B217C30C370067B457 /* beginhover.png in Resources */,
 				CA228CF0125CFD4500DDCD2E /* MessageDetailViewControllerv2.xib in Resources */,
@@ -2689,6 +2687,7 @@
 				CA00C6A517C30C370067B457 /* flagblue2.png in Resources */,
 				CA7472EE17E15FE300B45E15 /* ToolBarFastRewind_on.png in Resources */,
 				CABC726F17E605E5003E722E /* upsmall.png in Resources */,
+				CA019F1719CD77D500F67C47 /* jquery-2.1.1.min.js in Resources */,
 				CA00C3F717C2FE1B0067B457 /* IASKAppSettingsWebView.xib in Resources */,
 				CA7472E817E15FE300B45E15 /* ToolBarFastForward_off.png in Resources */,
 				CA00C69717C30C370067B457 /* arrowend@2x.png in Resources */,
@@ -2701,6 +2700,7 @@
 				CA00C68817C30C370067B457 /* 19-gear.png in Resources */,
 				CA00C6C717C30C370067B457 /* buttonnexton@2x.png in Resources */,
 				CA00C62E17C30C370067B457 /* fuck.gif in Resources */,
+				CA019F1B19CD7A9200F67C47 /* style-list-iphone6.css in Resources */,
 				CA00C6B617C30C370067B457 /* buttonbeginhover.png in Resources */,
 				CA00C6AD17C30C370067B457 /* selectedrow@2x.png in Resources */,
 				CA00C6A617C30C370067B457 /* flagblue2@2x.png in Resources */,
@@ -2823,7 +2823,6 @@
 				CAADF6CA1929681300ECA4C1 /* ProfilViewController.xib in Resources */,
 				CA7C6FDF185EF50E00B348BA /* 113-navigation.png in Resources */,
 				CA7C6FE0185EF50E00B348BA /* 119-piggy-bank.png in Resources */,
-				CA7C6FE1185EF50E00B348BA /* style-max.css in Resources */,
 				CA7C6FE2185EF50E00B348BA /* arrowforward@2x.png in Resources */,
 				CA7C6FE3185EF50E00B348BA /* calimero.gif in Resources */,
 				CA7C6FE4185EF50E00B348BA /* downsmall@2x.png in Resources */,
@@ -2903,7 +2902,6 @@
 				CA7C7029185EF50E00B348BA /* nextIcon.png in Resources */,
 				CA7C702A185EF50E00B348BA /* 08-chat.png in Resources */,
 				CA7C702B185EF50E00B348BA /* ToolBarPlay_off@2x.png in Resources */,
-				CA7C702C185EF50E00B348BA /* style-max-land.css in Resources */,
 				CA7C702D185EF50E00B348BA /* categories_land@2x.png in Resources */,
 				CA7C702E185EF50E00B348BA /* beginhover.png in Resources */,
 				CA7C702F185EF50E00B348BA /* MessageDetailViewControllerv2.xib in Resources */,
@@ -2990,6 +2988,7 @@
 				CA7C707C185EF50E00B348BA /* flagblue2.png in Resources */,
 				CA7C707D185EF50E00B348BA /* ToolBarFastRewind_on.png in Resources */,
 				CA7C707E185EF50E00B348BA /* upsmall.png in Resources */,
+				CA019F1819CD77D500F67C47 /* jquery-2.1.1.min.js in Resources */,
 				CA7C707F185EF50E00B348BA /* IASKAppSettingsWebView.xib in Resources */,
 				CA7C7080185EF50E00B348BA /* ToolBarFastForward_off.png in Resources */,
 				CA7C7081185EF50E00B348BA /* arrowend@2x.png in Resources */,
@@ -3002,6 +3001,7 @@
 				CA7C7086185EF50E00B348BA /* 19-gear.png in Resources */,
 				CA7C7087185EF50E00B348BA /* buttonnexton@2x.png in Resources */,
 				CA7C7088185EF50E00B348BA /* fuck.gif in Resources */,
+				CA019F1C19CD7A9200F67C47 /* style-list-iphone6.css in Resources */,
 				CA7C7089185EF50E00B348BA /* buttonbeginhover.png in Resources */,
 				CA7C708A185EF50E00B348BA /* selectedrow@2x.png in Resources */,
 				CA7C708B185EF50E00B348BA /* flagblue2@2x.png in Resources */,

@@ -112,10 +112,6 @@
     
 
 	[[self.parent messagesWebView] stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"window.location.hash='%@';", [[arrayData objectAtIndex:curMsg] postID]]];
-	
-	
-	//<link type='text/css' rel='stylesheet' href='style-max-land.css' media='only screen and (orientation:landscape)'/>\
-	//<meta name='viewport' content='width=device-width; initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=0;' />\
 
     NSString *myRawContent = [[arrayData objectAtIndex:curMsg] dicoHTML];
     
@@ -125,13 +121,12 @@
     if ([[arrayData objectAtIndex:curMsg] editedTime ]) {
         myRawContent = [myRawContent stringByAppendingString:[NSString stringWithFormat:@"<br/><p class=\"editedhfrlink\">édité par %@</p>", [[arrayData objectAtIndex:curMsg] editedTime]]];
     }
-
     
 	NSString *HTMLString = [NSString stringWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
                             <html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"fr\" lang=\"fr\">\
                             <head>\
 							<meta name='viewport' content='initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0' />\
-                            <script type='text/javascript' src='jquery-2.0.3.min.js'></script>\
+                            <script type='text/javascript' src='jquery-2.1.1.min.js'></script>\
                             <link type='text/css' rel='stylesheet' href='style-liste.css'/>\
                             <link type='text/css' rel='stylesheet' href='style-liste-retina.css' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\
                             <link type='text/css' rel='stylesheet' href='style-liste-ipad-portrait.css' media='all and (min-width: 767px)'/>\
