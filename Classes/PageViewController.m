@@ -218,10 +218,10 @@
 	//NSLog(@"didPresentAlertView PT %@", alertView);
 	
 	if (([alertView tag] == 666)) {
-		usleep(200000);
-		
-		[alertView dismissWithClickedButtonIndex:0 animated:YES];
-	}
+        dispatch_after(200000, dispatch_get_main_queue(), ^{
+            [alertView dismissWithClickedButtonIndex:0 animated:YES];
+        });
+    }
 	else if (([alertView tag] == 668)) {
 		//NSLog(@"keud");
 	}
