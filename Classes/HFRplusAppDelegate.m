@@ -56,12 +56,13 @@
     
     NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
     if ([bundleIdentifier isEqualToString:@"hfrplus.red"]) {
-        [TestFlight takeOff:kTestFlightAPIRE];
-
+        [Crittercism enableWithAppID:kTestFlightAPIRE];
+        
+        //[TestFlight takeOff:kTestFlightAPIRE];
     }
     else
     {
-        [TestFlight takeOff:kTestFlightAPI];
+        //[TestFlight takeOff:kTestFlightAPI];
         [MKStoreManager sharedManager];
 
     }

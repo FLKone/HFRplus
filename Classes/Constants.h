@@ -10,7 +10,7 @@
 #import "NSDictionary+Merging.h"
 #import "HFRNavigationController.h"
 
-#define NSLog(__FORMAT__, ...) TFLog((@"%s [Line %d] " __FORMAT__), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+#define NSLog(__FORMAT__, ...) NSLog((@"%s [Line %d] " __FORMAT__), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 
 static const NSInteger kDispatchPeriodSeconds = 20;
 

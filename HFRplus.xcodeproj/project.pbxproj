@@ -83,7 +83,6 @@
 		CA00C41E17C2FE240067B457 /* SDWebImagePrefetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = CA00C40E17C2FE240067B457 /* SDWebImagePrefetcher.m */; };
 		CA00C41F17C2FE240067B457 /* UIButton+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = CA00C41017C2FE240067B457 /* UIButton+WebCache.m */; };
 		CA00C42017C2FE240067B457 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = CA00C41217C2FE240067B457 /* UIImageView+WebCache.m */; };
-		CA00C42117C2FE240067B457 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA00C41417C2FE240067B457 /* libTestFlight.a */; };
 		CA00C43E17C2FF3F0067B457 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CA00C42417C2FF3F0067B457 /* ASIAuthenticationDialog.m */; };
 		CA00C43F17C2FF3F0067B457 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = CA00C42717C2FF3F0067B457 /* ASIDataCompressor.m */; };
 		CA00C44017C2FF3F0067B457 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = CA00C42917C2FF3F0067B457 /* ASIDataDecompressor.m */; };
@@ -362,6 +361,10 @@
 		CA7472F217E15FE300B45E15 /* ToolBarPrevious_on.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7472E617E15FE200B45E15 /* ToolBarPrevious_on.png */; };
 		CA7472F317E15FE300B45E15 /* ToolBarPrevious_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7472E717E15FE300B45E15 /* ToolBarPrevious_on@2x.png */; };
 		CA77D0F51261424D00271D62 /* PageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA77D0F41261424D00271D62 /* PageViewController.m */; };
+		CA78F56C19CF671F0095FF18 /* dsym_upload.sh in Resources */ = {isa = PBXBuildFile; fileRef = CA78F56A19CF671F0095FF18 /* dsym_upload.sh */; };
+		CA78F56D19CF671F0095FF18 /* dsym_upload.sh in Resources */ = {isa = PBXBuildFile; fileRef = CA78F56A19CF671F0095FF18 /* dsym_upload.sh */; };
+		CA78F56E19CF671F0095FF18 /* libCrittercism_v4_3_7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA78F56B19CF671F0095FF18 /* libCrittercism_v4_3_7.a */; };
+		CA78F56F19CF671F0095FF18 /* libCrittercism_v4_3_7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA78F56B19CF671F0095FF18 /* libCrittercism_v4_3_7.a */; };
 		CA79581B12836B24007C4E02 /* HFRSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA79581912836B24007C4E02 /* HFRSearchViewController.m */; };
 		CA79581C12836B24007C4E02 /* HFRSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA79581A12836B24007C4E02 /* HFRSearchViewController.xib */; };
 		CA7C6FA5185EF50E00B348BA /* compose.png in Resources */ = {isa = PBXBuildFile; fileRef = CA00C5CF17C30C370067B457 /* compose.png */; };
@@ -744,7 +747,6 @@
 		CA7C7124185EF50E00B348BA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		CA7C7125185EF50E00B348BA /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01BF87D9121C45B9007624B6 /* CFNetwork.framework */; };
 		CA7C7126185EF50E00B348BA /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01BF87EC121C45DE007624B6 /* MobileCoreServices.framework */; };
-		CA7C7127185EF50E00B348BA /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA00C41417C2FE240067B457 /* libTestFlight.a */; };
 		CA7C7128185EF50E00B348BA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01BF87EE121C45DE007624B6 /* SystemConfiguration.framework */; };
 		CA7C7129185EF50E00B348BA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 013F0DB4121E0E8700BEBEB1 /* QuartzCore.framework */; };
 		CA7C712A185EF50E00B348BA /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA18B160126245AB008B8466 /* AssetsLibrary.framework */; };
@@ -978,10 +980,6 @@
 		CA00C41017C2FE240067B457 /* UIButton+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+WebCache.m"; sourceTree = "<group>"; };
 		CA00C41117C2FE240067B457 /* UIImageView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+WebCache.h"; sourceTree = "<group>"; };
 		CA00C41217C2FE240067B457 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
-		CA00C41417C2FE240067B457 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
-		CA00C41517C2FE240067B457 /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
-		CA00C41617C2FE240067B457 /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
-		CA00C41717C2FE240067B457 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		CA00C42317C2FF3F0067B457 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		CA00C42417C2FF3F0067B457 /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		CA00C42517C2FF3F0067B457 /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -1295,6 +1293,11 @@
 		CA7472E717E15FE300B45E15 /* ToolBarPrevious_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ToolBarPrevious_on@2x.png"; sourceTree = "<group>"; };
 		CA77D0F31261424D00271D62 /* PageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageViewController.h; sourceTree = "<group>"; };
 		CA77D0F41261424D00271D62 /* PageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PageViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		CA78F56719CF671F0095FF18 /* CRFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRFilter.h; sourceTree = "<group>"; };
+		CA78F56819CF671F0095FF18 /* Crittercism.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Crittercism.h; sourceTree = "<group>"; };
+		CA78F56919CF671F0095FF18 /* CrittercismDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrittercismDelegate.h; sourceTree = "<group>"; };
+		CA78F56A19CF671F0095FF18 /* dsym_upload.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = dsym_upload.sh; sourceTree = "<group>"; };
+		CA78F56B19CF671F0095FF18 /* libCrittercism_v4_3_7.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCrittercism_v4_3_7.a; sourceTree = "<group>"; };
 		CA79581812836B24007C4E02 /* HFRSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = HFRSearchViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CA79581912836B24007C4E02 /* HFRSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HFRSearchViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CA79581A12836B24007C4E02 /* HFRSearchViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HFRSearchViewController.xib; sourceTree = "<group>"; };
@@ -1399,10 +1402,10 @@
 				CA1070B415A4CEFE002E6C19 /* MessageUI.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
+				CA78F56E19CF671F0095FF18 /* libCrittercism_v4_3_7.a in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
 				01BF87DA121C45B9007624B6 /* CFNetwork.framework in Frameworks */,
 				01BF87ED121C45DE007624B6 /* MobileCoreServices.framework in Frameworks */,
-				CA00C42117C2FE240067B457 /* libTestFlight.a in Frameworks */,
 				01BF87EF121C45DE007624B6 /* SystemConfiguration.framework in Frameworks */,
 				013F0DB5121E0E8700BEBEB1 /* QuartzCore.framework in Frameworks */,
 				CA18B161126245AB008B8466 /* AssetsLibrary.framework in Frameworks */,
@@ -1423,10 +1426,10 @@
 				CA7C7121185EF50E00B348BA /* MessageUI.framework in Frameworks */,
 				CA7C7122185EF50E00B348BA /* Foundation.framework in Frameworks */,
 				CA7C7123185EF50E00B348BA /* UIKit.framework in Frameworks */,
+				CA78F56F19CF671F0095FF18 /* libCrittercism_v4_3_7.a in Frameworks */,
 				CA7C7124185EF50E00B348BA /* CoreGraphics.framework in Frameworks */,
 				CA7C7125185EF50E00B348BA /* CFNetwork.framework in Frameworks */,
 				CA7C7126185EF50E00B348BA /* MobileCoreServices.framework in Frameworks */,
-				CA7C7127185EF50E00B348BA /* libTestFlight.a in Frameworks */,
 				CA7C7128185EF50E00B348BA /* SystemConfiguration.framework in Frameworks */,
 				CA7C7129185EF50E00B348BA /* QuartzCore.framework in Frameworks */,
 				CA7C712A185EF50E00B348BA /* AssetsLibrary.framework in Frameworks */,
@@ -1689,6 +1692,7 @@
 			isa = PBXGroup;
 			children = (
 				CA00C42217C2FF3F0067B457 /* ASIHTTPRequest */,
+				CA78F56619CF671F0095FF18 /* CrittercismSDK */,
 				CACADFD119217CCA0071D2DA /* SVPullToRefresh */,
 				CA00C43917C2FF3F0067B457 /* HTMLParser */,
 				CA00C3B917C2FE1B0067B457 /* InAppSettingsKit */,
@@ -1697,7 +1701,6 @@
 				CA00C3A317C2FDAF0067B457 /* MWPhotoBrowser */,
 				CA00C45617C300140067B457 /* RegexKitLite */,
 				CA00C3FE17C2FE240067B457 /* SDWebImage */,
-				CA00C41317C2FE240067B457 /* TestFlight */,
 				CA00C45017C3000B0067B457 /* NSData+Base64.h */,
 				CA00C45117C3000B0067B457 /* NSData+Base64.m */,
 				CA00C45217C3000B0067B457 /* ShakeView.h */,
@@ -1836,17 +1839,6 @@
 				CA00C41217C2FE240067B457 /* UIImageView+WebCache.m */,
 			);
 			path = SDWebImage;
-			sourceTree = "<group>";
-		};
-		CA00C41317C2FE240067B457 /* TestFlight */ = {
-			isa = PBXGroup;
-			children = (
-				CA00C41417C2FE240067B457 /* libTestFlight.a */,
-				CA00C41517C2FE240067B457 /* TestFlight+AsyncLogging.h */,
-				CA00C41617C2FE240067B457 /* TestFlight+ManualSessions.h */,
-				CA00C41717C2FE240067B457 /* TestFlight.h */,
-			);
-			path = TestFlight;
 			sourceTree = "<group>";
 		};
 		CA00C42217C2FF3F0067B457 /* ASIHTTPRequest */ = {
@@ -2289,6 +2281,18 @@
 			path = iOS7;
 			sourceTree = "<group>";
 		};
+		CA78F56619CF671F0095FF18 /* CrittercismSDK */ = {
+			isa = PBXGroup;
+			children = (
+				CA78F56719CF671F0095FF18 /* CRFilter.h */,
+				CA78F56819CF671F0095FF18 /* Crittercism.h */,
+				CA78F56919CF671F0095FF18 /* CrittercismDelegate.h */,
+				CA78F56A19CF671F0095FF18 /* dsym_upload.sh */,
+				CA78F56B19CF671F0095FF18 /* libCrittercism_v4_3_7.a */,
+			);
+			path = CrittercismSDK;
+			sourceTree = "<group>";
+		};
 		CA9E8275124364E8000EE882 /* PhotoViewer */ = {
 			isa = PBXGroup;
 			children = (
@@ -2579,6 +2583,7 @@
 				CAB1627A124B9F9A00D12569 /* TopicCellView.xib in Resources */,
 				CA00C6E917C310B50067B457 /* InAppSettings.bundle in Resources */,
 				CA00C63C17C30C370067B457 /* miam.gif in Resources */,
+				CA78F56C19CF671F0095FF18 /* dsym_upload.sh in Resources */,
 				CA00C6A417C30C370067B457 /* down.png in Resources */,
 				CA7472D817E14D4500B45E15 /* ToolBarPlay_off.png in Resources */,
 				CA00C62917C30C370067B457 /* evil.gif in Resources */,
@@ -2877,6 +2882,7 @@
 				CA7C7021185EF50E00B348BA /* TopicCellView.xib in Resources */,
 				CA7C7022185EF50E00B348BA /* InAppSettings.bundle in Resources */,
 				CA7C7023185EF50E00B348BA /* miam.gif in Resources */,
+				CA78F56D19CF671F0095FF18 /* dsym_upload.sh in Resources */,
 				CA7C7024185EF50E00B348BA /* down.png in Resources */,
 				CA7C7025185EF50E00B348BA /* ToolBarPlay_off.png in Resources */,
 				CA7C7026185EF50E00B348BA /* evil.gif in Resources */,
@@ -3291,8 +3297,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -3302,14 +3306,13 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "CONFIGURATION_$(CONFIGURATION)";
 				HEADER_SEARCH_PATHS = "/usr/include/libxml2/**";
 				INFOPLIST_FILE = "HFRplus-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/**",
+					"$(PROJECT_DIR)/HFRplus/Vendor/CrittercismSDK",
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = HFRplus;
-				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -3320,8 +3323,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -3329,14 +3330,14 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "CONFIGURATION_$(CONFIGURATION)";
 				HEADER_SEARCH_PATHS = "/usr/include/libxml2/**";
 				INFOPLIST_FILE = "HFRplus-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/**",
+					"$(PROJECT_DIR)/HFRplus/Vendor/CrittercismSDK",
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = HFRplus;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "2349d881-2b75-4454-98ab-e5603a91014d";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -3354,7 +3355,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = HFRplus.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: julien Alexandre (4Z4VCUMET3)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -3365,12 +3366,10 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				MACH_O_TYPE = mh_execute;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -3389,7 +3388,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = HFRplus.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: julien Alexandre (4Z4VCUMET3)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -3400,12 +3399,10 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				MACH_O_TYPE = mh_execute;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -3418,8 +3415,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon RE";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -3429,14 +3424,13 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "CONFIGURATION_$(CONFIGURATION)";
 				HEADER_SEARCH_PATHS = "/usr/include/libxml2/**";
 				INFOPLIST_FILE = "HFRplusRE-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/**",
+					"$(PROJECT_DIR)/HFRplus/Vendor/CrittercismSDK",
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = HFRplusRED;
-				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -3447,8 +3441,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon RE";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -3456,14 +3448,14 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "CONFIGURATION_$(CONFIGURATION)";
 				HEADER_SEARCH_PATHS = "/usr/include/libxml2/**";
 				INFOPLIST_FILE = "HFRplusRE-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/**",
+					"$(PROJECT_DIR)/HFRplus/Vendor/CrittercismSDK",
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = HFRplusRED;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "41b7ca04-4f93-462f-bf26-0666e8ea2cf1";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
