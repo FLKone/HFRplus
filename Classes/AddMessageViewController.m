@@ -122,10 +122,6 @@
 
             [self didSelectSmile:[[[[aRequest.URL absoluteString] stringByMatching:regularExpressionString capture:1L] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
             
-			//[self didSelectSmile:[[[NSString alloc] initWithData:[NSData dataFromBase64String:] encoding:NSASCIIStringEncoding] autorelease]];
-			
-      //      NSLog(@"UIWebViewNavigationTypeOther");
-            
 			return NO;
 		}		
 	}

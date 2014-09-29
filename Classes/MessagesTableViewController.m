@@ -1494,7 +1494,7 @@
 	jsString = [jsString stringByAppendingString:@"$('.message').addSwipeEvents().bind('doubletap', function(evt, touch) { window.location = 'oijlkajsdoihjlkjasdodetails://'+this.id; });"];
 	jsString = [jsString stringByAppendingString:@"$('.header').click(function(event) { var offset = $(this).offset(); event.stopPropagation(); window.location = 'oijlkajsdoihjlkjasdopopup://'+(offset.top-window.pageYOffset)+'/'+this.parentNode.id; });"];
 	
-	jsString = [jsString stringByAppendingString:@"$('.hfrplusimg').click(function() { window.location = 'oijlkajsdoihjlkjasdoimbrows://'+this.title+'/'+$.base64.encode(this.alt); });"];
+	jsString = [jsString stringByAppendingString:@"$('.hfrplusimg').click(function() { window.location = 'oijlkajsdoihjlkjasdoimbrows://'+this.title+'/'+encodeURIComponent(this.alt); });"];
 	//jsString = [jsString stringByAppendingString:@"$('.message').doubletap(function(event){ window.location = 'oijlkajsdoihjlkjasdodetails://'+this.id; }, function(event){  }, 400);"];
 	
 	//[webView stringByEvaluatingJavaScriptFromString:@"x$('.message').touchend(function(e){ x$(this).removeClass('touched'); });"];
@@ -1721,26 +1721,18 @@
 
 			[self performSelector:@selector(showMenuCon:andPos:) withObject:[NSNumber numberWithInt:curMsg]  withObject:[NSNumber numberWithInt:ypos]];
 			return NO;
-		}		
-		else if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdoimbrows"]) {
-			NSString *regularExpressionString = @"oijlkajsdoihjlkjasdoimbrows://[^/]+/(.*)";
-
-			/*
-			NSLog(@"v1 %@", [[[NSString alloc] initWithData:[NSData dataFromBase64String:[[aRequest.URL absoluteString] lastPathComponent]] encoding:NSASCIIStringEncoding] autorelease]);
-			
-			
-			NSLog(@"v2 %@", [[[NSString alloc] initWithData:[NSData dataFromBase64String:
-				  [[[aRequest.URL absoluteString] stringByMatching:regularExpressionString capture:1L] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
-															 ] encoding:NSASCIIStringEncoding] autorelease]);
-			*/
-			NSString *imgUrl = [[NSString alloc] initWithData:[NSData dataFromBase64String:
-											 [[[aRequest.URL absoluteString] stringByMatching:regularExpressionString capture:1L] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
-																] encoding:NSASCIIStringEncoding];
-			
-			[self didSelectImage:[[[[aRequest.URL absoluteString] pathComponents] objectAtIndex:1] intValue] withUrl:imgUrl];
-			[imgUrl release];
-			return NO;
 		}
+        else if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdoimbrows"]) {
+            NSString *regularExpressionString = @"oijlkajsdoihjlkjasdoimbrows://[^/]+/(.*)";
+            
+            NSString *imgUrl = [[[[aRequest.URL absoluteString] stringByMatching:regularExpressionString capture:1L] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            
+            [self didSelectImage:[[[[aRequest.URL absoluteString] pathComponents] objectAtIndex:1] intValue] withUrl:imgUrl];
+
+            return NO;
+        }
+        
+        
 	}
     
 	return YES;
