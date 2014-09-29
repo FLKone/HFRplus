@@ -585,8 +585,7 @@
     
 }
 
-- (void)actionSheet:(UIActionSheet *)modalView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
 
 	if (buttonIndex < [self.arrayAction count]) {
 		//NSLog(@"clickedButtonAtIndex %d %@", buttonIndex, [NSNumber numberWithInt:curMsg]);

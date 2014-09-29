@@ -774,26 +774,24 @@
     
 }
 
-- (void)actionSheet:(UIActionSheet *)modalView clickedButtonAtIndex:(NSInteger)buttonIndex
-{    
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
     //NSLog(@"clickedButtonAtIndex %d", buttonIndex);
-
+    
     if (buttonIndex < self.arrayActionsMessages.count) {
         NSLog(@"action %@", [self.arrayActionsMessages objectAtIndex:buttonIndex]);
-        if ([self respondsToSelector:NSSelectorFromString([[self.arrayActionsMessages objectAtIndex:buttonIndex] objectForKey:@"code"])]) 
+        if ([self respondsToSelector:NSSelectorFromString([[self.arrayActionsMessages objectAtIndex:buttonIndex] objectForKey:@"code"])])
         {
             //[self performSelector:];
             [self performSelectorOnMainThread:NSSelectorFromString([[self.arrayActionsMessages objectAtIndex:buttonIndex] objectForKey:@"code"]) withObject:nil waitUntilDone:NO];
         }
         else {
             NSLog(@"CRASH not respondsToSelector %@", [[self.arrayActionsMessages objectAtIndex:buttonIndex] objectForKey:@"code"]);
-        
+            
             [self performSelectorOnMainThread:NSSelectorFromString([[self.arrayActionsMessages objectAtIndex:buttonIndex] objectForKey:@"code"]) withObject:nil waitUntilDone:NO];
-
+            
         }
     }
     
-
 }
 
 -(void)showPoll {
