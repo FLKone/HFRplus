@@ -272,7 +272,7 @@ background:-webkit-gradient(
 .message .content .right ol, ul
 {
 	margin:1em 0px !important;
-	padding-left:20px !important
+	padding-left:2em !important
 }
 
 .message .content .right table.code * {

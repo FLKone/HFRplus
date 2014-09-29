@@ -548,7 +548,9 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(VisibilityChanged:) name:@"VisibilityChanged" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editMenuHidden:) name:UIMenuControllerDidHideMenuNotification object:nil];
-
+    if ([UIFontDescriptor respondsToSelector:@selector(preferredFontDescriptorWithTextStyle:)]) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userTextSizeDidChange) name:UIContentSizeCategoryDidChangeNotification object:nil];
+    }
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
     
@@ -1541,6 +1543,8 @@
 	
 	//NSLog(@"stringFlagTopic %@", self.stringFlagTopic);
     
+    [self userTextSizeDidChange];
+    
     jsString = [jsString stringByAppendingString:[NSString stringWithFormat:@"window.location.hash='';window.location.hash='%@';", self.stringFlagTopic]];
     
 	//jsString = [jsString stringByAppendingString:[NSString stringWithFormat:@"$('html, body').animate({scrollTop:$('a[name=\"%@\"]').offset().top }, 'slow');", [self.stringFlagTopic stringByReplacingOccurrencesOfString:@"#" withString:@""]]];
@@ -2145,6 +2149,21 @@
 	[self QuoteMessage:[NSNumber numberWithInt:curPostID]];
 }
 
+- (void) userTextSizeDidChange {
+    
+    if ([UIFontDescriptor respondsToSelector:@selector(preferredFontDescriptorWithTextStyle:)]) {
+        CGFloat userFontSize = [UIFontDescriptor preferredFontDescriptorWithTextStyle:UIFontTextStyleBody].pointSize;
+        userFontSize = floorf(userFontSize*0.90);
+        NSString *script = [NSString stringWithFormat:@"$('.message .content .right *').css('cssText', 'font-size:%fpx !important');", userFontSize];
+        script = [script stringByAppendingString:[NSString stringWithFormat:@"$('.message .content .right table.code *').css('cssText', 'font-size:%fpx !important');", floor(userFontSize*0.75)]];
+        script = [script stringByAppendingString:[NSString stringWithFormat:@"$('.message .content .right p.editedhfrlink').css('cssText', 'font-size:%fpx !important');", floor(userFontSize*0.75)]];
+        
+        [self.messagesWebView stringByEvaluatingJavaScriptFromString:script];
+        
+        //NSLog(@"userFontSize %@", script);
+    }
+}
+
 #pragma mark -
 #pragma mark Memory management
 - (void)didReceiveMemoryWarning {
@@ -2180,6 +2199,11 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIMenuControllerDidHideMenuNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"VisibilityChanged" object:nil];
+    
+    if ([UIFontDescriptor respondsToSelector:@selector(preferredFontDescriptorWithTextStyle:)]) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIContentSizeCategoryDidChangeNotification object:nil];
+    }
+
 
 	[self.queue cancelAllOperations];
 	[self.queue release];
