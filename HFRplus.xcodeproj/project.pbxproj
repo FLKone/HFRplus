@@ -323,10 +323,11 @@
 		CA228CF0125CFD4500DDCD2E /* MessageDetailViewControllerv2.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA228CEF125CFD4500DDCD2E /* MessageDetailViewControllerv2.xib */; };
 		CA24233E17C3C898002888D3 /* jquery-2.0.3.min.js in Resources */ = {isa = PBXBuildFile; fileRef = CA24233D17C3C898002888D3 /* jquery-2.0.3.min.js */; };
 		CA26862513ADE01100AC5511 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA26862313ADE01100AC5511 /* BrowserViewController.m */; };
-		CA26862613ADE01100AC5511 /* BrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA26862413ADE01100AC5511 /* BrowserViewController.xib */; };
 		CA2E4C0A17E21EC700E95622 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA2E4C0917E21EC700E95622 /* Images.xcassets */; };
 		CA2E4C0D17E5095000E95622 /* categories_land@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA2E4C0B17E5095000E95622 /* categories_land@2x.png */; };
 		CA2E4C0E17E5095000E95622 /* categories_land.png in Resources */ = {isa = PBXBuildFile; fileRef = CA2E4C0C17E5095000E95622 /* categories_land.png */; };
+		CA2E6DE519DB08CC0089B5CF /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA2E6DE419DB08CC0089B5CF /* WebKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		CA2E6DE619DB08D50089B5CF /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA2E6DE419DB08CC0089B5CF /* WebKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		CA34780B12EB557500D1BA2A /* PayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA34780912EB557500D1BA2A /* PayViewController.m */; };
 		CA34780C12EB557500D1BA2A /* PayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA34780A12EB557500D1BA2A /* PayViewController.xib */; };
 		CA37D50D15A1BD5F002C72C6 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CA37D50C15A1BD5F002C72C6 /* libsqlite3.dylib */; };
@@ -571,7 +572,6 @@
 		CA7C7071185EF50E00B348BA /* buttonbeginhover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA00C5E517C30C370067B457 /* buttonbeginhover@2x.png */; };
 		CA7C7072185EF50E00B348BA /* ForumsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA00C53417C308360067B457 /* ForumsTableViewController.xib */; };
 		CA7C7073185EF50E00B348BA /* non.gif in Resources */ = {isa = PBXBuildFile; fileRef = CA00C56917C30C370067B457 /* non.gif */; };
-		CA7C7074185EF50E00B348BA /* BrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA26862413ADE01100AC5511 /* BrowserViewController.xib */; };
 		CA7C7075185EF50E00B348BA /* mmmfff.gif in Resources */ = {isa = PBXBuildFile; fileRef = CA00C56617C30C370067B457 /* mmmfff.gif */; };
 		CA7C7076185EF50E00B348BA /* flagred.png in Resources */ = {isa = PBXBuildFile; fileRef = CA00C5D417C30C370067B457 /* flagred.png */; };
 		CA7C7077185EF50E00B348BA /* template.htm in Resources */ = {isa = PBXBuildFile; fileRef = CA00C59117C30C370067B457 /* template.htm */; };
@@ -1251,10 +1251,10 @@
 		CA24233D17C3C898002888D3 /* jquery-2.0.3.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-2.0.3.min.js"; sourceTree = "<group>"; };
 		CA26862213ADE01100AC5511 /* BrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BrowserViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CA26862313ADE01100AC5511 /* BrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BrowserViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		CA26862413ADE01100AC5511 /* BrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserViewController.xib; sourceTree = "<group>"; };
 		CA2E4C0917E21EC700E95622 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		CA2E4C0B17E5095000E95622 /* categories_land@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "categories_land@2x.png"; sourceTree = "<group>"; };
 		CA2E4C0C17E5095000E95622 /* categories_land.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = categories_land.png; sourceTree = "<group>"; };
+		CA2E6DE419DB08CC0089B5CF /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		CA34780812EB557500D1BA2A /* PayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PayViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CA34780912EB557500D1BA2A /* PayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PayViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CA34780A12EB557500D1BA2A /* PayViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PayViewController.xib; sourceTree = "<group>"; };
@@ -1396,6 +1396,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA2E6DE519DB08CC0089B5CF /* WebKit.framework in Frameworks */,
 				CAF6C0121607B62300B4B70C /* CoreData.framework in Frameworks */,
 				CA4AA6DD15B2553C00E53A1F /* CoreText.framework in Frameworks */,
 				CA4CE89215B1B30B0039FC3B /* ImageIO.framework in Frameworks */,
@@ -1420,6 +1421,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA2E6DE619DB08D50089B5CF /* WebKit.framework in Frameworks */,
 				CA7C711E185EF50E00B348BA /* CoreData.framework in Frameworks */,
 				CA7C711F185EF50E00B348BA /* CoreText.framework in Frameworks */,
 				CA7C7120185EF50E00B348BA /* ImageIO.framework in Frameworks */,
@@ -1653,6 +1655,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CA2E6DE419DB08CC0089B5CF /* WebKit.framework */,
 				CA05A37615B48B750083EB64 /* libxml2.dylib */,
 				CA4CE81415B185CA0039FC3B /* libz.dylib */,
 				CA37D50C15A1BD5F002C72C6 /* libsqlite3.dylib */,
@@ -2226,7 +2229,6 @@
 			children = (
 				CA26862213ADE01100AC5511 /* BrowserViewController.h */,
 				CA26862313ADE01100AC5511 /* BrowserViewController.m */,
-				CA26862413ADE01100AC5511 /* BrowserViewController.xib */,
 			);
 			name = webBrowser;
 			sourceTree = "<group>";
@@ -2668,7 +2670,6 @@
 				CA00C6B717C30C370067B457 /* buttonbeginhover@2x.png in Resources */,
 				CA00C53517C308360067B457 /* ForumsTableViewController.xib in Resources */,
 				CA00C64017C30C370067B457 /* non.gif in Resources */,
-				CA26862613ADE01100AC5511 /* BrowserViewController.xib in Resources */,
 				CA00C63D17C30C370067B457 /* mmmfff.gif in Resources */,
 				CA00C6A717C30C370067B457 /* flagred.png in Resources */,
 				CA00C66717C30C370067B457 /* template.htm in Resources */,
@@ -2967,7 +2968,6 @@
 				CA7C7071185EF50E00B348BA /* buttonbeginhover@2x.png in Resources */,
 				CA7C7072185EF50E00B348BA /* ForumsTableViewController.xib in Resources */,
 				CA7C7073185EF50E00B348BA /* non.gif in Resources */,
-				CA7C7074185EF50E00B348BA /* BrowserViewController.xib in Resources */,
 				CA7C7075185EF50E00B348BA /* mmmfff.gif in Resources */,
 				CA7C7076185EF50E00B348BA /* flagred.png in Resources */,
 				CA7C7077185EF50E00B348BA /* template.htm in Resources */,

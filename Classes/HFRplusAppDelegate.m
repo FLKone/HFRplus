@@ -369,8 +369,7 @@
         else
         {
         
-            BrowserViewController *browserViewController = [[BrowserViewController alloc]
-                                                            initWithNibName:@"BrowserViewController" bundle:nil andURL:stringUrl];
+            BrowserViewController *browserViewController = [[BrowserViewController alloc] initWithURL:stringUrl];
             
             HFRNavigationController *nc = [[HFRNavigationController alloc] initWithRootViewController:browserViewController];
             

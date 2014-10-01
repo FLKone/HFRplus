@@ -8,10 +8,11 @@
 #import "BrowserViewController.h"
 #import "HFRplusAppDelegate.h"
 #import "RangeOfCharacters.h"
+#import <WebKit/WebKit.h>
 
 
 @implementation BrowserViewController
-@synthesize delegate, myWebView, currentUrl, fullBrowser;
+@synthesize delegate, myWebView, currentUrl, fullBrowser, myModernWebView;
 
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
@@ -27,9 +28,27 @@
 
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andURL:(NSString *)theURL
+- (void)webView:(WKWebView *)localWebView didStartProvisionalNavigation:(WKNavigation *)navigation
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+}
+
+- (void)webView:(WKWebView *)localWebView didFinishNavigation:(WKNavigation *)navigation
+{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    [localWebView evaluateJavaScript:[NSString stringWithFormat:@"document.title"] completionHandler:^(id response, NSError *error) {
+        if (![self.title isEqualToString:response]) {
+            self.title = response;
+        }
+    }];
+
+    
+}
+
+
+- (id)initWithURL:(NSString *)theURL
+{
+    self = [super init];
     if (self) {
         // Custom initialization
         self.currentUrl = [NSString stringWithString:theURL];
@@ -41,7 +60,7 @@
 - (void)dealloc
 {
     [super dealloc];
-    NSLog(@"deallocdeallocdeallocdeallocdealloc");
+    //NSLog(@"deallocdeallocdeallocdeallocdealloc");
 }
 
 - (void)didReceiveMemoryWarning
@@ -70,12 +89,25 @@
     {
         if ([[HFRplusAppDelegate sharedAppDelegate].detailNavigationController.topViewController isMemberOfClass:[BrowserViewController class]]) {
             //on load
-            [((BrowserViewController *)[HFRplusAppDelegate sharedAppDelegate].detailNavigationController.topViewController).myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.myWebView.request.URL.absoluteString]]];
+            if ([WKWebView class]) {
+                [((BrowserViewController *)[HFRplusAppDelegate sharedAppDelegate].detailNavigationController.topViewController).myModernWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.myModernWebView.URL.absoluteString]]];
+
+            }
+            else {
+                [((BrowserViewController *)[HFRplusAppDelegate sharedAppDelegate].detailNavigationController.topViewController).myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.myWebView.request.URL.absoluteString]]];
+                
+            }
         }
         else {
             //on move/decale
             //[self cancel];
-            [[HFRplusAppDelegate sharedAppDelegate].splitViewController MoveRightToLeft:self.myWebView.request.URL.absoluteString];
+            if ([WKWebView class]) {
+                [[HFRplusAppDelegate sharedAppDelegate].splitViewController MoveRightToLeft:self.myModernWebView.URL.absoluteString];
+            }
+            else {
+                [[HFRplusAppDelegate sharedAppDelegate].splitViewController MoveRightToLeft:self.myWebView.request.URL.absoluteString];
+            }
+
 
         }
         [self cancel];
@@ -84,11 +116,80 @@
 
 - (void)reload {
     [self.myWebView reload];
+    [self.myModernWebView reload];
+}
+
+- (void)goBack {
+    [self.myWebView goBack];
+    [self.myModernWebView goBack];
+}
+
+- (void)goForward {
+    [self.myWebView goForward];
+    [self.myModernWebView goForward];
 }
 
 #pragma mark - View lifecycle
 - (BOOL)prefersStatusBarHidden{
-    return YES;
+    return NO;
+}
+
+-(void)loadView {
+    
+    UIView *view = [[[UIView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame] autorelease];
+    view.backgroundColor = [UIColor whiteColor];
+    view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.view = view;
+    
+    if ([WKWebView class]) {
+        myModernWebView = [[WKWebView alloc] initWithFrame:self.view.bounds];
+        myModernWebView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        myModernWebView.navigationDelegate = self;
+        myModernWebView.allowsBackForwardNavigationGestures = YES;
+        
+        [self.view addSubview:myModernWebView];
+    }
+    else {
+        myWebView = [[UIWebView alloc] initWithFrame:self.view.bounds];
+        myWebView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        myWebView.delegate = self;
+        myWebView.scalesPageToFit = YES;
+        
+        [self.view addSubview:myWebView];
+    }
+    
+    CGRect toolbarFrame = self.view.frame;
+    toolbarFrame.size.height = 44;
+    toolbarFrame.origin.y = self.view.frame.size.height - 44;
+    
+    UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:toolbarFrame];
+    toolbar.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin);
+    
+    
+    UIBarButtonItem *systemItem1 = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrowback"] style:UIBarButtonItemStyleBordered target:self action:@selector(goBack)];
+
+    UIBarButtonItem *systemItem2 = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrowforward"] style:UIBarButtonItemStyleBordered target:self action:@selector(goForward)];
+
+    
+    //Use this to put space in between your toolbox buttons
+    UIBarButtonItem *flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                                                              target:nil
+                                                                              action:nil];
+    
+    //Add buttons to the array
+    NSArray *items = [NSArray arrayWithObjects: systemItem1, flexItem, systemItem2, nil];
+    
+    //release buttons
+    [systemItem1 release];
+    [systemItem2 release];
+    [flexItem release];
+    
+    //add array of buttons to toolbar
+    [toolbar setItems:items animated:NO];
+    
+    [self.view addSubview:toolbar];
+    [toolbar release];
+
 }
 
 - (void)viewDidLoad
@@ -96,10 +197,17 @@
     [super viewDidLoad];
     
     NSURL *url = [NSURL URLWithString:self.currentUrl];
+    
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setValue:@"Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1C25 Safari/419.3" forHTTPHeaderField:@"User-Agent"];
+    //[request setValue:@"Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1C25 Safari/419.3" forHTTPHeaderField:@"User-Agent"];
+    
+    if ([WKWebView class]) {
+        [self.myModernWebView loadRequest:request];
+    }
+    else {
+        [self.myWebView loadRequest:request];
+    }
 
-    [self.myWebView loadRequest:request];
     // Do any additional setup after loading the view from its nib.
     
 
@@ -134,10 +242,14 @@
     
 	self.navigationItem.rightBarButtonItems = myButtonArray;
     
-    
-    [[self.myWebView scrollView] setContentInset:UIEdgeInsetsMake(0, 0, 44, 0)];
-    [[self.myWebView scrollView] setScrollIndicatorInsets:UIEdgeInsetsMake(0, 0, 44, 0)];
-
+    if ([WKWebView class]) {
+        [[self.myModernWebView scrollView] setContentInset:UIEdgeInsetsMake(0, 0, 44, 0)];
+        [[self.myModernWebView scrollView] setScrollIndicatorInsets:UIEdgeInsetsMake(0, 0, 44, 0)];
+    }
+    else {
+        [[self.myWebView scrollView] setContentInset:UIEdgeInsetsMake(0, 0, 44, 0)];
+        [[self.myWebView scrollView] setScrollIndicatorInsets:UIEdgeInsetsMake(0, 0, 44, 0)];
+    }
 
     [segmentBarItem release];
 }
@@ -146,10 +258,18 @@
 {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
-	[self.myWebView stopLoading];
 
-	self.myWebView.delegate = nil;
-	self.myWebView = nil;
+    if ([WKWebView class]) {
+        [self.myModernWebView stopLoading];
+        self.myModernWebView.navigationDelegate = nil;
+    }
+    else {
+        [self.myWebView stopLoading];
+        self.myWebView.delegate = nil;
+    }
+    
+    self.myWebView = nil;
+    self.myModernWebView = nil;
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
