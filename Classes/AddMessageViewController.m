@@ -101,9 +101,33 @@
 	
 	NSString *jsString = [[[NSString alloc] initWithString:@""] autorelease];
 	//jsString = [jsString stringByAppendingString:@"$('body').bind('touchmove', function(e){e.preventDefault()});"];
-	jsString = [jsString stringByAppendingString:@"$('.button').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+encodeURIComponent(this.title); });"];
+	//jsString = [jsString stringByAppendingString:@"$('.button').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+encodeURIComponent(this.title); });"];
     
-	jsString = [jsString stringByAppendingString:@"$('#smileperso img.smile').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+encodeURIComponent(this.alt); });"];
+	//jsString = [jsString stringByAppendingString:@"$('#smileperso img.smile').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+encodeURIComponent(this.alt); });"];
+    
+    jsString = [jsString stringByAppendingString:@"var hammertime = $('.button').hammer({ hold_timeout: 0.000001 }); \
+                                                    hammertime.on('touchstart touchend', function(ev) {\
+                                                    if(ev.type === 'touchstart'){\
+                                                        $(this).addClass('selected');\
+                                                    }\
+                                                    if(ev.type === 'touchend'){\
+                                                        $(this).removeClass('selected');\
+                                                        window.location = 'oijlkajsdoihjlkjasdosmile://'+encodeURIComponent(this.title).replace(/\\(/g, '%28').replace(/\\)/g, '%29');\
+                                                    }\
+                                                    });"];
+    
+    jsString = [jsString stringByAppendingString:@"var hammertime2 = $('#smileperso img.smile').hammer({ hold_timeout: 0.000001 }); \
+                hammertime2.on('touchstart touchend', function(ev) {\
+                if(ev.type === 'touchstart'){\
+                $(this).addClass('selected');\
+                }\
+                if(ev.type === 'touchend'){\
+                $(this).removeClass('selected');\
+                window.location = 'oijlkajsdoihjlkjasdosmile://'+encodeURIComponent(this.alt).replace(/\\(/g, '%28').replace(/\\)/g, '%29');\
+                }\
+                });"];
+    
+    //NSLog(@"jsString %@", jsString);
     
 	[webView stringByEvaluatingJavaScriptFromString:jsString];
 	
@@ -120,6 +144,9 @@
 		if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdosmile"]) {
 			NSString *regularExpressionString = @"oijlkajsdoihjlkjasdosmile://(.*)";
 
+            
+            
+            
             [self didSelectSmile:[[[[aRequest.URL absoluteString] stringByMatching:regularExpressionString capture:1L] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
             
 			return NO;
@@ -1551,8 +1578,19 @@
 	[self.smileView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"\
 															$('#container').hide();\
 															$('#container_ajax').html('%@');\
-															$('#container_ajax img').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+encodeURIComponent(this.alt); });\
-															", tmpHTML]];	
+                                                            var hammertime2 = $('#container_ajax img').hammer({ hold_timeout: 0.000001 }); \
+                                                            hammertime2.on('touchstart touchend', function(ev) {\
+                                                            if(ev.type === 'touchstart'){\
+                                                            $(this).addClass('selected');\
+                                                            }\
+                                                            if(ev.type === 'touchend'){\
+                                                            $(this).removeClass('selected');\
+                                                            window.location = 'oijlkajsdoihjlkjasdosmile://'+encodeURIComponent(this.alt).replace(/\\(/g, '%%28').replace(/\\)/g, '%%29');\
+                                                            }\
+                                                            });\
+                                                            ", tmpHTML]];
+    
+    
 }
 
 #pragma mark -

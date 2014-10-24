@@ -46,6 +46,12 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
+		4CB311EC19FAF8750097D84D /* hammer.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311EB19FAF8750097D84D /* hammer.min.js */; };
+		4CB311ED19FAF8750097D84D /* hammer.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311EB19FAF8750097D84D /* hammer.min.js */; };
+		4CB311EF19FAFCAE0097D84D /* hammer.min.map in Sources */ = {isa = PBXBuildFile; fileRef = 4CB311EE19FAFCAE0097D84D /* hammer.min.map */; };
+		4CB311F019FAFCAE0097D84D /* hammer.min.map in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311EE19FAFCAE0097D84D /* hammer.min.map */; };
+		4CB311F219FAFF2C0097D84D /* jquery.hammer.js in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311F119FAFF2C0097D84D /* jquery.hammer.js */; };
+		4CB311F319FAFF2C0097D84D /* jquery.hammer.js in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311F119FAFF2C0097D84D /* jquery.hammer.js */; };
 		CA00C3B217C2FDB00067B457 /* MWCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA00C3A517C2FDAF0067B457 /* MWCaptionView.m */; };
 		CA00C3B317C2FDB00067B457 /* MWPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = CA00C3A717C2FDAF0067B457 /* MWPhoto.m */; };
 		CA00C3B417C2FDB00067B457 /* MWPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CA00C3A817C2FDAF0067B457 /* MWPhotoBrowser.bundle */; };
@@ -906,6 +912,9 @@
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = main.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		32CA4F630368D1EE00C91783 /* HFRplus_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFRplus_Prefix.pch; sourceTree = "<group>"; };
+		4CB311EB19FAF8750097D84D /* hammer.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = hammer.min.js; sourceTree = "<group>"; };
+		4CB311EE19FAFCAE0097D84D /* hammer.min.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = hammer.min.map; sourceTree = "<group>"; };
+		4CB311F119FAFF2C0097D84D /* jquery.hammer.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.hammer.js; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* HFRplus-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HFRplus-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		CA00C3A217C2FD1F0067B457 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		CA00C3A417C2FDAF0067B457 /* MWCaptionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWCaptionView.h; sourceTree = "<group>"; };
@@ -2031,6 +2040,9 @@
 				CA019F1619CD77D500F67C47 /* jquery-2.1.1.min.js */,
 				CA00C58417C30C370067B457 /* jquery.base64.js */,
 				CA00C58517C30C370067B457 /* jquery.doubletap.js */,
+				4CB311EB19FAF8750097D84D /* hammer.min.js */,
+				4CB311EE19FAFCAE0097D84D /* hammer.min.map */,
+				4CB311F119FAFF2C0097D84D /* jquery.hammer.js */,
 				CA00C58817C30C370067B457 /* smileybase.html */,
 				CA00C58917C30C370067B457 /* style-aide.css */,
 				CA00C59017C30C370067B457 /* style-smile.css */,
@@ -2637,6 +2649,7 @@
 				CA00C64317C30C370067B457 /* ouch.gif in Resources */,
 				CAF5DB6A1932BA58000B5215 /* info@2x.png in Resources */,
 				CA00C6D817C30C370067B457 /* toolbar3@2x.png in Resources */,
+				4CB311EC19FAF8750097D84D /* hammer.min.js in Resources */,
 				CA00C6A117C30C370067B457 /* bgiPad.png in Resources */,
 				CA00C62317C30C370067B457 /* crazy.gif in Resources */,
 				CA2E4C0A17E21EC700E95622 /* Images.xcassets in Resources */,
@@ -2729,6 +2742,7 @@
 				CA00C6AE17C30C370067B457 /* unselectedrow.png in Resources */,
 				CAAFF8AB17DF7A0900C120BC /* categories.png in Resources */,
 				CA00C6D017C30C370067B457 /* endon.png in Resources */,
+				4CB311F219FAFF2C0097D84D /* jquery.hammer.js in Resources */,
 				CA00C6A817C30C370067B457 /* flagred@2x.png in Resources */,
 				CA00C65E17C30C370067B457 /* smileybase.html in Resources */,
 				CABC726817E60537003E722E /* up@2x.png in Resources */,
@@ -2935,6 +2949,7 @@
 				CA7C7053185EF50E00B348BA /* ouch.gif in Resources */,
 				CAF5DB6B1932BA58000B5215 /* info@2x.png in Resources */,
 				CA7C7054185EF50E00B348BA /* toolbar3@2x.png in Resources */,
+				4CB311ED19FAF8750097D84D /* hammer.min.js in Resources */,
 				CA7C7055185EF50E00B348BA /* bgiPad.png in Resources */,
 				CA7C7056185EF50E00B348BA /* crazy.gif in Resources */,
 				CA7C7057185EF50E00B348BA /* Images.xcassets in Resources */,
@@ -3027,6 +3042,7 @@
 				CA7C70A8185EF50E00B348BA /* unselectedrow.png in Resources */,
 				CA7C70A9185EF50E00B348BA /* categories.png in Resources */,
 				CA7C70AA185EF50E00B348BA /* endon.png in Resources */,
+				4CB311F319FAFF2C0097D84D /* jquery.hammer.js in Resources */,
 				CA7C70AB185EF50E00B348BA /* flagred@2x.png in Resources */,
 				CA7C70AC185EF50E00B348BA /* smileybase.html in Resources */,
 				CA7C70AD185EF50E00B348BA /* up@2x.png in Resources */,
@@ -3042,6 +3058,7 @@
 				CA7C70B6185EF50E00B348BA /* 06-magnify.png in Resources */,
 				CA7C70B7185EF50E00B348BA /* jquery.doubletap.js in Resources */,
 				CA7C70B8185EF50E00B348BA /* jquery.base64.js in Resources */,
+				4CB311F019FAFCAE0097D84D /* hammer.min.map in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3078,6 +3095,7 @@
 				0140AA86121DF25F001C35C4 /* HFRMPViewController.m in Sources */,
 				CA00C44717C2FF3F0067B457 /* HTMLNode.m in Sources */,
 				0140ABAF121E011D001C35C4 /* FavoriteCell.m in Sources */,
+				4CB311EF19FAFCAE0097D84D /* hammer.min.map in Sources */,
 				0140ABB0121E011D001C35C4 /* Catcounter.m in Sources */,
 				0140ABB1121E011D001C35C4 /* FavoritesTableViewController.m in Sources */,
 				CA00C46F17C302610067B457 /* UIImage+Resize.m in Sources */,
