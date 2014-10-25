@@ -1388,6 +1388,58 @@
 		tmpHTML = [tmpHTML stringByAppendingString:[[self.arrayData objectAtIndex:i] toHTML:i]];
 	}
     
+    NSString *refreshBtn = [[[NSString alloc] initWithString:@""] autorelease];
+
+    //on ajoute le bouton actualiser si besoin
+    if (([self pageNumber] == [self lastPageNumber]) || ([self lastPageNumber] == 0)) {
+        //NSLog(@"premiere et unique ou dernier");
+        //'before'
+        refreshBtn = @"<div id=\"actualiserbtn\">Actualiser</div>";
+        
+    }
+    else {
+        //NSLog(@"autre");
+    }
+    
+    NSString *tooBar = [[[NSString alloc] initWithString:@""] autorelease];
+
+    //Toolbar;
+    if (self.aToolbar) {
+        NSString *buttonBegin, *buttonEnd;
+        NSString *buttonPrevious, *buttonNext;
+        
+        if ([(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:0] isEnabled]) {
+            buttonBegin = @"<div class=\"button begin active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://begin\">begin</a></div>";
+            buttonPrevious = @"<div class=\"button2 begin active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://previous\">previous</a></div>";
+        }
+        else {
+            buttonBegin = @"<div class=\"button begin\"></div>";
+            buttonPrevious = @"<div class=\"button2 begin\"></div>";
+        }
+        
+        if ([(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:4] isEnabled]) {
+            buttonEnd = @"<div class=\"button end active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://end\">end</a></div>";
+            buttonNext = @"<div class=\"button2 end active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://next\">next</a></div>";
+        }
+        else {
+            buttonEnd = @"<div class=\"button end\"></div>";
+            buttonNext = @"<div class=\"button2 end\"></div>";
+        }
+        
+        
+        //[NSString stringWithString:@"<div class=\"button end\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://end\">end</a></div>"];
+        
+        tooBar =  [NSString stringWithFormat:@"<div id=\"toolbarpage\">\
+                     %@\
+                     %@\
+                     <a href=\"oijlkajsdoihjlkjasdoauto://choose\">%d/%d</a>\
+                     %@\
+                     %@\
+                     </div>", buttonBegin, buttonPrevious, [self pageNumber], [self lastPageNumber], buttonNext, buttonEnd];
+    }
+    
+    
+    
 	NSString *HTMLString = [NSString
                 stringWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
                 <html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"fr\" lang=\"fr\">\
@@ -1400,6 +1452,8 @@
                 <link type='text/css' rel='stylesheet' href='style-liste-retina.css' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\
                 </head><body class='iosversion'>\
                 <div class='bunselected nosig' id='qsdoiqjsdkjhqkjhqsdqdilkjqsd2'>%@</div>\
+                %@\
+                %@\
                 <div id='endofpage'></div>\
                 <div id='endofpagetoolbar'></div>\
                 <a name='bas'></a>\
@@ -1413,7 +1467,7 @@
                     $('img').error(function(){ $(this).attr('src', 'photoDefaultfailmini.png');});\
                     function touchstart() { document.location.href = 'oijlkajsdoihjlkjasdotouch://touchstart'};\
                 </script>\
-                </body></html>", tmpHTML];
+                </body></html>", tmpHTML, refreshBtn, tooBar];
 	
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"iosversion" withString:@"ios7"];
@@ -1484,7 +1538,7 @@
 	if (([self pageNumber] == [self lastPageNumber]) || ([self lastPageNumber] == 0)) {
 		//NSLog(@"premiere et unique ou dernier");
 		//'before'
-		jsString = [jsString stringByAppendingString:[NSString stringWithFormat:@"$('#endofpage').before('<div id=\"actualiserbtn\">Actualiser<div>');$('#actualiserbtn').click( function(){ window.location = 'oijlkajsdoihjlkjasdorefresh://data'; });"]];
+		jsString = [jsString stringByAppendingString:[NSString stringWithFormat:@"$('#actualiserbtn').click( function(){ window.location = 'oijlkajsdoihjlkjasdorefresh://data'; });"]];
 		
 	}
 	else {
@@ -1498,45 +1552,6 @@
 	//jsString = [jsString stringByAppendingString:@"$('.message').doubletap(function(event){ window.location = 'oijlkajsdoihjlkjasdodetails://'+this.id; }, function(event){  }, 400);"];
 	
 	//[webView stringByEvaluatingJavaScriptFromString:@"x$('.message').touchend(function(e){ x$(this).removeClass('touched'); });"];
-	
-	//Toolbar;
-	if (self.aToolbar) {
-		NSString *buttonBegin, *buttonEnd;
-		NSString *buttonPrevious, *buttonNext;
-		
-		if ([(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:0] isEnabled]) {
-			buttonBegin = @"<div class=\"button begin active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://begin\">begin</a></div>";
-			buttonPrevious = @"<div class=\"button2 begin active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://previous\">previous</a></div>";
-		}
-		else {
-			buttonBegin = @"<div class=\"button begin\"></div>";
-			buttonPrevious = @"<div class=\"button2 begin\"></div>";
-		}
-        
-		if ([(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:4] isEnabled]) {
-			buttonEnd = @"<div class=\"button end active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://end\">end</a></div>";
-			buttonNext = @"<div class=\"button2 end active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://next\">next</a></div>";
-		}
-		else {
-			buttonEnd = @"<div class=\"button end\"></div>";
-			buttonNext = @"<div class=\"button2 end\"></div>";
-		}
-		
-		
-		//[NSString stringWithString:@"<div class=\"button end\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://end\">end</a></div>"];
-		
-		jsString = [jsString stringByAppendingString:
-                    [NSString stringWithFormat:@"$('#endofpage').before('\
-                     <div id=\"toolbarpage\">\
-                     %@\
-                     %@\
-                     <a href=\"oijlkajsdoihjlkjasdoauto://choose\">%d/%d</a>\
-                     %@\
-                     %@\
-                     <div>\
-                     ');", buttonBegin, buttonPrevious, [self pageNumber], [self lastPageNumber], buttonNext, buttonEnd]
-                    ];
-	}
 	
 	
 	//NSLog(@"stringFlagTopic %@", self.stringFlagTopic);
