@@ -1562,15 +1562,22 @@
     
 	//jsString = [jsString stringByAppendingString:[NSString stringWithFormat:@"$('html, body').animate({scrollTop:$('a[name=\"%@\"]').offset().top }, 'slow');", [self.stringFlagTopic stringByReplacingOccurrencesOfString:@"#" withString:@""]]];
     
-    self.lastStringFlagTopic = self.stringFlagTopic;
-    self.stringFlagTopic = @"";
+
 	
 	[self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString];
     
-    
+    NSString* jsString2 = @"window.location.hash='#bas';";
+    NSString* jsString3 = [NSString stringWithFormat:@"window.location.hash='%@'", self.stringFlagTopic];
+
+    [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString2];
+    [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString3];
+
     [self.loadingView setHidden:YES];
     [self.messagesWebView setHidden:NO];
 
+    self.lastStringFlagTopic = self.stringFlagTopic;
+    self.stringFlagTopic = @"";
+    
 	//NSLog(@"? webViewDidFinishLoad JS");
 	
 	//NSDate *nowT = [NSDate date]; // Create a current date
