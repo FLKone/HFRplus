@@ -130,6 +130,8 @@
                             <link type='text/css' rel='stylesheet' href='style-liste.css'/>\
                             <link type='text/css' rel='stylesheet' href='style-liste-retina.css' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\
 							</head><body><div class='bunselected maxmessage' id='qsdoiqjsdkjhqkjhqsdqdilkjqsd2'><div class='message' id='1'><div class='content'><div class='right'>%@</div></div></div></div></body></html><script type='text/javascript'>\
+                            document.addEventListener('DOMContentLoaded', loadedML);\
+                            function loadedML() { document.location.href = 'oijlkajsdoihjlkjasdoloaded://loaded'; };\
 							function HLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bselected'; } function UHLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bunselected'; } function swap_spoiler_states(obj){var div=obj.getElementsByTagName('div');if(div[0]){if(div[0].style.visibility==\"visible\"){div[0].style.visibility='hidden';}else if(div[0].style.visibility==\"hidden\"||!div[0].style.visibility){div[0].style.visibility='visible';}}} $('img').error(function(){\
                             $(this).attr('src', 'photoDefaultfailmini.png');}); </script>",
 							myRawContent];
@@ -247,7 +249,11 @@
 	self.styleAlert = [[UIActionSheet alloc] init];
 	
 	// "Segmented" control to the right
-
+    
+    if ([UIFontDescriptor respondsToSelector:@selector(preferredFontDescriptorWithTextStyle:)]) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userTextSizeDidChange) name:UIContentSizeCategoryDidChangeNotification object:nil];
+    }
+    
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         self.toolbarBtn.frame = CGRectMake(self.toolbarBtn.frame.origin.x, self.toolbarBtn.frame.origin.y - 49, self.toolbarBtn.frame.size.width, self.toolbarBtn.frame.size.height);
         self.messageAuthor.frame = CGRectMake(self.messageAuthor.frame.origin.x, self.messageAuthor.frame.origin.y - 49, self.messageAuthor.frame.size.width, self.messageAuthor.frame.size.height);
@@ -365,6 +371,10 @@
 
 	[self viewDidUnload];
 
+    if ([UIFontDescriptor respondsToSelector:@selector(preferredFontDescriptorWithTextStyle:)]) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIContentSizeCategoryDidChangeNotification object:nil];
+    }
+    
 	self.quoteBtn = nil;
 	self.editBtn = nil;
 	self.actionBtn = nil;
@@ -387,13 +397,13 @@
 {
 	//NSLog(@"webViewDidStartLoad");
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
 	//NSLog(@"webViewDidFinishLoad");
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    
 
 }
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)aRequest navigationType:(UIWebViewNavigationType)navigationType {
@@ -471,8 +481,19 @@
         }
         
     }
-
+    else if (navigationType == UIWebViewNavigationTypeOther) {
+        if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdoloaded"]) {
+            [self webViewDidFinishLoadDOM];
+            return NO;
+        }
+    }
+    
     return YES;
+}
+
+- (void)webViewDidFinishLoadDOM {
+    [self userTextSizeDidChange];
+
 }
 
 - (IBAction)segmentAction:(id)sender
@@ -596,6 +617,21 @@
         
     }
 	
+}
+
+- (void) userTextSizeDidChange {
+    
+    if ([UIFontDescriptor respondsToSelector:@selector(preferredFontDescriptorWithTextStyle:)]) {
+        CGFloat userFontSize = [UIFontDescriptor preferredFontDescriptorWithTextStyle:UIFontTextStyleBody].pointSize;
+        userFontSize = floorf(userFontSize*0.90);
+        NSString *script = [NSString stringWithFormat:@"$('.message .content .right').css('cssText', 'font-size:%fpx !important');", userFontSize];
+        //        script = [script stringByAppendingString:[NSString stringWithFormat:@"$('.message .content .right table.code *').css('cssText', 'font-size:%fpx !important');", floor(userFontSize*0.75)]];
+        //        script = [script stringByAppendingString:[NSString stringWithFormat:@"$('.message .content .right p.editedhfrlink').css('cssText', 'font-size:%fpx !important');", floor(userFontSize*0.75)]];
+        
+        [self.messageView stringByEvaluatingJavaScriptFromString:script];
+        
+        //NSLog(@"userFontSize %@", script);
+    }
 }
 
 #pragma mark -
