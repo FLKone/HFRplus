@@ -183,6 +183,7 @@ background:-webkit-gradient(
 .message .header .right {
 	height:34px;
 	float:right;
+    font-size:15px !important;
 	/*margin-right:11px !important;
 
 	font-size:9px !important;
@@ -201,7 +202,7 @@ background:-webkit-gradient(
 }
 
 .message .header .right a.small.awesome, .message .header .right a.small.awesome:visited {
-	font-size: 15px !important;
+	font-size: 1em !important;
 }
 
 .message .header .right a.awesome, .message .header .right a.awesome:visited {
@@ -261,7 +262,7 @@ background:-webkit-gradient(
 	overflow:hidden;	
 }
 .message .content .right * {
-	font-size:12px !important;	
+	font-size:1em !important;
 }
 
 .message .content .right a {
@@ -275,8 +276,8 @@ background:-webkit-gradient(
 	padding-left:2em !important
 }
 
-.message .content .right table.code * {
-	font-size:9px !important;
+.message .content .right table.code td {
+	font-size:0.8em !important;
 }
 
 table.code, table.fixed, table.quote, table.citation {
@@ -438,7 +439,7 @@ table.code *, table.fixed * {
     width:24px !important;
     padding-left:1px !important;
     line-height:16px !important;
-    font-size:11px !important;
+    font-size:0.9em !important;
     font-style:normal;
     text-align:center;
     text-decoration:none;
@@ -446,7 +447,7 @@ table.code *, table.fixed * {
 }
 
 .message .content .right p.editedhfrlink {
-    font-size:9px !important;
+    font-size:0.7em !important;
     font-style:italic;
     text-align:right;
     clear:both;
@@ -759,7 +760,7 @@ background-size:100% 100%;
     }
 
     .message .content .right * {
-        font-size:13px !important;
+        font-size:1em !important;
     }
 }
 
@@ -791,7 +792,7 @@ background-size:100% 100%;
     }
     
     .message .content .right * {
-        font-size:13px !important;	
+        font-size:1em !important;
     }
     
 }
