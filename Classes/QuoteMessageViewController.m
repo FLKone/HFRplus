@@ -272,8 +272,8 @@
     
     float frameWidth = self.view.frame.size.width;
     
-    NSLog(@"self %f", self.view.frame.size.width);
-    NSLog(@"hard %f", 320 + offsetforiPad);
+    //NSLog(@"self %f", self.view.frame.size.width);
+    //NSLog(@"hard %f", 320 + offsetforiPad);
     
 	float originY = 0;
 	

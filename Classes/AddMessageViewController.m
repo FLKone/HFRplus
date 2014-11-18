@@ -112,7 +112,7 @@
                                                     }\
                                                     if(ev.type === 'touchend'){\
                                                         $(this).removeClass('selected');\
-                                                        window.location = 'oijlkajsdoihjlkjasdosmile://'+encodeURIComponent(this.title).replace(/\\(/g, '%28').replace(/\\)/g, '%29');\
+                                                        window.location = 'oijlkajsdoihjlkjasdosmile://internal?query='+encodeURIComponent(this.title).replace(/\\(/g, '%28').replace(/\\)/g, '%29');\
                                                     }\
                                                     });"];
     
@@ -123,7 +123,7 @@
                 }\
                 if(ev.type === 'touchend'){\
                 $(this).removeClass('selected');\
-                window.location = 'oijlkajsdoihjlkjasdosmile://'+encodeURIComponent(this.alt).replace(/\\(/g, '%28').replace(/\\)/g, '%29');\
+                window.location = 'oijlkajsdoihjlkjasdosmile://internal?query='+encodeURIComponent(this.alt).replace(/\\(/g, '%28').replace(/\\)/g, '%29');\
                 }\
                 });"];
     
@@ -142,12 +142,13 @@
 	}
 	else if (navigationType == UIWebViewNavigationTypeOther) {
 		if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdosmile"]) {
-			NSString *regularExpressionString = @"oijlkajsdoihjlkjasdosmile://(.*)";
 
+            //NSLog(@"parameterString %@", [aRequest.URL query]);
+
+            NSArray *queryComponents = [[aRequest.URL query] componentsSeparatedByString:@"&"];
+            NSArray *firstParam = [[queryComponents objectAtIndex:0] componentsSeparatedByString:@"="];
             
-            
-            
-            [self didSelectSmile:[[[[aRequest.URL absoluteString] stringByMatching:regularExpressionString capture:1L] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            [self didSelectSmile:[[[firstParam objectAtIndex:1] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
             
 			return NO;
 		}		
@@ -1585,7 +1586,7 @@
                                                             }\
                                                             if(ev.type === 'touchend'){\
                                                             $(this).removeClass('selected');\
-                                                            window.location = 'oijlkajsdoihjlkjasdosmile://'+encodeURIComponent(this.alt).replace(/\\(/g, '%%28').replace(/\\)/g, '%%29');\
+                                                            window.location = 'oijlkajsdoihjlkjasdosmile://internal?query='+encodeURIComponent(this.alt).replace(/\\(/g, '%%28').replace(/\\)/g, '%%29');\
                                                             }\
                                                             });\
                                                             ", tmpHTML]];
