@@ -160,7 +160,7 @@ background:-webkit-gradient(
 	color:white;
 	float:left;
 	font-weight:bolder;
-	width:180px;
+	width:60%;
 	text-shadow: #555 0px 1px 1px;	
 	height:19px;
 	
@@ -174,7 +174,7 @@ background:-webkit-gradient(
 	color:white;
 	float:left;
 	font-weight:bold;
-	width:180px;
+	width:60%;
 	text-shadow: #555 0px 1px 1px;	
 	height:14px;
 	
@@ -750,10 +750,6 @@ background-size:100% 100%;
         background-position: 325px 14px;
     }
 
-    .message .header .left, .message .header .leftdate {
-        width:380px;
-    }
-
     .message .content .right * {
         font-size:1em !important;
     }
@@ -780,10 +776,6 @@ background-size:100% 100%;
     
     #actualiserbtn.loading {
         background-position: 295px 14px;
-    }
-    
-    .message .header .left, .message .header .leftdate {
-        width:380px;
     }
 
     .message .content .right * {
