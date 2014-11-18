@@ -243,14 +243,7 @@ background:-webkit-gradient(
 .message .content {
     
 	padding:10px 0!important;
-	/*background:-webkit-gradient(
-    linear,
-    left 20,
-    left top,
-    color-stop(0.66, rgb(255,255,255)),
-    color-stop(1, rgb(237,240,244)),
-    color-stop(1, rgb(237,240,244))
-);*/
+    background:white;
 }
 
 
