@@ -259,7 +259,8 @@ background:-webkit-gradient(
 	text-align:left;
 	float:right;
 	width:300px;
-	overflow:hidden;	
+	overflow:hidden;
+    font-size:13px !important;
 }
 .message .content .right * {
 	font-size:1em !important;
@@ -790,7 +791,7 @@ background-size:100% 100%;
     .message .header .left, .message .header .leftdate {
         width:380px;
     }
-    
+
     .message .content .right * {
         font-size:1em !important;
     }
