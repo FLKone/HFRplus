@@ -7,7 +7,7 @@
 
 #import "HFRplusAppDelegate.h"
 #import "PageViewController.h"
-
+#import "MessagesTableViewController.h"
 
 @implementation PageViewController
 @synthesize previousPageUrl, nextPageUrl;
@@ -173,7 +173,16 @@
 -(void)previousPage:(id)sender {
 	
 	self.currentUrl = self.previousPageUrl;
-	[self fetchContent];	
+    
+    if ([[self class] isSubclassOfClass:[MessagesTableViewController class]]) {
+        [self fetchContent:kNewMessageFromNext];
+
+    }
+    else {
+        [self fetchContent];
+    }
+    
+    
 }
 -(void)firstPage {
     [self firstPage:nil];

@@ -91,10 +91,13 @@
 
     NSLog(@"from %d", from);
     
+    if(from == kNewMessageFromNext) self.stringFlagTopic = @"#bas";
+    
     switch (from) {
         case kNewMessageFromShake:
         case kNewMessageFromUpdate:
         case kNewMessageFromEditor:
+        case kNewMessageFromNext:
             NSLog(@"hidden");
             [self.loadingView setHidden:YES];
             break;
