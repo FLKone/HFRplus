@@ -1856,6 +1856,9 @@
 	self.rehostTableView = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    
+    UIMenuController *menuController = [UIMenuController sharedMenuController];
+    [menuController setMenuItems:nil];
 }
 
 - (void)dealloc {
