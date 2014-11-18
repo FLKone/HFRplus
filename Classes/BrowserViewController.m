@@ -161,6 +161,7 @@
     CGRect toolbarFrame = self.view.frame;
     toolbarFrame.size.height = 44;
     toolbarFrame.origin.y = self.view.frame.size.height - 44;
+    toolbarFrame.origin.x = 0;
     
     UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:toolbarFrame];
     toolbar.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin);
