@@ -104,6 +104,7 @@
         default:
             NSLog(@"not hidden");
             [self.loadingView setHidden:NO];
+            [self.messagesWebView stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML = \"\";"];
             break;
     }
     
@@ -1441,7 +1442,7 @@
                      </div>", buttonBegin, buttonPrevious, [self pageNumber], [self lastPageNumber], buttonNext, buttonEnd];
     }
     
-    
+    NSString *customFontSize = [self userTextSizeDidChange];
     
 	NSString *HTMLString = [NSString
                 stringWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
@@ -1453,6 +1454,9 @@
                 <meta name='viewport' content='initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no' />\
                 <link type='text/css' rel='stylesheet' href='style-liste.css'/>\
                 <link type='text/css' rel='stylesheet' href='style-liste-retina.css' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\
+                <style type='text/css'>\
+                %@\
+                </style>\
                 </head><body class='iosversion'>\
                 <div class='bunselected nosig' id='qsdoiqjsdkjhqkjhqsdqdilkjqsd2'>%@</div>\
                 %@\
@@ -1463,14 +1467,14 @@
                 <script type='text/javascript'>\
                     document.addEventListener('DOMContentLoaded', loadedML);\
                     document.addEventListener('touchstart', touchstart);\
-                    function loadedML() { setTimeout(function() {document.location.href = 'oijlkajsdoihjlkjasdoloaded://loaded';},700); };\
+                    function loadedML() { document.location.href = 'oijlkajsdoihjlkjasdopreloaded://preloaded'; setTimeout(function() {document.location.href = 'oijlkajsdoihjlkjasdoloaded://loaded';},700); };\
                     function HLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bselected'; }\
                     function UHLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bunselected'; }\
                     function swap_spoiler_states(obj){var div=obj.getElementsByTagName('div');if(div[0]){if(div[0].style.visibility==\"visible\"){div[0].style.visibility='hidden';}else if(div[0].style.visibility==\"hidden\"||!div[0].style.visibility){div[0].style.visibility='visible';}}}\
                     $('img').error(function(){ $(this).attr('src', 'photoDefaultfailmini.png');});\
                     function touchstart() { document.location.href = 'oijlkajsdoihjlkjasdotouch://touchstart'};\
                 </script>\
-                </body></html>", tmpHTML, refreshBtn, tooBar];
+                </body></html>", customFontSize, tmpHTML, refreshBtn, tooBar];
 	
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"iosversion" withString:@"ios7"];
@@ -1524,9 +1528,15 @@
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 }
 
+- (void)webViewDidFinishPreLoadDOM {
+    NSLog(@"== webViewDidFinishPreLoadDOM");
+
+    [self userTextSizeDidChange];
+}
+
 - (void)webViewDidFinishLoadDOM
 {
-    //NSLog(@"== webViewDidFinishLoadDOM");
+    NSLog(@"== webViewDidFinishLoadDOM");
     if (self.loaded) {
         //NSLog(@"deja DOMed");
         return;
@@ -1558,8 +1568,7 @@
 	
 	
 	//NSLog(@"stringFlagTopic %@", self.stringFlagTopic);
-    
-    [self userTextSizeDidChange];
+
     
     jsString = [jsString stringByAppendingString:[NSString stringWithFormat:@"window.location.hash='';window.location.hash='%@';", self.stringFlagTopic]];
     
@@ -1575,6 +1584,7 @@
     [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString2];
     [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString3];
 
+    NSLog(@"== webViewDidFinishLoadDOM OK");
     [self.loadingView setHidden:YES];
     [self.messagesWebView setHidden:NO];
 
@@ -1589,7 +1599,11 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-	//NSLog(@"== webViewDidFinishLoad");
+	NSLog(@"== webViewDidFinishLoad");
+    
+    if (!self.loaded) {
+        [self webViewDidFinishPreLoadDOM];
+    }
     
     [self webViewDidFinishLoadDOM];
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
@@ -1730,6 +1744,10 @@
             }
 			return NO;
 		}
+        else if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdopreloaded"]) {
+            [self webViewDidFinishPreLoadDOM];
+            return NO;
+        }
 		else if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdoloaded"]) {
 			[self webViewDidFinishLoadDOM];
 			return NO;
@@ -2164,7 +2182,7 @@
 	[self QuoteMessage:[NSNumber numberWithInt:curPostID]];
 }
 
-- (void) userTextSizeDidChange {
+- (NSString *) userTextSizeDidChange {
     
     if ([UIFontDescriptor respondsToSelector:@selector(preferredFontDescriptorWithTextStyle:)]) {
         CGFloat userFontSize = [UIFontDescriptor preferredFontDescriptorWithTextStyle:UIFontTextStyleBody].pointSize;
@@ -2175,8 +2193,13 @@
         
         [self.messagesWebView stringByEvaluatingJavaScriptFromString:script];
         
+        return [NSString stringWithFormat:@".message .content .right { font-size:%fpx !important; }", userFontSize];
+        
         //NSLog(@"userFontSize %@", script);
     }
+
+    return @"";
+    
 }
 
 #pragma mark -

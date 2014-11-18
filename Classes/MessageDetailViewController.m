@@ -122,6 +122,9 @@
         myRawContent = [myRawContent stringByAppendingString:[NSString stringWithFormat:@"<br/><p class=\"editedhfrlink\">édité par %@</p>", [[arrayData objectAtIndex:curMsg] editedTime]]];
     }
     
+    NSString *customFontSize = [self userTextSizeDidChange];
+
+    
 	NSString *HTMLString = [NSString stringWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
                             <html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"fr\" lang=\"fr\">\
                             <head>\
@@ -129,12 +132,14 @@
                             <script type='text/javascript' src='jquery-2.1.1.min.js'></script>\
                             <link type='text/css' rel='stylesheet' href='style-liste.css'/>\
                             <link type='text/css' rel='stylesheet' href='style-liste-retina.css' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\
+                            <style type='text/css'>\
+                            %@\
+                            </style>\
 							</head><body><div class='bunselected maxmessage' id='qsdoiqjsdkjhqkjhqsdqdilkjqsd2'><div class='message' id='1'><div class='content'><div class='right'>%@</div></div></div></div></body></html><script type='text/javascript'>\
                             document.addEventListener('DOMContentLoaded', loadedML);\
                             function loadedML() { document.location.href = 'oijlkajsdoihjlkjasdoloaded://loaded'; };\
 							function HLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bselected'; } function UHLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bunselected'; } function swap_spoiler_states(obj){var div=obj.getElementsByTagName('div');if(div[0]){if(div[0].style.visibility==\"visible\"){div[0].style.visibility='hidden';}else if(div[0].style.visibility==\"hidden\"||!div[0].style.visibility){div[0].style.visibility='visible';}}} $('img').error(function(){\
-                            $(this).attr('src', 'photoDefaultfailmini.png');}); </script>",
-							myRawContent];
+                            $(this).attr('src', 'photoDefaultfailmini.png');}); </script>", customFontSize, myRawContent];
 
 	HTMLString = [HTMLString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 	//HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"href=\"/forum2.php?" withString:@"href=\"http://forum.hardware.fr/forum2.php?"];
@@ -619,7 +624,7 @@
 	
 }
 
-- (void) userTextSizeDidChange {
+- (NSString *) userTextSizeDidChange {
     
     if ([UIFontDescriptor respondsToSelector:@selector(preferredFontDescriptorWithTextStyle:)]) {
         CGFloat userFontSize = [UIFontDescriptor preferredFontDescriptorWithTextStyle:UIFontTextStyleBody].pointSize;
@@ -630,9 +635,16 @@
         
         [self.messageView stringByEvaluatingJavaScriptFromString:script];
         
+        return [NSString stringWithFormat:@".message .content .right { font-size:%fpx !important; }", userFontSize];
+        
         //NSLog(@"userFontSize %@", script);
     }
+    
+    return @"";
+    
 }
+
+
 
 #pragma mark -
 #pragma mark AddMessage Delegate
