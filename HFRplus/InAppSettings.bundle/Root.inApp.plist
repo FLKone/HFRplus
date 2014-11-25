@@ -92,6 +92,28 @@
 		</dict>
 		<dict>
 			<key>DefaultValue</key>
+			<string>default</string>
+			<key>FooterText</key>
+			<string>Le réglage &quot;Système&quot;, disponible depuis iOS7, se trouve dans les options d&apos;accessibilité dans les réglages d&apos;iOS.</string>
+			<key>Key</key>
+			<string>size_text</string>
+			<key>Title</key>
+			<string>Taille du texte</string>
+			<key>Titles</key>
+			<array>
+				<string>Normale</string>
+				<string>Système</string>
+			</array>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Values</key>
+			<array>
+				<string>default</string>
+				<string>sys</string>
+			</array>
+		</dict>
+		<dict>
+			<key>DefaultValue</key>
 			<string>no</string>
 			<key>Key</key>
 			<string>display_images</string>
