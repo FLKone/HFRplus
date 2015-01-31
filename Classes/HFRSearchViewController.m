@@ -98,9 +98,12 @@
     theSearchBar.delegate = self;
     theSearchBar.placeholder = @"Recherche";
     
+    if ([theSearchBar respondsToSelector:@selector(setSearchBarStyle:)]) {
+        theSearchBar.searchBarStyle = UISearchBarStyleMinimal;
+    }
+
 	self.navigationItem.titleView = theSearchBar;
     self.navigationItem.titleView.frame = CGRectMake(0, 0, 320, 44);
-    
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(OrientationChanged)
