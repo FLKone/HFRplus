@@ -114,7 +114,8 @@
     self.theSearchBar = [[UISearchBar alloc] init];
     theSearchBar.delegate = self;
     theSearchBar.placeholder = @"Recherche";
-    
+    theSearchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
+
     if ([theSearchBar respondsToSelector:@selector(setSearchBarStyle:)]) {
         theSearchBar.searchBarStyle = UISearchBarStyleMinimal;
     }
