@@ -46,9 +46,9 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
+		4C028AD21A8C635500F542B1 /* hammer.min.map in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311EE19FAFCAE0097D84D /* hammer.min.map */; };
 		4CB311EC19FAF8750097D84D /* hammer.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311EB19FAF8750097D84D /* hammer.min.js */; };
 		4CB311ED19FAF8750097D84D /* hammer.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311EB19FAF8750097D84D /* hammer.min.js */; };
-		4CB311EF19FAFCAE0097D84D /* hammer.min.map in Sources */ = {isa = PBXBuildFile; fileRef = 4CB311EE19FAFCAE0097D84D /* hammer.min.map */; };
 		4CB311F019FAFCAE0097D84D /* hammer.min.map in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311EE19FAFCAE0097D84D /* hammer.min.map */; };
 		4CB311F219FAFF2C0097D84D /* jquery.hammer.js in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311F119FAFF2C0097D84D /* jquery.hammer.js */; };
 		4CB311F319FAFF2C0097D84D /* jquery.hammer.js in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311F119FAFF2C0097D84D /* jquery.hammer.js */; };
@@ -2430,6 +2430,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA00C6A317C30C370067B457 /* compose.png in Resources */,
+				4C028AD21A8C635500F542B1 /* hammer.min.map in Resources */,
 				CA00C64117C30C370067B457 /* ohill.gif in Resources */,
 				CA24233E17C3C898002888D3 /* jquery-2.0.3.min.js in Resources */,
 				CA00C6B417C30C370067B457 /* beginon.png in Resources */,
@@ -3043,7 +3044,6 @@
 				0140AA86121DF25F001C35C4 /* HFRMPViewController.m in Sources */,
 				CA00C44717C2FF3F0067B457 /* HTMLNode.m in Sources */,
 				0140ABAF121E011D001C35C4 /* FavoriteCell.m in Sources */,
-				4CB311EF19FAFCAE0097D84D /* hammer.min.map in Sources */,
 				0140ABB0121E011D001C35C4 /* Catcounter.m in Sources */,
 				0140ABB1121E011D001C35C4 /* FavoritesTableViewController.m in Sources */,
 				CA00C46F17C302610067B457 /* UIImage+Resize.m in Sources */,
