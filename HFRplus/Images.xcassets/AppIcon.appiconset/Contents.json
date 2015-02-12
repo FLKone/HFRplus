@@ -21,13 +21,12 @@
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "appicon-Small-40.png",
+      "filename" : "appicon-Small-40@2x.png",
       "scale" : "2x"
     },
     {
-      "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "appicon-Small-40@2x.png",
+      "size" : "40x40",
       "scale" : "3x"
     },
     {
