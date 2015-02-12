@@ -48,9 +48,8 @@
       "scale" : "2x"
     },
     {
-      "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "appicon-60@2x.png",
+      "size" : "60x60",
       "scale" : "3x"
     },
     {
