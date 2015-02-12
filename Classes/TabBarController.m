@@ -25,7 +25,7 @@
         [tabBarItem1 setImage:[UIImage imageNamed:@"44-shoebox"]];
         [tabBarItem2 setImage:[UIImage imageNamed:@"28-star"]];
         [tabBarItem3 setImage:[UIImage imageNamed:@"18-envelope.png"]];
-        [tabBarItem4 setImage:[UIImage imageNamed:@"06-magnify.png"]];
+        //[tabBarItem4 setImage:[UIImage imageNamed:@"06-magnify.png"]];
         
     } else {
         tabBarItem1.selectedImage = [[UIImage imageNamed:@"categories_on"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate ];
@@ -37,8 +37,8 @@
         tabBarItem3.selectedImage = [[UIImage imageNamed:@"mp_on"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate ];
         tabBarItem3.image = [[UIImage imageNamed:@"mp"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate ];
         
-        tabBarItem4.selectedImage = [[UIImage imageNamed:@"search_on"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate ];
-        tabBarItem4.image = [[UIImage imageNamed:@"search"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate ];
+        //tabBarItem4.selectedImage = [[UIImage imageNamed:@"search_on"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate ];
+        //tabBarItem4.image = [[UIImage imageNamed:@"search"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate ];
     }
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

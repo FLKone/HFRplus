@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UIApplication">
@@ -18,7 +18,6 @@
                 <outlet property="forumsNavController" destination="269" id="330"/>
                 <outlet property="messagesNavController" destination="268" id="332"/>
                 <outlet property="rootController" destination="261" id="329"/>
-                <outlet property="searchNavController" destination="266" id="333"/>
                 <outlet property="splitViewController" destination="194" id="201"/>
                 <outlet property="window" destination="2" id="5"/>
             </connections>
@@ -90,21 +89,6 @@
                             </viewController>
                         </viewControllers>
                     </navigationController>
-                    <navigationController id="266">
-                        <extendedEdge key="edgesForExtendedLayout"/>
-                        <tabBarItem key="tabBarItem" title="Recherche" image="06-magnify.png" id="285"/>
-                        <toolbarItems/>
-                        <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="283">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                        </navigationBar>
-                        <viewControllers>
-                            <viewController id="284" customClass="HFRSearchViewController">
-                                <toolbarItems/>
-                                <navigationItem key="navigationItem" title="Item" id="286"/>
-                            </viewController>
-                        </viewControllers>
-                    </navigationController>
                     <navigationController id="324">
                         <extendedEdge key="edgesForExtendedLayout"/>
                         <tabBarItem key="tabBarItem" systemItem="more" id="327"/>
@@ -142,7 +126,6 @@
         </splitViewController>
     </objects>
     <resources>
-        <image name="06-magnify.png" width="24" height="24"/>
         <image name="18-envelope.png" width="24" height="16"/>
         <image name="28-star.png" width="26" height="26"/>
         <image name="44-shoebox.png" width="24" height="22"/>
