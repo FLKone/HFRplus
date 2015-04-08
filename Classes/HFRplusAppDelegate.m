@@ -46,11 +46,41 @@
 	NSParameterAssert([curReach isKindOfClass: [Reachability class]]);
 }
 
+- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
+{
+    NSLog(@"My token is: %@", deviceToken);
+}
+
+- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
+{
+    NSLog(@"Failed to get token, error: %@", error);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    NSLog(@"didReceiveRemoteNotification");
+    if ( application.applicationState == UIApplicationStateInactive || application.applicationState == UIApplicationStateBackground  )
+    {
+        //opened from a push notification when the app was on background
+        NSLog(@"userInfo %@", userInfo);
+    }
+}
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
 
-    //NSLog(@"didFinishLaunchingWithOptions");
+    NSLog(@"didFinishLaunchingWithOptions");
+
+    if (launchOptions != nil) {
+        // Launched from push notification
+        NSLog(@"launchOptions %@", launchOptions);
+
+        NSDictionary *notification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+        
+        NSLog(@"notification %@", notification);
 
         
+    }
 	//self.hash_check = [[NSString alloc] init];
 	
     
