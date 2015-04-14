@@ -30,7 +30,7 @@
 	}
     else if ([key isEqualToString:@"SetCheckpoint"]) {
 
-        [TestFlight passCheckpoint:@"DEBUG"];
+        //[TestFlight passCheckpoint:@"DEBUG"];
         
     }
 }

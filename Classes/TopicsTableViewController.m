@@ -42,7 +42,7 @@
 
 @synthesize request;
 
-@synthesize myPickerView, pickerViewArray, actionSheet, topicActionSheet;
+@synthesize myPickerView, pickerViewArray, actionSheet, topicActionSheet, subCatSegmentedControl;
 
 
 @synthesize tmpCell;
@@ -794,6 +794,9 @@
 {
     [_popover dismissPopoverAnimated:YES];
     
+    [self dismissModalViewControllerAnimated:YES];
+
+    
 	//NSLog(@"curName %@", self.forumName);
 	
 	//NSLog(@"newName %@", [[pickerViewArray objectAtIndex:[myPickerView selectedRowInComponent:0]] aTitle]);
@@ -855,7 +858,7 @@
     }
     
     if (self.status == kComplete || self.status == kIdle) {
-        NSLog(@"COMPLETE %d", self.childViewControllers.count);
+        //NSLog(@"COMPLETE %d", self.childViewControllers.count);
         
     }
     else
@@ -985,7 +988,7 @@
         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
             segmentedControl2 = [[UISegmentedControl alloc] initWithItems:
                                   [NSArray arrayWithObjects:
-                                   [UIImage imageNamed:@"categories"],
+                                   [UIImage imageNamed:@"all_categories"],
                                    nil]];
         }
         else
@@ -1000,7 +1003,6 @@
         segmentedControl2.segmentedControlStyle = UISegmentedControlStyleBar;
         segmentedControl2.momentary = YES;
 
-        
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad && SYSTEM_VERSION_LESS_THAN(@"7.0")) {
             segmentedControl2.tintColor = [UIColor colorWithRed:156/255.f green:161/255.f blue:167/255.f alpha:1.00];
         }
@@ -1016,7 +1018,9 @@
         segmentedControl.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin);
         segmentedControl2.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin);
         self.navigationItem.titleView.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin);
-
+        
+        self.subCatSegmentedControl = segmentedControl2;
+        
         [segmentedControl2 release];
             
     }
@@ -1098,6 +1102,7 @@
         [confirmButton addTarget:self action:@selector(loadSubCat) forControlEvents:UIControlEventValueChanged];
         [actionSheet addSubview:confirmButton];
         [confirmButton release];
+        
     }
 
 	
@@ -1956,9 +1961,20 @@
 	[actionSheet dismissWithClickedButtonIndex:0 animated:YES];
 }
 
+-(UIViewController *)presentationController:(UIPresentationController *)controller viewControllerForAdaptivePresentationStyle:(UIModalPresentationStyle)style   {
+    
+    UINavigationController *uvc = [[UINavigationController alloc] initWithRootViewController:controller.presentedViewController];
+    return uvc;
+    
+}
+
+- (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller {
+    return UIModalPresentationNone;
+}
+
 -(void)showPicker:(id)sender {
 
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad || SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8")) {
         //NSLog(@"TT %@", [[pickerViewArray objectAtIndex:[myPickerView selectedRowInComponent:0]] aTitle]);
         
         SubCatTableViewController *subCatTableViewController = [[[SubCatTableViewController alloc] initWithStyle:UITableViewStylePlain] autorelease];
@@ -1966,21 +1982,25 @@
         subCatTableViewController.arrayData = pickerViewArray;
         subCatTableViewController.notification = @"SubCatSelected";
         
-        self.popover = [[[UIPopoverController alloc] initWithContentViewController:subCatTableViewController] autorelease];
-        
-        //CGPoint senderPoint = [sender locationInView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view]];
-        CGRect origFrame = [(UISegmentedControl *)sender frame];
-        //origFrame.origin.x += 80;
-        
-        
-        //origFrame.origin.x += 75;
-        //origFrame.origin.y += 10;
-        
-        //[_popover presentPopoverFromBarButtonItem:self.navigationItem.rightBarButtonItem permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-        
-        [_popover presentPopoverFromRect:origFrame inView:self.navigationItem.titleView permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-     
-    } else {
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8")) {
+            subCatTableViewController.modalPresentationStyle = UIModalPresentationPopover;
+            UIPopoverPresentationController *pc = [subCatTableViewController popoverPresentationController];
+            pc.permittedArrowDirections = UIPopoverArrowDirectionAny;
+            pc.delegate = self;
+            pc.sourceView = self.subCatSegmentedControl;
+            pc.sourceRect = CGRectMake(0, 0, 45, 35);
+
+            [self presentViewController:subCatTableViewController animated:YES completion:nil];
+        }
+        else {
+            self.popover = nil;
+            self.popover = [[[UIPopoverController alloc] initWithContentViewController:subCatTableViewController] autorelease];
+            CGRect origFrame = [(UISegmentedControl *)sender frame];
+            [_popover presentPopoverFromRect:origFrame inView:self.navigationItem.titleView permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        }
+
+    }
+    else {
         CGSize pickerSize = [myPickerView sizeThatFits:CGSizeZero];
         myPickerView.frame = [self pickerFrameWithSize:pickerSize];
         
@@ -2006,9 +2026,9 @@
         [actionSheet setBounds:CGRectMake(0, 0,
                                           self.view.frame.size.width, myPickerView.frame.size.height + 44)];
         
-        [UIView commitAnimations]; 
+        [UIView commitAnimations];
+        
     }
-    
 
 
 }
@@ -2081,7 +2101,8 @@
 	self.myPickerView = nil;
 	self.actionSheet = nil;
 	self.pickerViewArray = nil;
-
+    self.subCatSegmentedControl = nil;
+    
     self.topicActionSheet = nil;
     
 	self.statusMessage = nil;

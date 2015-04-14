@@ -56,7 +56,24 @@
 		
     //you must then convert the path to a proper NSURL or it won't work
 	
-	NSString *result = (NSString *) CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)self.theSearchBar.text, NULL, CFSTR(":/?#[]@!$&’()*+,;="), kCFStringEncodingUTF8);
+    NSString *realString = [self.theSearchBar.text lowercaseString];
+    NSString *fakeString = [self.theSearchBar.text lowercaseString];
+    
+    NSArray *bannedWords = [NSArray arrayWithObjects:@"jailbreak", @"cydia", @"pengu", @"apple jb", nil];
+    
+    for(NSString *word in bannedWords) {
+        if ([realString rangeOfString:word].location == NSNotFound) {
+            //On est bon.
+        } else {
+            //On est pas bon :o
+            NSLog(@"On est pas bon");
+            fakeString = @"SSBEb24ndCBXYW50IHRvIExpdmUgb24gVGhpcyBQbGFuZXQgQW55bW9yZQ==";
+            break;
+            
+        }
+    }
+    
+	NSString *result = (NSString *) CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)fakeString, NULL, CFSTR(":/?#[]@!$&’()*+,;="), kCFStringEncodingUTF8);
 
 	
     NSURL *xmlURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.google.com/cse?cx=%@&client=google-csbe&output=xml_no_dtd&num=20&q=%@", kGoogleCSEAPI, result]];
@@ -97,10 +114,14 @@
     self.theSearchBar = [[UISearchBar alloc] init];
     theSearchBar.delegate = self;
     theSearchBar.placeholder = @"Recherche";
-    
+    theSearchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
+
+    if ([theSearchBar respondsToSelector:@selector(setSearchBarStyle:)]) {
+        theSearchBar.searchBarStyle = UISearchBarStyleMinimal;
+    }
+
 	self.navigationItem.titleView = theSearchBar;
     self.navigationItem.titleView.frame = CGRectMake(0, 0, 320, 44);
-    
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(OrientationChanged)

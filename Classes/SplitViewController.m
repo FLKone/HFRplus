@@ -123,7 +123,7 @@
     }
     else
     {
-        BrowserViewController *browserViewController = [[BrowserViewController alloc] initWithNibName:@"BrowserViewController" bundle:nil andURL:url];
+        BrowserViewController *browserViewController = [[BrowserViewController alloc] initWithURL:url];
         [browserViewController setFullBrowser:YES];
         
         [rightNavController popToRootViewControllerAnimated:NO];
@@ -179,7 +179,7 @@
     [leftNavController pushViewController:aView animated:YES];
     [aView release];
     
-    BrowserViewController *browserViewController = [[BrowserViewController alloc] initWithNibName:@"BrowserViewController" bundle:nil andURL:url];
+    BrowserViewController *browserViewController = [[BrowserViewController alloc] initWithURL:url];
     [browserViewController setFullBrowser:YES];
     
     [rightNavController popToRootViewControllerAnimated:NO];

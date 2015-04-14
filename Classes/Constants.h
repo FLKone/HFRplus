@@ -10,7 +10,7 @@
 #import "NSDictionary+Merging.h"
 #import "HFRNavigationController.h"
 
-#define NSLog(__FORMAT__, ...) TFLog((@"%s [Line %d] " __FORMAT__), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+#define NSLog(__FORMAT__, ...) NSLog((@"%s [Line %d] " __FORMAT__), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 
 static const NSInteger kDispatchPeriodSeconds = 20;
 
@@ -52,6 +52,7 @@ typedef enum {
 #define kNewMessageFromShake    2
 #define kNewMessageFromEditor   3
 #define kNewMessageFromUnkwn    4
+#define kNewMessageFromNext     5
 
 // iOS7
 #define HEIGHT_FOR_HEADER_IN_SECTION                ((SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") ? 36.0f : 23.0f))

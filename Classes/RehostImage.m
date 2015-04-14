@@ -203,19 +203,19 @@
 	HTMLNode * bodyNode = [myParser body]; //Find the body tag
     
 	NSArray *codeArray = [bodyNode findChildTags:@"code"];
-	NSLog(@"codeArray %d", codeArray.count);
+	//NSLog(@"codeArray %d", codeArray.count);
 	
-	if (codeArray.count == 6) {
+	if (codeArray.count == 8) {
 		// OK :D
 
 		// If appropriate, configure the new managed object.
         self.link_full = [[codeArray objectAtIndex:0] allContents];
         self.link_preview = [[codeArray objectAtIndex:1] allContents];
-        self.link_miniature = [[codeArray objectAtIndex:2] allContents];
+        self.link_miniature = [[codeArray objectAtIndex:3] allContents];
         
-        self.nolink_full = [[codeArray objectAtIndex:3] allContents];
-        self.nolink_preview = [[codeArray objectAtIndex:4] allContents];
-        self.nolink_miniature = [[codeArray objectAtIndex:5] allContents];
+        self.nolink_full = [[codeArray objectAtIndex:4] allContents];
+        self.nolink_preview = [[codeArray objectAtIndex:5] allContents];
+        self.nolink_miniature = [[codeArray objectAtIndex:7] allContents];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"uploadProgress" object:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithFloat:2.0f], self, nil] forKeys:[NSArray arrayWithObjects:@"progress", @"rehostImage", nil]]];
 	}

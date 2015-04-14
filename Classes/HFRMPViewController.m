@@ -200,7 +200,7 @@
 
 - (void)actionSheet:(UIActionSheet *)modalView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    NSLog(@"buttonIndex %d", buttonIndex);
+    //NSLog(@"buttonIndex %d", buttonIndex);
 	switch (buttonIndex)
 	{
 		case 0:

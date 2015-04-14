@@ -101,25 +101,55 @@
 	
 	NSString *jsString = [[[NSString alloc] initWithString:@""] autorelease];
 	//jsString = [jsString stringByAppendingString:@"$('body').bind('touchmove', function(e){e.preventDefault()});"];
-	jsString = [jsString stringByAppendingString:@"$('.button').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+$.base64.encode(this.title); });"];
+	//jsString = [jsString stringByAppendingString:@"$('.button').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+encodeURIComponent(this.title); });"];
     
-	jsString = [jsString stringByAppendingString:@"$('#smileperso img.smile').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+$.base64.encode(this.alt); });"];    
+	//jsString = [jsString stringByAppendingString:@"$('#smileperso img.smile').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+encodeURIComponent(this.alt); });"];
+    
+    jsString = [jsString stringByAppendingString:@"var hammertime = $('.button').hammer({ hold_timeout: 0.000001 }); \
+                                                    hammertime.on('touchstart touchend', function(ev) {\
+                                                    if(ev.type === 'touchstart'){\
+                                                        $(this).addClass('selected');\
+                                                    }\
+                                                    if(ev.type === 'touchend'){\
+                                                        $(this).removeClass('selected');\
+                                                        window.location = 'oijlkajsdoihjlkjasdosmile://internal?query='+encodeURIComponent(this.title).replace(/\\(/g, '%28').replace(/\\)/g, '%29');\
+                                                    }\
+                                                    });"];
+    
+    jsString = [jsString stringByAppendingString:@"var hammertime2 = $('#smileperso img.smile').hammer({ hold_timeout: 0.000001 }); \
+                hammertime2.on('touchstart touchend', function(ev) {\
+                if(ev.type === 'touchstart'){\
+                $(this).addClass('selected');\
+                }\
+                if(ev.type === 'touchend'){\
+                $(this).removeClass('selected');\
+                window.location = 'oijlkajsdoihjlkjasdosmile://internal?query='+encodeURIComponent(this.alt).replace(/\\(/g, '%28').replace(/\\)/g, '%29');\
+                }\
+                });"];
+    
+    //NSLog(@"jsString %@", jsString);
+    
 	[webView stringByEvaluatingJavaScriptFromString:jsString];
 	
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)aRequest navigationType:(UIWebViewNavigationType)navigationType {
-	//NSLog(@"expected:%d, got:%d | url:%@", UIWebViewNavigationTypeLinkClicked, navigationType, [aRequest.URL absoluteString]);
+	//NSLog(@"expected:%ld, got:%ld | url:%@", (long)UIWebViewNavigationTypeLinkClicked, navigationType, [aRequest.URL absoluteString]);
 	
 	if (navigationType == UIWebViewNavigationTypeLinkClicked) {
 		return NO;
 	}
 	else if (navigationType == UIWebViewNavigationTypeOther) {
 		if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdosmile"]) {
-			NSString *regularExpressionString = @"oijlkajsdoihjlkjasdosmile://(.*)";
-			[self didSelectSmile:[[[NSString alloc] initWithData:[NSData dataFromBase64String:[[[aRequest.URL absoluteString] stringByMatching:regularExpressionString capture:1L] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]] encoding:NSASCIIStringEncoding] autorelease]];
-			
+
+            //NSLog(@"parameterString %@", [aRequest.URL query]);
+
+            NSArray *queryComponents = [[aRequest.URL query] componentsSeparatedByString:@"&"];
+            NSArray *firstParam = [[queryComponents objectAtIndex:0] componentsSeparatedByString:@"="];
+            
+            [self didSelectSmile:[[[firstParam objectAtIndex:1] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            
 			return NO;
 		}		
 	}
@@ -1549,8 +1579,19 @@
 	[self.smileView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"\
 															$('#container').hide();\
 															$('#container_ajax').html('%@');\
-															$('#container_ajax img').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+$.base64.encode(this.alt); });\
-															", tmpHTML]];	
+                                                            var hammertime2 = $('#container_ajax img').hammer({ hold_timeout: 0.000001 }); \
+                                                            hammertime2.on('touchstart touchend', function(ev) {\
+                                                            if(ev.type === 'touchstart'){\
+                                                            $(this).addClass('selected');\
+                                                            }\
+                                                            if(ev.type === 'touchend'){\
+                                                            $(this).removeClass('selected');\
+                                                            window.location = 'oijlkajsdoihjlkjasdosmile://internal?query='+encodeURIComponent(this.alt).replace(/\\(/g, '%%28').replace(/\\)/g, '%%29');\
+                                                            }\
+                                                            });\
+                                                            ", tmpHTML]];
+    
+    
 }
 
 #pragma mark -
@@ -1815,6 +1856,9 @@
 	self.rehostTableView = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    
+    UIMenuController *menuController = [UIMenuController sharedMenuController];
+    [menuController setMenuItems:nil];
 }
 
 - (void)dealloc {

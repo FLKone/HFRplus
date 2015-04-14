@@ -7,7 +7,7 @@
 
 #import "HFRplusAppDelegate.h"
 #import "PageViewController.h"
-
+#import "MessagesTableViewController.h"
 
 @implementation PageViewController
 @synthesize previousPageUrl, nextPageUrl;
@@ -173,7 +173,16 @@
 -(void)previousPage:(id)sender {
 	
 	self.currentUrl = self.previousPageUrl;
-	[self fetchContent];	
+    
+    if ([[self class] isSubclassOfClass:[MessagesTableViewController class]]) {
+        [self fetchContent:kNewMessageFromNext];
+
+    }
+    else {
+        [self fetchContent];
+    }
+    
+    
 }
 -(void)firstPage {
     [self firstPage:nil];
@@ -218,10 +227,10 @@
 	//NSLog(@"didPresentAlertView PT %@", alertView);
 	
 	if (([alertView tag] == 666)) {
-		usleep(200000);
-		
-		[alertView dismissWithClickedButtonIndex:0 animated:YES];
-	}
+        dispatch_after(200000, dispatch_get_main_queue(), ^{
+            [alertView dismissWithClickedButtonIndex:0 animated:YES];
+        });
+    }
 	else if (([alertView tag] == 668)) {
 		//NSLog(@"keud");
 	}

@@ -91,16 +91,20 @@
 
     NSLog(@"from %d", from);
     
+    if(from == kNewMessageFromNext) self.stringFlagTopic = @"#bas";
+    
     switch (from) {
         case kNewMessageFromShake:
         case kNewMessageFromUpdate:
         case kNewMessageFromEditor:
+        case kNewMessageFromNext:
             NSLog(@"hidden");
             [self.loadingView setHidden:YES];
             break;
         default:
             NSLog(@"not hidden");
             [self.loadingView setHidden:NO];
+            [self.messagesWebView stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML = \"\";"];
             break;
     }
     
@@ -548,7 +552,9 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(VisibilityChanged:) name:@"VisibilityChanged" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editMenuHidden:) name:UIMenuControllerDidHideMenuNotification object:nil];
-
+    if ([UIFontDescriptor respondsToSelector:@selector(preferredFontDescriptorWithTextStyle:)]) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userTextSizeDidChange) name:UIContentSizeCategoryDidChangeNotification object:nil];
+    }
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
     
@@ -772,22 +778,24 @@
     
 }
 
-- (void)actionSheet:(UIActionSheet *)modalView clickedButtonAtIndex:(NSInteger)buttonIndex
-{    
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
     //NSLog(@"clickedButtonAtIndex %d", buttonIndex);
-
+    
     if (buttonIndex < self.arrayActionsMessages.count) {
         NSLog(@"action %@", [self.arrayActionsMessages objectAtIndex:buttonIndex]);
-        if ([self respondsToSelector:NSSelectorFromString([[self.arrayActionsMessages objectAtIndex:buttonIndex] objectForKey:@"code"])]) 
+        if ([self respondsToSelector:NSSelectorFromString([[self.arrayActionsMessages objectAtIndex:buttonIndex] objectForKey:@"code"])])
         {
-            [self performSelector:NSSelectorFromString([[self.arrayActionsMessages objectAtIndex:buttonIndex] objectForKey:@"code"])];
+            //[self performSelector:];
+            [self performSelectorOnMainThread:NSSelectorFromString([[self.arrayActionsMessages objectAtIndex:buttonIndex] objectForKey:@"code"]) withObject:nil waitUntilDone:NO];
         }
         else {
             NSLog(@"CRASH not respondsToSelector %@", [[self.arrayActionsMessages objectAtIndex:buttonIndex] objectForKey:@"code"]);
-            [self performSelector:NSSelectorFromString([[self.arrayActionsMessages objectAtIndex:buttonIndex] objectForKey:@"code"])];
+            
+            [self performSelectorOnMainThread:NSSelectorFromString([[self.arrayActionsMessages objectAtIndex:buttonIndex] objectForKey:@"code"]) withObject:nil waitUntilDone:NO];
+            
         }
     }
-
+    
 }
 
 -(void)showPoll {
@@ -1384,34 +1392,89 @@
 		tmpHTML = [tmpHTML stringByAppendingString:[[self.arrayData objectAtIndex:i] toHTML:i]];
 	}
     
+    NSString *refreshBtn = [[[NSString alloc] initWithString:@""] autorelease];
+
+    //on ajoute le bouton actualiser si besoin
+    if (([self pageNumber] == [self lastPageNumber]) || ([self lastPageNumber] == 0)) {
+        //NSLog(@"premiere et unique ou dernier");
+        //'before'
+        refreshBtn = @"<div id=\"actualiserbtn\">Actualiser</div>";
+        
+    }
+    else {
+        //NSLog(@"autre");
+    }
+    
+    NSString *tooBar = [[[NSString alloc] initWithString:@""] autorelease];
+
+    //Toolbar;
+    if (self.aToolbar) {
+        NSString *buttonBegin, *buttonEnd;
+        NSString *buttonPrevious, *buttonNext;
+        
+        if ([(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:0] isEnabled]) {
+            buttonBegin = @"<div class=\"button begin active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://begin\">begin</a></div>";
+            buttonPrevious = @"<div class=\"button2 begin active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://previous\">previous</a></div>";
+        }
+        else {
+            buttonBegin = @"<div class=\"button begin\"></div>";
+            buttonPrevious = @"<div class=\"button2 begin\"></div>";
+        }
+        
+        if ([(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:4] isEnabled]) {
+            buttonEnd = @"<div class=\"button end active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://end\">end</a></div>";
+            buttonNext = @"<div class=\"button2 end active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://next\">next</a></div>";
+        }
+        else {
+            buttonEnd = @"<div class=\"button end\"></div>";
+            buttonNext = @"<div class=\"button2 end\"></div>";
+        }
+        
+        
+        //[NSString stringWithString:@"<div class=\"button end\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://end\">end</a></div>"];
+        
+        tooBar =  [NSString stringWithFormat:@"<div id=\"toolbarpage\">\
+                     %@\
+                     %@\
+                     <a href=\"oijlkajsdoihjlkjasdoauto://choose\">%d/%d</a>\
+                     %@\
+                     %@\
+                     </div>", buttonBegin, buttonPrevious, [self pageNumber], [self lastPageNumber], buttonNext, buttonEnd];
+    }
+    
+    NSString *customFontSize = [self userTextSizeDidChange];
+    
 	NSString *HTMLString = [NSString
                 stringWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
                 <html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"fr\" lang=\"fr\">\
                 <head>\
-                <script type='text/javascript' src='jquery-2.0.3.min.js'></script>\
+                <script type='text/javascript' src='jquery-2.1.1.min.js'></script>\
                 <script type='text/javascript' src='jquery.doubletap.js'></script>\
                 <script type='text/javascript' src='jquery.base64.js'></script>\
                 <meta name='viewport' content='initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no' />\
                 <link type='text/css' rel='stylesheet' href='style-liste.css'/>\
                 <link type='text/css' rel='stylesheet' href='style-liste-retina.css' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\
-                <link type='text/css' rel='stylesheet' href='style-liste-ipad-portrait.css' media='all and (min-width: 767px)'/>\
-                <link type='text/css' rel='stylesheet' href='style-liste-ipad-landscape.css' media='all and (min-width: 700px) and (max-width: 750px)'/>\
+                <style type='text/css'>\
+                %@\
+                </style>\
                 </head><body class='iosversion'>\
                 <div class='bunselected nosig' id='qsdoiqjsdkjhqkjhqsdqdilkjqsd2'>%@</div>\
+                %@\
+                %@\
                 <div id='endofpage'></div>\
                 <div id='endofpagetoolbar'></div>\
                 <a name='bas'></a>\
                 <script type='text/javascript'>\
                     document.addEventListener('DOMContentLoaded', loadedML);\
                     document.addEventListener('touchstart', touchstart);\
-                    function loadedML() { setTimeout(function() {document.location.href = 'oijlkajsdoihjlkjasdoloaded://loaded';},700); };\
+                    function loadedML() { document.location.href = 'oijlkajsdoihjlkjasdopreloaded://preloaded'; setTimeout(function() {document.location.href = 'oijlkajsdoihjlkjasdoloaded://loaded';},700); };\
                     function HLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bselected'; }\
                     function UHLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bunselected'; }\
                     function swap_spoiler_states(obj){var div=obj.getElementsByTagName('div');if(div[0]){if(div[0].style.visibility==\"visible\"){div[0].style.visibility='hidden';}else if(div[0].style.visibility==\"hidden\"||!div[0].style.visibility){div[0].style.visibility='visible';}}}\
                     $('img').error(function(){ $(this).attr('src', 'photoDefaultfailmini.png');});\
                     function touchstart() { document.location.href = 'oijlkajsdoihjlkjasdotouch://touchstart'};\
                 </script>\
-                </body></html>", tmpHTML];
+                </body></html>", customFontSize, tmpHTML, refreshBtn, tooBar];
 	
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"iosversion" withString:@"ios7"];
@@ -1465,9 +1528,15 @@
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 }
 
+- (void)webViewDidFinishPreLoadDOM {
+    NSLog(@"== webViewDidFinishPreLoadDOM");
+
+    [self userTextSizeDidChange];
+}
+
 - (void)webViewDidFinishLoadDOM
 {
-    //NSLog(@"== webViewDidFinishLoadDOM");
+    NSLog(@"== webViewDidFinishLoadDOM");
     if (self.loaded) {
         //NSLog(@"deja DOMed");
         return;
@@ -1482,7 +1551,7 @@
 	if (([self pageNumber] == [self lastPageNumber]) || ([self lastPageNumber] == 0)) {
 		//NSLog(@"premiere et unique ou dernier");
 		//'before'
-		jsString = [jsString stringByAppendingString:[NSString stringWithFormat:@"$('#endofpage').before('<div id=\"actualiserbtn\">Actualiser<div>');$('#actualiserbtn').click( function(){ window.location = 'oijlkajsdoihjlkjasdorefresh://data'; });"]];
+		jsString = [jsString stringByAppendingString:[NSString stringWithFormat:@"$('#actualiserbtn').click( function(){ window.location = 'oijlkajsdoihjlkjasdorefresh://data'; });"]];
 		
 	}
 	else {
@@ -1492,66 +1561,36 @@
 	jsString = [jsString stringByAppendingString:@"$('.message').addSwipeEvents().bind('doubletap', function(evt, touch) { window.location = 'oijlkajsdoihjlkjasdodetails://'+this.id; });"];
 	jsString = [jsString stringByAppendingString:@"$('.header').click(function(event) { var offset = $(this).offset(); event.stopPropagation(); window.location = 'oijlkajsdoihjlkjasdopopup://'+(offset.top-window.pageYOffset)+'/'+this.parentNode.id; });"];
 	
-	jsString = [jsString stringByAppendingString:@"$('.hfrplusimg').click(function() { window.location = 'oijlkajsdoihjlkjasdoimbrows://'+this.title+'/'+$.base64.encode(this.alt); });"];
+	jsString = [jsString stringByAppendingString:@"$('.hfrplusimg').click(function() { window.location = 'oijlkajsdoihjlkjasdoimbrows://'+this.title+'/'+encodeURIComponent(this.alt); });"];
 	//jsString = [jsString stringByAppendingString:@"$('.message').doubletap(function(event){ window.location = 'oijlkajsdoihjlkjasdodetails://'+this.id; }, function(event){  }, 400);"];
 	
 	//[webView stringByEvaluatingJavaScriptFromString:@"x$('.message').touchend(function(e){ x$(this).removeClass('touched'); });"];
 	
-	//Toolbar;
-	if (self.aToolbar) {
-		NSString *buttonBegin, *buttonEnd;
-		NSString *buttonPrevious, *buttonNext;
-		
-		if ([(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:0] isEnabled]) {
-			buttonBegin = @"<div class=\"button begin active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://begin\">begin</a></div>";
-			buttonPrevious = @"<div class=\"button2 begin active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://previous\">previous</a></div>";
-		}
-		else {
-			buttonBegin = @"<div class=\"button begin\"></div>";
-			buttonPrevious = @"<div class=\"button2 begin\"></div>";
-		}
-        
-		if ([(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:4] isEnabled]) {
-			buttonEnd = @"<div class=\"button end active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://end\">end</a></div>";
-			buttonNext = @"<div class=\"button2 end active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://next\">next</a></div>";
-		}
-		else {
-			buttonEnd = @"<div class=\"button end\"></div>";
-			buttonNext = @"<div class=\"button2 end\"></div>";
-		}
-		
-		
-		//[NSString stringWithString:@"<div class=\"button end\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://end\">end</a></div>"];
-		
-		jsString = [jsString stringByAppendingString:
-                    [NSString stringWithFormat:@"$('#endofpage').before('\
-                     <div id=\"toolbarpage\">\
-                     %@\
-                     %@\
-                     <a href=\"oijlkajsdoihjlkjasdoauto://choose\">%d/%d</a>\
-                     %@\
-                     %@\
-                     <div>\
-                     ');", buttonBegin, buttonPrevious, [self pageNumber], [self lastPageNumber], buttonNext, buttonEnd]
-                    ];
-	}
-	
 	
 	//NSLog(@"stringFlagTopic %@", self.stringFlagTopic);
+
     
     jsString = [jsString stringByAppendingString:[NSString stringWithFormat:@"window.location.hash='';window.location.hash='%@';", self.stringFlagTopic]];
     
 	//jsString = [jsString stringByAppendingString:[NSString stringWithFormat:@"$('html, body').animate({scrollTop:$('a[name=\"%@\"]').offset().top }, 'slow');", [self.stringFlagTopic stringByReplacingOccurrencesOfString:@"#" withString:@""]]];
     
-    self.lastStringFlagTopic = self.stringFlagTopic;
-    self.stringFlagTopic = @"";
+
 	
 	[self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString];
     
-    
+    NSString* jsString2 = @"window.location.hash='#bas';";
+    NSString* jsString3 = [NSString stringWithFormat:@"window.location.hash='%@'", self.stringFlagTopic];
+
+    [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString2];
+    [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString3];
+
+    NSLog(@"== webViewDidFinishLoadDOM OK");
     [self.loadingView setHidden:YES];
     [self.messagesWebView setHidden:NO];
 
+    self.lastStringFlagTopic = self.stringFlagTopic;
+    self.stringFlagTopic = @"";
+    
 	//NSLog(@"? webViewDidFinishLoad JS");
 	
 	//NSDate *nowT = [NSDate date]; // Create a current date
@@ -1560,9 +1599,16 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-	//NSLog(@"== webViewDidFinishLoad");
+	NSLog(@"== webViewDidFinishLoad");
+    
+    if (!self.loaded) {
+        [self webViewDidFinishPreLoadDOM];
+    }
     
     [self webViewDidFinishLoadDOM];
+    
+    [webView.scrollView setContentSize: CGSizeMake(300, webView.scrollView.contentSize.height)];
+    
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
     //NSLog(@"== webViewDidFinishLoad OK");
@@ -1701,6 +1747,10 @@
             }
 			return NO;
 		}
+        else if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdopreloaded"]) {
+            [self webViewDidFinishPreLoadDOM];
+            return NO;
+        }
 		else if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdoloaded"]) {
 			[self webViewDidFinishLoadDOM];
 			return NO;
@@ -1717,26 +1767,18 @@
 
 			[self performSelector:@selector(showMenuCon:andPos:) withObject:[NSNumber numberWithInt:curMsg]  withObject:[NSNumber numberWithInt:ypos]];
 			return NO;
-		}		
-		else if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdoimbrows"]) {
-			NSString *regularExpressionString = @"oijlkajsdoihjlkjasdoimbrows://[^/]+/(.*)";
-
-			/*
-			NSLog(@"v1 %@", [[[NSString alloc] initWithData:[NSData dataFromBase64String:[[aRequest.URL absoluteString] lastPathComponent]] encoding:NSASCIIStringEncoding] autorelease]);
-			
-			
-			NSLog(@"v2 %@", [[[NSString alloc] initWithData:[NSData dataFromBase64String:
-				  [[[aRequest.URL absoluteString] stringByMatching:regularExpressionString capture:1L] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
-															 ] encoding:NSASCIIStringEncoding] autorelease]);
-			*/
-			NSString *imgUrl = [[NSString alloc] initWithData:[NSData dataFromBase64String:
-											 [[[aRequest.URL absoluteString] stringByMatching:regularExpressionString capture:1L] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
-																] encoding:NSASCIIStringEncoding];
-			
-			[self didSelectImage:[[[[aRequest.URL absoluteString] pathComponents] objectAtIndex:1] intValue] withUrl:imgUrl];
-			[imgUrl release];
-			return NO;
 		}
+        else if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdoimbrows"]) {
+            NSString *regularExpressionString = @"oijlkajsdoihjlkjasdoimbrows://[^/]+/(.*)";
+            
+            NSString *imgUrl = [[[[aRequest.URL absoluteString] stringByMatching:regularExpressionString capture:1L] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            
+            [self didSelectImage:[[[[aRequest.URL absoluteString] pathComponents] objectAtIndex:1] intValue] withUrl:imgUrl];
+
+            return NO;
+        }
+        
+        
 	}
     
 	return YES;
@@ -2143,6 +2185,28 @@
 	[self QuoteMessage:[NSNumber numberWithInt:curPostID]];
 }
 
+- (NSString *) userTextSizeDidChange {
+    
+    if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"size_text"] isEqualToString:@"sys"]) {
+        if ([UIFontDescriptor respondsToSelector:@selector(preferredFontDescriptorWithTextStyle:)]) {
+            CGFloat userFontSize = [UIFontDescriptor preferredFontDescriptorWithTextStyle:UIFontTextStyleBody].pointSize;
+            userFontSize = floorf(userFontSize*0.90);
+            NSString *script = [NSString stringWithFormat:@"$('.message .content .right').css('cssText', 'font-size:%fpx !important');", userFontSize];
+            //        script = [script stringByAppendingString:[NSString stringWithFormat:@"$('.message .content .right table.code *').css('cssText', 'font-size:%fpx !important');", floor(userFontSize*0.75)]];
+            //        script = [script stringByAppendingString:[NSString stringWithFormat:@"$('.message .content .right p.editedhfrlink').css('cssText', 'font-size:%fpx !important');", floor(userFontSize*0.75)]];
+            
+            [self.messagesWebView stringByEvaluatingJavaScriptFromString:script];
+            
+            return [NSString stringWithFormat:@".message .content .right { font-size:%fpx !important; }", userFontSize];
+            
+            //NSLog(@"userFontSize %@", script);
+        }
+    }
+    
+    return @"";
+    
+}
+
 #pragma mark -
 #pragma mark Memory management
 - (void)didReceiveMemoryWarning {
@@ -2178,6 +2242,11 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIMenuControllerDidHideMenuNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"VisibilityChanged" object:nil];
+    
+    if ([UIFontDescriptor respondsToSelector:@selector(preferredFontDescriptorWithTextStyle:)]) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIContentSizeCategoryDidChangeNotification object:nil];
+    }
+
 
 	[self.queue cancelAllOperations];
 	[self.queue release];

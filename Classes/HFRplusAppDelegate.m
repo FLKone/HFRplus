@@ -56,12 +56,13 @@
     
     NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
     if ([bundleIdentifier isEqualToString:@"hfrplus.red"]) {
-        [TestFlight takeOff:kTestFlightAPIRE];
-
+        [Crittercism enableWithAppID:kTestFlightAPIRE];
+        
+        //[TestFlight takeOff:kTestFlightAPIRE];
     }
     else
     {
-        [TestFlight takeOff:kTestFlightAPI];
+        //[TestFlight takeOff:kTestFlightAPI];
         [MKStoreManager sharedManager];
 
     }
@@ -368,8 +369,7 @@
         else
         {
         
-            BrowserViewController *browserViewController = [[BrowserViewController alloc]
-                                                            initWithNibName:@"BrowserViewController" bundle:nil andURL:stringUrl];
+            BrowserViewController *browserViewController = [[BrowserViewController alloc] initWithURL:stringUrl];
             
             HFRNavigationController *nc = [[HFRNavigationController alloc] initWithRootViewController:browserViewController];
             

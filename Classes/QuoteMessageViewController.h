@@ -8,7 +8,7 @@
 #import <UIKit/UIKit.h>
 #import "AddMessageViewController.h"
 
-@interface QuoteMessageViewController : AddMessageViewController <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate> {
+@interface QuoteMessageViewController : AddMessageViewController <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate, UIPopoverPresentationControllerDelegate, UIAdaptivePresentationControllerDelegate> {
 	NSString *urlQuote;
 	
 	UIPickerView		*myPickerView;

@@ -603,7 +603,7 @@
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
     
-        UIImage *buttonImage2 = [UIImage imageNamed:@"categories_land"];
+        UIImage *buttonImage2 = [UIImage imageNamed:@"all_categories_land"];
         UIButton *aButton2 = [UIButton buttonWithType:UIButtonTypeCustom];
         [aButton2 setAdjustsImageWhenHighlighted:NO];
         
@@ -624,7 +624,7 @@
         
         
         
-        UIImage *buttonImage = [UIImage imageNamed:@"categories"];
+        UIImage *buttonImage = [UIImage imageNamed:@"all_categories"];
         UIButton *aButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [aButton setAdjustsImageWhenHighlighted:NO];
         

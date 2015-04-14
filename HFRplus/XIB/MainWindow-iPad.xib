@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
     <dependencies>
-        <deployment defaultVersion="1280" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UIApplication">
@@ -18,7 +18,6 @@
                 <outlet property="forumsNavController" destination="269" id="330"/>
                 <outlet property="messagesNavController" destination="268" id="332"/>
                 <outlet property="rootController" destination="261" id="329"/>
-                <outlet property="searchNavController" destination="266" id="333"/>
                 <outlet property="splitViewController" destination="194" id="201"/>
                 <outlet property="window" destination="2" id="5"/>
             </connections>
@@ -36,17 +35,9 @@
             <extendedEdge key="edgesForExtendedLayout"/>
             <toolbarItems/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
-            <nil key="simulatedTopBarMetrics"/>
-            <nil key="simulatedBottomBarMetrics"/>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-            <nil key="simulatedDestinationMetrics"/>
             <tabBarController key="masterViewController" id="261" customClass="TabBarController">
                 <extendedEdge key="edgesForExtendedLayout"/>
-                <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
-                <nil key="simulatedTopBarMetrics"/>
-                <nil key="simulatedBottomBarMetrics"/>
-                <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-                <nil key="simulatedDestinationMetrics"/>
                 <tabBar key="tabBar" contentMode="scaleToFill" id="270">
                     <rect key="frame" x="0.0" y="975" width="768" height="49"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -57,11 +48,6 @@
                         <extendedEdge key="edgesForExtendedLayout"/>
                         <tabBarItem key="tabBarItem" title="Catégories" image="44-shoebox.png" id="273"/>
                         <toolbarItems/>
-                        <nil key="simulatedStatusBarMetrics"/>
-                        <nil key="simulatedTopBarMetrics"/>
-                        <nil key="simulatedBottomBarMetrics"/>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-                        <nil key="simulatedDestinationMetrics"/>
                         <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="271">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask"/>
@@ -70,11 +56,6 @@
                             <viewController id="272" customClass="ForumsTableViewController">
                                 <toolbarItems/>
                                 <navigationItem key="navigationItem" title="Item" id="274"/>
-                                <nil key="simulatedStatusBarMetrics"/>
-                                <nil key="simulatedTopBarMetrics"/>
-                                <nil key="simulatedBottomBarMetrics"/>
-                                <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-                                <nil key="simulatedDestinationMetrics"/>
                             </viewController>
                         </viewControllers>
                     </navigationController>
@@ -82,11 +63,6 @@
                         <extendedEdge key="edgesForExtendedLayout"/>
                         <tabBarItem key="tabBarItem" title="Vos Sujets" image="28-star.png" id="281"/>
                         <toolbarItems/>
-                        <nil key="simulatedStatusBarMetrics"/>
-                        <nil key="simulatedTopBarMetrics"/>
-                        <nil key="simulatedBottomBarMetrics"/>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-                        <nil key="simulatedDestinationMetrics"/>
                         <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="279">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask"/>
@@ -95,11 +71,6 @@
                             <viewController id="280" customClass="FavoritesTableViewController">
                                 <toolbarItems/>
                                 <navigationItem key="navigationItem" title="Item" id="282"/>
-                                <nil key="simulatedStatusBarMetrics"/>
-                                <nil key="simulatedTopBarMetrics"/>
-                                <nil key="simulatedBottomBarMetrics"/>
-                                <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-                                <nil key="simulatedDestinationMetrics"/>
                             </viewController>
                         </viewControllers>
                     </navigationController>
@@ -107,11 +78,6 @@
                         <extendedEdge key="edgesForExtendedLayout"/>
                         <tabBarItem key="tabBarItem" title="Messages" image="18-envelope.png" id="277"/>
                         <toolbarItems/>
-                        <nil key="simulatedStatusBarMetrics"/>
-                        <nil key="simulatedTopBarMetrics"/>
-                        <nil key="simulatedBottomBarMetrics"/>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-                        <nil key="simulatedDestinationMetrics"/>
                         <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="275">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask"/>
@@ -120,36 +86,6 @@
                             <viewController nibName="TopicsTableViewController" id="276" customClass="HFRMPViewController">
                                 <toolbarItems/>
                                 <navigationItem key="navigationItem" title="Item" id="278"/>
-                                <nil key="simulatedStatusBarMetrics"/>
-                                <nil key="simulatedTopBarMetrics"/>
-                                <nil key="simulatedBottomBarMetrics"/>
-                                <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-                                <nil key="simulatedDestinationMetrics"/>
-                            </viewController>
-                        </viewControllers>
-                    </navigationController>
-                    <navigationController id="266">
-                        <extendedEdge key="edgesForExtendedLayout"/>
-                        <tabBarItem key="tabBarItem" title="Recherche" image="06-magnify.png" id="285"/>
-                        <toolbarItems/>
-                        <nil key="simulatedStatusBarMetrics"/>
-                        <nil key="simulatedTopBarMetrics"/>
-                        <nil key="simulatedBottomBarMetrics"/>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-                        <nil key="simulatedDestinationMetrics"/>
-                        <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="283">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                        </navigationBar>
-                        <viewControllers>
-                            <viewController id="284" customClass="HFRSearchViewController">
-                                <toolbarItems/>
-                                <navigationItem key="navigationItem" title="Item" id="286"/>
-                                <nil key="simulatedStatusBarMetrics"/>
-                                <nil key="simulatedTopBarMetrics"/>
-                                <nil key="simulatedBottomBarMetrics"/>
-                                <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-                                <nil key="simulatedDestinationMetrics"/>
                             </viewController>
                         </viewControllers>
                     </navigationController>
@@ -157,11 +93,6 @@
                         <extendedEdge key="edgesForExtendedLayout"/>
                         <tabBarItem key="tabBarItem" systemItem="more" id="327"/>
                         <toolbarItems/>
-                        <nil key="simulatedStatusBarMetrics"/>
-                        <nil key="simulatedTopBarMetrics"/>
-                        <nil key="simulatedBottomBarMetrics"/>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-                        <nil key="simulatedDestinationMetrics"/>
                         <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="325">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask"/>
@@ -170,11 +101,6 @@
                             <viewController id="326" customClass="InfosViewController">
                                 <toolbarItems/>
                                 <navigationItem key="navigationItem" title="Item" id="328"/>
-                                <nil key="simulatedStatusBarMetrics"/>
-                                <nil key="simulatedTopBarMetrics"/>
-                                <nil key="simulatedBottomBarMetrics"/>
-                                <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-                                <nil key="simulatedDestinationMetrics"/>
                             </viewController>
                         </viewControllers>
                     </navigationController>
@@ -185,22 +111,12 @@
             </tabBarController>
             <navigationController key="detailViewController" id="248" customClass="DetailNavigationViewController">
                 <extendedEdge key="edgesForExtendedLayout"/>
-                <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
-                <nil key="simulatedTopBarMetrics"/>
-                <nil key="simulatedBottomBarMetrics"/>
-                <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-                <nil key="simulatedDestinationMetrics"/>
                 <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="249">
                     <autoresizingMask key="autoresizingMask"/>
                 </navigationBar>
                 <viewControllers>
                     <viewController id="317">
                         <navigationItem key="navigationItem" title="Item" id="318"/>
-                        <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
-                        <nil key="simulatedTopBarMetrics"/>
-                        <nil key="simulatedBottomBarMetrics"/>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-                        <nil key="simulatedDestinationMetrics"/>
                     </viewController>
                 </viewControllers>
                 <connections>
@@ -210,9 +126,13 @@
         </splitViewController>
     </objects>
     <resources>
-        <image name="06-magnify.png" width="24" height="24"/>
         <image name="18-envelope.png" width="24" height="16"/>
         <image name="28-star.png" width="26" height="26"/>
         <image name="44-shoebox.png" width="24" height="22"/>
     </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
 </document>
