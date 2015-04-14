@@ -23,5 +23,6 @@
 -(IBAction) network_base;
 -(IBAction) network_asi;
 -(IBAction)changeURL:(id)sender;
+- (IBAction)debug_notif:(id)sender;
 
 @end

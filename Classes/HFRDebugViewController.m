@@ -70,6 +70,18 @@
 		return (interfaceOrientation == UIInterfaceOrientationPortrait);
 	}
 }
+- (IBAction)debug_notif:(id)sender {
+    NSLog(@"notif test");
+    
+    if ([[UIApplication sharedApplication] respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
+    {
+        // iOS 8 Notifications
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+        
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    }
+
+}
 
 - (void)addText:(NSString *)text {
     dispatch_async( dispatch_get_main_queue(), ^{
