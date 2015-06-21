@@ -1,6 +1,6 @@
 <img src="http://a252.phobos.apple.com/us/r1000/119/Purple/v4/d1/89/07/d18907cd-3fd2-a828-cbcd-1c9ffeb4e6d0/mza_7454098853510851857.170x170-75.png" alt="HFR+" title="HFR+" style="display:block; margin: 10px auto 30px auto;" class="center">
 
-HFR+
+HFR+ v1 - Compatible iOS 5 - 8
 =========================
 Application iOS (iPhone, iPod Touch et iPad) pour le forum hardware.fr
 
