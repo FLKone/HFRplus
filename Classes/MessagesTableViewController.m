@@ -1578,13 +1578,15 @@
 	
 	[self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString];
     
-    NSString* jsString2 = @"window.location.hash='#bas';";
-    NSString* jsString3 = [NSString stringWithFormat:@"window.location.hash='%@'", self.stringFlagTopic];
+    if (SYSTEM_VERSION_LESS_THAN(@"9")) {
+        NSString* jsString2 = @"window.location.hash='#bas';";
+        NSString* jsString3 = [NSString stringWithFormat:@"window.location.hash='%@'", self.stringFlagTopic];
+        
+        [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString2];
+        [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString3];
+    }
 
-    [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString2];
-    [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString3];
-
-    NSLog(@"== webViewDidFinishLoadDOM OK");
+    //NSLog(@"== webViewDidFinishLoadDOM OK");
     [self.loadingView setHidden:YES];
     [self.messagesWebView setHidden:NO];
 
