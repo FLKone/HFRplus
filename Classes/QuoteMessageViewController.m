@@ -126,6 +126,26 @@
 
 	HTMLNode * bodyNode = [myParser body]; //Find the body tag
 		
+    // check if user is logged in
+    BOOL isLogged = false;
+    HTMLNode * hashCheckNode = [bodyNode findChildWithAttribute:@"name" matchingName:@"hash_check" allowPartial:NO];
+    if (hashCheckNode && ![[hashCheckNode getAttributeNamed:@"value"] isEqualToString:@""]) {
+        //hash = logginé :o
+        isLogged = true;
+    }
+    //username
+    NSString *username = @"";
+    HTMLNode *usernameNode = [bodyNode findChildWithAttribute:@"name" matchingName:@"pseudo" allowPartial:NO];
+    if (usernameNode && ![[usernameNode getAttributeNamed:@"value"] isEqualToString:@""]) {
+        //hash = logginé :o
+        username = [usernameNode getAttributeNamed:@"value"];
+    }
+    //-- check if user is logged in
+    
+    //NSLog(@"FORM login = %d", isLogged);
+    //NSLog(@"FORM username = %@", username);
+    
+    
     // SMILEY PERSO
     HTMLNode * smileyNode = [bodyNode findChildWithAttribute:@"id" matchingName:@"dynamic_smilies" allowPartial:NO];
 
@@ -505,6 +525,14 @@
 	[self setFormSubmit:newSubmitForm];
 	[newSubmitForm release];
 	
+    if(!isLogged) {
+        [self.textFieldSmileys setHidden:TRUE];
+    }
+    
+    if([username caseInsensitiveCompare:@"applereview"] == NSOrderedSame) {
+        [self.textFieldSmileys setHidden:TRUE];
+    }
+    
 	//self.formSubmit = [NSString stringWithFormat:@"http://forum.hardware.fr/%@", [fastAnswerNode getAttributeNamed:@"action"]];
 	//NSLog(@"self.formSubmit2 %@", self.formSubmit);
 	[myParser release];
