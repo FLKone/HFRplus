@@ -2369,7 +2369,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0700;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = 4Z4VCUMET3;
@@ -3254,6 +3254,7 @@
 					"$(PROJECT_DIR)/**",
 				);
 				OTHER_LDFLAGS = "-licucore";
+				PRODUCT_BUNDLE_IDENTIFIER = hfrplus;
 				PRODUCT_NAME = HFRplus;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3281,6 +3282,7 @@
 					"$(PROJECT_DIR)/**",
 				);
 				OTHER_LDFLAGS = "-licucore";
+				PRODUCT_BUNDLE_IDENTIFIER = hfrplus;
 				PRODUCT_NAME = HFRplus;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3302,6 +3304,7 @@
 				CODE_SIGN_ENTITLEMENTS = HFRplus.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -3379,6 +3382,7 @@
 					"$(PROJECT_DIR)/**",
 				);
 				OTHER_LDFLAGS = "-licucore";
+				PRODUCT_BUNDLE_IDENTIFIER = hfrplus.red;
 				PRODUCT_NAME = HFRplusRED;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3406,6 +3410,7 @@
 					"$(PROJECT_DIR)/**",
 				);
 				OTHER_LDFLAGS = "-licucore";
+				PRODUCT_BUNDLE_IDENTIFIER = hfrplus.red;
 				PRODUCT_NAME = HFRplusRED;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
