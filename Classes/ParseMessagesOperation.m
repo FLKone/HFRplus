@@ -16,6 +16,7 @@
 #import <CommonCrypto/CommonDigest.h>
 
 #import "ASIHTTPRequest.h"
+#import "BlackList.h"
 
 @interface ParseMessagesOperation ()
 @property (nonatomic, assign) id <ParseMessagesOperationDelegate> delegate;
@@ -175,10 +176,24 @@
 				//[pool2 drain];
 				continue;
 			}
-
+            
+            if ([[BlackList shared] isBL:fasTest.name]) {
+                [fasTest setIsBL:YES];
+            }
+            
 			HTMLNode * avatarNode = [messageNode findChildWithAttribute:@"class" matchingName:@"avatar_center" allowPartial:NO];
 			HTMLNode * contentNode = [messageNode findChildWithAttribute:@"id" matchingName:@"para" allowPartial:YES];
-
+            fasTest.dicoHTML = rawContentsOfNode([contentNode _node], [myParser _doc]);
+            
+            if (![fasTest isBL]) {
+                for (NSDictionary *dic in [[BlackList shared] getAll]) {
+                    if ([fasTest.dicoHTML rangeOfString:[dic objectForKey:@"word"] options:NSCaseInsensitiveSearch].location != NSNotFound) {
+                        [fasTest setIsBL:YES];
+                        break;
+                    }
+                }
+            }
+            
 			//NSDate *then1 = [NSDate date]; // Create a current date
 
 			/* OLD SLOW
@@ -214,7 +229,7 @@
 			
 			//NSDate *then2 = [NSDate date]; // Create a current date
 
-			fasTest.dicoHTML = rawContentsOfNode([contentNode _node], [myParser _doc]);
+
 
 			//NSDate *then3 = [NSDate date]; // Create a current date
 

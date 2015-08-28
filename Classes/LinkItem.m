@@ -12,7 +12,7 @@
 @implementation LinkItem
 
 @synthesize postID, lastPageUrl, lastPostUrl, viewed, name, url, flagUrl, typeFlag, rep, dicoHTML, messageDate, imageUI, textViewMsg, messageNode, messageAuteur;
-@synthesize urlQuote, urlEdit, urlProfil, addFlagUrl, quoteJS, MPUrl, isDel;
+@synthesize urlQuote, urlEdit, urlProfil, addFlagUrl, quoteJS, MPUrl, isDel, isBL;
 
 @synthesize quotedNB, quotedLINK, editedTime;
 
@@ -29,6 +29,10 @@
 	if ([[self name] isEqualToString:@"Modération"]) {
 		tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"class=\"message" withString:@"class=\"message mode "];
 	}
+    
+    if([self isBL]){
+        tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"class=\"message" withString:@"class=\"message hfrbl"];
+    }
 
 	tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"%%AUTEUR_PSEUDO%%" withString:[self name]];
 	tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"%%POSTID%%" withString:[self postID]];	

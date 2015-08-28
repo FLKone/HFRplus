@@ -54,3 +54,4 @@ Crédits
 * [MWPhotoBrowser](https://github.com/mwaterfall/MWPhotoBrowser)
 * [SDWebImage](https://github.com/rs/SDWebImage)
 * [RegexKitLite](http://regexkit.sourceforge.net/RegexKitLite/)
+* [UIMenuItem+CXAImageSupport](https://github.com/cxa/UIMenuItem-CXAImageSupport)

@@ -23,7 +23,9 @@
 
 	BOOL viewed;
 	BOOL isDel;
-	
+    
+	BOOL isBL;
+    
 	int rep;
 
 	NSString *urlQuote;
@@ -86,6 +88,7 @@
 @property int rep;
 @property BOOL viewed;
 @property BOOL isDel;
+@property BOOL isBL;
 
 -(NSString *)toHTML:(int)index;
 

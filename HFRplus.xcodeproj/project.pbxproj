@@ -47,6 +47,72 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		4C028AD21A8C635500F542B1 /* hammer.min.map in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311EE19FAFCAE0097D84D /* hammer.min.map */; };
+		4CB132941B9058530081B44D /* 146-gavel.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132921B9058530081B44D /* 146-gavel.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132951B9058530081B44D /* 146-gavel.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132921B9058530081B44D /* 146-gavel.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132961B9058530081B44D /* 146-gavel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132931B9058530081B44D /* 146-gavel@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132971B9058530081B44D /* 146-gavel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132931B9058530081B44D /* 146-gavel@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4CB1329B1B905BF80081B44D /* BlackListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB132991B905BF80081B44D /* BlackListTableViewController.m */; settings = {ASSET_TAGS = (); }; };
+		4CB1329C1B905BF80081B44D /* BlackListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB132991B905BF80081B44D /* BlackListTableViewController.m */; settings = {ASSET_TAGS = (); }; };
+		4CB1329D1B905BF80081B44D /* BlackListTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CB1329A1B905BF80081B44D /* BlackListTableViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		4CB1329E1B905BF80081B44D /* BlackListTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CB1329A1B905BF80081B44D /* BlackListTableViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		4CB132A31B9068250081B44D /* InfosViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132A21B9068250081B44D /* InfosViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		4CB132A41B9068250081B44D /* InfosViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132A21B9068250081B44D /* InfosViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		4CB132A71B908EC00081B44D /* UIMenuItem+CXAImageSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB132A61B908EC00081B44D /* UIMenuItem+CXAImageSupport.m */; settings = {ASSET_TAGS = (); COMPILER_FLAGS = "-fobjc-arc"; }; };
+		4CB132A81B908EC00081B44D /* UIMenuItem+CXAImageSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB132A61B908EC00081B44D /* UIMenuItem+CXAImageSupport.m */; settings = {ASSET_TAGS = (); COMPILER_FLAGS = "-fobjc-arc"; }; };
+		4CB132B71B90970C0081B44D /* RemoveUserFilled-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132B61B90970C0081B44D /* RemoveUserFilled-20@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132B81B90970C0081B44D /* RemoveUserFilled-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132B61B90970C0081B44D /* RemoveUserFilled-20@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132BA1B9097110081B44D /* RemoveUserFilled-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132B91B9097110081B44D /* RemoveUserFilled-20.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132BB1B9097110081B44D /* RemoveUserFilled-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132B91B9097110081B44D /* RemoveUserFilled-20.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132BD1B90984E0081B44D /* EditColumnFilled-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132BC1B90984E0081B44D /* EditColumnFilled-20@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132BE1B90984E0081B44D /* EditColumnFilled-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132BC1B90984E0081B44D /* EditColumnFilled-20@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132C01B9098520081B44D /* EditColumnFilled-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132BF1B9098520081B44D /* EditColumnFilled-20.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132C11B9098520081B44D /* EditColumnFilled-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132BF1B9098520081B44D /* EditColumnFilled-20.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132C31B9098820081B44D /* ContactCardFilled-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132C21B9098820081B44D /* ContactCardFilled-20.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132C41B9098820081B44D /* ContactCardFilled-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132C21B9098820081B44D /* ContactCardFilled-20.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132C61B9098880081B44D /* ContactCardFilled-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132C51B9098880081B44D /* ContactCardFilled-20@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132C71B9098880081B44D /* ContactCardFilled-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132C51B9098880081B44D /* ContactCardFilled-20@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132C91B9099220081B44D /* ReplyArrowFilled-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132C81B9099220081B44D /* ReplyArrowFilled-20.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132CA1B9099220081B44D /* ReplyArrowFilled-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132C81B9099220081B44D /* ReplyArrowFilled-20.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132CC1B9099270081B44D /* ReplyArrowFilled-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132CB1B9099270081B44D /* ReplyArrowFilled-20@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132CD1B9099270081B44D /* ReplyArrowFilled-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132CB1B9099270081B44D /* ReplyArrowFilled-20@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132CF1B9099900081B44D /* MessageFilled-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132CE1B9099900081B44D /* MessageFilled-20.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132D01B9099900081B44D /* MessageFilled-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132CE1B9099900081B44D /* MessageFilled-20.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132D21B9099950081B44D /* MessageFilled-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132D11B9099950081B44D /* MessageFilled-20@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132D31B9099950081B44D /* MessageFilled-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132D11B9099950081B44D /* MessageFilled-20@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132D51B9099BA0081B44D /* StarFilled-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132D41B9099BA0081B44D /* StarFilled-20@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132D61B9099BA0081B44D /* StarFilled-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132D41B9099BA0081B44D /* StarFilled-20@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132D81B9099C20081B44D /* StarFilled-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132D71B9099C20081B44D /* StarFilled-20.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132D91B9099C20081B44D /* StarFilled-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132D71B9099C20081B44D /* StarFilled-20.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132DB1B909C730081B44D /* QuoteFilled-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132DA1B909C730081B44D /* QuoteFilled-20.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132DC1B909C730081B44D /* QuoteFilled-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132DA1B909C730081B44D /* QuoteFilled-20.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132DE1B909C7C0081B44D /* QuoteFilled-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132DD1B909C7C0081B44D /* QuoteFilled-20@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132DF1B909C7C0081B44D /* QuoteFilled-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132DD1B909C7C0081B44D /* QuoteFilled-20@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132E11B909C820081B44D /* Quote-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132E01B909C820081B44D /* Quote-20@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132E21B909C820081B44D /* Quote-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132E01B909C820081B44D /* Quote-20@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132E41B909C890081B44D /* Quote-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132E31B909C890081B44D /* Quote-20.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132E51B909C890081B44D /* Quote-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132E31B909C890081B44D /* Quote-20.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132E71B909D690081B44D /* ReplyAllArrowFilled-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132E61B909D690081B44D /* ReplyAllArrowFilled-20.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132E81B909D690081B44D /* ReplyAllArrowFilled-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132E61B909D690081B44D /* ReplyAllArrowFilled-20.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132EA1B909D6D0081B44D /* ReplyAllArrowFilled-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132E91B909D6D0081B44D /* ReplyAllArrowFilled-20@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132EB1B909D6D0081B44D /* ReplyAllArrowFilled-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132E91B909D6D0081B44D /* ReplyAllArrowFilled-20@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132ED1B909D710081B44D /* ReplyAllArrow-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132EC1B909D710081B44D /* ReplyAllArrow-20@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132EE1B909D710081B44D /* ReplyAllArrow-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132EC1B909D710081B44D /* ReplyAllArrow-20@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132F01B909D760081B44D /* ReplyAllArrow-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132EF1B909D760081B44D /* ReplyAllArrow-20.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132F11B909D760081B44D /* ReplyAllArrow-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132EF1B909D760081B44D /* ReplyAllArrow-20.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132F81B90A1930081B44D /* BlackList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB132F71B90A1930081B44D /* BlackList.m */; settings = {ASSET_TAGS = (); }; };
+		4CB132F91B90A1930081B44D /* BlackList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB132F71B90A1930081B44D /* BlackList.m */; settings = {ASSET_TAGS = (); }; };
+		4CB132FB1B90B7010081B44D /* ThorHammer-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132FA1B90B7010081B44D /* ThorHammer-20.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132FC1B90B7010081B44D /* ThorHammer-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132FA1B90B7010081B44D /* ThorHammer-20.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132FE1B90B7060081B44D /* ThorHammer-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132FD1B90B7060081B44D /* ThorHammer-20@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4CB132FF1B90B7060081B44D /* ThorHammer-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132FD1B90B7060081B44D /* ThorHammer-20@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4CB133071B90B7550081B44D /* ThorHammerFilled-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB133061B90B7550081B44D /* ThorHammerFilled-20@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4CB133081B90B7550081B44D /* ThorHammerFilled-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB133061B90B7550081B44D /* ThorHammerFilled-20@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4CB1330A1B90B7590081B44D /* ThorHammerFilled-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB133091B90B7590081B44D /* ThorHammerFilled-20.png */; settings = {ASSET_TAGS = (); }; };
+		4CB1330B1B90B7590081B44D /* ThorHammerFilled-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB133091B90B7590081B44D /* ThorHammerFilled-20.png */; settings = {ASSET_TAGS = (); }; };
+		4CB1330D1B90B7940081B44D /* Thor Hammer Filled-23@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB1330C1B90B7940081B44D /* Thor Hammer Filled-23@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4CB1330E1B90B7940081B44D /* Thor Hammer Filled-23@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB1330C1B90B7940081B44D /* Thor Hammer Filled-23@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4CB133101B90B7990081B44D /* Thor Hammer Filled-23.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB1330F1B90B7990081B44D /* Thor Hammer Filled-23.png */; settings = {ASSET_TAGS = (); }; };
+		4CB133111B90B7990081B44D /* Thor Hammer Filled-23.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB1330F1B90B7990081B44D /* Thor Hammer Filled-23.png */; settings = {ASSET_TAGS = (); }; };
 		4CB311EC19FAF8750097D84D /* hammer.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311EB19FAF8750097D84D /* hammer.min.js */; };
 		4CB311ED19FAF8750097D84D /* hammer.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311EB19FAF8750097D84D /* hammer.min.js */; };
 		4CB311F019FAFCAE0097D84D /* hammer.min.map in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311EE19FAFCAE0097D84D /* hammer.min.map */; };
@@ -892,6 +958,42 @@
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = main.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		32CA4F630368D1EE00C91783 /* HFRplus_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFRplus_Prefix.pch; sourceTree = "<group>"; };
+		4CB132921B9058530081B44D /* 146-gavel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "146-gavel.png"; sourceTree = "<group>"; };
+		4CB132931B9058530081B44D /* 146-gavel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "146-gavel@2x.png"; sourceTree = "<group>"; };
+		4CB132981B905BF80081B44D /* BlackListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlackListTableViewController.h; sourceTree = "<group>"; };
+		4CB132991B905BF80081B44D /* BlackListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlackListTableViewController.m; sourceTree = "<group>"; };
+		4CB1329A1B905BF80081B44D /* BlackListTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BlackListTableViewController.xib; sourceTree = "<group>"; };
+		4CB132A21B9068250081B44D /* InfosViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfosViewController.xib; sourceTree = "<group>"; };
+		4CB132A51B908EC00081B44D /* UIMenuItem+CXAImageSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIMenuItem+CXAImageSupport.h"; sourceTree = "<group>"; };
+		4CB132A61B908EC00081B44D /* UIMenuItem+CXAImageSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIMenuItem+CXAImageSupport.m"; sourceTree = "<group>"; };
+		4CB132B61B90970C0081B44D /* RemoveUserFilled-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RemoveUserFilled-20@2x.png"; sourceTree = "<group>"; };
+		4CB132B91B9097110081B44D /* RemoveUserFilled-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RemoveUserFilled-20.png"; sourceTree = "<group>"; };
+		4CB132BC1B90984E0081B44D /* EditColumnFilled-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EditColumnFilled-20@2x.png"; sourceTree = "<group>"; };
+		4CB132BF1B9098520081B44D /* EditColumnFilled-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EditColumnFilled-20.png"; sourceTree = "<group>"; };
+		4CB132C21B9098820081B44D /* ContactCardFilled-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ContactCardFilled-20.png"; sourceTree = "<group>"; };
+		4CB132C51B9098880081B44D /* ContactCardFilled-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ContactCardFilled-20@2x.png"; sourceTree = "<group>"; };
+		4CB132C81B9099220081B44D /* ReplyArrowFilled-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ReplyArrowFilled-20.png"; sourceTree = "<group>"; };
+		4CB132CB1B9099270081B44D /* ReplyArrowFilled-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ReplyArrowFilled-20@2x.png"; sourceTree = "<group>"; };
+		4CB132CE1B9099900081B44D /* MessageFilled-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MessageFilled-20.png"; sourceTree = "<group>"; };
+		4CB132D11B9099950081B44D /* MessageFilled-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MessageFilled-20@2x.png"; sourceTree = "<group>"; };
+		4CB132D41B9099BA0081B44D /* StarFilled-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "StarFilled-20@2x.png"; sourceTree = "<group>"; };
+		4CB132D71B9099C20081B44D /* StarFilled-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "StarFilled-20.png"; sourceTree = "<group>"; };
+		4CB132DA1B909C730081B44D /* QuoteFilled-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "QuoteFilled-20.png"; sourceTree = "<group>"; };
+		4CB132DD1B909C7C0081B44D /* QuoteFilled-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "QuoteFilled-20@2x.png"; sourceTree = "<group>"; };
+		4CB132E01B909C820081B44D /* Quote-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Quote-20@2x.png"; sourceTree = "<group>"; };
+		4CB132E31B909C890081B44D /* Quote-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Quote-20.png"; sourceTree = "<group>"; };
+		4CB132E61B909D690081B44D /* ReplyAllArrowFilled-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ReplyAllArrowFilled-20.png"; sourceTree = "<group>"; };
+		4CB132E91B909D6D0081B44D /* ReplyAllArrowFilled-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ReplyAllArrowFilled-20@2x.png"; sourceTree = "<group>"; };
+		4CB132EC1B909D710081B44D /* ReplyAllArrow-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ReplyAllArrow-20@2x.png"; sourceTree = "<group>"; };
+		4CB132EF1B909D760081B44D /* ReplyAllArrow-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ReplyAllArrow-20.png"; sourceTree = "<group>"; };
+		4CB132F61B90A1930081B44D /* BlackList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlackList.h; sourceTree = "<group>"; };
+		4CB132F71B90A1930081B44D /* BlackList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlackList.m; sourceTree = "<group>"; };
+		4CB132FA1B90B7010081B44D /* ThorHammer-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ThorHammer-20.png"; sourceTree = "<group>"; };
+		4CB132FD1B90B7060081B44D /* ThorHammer-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ThorHammer-20@2x.png"; sourceTree = "<group>"; };
+		4CB133061B90B7550081B44D /* ThorHammerFilled-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ThorHammerFilled-20@2x.png"; sourceTree = "<group>"; };
+		4CB133091B90B7590081B44D /* ThorHammerFilled-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ThorHammerFilled-20.png"; sourceTree = "<group>"; };
+		4CB1330C1B90B7940081B44D /* Thor Hammer Filled-23@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Thor Hammer Filled-23@2x.png"; sourceTree = "<group>"; };
+		4CB1330F1B90B7990081B44D /* Thor Hammer Filled-23.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Thor Hammer Filled-23.png"; sourceTree = "<group>"; };
 		4CB311EB19FAF8750097D84D /* hammer.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = hammer.min.js; sourceTree = "<group>"; };
 		4CB311EE19FAFCAE0097D84D /* hammer.min.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = hammer.min.map; sourceTree = "<group>"; };
 		4CB311F119FAFF2C0097D84D /* jquery.hammer.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.hammer.js; sourceTree = "<group>"; };
@@ -1483,6 +1585,7 @@
 				01BF877E121C4407007624B6 /* Compte */,
 				01BF8776121C4407007624B6 /* InfosViewController.h */,
 				01BF8777121C4407007624B6 /* InfosViewController.m */,
+				4CB132A21B9068250081B44D /* InfosViewController.xib */,
 				01BF8779121C4407007624B6 /* AideViewController.m */,
 				01BF877A121C4407007624B6 /* CreditsViewController.h */,
 				01BF877B121C4407007624B6 /* CreditsViewController.m */,
@@ -1490,6 +1593,11 @@
 				01BF877C121C4407007624B6 /* AideViewController.xib */,
 				01BF877D121C4407007624B6 /* CreditsViewController.xib */,
 				CA34781112EB56DC00D1BA2A /* inApp */,
+				4CB132981B905BF80081B44D /* BlackListTableViewController.h */,
+				4CB132991B905BF80081B44D /* BlackListTableViewController.m */,
+				4CB132F61B90A1930081B44D /* BlackList.h */,
+				4CB132F71B90A1930081B44D /* BlackList.m */,
+				4CB1329A1B905BF80081B44D /* BlackListTableViewController.xib */,
 			);
 			name = Infos;
 			sourceTree = "<group>";
@@ -1646,6 +1754,40 @@
 				CA8DDC9B12EB30AC00635441 /* StoreKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4CB132A91B9094BD0081B44D /* MenuItem */ = {
+			isa = PBXGroup;
+			children = (
+				4CB132C51B9098880081B44D /* ContactCardFilled-20@2x.png */,
+				4CB132C21B9098820081B44D /* ContactCardFilled-20.png */,
+				4CB132BC1B90984E0081B44D /* EditColumnFilled-20@2x.png */,
+				4CB132BF1B9098520081B44D /* EditColumnFilled-20.png */,
+				4CB132B61B90970C0081B44D /* RemoveUserFilled-20@2x.png */,
+				4CB132B91B9097110081B44D /* RemoveUserFilled-20.png */,
+				4CB132CB1B9099270081B44D /* ReplyArrowFilled-20@2x.png */,
+				4CB132C81B9099220081B44D /* ReplyArrowFilled-20.png */,
+				4CB132D11B9099950081B44D /* MessageFilled-20@2x.png */,
+				4CB132CE1B9099900081B44D /* MessageFilled-20.png */,
+				4CB132D41B9099BA0081B44D /* StarFilled-20@2x.png */,
+				4CB132D71B9099C20081B44D /* StarFilled-20.png */,
+				4CB132DD1B909C7C0081B44D /* QuoteFilled-20@2x.png */,
+				4CB132DA1B909C730081B44D /* QuoteFilled-20.png */,
+				4CB132E01B909C820081B44D /* Quote-20@2x.png */,
+				4CB132E31B909C890081B44D /* Quote-20.png */,
+				4CB132E91B909D6D0081B44D /* ReplyAllArrowFilled-20@2x.png */,
+				4CB132E61B909D690081B44D /* ReplyAllArrowFilled-20.png */,
+				4CB132EC1B909D710081B44D /* ReplyAllArrow-20@2x.png */,
+				4CB132EF1B909D760081B44D /* ReplyAllArrow-20.png */,
+				4CB132FD1B90B7060081B44D /* ThorHammer-20@2x.png */,
+				4CB132FA1B90B7010081B44D /* ThorHammer-20.png */,
+				4CB133061B90B7550081B44D /* ThorHammerFilled-20@2x.png */,
+				4CB133091B90B7590081B44D /* ThorHammerFilled-20.png */,
+				4CB1330C1B90B7940081B44D /* Thor Hammer Filled-23@2x.png */,
+				4CB1330F1B90B7990081B44D /* Thor Hammer Filled-23.png */,
+			);
+			name = MenuItem;
+			path = iOS7;
 			sourceTree = "<group>";
 		};
 		CA00C35417C2FC620067B457 /* HFRplus */ = {
@@ -1887,6 +2029,8 @@
 		CA00C45F17C302610067B457 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				4CB132A51B908EC00081B44D /* UIMenuItem+CXAImageSupport.h */,
+				4CB132A61B908EC00081B44D /* UIMenuItem+CXAImageSupport.m */,
 				CA00C46017C302610067B457 /* AKSingleSegmentedControl.h */,
 				CA00C46117C302610067B457 /* AKSingleSegmentedControl.m */,
 				CA00C46217C302610067B457 /* NSDictionary+Merging.h */,
@@ -2029,6 +2173,7 @@
 		CA00C5A217C30C370067B457 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				4CB132A91B9094BD0081B44D /* MenuItem */,
 				CA7472D317E14D4500B45E15 /* iOS7 */,
 				CAF5DB5A1932BA58000B5215 /* check.png */,
 				CAF5DB5B1932BA58000B5215 /* check@2x.png */,
@@ -2064,6 +2209,8 @@
 				CA00C5BC17C30C370067B457 /* 60-signpost.png */,
 				CA00C5BD17C30C370067B457 /* 71-compass.png */,
 				CAF5DB8F1936D013000B5215 /* 71-compass@2x.png */,
+				4CB132921B9058530081B44D /* 146-gavel.png */,
+				4CB132931B9058530081B44D /* 146-gavel@2x.png */,
 				CA00C5BE17C30C370067B457 /* arrowback.png */,
 				CA00C5BF17C30C370067B457 /* arrowback@2x.png */,
 				CA00C5C017C30C370067B457 /* arrowbegin.png */,
@@ -2421,11 +2568,16 @@
 				CA00C69A17C30C370067B457 /* arrowR.png in Resources */,
 				CA2E4C0E17E5095000E95622 /* all_categories_land.png in Resources */,
 				CA00C63117C30C370067B457 /* hap.gif in Resources */,
+				4CB132D51B9099BA0081B44D /* StarFilled-20@2x.png in Resources */,
+				4CB132F01B909D760081B44D /* ReplyAllArrow-20.png in Resources */,
 				01BF8789121C4407007624B6 /* CreditsViewController.xib in Resources */,
 				CA00C65717C30C370067B457 /* credits.html in Resources */,
 				CA00C63517C30C370067B457 /* hot.gif in Resources */,
 				01BF878C121C4407007624B6 /* IdentificationViewController.xib in Resources */,
 				CA00C68C17C30C370067B457 /* 28-star.png in Resources */,
+				4CB132C01B9098520081B44D /* EditColumnFilled-20.png in Resources */,
+				4CB132C31B9098820081B44D /* ContactCardFilled-20.png in Resources */,
+				4CB132BD1B90984E0081B44D /* EditColumnFilled-20@2x.png in Resources */,
 				CA00C6A917C30C370067B457 /* flagyellow.png in Resources */,
 				CA00C6D417C30C370067B457 /* loadinfo@2x.gif in Resources */,
 				CA00C6CA17C30C370067B457 /* buttonpreviousoff.png in Resources */,
@@ -2436,6 +2588,8 @@
 				CA00C6BC17C30C370067B457 /* buttonendhover.png in Resources */,
 				CA00C6D617C30C370067B457 /* toolbar2.png in Resources */,
 				CA00C68417C30C370067B457 /* 122-stats.png in Resources */,
+				4CB133071B90B7550081B44D /* ThorHammerFilled-20@2x.png in Resources */,
+				4CB132CC1B9099270081B44D /* ReplyArrowFilled-20@2x.png in Resources */,
 				01BF878D121C4407007624B6 /* CompteViewController.xib in Resources */,
 				CAF5DB7D19340741000B5215 /* FeedbackTableViewCell.xib in Resources */,
 				CA00C63317C30C370067B457 /* heink.gif in Resources */,
@@ -2443,8 +2597,10 @@
 				CA00C6CF17C30C370067B457 /* endoff.png in Resources */,
 				CA00C6A217C30C370067B457 /* bgiPad@2x.png in Resources */,
 				CA00C66317C30C370067B457 /* style-liste.css in Resources */,
+				4CB132E71B909D690081B44D /* ReplyAllArrowFilled-20.png in Resources */,
 				CA00C63217C30C370067B457 /* hebe.gif in Resources */,
 				CA00C68A17C30C370067B457 /* 20-gear2.png in Resources */,
+				4CB133101B90B7990081B44D /* Thor Hammer Filled-23.png in Resources */,
 				CA00C6B117C30C370067B457 /* bar2.png in Resources */,
 				CA7472D217E1262F00B45E15 /* avatar_male_gray_on_light_48x48@2x.png in Resources */,
 				CA00C64617C30C370067B457 /* pouah.gif in Resources */,
@@ -2457,6 +2613,7 @@
 				CA00C69B17C30C370067B457 /* arrowR@2x.png in Resources */,
 				CA7472F317E15FE300B45E15 /* ToolBarPrevious_on@2x.png in Resources */,
 				CA00C6DE17C30C370067B457 /* link.png in Resources */,
+				4CB132ED1B909D710081B44D /* ReplyAllArrow-20@2x.png in Resources */,
 				CA00C64417C30C370067B457 /* ouimaitre.gif in Resources */,
 				CA7472DB17E14D4500B45E15 /* ToolBarPlay_on@2x.png in Resources */,
 				CA00C6BE17C30C370067B457 /* buttonendoff.png in Resources */,
@@ -2473,6 +2630,7 @@
 				CABC726E17E605E5003E722E /* downsmall@2x.png in Resources */,
 				CA00C3F917C2FE1B0067B457 /* IASKPSTextFieldSpecifierViewCell.xib in Resources */,
 				CAF5DB731933D408000B5215 /* PersonnalLinkViewController.xib in Resources */,
+				4CB132DB1B909C730081B44D /* QuoteFilled-20.png in Resources */,
 				CA00C6C017C30C370067B457 /* buttonendon.png in Resources */,
 				CA00C62B17C30C370067B457 /* foudtag.gif in Resources */,
 				CA7472EB17E15FE300B45E15 /* ToolBarFastForward_on@2x.png in Resources */,
@@ -2484,6 +2642,8 @@
 				CAF5DB901936D013000B5215 /* 71-compass@2x.png in Resources */,
 				CA00C3F817C2FE1B0067B457 /* IASKPSSliderSpecifierViewCell.xib in Resources */,
 				CA00C65217C30C370067B457 /* vomi.gif in Resources */,
+				4CB132D21B9099950081B44D /* MessageFilled-20@2x.png in Resources */,
+				4CB132FB1B90B7010081B44D /* ThorHammer-20.png in Resources */,
 				CA00C6E117C30C370067B457 /* nextIcon@2x.png in Resources */,
 				CAF5DB8B1936CD7B000B5215 /* 09-arrows-out.png in Resources */,
 				CA00C65517C30C370067B457 /* wink.gif in Resources */,
@@ -2499,6 +2659,8 @@
 				CA00C68B17C30C370067B457 /* 20-gear2@2x.png in Resources */,
 				013F0EAD121E117900BEBEB1 /* MessagesTableViewController.xib in Resources */,
 				CA00C63A17C30C370067B457 /* love.gif in Resources */,
+				4CB132CF1B9099900081B44D /* MessageFilled-20.png in Resources */,
+				4CB132A31B9068250081B44D /* InfosViewController.xib in Resources */,
 				013F0EAF121E117900BEBEB1 /* MessageDetailViewController.xib in Resources */,
 				CA00C68517C30C370067B457 /* 122-stats@2x.png in Resources */,
 				CA00C6D317C30C370067B457 /* loadinfo.net.gif in Resources */,
@@ -2507,12 +2669,14 @@
 				CA00C63417C30C370067B457 /* hello.gif in Resources */,
 				013F0EB3121E117900BEBEB1 /* AddMessageViewController.xib in Resources */,
 				CA00C6C617C30C370067B457 /* buttonnexton.png in Resources */,
+				4CB132FE1B90B7060081B44D /* ThorHammer-20@2x.png in Resources */,
 				CABC727617E6077A003E722E /* downsmall7@2x.png in Resources */,
 				CAF5DB761933D422000B5215 /* ConfigurationViewController.xib in Resources */,
 				CA7472EF17E15FE300B45E15 /* ToolBarFastRewind_on@2x.png in Resources */,
 				CA00C65F17C30C370067B457 /* style-aide.css in Resources */,
 				CA00C69F17C30C370067B457 /* bginput.png in Resources */,
 				CA00C6E717C30C370067B457 /* up.png in Resources */,
+				4CB132E41B909C890081B44D /* Quote-20.png in Resources */,
 				CA7472E917E15FE300B45E15 /* ToolBarFastForward_off@2x.png in Resources */,
 				CA00C6D217C30C370067B457 /* loadinfo.gif in Resources */,
 				CA00C6E417C30C370067B457 /* photoDefaultfailmini.png in Resources */,
@@ -2531,11 +2695,15 @@
 				CA00C6AA17C30C370067B457 /* flagyellow@2x.png in Resources */,
 				CAF03C561245612800897C3B /* AccessoryView.xib in Resources */,
 				CA00C64F17C30C370067B457 /* sum.gif in Resources */,
+				4CB132C91B9099220081B44D /* ReplyArrowFilled-20.png in Resources */,
 				CAB1627A124B9F9A00D12569 /* TopicCellView.xib in Resources */,
+				4CB1330D1B90B7940081B44D /* Thor Hammer Filled-23@2x.png in Resources */,
+				4CB132941B9058530081B44D /* 146-gavel.png in Resources */,
 				CA00C6E917C310B50067B457 /* InAppSettings.bundle in Resources */,
 				CA00C63C17C30C370067B457 /* miam.gif in Resources */,
 				CA00C6A417C30C370067B457 /* down.png in Resources */,
 				CA7472D817E14D4500B45E15 /* ToolBarPlay_off.png in Resources */,
+				4CB132961B9058530081B44D /* 146-gavel@2x.png in Resources */,
 				CA00C62917C30C370067B457 /* evil.gif in Resources */,
 				CA00C67B17C30C370067B457 /* 08-chat@2x.png in Resources */,
 				CA00C68E17C30C370067B457 /* 44-shoebox.png in Resources */,
@@ -2607,6 +2775,7 @@
 				CA00C45E17C301650067B457 /* MainWindow.xib in Resources */,
 				CA00C6D717C30C370067B457 /* toolbar3.png in Resources */,
 				CA00C69C17C30C370067B457 /* avatar_male_gray_on_light_32x32.png in Resources */,
+				4CB132D81B9099C20081B44D /* StarFilled-20.png in Resources */,
 				CA00C64B17C30C370067B457 /* smile.gif in Resources */,
 				CA20FA3612F15CA700EC1771 /* TopicSearchCellView.xib in Resources */,
 				CA00C63017C30C370067B457 /* gun.gif in Resources */,
@@ -2629,6 +2798,7 @@
 				CA019F1719CD77D500F67C47 /* jquery-2.1.1.min.js in Resources */,
 				CA00C3F717C2FE1B0067B457 /* IASKAppSettingsWebView.xib in Resources */,
 				CA7472E817E15FE300B45E15 /* ToolBarFastForward_off.png in Resources */,
+				4CB1329D1B905BF80081B44D /* BlackListTableViewController.xib in Resources */,
 				CA00C69717C30C370067B457 /* arrowend@2x.png in Resources */,
 				CAF5DB871936CD7B000B5215 /* 09-arrows-out@2x.png in Resources */,
 				CA00C69017C30C370067B457 /* 60-signpost.png in Resources */,
@@ -2655,10 +2825,13 @@
 				CA00C61F17C30C370067B457 /* bounce.gif in Resources */,
 				CA00C61817C30C370067B457 /* multipleflag0.gif in Resources */,
 				CA63F38E185EC18B0092E9F9 /* RehostCell.xib in Resources */,
+				4CB132DE1B909C7C0081B44D /* QuoteFilled-20@2x.png in Resources */,
 				CA45B60915B89F4F00380CA0 /* README.md in Resources */,
+				4CB132BA1B9097110081B44D /* RemoveUserFilled-20.png in Resources */,
 				CA00C61E17C30C370067B457 /* biggrin.gif in Resources */,
 				CA00C6BA17C30C370067B457 /* buttonbeginon.png in Resources */,
 				CAA1F69117E5DFA20006E785 /* plus.png in Resources */,
+				4CB132E11B909C820081B44D /* Quote-20@2x.png in Resources */,
 				CABC726D17E605E5003E722E /* downsmall.png in Resources */,
 				CAF5DB641932BA58000B5215 /* error.png in Resources */,
 				CA00C64917C30C370067B457 /* sarcastic.gif in Resources */,
@@ -2673,11 +2846,13 @@
 				CA00C69817C30C370067B457 /* arrowforward.png in Resources */,
 				CA00C6AE17C30C370067B457 /* unselectedrow.png in Resources */,
 				CAAFF8AB17DF7A0900C120BC /* all_categories.png in Resources */,
+				4CB132B71B90970C0081B44D /* RemoveUserFilled-20@2x.png in Resources */,
 				CA00C6D017C30C370067B457 /* endon.png in Resources */,
 				4CB311F219FAFF2C0097D84D /* jquery.hammer.js in Resources */,
 				CA00C6A817C30C370067B457 /* flagred@2x.png in Resources */,
 				CA00C65E17C30C370067B457 /* smileybase.html in Resources */,
 				CABC726817E60537003E722E /* up@2x.png in Resources */,
+				4CB1330A1B90B7590081B44D /* ThorHammerFilled-20.png in Resources */,
 				CA7472EA17E15FE300B45E15 /* ToolBarFastForward_on.png in Resources */,
 				CABC726717E60537003E722E /* down@2x.png in Resources */,
 				CA00C65617C30C370067B457 /* aide.html in Resources */,
@@ -2686,8 +2861,10 @@
 				CA00C6B917C30C370067B457 /* buttonbeginoff@2x.png in Resources */,
 				CA00C66217C30C370067B457 /* style-liste-retina.css in Resources */,
 				CA00C6BD17C30C370067B457 /* buttonendhover@2x.png in Resources */,
+				4CB132C61B9098880081B44D /* ContactCardFilled-20@2x.png in Resources */,
 				CA00C6DF17C30C370067B457 /* loading.gif in Resources */,
 				CA00C67717C30C370067B457 /* 06-magnify.png in Resources */,
+				4CB132EA1B909D6D0081B44D /* ReplyAllArrowFilled-20@2x.png in Resources */,
 				CA00C65B17C30C370067B457 /* jquery.doubletap.js in Resources */,
 				CA00C65A17C30C370067B457 /* jquery.base64.js in Resources */,
 			);
@@ -2713,11 +2890,16 @@
 				CA7C6FB2185EF50E00B348BA /* all_categories_land.png in Resources */,
 				CA7C6FB3185EF50E00B348BA /* hap.gif in Resources */,
 				CA7C6FB4185EF50E00B348BA /* CreditsViewController.xib in Resources */,
+				4CB132D61B9099BA0081B44D /* StarFilled-20@2x.png in Resources */,
+				4CB132F11B909D760081B44D /* ReplyAllArrow-20.png in Resources */,
 				CA7C6FB5185EF50E00B348BA /* credits.html in Resources */,
 				CA7C6FB6185EF50E00B348BA /* hot.gif in Resources */,
 				CA7C6FB7185EF50E00B348BA /* IdentificationViewController.xib in Resources */,
 				CA7C6FB8185EF50E00B348BA /* 28-star.png in Resources */,
 				CA7C6FB9185EF50E00B348BA /* flagyellow.png in Resources */,
+				4CB132C11B9098520081B44D /* EditColumnFilled-20.png in Resources */,
+				4CB132C41B9098820081B44D /* ContactCardFilled-20.png in Resources */,
+				4CB132BE1B90984E0081B44D /* EditColumnFilled-20@2x.png in Resources */,
 				CA7C6FBA185EF50E00B348BA /* loadinfo@2x.gif in Resources */,
 				CA7C6FBB185EF50E00B348BA /* buttonpreviousoff.png in Resources */,
 				CA7C6FBC185EF50E00B348BA /* bug.gif in Resources */,
@@ -2728,6 +2910,8 @@
 				CA7C6FC0185EF50E00B348BA /* toolbar2.png in Resources */,
 				CA7C6FC1185EF50E00B348BA /* 122-stats.png in Resources */,
 				CA7C6FC2185EF50E00B348BA /* CompteViewController.xib in Resources */,
+				4CB133081B90B7550081B44D /* ThorHammerFilled-20@2x.png in Resources */,
+				4CB132CD1B9099270081B44D /* ReplyArrowFilled-20@2x.png in Resources */,
 				CAF5DB7E19340741000B5215 /* FeedbackTableViewCell.xib in Resources */,
 				CA7C6FC3185EF50E00B348BA /* heink.gif in Resources */,
 				CA7C6FC4185EF50E00B348BA /* dtc.gif in Resources */,
@@ -2735,8 +2919,10 @@
 				CA7C6FC6185EF50E00B348BA /* bgiPad@2x.png in Resources */,
 				CA7C6FC7185EF50E00B348BA /* style-liste.css in Resources */,
 				CA7C6FC8185EF50E00B348BA /* hebe.gif in Resources */,
+				4CB132E81B909D690081B44D /* ReplyAllArrowFilled-20.png in Resources */,
 				CA7C6FC9185EF50E00B348BA /* 20-gear2.png in Resources */,
 				CA7C6FCA185EF50E00B348BA /* bar2.png in Resources */,
+				4CB133111B90B7990081B44D /* Thor Hammer Filled-23.png in Resources */,
 				CA7C6FCB185EF50E00B348BA /* avatar_male_gray_on_light_48x48@2x.png in Resources */,
 				CA7C6FCC185EF50E00B348BA /* pouah.gif in Resources */,
 				CA7C6FCD185EF50E00B348BA /* icon_text_align_justify.png in Resources */,
@@ -2749,6 +2935,7 @@
 				CA7C6FD5185EF50E00B348BA /* ToolBarPrevious_on@2x.png in Resources */,
 				CA7C6FD6185EF50E00B348BA /* link.png in Resources */,
 				CA7C6FD7185EF50E00B348BA /* ouimaitre.gif in Resources */,
+				4CB132EE1B909D710081B44D /* ReplyAllArrow-20@2x.png in Resources */,
 				CA7C6FD8185EF50E00B348BA /* ToolBarPlay_on@2x.png in Resources */,
 				CA7C6FD9185EF50E00B348BA /* buttonendoff.png in Resources */,
 				CA7C6FDA185EF50E00B348BA /* 121-landscapebig.png in Resources */,
@@ -2765,6 +2952,7 @@
 				CA7C6FE5185EF50E00B348BA /* IASKPSTextFieldSpecifierViewCell.xib in Resources */,
 				CAF5DB741933D408000B5215 /* PersonnalLinkViewController.xib in Resources */,
 				CA7C6FE7185EF50E00B348BA /* buttonendon.png in Resources */,
+				4CB132DC1B909C730081B44D /* QuoteFilled-20.png in Resources */,
 				CA7C6FE8185EF50E00B348BA /* foudtag.gif in Resources */,
 				CA7C6FE9185EF50E00B348BA /* ToolBarFastForward_on@2x.png in Resources */,
 				CA7C6FEA185EF50E00B348BA /* previousIcon@2x.png in Resources */,
@@ -2776,6 +2964,8 @@
 				CA7C6FF0185EF50E00B348BA /* IASKPSSliderSpecifierViewCell.xib in Resources */,
 				CA7C6FF1185EF50E00B348BA /* vomi.gif in Resources */,
 				CA7C6FF2185EF50E00B348BA /* nextIcon@2x.png in Resources */,
+				4CB132D31B9099950081B44D /* MessageFilled-20@2x.png in Resources */,
+				4CB132FC1B90B7010081B44D /* ThorHammer-20.png in Resources */,
 				CAF5DB8C1936CD7B000B5215 /* 09-arrows-out.png in Resources */,
 				CA7C6FF3185EF50E00B348BA /* wink.gif in Resources */,
 				CA7C6FF5185EF50E00B348BA /* arrowback@2x.png in Resources */,
@@ -2791,6 +2981,8 @@
 				CA7C6FFF185EF50E00B348BA /* MessagesTableViewController.xib in Resources */,
 				CA7C7000185EF50E00B348BA /* love.gif in Resources */,
 				CA7C7001185EF50E00B348BA /* MessageDetailViewController.xib in Resources */,
+				4CB132D01B9099900081B44D /* MessageFilled-20.png in Resources */,
+				4CB132A41B9068250081B44D /* InfosViewController.xib in Resources */,
 				CA7C7002185EF50E00B348BA /* 122-stats@2x.png in Resources */,
 				CA7C7003185EF50E00B348BA /* loadinfo.net.gif in Resources */,
 				CA7C7004185EF50E00B348BA /* ToolBarPlay_on.png in Resources */,
@@ -2799,12 +2991,14 @@
 				CA7C7007185EF50E00B348BA /* AddMessageViewController.xib in Resources */,
 				CA7C7008185EF50E00B348BA /* buttonnexton.png in Resources */,
 				CA7C7009185EF50E00B348BA /* downsmall7@2x.png in Resources */,
+				4CB132FF1B90B7060081B44D /* ThorHammer-20@2x.png in Resources */,
 				CAF5DB771933D422000B5215 /* ConfigurationViewController.xib in Resources */,
 				CA7C700A185EF50E00B348BA /* ToolBarFastRewind_on@2x.png in Resources */,
 				CA7C700B185EF50E00B348BA /* style-aide.css in Resources */,
 				CA7C700C185EF50E00B348BA /* bginput.png in Resources */,
 				CA7C700D185EF50E00B348BA /* up.png in Resources */,
 				CA7C700E185EF50E00B348BA /* ToolBarFastForward_off@2x.png in Resources */,
+				4CB132E51B909C890081B44D /* Quote-20.png in Resources */,
 				CA7C700F185EF50E00B348BA /* loadinfo.gif in Resources */,
 				CA7C7010185EF50E00B348BA /* photoDefaultfailmini.png in Resources */,
 				CA7C7011185EF50E00B348BA /* Default-568h@2x.png in Resources */,
@@ -2823,11 +3017,15 @@
 				CA7C701F185EF50E00B348BA /* AccessoryView.xib in Resources */,
 				CA7C7020185EF50E00B348BA /* sum.gif in Resources */,
 				CA7C7021185EF50E00B348BA /* TopicCellView.xib in Resources */,
+				4CB132CA1B9099220081B44D /* ReplyArrowFilled-20.png in Resources */,
 				CA7C7022185EF50E00B348BA /* InAppSettings.bundle in Resources */,
+				4CB1330E1B90B7940081B44D /* Thor Hammer Filled-23@2x.png in Resources */,
+				4CB132951B9058530081B44D /* 146-gavel.png in Resources */,
 				CA7C7023185EF50E00B348BA /* miam.gif in Resources */,
 				CA7C7024185EF50E00B348BA /* down.png in Resources */,
 				CA7C7025185EF50E00B348BA /* ToolBarPlay_off.png in Resources */,
 				CA7C7026185EF50E00B348BA /* evil.gif in Resources */,
+				4CB132971B9058530081B44D /* 146-gavel@2x.png in Resources */,
 				CA7C7027185EF50E00B348BA /* 08-chat@2x.png in Resources */,
 				CA7C7028185EF50E00B348BA /* 44-shoebox.png in Resources */,
 				CAF5DB8A1936CD7B000B5215 /* 10-arrows-in@2x.png in Resources */,
@@ -2899,6 +3097,7 @@
 				CA7C7068185EF50E00B348BA /* toolbar3.png in Resources */,
 				CA7C7069185EF50E00B348BA /* avatar_male_gray_on_light_32x32.png in Resources */,
 				CA7C706A185EF50E00B348BA /* smile.gif in Resources */,
+				4CB132D91B9099C20081B44D /* StarFilled-20.png in Resources */,
 				CA7C706B185EF50E00B348BA /* TopicSearchCellView.xib in Resources */,
 				CA7C706C185EF50E00B348BA /* gun.gif in Resources */,
 				CA7C706D185EF50E00B348BA /* sweat.gif in Resources */,
@@ -2921,6 +3120,7 @@
 				CA7C707F185EF50E00B348BA /* IASKAppSettingsWebView.xib in Resources */,
 				CA7C7080185EF50E00B348BA /* ToolBarFastForward_off.png in Resources */,
 				CA7C7081185EF50E00B348BA /* arrowend@2x.png in Resources */,
+				4CB1329E1B905BF80081B44D /* BlackListTableViewController.xib in Resources */,
 				CAF5DB881936CD7B000B5215 /* 09-arrows-out@2x.png in Resources */,
 				CA7C7083185EF50E00B348BA /* 60-signpost.png in Resources */,
 				CA7C7084185EF50E00B348BA /* 113-navigation@2x.png in Resources */,
@@ -2947,10 +3147,13 @@
 				CA7C7098185EF50E00B348BA /* multipleflag0.gif in Resources */,
 				CA7C7099185EF50E00B348BA /* RehostCell.xib in Resources */,
 				CA7C709A185EF50E00B348BA /* README.md in Resources */,
+				4CB132DF1B909C7C0081B44D /* QuoteFilled-20@2x.png in Resources */,
 				CA7C709B185EF50E00B348BA /* biggrin.gif in Resources */,
+				4CB132BB1B9097110081B44D /* RemoveUserFilled-20.png in Resources */,
 				CA7C709C185EF50E00B348BA /* buttonbeginon.png in Resources */,
 				CA7C709D185EF50E00B348BA /* plus.png in Resources */,
 				CA7C709E185EF50E00B348BA /* downsmall.png in Resources */,
+				4CB132E21B909C820081B44D /* Quote-20@2x.png in Resources */,
 				CAF5DB651932BA58000B5215 /* error.png in Resources */,
 				CA7C709F185EF50E00B348BA /* sarcastic.gif in Resources */,
 				CA7C70A0185EF50E00B348BA /* HFRDebugViewController.xib in Resources */,
@@ -2965,11 +3168,13 @@
 				CA7C70A8185EF50E00B348BA /* unselectedrow.png in Resources */,
 				CA7C70A9185EF50E00B348BA /* all_categories.png in Resources */,
 				CA7C70AA185EF50E00B348BA /* endon.png in Resources */,
+				4CB132B81B90970C0081B44D /* RemoveUserFilled-20@2x.png in Resources */,
 				4CB311F319FAFF2C0097D84D /* jquery.hammer.js in Resources */,
 				CA7C70AB185EF50E00B348BA /* flagred@2x.png in Resources */,
 				CA7C70AC185EF50E00B348BA /* smileybase.html in Resources */,
 				CA7C70AD185EF50E00B348BA /* up@2x.png in Resources */,
 				CA7C70AE185EF50E00B348BA /* ToolBarFastForward_on.png in Resources */,
+				4CB1330B1B90B7590081B44D /* ThorHammerFilled-20.png in Resources */,
 				CA7C70AF185EF50E00B348BA /* down@2x.png in Resources */,
 				CA7C70B0185EF50E00B348BA /* aide.html in Resources */,
 				CA7C70B1185EF50E00B348BA /* multiplefavoris.gif in Resources */,
@@ -2978,8 +3183,10 @@
 				CA7C70B3185EF50E00B348BA /* style-liste-retina.css in Resources */,
 				CA7C70B4185EF50E00B348BA /* buttonendhover@2x.png in Resources */,
 				CA7C70B5185EF50E00B348BA /* loading.gif in Resources */,
+				4CB132C71B9098880081B44D /* ContactCardFilled-20@2x.png in Resources */,
 				CA7C70B6185EF50E00B348BA /* 06-magnify.png in Resources */,
 				CA7C70B7185EF50E00B348BA /* jquery.doubletap.js in Resources */,
+				4CB132EB1B909D6D0081B44D /* ReplyAllArrowFilled-20@2x.png in Resources */,
 				CA7C70B8185EF50E00B348BA /* jquery.base64.js in Resources */,
 				4CB311F019FAFCAE0097D84D /* hammer.min.map in Resources */,
 			);
@@ -3009,6 +3216,7 @@
 				CA00C43E17C2FF3F0067B457 /* ASIAuthenticationDialog.m in Sources */,
 				CA00C3F517C2FE1B0067B457 /* IASKTextField.m in Sources */,
 				CA00C3FC17C2FE1B0067B457 /* MBProgressHUD.m in Sources */,
+				4CB1329B1B905BF80081B44D /* BlackListTableViewController.m in Sources */,
 				01BF8A54121D7945007624B6 /* Forum.m in Sources */,
 				CAF5DB5819328EB4000B5215 /* PullToRefreshErrorViewController.m in Sources */,
 				01BF8B45121DAD33007624B6 /* TopicsTableViewController.m in Sources */,
@@ -3048,6 +3256,7 @@
 				CA9E851D1243A0E1000EE882 /* UIImageViewCustom.m in Sources */,
 				CA9E86891243C11A000EE882 /* TabBarController.m in Sources */,
 				CAB16278124B9F8300D12569 /* TopicCellView.m in Sources */,
+				4CB132A71B908EC00081B44D /* UIMenuItem+CXAImageSupport.m in Sources */,
 				CAA1B092125C0A53009C80E3 /* AKSegmentedControl.m in Sources */,
 				CACADFD719217CCA0071D2DA /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				CA00C44317C2FF3F0067B457 /* ASIHTTPRequest.m in Sources */,
@@ -3077,6 +3286,7 @@
 				CA00C3F117C2FE1B0067B457 /* IASKPSTitleValueSpecifierViewCell.m in Sources */,
 				CA00C3B817C2FDB00067B457 /* MWZoomingScrollView.m in Sources */,
 				CA5E109518AC2A4F00C481A9 /* PollTableViewController.m in Sources */,
+				4CB132F81B90A1930081B44D /* BlackList.m in Sources */,
 				CA00C3EC17C2FE1B0067B457 /* IASKSettingsStoreFile.m in Sources */,
 				CA00C3B717C2FDB00067B457 /* MWTapDetectingView.m in Sources */,
 				CA00C44617C2FF3F0067B457 /* Reachability.m in Sources */,
@@ -3123,6 +3333,7 @@
 				CA7C70C6185EF50E00B348BA /* ASIAuthenticationDialog.m in Sources */,
 				CA7C70C7185EF50E00B348BA /* IASKTextField.m in Sources */,
 				CA7C70C8185EF50E00B348BA /* MBProgressHUD.m in Sources */,
+				4CB1329C1B905BF80081B44D /* BlackListTableViewController.m in Sources */,
 				CA7C70C9185EF50E00B348BA /* Forum.m in Sources */,
 				CAF5DB5919328EB4000B5215 /* PullToRefreshErrorViewController.m in Sources */,
 				CA7C70CA185EF50E00B348BA /* TopicsTableViewController.m in Sources */,
@@ -3162,6 +3373,7 @@
 				CA7C70EB185EF50E00B348BA /* UIImageViewCustom.m in Sources */,
 				CA7C70EC185EF50E00B348BA /* TabBarController.m in Sources */,
 				CA7C70ED185EF50E00B348BA /* TopicCellView.m in Sources */,
+				4CB132A81B908EC00081B44D /* UIMenuItem+CXAImageSupport.m in Sources */,
 				CA7C70EE185EF50E00B348BA /* AKSegmentedControl.m in Sources */,
 				CACADFD819217CCA0071D2DA /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				CA7C70EF185EF50E00B348BA /* ASIHTTPRequest.m in Sources */,
@@ -3191,6 +3403,7 @@
 				CA7C7106185EF50E00B348BA /* IASKPSTitleValueSpecifierViewCell.m in Sources */,
 				CA7C7107185EF50E00B348BA /* MWZoomingScrollView.m in Sources */,
 				CA5E109618AC2A4F00C481A9 /* PollTableViewController.m in Sources */,
+				4CB132F91B90A1930081B44D /* BlackList.m in Sources */,
 				CA7C7108185EF50E00B348BA /* IASKSettingsStoreFile.m in Sources */,
 				CA7C7109185EF50E00B348BA /* MWTapDetectingView.m in Sources */,
 				CA7C710A185EF50E00B348BA /* Reachability.m in Sources */,

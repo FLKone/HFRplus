@@ -29,6 +29,8 @@
 #import <CommonCrypto/CommonDigest.h>
 
 #import "ProfilViewController.h"
+#import "UIMenuItem+CXAImageSupport.h"
+#import "BlackList.h"
 
 @implementation MessagesTableViewController
 @synthesize loaded, isLoading, topicName, topicAnswerUrl, loadingView, messagesWebView, arrayData, updatedArrayData, detailViewController, messagesTableViewController, pollNode;
@@ -1805,27 +1807,43 @@
         answString = @"Rép.";
     }
     
+    //UIImage *menuImgBan = [UIImage imageNamed:@"RemoveUserFilled-20"];
+    UIImage *menuImgBan = [UIImage imageNamed:@"ThorHammer-20"];
+    if ([[BlackList shared] isBL:[[arrayData objectAtIndex:curMsg] name]]) {
+        menuImgBan = [UIImage imageNamed:@"ThorHammerFilled-20"];
+    }
+
+    UIImage *menuImgEdit = [UIImage imageNamed:@"EditColumnFilled-20"];
+    UIImage *menuImgProfil = [UIImage imageNamed:@"ContactCardFilled-20"];
+    UIImage *menuImgQuote = [UIImage imageNamed:@"ReplyArrowFilled-20"];
+    UIImage *menuImgMP = [UIImage imageNamed:@"MessageFilled-20"];
+    UIImage *menuImgFav = [UIImage imageNamed:@"StarFilled-20"];
+
+    //UIImage *menuImgMultiQuoteChecked = [UIImage imageNamed:@"QuoteFilled-20"];
+    //UIImage *menuImgMultiQuoteUnchecked = [UIImage imageNamed:@"Quote-20"];
+
+    UIImage *menuImgMultiQuoteChecked = [UIImage imageNamed:@"ReplyAllArrowFilled-20"];
+    UIImage *menuImgMultiQuoteUnchecked = [UIImage imageNamed:@"ReplyAllArrow-20"];
+    
+    [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Profil", @"actionProfil", menuImgProfil, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
+
+
 	if([[arrayData objectAtIndex:curMsg] urlEdit]){
 		//NSLog(@"urlEdit");
-		[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Editer", @"EditMessage", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+		[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Editer", @"EditMessage", menuImgEdit, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
 		
 		if (self.navigationItem.rightBarButtonItem.enabled) {
-			[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:answString, @"QuoteMessage", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+			[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:answString, @"QuoteMessage", menuImgQuote, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
 		}
 
 	}
 	else {
 		//NSLog(@"profil");
 		if (self.navigationItem.rightBarButtonItem.enabled) {
-			[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:answString, @"QuoteMessage", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+			[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:answString, @"QuoteMessage", menuImgQuote, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
 		}
 
-		
-		if([[arrayData objectAtIndex:curMsg] MPUrl]){
-			//NSLog(@"MPUrl");
-			
-			[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"MP", @"actionMessage", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
-		}
+
 		
 
 	}
@@ -1844,27 +1862,35 @@
 		NSString *quotes = [self LireCookie:nameCookie];
 		
 		if ([quotes rangeOfString:[NSString stringWithFormat:@"|%@", [quoteComponents objectAtIndex:3]]].location == NSNotFound) {
-			[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Citer ☐", @"actionCiter", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];	
+			[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Citer ☐", @"actionCiter", menuImgMultiQuoteUnchecked, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
 			
 		}
 		else {
-			[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Citer ☑", @"actionCiter", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];	
+			[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Citer ☑", @"actionCiter", menuImgMultiQuoteChecked, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
 			
 		}
 		
 	}
 
-    
-	if ([self canBeFavorite]) {
-		//NSLog(@"isRedFlagged ★");
-		[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"★", @"actionFavoris", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
-	}
-	
-	
-    [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Profil", @"actionProfil", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
 
- 			
-	
+    if(![[arrayData objectAtIndex:curMsg] urlEdit]){
+        
+        if([[arrayData objectAtIndex:curMsg] MPUrl]){
+            //NSLog(@"MPUrl");
+            
+            [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"MP", @"actionMessage", menuImgMP, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
+        }
+        
+        [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Blacklist", @"actionBL", menuImgBan, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
+    }
+
+    
+    
+    if ([self canBeFavorite]) {
+        //NSLog(@"isRedFlagged ★");
+        [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Favoris", @"actionFavoris", menuImgFav, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
+    }
+    
 	
 	self.curPostID = curMsg;
 	/*
@@ -1891,11 +1917,20 @@
 	
 	NSMutableArray *menuAction = [[NSMutableArray alloc] init];
 	
+
+    
 	for (id tmpAction in self.arrayAction) {
 		//NSLog(@"%@", [tmpAction objectForKey:@"code"]);
 		
-		UIMenuItem *tmpMenuItem = [[UIMenuItem alloc] initWithTitle:[tmpAction valueForKey:@"title"] action:NSSelectorFromString([tmpAction objectForKey:@"code"])];
-		[menuAction addObject:tmpMenuItem];
+        if ([tmpAction objectForKey:@"image"] != nil) {
+            UIMenuItem *tmpMenuItem2 = [[UIMenuItem alloc] initWithTitle:[tmpAction valueForKey:@"title"] action:NSSelectorFromString([tmpAction objectForKey:@"code"]) image:(UIImage *)[tmpAction objectForKey:@"image"]];
+            [menuAction addObject:tmpMenuItem2];
+        }
+        else {
+            UIMenuItem *tmpMenuItem = [[UIMenuItem alloc] initWithTitle:[tmpAction valueForKey:@"title"] action:NSSelectorFromString([tmpAction objectForKey:@"code"])];
+            [menuAction addObject:tmpMenuItem];
+        }
+
 	}	
 	[menuController setMenuItems:menuAction];
 	[menuAction release];
@@ -2016,6 +2051,31 @@
     
 	
 }
+
+-(void) actionBL:(NSNumber *)curMsgN {
+    
+    int curMsg = [curMsgN intValue];
+    
+    NSString *username = [[arrayData objectAtIndex:curMsg] name];
+    NSString *promptMsg = @"";
+    
+    if ([[BlackList shared] removeWord:username]) {
+        promptMsg = [NSString stringWithFormat:@"%@ a été supprimé de la liste noire", username];
+    }
+    else {
+        [[BlackList shared] add:username];
+        promptMsg = [NSString stringWithFormat:@"BIM! %@ ajouté à la liste noire", username];
+    }
+    
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:promptMsg
+                                                   delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    [alert show];
+    [alert release];
+
+    
+}
+
 -(void)actionMessage:(NSNumber *)curMsgN {
 	if (self.isAnimating) {
 		return;
@@ -2173,6 +2233,12 @@
 	[self actionMessage:[NSNumber numberWithInt:curPostID]];
 	
 }
+-(void)actionBL {
+    [self actionBL:[NSNumber numberWithInt:curPostID]];
+    
+}
+
+
 -(void)actionCiter {
 	[self actionCiter:[NSNumber numberWithInt:curPostID]];
 }

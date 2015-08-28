@@ -22,6 +22,11 @@ typedef enum {
 	kComplete
 } STATUS;
 
+typedef enum {
+    kTerminator,
+    kPoussin
+} BLMOD;
+
 #define kStatusChangedNotification  @"kStatusChangedNotification"
 
 #define kForumURL				@"http://forum.hardware.fr"
@@ -40,6 +45,7 @@ typedef enum {
 
 #define REHOST_IMAGE_FILE @"rehostImages.plist"
 #define USED_SMILEYS_FILE @"usedSmilieys.plist"
+#define BLACKLIST_FILE @"blackList.plist"
 
 
 #define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
