@@ -559,6 +559,10 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userTextSizeDidChange) name:UIContentSizeCategoryDidChangeNotification object:nil];
     }
     
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc]
+                                             initWithTarget:self action:@selector(handleTap:)];
+    [self.searchBg addGestureRecognizer:tapRecognizer];
+    
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
     
     label.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
@@ -911,29 +915,56 @@
  */
 }
 
--(void)searchTopic {
-    while (self.isAnimating) {
-        NSLog(@"isAnimating");
-        //return;
+
+-(void)handleTap:(id)sender{
+    [self toggleSearch:NO];
+}
+
+- (void)toggleSearch:(BOOL) active{
+    
+    if (!active) {
+        CGRect oldframe = self.searchBox.frame;
+        //NSLog(@"oldframe %@", NSStringFromCGRect(oldframe));
+
+        CGRect newframe = oldframe;
+        newframe.origin.y = 0 - oldframe.size.height;
+        
+        [UIView beginAnimations:@"FadeOut" context:nil];
+        [UIView setAnimationDuration:0.2];
+        [self.searchBg setAlpha:0];
+        self.searchBox.frame = newframe;
+        
+        [UIView commitAnimations];
+    } else {
+        
+        CGRect oldframe = self.searchBox.frame;
+        //NSLog(@"oldframe %@", NSStringFromCGRect(oldframe));
+        
+        CGRect newframe = oldframe;
+        newframe.origin.y = 0 - oldframe.size.height;
+        oldframe.origin.y = 0;
+        self.searchBox.frame = newframe;
+        [self.searchBox setHidden:NO];
+        [self.searchBg setAlpha:0];
+        [self.searchBg setHidden:NO];
+        
+        [UIView beginAnimations:@"FadeIn" context:nil];
+        [UIView setAnimationDuration:0.2];
+        [self.searchBg setAlpha:0.7];
+        self.searchBox.frame = oldframe;
+        
+        [UIView commitAnimations];
+
     }
+}
+
+
+-(void)searchTopic {
 
     // Animate the resize of the text view's frame in sync with the keyboard's appearance.
     
-    CGRect oldframe = self.searchBox.frame;
-    CGRect newframe = oldframe;
-    newframe.origin.y -= oldframe.size.height;
-    self.searchBox.frame = newframe;
-    [self.searchBox setHidden:NO];
-    [self.searchBg setAlpha:0];
-    [self.searchBg setHidden:NO];
-    
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.2];
-    [self.searchBg setAlpha:0.7];
-    self.searchBox.frame = oldframe;
-    
-    [UIView commitAnimations];
-    
+
+    [self toggleSearch:YES];
     /* Push Search
     MessagesSearchTableViewController *aView = [[MessagesSearchTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:self.currentUrl];
     self.messagesTableViewController = aView;
