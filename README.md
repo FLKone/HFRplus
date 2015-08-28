@@ -16,7 +16,7 @@ Roadmap
 <td>1.9</td><td>Compatibilité iOS9 + :o</td><td>late-2015</td>
   </tr>
 <tr>
-    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=17&page=1&sort=created&state=open">2.0</a></td><td>Nouvelle version. <a href="https://github.com/FLKone/HFRplus/tree/devel">cf ~devel</a></td><td>TBD</td>
+    <td><a href="https://github.com/FLKone/HFRplus/tree/devel">2.0</a></td><td>Nouvelle version. <a href="https://github.com/FLKone/HFRplus/tree/devel">cf ~devel</a></td><td>TBD</td>
   </tr>   
 </table>
 
