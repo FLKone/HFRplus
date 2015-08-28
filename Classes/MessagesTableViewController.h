@@ -83,6 +83,10 @@
     
     //Poll
     NSString *pollNode;
+    
+    //Search
+    UIView *searchBg;
+    UIView *searchBox;
 }
 
 
@@ -132,6 +136,8 @@
 
 @property (nonatomic, retain) NSString *pollNode;
 
+@property (nonatomic, retain) IBOutlet UIView *searchBg;
+@property (nonatomic, retain) IBOutlet UIView *searchBox;
 
 @property (retain, nonatomic) NSMutableArray *arrayActionsMessages;
 

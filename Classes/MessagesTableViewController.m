@@ -8,6 +8,7 @@
 #import <unistd.h>
 
 #import "MessagesTableViewController.h"
+#import "MessagesSearchTableViewController.h"
 #import "MessageDetailViewController.h"
 #import "TopicsTableViewController.h"
 #import "PollTableViewController.h"
@@ -34,7 +35,7 @@
 
 @implementation MessagesTableViewController
 @synthesize loaded, isLoading, topicName, topicAnswerUrl, loadingView, messagesWebView, arrayData, updatedArrayData, detailViewController, messagesTableViewController, pollNode;
-@synthesize swipeLeftRecognizer, swipeRightRecognizer, overview, arrayActionsMessages, lastStringFlagTopic;
+@synthesize swipeLeftRecognizer, swipeRightRecognizer, overview, arrayActionsMessages, lastStringFlagTopic, searchBg, searchBox;
 
 @synthesize queue; //v3
 @synthesize stringFlagTopic;
@@ -728,6 +729,8 @@
         return;
     }
     
+    [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Rechercher", @"searchTopic", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+    
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && ![self.parentViewController isMemberOfClass:[UINavigationController class]]) {
         
         [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Navigateur✚", @"fullScreen", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
@@ -906,6 +909,53 @@
 	[[mainDelegate rootController] setSelectedIndex:3];		
 	[[(BrowserViewController *)[[mainDelegate rootController] selectedViewController] webView] loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://forum.hardware.fr/%@", topicAnswerUrl]]]];		
  */
+}
+
+-(void)searchTopic {
+    while (self.isAnimating) {
+        NSLog(@"isAnimating");
+        //return;
+    }
+
+    // Animate the resize of the text view's frame in sync with the keyboard's appearance.
+    
+    CGRect oldframe = self.searchBox.frame;
+    CGRect newframe = oldframe;
+    newframe.origin.y -= oldframe.size.height;
+    self.searchBox.frame = newframe;
+    [self.searchBox setHidden:NO];
+    [self.searchBg setAlpha:0];
+    [self.searchBg setHidden:NO];
+    
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.2];
+    [self.searchBg setAlpha:0.7];
+    self.searchBox.frame = oldframe;
+    
+    [UIView commitAnimations];
+    
+    /* Push Search
+    MessagesSearchTableViewController *aView = [[MessagesSearchTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:self.currentUrl];
+    self.messagesTableViewController = aView;
+    [aView release];
+    
+    //setup the URL
+    self.messagesTableViewController.topicName = [NSString stringWithFormat:@"Recherche dans %@", self.topicName];
+    self.messagesTableViewController.isViewed = YES;
+    
+    self.navigationItem.backBarButtonItem =
+    [[UIBarButtonItem alloc] initWithTitle:@"Retour"
+                                     style: UIBarButtonItemStyleBordered
+                                    target:nil
+                                    action:nil];
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+        self.navigationItem.backBarButtonItem.title = @" ";
+    }
+    
+    //NSLog(@"push message liste");
+    [self.navigationController pushViewController:messagesTableViewController animated:YES];
+     */
 }
 
 -(void)quoteMessage:(NSString *)quoteUrl
@@ -1675,7 +1725,7 @@
                 //}
                 
                 //setup the URL
-                self.messagesTableViewController.topicName = @"";	
+                self.messagesTableViewController.topicName = @"Chargement...";
                 self.messagesTableViewController.isViewed = YES;	
                 
                 self.navigationItem.backBarButtonItem =
@@ -1710,7 +1760,7 @@
             [aView release];
             
             //setup the URL
-            self.messagesTableViewController.topicName = @"";
+            self.messagesTableViewController.topicName = @"Chargement...";
             self.messagesTableViewController.isViewed = YES;
             
             self.navigationItem.backBarButtonItem =

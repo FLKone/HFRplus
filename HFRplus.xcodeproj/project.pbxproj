@@ -113,6 +113,8 @@
 		4CB1330E1B90B7940081B44D /* Thor Hammer Filled-23@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB1330C1B90B7940081B44D /* Thor Hammer Filled-23@2x.png */; settings = {ASSET_TAGS = (); }; };
 		4CB133101B90B7990081B44D /* Thor Hammer Filled-23.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB1330F1B90B7990081B44D /* Thor Hammer Filled-23.png */; settings = {ASSET_TAGS = (); }; };
 		4CB133111B90B7990081B44D /* Thor Hammer Filled-23.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB1330F1B90B7990081B44D /* Thor Hammer Filled-23.png */; settings = {ASSET_TAGS = (); }; };
+		4CB133141B90E9530081B44D /* MessagesSearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB133131B90E9530081B44D /* MessagesSearchTableViewController.m */; settings = {ASSET_TAGS = (); }; };
+		4CB133151B90E9530081B44D /* MessagesSearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB133131B90E9530081B44D /* MessagesSearchTableViewController.m */; settings = {ASSET_TAGS = (); }; };
 		4CB311EC19FAF8750097D84D /* hammer.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311EB19FAF8750097D84D /* hammer.min.js */; };
 		4CB311ED19FAF8750097D84D /* hammer.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311EB19FAF8750097D84D /* hammer.min.js */; };
 		4CB311F019FAFCAE0097D84D /* hammer.min.map in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311EE19FAFCAE0097D84D /* hammer.min.map */; };
@@ -994,6 +996,8 @@
 		4CB133091B90B7590081B44D /* ThorHammerFilled-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ThorHammerFilled-20.png"; sourceTree = "<group>"; };
 		4CB1330C1B90B7940081B44D /* Thor Hammer Filled-23@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Thor Hammer Filled-23@2x.png"; sourceTree = "<group>"; };
 		4CB1330F1B90B7990081B44D /* Thor Hammer Filled-23.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Thor Hammer Filled-23.png"; sourceTree = "<group>"; };
+		4CB133121B90E9530081B44D /* MessagesSearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagesSearchTableViewController.h; sourceTree = "<group>"; };
+		4CB133131B90E9530081B44D /* MessagesSearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagesSearchTableViewController.m; sourceTree = "<group>"; };
 		4CB311EB19FAF8750097D84D /* hammer.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = hammer.min.js; sourceTree = "<group>"; };
 		4CB311EE19FAFCAE0097D84D /* hammer.min.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = hammer.min.map; sourceTree = "<group>"; };
 		4CB311F119FAFF2C0097D84D /* jquery.hammer.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.hammer.js; sourceTree = "<group>"; };
@@ -1530,6 +1534,8 @@
 				013F0E97121E117800BEBEB1 /* MessagesTableViewController.h */,
 				013F0E98121E117800BEBEB1 /* MessagesTableViewController.m */,
 				013F0E99121E117800BEBEB1 /* MessagesTableViewController.xib */,
+				4CB133121B90E9530081B44D /* MessagesSearchTableViewController.h */,
+				4CB133131B90E9530081B44D /* MessagesSearchTableViewController.m */,
 				013F0E9D121E117900BEBEB1 /* ParseMessagesOperation.h */,
 				013F0E9E121E117900BEBEB1 /* ParseMessagesOperation.m */,
 				013F0E9A121E117800BEBEB1 /* MessageDetailViewController.h */,
@@ -3287,6 +3293,7 @@
 				CA00C3B817C2FDB00067B457 /* MWZoomingScrollView.m in Sources */,
 				CA5E109518AC2A4F00C481A9 /* PollTableViewController.m in Sources */,
 				4CB132F81B90A1930081B44D /* BlackList.m in Sources */,
+				4CB133141B90E9530081B44D /* MessagesSearchTableViewController.m in Sources */,
 				CA00C3EC17C2FE1B0067B457 /* IASKSettingsStoreFile.m in Sources */,
 				CA00C3B717C2FDB00067B457 /* MWTapDetectingView.m in Sources */,
 				CA00C44617C2FF3F0067B457 /* Reachability.m in Sources */,
@@ -3404,6 +3411,7 @@
 				CA7C7107185EF50E00B348BA /* MWZoomingScrollView.m in Sources */,
 				CA5E109618AC2A4F00C481A9 /* PollTableViewController.m in Sources */,
 				4CB132F91B90A1930081B44D /* BlackList.m in Sources */,
+				4CB133151B90E9530081B44D /* MessagesSearchTableViewController.m in Sources */,
 				CA7C7108185EF50E00B348BA /* IASKSettingsStoreFile.m in Sources */,
 				CA7C7109185EF50E00B348BA /* MWTapDetectingView.m in Sources */,
 				CA7C710A185EF50E00B348BA /* Reachability.m in Sources */,
