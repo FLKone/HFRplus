@@ -4,8 +4,6 @@ HFR+ v1 - Compatible iOS 5 - 8
 =========================
 Application iOS (iPhone, iPod Touch et iPad) pour le forum hardware.fr
 
-<a href="https://itunes.apple.com/app/hfr/id384464712?mt=8" target="_blank"><img src="http://apps.flkone.com/hfrplus/appstore.svg" alt="AppStore" title="AppStore"></a>
-
 
 Roadmap
 -------------------------
@@ -15,10 +13,10 @@ Roadmap
     <th>Version</th><th>Type</th><th>Sortie</th>
   </tr>
 <tr>
-    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=16&page=1&sort=created&state=open">1.7.2</a></td><td>Fonctionnalités</td><td>early-2014</td>
+<td>1.9</td><td>Compatibilité iOS9 + :o</td><td>late-2015</td>
   </tr>
 <tr>
-    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=17&page=1&sort=created&state=open">x.0</a></td><td>Fonctionnalités avancées</td><td>TBD</td>
+    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=17&page=1&sort=created&state=open">2.0</a></td><td>Nouvelle version. <a href="https://github.com/FLKone/HFRplus/tree/devel">cf ~devel</a></td><td>TBD</td>
   </tr>   
 </table>
 
@@ -56,11 +54,3 @@ Crédits
 * [MWPhotoBrowser](https://github.com/mwaterfall/MWPhotoBrowser)
 * [SDWebImage](https://github.com/rs/SDWebImage)
 * [RegexKitLite](http://regexkit.sourceforge.net/RegexKitLite/)
-
-
-
-Soutenir le développement
--------------------------
-
-<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4EBPMFBQ8M6HN" target="_blank"><img src="https://www.paypalobjects.com/fr_FR/FR/i/btn/btn_donate_LG.gif" alt="PayPal - la solution de paiement en ligne la plus simple et la plus sécurisée !"></a>
-<span style="color:#bebebe; font-size:11px;">(commission Paypal: 3,4% + 0,25€)</span>
