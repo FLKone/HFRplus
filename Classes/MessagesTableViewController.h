@@ -87,6 +87,15 @@
     //Search
     UIView *searchBg;
     UIView *searchBox;
+    UITextField *searchKeyword;
+    UITextField *searchPseudo;
+    UISwitch *searchFilter;
+    UISlider *searchSliderPage;
+    UILabel *searchSliderPageDesc;
+    int searchPage;
+    NSTimer *searchPageTimer;
+    UIButton *searchPageFirst;
+    UIButton *searchPageLast;
 }
 
 
@@ -139,8 +148,17 @@
 @property (nonatomic, retain) IBOutlet UIView *searchBg;
 @property (nonatomic, retain) IBOutlet UIView *searchBox;
 
-@property (retain, nonatomic) NSMutableArray *arrayActionsMessages;
+@property (nonatomic, retain) IBOutlet UIView *searchKeyword;
+@property (nonatomic, retain) IBOutlet UIView *searchPseudo;
+@property (nonatomic, retain) IBOutlet UIView *searchFilter;
+@property (nonatomic, retain) IBOutlet UIView *searchSliderPage;
+@property (nonatomic, retain) IBOutlet UILabel *searchSliderPageDesc;
+@property int searchPage;
+@property (nonatomic, retain) NSTimer *searchPageTimer;
+@property (nonatomic, retain) IBOutlet UIButton *searchPageFirst;
+@property (nonatomic, retain) IBOutlet UIButton *searchPageLast;
 
+@property (retain, nonatomic) NSMutableArray *arrayActionsMessages;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andUrl:(NSString *)theTopicUrl;
 - (void)optionsTopic:(id)sender;
@@ -168,6 +186,12 @@
 -(BOOL) canBeFavorite;
 -(void) EcrireCookie:(NSString *)nom withVal:(NSString *)valeur;
 -(NSString *) LireCookie:(NSString *)nom;
--(void)  EffaceCookie:(NSString *)nom;
+-(void) EffaceCookie:(NSString *)nom;
+
+- (IBAction)searchSliderChanged:(UISlider *)sender;
+- (IBAction)searchSliderExit:(UISlider *)sender;
+- (IBAction)searchSliderEntered:(UISlider *)sender;
+- (IBAction)searchPageGoToFirst:(UIButton *)sender;
+- (IBAction)searchPageGoToLast:(UIButton *)sender;
 
 @end

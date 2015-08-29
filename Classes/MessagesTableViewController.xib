@@ -11,6 +11,11 @@
                 <outlet property="messagesWebView" destination="17" id="19"/>
                 <outlet property="searchBg" destination="sPu-av-2DW" id="D84-nS-0TV"/>
                 <outlet property="searchBox" destination="aIX-Ky-oja" id="oBR-YV-TOO"/>
+                <outlet property="searchFilter" destination="ZQc-t8-rah" id="nqQ-GU-MwK"/>
+                <outlet property="searchKeyword" destination="l6t-e9-NT4" id="eeb-nC-fyg"/>
+                <outlet property="searchPseudo" destination="1EF-Sd-UCj" id="jlY-3e-A6u"/>
+                <outlet property="searchSliderPage" destination="byj-tC-mPT" id="7zU-Z6-7sL"/>
+                <outlet property="searchSliderPageDesc" destination="sam-0d-H8r" id="mcC-l9-378"/>
                 <outlet property="view" destination="8" id="10"/>
             </connections>
         </placeholder>
@@ -59,7 +64,7 @@
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5982934397163121" colorSpace="calibratedRGB"/>
                 </view>
                 <view hidden="YES" contentMode="scaleToFill" id="aIX-Ky-oja">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="155"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Pseudo" minimumFontSize="17" id="1EF-Sd-UCj">
@@ -76,13 +81,42 @@
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="vlM-0m-emh">
+                            <rect key="frame" x="20" y="61" width="30" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="1"/>
+                            <inset key="insetFor6xAndEarlier" minX="0.0" minY="3" maxX="0.0" maxY="-3"/>
+                            <state key="normal" image="ToolBarFastRewind_on.png"/>
+                            <connections>
+                                <action selector="searchPageGoToFirst:" destination="-1" eventType="touchUpInside" id="obk-U4-uVq"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="8Ga-rH-F3i">
+                            <rect key="frame" x="325" y="61" width="30" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="1"/>
+                            <inset key="insetFor6xAndEarlier" minX="0.0" minY="3" maxX="0.0" maxY="-3"/>
+                            <state key="normal" image="ToolBarFastForward_on.png"/>
+                            <connections>
+                                <action selector="searchPageGoToLast:" destination="-1" eventType="touchUpInside" id="ul9-Ym-TZF"/>
+                            </connections>
+                        </button>
                         <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="byj-tC-mPT">
-                            <rect key="frame" x="8" y="48" width="359" height="25"/>
+                            <rect key="frame" x="69" y="76" width="237" height="25"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <animations/>
+                            <color key="minimumTrackTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="maximumTrackTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="searchSliderEntered:" destination="-1" eventType="touchDown" id="hX3-bM-ITK"/>
+                                <action selector="searchSliderExit:" destination="-1" eventType="touchUpInside" id="r4N-4d-Tqp"/>
+                                <action selector="searchSliderExit:" destination="-1" eventType="touchUpOutside" id="w6u-G8-qRX"/>
+                            </connections>
                         </slider>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="à partir de la page 150 (sur 250)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sam-0d-H8r">
-                            <rect key="frame" x="10" y="70" width="355" height="30"/>
+                            <rect key="frame" x="10" y="44" width="355" height="30"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -90,13 +124,13 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="EId-Gd-9mM">
-                            <rect key="frame" x="0.0" y="106" width="375" height="44"/>
+                            <rect key="frame" x="0.0" y="111" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                             <animations/>
                             <items>
                                 <barButtonItem title="Filtrer" style="plain" id="WA1-sx-fqp"/>
                                 <barButtonItem style="plain" id="7Kt-Mf-2mZ">
-                                    <switch key="customView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="ZQc-t8-rah">
+                                    <switch key="customView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="ZQc-t8-rah">
                                         <rect key="frame" x="77" y="9" width="79" height="27"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <animations/>
@@ -109,6 +143,7 @@
                     </subviews>
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <inset key="insetFor6xAndEarlier" minX="0.0" minY="0.0" maxX="0.0" maxY="-5"/>
                 </view>
             </subviews>
             <animations/>
@@ -117,7 +152,11 @@
             <nil key="simulatedTopBarMetrics"/>
             <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-            <point key="canvasLocation" x="448.5" y="485.5"/>
+            <point key="canvasLocation" x="431.5" y="485.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="ToolBarFastForward_on.png" width="21" height="19"/>
+        <image name="ToolBarFastRewind_on.png" width="21" height="19"/>
+    </resources>
 </document>

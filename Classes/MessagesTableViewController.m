@@ -35,7 +35,7 @@
 
 @implementation MessagesTableViewController
 @synthesize loaded, isLoading, topicName, topicAnswerUrl, loadingView, messagesWebView, arrayData, updatedArrayData, detailViewController, messagesTableViewController, pollNode;
-@synthesize swipeLeftRecognizer, swipeRightRecognizer, overview, arrayActionsMessages, lastStringFlagTopic, searchBg, searchBox;
+@synthesize swipeLeftRecognizer, swipeRightRecognizer, overview, arrayActionsMessages, lastStringFlagTopic, searchBg, searchBox, searchKeyword, searchPseudo, searchFilter, searchSliderPage, searchPage, searchSliderPageDesc, searchPageTimer, searchPageFirst, searchPageLast;
 
 @synthesize queue; //v3
 @synthesize stringFlagTopic;
@@ -279,6 +279,7 @@
 			
 
 			[self setLastPageNumber:[[[temporaryNumPagesArray lastObject] contents] intValue]];
+
 			
 			if ([self pageNumber] == [self lastPageNumber]) {
 				NSString *newLastPageUrl = [[NSString alloc] initWithString:[self currentUrl]];
@@ -366,9 +367,16 @@
 		else {
 			self.aToolbar = nil;
 			//NSLog(@"pas de pages");
-			
+            [self setFirstPageNumber:1];
+            [self setLastPageNumber:1];
 		}
 		
+        
+        
+        //searchbox
+        self.searchPage = (self.pageNumber-1 > 0) ? (self.pageNumber-1) : 1;
+        [self updateSearchPageDesc];
+        //searchbox
 		
 		
 		//--
@@ -639,6 +647,8 @@
 	[recognizer release];
 	//-- Gesture
 
+    //Search Page From
+    self.searchPage = 1;
 	//Bouton Repondre message
 
 	UIBarButtonItem *optionsBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(optionsTopic:)];
@@ -875,6 +885,7 @@
     [self goToPagePosition:@"bottom"];    
 }
 
+
 -(void)answerTopic
 {
 	
@@ -915,48 +926,6 @@
  */
 }
 
-
--(void)handleTap:(id)sender{
-    [self toggleSearch:NO];
-}
-
-- (void)toggleSearch:(BOOL) active{
-    
-    if (!active) {
-        CGRect oldframe = self.searchBox.frame;
-        //NSLog(@"oldframe %@", NSStringFromCGRect(oldframe));
-
-        CGRect newframe = oldframe;
-        newframe.origin.y = 0 - oldframe.size.height;
-        
-        [UIView beginAnimations:@"FadeOut" context:nil];
-        [UIView setAnimationDuration:0.2];
-        [self.searchBg setAlpha:0];
-        self.searchBox.frame = newframe;
-        
-        [UIView commitAnimations];
-    } else {
-        
-        CGRect oldframe = self.searchBox.frame;
-        //NSLog(@"oldframe %@", NSStringFromCGRect(oldframe));
-        
-        CGRect newframe = oldframe;
-        newframe.origin.y = 0 - oldframe.size.height;
-        oldframe.origin.y = 0;
-        self.searchBox.frame = newframe;
-        [self.searchBox setHidden:NO];
-        [self.searchBg setAlpha:0];
-        [self.searchBg setHidden:NO];
-        
-        [UIView beginAnimations:@"FadeIn" context:nil];
-        [UIView setAnimationDuration:0.2];
-        [self.searchBg setAlpha:0.7];
-        self.searchBox.frame = oldframe;
-        
-        [UIView commitAnimations];
-
-    }
-}
 
 
 -(void)searchTopic {
@@ -2434,6 +2403,133 @@
     
     [super dealloc];
 	
+}
+
+#pragma mark -
+#pragma mark Search Lifecycle
+
+-(void)handleTap:(id)sender{
+    [self toggleSearch:NO];
+}
+
+- (void)toggleSearch:(BOOL) active{
+    
+    if (!active) {
+        CGRect oldframe = self.searchBox.frame;
+        //NSLog(@"oldframe %@", NSStringFromCGRect(oldframe));
+        
+        CGRect newframe = oldframe;
+        newframe.origin.y = 0 - oldframe.size.height;
+        
+        [UIView beginAnimations:@"FadeOut" context:nil];
+        [UIView setAnimationDuration:0.2];
+        [self.searchBg setAlpha:0];
+        self.searchBox.frame = newframe;
+        
+        [UIView commitAnimations];
+    } else {
+        
+        CGRect oldframe = self.searchBox.frame;
+        //NSLog(@"oldframe %@", NSStringFromCGRect(oldframe));
+        
+        CGRect newframe = oldframe;
+        newframe.origin.y = 0 - oldframe.size.height;
+        oldframe.origin.y = 0;
+        self.searchBox.frame = newframe;
+        [self.searchBox setHidden:NO];
+        [self.searchBg setAlpha:0];
+        [self.searchBg setHidden:NO];
+        
+        [UIView beginAnimations:@"FadeIn" context:nil];
+        [UIView setAnimationDuration:0.2];
+        [self.searchBg setAlpha:0.7];
+        self.searchBox.frame = oldframe;
+        
+        [UIView commitAnimations];
+        
+    }
+}
+
+-(void)updateSearchPageDesc {
+    [self.searchSliderPageDesc setText:[NSString stringWithFormat:@"à partir de la page %d (sur %d)", self.searchPage, self.lastPageNumber]];
+}
+
+- (IBAction)searchSliderChanged:(NSTimer *)timer {
+    
+    UISlider *slider = (UISlider *)[timer userInfo];
+    
+    NSLog(@"slider value = %f | %f", slider.value, timer.timeInterval);
+
+    
+    if (slider.value > 0.95 && RoundTo(self.searchPage, 100.0) + 100 <= self.lastPageNumber) {
+        self.searchPage = RoundTo(self.searchPage, 100.0) + 100;
+    }
+    else if (slider.value > 0.85 && RoundTo(self.searchPage, 10.0) + 10 <= self.lastPageNumber) {
+        self.searchPage = RoundTo(self.searchPage, 10.0) + 10;
+    }
+    else if (slider.value > 0.65 && RoundTo(self.searchPage, 5.0) + 5 <= self.lastPageNumber) {
+            self.searchPage = RoundTo(self.searchPage, 5.0) + 5;
+    }
+    else if (slider.value > 0.5) {
+        if (self.searchPage + 1 <= self.lastPageNumber) {
+            self.searchPage += 1;
+        }
+    }
+    
+    if (slider.value < 0.05 && RoundTo(self.searchPage, 100.0) > 100) {
+        self.searchPage = RoundTo(self.searchPage, 100.0) - 100;
+    }
+    else if (slider.value < 0.15 && RoundTo(self.searchPage, 10.0) > 10) {
+        self.searchPage = RoundTo(self.searchPage, 10.0) - 10;
+    }
+    else if (slider.value < 0.35 && RoundTo(self.searchPage, 5.0) > 5) {
+        self.searchPage = RoundTo(self.searchPage, 5.0) - 5;
+    }
+    else if (slider.value < 0.5) {
+        if (self.searchPage > 1) {
+            self.searchPage -= 1;
+        }
+    }
+
+    [self updateSearchPageDesc];
+    
+}
+
+- (IBAction)searchSliderExit:(UISlider *)sender {
+    NSLog(@"EXIT: slider value = %f", sender.value);
+    sender.value = 0.5;
+    [self.searchPageTimer invalidate];
+    self.searchPageTimer = nil;
+}
+
+- (IBAction)searchSliderEntered:(UISlider *)sender {
+    self.searchPageTimer =
+    [NSTimer
+     scheduledTimerWithTimeInterval:0.15
+     target:self
+     selector:@selector(searchSliderChanged:)
+     userInfo:sender
+     repeats:YES];
+}
+
+- (IBAction)searchPageGoToFirst:(UIButton *)sender {
+    self.searchPage = 1;
+    [self updateSearchPageDesc];
+}
+
+- (IBAction)searchPageGoToLast:(UIButton *)sender {
+    self.searchPage = self.lastPageNumber;
+    [self updateSearchPageDesc];
+}
+
+float RoundTo(float number, float to)
+{
+    if (number >= 0) {
+        return to * floorf(number / to + 0.5f);
+    }
+    else {
+        return to * ceilf(number / to - 0.5f);
+    }
 }
 
 @end

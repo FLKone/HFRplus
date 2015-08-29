@@ -34,7 +34,7 @@ static BlackList *_shared = nil;    // static instance variable
     NSString *tmp = [NSString stringWithFormat:@"List: "];
     
     for (NSDictionary *dc in self.list) {
-        tmp = [tmp stringByAppendingFormat:@"\n%@ - %@ - %ld", [dc objectForKey:@"word"], [dc objectForKey:@"alias"], [[dc valueForKey:@"mode"] integerValue]];
+        tmp = [tmp stringByAppendingFormat:@"\n%@ - %@ - %d", [dc objectForKey:@"word"], [dc objectForKey:@"alias"], [[dc valueForKey:@"mode"] integerValue]];
     }
     
     return tmp;
