@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8187.4" systemVersion="15A263e" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
-        <deployment defaultVersion="1280" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8151.3"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddMessageViewController">
@@ -31,10 +31,12 @@
                         <activityIndicatorView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" animating="YES" style="gray" id="66">
                             <rect key="frame" x="20" y="0.0" width="20" height="20"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <animations/>
                         </activityIndicatorView>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Chargement..." lineBreakMode="clip" minimumFontSize="10" adjustsFontSizeToFit="NO" id="67">
                             <rect key="frame" x="50" y="0.0" width="95" height="20"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <animations/>
                             <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="12"/>
                             <color key="textColor" red="0.2704081633" green="0.2704081633" blue="0.2704081633" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -42,6 +44,7 @@
                             <size key="shadowOffset" width="0.0" height="1"/>
                         </label>
                     </subviews>
+                    <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <view hidden="YES" contentMode="scaleToFill" id="49">
@@ -51,9 +54,10 @@
                         <textView multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" id="62">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="440"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="15"/>
-                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardAppearance="alert"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             <connections>
                                 <outlet property="delegate" destination="-1" id="63"/>
                             </connections>
@@ -61,6 +65,7 @@
                         <webView hidden="YES" alpha="0.0" contentMode="scaleToFill" id="44">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <animations/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <outlet property="delegate" destination="-1" id="45"/>
@@ -69,6 +74,7 @@
                         <tableView clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" id="e0C-PW-RY7">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <color key="sectionIndexTrackingBackgroundColor" red="1" green="0.79365305659999996" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
@@ -79,6 +85,7 @@
                         <tableView clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="35" sectionHeaderHeight="22" sectionFooterHeight="22" id="75">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <outlet property="dataSource" destination="-1" id="76"/>
@@ -88,6 +95,7 @@
                         <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" momentary="YES" id="59">
                             <rect key="frame" x="165" y="446" width="150" height="29"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                            <animations/>
                             <segments>
                                 <segment title="Smilies"/>
                                 <segment title="Photos"/>
@@ -99,6 +107,7 @@
                         <segmentedControl opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" momentary="YES" id="72">
                             <rect key="frame" x="165" y="446" width="150" height="29"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                            <animations/>
                             <segments>
                                 <segment title="⬅︎" enabled="NO"/>
                                 <segment title="Annuler"/>
@@ -111,8 +120,9 @@
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Chercher un smiley" adjustsFontSizeToFit="NO" minimumFontSize="17" clearButtonMode="always" id="69">
                             <rect key="frame" x="5" y="445" width="155" height="31"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <animations/>
                             <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="13"/>
-                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardAppearance="alert" returnKeyType="search"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="search"/>
                             <connections>
                                 <action selector="textFieldSmileChange:" destination="-1" eventType="valueChanged" id="79"/>
                                 <action selector="textFieldSmileChange:" destination="-1" eventType="editingChanged" id="80"/>
@@ -120,12 +130,14 @@
                             </connections>
                         </textField>
                     </subviews>
+                    <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                 </view>
             </subviews>
+            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
 </document>
