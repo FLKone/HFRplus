@@ -87,15 +87,13 @@
     //Search
     UIView *searchBg;
     UIView *searchBox;
+    
     UITextField *searchKeyword;
     UITextField *searchPseudo;
     UISwitch *searchFilter;
-    UISlider *searchSliderPage;
-    UILabel *searchSliderPageDesc;
-    int searchPage;
-    NSTimer *searchPageTimer;
-    UIButton *searchPageFirst;
-    UIButton *searchPageLast;
+    UISwitch *searchFromFP;
+    NSMutableDictionary *searchInputData;
+    BOOL isSearchInstra;
 }
 
 
@@ -148,15 +146,12 @@
 @property (nonatomic, retain) IBOutlet UIView *searchBg;
 @property (nonatomic, retain) IBOutlet UIView *searchBox;
 
-@property (nonatomic, retain) IBOutlet UIView *searchKeyword;
-@property (nonatomic, retain) IBOutlet UIView *searchPseudo;
-@property (nonatomic, retain) IBOutlet UIView *searchFilter;
-@property (nonatomic, retain) IBOutlet UIView *searchSliderPage;
-@property (nonatomic, retain) IBOutlet UILabel *searchSliderPageDesc;
-@property int searchPage;
-@property (nonatomic, retain) NSTimer *searchPageTimer;
-@property (nonatomic, retain) IBOutlet UIButton *searchPageFirst;
-@property (nonatomic, retain) IBOutlet UIButton *searchPageLast;
+@property (nonatomic, retain) IBOutlet UITextField *searchKeyword;
+@property (nonatomic, retain) IBOutlet UITextField *searchPseudo;
+@property (nonatomic, retain) IBOutlet UISwitch *searchFilter;
+@property (retain, nonatomic) IBOutlet UISwitch *searchFromFP;
+@property (nonatomic, retain) NSMutableDictionary *searchInputData;
+@property BOOL isSearchInstra;
 
 @property (retain, nonatomic) NSMutableArray *arrayActionsMessages;
 
@@ -188,10 +183,12 @@
 -(NSString *) LireCookie:(NSString *)nom;
 -(void) EffaceCookie:(NSString *)nom;
 
-- (IBAction)searchSliderChanged:(UISlider *)sender;
-- (IBAction)searchSliderExit:(UISlider *)sender;
-- (IBAction)searchSliderEntered:(UISlider *)sender;
-- (IBAction)searchPageGoToFirst:(UIButton *)sender;
-- (IBAction)searchPageGoToLast:(UIButton *)sender;
+- (IBAction)searchFilterChanged:(UISwitch *)sender;
+- (IBAction)searchFromFPChanged:(UISwitch *)sender;
+- (IBAction)searchPseudoChanged:(UITextField *)sender;
+- (IBAction)searchKeywordChanged:(UITextField *)sender;
+- (void)toggleSearch:(BOOL) active;
+- (IBAction)searchNext:(UITextField *)sender;
+
 
 @end

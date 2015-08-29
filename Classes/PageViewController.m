@@ -249,14 +249,27 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-	//NSLog(@"clickedButtonAtIndex PT %@ index : %d", alertView, buttonIndex);
+	NSLog(@"clickedButtonAtIndex PT %@ index : %ld", alertView, (long)buttonIndex);
     
 	if (buttonIndex == 1 && alertView.tag == 667) {
 		[self fetchContent];
 	}
 	else if (buttonIndex == 1 && alertView.tag == 668) {
 		[self gotoPageNumber:[[[alertView textFieldAtIndex:0] text] intValue]];
-	}
+    }
+    else if (buttonIndex == 0 && alertView.tag == 770) {
+        NSLog(@"BIM");
+        [self.navigationController popViewControllerAnimated:YES];
+        //[self gotoPageNumber:[[[alertView textFieldAtIndex:0] text] intValue]];
+    }
+    else if (buttonIndex == 1 && alertView.tag == 770) {
+        NSLog(@"BAM");
+        if ([self isKindOfClass:[MessagesTableViewController class]]) {
+            [self.navigationController popViewControllerAnimated:YES];
+            [self.navigationController.topViewController toggleSearch:YES];
+        }
+        //[self gotoPageNumber:[[[alertView textFieldAtIndex:0] text] intValue]];
+    }
 }
 
 @end

@@ -35,7 +35,8 @@
 
 @implementation MessagesTableViewController
 @synthesize loaded, isLoading, topicName, topicAnswerUrl, loadingView, messagesWebView, arrayData, updatedArrayData, detailViewController, messagesTableViewController, pollNode;
-@synthesize swipeLeftRecognizer, swipeRightRecognizer, overview, arrayActionsMessages, lastStringFlagTopic, searchBg, searchBox, searchKeyword, searchPseudo, searchFilter, searchSliderPage, searchPage, searchSliderPageDesc, searchPageTimer, searchPageFirst, searchPageLast;
+@synthesize swipeLeftRecognizer, swipeRightRecognizer, overview, arrayActionsMessages, lastStringFlagTopic;
+@synthesize searchBg, searchBox, searchKeyword, searchPseudo, searchFilter, searchFromFP, searchInputData, isSearchInstra;
 
 @synthesize queue; //v3
 @synthesize stringFlagTopic;
@@ -123,7 +124,7 @@
 - (void)fetchContentStarted:(ASIHTTPRequest *)theRequest
 {
 	//--
-	//NSLog(@"fetchContentStarted");
+	NSLog(@"fetchContentStarted");
     
     if (![self.currentUrl isEqualToString:[theRequest.url.absoluteString stringByReplacingOccurrencesOfString:kForumURL withString:@""]]) {
         //NSLog(@"not equal ==");
@@ -167,14 +168,15 @@
 	
 	[self.loadingView setHidden:YES];
 	
-	//NSLog(@"theRequest.error %@", theRequest.error);
+    NSLog(@"theRequest.error %@", theRequest.error);
+    NSLog(@"theRequest.url %@", theRequest.url);
 	
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[theRequest.error localizedDescription]
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
     
     [alert setTag:667];
-	[alert show];
-	[alert release];	
+	//[alert show];
+	//[alert release];
 }
 
 #pragma mark -
@@ -183,7 +185,7 @@
 
 -(void)setupScrollAndPage
 {
-	//NSLog(@"url: %@", self.topicUrl);
+	NSLog(@"topicName: %@", self.topicName);
 	
 	//On vire le '#t09707987987'
 	NSRange rangeFlagPage;
@@ -204,27 +206,34 @@
     }    
 	//--
 
-
-	//On check si y'a page=2323
-	NSString *regexString  = @".*page=([^&]+).*";
-	NSRange   matchedRange;// = NSMakeRange(NSNotFound, 0UL);
-	NSRange   searchRange = NSMakeRange(0, self.currentUrl.length);
-	NSError  *error2        = NULL;
-	
-	matchedRange = [self.currentUrl rangeOfRegex:regexString options:RKLNoOptions inRange:searchRange capture:1L error:&error2];
-	
-	if (matchedRange.location == NSNotFound) {
-		NSRange rangeNumPage =  [[self currentUrl] rangeOfCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] options:NSBackwardsSearch];
-		self.pageNumber = [[self.currentUrl substringWithRange:rangeNumPage] intValue];
-	}
-	else {
-		self.pageNumber = [[self.currentUrl substringWithRange:matchedRange] intValue];
-		
-	}
-	//On check si y'a page=2323
-
-	[(UILabel *)[self navigationItem].titleView setText:[NSString stringWithFormat:@"%@ — %d", self.topicName, self.pageNumber]];
-	[(UILabel *)[self navigationItem].titleView adjustFontSizeToFit];
+    if (self.isSearchInstra) {
+        
+        [(UILabel *)[self navigationItem].titleView setText:[NSString stringWithFormat:@"Recherche | %@", self.topicName]];
+        [(UILabel *)[self navigationItem].titleView adjustFontSizeToFit];
+        self.pageNumber = 0;
+    }
+    else {
+        //On check si y'a page=2323
+        NSString *regexString  = @".*page=([^&]+).*";
+        NSRange   matchedRange;// = NSMakeRange(NSNotFound, 0UL);
+        NSRange   searchRange = NSMakeRange(0, self.currentUrl.length);
+        NSError  *error2        = NULL;
+        
+        matchedRange = [self.currentUrl rangeOfRegex:regexString options:RKLNoOptions inRange:searchRange capture:1L error:&error2];
+        
+        if (matchedRange.location == NSNotFound) {
+            NSRange rangeNumPage =  [[self currentUrl] rangeOfCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] options:NSBackwardsSearch];
+            self.pageNumber = [[self.currentUrl substringWithRange:rangeNumPage] intValue];
+        }
+        else {
+            self.pageNumber = [[self.currentUrl substringWithRange:matchedRange] intValue];
+            
+        }
+        //On check si y'a page=2323
+        
+        [(UILabel *)[self navigationItem].titleView setText:[NSString stringWithFormat:@"%@ — %d", self.topicName, self.pageNumber]];
+        [(UILabel *)[self navigationItem].titleView adjustFontSizeToFit];
+    }
 
 
 	//self.title = [NSString stringWithFormat:@"%@ — %d", self.topicName, self.pageNumber];
@@ -241,7 +250,8 @@
 	if ([titleNode allContents] && self.topicName.length == 0) {
 		//NSLog(@"setupPageToolbar titleNode %@", [titleNode allContents]);
 		self.topicName = [titleNode allContents];
-		[(UILabel *)[self navigationItem].titleView setText:[NSString stringWithFormat:@"%@ — %d", self.topicName, self.pageNumber]];
+        
+        [(UILabel *)[self navigationItem].titleView setText:[NSString stringWithFormat:@"%@ — %d", self.topicName, self.pageNumber]];
         [(UILabel *)[self navigationItem].titleView adjustFontSizeToFit];
 
         //self.title = [NSString stringWithFormat:@"%@ — %d", self.topicName, self.pageNumber];
@@ -371,14 +381,6 @@
             [self setLastPageNumber:1];
 		}
 		
-        
-        
-        //searchbox
-        self.searchPage = (self.pageNumber-1 > 0) ? (self.pageNumber-1) : 1;
-        [self updateSearchPageDesc];
-        //searchbox
-		
-		
 		//--
 		
 		
@@ -435,20 +437,56 @@
 }
 
 -(void)setupPoll:(HTMLNode *)bodyNode andP:(HTMLParser *)myParser {
-    NSLog(@"setupPoll");
+    self.pollNode = nil;
+    
 	HTMLNode * tmpPollNode = [[bodyNode findChildWithAttribute:@"class" matchingName:@"sondage" allowPartial:NO] retain];
 	if(tmpPollNode)
     {
-        NSLog(@"POPOLL");
         [self setPollNode:rawContentsOfNode([tmpPollNode _node], [myParser _doc])];
-    
     }
-    else {
-        NSLog(@"POD'POLL");
-        self.pollNode = nil;
-    }
-    
 }
+
+-(void)setupIntrSearch:(HTMLNode *)bodyNode andP:(HTMLParser *)myParser {
+    HTMLNode * tmpSearchNode = [[bodyNode findChildWithAttribute:@"action" matchingName:@"/transsearch.php" allowPartial:NO] retain];
+    if(tmpSearchNode)
+    {
+        NSArray *wantedArr = [NSArray arrayWithObjects:@"post", @"cat", @"firstnum", @"currentnum", @"word", @"spseudo", @"filter", nil];
+        //NSLog(@"INTRA");
+        //hidden input for URL          post | cat | currentnum
+        //hidden input for URL          word | spseudo | filter
+        NSArray *arrInput = [tmpSearchNode findChildTags:@"input"];
+        for (HTMLNode *no in arrInput) {
+            //NSLog(@"%@ = %@", [no getAttributeNamed:@"name"], [no getAttributeNamed:@"value"]);
+            
+            if ([no getAttributeNamed:@"name"] && [wantedArr indexOfObject: [no getAttributeNamed:@"name"]] != NSNotFound) {
+                
+                //NSLog(@"WANTED %lu", (unsigned long)[wantedArr indexOfObject: [no getAttributeNamed:@"name"]]);
+                [self.searchInputData setValue:[no getAttributeNamed:@"value"] forKey:[no getAttributeNamed:@"name"]];
+                
+                if ([[no getAttributeNamed:@"name"] isEqualToString:@"word"]) {
+                    [self.searchKeyword setText:[no getAttributeNamed:@"value"]];
+                }
+                else if ([[no getAttributeNamed:@"name"] isEqualToString:@"spseudo"]) {
+                    [self.searchPseudo setText:[no getAttributeNamed:@"value"]];
+                }
+                else if ([[no getAttributeNamed:@"name"] isEqualToString:@"filter"]) {
+                    if ([[no getAttributeNamed:@"value"] isEqualToString:@"1"]) {
+                        [self.searchFilter setOn:YES animated:NO];
+                    }
+                    else {
+                        [self.searchFilter setOn:NO animated:NO];
+                    }
+                }
+                else if ([[no getAttributeNamed:@"name"] isEqualToString:@"currentnum"]) {
+                    [self.searchFromFP setOn:NO animated:NO];
+                }
+            }
+        }
+    }
+}
+
+
+
 
 -(void)loadDataInTableView:(HTMLParser *)myParser
 {    
@@ -489,15 +527,15 @@
 	[self setupFastAnswer:bodyNode];
 
     //prep' Poll view
-	[self setupPoll:bodyNode andP:myParser];
-    
+    [self setupPoll:bodyNode andP:myParser];
+    [self setupIntrSearch:bodyNode andP:myParser];
+
 	//if(topicAnswerUrl.length > 0) 
 	//-	
 
 	//--Pages
 	[self setupPageToolbar:bodyNode andP:myParser];
     self.navigationItem.rightBarButtonItem.enabled = YES;
-
 }
 
 // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -508,6 +546,7 @@
 		self.currentUrl = [theTopicUrl copy];	
 		self.loaded = NO;
 		self.isViewed = YES;
+        [self setIsSearchInstra:NO];
 
 
 	}
@@ -554,7 +593,7 @@
 }
 
 - (void)viewDidLoad {
-	NSLog(@"viewDidLoad");
+	NSLog(@"viewDidLoad %@", self.topicName);
 
     [super viewDidLoad];
 	self.isAnimating = NO;
@@ -591,7 +630,6 @@
         else {
             [label setFont:[UIFont boldSystemFontOfSize:17.0]];
         }
-
     }
     else
     {
@@ -647,22 +685,32 @@
 	[recognizer release];
 	//-- Gesture
 
-    //Search Page From
-    self.searchPage = 1;
-	//Bouton Repondre message
 
-	UIBarButtonItem *optionsBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(optionsTopic:)];
-    optionsBarItem.enabled = NO;
-	
-    NSMutableArray *myButtonArray = [[NSMutableArray alloc] initWithObjects:optionsBarItem, nil];
-    [optionsBarItem release];
+	//Bouton Repondre message
     
-	self.navigationItem.rightBarButtonItems = myButtonArray;
+    if (self.isSearchInstra) {
+        UIBarButtonItem *optionsBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(searchTopic)];
+        optionsBarItem.enabled = NO;
+        
+        NSMutableArray *myButtonArray = [[NSMutableArray alloc] initWithObjects:optionsBarItem, nil];
+        [optionsBarItem release];
+        
+        self.navigationItem.rightBarButtonItems = myButtonArray;
+    }
+    else {
+        UIBarButtonItem *optionsBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(optionsTopic:)];
+        optionsBarItem.enabled = NO;
+        
+        NSMutableArray *myButtonArray = [[NSMutableArray alloc] initWithObjects:optionsBarItem, nil];
+        [optionsBarItem release];
+        
+        self.navigationItem.rightBarButtonItems = myButtonArray;
+    }
+    
 
 	[(ShakeView*)self.view setShakeDelegate:self];
 	
     
-
     
     
 	self.arrayAction = [[NSMutableArray alloc] init];
@@ -679,6 +727,8 @@
 	self.isUnreadable = NO;
 	self.curPostID = -1;
 	
+    self.searchInputData = [[NSMutableDictionary alloc] init];
+    
 	[self setEditFlagTopic:nil];
 	[self setStringFlagTopic:@""];
 
@@ -934,28 +984,7 @@
     
 
     [self toggleSearch:YES];
-    /* Push Search
-    MessagesSearchTableViewController *aView = [[MessagesSearchTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:self.currentUrl];
-    self.messagesTableViewController = aView;
-    [aView release];
-    
-    //setup the URL
-    self.messagesTableViewController.topicName = [NSString stringWithFormat:@"Recherche dans %@", self.topicName];
-    self.messagesTableViewController.isViewed = YES;
-    
-    self.navigationItem.backBarButtonItem =
-    [[UIBarButtonItem alloc] initWithTitle:@"Retour"
-                                     style: UIBarButtonItemStyleBordered
-                                    target:nil
-                                    action:nil];
-    
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
-        self.navigationItem.backBarButtonItem.title = @" ";
-    }
-    
-    //NSLog(@"push message liste");
-    [self.navigationController pushViewController:messagesTableViewController animated:YES];
-     */
+
 }
 
 -(void)quoteMessage:(NSString *)quoteUrl
@@ -963,7 +992,6 @@
 	if (self.isAnimating) {
 		return;
 	}
-	
 	
 	QuoteMessageViewController *quoteMessageViewController = [[QuoteMessageViewController alloc]
 														  initWithNibName:@"AddMessageViewController" bundle:nil];
@@ -1211,8 +1239,6 @@
 
 	
     /*
-
-    
     PhotoViewController *photoViewController;
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
@@ -1316,10 +1342,14 @@
 }
 
 - (void)handleSwipeToLeft:(UISwipeGestureRecognizer *)recognizer {
-	[self nextPage:recognizer];
+    if (self.searchBg.alpha == 0.0) {
+        [self nextPage:recognizer];
+    }
 }
 - (void)handleSwipeToRight:(UISwipeGestureRecognizer *)recognizer {
-	[self previousPage:recognizer];
+    if (self.searchBg.alpha == 0.0) {
+        [self previousPage:recognizer];
+    }
 }
 
 #pragma mark -
@@ -1439,115 +1469,130 @@
 
 	NSString *tmpHTML = [[[NSString alloc] initWithString:@""] autorelease];
 	
-	int i;
-	for (i = 0; i < [self.arrayData count]; i++) { //Loop through all the tags
-		tmpHTML = [tmpHTML stringByAppendingString:[[self.arrayData objectAtIndex:i] toHTML:i]];
-	}
     
-    NSString *refreshBtn = [[[NSString alloc] initWithString:@""] autorelease];
-
-    //on ajoute le bouton actualiser si besoin
-    if (([self pageNumber] == [self lastPageNumber]) || ([self lastPageNumber] == 0)) {
-        //NSLog(@"premiere et unique ou dernier");
-        //'before'
-        refreshBtn = @"<div id=\"actualiserbtn\">Actualiser</div>";
+    NSLog(@"COUNT = %lu", (unsigned long)[self.arrayData count]);
+    
+    if (self.arrayData.count == 0) {
+        NSLog(@"BZAAAAA");
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Aucune réponse n'a été trouvée"
+                                                       delegate:self cancelButtonTitle:@"Retour" otherButtonTitles:@"Affiner", nil];
         
+        [alert setTag:770];
+        [alert show];
+        [alert release];
     }
     else {
-        //NSLog(@"autre");
-    }
-    
-    NSString *tooBar = [[[NSString alloc] initWithString:@""] autorelease];
-
-    //Toolbar;
-    if (self.aToolbar) {
-        NSString *buttonBegin, *buttonEnd;
-        NSString *buttonPrevious, *buttonNext;
+        int i;
+        for (i = 0; i < [self.arrayData count]; i++) { //Loop through all the tags
+            tmpHTML = [tmpHTML stringByAppendingString:[[self.arrayData objectAtIndex:i] toHTML:i]];
+        }
         
-        if ([(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:0] isEnabled]) {
-            buttonBegin = @"<div class=\"button begin active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://begin\">begin</a></div>";
-            buttonPrevious = @"<div class=\"button2 begin active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://previous\">previous</a></div>";
+        NSString *refreshBtn = [[[NSString alloc] initWithString:@""] autorelease];
+        
+        //on ajoute le bouton actualiser si besoin
+        if (([self pageNumber] == [self lastPageNumber]) || ([self lastPageNumber] == 0)) {
+            //NSLog(@"premiere et unique ou dernier");
+            //'before'
+            refreshBtn = @"<div id=\"actualiserbtn\">Actualiser</div>";
+            
         }
         else {
-            buttonBegin = @"<div class=\"button begin\"></div>";
-            buttonPrevious = @"<div class=\"button2 begin\"></div>";
+            //NSLog(@"autre");
         }
         
-        if ([(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:4] isEnabled]) {
-            buttonEnd = @"<div class=\"button end active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://end\">end</a></div>";
-            buttonNext = @"<div class=\"button2 end active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://next\">next</a></div>";
+        NSString *tooBar = [[[NSString alloc] initWithString:@""] autorelease];
+        
+        //Toolbar;
+        if (self.aToolbar) {
+            NSString *buttonBegin, *buttonEnd;
+            NSString *buttonPrevious, *buttonNext;
+            
+            if ([(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:0] isEnabled]) {
+                buttonBegin = @"<div class=\"button begin active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://begin\">begin</a></div>";
+                buttonPrevious = @"<div class=\"button2 begin active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://previous\">previous</a></div>";
+            }
+            else {
+                buttonBegin = @"<div class=\"button begin\"></div>";
+                buttonPrevious = @"<div class=\"button2 begin\"></div>";
+            }
+            
+            if ([(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:4] isEnabled]) {
+                buttonEnd = @"<div class=\"button end active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://end\">end</a></div>";
+                buttonNext = @"<div class=\"button2 end active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://next\">next</a></div>";
+            }
+            else {
+                buttonEnd = @"<div class=\"button end\"></div>";
+                buttonNext = @"<div class=\"button2 end\"></div>";
+            }
+            
+            
+            //[NSString stringWithString:@"<div class=\"button end\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://end\">end</a></div>"];
+            
+            tooBar =  [NSString stringWithFormat:@"<div id=\"toolbarpage\">\
+                       %@\
+                       %@\
+                       <a href=\"oijlkajsdoihjlkjasdoauto://choose\">%d/%d</a>\
+                       %@\
+                       %@\
+                       </div>", buttonBegin, buttonPrevious, [self pageNumber], [self lastPageNumber], buttonNext, buttonEnd];
         }
-        else {
-            buttonEnd = @"<div class=\"button end\"></div>";
-            buttonNext = @"<div class=\"button2 end\"></div>";
+        
+        NSString *customFontSize = [self userTextSizeDidChange];
+        
+        NSString *HTMLString = [NSString
+                                stringWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
+                                <html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"fr\" lang=\"fr\">\
+                                <head>\
+                                <script type='text/javascript' src='jquery-2.1.1.min.js'></script>\
+                                <script type='text/javascript' src='jquery.doubletap.js'></script>\
+                                <script type='text/javascript' src='jquery.base64.js'></script>\
+                                <meta name='viewport' content='initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no' />\
+                                <link type='text/css' rel='stylesheet' href='style-liste.css'/>\
+                                <link type='text/css' rel='stylesheet' href='style-liste-retina.css' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\
+                                <style type='text/css'>\
+                                %@\
+                                </style>\
+                                </head><body class='iosversion'>\
+                                <div class='bunselected nosig' id='qsdoiqjsdkjhqkjhqsdqdilkjqsd2'>%@</div>\
+                                %@\
+                                %@\
+                                <div id='endofpage'></div>\
+                                <div id='endofpagetoolbar'></div>\
+                                <a name='bas'></a>\
+                                <script type='text/javascript'>\
+                                document.addEventListener('DOMContentLoaded', loadedML);\
+                                document.addEventListener('touchstart', touchstart);\
+                                function loadedML() { document.location.href = 'oijlkajsdoihjlkjasdopreloaded://preloaded'; setTimeout(function() {document.location.href = 'oijlkajsdoihjlkjasdoloaded://loaded';},700); };\
+                                function HLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bselected'; }\
+                                function UHLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bunselected'; }\
+                                function swap_spoiler_states(obj){var div=obj.getElementsByTagName('div');if(div[0]){if(div[0].style.visibility==\"visible\"){div[0].style.visibility='hidden';}else if(div[0].style.visibility==\"hidden\"||!div[0].style.visibility){div[0].style.visibility='visible';}}}\
+                                $('img').error(function(){ $(this).attr('src', 'photoDefaultfailmini.png');});\
+                                function touchstart() { document.location.href = 'oijlkajsdoihjlkjasdotouch://touchstart'};\
+                                </script>\
+                                </body></html>", customFontSize, tmpHTML, refreshBtn, tooBar];
+        
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"iosversion" withString:@"ios7"];
         }
+        //  HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"hfrplusiosversion" withString:@""];
         
         
-        //[NSString stringWithString:@"<div class=\"button end\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://end\">end</a></div>"];
+        NSString *path = [[NSBundle mainBundle] bundlePath];
+        NSURL *baseURL = [NSURL fileURLWithPath:path];
+        //NSLog(@"baseURL %@", baseURL);
         
-        tooBar =  [NSString stringWithFormat:@"<div id=\"toolbarpage\">\
-                     %@\
-                     %@\
-                     <a href=\"oijlkajsdoihjlkjasdoauto://choose\">%d/%d</a>\
-                     %@\
-                     %@\
-                     </div>", buttonBegin, buttonPrevious, [self pageNumber], [self lastPageNumber], buttonNext, buttonEnd];
+        //NSLog(@"======================================================================================================");
+        //NSLog(@"HTMLString %@", HTMLString);
+        //NSLog(@"======================================================================================================");
+        //NSLog(@"baseURL %@", baseURL);
+        //NSLog(@"======================================================================================================");
+        
+        self.loaded = NO;
+        [self.messagesWebView loadHTMLString:HTMLString baseURL:baseURL];
+        
+        [self.messagesWebView setUserInteractionEnabled:YES];
     }
-    
-    NSString *customFontSize = [self userTextSizeDidChange];
-    
-	NSString *HTMLString = [NSString
-                stringWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
-                <html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"fr\" lang=\"fr\">\
-                <head>\
-                <script type='text/javascript' src='jquery-2.1.1.min.js'></script>\
-                <script type='text/javascript' src='jquery.doubletap.js'></script>\
-                <script type='text/javascript' src='jquery.base64.js'></script>\
-                <meta name='viewport' content='initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no' />\
-                <link type='text/css' rel='stylesheet' href='style-liste.css'/>\
-                <link type='text/css' rel='stylesheet' href='style-liste-retina.css' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\
-                <style type='text/css'>\
-                %@\
-                </style>\
-                </head><body class='iosversion'>\
-                <div class='bunselected nosig' id='qsdoiqjsdkjhqkjhqsdqdilkjqsd2'>%@</div>\
-                %@\
-                %@\
-                <div id='endofpage'></div>\
-                <div id='endofpagetoolbar'></div>\
-                <a name='bas'></a>\
-                <script type='text/javascript'>\
-                    document.addEventListener('DOMContentLoaded', loadedML);\
-                    document.addEventListener('touchstart', touchstart);\
-                    function loadedML() { document.location.href = 'oijlkajsdoihjlkjasdopreloaded://preloaded'; setTimeout(function() {document.location.href = 'oijlkajsdoihjlkjasdoloaded://loaded';},700); };\
-                    function HLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bselected'; }\
-                    function UHLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bunselected'; }\
-                    function swap_spoiler_states(obj){var div=obj.getElementsByTagName('div');if(div[0]){if(div[0].style.visibility==\"visible\"){div[0].style.visibility='hidden';}else if(div[0].style.visibility==\"hidden\"||!div[0].style.visibility){div[0].style.visibility='visible';}}}\
-                    $('img').error(function(){ $(this).attr('src', 'photoDefaultfailmini.png');});\
-                    function touchstart() { document.location.href = 'oijlkajsdoihjlkjasdotouch://touchstart'};\
-                </script>\
-                </body></html>", customFontSize, tmpHTML, refreshBtn, tooBar];
-	
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-        HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"iosversion" withString:@"ios7"];
-    }
-  //  HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"hfrplusiosversion" withString:@""];
-
-    
-	NSString *path = [[NSBundle mainBundle] bundlePath];
-	NSURL *baseURL = [NSURL fileURLWithPath:path];
-	//NSLog(@"baseURL %@", baseURL);
-	
-	//NSLog(@"======================================================================================================");
-	//NSLog(@"HTMLString %@", HTMLString);
-	//NSLog(@"======================================================================================================");
-	//NSLog(@"baseURL %@", baseURL);
-	//NSLog(@"======================================================================================================");
-    
-    self.loaded = NO;
-	[self.messagesWebView loadHTMLString:HTMLString baseURL:baseURL];
-	
-	[self.messagesWebView setUserInteractionEnabled:YES];
+ 
 
 	//[HTMLString release];
 	//[tmpHTML release];
@@ -1581,14 +1626,14 @@
 }
 
 - (void)webViewDidFinishPreLoadDOM {
-    NSLog(@"== webViewDidFinishPreLoadDOM");
+    //NSLog(@"== webViewDidFinishPreLoadDOM");
 
     [self userTextSizeDidChange];
 }
 
 - (void)webViewDidFinishLoadDOM
 {
-    NSLog(@"== webViewDidFinishLoadDOM");
+    //NSLog(@"== webViewDidFinishLoadDOM");
     if (self.loaded) {
         //NSLog(@"deja DOMed");
         return;
@@ -1653,7 +1698,7 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-	NSLog(@"== webViewDidFinishLoad");
+	//NSLog(@"== webViewDidFinishLoad");
     
     if (!self.loaded) {
         [self webViewDidFinishPreLoadDOM];
@@ -1697,7 +1742,7 @@
 */
 	 
 - (BOOL) canBecomeFirstResponder {
-	NSLog(@"canBecomeFirstResponder");
+	//NSLog(@"canBecomeFirstResponder");
 	
     return YES;
 }
@@ -1725,7 +1770,7 @@
                 //}
                 
                 //setup the URL
-                self.messagesTableViewController.topicName = @"Chargement...";
+                self.messagesTableViewController.topicName = @"";
                 self.messagesTableViewController.isViewed = YES;	
                 
                 self.navigationItem.backBarButtonItem =
@@ -1760,7 +1805,7 @@
             [aView release];
             
             //setup the URL
-            self.messagesTableViewController.topicName = @"Chargement...";
+            self.messagesTableViewController.topicName = @"";
             self.messagesTableViewController.isViewed = YES;
             
             self.navigationItem.backBarButtonItem =
@@ -2347,6 +2392,8 @@
 	self.messagesWebView = nil;
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;	
 
+    [self setSearchFromFP:nil];
+    [self setSearchFilter:nil];
 	[super viewDidUnload];
 	
 	
@@ -2401,6 +2448,8 @@
 	self.arrayAction = nil;
     self.arrayActionsMessages = nil;
     
+    self.searchInputData = nil;
+    
     [super dealloc];
 	
 }
@@ -2412,14 +2461,18 @@
     [self toggleSearch:NO];
 }
 
-- (void)toggleSearch:(BOOL) active{
-    
+- (void)toggleSearch:(BOOL) active {
+    NSLog(@"toggleSearchtoggleSearchtoggleSearchtoggleSearch");
     if (!active) {
+        NSLog(@"RESIGN");
         CGRect oldframe = self.searchBox.frame;
         //NSLog(@"oldframe %@", NSStringFromCGRect(oldframe));
         
         CGRect newframe = oldframe;
         newframe.origin.y = 0 - oldframe.size.height;
+        
+        [self.searchKeyword resignFirstResponder];
+        [self.searchPseudo resignFirstResponder];
         
         [UIView beginAnimations:@"FadeOut" context:nil];
         [UIView setAnimationDuration:0.2];
@@ -2427,8 +2480,9 @@
         self.searchBox.frame = newframe;
         
         [UIView commitAnimations];
+
     } else {
-        
+        NSLog(@"BECOME");
         CGRect oldframe = self.searchBox.frame;
         //NSLog(@"oldframe %@", NSStringFromCGRect(oldframe));
         
@@ -2440,96 +2494,136 @@
         [self.searchBg setAlpha:0];
         [self.searchBg setHidden:NO];
         
-        [UIView beginAnimations:@"FadeIn" context:nil];
-        [UIView setAnimationDuration:0.2];
-        [self.searchBg setAlpha:0.7];
-        self.searchBox.frame = oldframe;
-        
-        [UIView commitAnimations];
-        
+        [UIView animateWithDuration:0.2 animations:^{
+            [self.searchBg setAlpha:0.7];
+            self.searchBox.frame = oldframe;
+        } completion:^(BOOL finished){
+            [self.searchKeyword becomeFirstResponder];
+        }];
+
     }
 }
 
--(void)updateSearchPageDesc {
-    [self.searchSliderPageDesc setText:[NSString stringWithFormat:@"à partir de la page %d (sur %d)", self.searchPage, self.lastPageNumber]];
-}
-
-- (IBAction)searchSliderChanged:(NSTimer *)timer {
-    
-    UISlider *slider = (UISlider *)[timer userInfo];
-    
-    NSLog(@"slider value = %f | %f", slider.value, timer.timeInterval);
-
-    
-    if (slider.value > 0.95 && RoundTo(self.searchPage, 100.0) + 100 <= self.lastPageNumber) {
-        self.searchPage = RoundTo(self.searchPage, 100.0) + 100;
-    }
-    else if (slider.value > 0.85 && RoundTo(self.searchPage, 10.0) + 10 <= self.lastPageNumber) {
-        self.searchPage = RoundTo(self.searchPage, 10.0) + 10;
-    }
-    else if (slider.value > 0.65 && RoundTo(self.searchPage, 5.0) + 5 <= self.lastPageNumber) {
-            self.searchPage = RoundTo(self.searchPage, 5.0) + 5;
-    }
-    else if (slider.value > 0.5) {
-        if (self.searchPage + 1 <= self.lastPageNumber) {
-            self.searchPage += 1;
+- (IBAction)searchNext:(UITextField *)sender {
+    NSLog(@"searchNext %@", sender);
+        if ([sender isEqual:self.searchKeyword]) {
+            NSLog(@"searchKeyword");
+            [self.searchKeyword resignFirstResponder];
+            [self.searchPseudo becomeFirstResponder];
         }
-    }
-    
-    if (slider.value < 0.05 && RoundTo(self.searchPage, 100.0) > 100) {
-        self.searchPage = RoundTo(self.searchPage, 100.0) - 100;
-    }
-    else if (slider.value < 0.15 && RoundTo(self.searchPage, 10.0) > 10) {
-        self.searchPage = RoundTo(self.searchPage, 10.0) - 10;
-    }
-    else if (slider.value < 0.35 && RoundTo(self.searchPage, 5.0) > 5) {
-        self.searchPage = RoundTo(self.searchPage, 5.0) - 5;
-    }
-    else if (slider.value < 0.5) {
-        if (self.searchPage > 1) {
-            self.searchPage -= 1;
+        else if ([sender isEqual:self.searchPseudo] && (self.searchPseudo.text.length > 0 || self.searchKeyword.text.length > 0)) {
+            NSLog(@"searchPseudo");
+            [self.searchPseudo resignFirstResponder];
+            
+            [self searchSubmit:nil];
         }
-    }
+}
 
-    [self updateSearchPageDesc];
+- (IBAction)searchFilterChanged:(UISwitch *)sender {
+    NSLog(@"Filter %lu", (unsigned long)sender.isOn);
     
-}
-
-- (IBAction)searchSliderExit:(UISlider *)sender {
-    NSLog(@"EXIT: slider value = %f", sender.value);
-    sender.value = 0.5;
-    [self.searchPageTimer invalidate];
-    self.searchPageTimer = nil;
-}
-
-- (IBAction)searchSliderEntered:(UISlider *)sender {
-    self.searchPageTimer =
-    [NSTimer
-     scheduledTimerWithTimeInterval:0.15
-     target:self
-     selector:@selector(searchSliderChanged:)
-     userInfo:sender
-     repeats:YES];
-}
-
-- (IBAction)searchPageGoToFirst:(UIButton *)sender {
-    self.searchPage = 1;
-    [self updateSearchPageDesc];
-}
-
-- (IBAction)searchPageGoToLast:(UIButton *)sender {
-    self.searchPage = self.lastPageNumber;
-    [self updateSearchPageDesc];
-}
-
-float RoundTo(float number, float to)
-{
-    if (number >= 0) {
-        return to * floorf(number / to + 0.5f);
+    if (sender.isOn) {
+      [self.searchInputData setValue:[NSString stringWithFormat:@"%d", sender.isOn] forKey:@"filter"];
     }
     else {
-        return to * ceilf(number / to - 0.5f);
+        [self.searchInputData removeObjectForKey:@"filter"];
     }
 }
 
+- (IBAction)searchFromFPChanged:(UISwitch *)sender {
+    NSLog(@"searchFromFPChanged %lu", (unsigned long)sender.isOn);
+    
+    if (sender.isOn) {
+        [self.searchInputData removeObjectForKey:@"currentnum"];
+        [self.searchInputData removeObjectForKey:@"firstnum"];
+    }
+}
+
+- (IBAction)searchPseudoChanged:(UITextField *)sender {
+    NSLog(@"searchPseudoChanged %@", sender.text);
+    [self.searchInputData setValue:[NSString stringWithFormat:@"%@", sender.text] forKey:@"spseudo"];
+}
+
+- (IBAction)searchKeywordChanged:(UITextField *)sender {
+    NSLog(@"searchKeywordChanged %@", sender.text);
+    [self.searchInputData setValue:[NSString stringWithFormat:@"%@", sender.text] forKey:@"word"];
+}
+
+- (IBAction)searchSubmit:(UIBarButtonItem *)sender {
+    NSLog(@"searchSubmit");
+    
+    NSString *baseURL = [NSString stringWithFormat:@"/forum2.php?%@", [self serializeParams:self.searchInputData]];
+    
+    [self toggleSearch:NO];
+
+    if (self.isSearchInstra) {
+        self.currentUrl = baseURL;
+        [self fetchContent:kNewMessageFromUnkwn];
+    }
+    else {
+        MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:baseURL];
+        self.messagesTableViewController = aView;
+        [aView release];
+        
+        //setup the URL
+        self.messagesTableViewController.topicName = self.topicName;
+        self.messagesTableViewController.isViewed = YES;
+        self.messagesTableViewController.isSearchInstra = YES;
+        
+        self.navigationItem.backBarButtonItem =
+        [[UIBarButtonItem alloc] initWithTitle:@"Retour"
+                                         style: UIBarButtonItemStyleBordered
+                                        target:nil
+                                        action:nil];
+        
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+            self.navigationItem.backBarButtonItem.title = @" ";
+        }
+        
+        [self.navigationController pushViewController:messagesTableViewController animated:YES];
+    }
+
+}
+
+
+-(NSString *)serializeParams:(NSDictionary *)params {
+    /*
+     
+     Convert an NSDictionary to a query string
+     
+     */
+    
+    NSMutableArray* pairs = [NSMutableArray array];
+    for (NSString* key in [params keyEnumerator]) {
+        id value = [params objectForKey:key];
+        if ([value isKindOfClass:[NSDictionary class]]) {
+            for (NSString *subKey in value) {
+                NSString* escaped_value = (NSString *)CFURLCreateStringByAddingPercentEscapes(NULL,
+                                                                                              (CFStringRef)[value objectForKey:subKey],
+                                                                                              NULL,
+                                                                                              (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                              kCFStringEncodingUTF8);
+                [pairs addObject:[NSString stringWithFormat:@"%@[%@]=%@", key, subKey, escaped_value]];
+            }
+        } else if ([value isKindOfClass:[NSArray class]]) {
+            for (NSString *subValue in value) {
+                NSString* escaped_value = (NSString *)CFURLCreateStringByAddingPercentEscapes(NULL,
+                                                                                              (CFStringRef)subValue,
+                                                                                              NULL,
+                                                                                              (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                              kCFStringEncodingUTF8);
+                [pairs addObject:[NSString stringWithFormat:@"%@[]=%@", key, escaped_value]];
+            }
+        } else {
+            NSString* escaped_value = (NSString *)CFURLCreateStringByAddingPercentEscapes(NULL,
+                                                                                          (CFStringRef)[params objectForKey:key],
+                                                                                          NULL,
+                                                                                          (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                          kCFStringEncodingUTF8);
+            [pairs addObject:[NSString stringWithFormat:@"%@=%@", key, escaped_value]];
+            [escaped_value release];
+        }
+    }
+    return [pairs componentsJoinedByString:@"&"];
+}
 @end
