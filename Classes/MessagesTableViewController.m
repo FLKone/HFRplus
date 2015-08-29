@@ -1342,12 +1342,12 @@
 }
 
 - (void)handleSwipeToLeft:(UISwipeGestureRecognizer *)recognizer {
-    if (self.searchBg.alpha == 0.0) {
+    if (self.searchBg.alpha == 0.0 || self.searchBg.hidden == YES) {
         [self nextPage:recognizer];
     }
 }
 - (void)handleSwipeToRight:(UISwipeGestureRecognizer *)recognizer {
-    if (self.searchBg.alpha == 0.0) {
+    if (self.searchBg.alpha == 0.0 || self.searchBg.hidden == YES) {
         [self previousPage:recognizer];
     }
 }
