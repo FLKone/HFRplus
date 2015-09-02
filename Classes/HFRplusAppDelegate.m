@@ -15,6 +15,8 @@
 #import "MKStoreManager.h"
 #import "BrowserViewController.h"
 
+#import <SafariServices/SafariServices.h>
+
 @implementation HFRplusAppDelegate
 
 @synthesize window;
@@ -368,21 +370,35 @@
         }
         else
         {
-        
-            BrowserViewController *browserViewController = [[BrowserViewController alloc] initWithURL:stringUrl];
-            
-            HFRNavigationController *nc = [[HFRNavigationController alloc] initWithRootViewController:browserViewController];
-            
-            
-            nc.modalPresentationStyle = UIModalPresentationFormSheet;
-            
-            [self.rootController presentModalViewController:nc animated:YES];
-            [nc release];
-            
-            // The navigation controller is now owned by the current view controller
-            // and the root view controller is owned by the navigation controller,
-            // so both objects should be released to prevent over-retention.
-            [browserViewController release];
+            if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0")) {
+                
+                SFSafariViewController *svc = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:stringUrl]];
+                
+                [self.rootController presentModalViewController:svc animated:YES];
+                [svc release];
+                
+                //BROWS FULLSCREEN IPAD;
+                
+                //let svc = SFSafariViewController(URL: NSURL(string: self.urlString)!)
+                //self.presentViewController(svc, animated: true, completion: nil)
+            }
+            else {
+                BrowserViewController *browserViewController = [[BrowserViewController alloc] initWithURL:stringUrl];
+                
+                HFRNavigationController *nc = [[HFRNavigationController alloc] initWithRootViewController:browserViewController];
+                
+                
+                nc.modalPresentationStyle = UIModalPresentationFormSheet;
+                
+                [self.rootController presentModalViewController:nc animated:YES];
+                [nc release];
+                
+                // The navigation controller is now owned by the current view controller
+                // and the root view controller is owned by the navigation controller,
+                // so both objects should be released to prevent over-retention.
+                [browserViewController release];
+
+            }
         }
     }
     else {

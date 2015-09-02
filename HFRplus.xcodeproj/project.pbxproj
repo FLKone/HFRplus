@@ -120,6 +120,8 @@
 		4CB311F019FAFCAE0097D84D /* hammer.min.map in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311EE19FAFCAE0097D84D /* hammer.min.map */; };
 		4CB311F219FAFF2C0097D84D /* jquery.hammer.js in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311F119FAFF2C0097D84D /* jquery.hammer.js */; };
 		4CB311F319FAFF2C0097D84D /* jquery.hammer.js in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311F119FAFF2C0097D84D /* jquery.hammer.js */; };
+		4CD6B8801B977E06007FC29E /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD6B87F1B977E06007FC29E /* SafariServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		4CD6B8811B977E0E007FC29E /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD6B87F1B977E06007FC29E /* SafariServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		CA00C3B217C2FDB00067B457 /* MWCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA00C3A517C2FDAF0067B457 /* MWCaptionView.m */; };
 		CA00C3B317C2FDB00067B457 /* MWPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = CA00C3A717C2FDAF0067B457 /* MWPhoto.m */; };
 		CA00C3B417C2FDB00067B457 /* MWPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CA00C3A817C2FDAF0067B457 /* MWPhotoBrowser.bundle */; };
@@ -1001,6 +1003,7 @@
 		4CB311EB19FAF8750097D84D /* hammer.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = hammer.min.js; sourceTree = "<group>"; };
 		4CB311EE19FAFCAE0097D84D /* hammer.min.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = hammer.min.map; sourceTree = "<group>"; };
 		4CB311F119FAFF2C0097D84D /* jquery.hammer.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.hammer.js; sourceTree = "<group>"; };
+		4CD6B87F1B977E06007FC29E /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* HFRplus-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HFRplus-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		CA00C3A217C2FD1F0067B457 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		CA00C3A417C2FDAF0067B457 /* MWCaptionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWCaptionView.h; sourceTree = "<group>"; };
@@ -1476,6 +1479,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CD6B8801B977E06007FC29E /* SafariServices.framework in Frameworks */,
 				CA2E6DE519DB08CC0089B5CF /* WebKit.framework in Frameworks */,
 				CAF6C0121607B62300B4B70C /* CoreData.framework in Frameworks */,
 				CA4AA6DD15B2553C00E53A1F /* CoreText.framework in Frameworks */,
@@ -1500,6 +1504,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CD6B8811B977E0E007FC29E /* SafariServices.framework in Frameworks */,
 				CA2E6DE619DB08D50089B5CF /* WebKit.framework in Frameworks */,
 				CA7C711E185EF50E00B348BA /* CoreData.framework in Frameworks */,
 				CA7C711F185EF50E00B348BA /* CoreText.framework in Frameworks */,
@@ -1741,6 +1746,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4CD6B87F1B977E06007FC29E /* SafariServices.framework */,
 				CA2E6DE419DB08CC0089B5CF /* WebKit.framework */,
 				CA05A37615B48B750083EB64 /* libxml2.dylib */,
 				CA4CE81415B185CA0039FC3B /* libz.dylib */,
