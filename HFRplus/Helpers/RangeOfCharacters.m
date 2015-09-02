@@ -328,8 +328,6 @@ finish:
 }
 
 - (NSString *)filterTU {
-
-    NSLog(@"filter %@", self);
     
     self = [self stringByReplacingOccurrencesOfString:@"topic unique" withString:@"TU" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [self length])];
     self = [self stringByReplacingOccurrencesOfString:@"T.U." withString:@"TU" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [self length])];

@@ -61,7 +61,6 @@
 }
 
 - (void)setATitle:(NSString *)n {
-    NSLog(@"Setting name to: %@", n);
     [_aTitle release];
     _aTitle = [[n filterTU] retain];
 
