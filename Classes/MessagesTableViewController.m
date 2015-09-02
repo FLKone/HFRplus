@@ -1933,8 +1933,7 @@
 
     UIImage *menuImgMultiQuoteChecked = [UIImage imageNamed:@"ReplyAllArrowFilled-20"];
     UIImage *menuImgMultiQuoteUnchecked = [UIImage imageNamed:@"ReplyAllArrow-20"];
-    
-    [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Profil", @"actionProfil", menuImgProfil, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
+
 
 
 	if([[arrayData objectAtIndex:curMsg] urlEdit]){
@@ -1992,8 +1991,8 @@
         
         [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Blacklist", @"actionBL", menuImgBan, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
     }
-
     
+    [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Profil", @"actionProfil", menuImgProfil, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
     
     if ([self canBeFavorite]) {
         //NSLog(@"isRedFlagged ★");
