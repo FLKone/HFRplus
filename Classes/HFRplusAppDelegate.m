@@ -376,11 +376,6 @@
                 
                 [self.rootController presentModalViewController:svc animated:YES];
                 [svc release];
-                
-                //BROWS FULLSCREEN IPAD;
-                
-                //let svc = SFSafariViewController(URL: NSURL(string: self.urlString)!)
-                //self.presentViewController(svc, animated: true, completion: nil)
             }
             else {
                 BrowserViewController *browserViewController = [[BrowserViewController alloc] initWithURL:stringUrl];
