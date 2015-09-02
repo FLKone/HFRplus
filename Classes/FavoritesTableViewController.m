@@ -1064,8 +1064,6 @@
         [self pushTopic];
         
     }
-
-	
 }
 
 -(void)handleLongPress:(UILongPressGestureRecognizer*)longPressRecognizer {

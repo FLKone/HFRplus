@@ -1710,6 +1710,29 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // If row is deleted, remove it from the list.
+    if (editingStyle == UITableViewCellEditingStyleDelete && tableView == rehostTableView)
+    {
+        NSLog(@"DELTE REHOST");
+        RehostImage*rehostImage = [self.rehostImagesSortedArray objectAtIndex:indexPath.row];
+        NSLog(@"rehostImage %@", rehostImage.nolink_full);
+    
+        [self.rehostImagesArray removeObjectIdenticalTo:rehostImage];
+        
+        NSString *directory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+        NSString *rehostImages = [[NSString alloc] initWithString:[directory stringByAppendingPathComponent:REHOST_IMAGE_FILE]];
+        NSData *savedData = [NSKeyedArchiver archivedDataWithRootObject:self.rehostImagesArray];
+        [savedData writeToFile:rehostImages atomically:YES];
+        
+        self.rehostImagesSortedArray =  [NSMutableArray arrayWithArray:[[self.rehostImagesArray reverseObjectEnumerator] allObjects]];
+
+        [self.rehostTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        
+    }
+}
+
 #pragma mark -
 #pragma mark Rehost
 - (void) uploadProgress: (NSNotification *) notification {
