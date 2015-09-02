@@ -34,7 +34,7 @@
 #import "BlackList.h"
 
 @implementation MessagesTableViewController
-@synthesize loaded, isLoading, topicName, topicAnswerUrl, loadingView, messagesWebView, arrayData, updatedArrayData, detailViewController, messagesTableViewController, pollNode;
+@synthesize loaded, isLoading, _topicName, topicAnswerUrl, loadingView, messagesWebView, arrayData, updatedArrayData, detailViewController, messagesTableViewController, pollNode;
 @synthesize swipeLeftRecognizer, swipeRightRecognizer, overview, arrayActionsMessages, lastStringFlagTopic;
 @synthesize searchBg, searchBox, searchKeyword, searchPseudo, searchFilter, searchFromFP, searchInputData, isSearchInstra;
 
@@ -49,6 +49,20 @@
 @synthesize request, arrayAction, curPostID;
 
 @synthesize firstDate;
+
+- (void)setTopicName:(NSString *)n {
+    [_topicName release];
+    _topicName = [[n filterTU] retain];
+    
+    
+}
+//Getter method
+- (NSString*) topicName {
+    //NSLog(@"Returning name: %@", _aTitle);
+    return _topicName;
+}
+
+
 
 #pragma mark -
 #pragma mark Data lifecycle

@@ -9,7 +9,7 @@
 
 
 @interface Topic : NSObject {
-	NSString *aTitle;
+	//NSString *_aTitle;
 	NSString *aURL;
 
 	int aRepCount;
@@ -36,7 +36,7 @@
 	int catID;
 }
 
-@property (nonatomic, retain) NSString *aTitle;
+@property (nonatomic, retain) NSString *_aTitle;
 @property (nonatomic, retain) NSString *aURL;
 
 @property int aRepCount;

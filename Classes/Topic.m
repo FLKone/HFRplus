@@ -6,11 +6,12 @@
 //
 
 #import "Topic.h"
+#import "RangeOfCharacters.h"
 
 
 @implementation Topic
 
-@synthesize aTitle;
+@synthesize _aTitle;
 @synthesize aURL;
 
 @synthesize aRepCount;
@@ -35,7 +36,7 @@
 - (id)init {
 	self = [super init];
 	if (self) {
-        self.aTitle = [NSString string];
+        _aTitle = [NSString stringWithFormat:@""];
         self.aURL = [NSString string];
 
         self.aURLOfFirstPage = [NSString string];
@@ -59,8 +60,21 @@
     return [NSString stringWithFormat:@"%d %@", self.postID, self.aTitle];
 }
 
+- (void)setATitle:(NSString *)n {
+    NSLog(@"Setting name to: %@", n);
+    [_aTitle release];
+    _aTitle = [[n filterTU] retain];
+
+
+}
+//Getter method
+- (NSString*) aTitle {
+    //NSLog(@"Returning name: %@", _aTitle);
+    return _aTitle;
+}
+
 -(void)dealloc {
-	self.aTitle	= nil;
+	_aTitle	= nil;
 	self.aURL	= nil;
 
     self.aURLOfFirstPage		= nil;

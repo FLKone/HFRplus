@@ -327,6 +327,20 @@ finish:
     return temp;
 }
 
+- (NSString *)filterTU {
+
+    NSLog(@"filter %@", self);
+    
+    self = [self stringByReplacingOccurrencesOfString:@"topic unique" withString:@"TU" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [self length])];
+    self = [self stringByReplacingOccurrencesOfString:@"topique unique" withString:@"TU" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [self length])];
+    self = [self stringByReplacingOccurrencesOfString:@"topic unik" withString:@"TU" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [self length])];
+    self = [self stringByReplacingOccurrencesOfString:@"topik unik" withString:@"TU" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [self length])];
+    self = [self stringByReplacingOccurrencesOfString:@"topic officiel" withString:@"TU" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [self length])];
+    self = [self stringByReplacingOccurrencesOfString:@"TOPIKUNIK" withString:@"TU" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [self length])];
+
+    return self;
+}
+
 - (NSString *)stripHTML
 {
     NSRange range;
@@ -335,6 +349,8 @@ finish:
         str = [str stringByReplacingCharactersInRange:range withString:@""];
     return str;
 }
+
+
 
 @end
 

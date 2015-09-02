@@ -35,7 +35,7 @@
 	UIView *loadingView;
 	UIView *overview;
 	
-	NSString *topicName;
+
 	
 	NSString *topicAnswerUrl;
 	
@@ -102,7 +102,7 @@
 @property (nonatomic, retain) IBOutlet UIView *overview;
 
 @property (nonatomic, retain) NSString *topicAnswerUrl;
-@property (nonatomic, retain) NSString *topicName;
+@property (nonatomic, retain, setter=setTopicName:) NSString *_topicName;
 
 @property (nonatomic, retain) NSDate *firstDate;
 
