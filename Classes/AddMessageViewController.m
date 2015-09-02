@@ -270,14 +270,16 @@
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, headerWidth, 50)];
 
 //    NSLog(@"mew cell %@", NSStringFromCGRect(self.view.frame));
-    
+
     UIButton* newPhotoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [newPhotoBtn setTitle:@"✚ Nouvelle Photo" forState:UIControlStateNormal];
+    [newPhotoBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10.0f)];
+    [newPhotoBtn setTitle:@"Nouvelle Photo" forState:UIControlStateNormal];
     newPhotoBtn.frame = CGRectMake(0, 3, headerWidth/2, 50.0f);
     [newPhotoBtn addTarget:self action:@selector(uploadNewPhoto:) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton* oldPhotoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [oldPhotoBtn setTitle:@"✚ Photo existante" forState:UIControlStateNormal];
+    [oldPhotoBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10.0f)];
+    [oldPhotoBtn setTitle:@"Photo existante" forState:UIControlStateNormal];
     oldPhotoBtn.frame = CGRectMake(headerWidth/2, 3, headerWidth/2, 50.0f);
     [oldPhotoBtn addTarget:self action:@selector(uploadExistingPhoto:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -286,21 +288,31 @@
     UIView *borderT = [[UIView alloc] initWithFrame:CGRectMake(0, 0, headerWidth, 1.0f)];
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-        [newPhotoBtn setTitleColor:[UIColor colorWithRed:0 green:0.478431 blue:1.0 alpha:1.0] forState:UIControlStateNormal];
-        [newPhotoBtn setTitleColor:[UIColor colorWithRed:0 green:0.478431 blue:1.0 alpha:0.2] forState:UIControlStateHighlighted];
+        [oldPhotoBtn setImage:[UIImage imageNamed:@"Folder-32"] forState:UIControlStateNormal];
+        [oldPhotoBtn setImage:[UIImage imageNamed:@"Folder-32"] forState:UIControlStateHighlighted];
         
-        [oldPhotoBtn setTitleColor:[UIColor colorWithRed:0 green:0.478431 blue:1.0 alpha:1.0] forState:UIControlStateNormal];
-        [oldPhotoBtn setTitleColor:[UIColor colorWithRed:0 green:0.478431 blue:1.0 alpha:0.2] forState:UIControlStateHighlighted];
+        [newPhotoBtn setImage:[UIImage imageNamed:@"Camera-32"] forState:UIControlStateNormal];
+        [newPhotoBtn setImage:[UIImage imageNamed:@"Camera-32"] forState:UIControlStateHighlighted];
+
+        [newPhotoBtn setTitleColor:[UIColor colorWithRed:0/255.0f green:122/255.0f blue:255/255.0f alpha:1.0] forState:UIControlStateNormal];
+        [newPhotoBtn setTitleColor:[UIColor colorWithRed:0/255.0f green:122/255.0f blue:255/255.0f alpha:1.0] forState:UIControlStateHighlighted];
+
+        [oldPhotoBtn setTitleColor:[UIColor colorWithRed:0/255.0f green:122/255.0f blue:255/255.0f alpha:1.0] forState:UIControlStateNormal];
+        [oldPhotoBtn setTitleColor:[UIColor colorWithRed:0/255.0f green:122/255.0f blue:255/255.0f alpha:1.0] forState:UIControlStateHighlighted];
     }
     else
     {
+        [oldPhotoBtn setImage:[UIImage imageNamed:@"6-Folder-32"] forState:UIControlStateNormal];
+        [newPhotoBtn setImage:[UIImage imageNamed:@"6-Folder-32"] forState:UIControlStateHighlighted];
         
-        [newPhotoBtn setTitleColor:[UIColor colorWithRed:0.22 green:0.33 blue:0.53 alpha:1.0] forState:UIControlStateNormal];
-        [newPhotoBtn setTitleColor:[UIColor colorWithRed:0.22 green:0.33 blue:0.53 alpha:0.6] forState:UIControlStateHighlighted];
+        [oldPhotoBtn setImage:[UIImage imageNamed:@"6-Camera-32"] forState:UIControlStateNormal];
+        [newPhotoBtn setImage:[UIImage imageNamed:@"6-Camera-32"] forState:UIControlStateHighlighted];
+
+        [newPhotoBtn setTitleColor:[UIColor colorWithRed:56/255.0f green:84/255.0f blue:135/255.0f alpha:1.0] forState:UIControlStateNormal];
+        [newPhotoBtn setTitleColor:[UIColor colorWithRed:56/255.0f green:84/255.0f blue:135/255.0f alpha:1.0] forState:UIControlStateHighlighted];
         
-        [oldPhotoBtn setTitleColor:[UIColor colorWithRed:0.22 green:0.33 blue:0.53 alpha:1.0] forState:UIControlStateNormal];
-        [oldPhotoBtn setTitleColor:[UIColor colorWithRed:0.22 green:0.33 blue:0.53 alpha:0.6] forState:UIControlStateHighlighted];
-        
+        [oldPhotoBtn setTitleColor:[UIColor colorWithRed:56/255.0f green:84/255.0f blue:135/255.0f alpha:1.0] forState:UIControlStateNormal];
+        [oldPhotoBtn setTitleColor:[UIColor colorWithRed:56/255.0f green:84/255.0f blue:135/255.0f alpha:1.0] forState:UIControlStateHighlighted];
     }
     
     newPhotoBtn.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin);
