@@ -945,10 +945,10 @@
                                                  @"Lus",
                                                  nil]];
         
-        [segmentedControl setWidth:40.0f forSegmentAtIndex:0];
-        [segmentedControl setWidth:45.0f forSegmentAtIndex:1];
-        [segmentedControl setWidth:40.0f forSegmentAtIndex:2];
-        [segmentedControl setWidth:35.0f forSegmentAtIndex:3];
+        [segmentedControl setWidth:38.0f forSegmentAtIndex:0];
+        [segmentedControl setWidth:44.0f forSegmentAtIndex:1];
+        [segmentedControl setWidth:38.0f forSegmentAtIndex:2];
+        [segmentedControl setWidth:32.0f forSegmentAtIndex:3];
         
         
         
@@ -1012,6 +1012,12 @@
         segmentedControl.frame = CGRectMake(5, 0, segmentedControl.frame.size.width, segmentedControl.frame.size.height);
 
 
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            CGRect oldSegFrame = segmentedControl2.frame;
+            oldSegFrame.size.width -= 10;
+            segmentedControl2.frame = oldSegFrame;
+        }
+        
         [self.navigationItem.titleView insertSubview:segmentedControl2 atIndex:1];
         self.navigationItem.titleView.frame = CGRectMake(0, 0, segmentedControl.frame.size.width + 20 + segmentedControl2.frame.size.width, segmentedControl.frame.size.height);
 
