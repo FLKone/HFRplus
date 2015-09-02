@@ -1934,12 +1934,15 @@
     UIImage *menuImgMultiQuoteChecked = [UIImage imageNamed:@"ReplyAllArrowFilled-20"];
     UIImage *menuImgMultiQuoteUnchecked = [UIImage imageNamed:@"ReplyAllArrow-20"];
 
-
+    UIImage *menuImgDelete = [UIImage imageNamed:@"DeleteColumnFilled-20"];
+    UIImage *menuImgAlerte = [UIImage imageNamed:@"HighPriorityFilled-20"];
 
 	if([[arrayData objectAtIndex:curMsg] urlEdit]){
 		//NSLog(@"urlEdit");
 		[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Editer", @"EditMessage", menuImgEdit, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
-		
+
+        [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Supprimer", @"actionSupprimer", menuImgDelete, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
+
 		if (self.navigationItem.rightBarButtonItem.enabled) {
 			[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:answString, @"QuoteMessage", menuImgQuote, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
 		}
@@ -1990,9 +1993,12 @@
         }
         
         [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Blacklist", @"actionBL", menuImgBan, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
+        
+        [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Profil", @"actionProfil", menuImgProfil, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
+
+        [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Alerter", @"actionAlerter", menuImgAlerte, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
     }
     
-    [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Profil", @"actionProfil", menuImgProfil, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
     
     if ([self canBeFavorite]) {
         //NSLog(@"isRedFlagged ★");
@@ -2158,6 +2164,13 @@
     
     
 	
+}
+
+-(void) actionAlerter:(NSNumber *)curMsgN {
+    NSLog(@"actionAlerter %@", curMsgN);
+}
+-(void) actionSupprimer:(NSNumber *)curMsgN {
+    NSLog(@"actionSupprimer %@", curMsgN);
 }
 
 -(void) actionBL:(NSNumber *)curMsgN {
@@ -2345,14 +2358,20 @@
     [self actionBL:[NSNumber numberWithInt:curPostID]];
     
 }
-
+-(void)actionAlerter {
+    [self actionAlerter:[NSNumber numberWithInt:curPostID]];
+    
+}
+-(void)actionSupprimer {
+    [self actionSupprimer:[NSNumber numberWithInt:curPostID]];
+    
+}
 
 -(void)actionCiter {
 	[self actionCiter:[NSNumber numberWithInt:curPostID]];
 }
 
--(void)EditMessage
-{
+-(void)EditMessage {
 	[self EditMessage:[NSNumber numberWithInt:curPostID]];	
 }
 
