@@ -332,6 +332,9 @@ finish:
     NSLog(@"filter %@", self);
     
     self = [self stringByReplacingOccurrencesOfString:@"topic unique" withString:@"TU" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [self length])];
+    self = [self stringByReplacingOccurrencesOfString:@"T.U." withString:@"TU" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [self length])];
+    self = [self stringByReplacingOccurrencesOfString:@"topik unique" withString:@"TU" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [self length])];
+    self = [self stringByReplacingOccurrencesOfString:@"toupik ounik" withString:@"TU" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [self length])];
     self = [self stringByReplacingOccurrencesOfString:@"topique unique" withString:@"TU" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [self length])];
     self = [self stringByReplacingOccurrencesOfString:@"topic unik" withString:@"TU" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [self length])];
     self = [self stringByReplacingOccurrencesOfString:@"topik unik" withString:@"TU" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [self length])];
