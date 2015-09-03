@@ -1655,6 +1655,23 @@
     
     self.loaded = YES;
     
+    //Position du Flag
+    NSString* jsString10 = [NSString stringWithFormat:@"window.location.hash='';"];
+    [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString10];
+    
+    NSString* jsString11 = [NSString stringWithFormat:@"window.location.hash='%@';", self.stringFlagTopic];
+    [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString11];
+    
+    //bug iOS9--
+    if (SYSTEM_VERSION_LESS_THAN(@"9")) {
+        NSString* jsString2 = @"window.location.hash='#bas';";
+        NSString* jsString3 = [NSString stringWithFormat:@"window.location.hash='%@'", self.stringFlagTopic];
+        
+        [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString2];
+        [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString3];
+    }
+    //Position du Flag
+    
 	NSString *jsString = [[[NSString alloc] initWithString:@""] autorelease];
     
     
@@ -1665,49 +1682,19 @@
 		jsString = [jsString stringByAppendingString:[NSString stringWithFormat:@"$('#actualiserbtn').click( function(){ window.location = 'oijlkajsdoihjlkjasdorefresh://data'; });"]];
 		
 	}
-	else {
-		//NSLog(@"autre");
-	}
 	
 	jsString = [jsString stringByAppendingString:@"$('.message').addSwipeEvents().bind('doubletap', function(evt, touch) { window.location = 'oijlkajsdoihjlkjasdodetails://'+this.id; });"];
 	jsString = [jsString stringByAppendingString:@"$('.header').click(function(event) { var offset = $(this).offset(); event.stopPropagation(); window.location = 'oijlkajsdoihjlkjasdopopup://'+(offset.top-window.pageYOffset)+'/'+this.parentNode.id; });"];
 	
 	jsString = [jsString stringByAppendingString:@"$('.hfrplusimg').click(function() { window.location = 'oijlkajsdoihjlkjasdoimbrows://'+this.title+'/'+encodeURIComponent(this.alt); });"];
-	//jsString = [jsString stringByAppendingString:@"$('.message').doubletap(function(event){ window.location = 'oijlkajsdoihjlkjasdodetails://'+this.id; }, function(event){  }, 400);"];
-	
-	//[webView stringByEvaluatingJavaScriptFromString:@"x$('.message').touchend(function(e){ x$(this).removeClass('touched'); });"];
-	
-	
-	//NSLog(@"stringFlagTopic %@", self.stringFlagTopic);
 
-    
-    jsString = [jsString stringByAppendingString:[NSString stringWithFormat:@"window.location.hash='';window.location.hash='%@';", self.stringFlagTopic]];
-    
-	//jsString = [jsString stringByAppendingString:[NSString stringWithFormat:@"$('html, body').animate({scrollTop:$('a[name=\"%@\"]').offset().top }, 'slow');", [self.stringFlagTopic stringByReplacingOccurrencesOfString:@"#" withString:@""]]];
-    
+    [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString];
 
-	
-	[self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString];
-    
-    if (SYSTEM_VERSION_LESS_THAN(@"9")) {
-        NSString* jsString2 = @"window.location.hash='#bas';";
-        NSString* jsString3 = [NSString stringWithFormat:@"window.location.hash='%@'", self.stringFlagTopic];
-        
-        [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString2];
-        [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString3];
-    }
-
-    //NSLog(@"== webViewDidFinishLoadDOM OK");
     [self.loadingView setHidden:YES];
     [self.messagesWebView setHidden:NO];
 
     self.lastStringFlagTopic = self.stringFlagTopic;
     self.stringFlagTopic = @"";
-    
-	//NSLog(@"? webViewDidFinishLoad JS");
-	
-	//NSDate *nowT = [NSDate date]; // Create a current date
- 	//NSLog(@"TOTAL Time elapsed    : %f", [nowT timeIntervalSinceDate:self.firstDate]);
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
