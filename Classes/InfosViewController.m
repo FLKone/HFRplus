@@ -12,6 +12,8 @@
 #import "CreditsViewController.h"
 #import "HFRplusAppDelegate.h"
 #import "HFRDebugViewController.h"
+#import "AlerteModoViewController.h"
+#import "TestViewController.h"
 
 
 @implementation InfosViewController
@@ -94,7 +96,14 @@
     if (!debug) {
         
         [self.menuList[0] addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Debug", @"HFRDebugViewController", @"HFRDebugViewController", @"19-gear", nil]
-                                                                    forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];   
+                                                                    forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];
+        
+        [self.menuList[0] addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Alerte", @"AlerteModoViewController", @"AlerteModoViewController", @"19-gear", nil]
+                                                                       forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];
+
+        [self.menuList[0] addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Test", @"TestViewController", @"TestViewController", @"19-gear", nil]
+                                                                       forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];
+        
     }
 
     

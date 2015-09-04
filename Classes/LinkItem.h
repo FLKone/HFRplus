@@ -31,7 +31,7 @@
 	NSString *urlQuote;
 	NSString *urlEdit;
     NSString *urlProfil;
-	
+	NSString *urlAlert;
     
 	NSString *dicoHTML;
 	HTMLNode *messageNode;
@@ -61,6 +61,7 @@
 @property (nonatomic, retain) NSString *urlQuote;
 @property (nonatomic, retain) NSString *urlEdit;
 @property (nonatomic, retain) NSString *urlProfil;
+@property (nonatomic, retain) NSString *urlAlert;
 
 @property (nonatomic, retain) NSString *lastPostUrl;
 @property (nonatomic, retain) NSString *lastPageUrl;

@@ -1,15 +1,15 @@
 //
-//  AlerteModoViewController.m
+//  TestViewController.m
 //  HFRplus
 //
 //  Created by FLK on 04/09/2015.
 //
 //
 
-#import "AlerteModoViewController.h"
+#import "TestViewController.h"
 #import "HFRplusAppDelegate.h"
 
-@implementation AlerteModoViewController
+@implementation TestViewController
 @synthesize textView, delegate, url;
 
 // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -45,7 +45,7 @@
     
     [sendBarItem release];
     
-//    NSLog(@"VLD %@", self.url);
+    //    NSLog(@"VLD %@", self.url);
     //[self.textView setText:self.url];
 }
 
@@ -61,7 +61,7 @@
 }
 
 - (IBAction)done {
-
+    
     UIAlertView *alertOK = [[UIAlertView alloc] initWithTitle:@"Hooray-Debug !" message:@"Done!"
                                                      delegate:self.delegate cancelButtonTitle:nil otherButtonTitles: nil];
     [alertOK setTag:666];
@@ -74,8 +74,8 @@
     [indicator startAnimating];
     [alertOK addSubview:indicator];
     [indicator release];
-
-
+    
+    
     [alertOK release];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"VisibilityChanged" object:nil];
@@ -130,7 +130,7 @@
     
     [super dealloc];
     
-        
+    
 }
 
 @end

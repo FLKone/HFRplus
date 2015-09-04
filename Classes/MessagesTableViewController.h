@@ -31,7 +31,7 @@
 
 #import "MessageWebView.h"
 
-@interface MessagesTableViewController : PageViewController <UIActionSheetDelegate, ParseMessagesOperationDelegate, AddMessageViewControllerDelegate, PhotoViewControllerDelegate, UIScrollViewDelegate> {
+@interface MessagesTableViewController : PageViewController <UIActionSheetDelegate, ParseMessagesOperationDelegate, AddMessageViewControllerDelegate, PhotoViewControllerDelegate, UIScrollViewDelegate, AlerteModoViewControllerDelegate> {
     
 	MessageWebView *messagesWebView;
 	UIView *loadingView;

@@ -1377,6 +1377,17 @@
 
 
 #pragma mark -
+#pragma mark AlerteModo Delegate
+
+- (void)alertModoViewControllerDidFinish:(AlerteModoViewController *)controller {
+    NSLog(@"alertModoViewControllerDidFinish");
+}
+- (void)alertModoViewControllerDidFinishOK:(AlerteModoViewController *)controller {
+    NSLog(@"alertModoViewControllerDidFinishOK");
+
+}
+
+#pragma mark -
 #pragma mark AddMessage Delegate
 -(BOOL) canBeFavorite{
 	if ([self isUnreadable]) {
@@ -1928,14 +1939,13 @@
 		//NSLog(@"urlEdit");
 		[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Editer", @"EditMessage", menuImgEdit, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
         
-        if (curMsg) { //Pas de suppression du premier message d'un topic (curMsg = 0); 
+        if (curMsg) { //Pas de suppression du premier message d'un topic (curMsg = 0);
             [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Supprimer", @"actionSupprimer", menuImgDelete, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
         }
 
 		if (self.navigationItem.rightBarButtonItem.enabled) {
 			[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:answString, @"QuoteMessage", menuImgQuote, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
 		}
-
 	}
 	else {
 		//NSLog(@"profil");
@@ -2157,6 +2167,35 @@
 
 -(void) actionAlerter:(NSNumber *)curMsgN {
     NSLog(@"actionAlerter %@", curMsgN);
+    if (self.isAnimating) {
+        return;
+    }
+    
+    int curMsg = [curMsgN intValue];
+    
+    NSString *alertUrl = [NSString stringWithFormat:@"%@%@", kForumURL, [[arrayData objectAtIndex:curMsg] urlAlert]];
+    
+    AlerteModoViewController *alerteMessageViewController = [[AlerteModoViewController alloc]
+                                                             initWithNibName:@"AlerteModoViewController" bundle:nil];
+    alerteMessageViewController.delegate = self;
+    [alerteMessageViewController setUrl:alertUrl];
+    
+    // Create the navigation controller and present it modally.
+    HFRNavigationController *navigationController = [[HFRNavigationController alloc]
+                                                     initWithRootViewController:alerteMessageViewController];
+    
+    //navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+    //[self presentModalViewController:navigationController animated:YES];
+    
+    [self.navigationController pushViewController:alerteMessageViewController animated:YES];
+    
+    // The navigation controller is now owned by the current view controller
+    // and the root view controller is owned by the navigation controller,
+    // so both objects should be released to prevent over-retention.
+    [navigationController release];
+    [alerteMessageViewController release];
+    
+    
 }
 -(void) actionSupprimer:(NSNumber *)curMsgN {
     NSLog(@"actionSupprimer %@", curMsgN);

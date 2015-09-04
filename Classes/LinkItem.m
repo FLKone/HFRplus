@@ -12,7 +12,7 @@
 @implementation LinkItem
 
 @synthesize postID, lastPageUrl, lastPostUrl, viewed, name, url, flagUrl, typeFlag, rep, dicoHTML, messageDate, imageUI, textViewMsg, messageNode, messageAuteur;
-@synthesize urlQuote, urlEdit, urlProfil, addFlagUrl, quoteJS, MPUrl, isDel, isBL;
+@synthesize urlQuote, urlAlert, urlEdit, urlProfil, addFlagUrl, quoteJS, MPUrl, isDel, isBL;
 
 @synthesize quotedNB, quotedLINK, editedTime;
 
@@ -218,7 +218,8 @@
 	self.urlQuote = nil;
 	self.urlEdit = nil;
 	self.urlProfil = nil;
-	
+    self.urlAlert = nil;
+    
 	self.lastPageUrl = nil;
 	self.lastPostUrl = nil;
 	self.postID = nil;
