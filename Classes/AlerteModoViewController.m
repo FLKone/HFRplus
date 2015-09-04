@@ -86,7 +86,7 @@
         self.formSubmit = [[NSString alloc] init];
         
         self.title = @"Alerte Modération";
-        [self.textView setText:self.url];
+
     }
     return self;
 }
@@ -114,11 +114,16 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
+    [self.textView setPlaceholder:@"Attention : le message que vous écrivez ici sera envoyé directement chez les modérateurs via message privé ou e-mail.\n\nCe formulaire est destiné UNIQUEMENT à demander aux modérateurs de venir sur le sujet lorsqu'il y a un problème.\n\nIl ne sert pas à appeler à l'aide parce que personne ne répond à vos questions.\nIl ne sert pas non plus à ajouter un message sur le sujet, pour cela il y a le menu 'Répondre' (s'il est absent c'est que le sujet a été cloturé)."];
+    self.textView.placeholderColor = [UIColor lightGrayColor]; // optional
+    [self.textView setText:@""];
+
+    
     [self fetchContent];
 }
 
 -(void)setupResponder {
-    [self.textView becomeFirstResponder];
+   // [self.textView becomeFirstResponder];
 }
 
 -(void)loadDataInTableView:(NSData *)contentData {

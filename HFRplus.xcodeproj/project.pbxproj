@@ -126,6 +126,8 @@
 		4CC3C75A1B99BC18001B8632 /* AlerteModoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC3C7571B99BC18001B8632 /* AlerteModoViewController.m */; settings = {ASSET_TAGS = (); }; };
 		4CC3C75B1B99BC18001B8632 /* AlerteModoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CC3C7581B99BC18001B8632 /* AlerteModoViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		4CC3C75C1B99BC18001B8632 /* AlerteModoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CC3C7581B99BC18001B8632 /* AlerteModoViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		4CC3C7661B9A1513001B8632 /* UITextView+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC3C7651B9A1513001B8632 /* UITextView+Placeholder.m */; settings = {ASSET_TAGS = (); }; };
+		4CC3C7671B9A1513001B8632 /* UITextView+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC3C7651B9A1513001B8632 /* UITextView+Placeholder.m */; settings = {ASSET_TAGS = (); }; };
 		4CD6B8801B977E06007FC29E /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD6B87F1B977E06007FC29E /* SafariServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4CD6B8811B977E0E007FC29E /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD6B87F1B977E06007FC29E /* SafariServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4CD6B8831B9796F5007FC29E /* CancelFilled-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6B8821B9796F5007FC29E /* CancelFilled-20.png */; settings = {ASSET_TAGS = (); }; };
@@ -1046,6 +1048,8 @@
 		4CC3C7561B99BC18001B8632 /* AlerteModoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlerteModoViewController.h; sourceTree = "<group>"; };
 		4CC3C7571B99BC18001B8632 /* AlerteModoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlerteModoViewController.m; sourceTree = "<group>"; };
 		4CC3C7581B99BC18001B8632 /* AlerteModoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlerteModoViewController.xib; sourceTree = "<group>"; };
+		4CC3C7641B9A1513001B8632 /* UITextView+Placeholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+Placeholder.h"; sourceTree = "<group>"; };
+		4CC3C7651B9A1513001B8632 /* UITextView+Placeholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+Placeholder.m"; sourceTree = "<group>"; };
 		4CD6B87F1B977E06007FC29E /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		4CD6B8821B9796F5007FC29E /* CancelFilled-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CancelFilled-20.png"; sourceTree = "<group>"; };
 		4CD6B8851B979713007FC29E /* CancelFilled-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CancelFilled-20@2x.png"; sourceTree = "<group>"; };
@@ -2122,6 +2126,8 @@
 				CA00C46917C302610067B457 /* UITableViewController+Ext.m */,
 				CA00C46A17C302610067B457 /* UIWebView+Tools.h */,
 				CA00C46B17C302610067B457 /* UIWebView+Tools.m */,
+				4CC3C7641B9A1513001B8632 /* UITextView+Placeholder.h */,
+				4CC3C7651B9A1513001B8632 /* UITextView+Placeholder.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -3428,6 +3434,7 @@
 				CAFD004315B9B665003CA3FC /* HFRDebugViewController.m in Sources */,
 				CA8A79B215BB404700D8E9E7 /* Favorite.m in Sources */,
 				CA00C3E717C2FE1B0067B457 /* IASKAppSettingsViewController.m in Sources */,
+				4CC3C7661B9A1513001B8632 /* UITextView+Placeholder.m in Sources */,
 				CA00C41C17C2FE240067B457 /* SDWebImageDownloader.m in Sources */,
 				CA00C3E917C2FE1B0067B457 /* IASKSpecifierValuesViewController.m in Sources */,
 				CA00C3E817C2FE1B0067B457 /* IASKAppSettingsWebViewController.m in Sources */,
@@ -3548,6 +3555,7 @@
 				CA7C7111185EF50E00B348BA /* HFRDebugViewController.m in Sources */,
 				CA7C7112185EF50E00B348BA /* Favorite.m in Sources */,
 				CA7C7113185EF50E00B348BA /* IASKAppSettingsViewController.m in Sources */,
+				4CC3C7671B9A1513001B8632 /* UITextView+Placeholder.m in Sources */,
 				CA7C7114185EF50E00B348BA /* SDWebImageDownloader.m in Sources */,
 				CA7C7115185EF50E00B348BA /* IASKSpecifierValuesViewController.m in Sources */,
 				CA7C7116185EF50E00B348BA /* IASKAppSettingsWebViewController.m in Sources */,
