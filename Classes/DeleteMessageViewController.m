@@ -32,7 +32,13 @@
     [self.textFieldSmileys setEnabled:NO];
     [self.textView setEditable:NO];
     [self.textView setAlpha:0.6];
-    [self.textView setSelectable:NO];
+    if ([self.textView respondsToSelector:@selector(setSelectable:)]) {
+        [self.textView setSelectable:NO];
+    }
+    else {
+        [self.textView setUserInteractionEnabled:NO];
+    }
+
     
 }
 
