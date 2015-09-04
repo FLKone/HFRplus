@@ -215,9 +215,7 @@
 
             HTMLNode * alertNode = [messageNode findChildWithAttribute:@"href" matchingName:@"/user/modo.php" allowPartial:YES];
             fasTest.urlAlert = [alertNode getAttributeNamed:@"href"];
-            
-            NSLog(@"url=%@", fasTest.urlAlert);
-            
+                        
 			HTMLNode * profilNode = [[messageNode findChildWithAttribute:@"alt" matchingName:@"profil" allowPartial:NO] parent];
 			fasTest.urlProfil = [profilNode getAttributeNamed:@"href"];
             

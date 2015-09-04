@@ -126,10 +126,6 @@
 		4CC3C75A1B99BC18001B8632 /* AlerteModoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC3C7571B99BC18001B8632 /* AlerteModoViewController.m */; settings = {ASSET_TAGS = (); }; };
 		4CC3C75B1B99BC18001B8632 /* AlerteModoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CC3C7581B99BC18001B8632 /* AlerteModoViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		4CC3C75C1B99BC18001B8632 /* AlerteModoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CC3C7581B99BC18001B8632 /* AlerteModoViewController.xib */; settings = {ASSET_TAGS = (); }; };
-		4CC3C7601B99E2F8001B8632 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC3C75E1B99E2F8001B8632 /* TestViewController.m */; settings = {ASSET_TAGS = (); }; };
-		4CC3C7611B99E2F8001B8632 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC3C75E1B99E2F8001B8632 /* TestViewController.m */; settings = {ASSET_TAGS = (); }; };
-		4CC3C7621B99E2F8001B8632 /* TestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CC3C75F1B99E2F8001B8632 /* TestViewController.xib */; settings = {ASSET_TAGS = (); }; };
-		4CC3C7631B99E2F8001B8632 /* TestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CC3C75F1B99E2F8001B8632 /* TestViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		4CD6B8801B977E06007FC29E /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD6B87F1B977E06007FC29E /* SafariServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4CD6B8811B977E0E007FC29E /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD6B87F1B977E06007FC29E /* SafariServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4CD6B8831B9796F5007FC29E /* CancelFilled-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6B8821B9796F5007FC29E /* CancelFilled-20.png */; settings = {ASSET_TAGS = (); }; };
@@ -1050,9 +1046,6 @@
 		4CC3C7561B99BC18001B8632 /* AlerteModoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlerteModoViewController.h; sourceTree = "<group>"; };
 		4CC3C7571B99BC18001B8632 /* AlerteModoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlerteModoViewController.m; sourceTree = "<group>"; };
 		4CC3C7581B99BC18001B8632 /* AlerteModoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlerteModoViewController.xib; sourceTree = "<group>"; };
-		4CC3C75D1B99E2F8001B8632 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
-		4CC3C75E1B99E2F8001B8632 /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
-		4CC3C75F1B99E2F8001B8632 /* TestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestViewController.xib; sourceTree = "<group>"; };
 		4CD6B87F1B977E06007FC29E /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		4CD6B8821B9796F5007FC29E /* CancelFilled-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CancelFilled-20.png"; sourceTree = "<group>"; };
 		4CD6B8851B979713007FC29E /* CancelFilled-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CancelFilled-20@2x.png"; sourceTree = "<group>"; };
@@ -2543,9 +2536,6 @@
 				CAF03C551245612800897C3B /* AccessoryView.xib */,
 				CAA1B090125C0A53009C80E3 /* AKSegmentedControl.h */,
 				CAA1B091125C0A53009C80E3 /* AKSegmentedControl.m */,
-				4CC3C75D1B99E2F8001B8632 /* TestViewController.h */,
-				4CC3C75E1B99E2F8001B8632 /* TestViewController.m */,
-				4CC3C75F1B99E2F8001B8632 /* TestViewController.xib */,
 				4CC3C7561B99BC18001B8632 /* AlerteModoViewController.h */,
 				4CC3C7571B99BC18001B8632 /* AlerteModoViewController.m */,
 				4CC3C7581B99BC18001B8632 /* AlerteModoViewController.xib */,
@@ -2964,7 +2954,6 @@
 				CA00C68317C30C370067B457 /* 121-lanscape.png in Resources */,
 				CA00C69817C30C370067B457 /* arrowforward.png in Resources */,
 				CA00C6AE17C30C370067B457 /* unselectedrow.png in Resources */,
-				4CC3C7621B99E2F8001B8632 /* TestViewController.xib in Resources */,
 				CAAFF8AB17DF7A0900C120BC /* all_categories.png in Resources */,
 				4CB132B71B90970C0081B44D /* RemoveUserFilled-20@2x.png in Resources */,
 				CA00C6D017C30C370067B457 /* endon.png in Resources */,
@@ -3304,7 +3293,6 @@
 				CA7C70A7185EF50E00B348BA /* arrowforward.png in Resources */,
 				CA7C70A8185EF50E00B348BA /* unselectedrow.png in Resources */,
 				CA7C70A9185EF50E00B348BA /* all_categories.png in Resources */,
-				4CC3C7631B99E2F8001B8632 /* TestViewController.xib in Resources */,
 				CA7C70AA185EF50E00B348BA /* endon.png in Resources */,
 				4CB132B81B90970C0081B44D /* RemoveUserFilled-20@2x.png in Resources */,
 				4CB311F319FAFF2C0097D84D /* jquery.hammer.js in Resources */,
@@ -3367,7 +3355,6 @@
 				0140ABB0121E011D001C35C4 /* Catcounter.m in Sources */,
 				0140ABB1121E011D001C35C4 /* FavoritesTableViewController.m in Sources */,
 				4CC3C7591B99BC18001B8632 /* AlerteModoViewController.m in Sources */,
-				4CC3C7601B99E2F8001B8632 /* TestViewController.m in Sources */,
 				CA00C46F17C302610067B457 /* UIImage+Resize.m in Sources */,
 				CA00C45917C300140067B457 /* RegexKitLite.m in Sources */,
 				013F0EAB121E117900BEBEB1 /* LinkItem.m in Sources */,
@@ -3488,7 +3475,6 @@
 				CA7C70D1185EF50E00B348BA /* Catcounter.m in Sources */,
 				CA7C70D2185EF50E00B348BA /* FavoritesTableViewController.m in Sources */,
 				4CC3C75A1B99BC18001B8632 /* AlerteModoViewController.m in Sources */,
-				4CC3C7611B99E2F8001B8632 /* TestViewController.m in Sources */,
 				CA7C70D3185EF50E00B348BA /* UIImage+Resize.m in Sources */,
 				CA7C70D4185EF50E00B348BA /* RegexKitLite.m in Sources */,
 				CA7C70D5185EF50E00B348BA /* LinkItem.m in Sources */,

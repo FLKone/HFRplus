@@ -1381,9 +1381,11 @@
 
 - (void)alertModoViewControllerDidFinish:(AlerteModoViewController *)controller {
     NSLog(@"alertModoViewControllerDidFinish");
+    [self dismissModalViewControllerAnimated:YES];
 }
 - (void)alertModoViewControllerDidFinishOK:(AlerteModoViewController *)controller {
     NSLog(@"alertModoViewControllerDidFinishOK");
+    [self dismissModalViewControllerAnimated:YES];
 
 }
 
@@ -2180,18 +2182,12 @@
     alerteMessageViewController.delegate = self;
     [alerteMessageViewController setUrl:alertUrl];
     
-    // Create the navigation controller and present it modally.
     HFRNavigationController *navigationController = [[HFRNavigationController alloc]
                                                      initWithRootViewController:alerteMessageViewController];
     
-    //navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-    //[self presentModalViewController:navigationController animated:YES];
-    
-    [self.navigationController pushViewController:alerteMessageViewController animated:YES];
-    
-    // The navigation controller is now owned by the current view controller
-    // and the root view controller is owned by the navigation controller,
-    // so both objects should be released to prevent over-retention.
+    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+    [self presentModalViewController:navigationController animated:YES];
+
     [navigationController release];
     [alerteMessageViewController release];
     
@@ -2212,16 +2208,12 @@
     delMessageViewController.delegate = self;
     [delMessageViewController setUrlQuote:editUrl];
     
-    // Create the navigation controller and present it modally.
     HFRNavigationController *navigationController = [[HFRNavigationController alloc]
                                                      initWithRootViewController:delMessageViewController];
     
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
     [self presentModalViewController:navigationController animated:YES];
-    
-    // The navigation controller is now owned by the current view controller
-    // and the root view controller is owned by the navigation controller,
-    // so both objects should be released to prevent over-retention.
+
     [navigationController release];
     [delMessageViewController release];
 }
