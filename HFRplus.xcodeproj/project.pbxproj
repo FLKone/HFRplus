@@ -120,6 +120,12 @@
 		4CB311F019FAFCAE0097D84D /* hammer.min.map in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311EE19FAFCAE0097D84D /* hammer.min.map */; };
 		4CB311F219FAFF2C0097D84D /* jquery.hammer.js in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311F119FAFF2C0097D84D /* jquery.hammer.js */; };
 		4CB311F319FAFF2C0097D84D /* jquery.hammer.js in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311F119FAFF2C0097D84D /* jquery.hammer.js */; };
+		4CC3C7501B99BB6F001B8632 /* DeleteMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC3C74F1B99BB6F001B8632 /* DeleteMessageViewController.m */; settings = {ASSET_TAGS = (); }; };
+		4CC3C7511B99BB6F001B8632 /* DeleteMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC3C74F1B99BB6F001B8632 /* DeleteMessageViewController.m */; settings = {ASSET_TAGS = (); }; };
+		4CC3C7591B99BC18001B8632 /* AlerteModoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC3C7571B99BC18001B8632 /* AlerteModoViewController.m */; settings = {ASSET_TAGS = (); }; };
+		4CC3C75A1B99BC18001B8632 /* AlerteModoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC3C7571B99BC18001B8632 /* AlerteModoViewController.m */; settings = {ASSET_TAGS = (); }; };
+		4CC3C75B1B99BC18001B8632 /* AlerteModoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CC3C7581B99BC18001B8632 /* AlerteModoViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		4CC3C75C1B99BC18001B8632 /* AlerteModoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CC3C7581B99BC18001B8632 /* AlerteModoViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		4CD6B8801B977E06007FC29E /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD6B87F1B977E06007FC29E /* SafariServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4CD6B8811B977E0E007FC29E /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD6B87F1B977E06007FC29E /* SafariServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4CD6B8831B9796F5007FC29E /* CancelFilled-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6B8821B9796F5007FC29E /* CancelFilled-20.png */; settings = {ASSET_TAGS = (); }; };
@@ -1035,6 +1041,11 @@
 		4CB311EB19FAF8750097D84D /* hammer.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = hammer.min.js; sourceTree = "<group>"; };
 		4CB311EE19FAFCAE0097D84D /* hammer.min.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = hammer.min.map; sourceTree = "<group>"; };
 		4CB311F119FAFF2C0097D84D /* jquery.hammer.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.hammer.js; sourceTree = "<group>"; };
+		4CC3C74E1B99BB6F001B8632 /* DeleteMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeleteMessageViewController.h; sourceTree = "<group>"; };
+		4CC3C74F1B99BB6F001B8632 /* DeleteMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeleteMessageViewController.m; sourceTree = "<group>"; };
+		4CC3C7561B99BC18001B8632 /* AlerteModoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlerteModoViewController.h; sourceTree = "<group>"; };
+		4CC3C7571B99BC18001B8632 /* AlerteModoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlerteModoViewController.m; sourceTree = "<group>"; };
+		4CC3C7581B99BC18001B8632 /* AlerteModoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlerteModoViewController.xib; sourceTree = "<group>"; };
 		4CD6B87F1B977E06007FC29E /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		4CD6B8821B9796F5007FC29E /* CancelFilled-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CancelFilled-20.png"; sourceTree = "<group>"; };
 		4CD6B8851B979713007FC29E /* CancelFilled-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CancelFilled-20@2x.png"; sourceTree = "<group>"; };
@@ -2519,10 +2530,15 @@
 				CA81D28C12281D5800AC6ADA /* EditMessageViewController.m */,
 				CAAFAFDA125E2A58001B90EC /* NewMessageViewController.h */,
 				CAAFAFDB125E2A58001B90EC /* NewMessageViewController.m */,
+				4CC3C74E1B99BB6F001B8632 /* DeleteMessageViewController.h */,
+				4CC3C74F1B99BB6F001B8632 /* DeleteMessageViewController.m */,
 				013F0EA3121E117900BEBEB1 /* AddMessageViewController.xib */,
 				CAF03C551245612800897C3B /* AccessoryView.xib */,
 				CAA1B090125C0A53009C80E3 /* AKSegmentedControl.h */,
 				CAA1B091125C0A53009C80E3 /* AKSegmentedControl.m */,
+				4CC3C7561B99BC18001B8632 /* AlerteModoViewController.h */,
+				4CC3C7571B99BC18001B8632 /* AlerteModoViewController.m */,
+				4CC3C7581B99BC18001B8632 /* AlerteModoViewController.xib */,
 			);
 			name = Forms;
 			sourceTree = "<group>";
@@ -2720,6 +2736,7 @@
 				CA00C6E617C30C370067B457 /* previousIcon@2x.png in Resources */,
 				CA00C6CB17C30C370067B457 /* buttonpreviousoff@2x.png in Resources */,
 				CA00C6E517C30C370067B457 /* previousIcon.png in Resources */,
+				4CC3C75B1B99BC18001B8632 /* AlerteModoViewController.xib in Resources */,
 				CA00C6B817C30C370067B457 /* buttonbeginoff.png in Resources */,
 				CA00C45D17C301650067B457 /* MainWindow-iPad.xib in Resources */,
 				CAF5DB901936D013000B5215 /* 71-compass@2x.png in Resources */,
@@ -3058,6 +3075,7 @@
 				CA7C6FEB185EF50E00B348BA /* buttonpreviousoff@2x.png in Resources */,
 				CA7C6FEC185EF50E00B348BA /* previousIcon.png in Resources */,
 				CA7C6FEE185EF50E00B348BA /* buttonbeginoff.png in Resources */,
+				4CC3C75C1B99BC18001B8632 /* AlerteModoViewController.xib in Resources */,
 				CA7C6FEF185EF50E00B348BA /* MainWindow-iPad.xib in Resources */,
 				CAF5DB911936D013000B5215 /* 71-compass@2x.png in Resources */,
 				CA7C6FF0185EF50E00B348BA /* IASKPSSliderSpecifierViewCell.xib in Resources */,
@@ -3336,6 +3354,7 @@
 				0140ABAF121E011D001C35C4 /* FavoriteCell.m in Sources */,
 				0140ABB0121E011D001C35C4 /* Catcounter.m in Sources */,
 				0140ABB1121E011D001C35C4 /* FavoritesTableViewController.m in Sources */,
+				4CC3C7591B99BC18001B8632 /* AlerteModoViewController.m in Sources */,
 				CA00C46F17C302610067B457 /* UIImage+Resize.m in Sources */,
 				CA00C45917C300140067B457 /* RegexKitLite.m in Sources */,
 				013F0EAB121E117900BEBEB1 /* LinkItem.m in Sources */,
@@ -3370,6 +3389,7 @@
 				CA00C44317C2FF3F0067B457 /* ASIHTTPRequest.m in Sources */,
 				CAAFAFDC125E2A58001B90EC /* NewMessageViewController.m in Sources */,
 				CA00C3B517C2FDB00067B457 /* MWPhotoBrowser.m in Sources */,
+				4CC3C7501B99BB6F001B8632 /* DeleteMessageViewController.m in Sources */,
 				CA00C46E17C302610067B457 /* RangeOfCharacters.m in Sources */,
 				CA77D0F51261424D00271D62 /* PageViewController.m in Sources */,
 				CA00C47017C302610067B457 /* UITableViewController+Ext.m in Sources */,
@@ -3454,6 +3474,7 @@
 				CA7C70D0185EF50E00B348BA /* FavoriteCell.m in Sources */,
 				CA7C70D1185EF50E00B348BA /* Catcounter.m in Sources */,
 				CA7C70D2185EF50E00B348BA /* FavoritesTableViewController.m in Sources */,
+				4CC3C75A1B99BC18001B8632 /* AlerteModoViewController.m in Sources */,
 				CA7C70D3185EF50E00B348BA /* UIImage+Resize.m in Sources */,
 				CA7C70D4185EF50E00B348BA /* RegexKitLite.m in Sources */,
 				CA7C70D5185EF50E00B348BA /* LinkItem.m in Sources */,
@@ -3488,6 +3509,7 @@
 				CA7C70EF185EF50E00B348BA /* ASIHTTPRequest.m in Sources */,
 				CA7C70F0185EF50E00B348BA /* NewMessageViewController.m in Sources */,
 				CA7C70F1185EF50E00B348BA /* MWPhotoBrowser.m in Sources */,
+				4CC3C7511B99BB6F001B8632 /* DeleteMessageViewController.m in Sources */,
 				CA7C70F2185EF50E00B348BA /* RangeOfCharacters.m in Sources */,
 				CA7C70F3185EF50E00B348BA /* PageViewController.m in Sources */,
 				CA7C70F4185EF50E00B348BA /* UITableViewController+Ext.m in Sources */,

@@ -672,6 +672,11 @@
 	}
 }
 
+-(bool)isDeleteMode {
+    NSLog(@"IS DELETE? IN");
+    return NO;
+}
+
 - (IBAction)done {
 	//NSLog(@"done %@", self.formSubmit);
     
@@ -687,7 +692,9 @@
 			}
 		}
 		else if ([key isEqualToString:@"delete"]) {
-			
+            if ([self isDeleteMode]) {
+                [arequest setPostValue:@"1" forKey:key];
+            }
 		}
 		else
 			[arequest setPostValue:[self.arrayInputData objectForKey:key] forKey:key];

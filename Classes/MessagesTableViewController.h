@@ -19,6 +19,8 @@
 #import "QuoteMessageViewController.h"
 #import "EditMessageViewController.h"
 #import "NewMessageViewController.h"
+#import "DeleteMessageViewController.h"
+#import "AlerteModoViewController.h"
 
 #import "PhotoViewController.h"
 #import "MWPhotoBrowser.h"

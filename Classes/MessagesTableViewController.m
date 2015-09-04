@@ -1927,8 +1927,10 @@
 	if([[arrayData objectAtIndex:curMsg] urlEdit]){
 		//NSLog(@"urlEdit");
 		[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Editer", @"EditMessage", menuImgEdit, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
-
-        [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Supprimer", @"actionSupprimer", menuImgDelete, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
+        
+        if (curMsg) { //Pas de suppression du premier message d'un topic (curMsg = 0); 
+            [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Supprimer", @"actionSupprimer", menuImgDelete, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
+        }
 
 		if (self.navigationItem.rightBarButtonItem.enabled) {
 			[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:answString, @"QuoteMessage", menuImgQuote, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
@@ -2158,6 +2160,31 @@
 }
 -(void) actionSupprimer:(NSNumber *)curMsgN {
     NSLog(@"actionSupprimer %@", curMsgN);
+    if (self.isAnimating) {
+        return;
+    }
+
+    int curMsg = [curMsgN intValue];
+    
+    NSString *editUrl = [NSString stringWithFormat:@"%@%@", kForumURL, [[[arrayData objectAtIndex:curMsg] urlEdit] decodeSpanUrlFromString]];
+
+    DeleteMessageViewController *delMessageViewController = [[DeleteMessageViewController alloc]
+                                                              initWithNibName:@"AddMessageViewController" bundle:nil];
+    delMessageViewController.delegate = self;
+    [delMessageViewController setUrlQuote:editUrl];
+    
+    // Create the navigation controller and present it modally.
+    HFRNavigationController *navigationController = [[HFRNavigationController alloc]
+                                                     initWithRootViewController:delMessageViewController];
+    
+    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+    [self presentModalViewController:navigationController animated:YES];
+    
+    // The navigation controller is now owned by the current view controller
+    // and the root view controller is owned by the navigation controller,
+    // so both objects should be released to prevent over-retention.
+    [navigationController release];
+    [delMessageViewController release];
 }
 
 -(void) actionBL:(NSNumber *)curMsgN {
