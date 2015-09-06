@@ -89,15 +89,8 @@
     [self.menuList[0] addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Liste noire", @"BlackListTableViewController", @"BlackListTableViewController", @"Thor Hammer Filled-23", nil]
                                                                 forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];
 
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    BOOL debug = [defaults boolForKey:@"menu_debug"];
-    
-    //NSLog(@"display %@", display);
-    
-    if (debug) {
-        [self.menuList[0] addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Debug", @"HFRDebugViewController", @"HFRDebugViewController", @"19-gear", nil]
-                                                                    forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];
-    }
+    [self.menuList[0] addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Debug", @"HFRDebugViewController", @"HFRDebugViewController", @"19-gear", nil]
+                                                                forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];
 
     
 }
