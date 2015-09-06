@@ -194,6 +194,12 @@
                 }
             }
             
+            //recherche
+            NSArray * nodesInMsg = [[messageNode findChildOfClass:@"messCase2"] children];
+            if (nodesInMsg.count >= 2 && [[[nodesInMsg objectAtIndex:1] tagName] isEqualToString:@"a"]) {
+                fasTest.dicoHTML = [rawContentsOfNode([[nodesInMsg objectAtIndex:1] _node], [myParser _doc]) stringByAppendingString:fasTest.dicoHTML];
+            }
+            
 			//NSDate *then1 = [NSDate date]; // Create a current date
 
 			/* OLD SLOW

@@ -66,6 +66,11 @@
 
 }
 
+.message .content .right>a.cLink {
+    background-image: url(unselectedrow@2x.png);
+    background-size: 45px 50px;
+}
+
 .ios7 .message .header .right {
     background-size: 100%;
     background-image:url(plus@2x.png);

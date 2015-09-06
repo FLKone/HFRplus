@@ -33,7 +33,7 @@
     NSString *urlProfil;
 	NSString *urlAlert;
     
-	NSString *dicoHTML;
+	NSString *dicoHTML;    
 	HTMLNode *messageNode;
 
 	NSString *imageUI;
