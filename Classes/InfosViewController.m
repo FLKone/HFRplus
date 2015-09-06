@@ -57,7 +57,9 @@
 	*/
     
     [self hideEmptySeparators];
-    [self.tableView setBackgroundColor:[UIColor colorWithRed:239/255.0f green:239/255.0f blue:244/255.0f alpha:1.0f]];
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        [self.tableView setBackgroundColor:[UIColor colorWithRed:239/255.0f green:239/255.0f blue:244/255.0f alpha:1.0f]];
+    }
     
     self.menuList = [NSMutableArray array];
     self.menuList[0] = [NSMutableArray array];
@@ -92,11 +94,9 @@
     
     //NSLog(@"display %@", display);
     
-    if (!debug) {
-        
+    if (debug) {
         [self.menuList[0] addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Debug", @"HFRDebugViewController", @"HFRDebugViewController", @"19-gear", nil]
                                                                     forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];
-
     }
 
     
@@ -112,7 +112,6 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-	
 	[super viewWillAppear:animated];
 	
 	[self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:NO];
@@ -142,6 +141,13 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (section == 0) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        BOOL debug = [defaults boolForKey:@"menu_debug"];
+        
+        if (!debug)
+            return ((NSMutableArray *)menuList[section]).count - 1;
+    }
     return ((NSMutableArray *)menuList[section]).count;
 }
 
@@ -149,7 +155,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return menuList.count;
 }
-
+/*
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {    
     return HEIGHT_FOR_HEADER_IN_SECTION;
 }
@@ -191,6 +197,7 @@
     return customView;
     
 }
+*/
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
