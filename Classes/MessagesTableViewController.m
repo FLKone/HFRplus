@@ -115,7 +115,6 @@
         case kNewMessageFromShake:
         case kNewMessageFromUpdate:
         case kNewMessageFromEditor:
-        case kNewMessageFromNext:
             NSLog(@"hidden");
             [self.loadingView setHidden:YES];
             break;
