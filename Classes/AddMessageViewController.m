@@ -1829,7 +1829,12 @@
         picker.allowsEditing = NO;
         picker.sourceType = sourceType;
 
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        if ([self respondsToSelector:@selector(traitCollection)] && [HFRplusAppDelegate sharedAppDelegate].window.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact){
+
+            [self presentModalViewController:picker animated:YES];
+
+        }
+        else if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             self.popover = nil;
             UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:picker];
             [popover presentPopoverFromRect:sender.frame inView:[self.rehostTableView tableHeaderView] permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
@@ -1844,8 +1849,13 @@
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     
-    //NSLog(@"imagePickerControllerDidCancel");
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+    NSLog(@"imagePickerControllerDidCancel");
+    if ([self respondsToSelector:@selector(traitCollection)] && [HFRplusAppDelegate sharedAppDelegate].window.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact){
+        
+        [picker dismissModalViewControllerAnimated:YES];
+        
+    }
+    else if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         [_popover dismissPopoverAnimated:YES];
     }
     else

@@ -1682,10 +1682,13 @@
 }
 
 - (void)pushTopic {
-    
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone || [[HFRplusAppDelegate sharedAppDelegate].detailNavigationController.topViewController isMemberOfClass:[BrowserViewController class]]) {
-        
 
+
+    if (([self respondsToSelector:@selector(traitCollection)] && [HFRplusAppDelegate sharedAppDelegate].window.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) ||
+        [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone ||
+        [[HFRplusAppDelegate sharedAppDelegate].detailNavigationController.topViewController isMemberOfClass:[BrowserViewController class]]) {
+        
+        
         
         [self.navigationController pushViewController:messagesTableViewController animated:YES];
     }
@@ -1694,9 +1697,7 @@
         
         [[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] setViewControllers:[NSMutableArray arrayWithObjects:messagesTableViewController, nil] animated:YES];
         
-//        [[HFRplusAppDelegate sharedAppDelegate] setDetailNavigationController:messagesTableViewController];
-        
-    }   
+    }
     
     [self setTopicViewed];
     
