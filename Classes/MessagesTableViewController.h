@@ -34,7 +34,8 @@
 @interface MessagesTableViewController : PageViewController <UIActionSheetDelegate, ParseMessagesOperationDelegate, AddMessageViewControllerDelegate, PhotoViewControllerDelegate, UIScrollViewDelegate, AlerteModoViewControllerDelegate> {
     
 	MessageWebView *messagesWebView;
-	UIView *loadingView;
+    UIView *loadingView;
+    UILabel *errorLabelView;
 	UIView *overview;
 	
 
@@ -101,6 +102,7 @@
 
 @property (nonatomic, retain) IBOutlet MessageWebView *messagesWebView;
 @property (nonatomic, retain) IBOutlet UIView *loadingView;
+@property (nonatomic, retain) IBOutlet UILabel *errorLabelView;
 @property (nonatomic, retain) IBOutlet UIView *overview;
 
 @property (nonatomic, retain) NSString *topicAnswerUrl;

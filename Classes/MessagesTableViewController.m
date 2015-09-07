@@ -17,6 +17,8 @@
 #import "RegexKitLite.h"
 #import "HTMLParser.h"
 #import "ASIHTTPRequest.h"
+#import "ASIFormDataRequest.h"
+
 #import "ASIDownloadCache.h"
 
 #import "UIWebView+Tools.h"
@@ -34,7 +36,7 @@
 #import "BlackList.h"
 
 @implementation MessagesTableViewController
-@synthesize loaded, isLoading, _topicName, topicAnswerUrl, loadingView, messagesWebView, arrayData, updatedArrayData, detailViewController, messagesTableViewController, pollNode;
+@synthesize loaded, isLoading, _topicName, topicAnswerUrl, loadingView, errorLabelView, messagesWebView, arrayData, updatedArrayData, detailViewController, messagesTableViewController, pollNode;
 @synthesize swipeLeftRecognizer, swipeRightRecognizer, overview, arrayActionsMessages, lastStringFlagTopic;
 @synthesize searchBg, searchBox, searchKeyword, searchPseudo, searchFilter, searchFromFP, searchInputData, isSearchInstra;
 
@@ -84,8 +86,8 @@
     
     //NSLog(@"URL %@", [self currentUrl]);
     
-    NSLog(@"[self currentUrl] %@", [self currentUrl]);
-    NSLog(@"[self stringFlagTopic] %@", [self stringFlagTopic]);
+    //NSLog(@"[self currentUrl] %@", [self currentUrl]);
+    //NSLog(@"[self stringFlagTopic] %@", [self stringFlagTopic]);
     
 	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]]]];
 	[request setDelegate:self];
@@ -107,19 +109,21 @@
         [self.messagesWebView setHidden:YES];
     }
 
-    NSLog(@"from %d", from);
+    //NSLog(@"from %d", from);
     
+    [self.errorLabelView setHidden:YES];
+
     if(from == kNewMessageFromNext) self.stringFlagTopic = @"#bas";
     
     switch (from) {
         case kNewMessageFromShake:
         case kNewMessageFromUpdate:
         case kNewMessageFromEditor:
-            NSLog(@"hidden");
+            //NSLog(@"hidden");
             [self.loadingView setHidden:YES];
             break;
         default:
-            NSLog(@"not hidden");
+            //NSLog(@"not hidden");
             [self.loadingView setHidden:NO];
             [self.messagesWebView stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML = \"\";"];
             break;
@@ -137,7 +141,7 @@
 - (void)fetchContentStarted:(ASIHTTPRequest *)theRequest
 {
 	//--
-	NSLog(@"fetchContentStarted");
+	//NSLog(@"fetchContentStarted");
     
     if (![self.currentUrl isEqualToString:[theRequest.url.absoluteString stringByReplacingOccurrencesOfString:kForumURL withString:@""]]) {
         //NSLog(@"not equal ==");
@@ -181,8 +185,8 @@
 	
 	[self.loadingView setHidden:YES];
 	
-    NSLog(@"theRequest.error %@", theRequest.error);
-    NSLog(@"theRequest.url %@", theRequest.url);
+    //NSLog(@"theRequest.error %@", theRequest.error);
+    //NSLog(@"theRequest.url %@", theRequest.url);
 	
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[theRequest.error localizedDescription]
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
@@ -198,7 +202,7 @@
 
 -(void)setupScrollAndPage
 {
-	NSLog(@"topicName: %@", self.topicName);
+	//NSLog(@"topicName: %@", self.topicName);
 	
 	//On vire le '#t09707987987'
 	NSRange rangeFlagPage;
@@ -219,13 +223,10 @@
     }    
 	//--
 
-    if (self.isSearchInstra) {
-        
-        [(UILabel *)[self navigationItem].titleView setText:[NSString stringWithFormat:@"Recherche | %@", self.topicName]];
-        [(UILabel *)[self navigationItem].titleView adjustFontSizeToFit];
-        self.pageNumber = 0;
-    }
-    else {
+
+    /* else */
+    
+    {
         //On check si y'a page=2323
         NSString *regexString  = @".*page=([^&]+).*";
         NSRange   matchedRange;// = NSMakeRange(NSNotFound, 0UL);
@@ -248,7 +249,15 @@
         [(UILabel *)[self navigationItem].titleView adjustFontSizeToFit];
     }
 
+    //NSLog(@"pageNumber %d", self.pageNumber);
 
+    if (self.isSearchInstra) {
+        
+        [(UILabel *)[self navigationItem].titleView setText:[NSString stringWithFormat:@"Recherche | %@", self.topicName]];
+        [(UILabel *)[self navigationItem].titleView adjustFontSizeToFit];
+        
+    }
+    
 	//self.title = [NSString stringWithFormat:@"%@ — %d", self.topicName, self.pageNumber];
     
 	//[self navigationItem].titleView.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height - 4);
@@ -289,6 +298,9 @@
             
 			[self setFirstPageNumber:[[[temporaryNumPagesArray objectAtIndex:2] contents] intValue]];
 			
+            //NSLog(@"num %d = %d", [self pageNumber], [self firstPageNumber]);
+
+            
 			if ([self pageNumber] == [self firstPageNumber]) {
 				NSString *newFirstPageUrl = [[NSString alloc] initWithString:[self currentUrl]];
 				[self setFirstPageUrl:newFirstPageUrl];
@@ -310,7 +322,7 @@
 				[newLastPageUrl release];
 			}
 			else {
-                NSLog(@"lastObject %@", [[temporaryNumPagesArray lastObject] allContents]);
+                //NSLog(@"lastObject %@", [[temporaryNumPagesArray lastObject] allContents]);
                 
 				NSString *newLastPageUrl = [[NSString alloc] initWithString:[[temporaryNumPagesArray lastObject] getAttributeNamed:@"href"]];
 				[self setLastPageUrl:newLastPageUrl];
@@ -401,44 +413,46 @@
 		
 		NSArray *temporaryPagesArray = [pagesTrNode findChildrenWithAttribute:@"class" matchingName:@"pagepresuiv" allowPartial:YES];
 		
-		if(temporaryPagesArray.count != 3)
+        if (self.isSearchInstra) {
+            [self.view addGestureRecognizer:swipeLeftRecognizer];
+        }
+		else if(temporaryPagesArray.count != 3)
 		{
 			//NSLog(@"pas 3");
 			//[self.view removeGestureRecognizer:swipeLeftRecognizer];
 			//[self.view removeGestureRecognizer:swipeRightRecognizer];
 		}
 		else {
-			HTMLNode *nextUrlNode = [[temporaryPagesArray objectAtIndex:0] findChildWithAttribute:@"class" matchingName:@"cHeader" allowPartial:NO];
-
-			if (nextUrlNode) {
-				//nextPageUrl = [[NSString stringWithFormat:@"%@", [topicUrl stringByReplacingCharactersInRange:rangeNumPage withString:[NSString stringWithFormat:@"%d", (pageNumber + 1)]]] retain];
-				//nextPageUrl = [[NSString stringWithFormat:@"%@", [topicUrl stringByReplacingCharactersInRange:rangeNumPage withString:[NSString stringWithFormat:@"%d", (pageNumber + 1)]]] retain];
-				[self.view addGestureRecognizer:swipeLeftRecognizer];
-				self.nextPageUrl = [[nextUrlNode getAttributeNamed:@"href"] copy];
-				//NSLog(@"nextPageUrl = %@", nextPageUrl);
-				
-			}
-			else {
-				self.nextPageUrl = @"";
-				//[self.view removeGestureRecognizer:swipeLeftRecognizer];
-			}
-			
-			HTMLNode *previousUrlNode = [[temporaryPagesArray objectAtIndex:1] findChildWithAttribute:@"class" matchingName:@"cHeader" allowPartial:NO];
-			
-			if (previousUrlNode) {
-				//previousPageUrl = [[topicUrl stringByReplacingCharactersInRange:rangeNumPage withString:[NSString stringWithFormat:@"%d", (pageNumber - 1)]] retain];
-				[self.view addGestureRecognizer:swipeRightRecognizer];
-				self.previousPageUrl = [[previousUrlNode getAttributeNamed:@"href"] copy];
-				//NSLog(@"previousPageUrl = %@", previousPageUrl);
-				
-			}
-			else {
-				self.previousPageUrl = @"";
-				//[self.view removeGestureRecognizer:swipeRightRecognizer];
-				
-				
-			}
-			
+            HTMLNode *nextUrlNode = [[temporaryPagesArray objectAtIndex:0] findChildWithAttribute:@"class" matchingName:@"cHeader" allowPartial:NO];
+            
+            if (nextUrlNode) {
+                //nextPageUrl = [[NSString stringWithFormat:@"%@", [topicUrl stringByReplacingCharactersInRange:rangeNumPage withString:[NSString stringWithFormat:@"%d", (pageNumber + 1)]]] retain];
+                //nextPageUrl = [[NSString stringWithFormat:@"%@", [topicUrl stringByReplacingCharactersInRange:rangeNumPage withString:[NSString stringWithFormat:@"%d", (pageNumber + 1)]]] retain];
+                [self.view addGestureRecognizer:swipeLeftRecognizer];
+                self.nextPageUrl = [[nextUrlNode getAttributeNamed:@"href"] copy];
+                //NSLog(@"nextPageUrl = %@", nextPageUrl);
+                
+            }
+            else {
+                self.nextPageUrl = @"";
+                //[self.view removeGestureRecognizer:swipeLeftRecognizer];
+            }
+            
+            HTMLNode *previousUrlNode = [[temporaryPagesArray objectAtIndex:1] findChildWithAttribute:@"class" matchingName:@"cHeader" allowPartial:NO];
+            
+            if (previousUrlNode) {
+                //previousPageUrl = [[topicUrl stringByReplacingCharactersInRange:rangeNumPage withString:[NSString stringWithFormat:@"%d", (pageNumber - 1)]] retain];
+                [self.view addGestureRecognizer:swipeRightRecognizer];
+                self.previousPageUrl = [[previousUrlNode getAttributeNamed:@"href"] copy];
+                //NSLog(@"previousPageUrl = %@", previousPageUrl);
+                
+            }
+            else {
+                self.previousPageUrl = @"";
+                //[self.view removeGestureRecognizer:swipeRightRecognizer];
+                
+                
+            }
 		}
 	}
 	else {
@@ -463,10 +477,14 @@
     HTMLNode * tmpSearchNode = [[bodyNode findChildWithAttribute:@"action" matchingName:@"/transsearch.php" allowPartial:NO] retain];
     if(tmpSearchNode)
     {
-        NSArray *wantedArr = [NSArray arrayWithObjects:@"post", @"cat", @"firstnum", @"currentnum", @"word", @"spseudo", @"filter", nil];
+        [self.searchInputData removeAllObjects];
+        
+        
+        NSArray *wantedArr = [NSArray arrayWithObjects:@"hash_check", @"p", @"post", @"cat", @"firstnum", @"currentnum", @"word", @"spseudo", @"filter", nil];
         //NSLog(@"INTRA");
         //hidden input for URL          post | cat | currentnum
         //hidden input for URL          word | spseudo | filter
+        
         NSArray *arrInput = [tmpSearchNode findChildTags:@"input"];
         for (HTMLNode *no in arrInput) {
             //NSLog(@"%@ = %@", [no getAttributeNamed:@"name"], [no getAttributeNamed:@"value"]);
@@ -474,7 +492,9 @@
             if ([no getAttributeNamed:@"name"] && [wantedArr indexOfObject: [no getAttributeNamed:@"name"]] != NSNotFound) {
                 
                 //NSLog(@"WANTED %lu", (unsigned long)[wantedArr indexOfObject: [no getAttributeNamed:@"name"]]);
-                [self.searchInputData setValue:[no getAttributeNamed:@"value"] forKey:[no getAttributeNamed:@"name"]];
+                if (![[no getAttributeNamed:@"type"] isEqualToString:@"checkbox"] || ([[no getAttributeNamed:@"type"] isEqualToString:@"checkbox"] && [[no getAttributeNamed:@"checked"] isEqualToString:@"checked"])) {
+                    [self.searchInputData setValue:[no getAttributeNamed:@"value"] forKey:[no getAttributeNamed:@"name"]];
+                }
                 
                 if ([[no getAttributeNamed:@"name"] isEqualToString:@"word"]) {
                     [self.searchKeyword setText:[no getAttributeNamed:@"value"]];
@@ -483,10 +503,13 @@
                     [self.searchPseudo setText:[no getAttributeNamed:@"value"]];
                 }
                 else if ([[no getAttributeNamed:@"name"] isEqualToString:@"filter"]) {
-                    if ([[no getAttributeNamed:@"value"] isEqualToString:@"1"]) {
+                    //NSLog(@"name %@ = %@", [no getAttributeNamed:@"name"], [no getAttributeNamed:@"checked"]);
+                    if ([[no getAttributeNamed:@"checked"] isEqualToString:@"checked"]) {
+                        NSLog(@"FILTER ON");
                         [self.searchFilter setOn:YES animated:NO];
                     }
                     else {
+                        NSLog(@"FILTER OFF");
                         [self.searchFilter setOn:NO animated:NO];
                     }
                 }
@@ -494,6 +517,27 @@
                     [self.searchFromFP setOn:NO animated:NO];
                 }
             }
+        }
+        
+    }
+    else if (self.searchInputData.count) {
+        if ([self.searchInputData valueForKey:@"word"]) {
+            [self.searchKeyword setText:[self.searchInputData valueForKey:@"word"]];
+        }
+        
+        if ([self.searchInputData valueForKey:@"spseudo"]) {
+            [self.searchPseudo setText:[self.searchInputData valueForKey:@"spseudo"]];
+        }
+        
+        if ([self.searchInputData valueForKey:@"filter"]) {
+            [self.searchFilter setOn:YES animated:NO];
+        }
+        
+        if (![self.searchInputData valueForKey:@"currentnum"] && ![self.searchInputData valueForKey:@"firstnum"]) {
+            [self.searchFromFP setOn:YES animated:NO];
+        }
+        else {
+            [self.searchFromFP setOn:NO animated:NO];
         }
     }
 }
@@ -740,7 +784,11 @@
 	self.isUnreadable = NO;
 	self.curPostID = -1;
 	
-    self.searchInputData = [[NSMutableDictionary alloc] init];
+    if (!self.searchInputData) {
+        NSLog(@"NO searchInputData");
+        self.searchInputData = [[NSMutableDictionary alloc] init];
+    }
+
     
 	[self setEditFlagTopic:nil];
 	[self setStringFlagTopic:@""];
@@ -996,7 +1044,7 @@
     // Animate the resize of the text view's frame in sync with the keyboard's appearance.
     
 
-    [self toggleSearch:YES];
+    [self toggleSearch];
 
 }
 
@@ -1355,12 +1403,20 @@
 }
 
 - (void)handleSwipeToLeft:(UISwipeGestureRecognizer *)recognizer {
-    if (self.searchBg.alpha == 0.0 || self.searchBg.hidden == YES) {
+    
+    if (self.isSearchInstra) {
+        NSLog(@"isSearchInstra");
+
+        [self searchSubmit:nil];
+    }
+    else {
+        NSLog(@"NEXT");
+
         [self nextPage:recognizer];
     }
 }
 - (void)handleSwipeToRight:(UISwipeGestureRecognizer *)recognizer {
-    if (self.searchBg.alpha == 0.0 || self.searchBg.hidden == YES) {
+    if (!self.isSearchInstra && (self.searchBg.alpha == 0.0 || self.searchBg.hidden == YES)) {
         [self previousPage:recognizer];
     }
 }
@@ -1498,14 +1554,13 @@
     
     NSLog(@"COUNT = %lu", (unsigned long)[self.arrayData count]);
     
-    if (self.arrayData.count == 0) {
-        NSLog(@"BZAAAAA");
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Aucune réponse n'a été trouvée"
-                                                       delegate:self cancelButtonTitle:@"Retour" otherButtonTitles:@"Affiner", nil];
-        
-        [alert setTag:770];
-        [alert show];
-        [alert release];
+    if (self.isSearchInstra && self.arrayData.count == 0) {
+        NSLog(@"BZAAAAA %@", self.currentUrl);
+        [self.loadingView setHidden:YES];
+        [self.messagesWebView setHidden:YES];
+        [self.errorLabelView setText:@"Désolé aucune réponse n'a été trouvée"];
+        [self.errorLabelView setHidden:NO];
+        [self toggleSearch:YES];
     }
     else {
         int i;
@@ -1529,7 +1584,7 @@
         NSString *tooBar = [[[NSString alloc] initWithString:@""] autorelease];
         
         //Toolbar;
-        if (self.aToolbar) {
+        if (self.aToolbar && !self.isSearchInstra) {
             NSString *buttonBegin, *buttonEnd;
             NSString *buttonPrevious, *buttonNext;
             
@@ -1562,6 +1617,11 @@
                        %@\
                        </div>", buttonBegin, buttonPrevious, [self pageNumber], [self lastPageNumber], buttonNext, buttonEnd];
         }
+        else if (self.isSearchInstra) {
+            tooBar = [NSString stringWithFormat:@"<a href=\"oijlkajsdoihjlkjasdoauto://submitsearch\" id=\"searchintra_nextbutton\">Résultats suivants &raquo;</a>"];
+        }
+        
+        
         
         NSString *customFontSize = [self userTextSizeDidChange];
         
@@ -1598,7 +1658,12 @@
                                 </body></html>", customFontSize, tmpHTML, refreshBtn, tooBar];
         
         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-            HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"iosversion" withString:@"ios7"];
+            if (self.isSearchInstra) {
+                HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"iosversion" withString:@"ios7 searchintra"];
+            }
+            else {
+                HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"iosversion" withString:@"ios7"];
+            }
         }
         //  HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"hfrplusiosversion" withString:@""];
         
@@ -2465,7 +2530,8 @@
     // For example: self.myOutlet = nil;
 	
 	self.loadingView = nil;
-	
+    self.errorLabelView = nil;
+    
 	[self.messagesWebView stopLoading];
 	self.messagesWebView.delegate = nil;
 	self.messagesWebView = nil;
@@ -2540,10 +2606,19 @@
     [self toggleSearch:NO];
 }
 
+- (void)toggleSearch {
+    
+    if (self.searchBg.alpha && !self.searchBg.hidden)
+        [self toggleSearch:NO];
+    else
+        [self toggleSearch:YES];
+    
+}
+
 - (void)toggleSearch:(BOOL) active {
-    NSLog(@"toggleSearchtoggleSearchtoggleSearchtoggleSearch");
+    //NSLog(@"toggleSearchtoggleSearchtoggleSearchtoggleSearch");
     if (!active) {
-        NSLog(@"RESIGN");
+        //NSLog(@"RESIGN");
         CGRect oldframe = self.searchBox.frame;
         //NSLog(@"oldframe %@", NSStringFromCGRect(oldframe));
         
@@ -2561,7 +2636,7 @@
         [UIView commitAnimations];
 
     } else {
-        NSLog(@"BECOME");
+        //NSLog(@"BECOME");
         CGRect oldframe = self.searchBox.frame;
         //NSLog(@"oldframe %@", NSStringFromCGRect(oldframe));
         
@@ -2584,14 +2659,14 @@
 }
 
 - (IBAction)searchNext:(UITextField *)sender {
-    NSLog(@"searchNext %@", sender);
+    //NSLog(@"searchNext %@", sender);
         if ([sender isEqual:self.searchKeyword]) {
-            NSLog(@"searchKeyword");
+            //NSLog(@"searchKeyword");
             [self.searchKeyword resignFirstResponder];
             [self.searchPseudo becomeFirstResponder];
         }
         else if ([sender isEqual:self.searchPseudo] && (self.searchPseudo.text.length > 0 || self.searchKeyword.text.length > 0)) {
-            NSLog(@"searchPseudo");
+            //NSLog(@"searchPseudo");
             [self.searchPseudo resignFirstResponder];
             
             [self searchSubmit:nil];
@@ -2599,7 +2674,7 @@
 }
 
 - (IBAction)searchFilterChanged:(UISwitch *)sender {
-    NSLog(@"Filter %lu", (unsigned long)sender.isOn);
+    //NSLog(@"Filter %lu", (unsigned long)sender.isOn);
     
     if (sender.isOn) {
       [self.searchInputData setValue:[NSString stringWithFormat:@"%d", sender.isOn] forKey:@"filter"];
@@ -2610,7 +2685,7 @@
 }
 
 - (IBAction)searchFromFPChanged:(UISwitch *)sender {
-    NSLog(@"searchFromFPChanged %lu", (unsigned long)sender.isOn);
+    //NSLog(@"searchFromFPChanged %lu", (unsigned long)sender.isOn);
     
     if (sender.isOn) {
         [self.searchInputData removeObjectForKey:@"currentnum"];
@@ -2619,19 +2694,68 @@
 }
 
 - (IBAction)searchPseudoChanged:(UITextField *)sender {
-    NSLog(@"searchPseudoChanged %@", sender.text);
-    [self.searchInputData setValue:[NSString stringWithFormat:@"%@", sender.text] forKey:@"spseudo"];
+    //NSLog(@"searchPseudoChanged %@", sender.text);
+    if ([sender.text length]) {
+        [self.searchInputData setValue:[NSString stringWithFormat:@"%@", sender.text] forKey:@"spseudo"];
+    }
+    else {
+        [self.searchInputData setValue:@"" forKey:@"spseudo"];
+    }
+    
 }
 
 - (IBAction)searchKeywordChanged:(UITextField *)sender {
-    NSLog(@"searchKeywordChanged %@", sender.text);
-    [self.searchInputData setValue:[NSString stringWithFormat:@"%@", sender.text] forKey:@"word"];
+    //NSLog(@"searchKeywordChanged %@", sender.text);
+    if ([sender.text length]) {
+        [self.searchInputData setValue:[NSString stringWithFormat:@"%@", sender.text] forKey:@"word"];
+    }
+    else {
+        [self.searchInputData setValue:@"" forKey:@"word"];
+    }
+
 }
 
 - (IBAction)searchSubmit:(UIBarButtonItem *)sender {
     NSLog(@"searchSubmit");
     
-    NSString *baseURL = [NSString stringWithFormat:@"/forum2.php?%@", [self serializeParams:self.searchInputData]];
+    //NSString *baseURL = [NSString stringWithFormat:@"/forum2.php?%@", [self serializeParams:self.searchInputData]];
+
+    ASIFormDataRequest  *arequest = [[[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/transsearch.php", kForumURL]]] autorelease];
+    
+    for (NSString *key in self.searchInputData) {
+        [arequest setPostValue:[self.searchInputData objectForKey:key] forKey:key];
+        //NSLog(@"POST: %@ : %@", key, [self.searchInputData objectForKey:key]);
+    }
+    
+    [arequest setShouldRedirect:NO];
+    [arequest startSynchronous];
+    
+    NSString *baseURL = @"";
+    
+    if (arequest) {
+        NSString *Location = [[arequest responseHeaders] objectForKey:@"Location"];
+        NSLog(@"responseHeaders: %@", [arequest responseHeaders]);
+        NSLog(@"requestHeaders: %@", [arequest requestHeaders]);
+
+        if ([arequest error]) {
+            NSLog(@"error: %@", [[arequest error] localizedDescription]);
+        }
+        else if ([arequest responseString])
+        {
+            baseURL = Location;
+            //NSLog(@"responseString %@", [arequest responseString]);
+        }
+    }
+    
+    if (!baseURL) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Aucune réponse n'a été trouvée"
+                                                       delegate:self cancelButtonTitle:@"Affiner" otherButtonTitles:nil, nil];
+        
+        [alert setTag:780];
+        [alert show];
+        [alert release];
+        return;
+    }
     
     [self toggleSearch:NO];
 
@@ -2645,9 +2769,10 @@
         [aView release];
         
         //setup the URL
-        self.messagesTableViewController.topicName = self.topicName;
+        [self.messagesTableViewController setTopicName:[NSString stringWithString:self.topicName]];
         self.messagesTableViewController.isViewed = YES;
         self.messagesTableViewController.isSearchInstra = YES;
+        [self.messagesTableViewController setSearchInputData:[NSMutableDictionary dictionaryWithDictionary:self.searchInputData]];
         
         self.navigationItem.backBarButtonItem =
         [[UIBarButtonItem alloc] initWithTitle:@"Retour"

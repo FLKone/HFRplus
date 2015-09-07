@@ -82,8 +82,14 @@
 	}	
 	else if ([pageType isEqualToString:@"choose"]) {
 		[self choosePage];
-	}	
-	
+	}
+    else if ([pageType isEqualToString:@"submitsearch"]) {
+        if ([self respondsToSelector:@selector(searchSubmit:)]) {
+            [self searchSubmit:nil];
+        }
+
+    }
+
 }
 
 -(void)gotoPageNumber:(int)number{
@@ -259,14 +265,13 @@
     }
     else if (buttonIndex == 0 && alertView.tag == 770) {
         NSLog(@"BIM");
-        [self.navigationController popViewControllerAnimated:YES];
+        //[self.navigationController popViewControllerAnimated:YES];
         //[self gotoPageNumber:[[[alertView textFieldAtIndex:0] text] intValue]];
     }
     else if (buttonIndex == 1 && alertView.tag == 770) {
         NSLog(@"BAM");
         if ([self isKindOfClass:[MessagesTableViewController class]]) {
-            [self.navigationController popViewControllerAnimated:YES];
-            [self.navigationController.topViewController toggleSearch:YES];
+            [(MessagesTableViewController *)self.navigationController.topViewController toggleSearch:YES];
         }
         //[self gotoPageNumber:[[[alertView textFieldAtIndex:0] text] intValue]];
     }
