@@ -47,8 +47,8 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		4C028AD21A8C635500F542B1 /* hammer.min.map in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311EE19FAFCAE0097D84D /* hammer.min.map */; };
-		4C409EB81B9D00E8007892FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C409EB71B9D00E8007892FF /* LaunchScreen.storyboard */; settings = {ASSET_TAGS = (); }; };
-		4C409EB91B9D00E8007892FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C409EB71B9D00E8007892FF /* LaunchScreen.storyboard */; settings = {ASSET_TAGS = (); }; };
+		4C0B2DA51B9F2DF40026A582 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B2DA41B9F2DF40026A582 /* Launch Screen.storyboard */; settings = {ASSET_TAGS = (); }; };
+		4C0B2DA61B9F2DF40026A582 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B2DA41B9F2DF40026A582 /* Launch Screen.storyboard */; settings = {ASSET_TAGS = (); }; };
 		4CB132941B9058530081B44D /* 146-gavel.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132921B9058530081B44D /* 146-gavel.png */; settings = {ASSET_TAGS = (); }; };
 		4CB132951B9058530081B44D /* 146-gavel.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132921B9058530081B44D /* 146-gavel.png */; settings = {ASSET_TAGS = (); }; };
 		4CB132961B9058530081B44D /* 146-gavel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132931B9058530081B44D /* 146-gavel@2x.png */; settings = {ASSET_TAGS = (); }; };
@@ -1004,7 +1004,7 @@
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = main.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		32CA4F630368D1EE00C91783 /* HFRplus_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFRplus_Prefix.pch; sourceTree = "<group>"; };
-		4C409EB71B9D00E8007892FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		4C0B2DA41B9F2DF40026A582 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		4CB132921B9058530081B44D /* 146-gavel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "146-gavel.png"; sourceTree = "<group>"; };
 		4CB132931B9058530081B44D /* 146-gavel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "146-gavel@2x.png"; sourceTree = "<group>"; };
 		4CB132981B905BF80081B44D /* BlackListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlackListTableViewController.h; sourceTree = "<group>"; };
@@ -2108,7 +2108,7 @@
 			children = (
 				CA00C45B17C301650067B457 /* MainWindow-iPad.xib */,
 				CA00C45C17C301650067B457 /* MainWindow.xib */,
-				4C409EB71B9D00E8007892FF /* LaunchScreen.storyboard */,
+				4C0B2DA41B9F2DF40026A582 /* Launch Screen.storyboard */,
 			);
 			path = XIB;
 			sourceTree = "<group>";
@@ -2711,6 +2711,7 @@
 				CA00C64617C30C370067B457 /* pouah.gif in Resources */,
 				CA00C6DB17C30C370067B457 /* icon_text_align_justify.png in Resources */,
 				CABC727817E6077A003E722E /* upsmall7@2x.png in Resources */,
+				4C0B2DA51B9F2DF40026A582 /* Launch Screen.storyboard in Resources */,
 				CA00C66817C30C370067B457 /* templatev2.htm in Resources */,
 				CA00C62517C30C370067B457 /* ddr555.gif in Resources */,
 				0140AAAB121DF603001C35C4 /* HFRMPViewController.xib in Resources */,
@@ -2870,7 +2871,6 @@
 				CA00C62317C30C370067B457 /* crazy.gif in Resources */,
 				CA2E4C0A17E21EC700E95622 /* Images.xcassets in Resources */,
 				CAF5DB621932BA58000B5215 /* check@2x.png in Resources */,
-				4C409EB81B9D00E8007892FF /* LaunchScreen.storyboard in Resources */,
 				CA00C62C17C30C370067B457 /* fouyaya.gif in Resources */,
 				CA7472EC17E15FE300B45E15 /* ToolBarFastRewind_off.png in Resources */,
 				CA00C66B17C30C370067B457 /* Default.png in Resources */,
@@ -3051,6 +3051,7 @@
 				CA7C6FCD185EF50E00B348BA /* icon_text_align_justify.png in Resources */,
 				CA7C6FCE185EF50E00B348BA /* upsmall7@2x.png in Resources */,
 				CA7C6FCF185EF50E00B348BA /* templatev2.htm in Resources */,
+				4C0B2DA61B9F2DF40026A582 /* Launch Screen.storyboard in Resources */,
 				CA7C6FD0185EF50E00B348BA /* ddr555.gif in Resources */,
 				CA7C6FD1185EF50E00B348BA /* HFRMPViewController.xib in Resources */,
 				CA7C6FD2185EF50E00B348BA /* sol.gif in Resources */,
@@ -3210,7 +3211,6 @@
 				CA7C7057185EF50E00B348BA /* Images.xcassets in Resources */,
 				CAF5DB631932BA58000B5215 /* check@2x.png in Resources */,
 				CA7C7058185EF50E00B348BA /* fouyaya.gif in Resources */,
-				4C409EB91B9D00E8007892FF /* LaunchScreen.storyboard in Resources */,
 				CA7C7059185EF50E00B348BA /* ToolBarFastRewind_off.png in Resources */,
 				CA7C705A185EF50E00B348BA /* Default.png in Resources */,
 				CA7C705B185EF50E00B348BA /* 18-envelope.png in Resources */,
