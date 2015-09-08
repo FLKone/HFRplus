@@ -15,7 +15,7 @@
 
 @implementation QuoteMessageViewController
 @synthesize urlQuote;
-@synthesize myPickerView, pickerViewArray, actionSheet, catButton;
+@synthesize myPickerView, pickerViewArray, actionSheet, catButton, textQuote, boldQuote;
 - (void)cancelFetchContent
 {
 	[request cancel];
@@ -510,8 +510,25 @@
 	//}	
 	//-----
 
-	
+
 	NSString* txtTW = [[fastAnswerNode findChildWithAttribute:@"id" matchingName:@"content_form" allowPartial:NO] contents];
+    NSLog(@"txtTW %@", txtTW);
+    
+    if (self.textQuote) {
+        NSLog(@"textQuote %@", self.textQuote);
+        
+        if (self.boldQuote) {
+            NSLog(@"TOBO");
+            txtTW = [txtTW stringByReplacingOccurrencesOfString:self.textQuote withString:[NSString stringWithFormat:@"[b]%@[/b]", self.textQuote]];
+        }
+        else {
+            NSLog(@"TOPOBO");
+            txtTW = [txtTW stringByReplacingOccurrencesOfString:self.textQuote withString:[NSString stringWithFormat:@"[b]%@[/b]", self.textQuote]];
+        }
+
+        
+    }
+    NSLog(@"txtTWB %@", txtTW);
     txtTW = [txtTW stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"];
     
 	[self.textView setText:txtTW];
@@ -736,7 +753,8 @@
 
 - (void)dealloc {
 	self.urlQuote = nil;
-	
+    self.textQuote = nil;
+    
 	//Picker
 	self.myPickerView = nil;
 	self.actionSheet = nil;

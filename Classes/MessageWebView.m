@@ -7,8 +7,10 @@
 //
 
 #import "MessageWebView.h"
+#import "MessagesTableViewController.h"
 
 @implementation MessageWebView
+@synthesize controll;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -21,22 +23,32 @@
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
     
-    //NSLog(@"MWV %@ %d", NSStringFromSelector(action), [UIMenuController sharedMenuController].menuItems.count);
+    //NSLog(@"MWV %@ %lu", NSStringFromSelector(action), [UIMenuController sharedMenuController].menuItems.count);
 
     int nbCustom = [UIMenuController sharedMenuController].menuItems.count;
     
-    if (nbCustom) {
+    if (nbCustom > 2) {
         //NSLog(@"NO");
         return NO;
     }
 
-    //NSLog(@"MWV %@ %d %@", NSStringFromSelector(action), [UIMenuController sharedMenuController].menuItems.count, sender);
+    //NSLog(@"MWV %@ %lu %@", NSStringFromSelector(action), [UIMenuController sharedMenuController].menuItems.count, sender);
+    //NSLog(@"super %@", [super class]);
+    if ([NSStringFromSelector(action) isEqualToString:@"textQuote:"] || [NSStringFromSelector(action) isEqualToString:@"textQuoteBold:"]) {
+        return YES;
+    }
     BOOL returnB = [super canPerformAction:action withSender:sender];
     //NSLog(@"MWV returnB %d", returnB);
     return returnB;
 }
 
+-(void)textQuote:(id)sender {
+    [self.controll textQuote:sender];
+}
 
+-(void)textQuoteBold:(id)sender {
+    [self.controll textQuoteBold:sender];
+}
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

@@ -641,11 +641,55 @@
     //[self resignFirstResponder];
 }
 
-- (void)editMenuHidden:(id)sender {
-    //NSLog(@"editMenuHidden %@ NOMBRE %d", sender, [UIMenuController sharedMenuController].menuItems.count);
+-(void)textQuote:(id)sender {
+    NSString *theSelectedText = [self.messagesWebView stringByEvaluatingJavaScriptFromString:@"window.getSelection().toString();"];
+
+    NSString *baseElem = @"window.getSelection().anchorNode";
+    while (![[self.messagesWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"%@.parentElement.className", baseElem]] isEqualToString:@"message"]) {
+        //NSLog(@"baseElem %@", baseElem);
+        //NSLog(@"%@", [self.messagesWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"%@.parentElement.className", baseElem]]);
+        
+        baseElem = [baseElem stringByAppendingString:@".parentElement"];
+    }
+    NSLog(@"ID %@", [self.messagesWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"%@.parentElement.id", baseElem]]);
+    int curMsg = [[self.messagesWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"%@.parentElement.id", baseElem]] intValue];
+
+    NSLog(@"theSelectedText %@", theSelectedText);
     
+    //int curMsg = [[NSNumber numberWithInt:curPostID] intValue];
+        
+    [self quoteMessage:[NSString stringWithFormat:@"%@%@", kForumURL, [[[arrayData objectAtIndex:curMsg] urlQuote] decodeSpanUrlFromString]] andSelectedText:theSelectedText];
+}
+
+-(void)textQuoteBold:(id)sender {
+    NSString *theSelectedText = [self.messagesWebView stringByEvaluatingJavaScriptFromString:@"window.getSelection().toString();"];
+    
+    NSString *baseElem = @"window.getSelection().anchorNode";
+    while (![[self.messagesWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"%@.parentElement.className", baseElem]] isEqualToString:@"message"]) {
+        //NSLog(@"baseElem %@", baseElem);
+        //NSLog(@"%@", [self.messagesWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"%@.parentElement.className", baseElem]]);
+        
+        baseElem = [baseElem stringByAppendingString:@".parentElement"];
+    }
+    NSLog(@"ID %@", [self.messagesWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"%@.parentElement.id", baseElem]]);
+    int curMsg = [[self.messagesWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"%@.parentElement.id", baseElem]] intValue];
+
+    NSLog(@"theSelectedText Bold %@", theSelectedText);
+    
+    //int curMsg = [[NSNumber numberWithInt:curPostID] intValue];
+    
+    [self quoteMessage:[NSString stringWithFormat:@"%@%@", kForumURL, [[[arrayData objectAtIndex:curMsg] urlQuote] decodeSpanUrlFromString]] andSelectedText:theSelectedText withBold:YES];
+    
+
+}
+
+- (void)editMenuHidden:(id)sender {
+    NSLog(@"editMenuHidden %@ NOMBRE %lu", sender, [UIMenuController sharedMenuController].menuItems.count);
+    UIMenuItem *textQuotinuum = [[[UIMenuItem alloc] initWithTitle:@"Citer excl" action:@selector(textQuote:)] autorelease];
+    UIMenuItem *textQuotinuumBis = [[[UIMenuItem alloc] initWithTitle:@"Citer gras" action:@selector(textQuoteBold:)] autorelease];
+
     UIMenuController *menuController = [UIMenuController sharedMenuController];
-    [menuController setMenuItems:nil];
+    [menuController setMenuItems:[NSArray arrayWithObjects:textQuotinuum, textQuotinuumBis, nil]];
     //[self resignFirstResponder];
 }
 
@@ -794,7 +838,8 @@
 	[self setStringFlagTopic:@""];
 
 	[self fetchContent];
-	
+    [self editMenuHidden:nil];
+    self.messagesWebView.controll = self;
 }
 
 -(void)fullScreen {
@@ -1048,30 +1093,39 @@
 
 }
 
--(void)quoteMessage:(NSString *)quoteUrl
-{
-	if (self.isAnimating) {
-		return;
-	}
-	
-	QuoteMessageViewController *quoteMessageViewController = [[QuoteMessageViewController alloc]
-														  initWithNibName:@"AddMessageViewController" bundle:nil];
-	quoteMessageViewController.delegate = self;
-	[quoteMessageViewController setUrlQuote:quoteUrl];
-	
-	// Create the navigation controller and present it modally.
-	HFRNavigationController *navigationController = [[HFRNavigationController alloc]
-													initWithRootViewController:quoteMessageViewController];
+-(void)quoteMessage:(NSString *)quoteUrl andSelectedText:(NSString *)selected withBold:(BOOL)boldSelection {
+    if (self.isAnimating) {
+        return;
+    }
+    
+    QuoteMessageViewController *quoteMessageViewController = [[QuoteMessageViewController alloc]
+                                                              initWithNibName:@"AddMessageViewController" bundle:nil];
+    quoteMessageViewController.delegate = self;
+    [quoteMessageViewController setUrlQuote:quoteUrl];
+    [quoteMessageViewController setTextQuote:selected];
+    [quoteMessageViewController setBoldQuote:boldSelection];
+    
+    // Create the navigation controller and present it modally.
+    HFRNavigationController *navigationController = [[HFRNavigationController alloc]
+                                                     initWithRootViewController:quoteMessageViewController];
     
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-	[self presentModalViewController:navigationController animated:YES];
+    [self presentModalViewController:navigationController animated:YES];
     
-	// The navigation controller is now owned by the current view controller
-	// and the root view controller is owned by the navigation controller,
-	// so both objects should be released to prevent over-retention.
-	[navigationController release];
-	[quoteMessageViewController release];
-	
+    // The navigation controller is now owned by the current view controller
+    // and the root view controller is owned by the navigation controller,
+    // so both objects should be released to prevent over-retention.
+    [navigationController release];
+    [quoteMessageViewController release];
+}
+
+-(void)quoteMessage:(NSString *)quoteUrl andSelectedText:(NSString *)selected {
+    [self quoteMessage:quoteUrl andSelectedText:selected withBold:NO];
+}
+
+-(void)quoteMessage:(NSString *)quoteUrl
+{
+    [self quoteMessage:quoteUrl andSelectedText:@""];
 }
 
 -(void)editMessage:(NSString *)editUrl

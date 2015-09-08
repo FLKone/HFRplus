@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+@class MessagesTableViewController;
 
-@interface MessageWebView : UIWebView
+@interface MessageWebView : UIWebView {
+    MessagesTableViewController *controll;
+}
+@property (nonatomic, retain) MessagesTableViewController *controll;
 
 @end

@@ -9,8 +9,10 @@
 #import "AddMessageViewController.h"
 
 @interface QuoteMessageViewController : AddMessageViewController <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate, UIPopoverPresentationControllerDelegate, UIAdaptivePresentationControllerDelegate> {
-	NSString *urlQuote;
-	
+    NSString *urlQuote;
+    NSString *textQuote;
+	BOOL boldQuote;
+    
 	UIPickerView		*myPickerView;
 	NSMutableArray				*pickerViewArray;
 	UIActionSheet		*actionSheet;
@@ -18,6 +20,8 @@
 	UIButton		*catButton;
 }
 @property (nonatomic, retain) NSString *urlQuote;
+@property (nonatomic, retain) NSString *textQuote;
+@property BOOL boldQuote;
 
 @property (nonatomic, retain) UIPickerView *myPickerView;
 @property (nonatomic, retain) NSMutableArray *pickerViewArray;
