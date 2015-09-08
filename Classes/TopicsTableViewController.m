@@ -1694,9 +1694,14 @@
     }
     else {
         [[[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] viewControllers] objectAtIndex:1] popToRootViewControllerAnimated:NO];
-        
+
         [[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] setViewControllers:[NSMutableArray arrayWithObjects:messagesTableViewController, nil] animated:YES];
         
+        if ([messagesTableViewController.splitViewController respondsToSelector:@selector(displayModeButtonItem)]) {
+            NSLog(@"PUSH ADD BTN");
+            [[HFRplusAppDelegate sharedAppDelegate] detailNavigationController].viewControllers[0].navigationItem.leftBarButtonItem = messagesTableViewController.splitViewController.displayModeButtonItem;
+            [[HFRplusAppDelegate sharedAppDelegate] detailNavigationController].viewControllers[0].navigationItem.leftItemsSupplementBackButton = YES;
+        }
     }
     
     [self setTopicViewed];
@@ -1859,7 +1864,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Navigation logic may go here. Create and push another view controller.
 
-	//NSLog(@"did Select row Topics table views: %d", indexPath.row);
+    //NSLog(@"did Select row Topics table views: %d", indexPath.row);
 
 	//if (self.messagesTableViewController == nil) {
 		MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[arrayData objectAtIndex:indexPath.row] aURL]];

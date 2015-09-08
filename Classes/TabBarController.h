@@ -11,5 +11,5 @@
 @interface TabBarController : UITabBarController {
 
 }
-
+-(void)popAllToRoot:(BOOL)includingSelectedIndex;
 @end

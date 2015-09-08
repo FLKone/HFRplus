@@ -13,8 +13,8 @@
 -(void)viewDidLoad {
 	[super viewDidLoad];
 	
-	//NSLog(@"TBC viewDidLoad");
-    
+	NSLog(@"TBC viewDidLoad");
+    self.title = @"Menu";
     
     UITabBarItem *tabBarItem1 = [self.tabBar.items objectAtIndex:0];
     UITabBarItem *tabBarItem2 = [self.tabBar.items objectAtIndex:1];
@@ -120,6 +120,17 @@
     //NSLog(@"shouldAutorotate");
 
     return YES;
+}
+
+-(void)popAllToRoot:(BOOL)includingSelectedIndex {
+    //not selectedIndex
+    long nbTab = self.viewControllers.count;
+    
+    for (int i = 0; i < nbTab; i++) {
+        if (includingSelectedIndex || (!includingSelectedIndex && i != self.selectedIndex)) {
+            [(UINavigationController *)self.viewControllers[i] popToRootViewControllerAnimated:NO];
+        }
+    }
 }
 
 /*

@@ -1188,6 +1188,12 @@
         
         [[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] setViewControllers:[NSMutableArray arrayWithObjects:messagesTableViewController, nil] animated:YES];
         
+        if ([messagesTableViewController.splitViewController respondsToSelector:@selector(displayModeButtonItem)]) {
+            NSLog(@"PUSH ADD BTN");
+            [[HFRplusAppDelegate sharedAppDelegate] detailNavigationController].viewControllers[0].navigationItem.leftBarButtonItem = messagesTableViewController.splitViewController.displayModeButtonItem;
+            [[HFRplusAppDelegate sharedAppDelegate] detailNavigationController].viewControllers[0].navigationItem.leftItemsSupplementBackButton = YES;
+        }
+        
     }
     
     [self setTopicViewed];
