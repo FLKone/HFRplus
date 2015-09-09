@@ -699,7 +699,7 @@
 }
 
 - (void)viewDidLoad {
-	NSLog(@"viewDidLoad %@", self.topicName);
+	//NSLog(@"viewDidLoad %@", self.topicName);
 
     [super viewDidLoad];
 	self.isAnimating = NO;
@@ -1623,14 +1623,18 @@
     }
     else {
         int i;
-        //NSLog(@"OLD %@", self.stringFlagTopic);
+        NSLog(@"OLD %@", self.stringFlagTopic);
 
         NSCharacterSet* nonDigits = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
         int currentFlagValue = [[self.stringFlagTopic stringByTrimmingCharactersInSet:nonDigits] intValue];
         bool ifCurrentFlag = NO;
         int closePostID = 0;
         
-        //NSLog(@"Looking for %d", currentFlagValue);
+        if(!currentFlagValue) { //si pas de value on cherche soit le premier message (pas de flag) soit le dernier (#bas)
+            ifCurrentFlag = YES;
+        }
+        
+        NSLog(@"Looking for %d", currentFlagValue);
         //NSLog(@"==============");
 
         for (i = 0; i < [self.arrayData count]; i++) { //Loop through all the tags
@@ -1649,7 +1653,7 @@
             if (!ifCurrentFlag) {
                 //NSLog(@"pas encore trouvé");
 
-                if (closePostID && tmpFlagValue >= currentFlagValue) {
+                if (closePostID && currentFlagValue && tmpFlagValue >= currentFlagValue) {
                     //NSLog(@"On a trouvé plus grand, on set");
                     closePostID = tmpFlagValue;
                     ifCurrentFlag = YES;
@@ -1667,7 +1671,7 @@
             self.stringFlagTopic = [NSString stringWithFormat:@"#t%d", closePostID];
         }
         
-        //NSLog(@"NEW %@", self.stringFlagTopic);
+        NSLog(@"NEW %@", self.stringFlagTopic);
 
         
         NSString *refreshBtn = [[[NSString alloc] initWithString:@""] autorelease];
