@@ -83,6 +83,11 @@
     //self.firstDate = [NSDate date];
     
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMaxi];
+    //self.currentUrl = @"/forum2.php?config=hfr.inc&cat=25&post=1711&page=301&p=1&sondage=0&owntopic=1&trash=0&trash_post=0&print=0&numreponse=0&quote_only=0&new=0&nojs=0#t530526";
+    
+    
+    //self.currentUrl = @"/forum2.php?config=hfr.inc&cat=25&post=5925&page=1&p=1&sondage=0&owntopic=1&trash=0&trash_post=0&print=0&numreponse=0&quote_only=0&new=0&nojs=0#t535660";
+    
     
     //NSLog(@"URL %@", [self currentUrl]);
     
@@ -1580,7 +1585,7 @@
 	
     [self setStringFlagTopic:[[controller refreshAnchor] copy]];
     
-    //NSLog(@"addMessageViewControllerDidFinishOK stringFlagTopic %@", self.stringFlagTopic);
+    NSLog(@"addMessageViewControllerDidFinishOK stringFlagTopic %@", self.stringFlagTopic);
     
     
 	[self searchNewMessages:kNewMessageFromEditor];
@@ -1618,9 +1623,52 @@
     }
     else {
         int i;
+        //NSLog(@"OLD %@", self.stringFlagTopic);
+
+        NSCharacterSet* nonDigits = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+        int currentFlagValue = [[self.stringFlagTopic stringByTrimmingCharactersInSet:nonDigits] intValue];
+        bool ifCurrentFlag = NO;
+        int closePostID = 0;
+        
+        //NSLog(@"Looking for %d", currentFlagValue);
+        //NSLog(@"==============");
+
         for (i = 0; i < [self.arrayData count]; i++) { //Loop through all the tags
             tmpHTML = [tmpHTML stringByAppendingString:[[self.arrayData objectAtIndex:i] toHTML:i]];
+            int tmpFlagValue = [[[[self.arrayData objectAtIndex:i] postID] stringByTrimmingCharactersInSet:nonDigits] intValue];
+
+            
+            //NSLog(@"-- curFlagID = %d", tmpFlagValue);
+
+            if (!ifCurrentFlag && tmpFlagValue == currentFlagValue) {
+                //NSLog(@"TROUVE");
+                ifCurrentFlag = YES;
+                closePostID = tmpFlagValue;
+            }
+            
+            if (!ifCurrentFlag) {
+                //NSLog(@"pas encore trouvé");
+
+                if (closePostID && tmpFlagValue >= currentFlagValue) {
+                    //NSLog(@"On a trouvé plus grand, on set");
+                    closePostID = tmpFlagValue;
+                    ifCurrentFlag = YES;
+                }
+                else {
+                    //NSLog(@"0, on set le premier");
+                    closePostID = tmpFlagValue;
+                }
+            }
+
         }
+        
+        if (closePostID) {
+            //NSLog(@"On remplace au plus proche");
+            self.stringFlagTopic = [NSString stringWithFormat:@"#t%d", closePostID];
+        }
+        
+        //NSLog(@"NEW %@", self.stringFlagTopic);
+
         
         NSString *refreshBtn = [[[NSString alloc] initWithString:@""] autorelease];
         
