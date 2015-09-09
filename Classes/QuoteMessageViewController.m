@@ -11,6 +11,7 @@
 #import "HTMLParser.h"
 #import "Forum.h"
 #import "SubCatTableViewController.h"
+#import "RegexKitLite.h"
 
 
 @implementation QuoteMessageViewController
@@ -512,24 +513,81 @@
 
 
 	NSString* txtTW = [[fastAnswerNode findChildWithAttribute:@"id" matchingName:@"content_form" allowPartial:NO] contents];
+    txtTW = [txtTW stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"];
+
     NSLog(@"txtTW %@", txtTW);
     
     if (self.textQuote) {
         NSLog(@"textQuote %@", self.textQuote);
+        self.textQuote = [self.textQuote stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        //Test multiQUOTEMSG
         
-        if (self.boldQuote) {
-            NSLog(@"TOBO");
-            txtTW = [txtTW stringByReplacingOccurrencesOfString:self.textQuote withString:[NSString stringWithFormat:@"[b]%@[/b]", self.textQuote]];
+        NSString *pattern = @"\\[quotemsg=([0-9]+),([0-9]+),([0-9]+)\\](?s)((|.*?)+)\\[\\/quotemsg\\]";
+        NSError *error = NULL;
+        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern
+                                                                               options:NSRegularExpressionDotMatchesLineSeparators
+                                                                                 error:&error];
+        
+        NSLog(@"error %@", error);
+        
+        NSArray  *capturesArray = NULL;
+        NSRange range = NSMakeRange(0, txtTW.length);
+
+        capturesArray = [regex matchesInString:txtTW options:0 range:range];
+        NSLog(@"capturesArray: %@", capturesArray);
+        
+        //NSLog(@"TXT BEFORE==== %@", txtTW);
+        
+        if (capturesArray.count > 1) {
+            NSLog(@"Plusieurs quotemsg, il faut trouver le bon !");
+            
+            for (NSTextCheckingResult *quoteA in capturesArray) {
+                
+                NSString *quoteTxt = [txtTW substringWithRange:[quoteA rangeAtIndex:0]];
+                NSLog(@"Txt de la quote %@", quoteTxt);
+                
+                if ([quoteTxt rangeOfString:self.textQuote options:NSCaseInsensitiveSearch].location != NSNotFound) {
+                    NSLog(@"Selec trouvée");
+                    
+                    //case BOLD
+                    if (self.boldQuote) {
+                        //on laisse le txt du qtemsg et on bold
+                        txtTW = quoteTxt;
+                        txtTW = [txtTW stringByReplacingOccurrencesOfString:self.textQuote withString:[NSString stringWithFormat:@"[B]%@[/B]", self.textQuote]];
+                    }
+                    else {
+                        //case EXCLU
+                        txtTW = [NSString stringWithFormat:@"[quotemsg=%d,%d,%d]%@[/quotemsg]", [[txtTW substringWithRange:[quoteA rangeAtIndex:1]] intValue], [[txtTW substringWithRange:[quoteA rangeAtIndex:2]] intValue], [[txtTW substringWithRange:[quoteA rangeAtIndex:3]] intValue], self.textQuote];
+                        //recup le quotemsg et y inserer le msg
+                    }
+                    break;
+                    
+                }
+                else {
+                    NSLog(@"select pas trouvée");
+                }
+            }
+        }
+        else if (capturesArray.count == 1) {
+            if (self.boldQuote) {
+                //on laisse le txt et on bold
+                txtTW = [txtTW stringByReplacingOccurrencesOfString:self.textQuote withString:[NSString stringWithFormat:@"[B]%@[/B]", self.textQuote]];
+            }
+            else {
+                //recup le quotemsg et y inserer le msg
+                txtTW = [NSString stringWithFormat:@"[quotemsg=%d,%d,%d]%@[/quotemsg]", [[txtTW substringWithRange:[capturesArray[0] rangeAtIndex:1]] intValue], [[txtTW substringWithRange:[capturesArray[0] rangeAtIndex:2]] intValue], [[txtTW substringWithRange:[capturesArray[0] rangeAtIndex:3]] intValue], self.textQuote];
+            }
         }
         else {
-            NSLog(@"TOPOBO");
-            txtTW = [txtTW stringByReplacingOccurrencesOfString:self.textQuote withString:[NSString stringWithFormat:@"[b]%@[/b]", self.textQuote]];
+            NSLog(@"On touche RIEN MEC");
         }
-
+        
+        //NSLog(@"TXT AFTER=== %@", txtTW);
+        
+        //DEBUG
         
     }
-    NSLog(@"txtTWB %@", txtTW);
-    txtTW = [txtTW stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"];
+    //NSLog(@"txtTWB %@", txtTW);
     
 	[self.textView setText:txtTW];
 	//textView.contentOffset = CGPointMake(0, 0);

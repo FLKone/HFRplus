@@ -800,6 +800,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+        
 	self.title = @"Catégories";
     self.navigationController.navigationBar.translucent = NO;
 
