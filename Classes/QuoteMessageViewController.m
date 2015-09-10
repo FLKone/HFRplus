@@ -517,7 +517,7 @@
 
     NSLog(@"txtTW %@", txtTW);
     
-    if (self.textQuote) {
+    if (self.textQuote.length) {
         NSLog(@"textQuote %@", self.textQuote);
         self.textQuote = [self.textQuote stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         //Test multiQUOTEMSG
