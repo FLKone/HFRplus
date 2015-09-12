@@ -34,13 +34,13 @@
     
     NSString *forumURL = [NSString stringWithString:[forumNode getAttributeNamed:@"href"]];
 
-    NSString *forumID = [NSString stringWithString:[[forumNode getAttributeNamed:@"href"] wordAfterString:@"cat="]];
+    //NSString *forumID = [NSString stringWithString:[[forumNode getAttributeNamed:@"href"] wordAfterString:@"cat="]];
 
     NSString *forumTitle = [NSString stringWithString:[forumNode contents]];
     
     Forum *aForum = [[Forum alloc] init];
     [aForum setAURL:forumURL];
-    [aForum setAID:forumID];
+    //[aForum setAID:forumID];
     [aForum setATitle:forumTitle];
 
     self.forum = aForum;

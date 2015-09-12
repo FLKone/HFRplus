@@ -22,11 +22,13 @@
 #import "PullToRefreshErrorViewController.h"
 
 #import "ProfilViewController.h" //test
+#import "ForumCellView.h"
 
 @implementation ForumsTableViewController
 @synthesize request;
 @synthesize forumsTableView, loadingView, arrayData, arrayNewData, topicsTableViewController;
-@synthesize status, statusMessage, maintenanceView;
+@synthesize status, statusMessage, maintenanceView, metaDataList, pressedIndexPath, forumActionSheet;
+@synthesize tmpCell;
 
 #pragma mark -
 #pragma mark Test BTN
@@ -114,6 +116,8 @@
     [self loadDataInTableView:[theRequest responseData]];
     
     [self.arrayData removeAllObjects];
+    
+    NSLog(@"self.arrayNewData %@", self.arrayNewData);
     
     self.arrayData = [NSMutableArray arrayWithArray:self.arrayNewData];
     
@@ -804,6 +808,20 @@
 	self.title = @"Catégories";
     self.navigationController.navigationBar.translucent = NO;
 
+    self.metaDataList = [[NSMutableDictionary alloc] init];
+    
+    NSFileManager *fileManager = [[NSFileManager alloc] init];
+    NSString *directory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *metaList = [[NSString alloc] initWithString:[directory stringByAppendingPathComponent:FORUMSMETA_FILE]];
+    
+    if ([fileManager fileExistsAtPath:metaList]) {
+        self.metaDataList = [NSMutableDictionary dictionaryWithContentsOfFile:metaList];
+    }
+    else {
+        [self.metaDataList removeAllObjects];
+    }
+    
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(StatusChanged:)
                                                  name:kStatusChangedNotification
@@ -825,6 +843,8 @@
 	self.arrayNewData = [[NSMutableArray alloc] init];
 	self.statusMessage = [[NSString alloc] init];
 
+
+    
     UIView *v = [[UIView alloc] initWithFrame:CGRectZero];
     v.backgroundColor = [UIColor clearColor];
     [self.forumsTableView setTableFooterView:v];
@@ -889,18 +909,52 @@
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"ForumCellID";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    ForumCellView *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        
+        [[NSBundle mainBundle] loadNibNamed:@"ForumCellView" owner:self options:nil];
+        cell = tmpCell;
+        
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+        
+        UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc]
+                                                             initWithTarget:self action:@selector(handleLongPress:)];
+        [cell addGestureRecognizer:longPressRecognizer];
+        [longPressRecognizer release];
+        
+        self.tmpCell = nil;
     }
     
-    // Configure the cell...
-	cell.textLabel.text = [NSString stringWithFormat:@"%@", [[arrayData objectAtIndex:indexPath.row] aTitle]];
-	cell.textLabel.font = [UIFont boldSystemFontOfSize:17];
-	
-	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.titleLabel.text = [NSString stringWithFormat:@"%@", [[arrayData objectAtIndex:indexPath.row] aTitle]];
+    [cell.catImage setImage:[UIImage imageNamed:[[arrayData objectAtIndex:indexPath.row] getImage]]];
+    
+    if ([self.metaDataList objectForKey:[[arrayData objectAtIndex:indexPath.row] aURL]]) {
+        
+        NSDictionary *tmpDic = [self.metaDataList objectForKey:[[arrayData objectAtIndex:indexPath.row] aURL]];
+        
+        switch ([[tmpDic objectForKey:@"flag"] intValue]) {
+            case kFav:
+                cell.flagLabel.text = @"Favoris";
+                break;
+            case kFlag:
+                cell.flagLabel.text = @"Suivis";
+                break;
+            case kRed:
+                cell.flagLabel.text = @"Lus";
+                break;
+            case kALL:
+            default:
+                cell.flagLabel.text = @"";
+                break;
+        }
+    }
+    else {
+        cell.flagLabel.text = @"";
+    }
+    
     return cell;
 }
 
@@ -914,7 +968,33 @@
     self.topicsTableViewController = nil;
     
 	if (self.topicsTableViewController == nil) {
-		TopicsTableViewController *aView = [[TopicsTableViewController alloc] initWithNibName:@"TopicsTableViewController" bundle:nil];
+        TopicsTableViewController *aView;
+        
+        if ([self.metaDataList objectForKey:[[arrayData objectAtIndex:indexPath.row] aURL]]) {
+            
+            NSDictionary *tmpDic = [self.metaDataList objectForKey:[[arrayData objectAtIndex:indexPath.row] aURL]];
+            
+            switch ([[tmpDic objectForKey:@"flag"] intValue]) {
+                case kFav:
+                    aView = [[TopicsTableViewController alloc] initWithNibName:@"TopicsTableViewController" bundle:nil flag:1];
+                    break;
+                case kFlag:
+                    aView = [[TopicsTableViewController alloc] initWithNibName:@"TopicsTableViewController" bundle:nil flag:2];
+                    break;
+                case kRed:
+                    aView = [[TopicsTableViewController alloc] initWithNibName:@"TopicsTableViewController" bundle:nil flag:3];
+                    break;
+                case kALL:
+                default:
+                    aView = [[TopicsTableViewController alloc] initWithNibName:@"TopicsTableViewController" bundle:nil];
+                    break;
+            }
+        }
+        else {
+            aView = [[TopicsTableViewController alloc] initWithNibName:@"TopicsTableViewController" bundle:nil];
+        }
+        
+        
 		self.topicsTableViewController = aView;
 		[aView release];
 	}
@@ -933,14 +1013,134 @@
         self.navigationItem.backBarButtonItem.title = @" ";
     }
     
+    if ([self.metaDataList objectForKey:[[arrayData objectAtIndex:indexPath.row] aURL]]) {
+        
+        NSDictionary *tmpDic = [self.metaDataList objectForKey:[[arrayData objectAtIndex:indexPath.row] aURL]];
+        
+        switch ([[tmpDic objectForKey:@"flag"] intValue]) {
+            case kFav:
+                self.topicsTableViewController.forumFavorisURL = [[arrayData objectAtIndex:indexPath.row] URLforType:kFav];
+                break;
+            case kFlag:
+                self.topicsTableViewController.forumFlag1URL = [[arrayData objectAtIndex:indexPath.row] URLforType:kFlag];
+                break;
+            case kRed:
+                self.topicsTableViewController.forumFlag0URL = [[arrayData objectAtIndex:indexPath.row] URLforType:kRed];
+                break;
+            case kALL:
+            default:
+                self.topicsTableViewController.forumBaseURL = [[arrayData objectAtIndex:indexPath.row] aURL];
+                break;
+        }
+    }
+    else {
+        self.topicsTableViewController.forumBaseURL = [[arrayData objectAtIndex:indexPath.row] aURL];
+    }
     
-	self.topicsTableViewController.forumBaseURL = [[arrayData objectAtIndex:indexPath.row] aURL];
-	self.topicsTableViewController.forumName = [[arrayData objectAtIndex:indexPath.row] aTitle];	
-	self.topicsTableViewController.pickerViewArray = [[arrayData objectAtIndex:indexPath.row] subCats];	
+    self.topicsTableViewController.forumName = [[arrayData objectAtIndex:indexPath.row] aTitle];
+	self.topicsTableViewController.pickerViewArray = [[arrayData objectAtIndex:indexPath.row] subCats];
 
 	[self.navigationController pushViewController:topicsTableViewController animated:YES];
 
 }
+
+
+
+#pragma mark -
+#pragma mark Long Press
+
+-(void)handleLongPress:(UILongPressGestureRecognizer*)longPressRecognizer {
+    if (longPressRecognizer.state == UIGestureRecognizerStateBegan) {
+        CGPoint longPressLocation = [longPressRecognizer locationInView:self.forumsTableView];
+        self.pressedIndexPath = [[self.forumsTableView indexPathForRowAtPoint:longPressLocation] copy];
+        
+        if (self.forumActionSheet != nil) {
+            [self.forumActionSheet release], self.forumActionSheet = nil;
+        }
+        
+        self.forumActionSheet = [[UIActionSheet alloc] initWithTitle:@"Ouvrir directement les sujets..."
+                                                            delegate:self cancelButtonTitle:@"Annuler"
+                                              destructiveButtonTitle:nil
+                                                   otherButtonTitles:	@"Favoris", @"Suivis", @"Lus", @"Tous (défaut)",
+                                 nil,
+                                 nil];
+        
+        // use the same style as the nav bar
+        self.forumActionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+        
+        CGPoint longPressLocation2 = [longPressRecognizer locationInView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view]];
+        CGRect origFrame = CGRectMake( longPressLocation2.x, longPressLocation2.y, 1, 1);
+        
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            [self.forumActionSheet showFromRect:origFrame inView:[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] view] animated:YES];
+        }
+        else
+            [self.forumActionSheet showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
+        
+    }
+}
+
+- (void)actionSheet:(UIActionSheet *)modalView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"selc %@", [[arrayData objectAtIndex:pressedIndexPath.row] aURL]);
+    NSMutableDictionary *actuMeta = [self.metaDataList objectForKey:[[arrayData objectAtIndex:pressedIndexPath.row] aURL]];
+    if (!actuMeta) {
+        actuMeta = [NSMutableDictionary dictionary];
+    }
+    NSLog(@"actuMeta %@", actuMeta);
+    
+    switch (buttonIndex)
+    {
+        case 0:
+        {
+            [actuMeta setValue:@(kFav) forKey:@"flag"];
+            break;
+        }
+        case 1:
+        {
+            [actuMeta setValue:@(kFlag) forKey:@"flag"];
+            
+            break;
+            
+        }
+        case 2:
+        {
+            [actuMeta setValue:@(kRed) forKey:@"flag"];
+            break;
+            
+        }
+        case 3:
+        {
+            [actuMeta setValue:@(kALL) forKey:@"flag"];
+            break;
+            
+        }
+        default:
+        {
+            break;
+        }
+            
+    }
+    
+    NSLog(@"actuMeta %@", actuMeta);
+    
+    if ([actuMeta objectForKey:@"flag"]) {
+        [self.metaDataList setObject:actuMeta forKey:[[arrayData objectAtIndex:pressedIndexPath.row] aURL]];
+        
+        NSLog(@"mdl %@", self.metaDataList);
+        
+        NSString *directory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+        NSString *metaList = [[NSString alloc] initWithString:[directory stringByAppendingPathComponent:FORUMSMETA_FILE]];
+        
+        [self.metaDataList writeToFile:metaList atomically:YES];
+    }
+    
+    [self.forumsTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:self.pressedIndexPath, nil] withRowAnimation:UITableViewRowAnimationFade];
+    self.pressedIndexPath = nil;
+    
+}
+
 
 #pragma mark -
 #pragma mark Reload
@@ -999,6 +1199,10 @@
 
 	self.arrayData = nil;
     self.arrayNewData = nil;
+    
+    self.metaDataList = nil;
+    self.pressedIndexPath = nil;
+    self.forumActionSheet = nil;
     
 	[request cancel];
 	//[request setDelegate:nil];

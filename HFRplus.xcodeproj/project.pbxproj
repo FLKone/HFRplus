@@ -165,6 +165,10 @@
 		4C0B8DFD1BA455BF00D329BA /* InfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0B8DFA1BA455BF00D329BA /* InfoTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
 		4C0B8DFE1BA455BF00D329BA /* InfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B8DFB1BA455BF00D329BA /* InfoTableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
 		4C0B8DFF1BA455BF00D329BA /* InfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B8DFB1BA455BF00D329BA /* InfoTableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
+		4C0B8E041BA45B0100D329BA /* ForumCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0B8E021BA45B0100D329BA /* ForumCellView.m */; settings = {ASSET_TAGS = (); }; };
+		4C0B8E051BA45B0100D329BA /* ForumCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0B8E021BA45B0100D329BA /* ForumCellView.m */; settings = {ASSET_TAGS = (); }; };
+		4C0B8E061BA45B0100D329BA /* ForumCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B8E031BA45B0100D329BA /* ForumCellView.xib */; settings = {ASSET_TAGS = (); }; };
+		4C0B8E071BA45B0100D329BA /* ForumCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B8E031BA45B0100D329BA /* ForumCellView.xib */; settings = {ASSET_TAGS = (); }; };
 		4CB132941B9058530081B44D /* 146-gavel.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132921B9058530081B44D /* 146-gavel.png */; settings = {ASSET_TAGS = (); }; };
 		4CB132951B9058530081B44D /* 146-gavel.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132921B9058530081B44D /* 146-gavel.png */; settings = {ASSET_TAGS = (); }; };
 		4CB132961B9058530081B44D /* 146-gavel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132931B9058530081B44D /* 146-gavel@2x.png */; settings = {ASSET_TAGS = (); }; };
@@ -1180,6 +1184,9 @@
 		4C0B8DF91BA455BF00D329BA /* InfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoTableViewCell.h; sourceTree = "<group>"; };
 		4C0B8DFA1BA455BF00D329BA /* InfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoTableViewCell.m; sourceTree = "<group>"; };
 		4C0B8DFB1BA455BF00D329BA /* InfoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoTableViewCell.xib; sourceTree = "<group>"; };
+		4C0B8E011BA45B0100D329BA /* ForumCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForumCellView.h; sourceTree = "<group>"; };
+		4C0B8E021BA45B0100D329BA /* ForumCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForumCellView.m; sourceTree = "<group>"; };
+		4C0B8E031BA45B0100D329BA /* ForumCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ForumCellView.xib; sourceTree = "<group>"; };
 		4CB132921B9058530081B44D /* 146-gavel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "146-gavel.png"; sourceTree = "<group>"; };
 		4CB132931B9058530081B44D /* 146-gavel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "146-gavel@2x.png"; sourceTree = "<group>"; };
 		4CB132981B905BF80081B44D /* BlackListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlackListTableViewController.h; sourceTree = "<group>"; };
@@ -1897,6 +1904,7 @@
 		01BF8A0F121D7469007624B6 /* Forums */ = {
 			isa = PBXGroup;
 			children = (
+				4C0B8E001BA45AF700D329BA /* ForumsCell */,
 				01BF8A10121D7469007624B6 /* TopicsCell */,
 				01BF8A52121D7945007624B6 /* Forum.h */,
 				01BF8A53121D7945007624B6 /* Forum.m */,
@@ -2079,6 +2087,16 @@
 				4C0B8DFB1BA455BF00D329BA /* InfoTableViewCell.xib */,
 			);
 			name = InfosCell;
+			sourceTree = "<group>";
+		};
+		4C0B8E001BA45AF700D329BA /* ForumsCell */ = {
+			isa = PBXGroup;
+			children = (
+				4C0B8E011BA45B0100D329BA /* ForumCellView.h */,
+				4C0B8E021BA45B0100D329BA /* ForumCellView.m */,
+				4C0B8E031BA45B0100D329BA /* ForumCellView.xib */,
+			);
+			name = ForumsCell;
 			sourceTree = "<group>";
 		};
 		4CB132A91B9094BD0081B44D /* MenuItem */ = {
@@ -3258,6 +3276,7 @@
 				CA00C3F617C2FE1B0067B457 /* IASKAppSettingsView.xib in Resources */,
 				CA00C66617C30C370067B457 /* style-smile.css in Resources */,
 				CA00C61A17C30C370067B457 /* 24.gif in Resources */,
+				4C0B8E061BA45B0100D329BA /* ForumCellView.xib in Resources */,
 				CA00C69617C30C370067B457 /* arrowend.png in Resources */,
 				CAF5DB661932BA58000B5215 /* error@2x.png in Resources */,
 				CA00C67917C30C370067B457 /* 06-magnifying-glass.png in Resources */,
@@ -3655,6 +3674,7 @@
 				CA7C70A2185EF50E00B348BA /* style-smile.css in Resources */,
 				CA7C70A3185EF50E00B348BA /* 24.gif in Resources */,
 				CA7C70A4185EF50E00B348BA /* arrowend.png in Resources */,
+				4C0B8E071BA45B0100D329BA /* ForumCellView.xib in Resources */,
 				CAF5DB671932BA58000B5215 /* error@2x.png in Resources */,
 				CA7C70A5185EF50E00B348BA /* 06-magnifying-glass.png in Resources */,
 				CA7C70A6185EF50E00B348BA /* 121-lanscape.png in Resources */,
@@ -3743,6 +3763,7 @@
 				013F0EAE121E117900BEBEB1 /* MessageDetailViewController.m in Sources */,
 				013F0EB0121E117900BEBEB1 /* ParseMessagesOperation.m in Sources */,
 				CA63F389185E09B20092E9F9 /* RehostImage.m in Sources */,
+				4C0B8E041BA45B0100D329BA /* ForumCellView.m in Sources */,
 				CA00C3EE17C2FE1B0067B457 /* IASKSpecifier.m in Sources */,
 				CA00C44F17C2FF4E0067B457 /* MKStoreObserver.m in Sources */,
 				013F0EB1121E117900BEBEB1 /* AddMessageViewController.m in Sources */,
@@ -3865,6 +3886,7 @@
 				CA7C70DA185EF50E00B348BA /* MessageDetailViewController.m in Sources */,
 				CA7C70DB185EF50E00B348BA /* ParseMessagesOperation.m in Sources */,
 				CA7C70DC185EF50E00B348BA /* RehostImage.m in Sources */,
+				4C0B8E051BA45B0100D329BA /* ForumCellView.m in Sources */,
 				CA7C70DD185EF50E00B348BA /* IASKSpecifier.m in Sources */,
 				CA7C70DE185EF50E00B348BA /* MKStoreObserver.m in Sources */,
 				CA7C70DF185EF50E00B348BA /* AddMessageViewController.m in Sources */,
