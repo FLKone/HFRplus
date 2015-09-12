@@ -553,7 +553,7 @@
                     if (self.boldQuote) {
                         //on laisse le txt du qtemsg et on bold
                         txtTW = quoteTxt;
-                        txtTW = [txtTW stringByReplacingOccurrencesOfString:self.textQuote withString:[NSString stringWithFormat:@"[B]%@[/B]", self.textQuote]];
+                        txtTW = [txtTW stringByReplacingOccurrencesOfString:self.textQuote withString:[NSString stringWithFormat:@"[b]%@[/b]", self.textQuote]];
                     }
                     else {
                         //case EXCLU
@@ -571,7 +571,7 @@
         else if (capturesArray.count == 1) {
             if (self.boldQuote) {
                 //on laisse le txt et on bold
-                txtTW = [txtTW stringByReplacingOccurrencesOfString:self.textQuote withString:[NSString stringWithFormat:@"[B]%@[/B]", self.textQuote]];
+                txtTW = [txtTW stringByReplacingOccurrencesOfString:self.textQuote withString:[NSString stringWithFormat:@"[b]%@[/b]", self.textQuote]];
             }
             else {
                 //recup le quotemsg et y inserer le msg
