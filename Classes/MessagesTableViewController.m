@@ -689,9 +689,14 @@
 }
 
 - (void)editMenuHidden:(id)sender {
-    NSLog(@"editMenuHidden %@ NOMBRE %lu", sender, [UIMenuController sharedMenuController].menuItems.count);
-    UIMenuItem *textQuotinuum = [[[UIMenuItem alloc] initWithTitle:@"Citer excl" action:@selector(textQuote:)] autorelease];
-    UIMenuItem *textQuotinuumBis = [[[UIMenuItem alloc] initWithTitle:@"Citer gras" action:@selector(textQuoteBold:)] autorelease];
+    //NSLog(@"editMenuHidden %@ NOMBRE %lu", sender, [UIMenuController sharedMenuController].menuItems.count);
+    
+    UIImage *menuImgQuote = [UIImage imageNamed:@"ReplyArrowFilled-20"];
+    UIImage *menuImgQuoteB = [UIImage imageNamed:@"BoldFilled-20"];
+    
+    
+    UIMenuItem *textQuotinuum = [[[UIMenuItem alloc] initWithTitle:@"Citerexclu" action:@selector(textQuote:) image:menuImgQuote] autorelease];
+    UIMenuItem *textQuotinuumBis = [[[UIMenuItem alloc] initWithTitle:@"Citergras" action:@selector(textQuoteBold:) image:menuImgQuoteB] autorelease];
 
     UIMenuController *menuController = [UIMenuController sharedMenuController];
     [menuController setMenuItems:[NSArray arrayWithObjects:textQuotinuum, textQuotinuumBis, nil]];
