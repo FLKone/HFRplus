@@ -55,6 +55,8 @@
         
 	//self.hash_check = [[NSString alloc] init];
 	
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:YES];
+
     
     NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
     if ([bundleIdentifier isEqualToString:@"hfrplus.red"]) {
