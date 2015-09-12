@@ -17,6 +17,8 @@
 
 #import <SafariServices/SafariServices.h>
 
+#import "Crittercism.h"
+
 @implementation HFRplusAppDelegate
 
 @synthesize window;
@@ -60,7 +62,7 @@
     
     NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
     if ([bundleIdentifier isEqualToString:@"hfrplus.red"]) {
-        //[Crittercism enableWithAppID:kTestFlightAPIRE];
+        [Crittercism enableWithAppID:kTestFlightAPIRE];
         
         //[TestFlight takeOff:kTestFlightAPIRE];
     }

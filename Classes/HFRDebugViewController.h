@@ -19,6 +19,7 @@
 @property (nonatomic, retain) NSDateFormatter *dateFormatter;
 @property (retain, nonatomic) IBOutlet UISegmentedControl *choixURL;
 
+- (IBAction)MakeItRain:(id)sender;
 
 -(IBAction) network_base;
 -(IBAction) network_asi;

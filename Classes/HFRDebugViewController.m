@@ -100,6 +100,10 @@
 #pragma mark -
 #pragma mark network_base
 
+- (IBAction)MakeItRain:(id)sender {
+    [self crash];
+}
+
 -(IBAction) network_base {
 
     // Create the request.

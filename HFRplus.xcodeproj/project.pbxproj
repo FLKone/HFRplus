@@ -169,6 +169,10 @@
 		4C0B8E051BA45B0100D329BA /* ForumCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0B8E021BA45B0100D329BA /* ForumCellView.m */; settings = {ASSET_TAGS = (); }; };
 		4C0B8E061BA45B0100D329BA /* ForumCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B8E031BA45B0100D329BA /* ForumCellView.xib */; settings = {ASSET_TAGS = (); }; };
 		4C0B8E071BA45B0100D329BA /* ForumCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B8E031BA45B0100D329BA /* ForumCellView.xib */; settings = {ASSET_TAGS = (); }; };
+		4C0B8E0F1BA46ADA00D329BA /* dsym_upload.sh in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B8E0D1BA46ADA00D329BA /* dsym_upload.sh */; settings = {ASSET_TAGS = (); }; };
+		4C0B8E101BA46ADB00D329BA /* dsym_upload.sh in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B8E0D1BA46ADA00D329BA /* dsym_upload.sh */; settings = {ASSET_TAGS = (); }; };
+		4C0B8E111BA46ADB00D329BA /* libCrittercism_v5_3_0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C0B8E0E1BA46ADA00D329BA /* libCrittercism_v5_3_0.a */; settings = {ASSET_TAGS = (); }; };
+		4C0B8E121BA46ADB00D329BA /* libCrittercism_v5_3_0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C0B8E0E1BA46ADA00D329BA /* libCrittercism_v5_3_0.a */; settings = {ASSET_TAGS = (); }; };
 		4CB132941B9058530081B44D /* 146-gavel.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132921B9058530081B44D /* 146-gavel.png */; settings = {ASSET_TAGS = (); }; };
 		4CB132951B9058530081B44D /* 146-gavel.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132921B9058530081B44D /* 146-gavel.png */; settings = {ASSET_TAGS = (); }; };
 		4CB132961B9058530081B44D /* 146-gavel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132931B9058530081B44D /* 146-gavel@2x.png */; settings = {ASSET_TAGS = (); }; };
@@ -1187,6 +1191,12 @@
 		4C0B8E011BA45B0100D329BA /* ForumCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForumCellView.h; sourceTree = "<group>"; };
 		4C0B8E021BA45B0100D329BA /* ForumCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForumCellView.m; sourceTree = "<group>"; };
 		4C0B8E031BA45B0100D329BA /* ForumCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ForumCellView.xib; sourceTree = "<group>"; };
+		4C0B8E091BA46ADA00D329BA /* CRFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRFilter.h; sourceTree = "<group>"; };
+		4C0B8E0A1BA46ADA00D329BA /* Crittercism.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Crittercism.h; sourceTree = "<group>"; };
+		4C0B8E0B1BA46ADA00D329BA /* CrittercismConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrittercismConfig.h; sourceTree = "<group>"; };
+		4C0B8E0C1BA46ADA00D329BA /* CrittercismDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrittercismDelegate.h; sourceTree = "<group>"; };
+		4C0B8E0D1BA46ADA00D329BA /* dsym_upload.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = dsym_upload.sh; sourceTree = "<group>"; };
+		4C0B8E0E1BA46ADA00D329BA /* libCrittercism_v5_3_0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCrittercism_v5_3_0.a; sourceTree = "<group>"; };
 		4CB132921B9058530081B44D /* 146-gavel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "146-gavel.png"; sourceTree = "<group>"; };
 		4CB132931B9058530081B44D /* 146-gavel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "146-gavel@2x.png"; sourceTree = "<group>"; };
 		4CB132981B905BF80081B44D /* BlackListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlackListTableViewController.h; sourceTree = "<group>"; };
@@ -1734,6 +1744,7 @@
 				CA4CE89215B1B30B0039FC3B /* ImageIO.framework in Frameworks */,
 				CA1070B415A4CEFE002E6C19 /* MessageUI.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
+				4C0B8E111BA46ADB00D329BA /* libCrittercism_v5_3_0.a in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
 				01BF87DA121C45B9007624B6 /* CFNetwork.framework in Frameworks */,
@@ -1759,6 +1770,7 @@
 				CA7C7120185EF50E00B348BA /* ImageIO.framework in Frameworks */,
 				CA7C7121185EF50E00B348BA /* MessageUI.framework in Frameworks */,
 				CA7C7122185EF50E00B348BA /* Foundation.framework in Frameworks */,
+				4C0B8E121BA46ADB00D329BA /* libCrittercism_v5_3_0.a in Frameworks */,
 				CA7C7123185EF50E00B348BA /* UIKit.framework in Frameworks */,
 				CA7C7124185EF50E00B348BA /* CoreGraphics.framework in Frameworks */,
 				CA7C7125185EF50E00B348BA /* CFNetwork.framework in Frameworks */,
@@ -2099,6 +2111,19 @@
 			name = ForumsCell;
 			sourceTree = "<group>";
 		};
+		4C0B8E081BA46ADA00D329BA /* CrittercismSDK */ = {
+			isa = PBXGroup;
+			children = (
+				4C0B8E091BA46ADA00D329BA /* CRFilter.h */,
+				4C0B8E0A1BA46ADA00D329BA /* Crittercism.h */,
+				4C0B8E0B1BA46ADA00D329BA /* CrittercismConfig.h */,
+				4C0B8E0C1BA46ADA00D329BA /* CrittercismDelegate.h */,
+				4C0B8E0D1BA46ADA00D329BA /* dsym_upload.sh */,
+				4C0B8E0E1BA46ADA00D329BA /* libCrittercism_v5_3_0.a */,
+			);
+			path = CrittercismSDK;
+			sourceTree = "<group>";
+		};
 		4CB132A91B9094BD0081B44D /* MenuItem */ = {
 			isa = PBXGroup;
 			children = (
@@ -2169,6 +2194,7 @@
 				CA00C45617C300140067B457 /* RegexKitLite */,
 				CA00C3FE17C2FE240067B457 /* SDWebImage */,
 				CA00C45017C3000B0067B457 /* NSData+Base64.h */,
+				4C0B8E081BA46ADA00D329BA /* CrittercismSDK */,
 				CA00C45117C3000B0067B457 /* NSData+Base64.m */,
 				CA00C45217C3000B0067B457 /* ShakeView.h */,
 				CA00C45317C3000B0067B457 /* ShakeView.m */,
@@ -2922,6 +2948,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C0B8E0F1BA46ADA00D329BA /* dsym_upload.sh in Resources */,
 				CA00C6A317C30C370067B457 /* compose.png in Resources */,
 				4C028AD21A8C635500F542B1 /* hammer.min.map in Resources */,
 				CA00C64117C30C370067B457 /* ohill.gif in Resources */,
@@ -3320,6 +3347,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C0B8E101BA46ADB00D329BA /* dsym_upload.sh in Resources */,
 				CA7C6FA5185EF50E00B348BA /* compose.png in Resources */,
 				CA7C6FA6185EF50E00B348BA /* ohill.gif in Resources */,
 				CA7C6FA7185EF50E00B348BA /* jquery-2.0.3.min.js in Resources */,
@@ -3999,6 +4027,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/**",
 					"$(PROJECT_DIR)/**",
+					"$(PROJECT_DIR)/HFRplus/Vendor/CrittercismSDK",
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_BUNDLE_IDENTIFIER = hfrplus;
@@ -4027,6 +4056,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/**",
 					"$(PROJECT_DIR)/**",
+					"$(PROJECT_DIR)/HFRplus/Vendor/CrittercismSDK",
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_BUNDLE_IDENTIFIER = hfrplus;
@@ -4127,6 +4157,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/**",
 					"$(PROJECT_DIR)/**",
+					"$(PROJECT_DIR)/HFRplus/Vendor/CrittercismSDK",
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_BUNDLE_IDENTIFIER = hfrplus.red;
@@ -4155,6 +4186,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/**",
 					"$(PROJECT_DIR)/**",
+					"$(PROJECT_DIR)/HFRplus/Vendor/CrittercismSDK",
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_BUNDLE_IDENTIFIER = hfrplus.red;
