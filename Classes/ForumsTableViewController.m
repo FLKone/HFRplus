@@ -117,7 +117,7 @@
     
     [self.arrayData removeAllObjects];
     
-    NSLog(@"self.arrayNewData %@", self.arrayNewData);
+    //NSLog(@"self.arrayNewData %@", self.arrayNewData);
     
     self.arrayData = [NSMutableArray arrayWithArray:self.arrayNewData];
     
