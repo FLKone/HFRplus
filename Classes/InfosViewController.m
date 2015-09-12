@@ -13,11 +13,11 @@
 #import "HFRplusAppDelegate.h"
 #import "HFRDebugViewController.h"
 #import "AlerteModoViewController.h"
-
+#import "InfoTableViewCell.h"
 
 @implementation InfosViewController
 
-@synthesize menuList, lastViewController;
+@synthesize menuList, lastViewController, tmpCell;
 
 - (void)dealloc
 {
@@ -65,31 +65,31 @@
     self.menuList[0] = [NSMutableArray array];
     self.menuList[1] = [NSMutableArray array];
 	
-    [self.menuList[0] addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Mon Compte", @"CompteViewController", @"CompteViewController", @"111-user", nil]
+    [self.menuList[0] addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Mon Compte", @"CompteViewController", @"CompteViewController", @"CircledUserMaleFilled-40", nil]
                                                                 forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];
     
     
     
-    [self.menuList[1] addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Aide", @"AideViewController", @"AideViewController", @"113-navigation", nil]
+    [self.menuList[1] addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Aide", @"AideViewController", @"AideViewController", @"QuestionsFilled-40", nil]
                                                                 forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];
     
-    [self.menuList[1] addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Crédits", @"CreditsViewController", @"CreditsViewController", @"122-stats", nil]
+    [self.menuList[1] addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Crédits", @"CreditsViewController", @"CreditsViewController", @"AboutFilled-40", nil]
                                                                 forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];
     
     NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
     if (![bundleIdentifier isEqualToString:@"hfrplus.red"]) {
-        [self.menuList[1] addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Faire un don", @"PayViewController", @"PayViewController", @"119-piggy-bank", nil]
+        [self.menuList[1] addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Faire un don", @"PayViewController", @"PayViewController", @"MoneyBoxFilled-40", nil]
                                                                     forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];
     }
     
-    [self.menuList[0] addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Réglages", @"SettingsViewController", @"IASKAppSettingsView", @"20-gear2", nil]
+    [self.menuList[0] addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Réglages", @"SettingsViewController", @"IASKAppSettingsView", @"Settings3Filled-40", nil]
                                                                 forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];   
 
     
-    [self.menuList[0] addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Liste noire", @"BlackListTableViewController", @"BlackListTableViewController", @"Thor Hammer Filled-23", nil]
+    [self.menuList[0] addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Liste noire", @"BlackListTableViewController", @"BlackListTableViewController", @"ThorHammerFilled-40", nil]
                                                                 forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];
 
-    [self.menuList[0] addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Debug", @"HFRDebugViewController", @"HFRDebugViewController", @"19-gear", nil]
+    [self.menuList[0] addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Debug", @"HFRDebugViewController", @"HFRDebugViewController", @"BugFilled-40", nil]
                                                                 forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];
 
     
@@ -194,22 +194,26 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	static NSString *CellIdentifier = @"cellID";
+	static NSString *CellIdentifier = @"InfoCell";
 	
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-	if (!cell)
-	{
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+    InfoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if (cell == nil) {
+        [[NSBundle mainBundle] loadNibNamed:@"InfoTableViewCell" owner:self options:nil];
+        cell = tmpCell;
         
-		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+        
+        self.tmpCell = nil;
     }
     
 	// get the view controller's info dictionary based on the indexPath's row
     NSDictionary *dataDictionary = [menuList[indexPath.section] objectAtIndex:indexPath.row];
-    cell.textLabel.text = [dataDictionary valueForKey:kTitleKey];
+    cell.titleLabel.text = [dataDictionary valueForKey:kTitleKey];
     
     UIImage* theImage = [UIImage imageNamed:[dataDictionary valueForKey:kImageKey]];
-    cell.imageView.image = theImage;
+    cell.infoImage.image = theImage;
     
 	return cell;
     

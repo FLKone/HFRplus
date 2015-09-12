@@ -161,6 +161,10 @@
 		4C0B8DF51BA4526100D329BA /* BoldFilled-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B8DF21BA4526100D329BA /* BoldFilled-20@2x.png */; settings = {ASSET_TAGS = (); }; };
 		4C0B8DF61BA4526100D329BA /* BoldFilled-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B8DF31BA4526100D329BA /* BoldFilled-20.png */; settings = {ASSET_TAGS = (); }; };
 		4C0B8DF71BA4526100D329BA /* BoldFilled-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B8DF31BA4526100D329BA /* BoldFilled-20.png */; settings = {ASSET_TAGS = (); }; };
+		4C0B8DFC1BA455BF00D329BA /* InfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0B8DFA1BA455BF00D329BA /* InfoTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
+		4C0B8DFD1BA455BF00D329BA /* InfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0B8DFA1BA455BF00D329BA /* InfoTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
+		4C0B8DFE1BA455BF00D329BA /* InfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B8DFB1BA455BF00D329BA /* InfoTableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
+		4C0B8DFF1BA455BF00D329BA /* InfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B8DFB1BA455BF00D329BA /* InfoTableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
 		4CB132941B9058530081B44D /* 146-gavel.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132921B9058530081B44D /* 146-gavel.png */; settings = {ASSET_TAGS = (); }; };
 		4CB132951B9058530081B44D /* 146-gavel.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132921B9058530081B44D /* 146-gavel.png */; settings = {ASSET_TAGS = (); }; };
 		4CB132961B9058530081B44D /* 146-gavel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132931B9058530081B44D /* 146-gavel@2x.png */; settings = {ASSET_TAGS = (); }; };
@@ -1173,6 +1177,9 @@
 		4C0B8D851BA4522900D329BA /* cat-apple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cat-apple.png"; sourceTree = "<group>"; };
 		4C0B8DF21BA4526100D329BA /* BoldFilled-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BoldFilled-20@2x.png"; sourceTree = "<group>"; };
 		4C0B8DF31BA4526100D329BA /* BoldFilled-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BoldFilled-20.png"; sourceTree = "<group>"; };
+		4C0B8DF91BA455BF00D329BA /* InfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoTableViewCell.h; sourceTree = "<group>"; };
+		4C0B8DFA1BA455BF00D329BA /* InfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoTableViewCell.m; sourceTree = "<group>"; };
+		4C0B8DFB1BA455BF00D329BA /* InfoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoTableViewCell.xib; sourceTree = "<group>"; };
 		4CB132921B9058530081B44D /* 146-gavel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "146-gavel.png"; sourceTree = "<group>"; };
 		4CB132931B9058530081B44D /* 146-gavel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "146-gavel@2x.png"; sourceTree = "<group>"; };
 		4CB132981B905BF80081B44D /* BlackListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlackListTableViewController.h; sourceTree = "<group>"; };
@@ -1828,6 +1835,7 @@
 			children = (
 				CAFD003915B9B4FF003CA3FC /* Debug */,
 				01BF877E121C4407007624B6 /* Compte */,
+				4C0B8DF81BA455AF00D329BA /* InfosCell */,
 				01BF8776121C4407007624B6 /* InfosViewController.h */,
 				01BF8777121C4407007624B6 /* InfosViewController.m */,
 				4CB132A21B9068250081B44D /* InfosViewController.xib */,
@@ -2061,6 +2069,16 @@
 				4C0B8D851BA4522900D329BA /* cat-apple.png */,
 			);
 			name = CatIcons;
+			sourceTree = "<group>";
+		};
+		4C0B8DF81BA455AF00D329BA /* InfosCell */ = {
+			isa = PBXGroup;
+			children = (
+				4C0B8DF91BA455BF00D329BA /* InfoTableViewCell.h */,
+				4C0B8DFA1BA455BF00D329BA /* InfoTableViewCell.m */,
+				4C0B8DFB1BA455BF00D329BA /* InfoTableViewCell.xib */,
+			);
+			name = InfosCell;
 			sourceTree = "<group>";
 		};
 		4CB132A91B9094BD0081B44D /* MenuItem */ = {
@@ -3121,6 +3139,7 @@
 				CA7472F217E15FE300B45E15 /* ToolBarPrevious_on.png in Resources */,
 				CA00C63817C30C370067B457 /* kaola.gif in Resources */,
 				CA00C63B17C30C370067B457 /* mad.gif in Resources */,
+				4C0B8DFE1BA455BF00D329BA /* InfoTableViewCell.xib in Resources */,
 				CA00C6DA17C30C370067B457 /* icon_smile_face.png in Resources */,
 				CA00C62F17C30C370067B457 /* gratgrat.gif in Resources */,
 				CA00C6B317C30C370067B457 /* beginoff.png in Resources */,
@@ -3517,6 +3536,7 @@
 				CA7C704D185EF50E00B348BA /* kaola.gif in Resources */,
 				CA7C704E185EF50E00B348BA /* mad.gif in Resources */,
 				CA7C704F185EF50E00B348BA /* icon_smile_face.png in Resources */,
+				4C0B8DFF1BA455BF00D329BA /* InfoTableViewCell.xib in Resources */,
 				CA7C7050185EF50E00B348BA /* gratgrat.gif in Resources */,
 				CA7C7051185EF50E00B348BA /* beginoff.png in Resources */,
 				CA7C7052185EF50E00B348BA /* HFRSearchViewController.xib in Resources */,
@@ -3690,6 +3710,7 @@
 				1D3623260D0F684500981E51 /* HFRplusAppDelegate.m in Sources */,
 				01BF8785121C4407007624B6 /* InfosViewController.m in Sources */,
 				01BF8786121C4407007624B6 /* AideViewController.m in Sources */,
+				4C0B8DFC1BA455BF00D329BA /* InfoTableViewCell.m in Sources */,
 				01BF8787121C4407007624B6 /* CreditsViewController.m in Sources */,
 				01BF878A121C4407007624B6 /* IdentificationViewController.m in Sources */,
 				01BF878B121C4407007624B6 /* CompteViewController.m in Sources */,
@@ -3811,6 +3832,7 @@
 				CA7C70BE185EF50E00B348BA /* HFRplusAppDelegate.m in Sources */,
 				CA7C70BF185EF50E00B348BA /* InfosViewController.m in Sources */,
 				CA7C70C0185EF50E00B348BA /* AideViewController.m in Sources */,
+				4C0B8DFD1BA455BF00D329BA /* InfoTableViewCell.m in Sources */,
 				CA7C70C1185EF50E00B348BA /* CreditsViewController.m in Sources */,
 				CA7C70C2185EF50E00B348BA /* IdentificationViewController.m in Sources */,
 				CA7C70C3185EF50E00B348BA /* CompteViewController.m in Sources */,

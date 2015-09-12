@@ -6,6 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class InfoTableViewCell;
 
 #define kViewControllerKey		@"viewController"
 #define kTitleKey				@"title"
@@ -17,11 +18,12 @@
 	NSMutableArray *menuList;
 	
 	UIViewController *lastViewController;
-	
+	IBOutlet InfoTableViewCell *tmpCell;
 }
 
 @property (nonatomic, retain) NSMutableArray *menuList;
 
 @property (nonatomic, assign) UIViewController *lastViewController;
+@property (nonatomic, assign) IBOutlet InfoTableViewCell *tmpCell;
 
 @end
