@@ -16,6 +16,7 @@
 #import "RangeOfCharacters.h"
 #import "RehostImage.h"
 #import "RehostCell.h"
+#import "UIMenuItem+CXAImageSupport.h"
 
 @implementation AddMessageViewController
 @synthesize delegate, textView, arrayInputData, formSubmit, accessoryView, smileView;
@@ -33,19 +34,6 @@
 
 @synthesize popover = _popover, refreshAnchor;
 
-/*
-
-- (BOOL)canPerformAction: (SEL)action withSender: (id)sender {
-	NSLog(@"canPerformAction %@", NSStringFromSelector(action));
-	
-    if (action == @selector(copy:)) return YES;
-    if (action == @selector(textBold:)) return YES;
-    if (action == @selector(textItalic:)) return YES;
-    if (action == @selector(textUnderline:)) return YES;
-    if (action == @selector(textStrike:)) return YES;
-    return NO;
-}
-*/
 
 #pragma mark -
 #pragma mark View lifecycle
@@ -390,22 +378,50 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 	
+    UIImage *menuImgCopy = [UIImage imageNamed:@"CopyFilled-20"];
+    UIImage *menuImgCut = [UIImage imageNamed:@"CutFilled-20"];
+    UIImage *menuImgPaste = [UIImage imageNamed:@"PasteFilled-20"];
+    
+    UIImage *menuImgBold = [UIImage imageNamed:@"BoldEFilled-20"];
+    UIImage *menuImgItalic = [UIImage imageNamed:@"ItalicFilled-20"];
+    UIImage *menuImgUnderline = [UIImage imageNamed:@"UnderlineFilled-20"];
+    UIImage *menuImgStrike = [UIImage imageNamed:@"StrikethroughFilled-20"];
+    
+    UIImage *menuImgSpoiler = [UIImage imageNamed:@"InvisibleFilled-20"];
+    UIImage *menuImgQuote = [UIImage imageNamed:@"QuoteEFilled-20"];
+    UIImage *menuImgLink = [UIImage imageNamed:@"LinkFilled-20"];
+    UIImage *menuImgImage = [UIImage imageNamed:@"XlargeIconsFilled-20"];
+
+    UIMenuItem *textCutItem = [[[UIMenuItem alloc] initWithTitle:@"HFRCut" action:@selector(textCut:) image:menuImgCut] autorelease];
+    UIMenuItem *textCopyItem = [[[UIMenuItem alloc] initWithTitle:@"HFRCopy" action:@selector(textCopy:) image:menuImgCopy] autorelease];
+    UIMenuItem *textPasteItem = [[[UIMenuItem alloc] initWithTitle:@"HFRPaste" action:@selector(textPaste:) image:menuImgPaste] autorelease];
+
+    UIMenuItem *textBoldItem = [[[UIMenuItem alloc] initWithTitle:@"B" action:@selector(textBold:) image:menuImgBold] autorelease];
+    UIMenuItem *textItalicItem = [[[UIMenuItem alloc] initWithTitle:@"I" action:@selector(textItalic:) image:menuImgItalic] autorelease];
+    UIMenuItem *textUnderlineItem = [[[UIMenuItem alloc] initWithTitle:@"U" action:@selector(textUnderline:) image:menuImgUnderline] autorelease];
+    UIMenuItem *textStrikeItem = [[[UIMenuItem alloc] initWithTitle:@"S" action:@selector(textStrike:) image:menuImgStrike] autorelease];
+    
+    UIMenuItem *textSpoilerItem = [[[UIMenuItem alloc] initWithTitle:@"SPOILER" action:@selector(textSpoiler:) image:menuImgSpoiler] autorelease];
+    UIMenuItem *textQuoteItem = [[[UIMenuItem alloc] initWithTitle:@"QUOTE" action:@selector(textQuote:) image:menuImgQuote] autorelease];
+    UIMenuItem *textLinkItem = [[[UIMenuItem alloc] initWithTitle:@"URL" action:@selector(textLink:) image:menuImgLink] autorelease];
+    UIMenuItem *textImgItem = [[[UIMenuItem alloc] initWithTitle:@"IMG" action:@selector(textImg:) image:menuImgImage] autorelease];
+
 	// On rajoute les menus pour le style
+    
+    /*
     UIMenuItem *textBoldItem = [[[UIMenuItem alloc] initWithTitle:@"B" action:@selector(textBold:)] autorelease];
     UIMenuItem *textItalicItem = [[[UIMenuItem alloc] initWithTitle:@"I" action:@selector(textItalic:)] autorelease];
     UIMenuItem *textUnderlineItem = [[[UIMenuItem alloc] initWithTitle:@"U" action:@selector(textUnderline:)] autorelease];
     UIMenuItem *textStrikeItem = [[[UIMenuItem alloc] initWithTitle:@"S" action:@selector(textStrike:)] autorelease];
     
-	UIMenuItem *textSpoilerItem = [[[UIMenuItem alloc] initWithTitle:@"SPOILER" action:@selector(textSpoiler:)] autorelease];
+	UIMenuItem *textSpoilerItem = [[[UIMenuItem alloc] initWithTitle:@"SPOILER" action:@selector(textSpoiler:)] autorelease];*/
     UIMenuItem *textFixeItem = [[[UIMenuItem alloc] initWithTitle:@"FIXED" action:@selector(textFixe:)] autorelease];
-    UIMenuItem *textQuoteItem = [[[UIMenuItem alloc] initWithTitle:@"QUOTE" action:@selector(textQuote:)] autorelease];
- //   UIMenuItem *textCppItem = [[[UIMenuItem alloc] initWithTitle:@"CPP" action:@selector(textStrike:)] autorelease];
-    UIMenuItem *textLinkItem = [[[UIMenuItem alloc] initWithTitle:@"URL" action:@selector(textLink:)] autorelease];
+    //UIMenuItem *textCppItem = [[[UIMenuItem alloc] initWithTitle:@"CPP" action:@selector(textStrike:)] autorelease];
     //UIMenuItem *textMailItem = [[[UIMenuItem alloc] initWithTitle:@"@" action:@selector(textStrike:)] autorelease];
-    UIMenuItem *textImgItem = [[[UIMenuItem alloc] initWithTitle:@"IMG" action:@selector(textImg:)] autorelease];
 	
-    [[UIMenuController sharedMenuController] setMenuItems:[NSArray arrayWithObjects:textBoldItem, textItalicItem, textUnderlineItem, textStrikeItem,
-														   textSpoilerItem, textFixeItem, textQuoteItem, textLinkItem, textImgItem, nil]];
+    [[UIMenuController sharedMenuController] setMenuItems:[NSArray arrayWithObjects:textCutItem, textCopyItem, textPasteItem,
+                                                                                    textBoldItem, textItalicItem, textUnderlineItem, textStrikeItem,
+                                                                                    textSpoilerItem, textQuoteItem, textLinkItem, textImgItem, textFixeItem, nil]];
 
 	
 	[segmentControler setEnabled:YES forSegmentAtIndex:0];
@@ -1057,65 +1073,6 @@
 	
 	[self cancel];
 	
-}
-
--(void)insertBBCode:(NSString *)code {
-	
-	NSMutableString *text = [textView.text mutableCopy];
-	
-	//NSLog(@"textView %d %d", textView.selectedRange.location, textView.selectedRange.length);
-
-    NSRange selectedRange = textView.selectedRange;
-    
-    [text insertString:[NSString stringWithFormat:@"[/%@]", code] atIndex:selectedRange.location+selectedRange.length];
-    [text insertString:[NSString stringWithFormat:@"[%@]", code] atIndex:selectedRange.location];	
-	
-	//NSLog(@"selectedRange %d %d", selectedRange.location, selectedRange.length);
-	
-	if (selectedRange.length > 0) {
-		selectedRange.location += (code.length * 2) + 5 + selectedRange.length;
-	}
-	else {
-		selectedRange.location += code.length + 2;
-	}
-
-	selectedRange.length = 0;
-	
-	
-	
-    textView.text = text;
-	textView.selectedRange = selectedRange;
-    [text release];
-	
-}
-- (void)textBold:(id)sender{
-	[self insertBBCode:@"b"];
-}
-- (void)textItalic:(id)sender{
-	[self insertBBCode:@"i"];
-}
-- (void)textUnderline:(id)sender{
-	[self insertBBCode:@"u"];
-
-}
-- (void)textStrike:(id)sender{
-	[self insertBBCode:@"strike"];
-}
-
-- (void)textSpoiler:(id)sender{
-	[self insertBBCode:@"spoiler"];
-}
-- (void)textFixe:(id)sender{
-	[self insertBBCode:@"fixed"];
-}
-- (void)textQuote:(id)sender{
-	[self insertBBCode:@"quote"];
-}
-- (void)textLink:(id)sender{
-	[self insertBBCode:@"url"];
-}
-- (void)textImg:(id)sender{
-	[self insertBBCode:@"img"];
 }
 
 #pragma mark -

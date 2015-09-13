@@ -37,7 +37,8 @@
     /*
      /hfr/profil-918540.htm //testreview
      /hfr/profil-89386.htm //flk
-     */
+     
+    
     ProfilViewController *profilVC = [[ProfilViewController alloc] initWithNibName:@"ProfilViewController" bundle:nil andUrl:@"/hfr/profil-89386.htm"];
 
     
@@ -53,6 +54,24 @@
     
     [profilVC release];
     
+    QuoteMessageViewController *quoteMessageViewController = [[QuoteMessageViewController alloc]
+                                                              initWithNibName:@"AddMessageViewController" bundle:nil];
+
+    [quoteMessageViewController setUrlQuote:@"http://forum.hardware.fr/message.php?config=hfr.inc&cat=25&post=1711&numrep=537060&ref=0&page=308&p=1&subcat=0&sondage=0&owntopic=1&new=0#formulaire"];
+    
+    // Create the navigation controller and present it modally.
+    HFRNavigationController *navigationController = [[HFRNavigationController alloc]
+                                                     initWithRootViewController:quoteMessageViewController];
+    
+    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+    [self presentModalViewController:navigationController animated:YES];
+    
+    // The navigation controller is now owned by the current view controller
+    // and the root view controller is owned by the navigation controller,
+    // so both objects should be released to prevent over-retention.
+    [navigationController release];
+    [quoteMessageViewController release];
+    */
 }
 
 #pragma mark -
@@ -832,10 +851,12 @@
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
     [segmentBarItem release];	
 
+    /*
     // test BTN
-	//UIBarButtonItem *segmentBarItem2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(testBtn)];
-	//self.navigationItem.leftBarButtonItem = segmentBarItem2;
-    //[segmentBarItem2 release];
+	UIBarButtonItem *segmentBarItem2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(testBtn)];
+	self.navigationItem.leftBarButtonItem = segmentBarItem2;
+    [segmentBarItem2 release];
+    */
     
 	[(ShakeView*)self.view setShakeDelegate:self];
 
