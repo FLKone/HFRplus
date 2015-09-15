@@ -76,14 +76,20 @@
     
     if ([[topicNode className] rangeOfString:@"ligne_sticky"].location != NSNotFound) {
         aTopicAffix = [aTopicAffix stringByAppendingString:@""];//➫ ➥▶✚
+        aTopic.isSticky = YES;
     }
     if ([topicTitleNode findChildWithAttribute:@"alt" matchingName:@"closed" allowPartial:NO]) {
         aTopicAffix = [aTopicAffix stringByAppendingString:@""];
+        aTopic.isClosed = YES;
     }
     
     if (aTopicAffix.length > 0) {
         aTopicAffix = [aTopicAffix stringByAppendingString:@" "];
     }		
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        aTopicAffix = @"";
+    }
     
     NSString *aTopicTitle = [[NSString alloc] initWithFormat:@"%@%@%@", aTopicAffix, [[topicTitleNode allContents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]], aTopicSuffix];
     

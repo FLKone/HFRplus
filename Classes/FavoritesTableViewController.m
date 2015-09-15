@@ -1009,7 +1009,46 @@
         Topic *tmpTopic = [[[self.arrayData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
         
         // Configure the cell...
-        [(UILabel *)[cell.contentView viewWithTag:999] setText:[tmpTopic aTitle]];
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            UIFont *font1 = [UIFont boldSystemFontOfSize:13.0f];
+            if ([tmpTopic isViewed]) {
+                font1 = [UIFont systemFontOfSize:13.0f];
+            }
+            NSDictionary *arialDict = [NSDictionary dictionaryWithObject: font1 forKey:NSFontAttributeName];
+            NSMutableAttributedString *aAttrString1 = [[NSMutableAttributedString alloc] initWithString:[tmpTopic aTitle] attributes: arialDict];
+            
+            NSString *aTopicAffix = @"";
+            if (tmpTopic.isSticky) {
+                aTopicAffix = [aTopicAffix stringByAppendingString:@" "];
+            }
+            if (tmpTopic.isClosed) {
+                aTopicAffix = [aTopicAffix stringByAppendingString:@" "];
+            }
+            
+            UIFont *font2 = [UIFont fontWithName:@"fontello" size:15];
+            NSDictionary *arialDict2 = [NSDictionary dictionaryWithObject: font2 forKey:NSFontAttributeName];
+            NSMutableAttributedString *aAttrString2 = [[NSMutableAttributedString alloc] initWithString:aTopicAffix attributes: arialDict2];
+            
+            
+            [aAttrString2 appendAttributedString:aAttrString1];
+            [(UILabel *)[cell.contentView viewWithTag:999] setAttributedText:aAttrString2];
+            
+        }
+        else {
+            [(UILabel *)[cell.contentView viewWithTag:999] setText:[tmpTopic aTitle]];
+            
+            if ([tmpTopic isViewed]) {
+                [(UILabel *)[cell.contentView viewWithTag:999] setFont:[UIFont systemFontOfSize:13]];
+            }
+            else {
+                [(UILabel *)[cell.contentView viewWithTag:999] setFont:[UIFont boldSystemFontOfSize:13]];
+                
+            }
+        }
+        
+        
+        
+        
         //[(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"%d messages", ([[arrayData objectAtIndex:theRow] aRepCount] + 1)]];
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -1029,13 +1068,7 @@
         
         [(UILabel *)[cell.contentView viewWithTag:997] setText:[NSString stringWithFormat:@"%@ - %@", [tmpTopic aAuthorOfLastPost], [tmpTopic aDateOfLastPost]]];
         
-        if ([tmpTopic isViewed]) {
-            [(UILabel *)[cell.contentView viewWithTag:999] setFont:[UIFont systemFontOfSize:13]];
-        }
-        else {
-            [(UILabel *)[cell.contentView viewWithTag:999] setFont:[UIFont boldSystemFontOfSize:13]];
-            
-        }	
+
         
         return cell;
     }
