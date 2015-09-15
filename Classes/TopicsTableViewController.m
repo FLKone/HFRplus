@@ -590,15 +590,21 @@
 		
 		if ([[topicNode className] rangeOfString:@"ligne_sticky"].location != NSNotFound) {
 			aTopicAffix = [aTopicAffix stringByAppendingString:@""];//➫ ➥▶✚
+            aTopic.isSticky = YES;
 		}
 		if ([topicTitleNode findChildWithAttribute:@"alt" matchingName:@"closed" allowPartial:NO]) {
 			aTopicAffix = [aTopicAffix stringByAppendingString:@""];
+            aTopic.isClosed = YES;
 		}
 		
 		if (aTopicAffix.length > 0) {
 			aTopicAffix = [aTopicAffix stringByAppendingString:@" "];
 		}
 
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            aTopicAffix = @"";
+        }
+        
 		NSString *aTopicTitle = [[NSString alloc] initWithFormat:@"%@%@%@", aTopicAffix, [[topicTitleNode allContents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]], aTopicSuffix];
 		[aTopic setATitle:aTopicTitle];
 		[aTopicTitle release];
@@ -1490,8 +1496,43 @@
 	//NSLog(@"Cell Size %f %f", cell.contentView.frame.size.width, cell.contentView.frame.size.height);
 	
 
-	
-	[cell.titleLabel setText:[aTopic aTitle]];
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        UIFont *font1 = [UIFont boldSystemFontOfSize:13.0f];
+        if ([aTopic isViewed]) {
+            font1 = [UIFont systemFontOfSize:13.0f];
+        }
+        NSDictionary *arialDict = [NSDictionary dictionaryWithObject: font1 forKey:NSFontAttributeName];
+        NSMutableAttributedString *aAttrString1 = [[NSMutableAttributedString alloc] initWithString:[aTopic aTitle] attributes: arialDict];
+        
+        NSString *aTopicAffix = @"";
+        if (aTopic.isSticky) {
+            aTopicAffix = [aTopicAffix stringByAppendingString:@" "];
+        }
+        if (aTopic.isClosed) {
+            aTopicAffix = [aTopicAffix stringByAppendingString:@" "];
+        }
+        
+        UIFont *font2 = [UIFont fontWithName:@"fontello" size:15];
+        NSDictionary *arialDict2 = [NSDictionary dictionaryWithObject: font2 forKey:NSFontAttributeName];
+        NSMutableAttributedString *aAttrString2 = [[NSMutableAttributedString alloc] initWithString:aTopicAffix attributes: arialDict2];
+        
+        
+        [aAttrString2 appendAttributedString:aAttrString1];
+        cell.titleLabel.attributedText = aAttrString2;
+        
+        
+//        [ setText:[aTopic aTitle]];
+    }
+    else {
+        [cell.titleLabel setText:[aTopic aTitle]];
+        
+        if ([aTopic isViewed]) {
+            [[cell titleLabel] setFont:[UIFont systemFontOfSize:13]];
+        }
+        else {
+            [[cell titleLabel] setFont:[UIFont boldSystemFontOfSize:13]];
+        }
+    }
 	 
 	if (aTopic.aRepCount == 0) {
 	 [cell.msgLabel setText:[NSString stringWithFormat:@"↺ %d", (aTopic.aRepCount + 1)]];
@@ -1502,13 +1543,7 @@
 	
 	[cell.timeLabel setText:[NSString stringWithFormat:@"%@ - %@", [aTopic aAuthorOfLastPost], [aTopic aDateOfLastPost]]];
 
-    if ([aTopic isViewed]) {
-        [[cell titleLabel] setFont:[UIFont systemFontOfSize:13]];
-    }
-    else {
-        [[cell titleLabel] setFont:[UIFont boldSystemFontOfSize:13]];
-        
-    }
+
 
 	//Flag
 	if ([aTopic aTypeOfFlag].length > 0) {

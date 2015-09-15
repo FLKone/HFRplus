@@ -34,6 +34,9 @@
     
 	int postID;
 	int catID;
+    
+    bool isSticky;
+    bool isClosed;
 }
 
 @property (nonatomic, retain) NSString *_aTitle;
@@ -59,6 +62,9 @@
 
 @property int postID;
 @property int catID;
+
+@property bool isSticky;
+@property bool isClosed;
 
 - (NSString*) aTitle;
 
