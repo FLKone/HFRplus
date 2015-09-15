@@ -1490,6 +1490,20 @@
 	}
 	
 	int smilePerPage = 40;
+    float surface = [UIScreen mainScreen].bounds.size.height*[UIScreen mainScreen].bounds.size.width;
+    if (surface > 250000) {
+        smilePerPage = 65;
+    }
+    else if (surface > 180000) {
+        smilePerPage = 50;
+
+    }
+    
+    //NSLog(@"SMILEYS %f = %d", surface, smilePerPage);
+    
+    //i4 153600
+    //i5 181760
+    //i6 250125
 	int firstSmile = page * smilePerPage;
 	int lastSmile = MIN([self.smileyArray count], (page + 1) * smilePerPage);
 	
