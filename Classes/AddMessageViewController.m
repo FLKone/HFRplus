@@ -228,7 +228,14 @@
 
     NSString *tempHTML = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"smileybase" ofType:@"html"] encoding:NSUTF8StringEncoding error:NULL];
     
-    [self.smileView setBackgroundColor:[UIColor colorWithRed:46/255.f green:46/255.f blue:46/255.f alpha:1.00]];
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"iosversion" withString:@"ios7"];
+        [self.smileView setBackgroundColor:[UIColor colorWithRed:210/255.f green:213/255.f blue:219/255.f alpha:1.00]];
+    }
+    else {
+        [self.smileView setBackgroundColor:[UIColor colorWithRed:46/255.f green:46/255.f blue:46/255.f alpha:1.00]];
+    }
+    
     [self.smileView hideGradientBackground];
     
     [self.smileView loadHTMLString:[tempHTML stringByReplacingOccurrencesOfString:@"%SMILEYCUSTOM%"
@@ -1386,7 +1393,7 @@
 	[requestSmile setDidFinishSelector:@selector(fetchSmileContentComplete:)];
 	[requestSmile setDidFailSelector:@selector(fetchSmileContentFailed:)];
 
-	[self.smileView stringByEvaluatingJavaScriptFromString:@"$('#container').hide();$('#container_ajax').html('<div class=\"loading\"><img src=\"loadinfo.net.gif\" /> Recherche en cours...</div>');"];
+	[self.smileView stringByEvaluatingJavaScriptFromString:@"$('#container').hide();$('#container_ajax').html('<div class=\"loading\"><span class=\"spinner\">&#xe800;</span> Recherche en cours...</div>');"];
 	[requestSmile startAsynchronous];
 	//NSLog(@"fetchSmileys");
 
@@ -1452,7 +1459,7 @@
 	
 	[self.smileView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"\
 															$('#container').hide();\
-															$('#container_ajax').html('<div class=\"loading\"><img src=\"loadinfo.net.gif\" /> Page n˚%d...</div>');\
+															$('#container_ajax').html('<div class=\"loading\"><span class=\"spinner\">&#xe800;</span> Page n˚%d...</div>');\
 															", page + 1]];
 	
 	[self performSelectorInBackground:@selector(loadSmileys) withObject:nil];
