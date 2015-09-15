@@ -318,7 +318,7 @@
 		textFieldTo.font = [UIFont systemFontOfSize:15];
 		textFieldTo.delegate = self;
 		textFieldTo.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-		textFieldTo.keyboardAppearance = UIKeyboardAppearanceAlert;
+		textFieldTo.keyboardAppearance = UIKeyboardAppearanceDefault;
 		textFieldTo.returnKeyType = UIReturnKeyNext;
 		[textFieldTo setText:[self.arrayInputData valueForKey:@"dest"]];
 		textFieldTo.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -357,7 +357,7 @@
 		textFieldTitle.font = [UIFont systemFontOfSize:15];
 		textFieldTitle.delegate = self;
 		textFieldTitle.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-		textFieldTitle.keyboardAppearance = UIKeyboardAppearanceAlert;
+        textFieldTitle.keyboardAppearance = UIKeyboardAppearanceDefault;
 		textFieldTitle.returnKeyType = UIReturnKeyNext;
 		[textFieldTitle setText:[self.arrayInputData valueForKey:@"sujet"]];
 		textFieldTitle.autoresizingMask = UIViewAutoresizingFlexibleWidth;

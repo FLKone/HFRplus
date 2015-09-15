@@ -1750,7 +1750,7 @@
     textField.textAlignment = NSTextAlignmentCenter;
     textField.delegate = self;
     [textField addTarget:self action:@selector(textFieldTopicDidChange:) forControlEvents:UIControlEventEditingChanged];
-    textField.keyboardAppearance = UIKeyboardAppearanceAlert;
+    textField.keyboardAppearance = UIKeyboardAppearanceDefault;
     textField.keyboardType = UIKeyboardTypeNumberPad;
     
 	[alert setTag:669];
