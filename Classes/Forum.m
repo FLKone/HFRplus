@@ -11,7 +11,7 @@
 @implementation Forum
 
 @synthesize aTitle;
-@synthesize aURL;
+@synthesize aURL, aID;
 @synthesize subCats;
 /*
 -(NSString *)description {
@@ -23,7 +23,8 @@
 	if (self) {
         self.aTitle = [NSString string];
         self.aURL = [NSString string];
-        
+        self.aID = [NSString string];
+
         self.subCats = [NSMutableArray array];
         
 	}
@@ -111,7 +112,8 @@
 	self.aTitle	= nil;
 	self.aURL	= nil;
 	self.subCats = nil;
-	
+    self.aID	= nil;
+    
 	[super dealloc];
 }
 
