@@ -59,8 +59,9 @@
 	
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:YES];
 
-    
+#ifdef CONFIGURATION_Release
     NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+    
     if ([bundleIdentifier isEqualToString:@"hfrplus.red"]) {
         [Crittercism enableWithAppID:kTestFlightAPIRE];
         
@@ -72,7 +73,9 @@
         [MKStoreManager sharedManager];
 
     }
-	   
+#else
+    NSLog(@"DEBUUUUUGGGGG");
+#endif
     [self registerDefaultsFromSettingsBundle];
     
     //UserAgent
