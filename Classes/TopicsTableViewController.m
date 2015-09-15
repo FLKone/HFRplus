@@ -1060,9 +1060,19 @@
 	self.imageForUnselectedRow = [UIImage imageNamed:@"selectedrow"];
 	self.imageForSelectedRow = [UIImage imageNamed:@"unselectedrow"];
 	
-	self.imageForRedFlag = [UIImage imageNamed:@"flagred"];
-	self.imageForYellowFlag = [UIImage imageNamed:@"flagyellow"];
-	self.imageForBlueFlag = [UIImage imageNamed:@"flagblue2"];
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        self.imageForRedFlag = [UIImage imageNamed:@"Flat-RedFlag-25"];
+        self.imageForYellowFlag = [UIImage imageNamed:@"Flat-YellowFlag-25"];
+        self.imageForBlueFlag = [UIImage imageNamed:@"Flat-CyanFlag-25"];
+    }
+    else
+    {
+        self.imageForRedFlag = [UIImage imageNamed:@"flagred"];
+        self.imageForYellowFlag = [UIImage imageNamed:@"flagyellow"];
+        self.imageForBlueFlag = [UIImage imageNamed:@"flagblue2"];
+    }
+
 	
 	
 	//self.forumBaseURL = self.currentUrl;
@@ -1450,7 +1460,7 @@
 
         [[NSBundle mainBundle] loadNibNamed:@"TopicCellView" owner:self options:nil];
         cell = tmpCell;
-		cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		cell.selectionStyle = UITableViewCellSelectionStyleBlue;	
 
 		UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc] 
@@ -1523,8 +1533,10 @@
         
 		// set the button's target to this table view controller so we can interpret touch events and map that to a NSIndexSet
 		[button addTarget:self action:@selector(accessoryButtonTapped:withEvent:) forControlEvents:UIControlEventTouchUpInside];
+
+        //[button setBackgroundColor:[UIColor greenColor]];
 		
-		cell.accessoryView = button;
+        cell.accessoryView = button;
 	}
 	else {
 		
@@ -1537,7 +1549,8 @@
 		[button setBackgroundImage:imageForSelectedRow forState:UIControlStateNormal];
 		[button setBackgroundImage:imageForUnselectedRow forState:UIControlStateHighlighted];
 		[button setUserInteractionEnabled:NO];
-		
+        //[button setBackgroundColor:[UIColor blueColor]];
+
 		cell.accessoryView = button;
 		
 	}

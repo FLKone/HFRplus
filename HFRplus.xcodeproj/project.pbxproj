@@ -49,6 +49,18 @@
 		4C028AD21A8C635500F542B1 /* hammer.min.map in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311EE19FAFCAE0097D84D /* hammer.min.map */; };
 		4C052DF81BA8537E00B61952 /* fontello.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4C052DF21BA8537E00B61952 /* fontello.ttf */; settings = {ASSET_TAGS = (); }; };
 		4C052DF91BA8537E00B61952 /* fontello.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4C052DF21BA8537E00B61952 /* fontello.ttf */; settings = {ASSET_TAGS = (); }; };
+		4C052E141BA86C9400B61952 /* Flat-YellowFlag-25@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C052E0E1BA86C9400B61952 /* Flat-YellowFlag-25@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4C052E151BA86C9400B61952 /* Flat-YellowFlag-25@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C052E0E1BA86C9400B61952 /* Flat-YellowFlag-25@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4C052E161BA86C9400B61952 /* Flat-YellowFlag-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C052E0F1BA86C9400B61952 /* Flat-YellowFlag-25.png */; settings = {ASSET_TAGS = (); }; };
+		4C052E171BA86C9400B61952 /* Flat-YellowFlag-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C052E0F1BA86C9400B61952 /* Flat-YellowFlag-25.png */; settings = {ASSET_TAGS = (); }; };
+		4C052E181BA86C9400B61952 /* Flat-RedFlag-25@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C052E101BA86C9400B61952 /* Flat-RedFlag-25@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4C052E191BA86C9400B61952 /* Flat-RedFlag-25@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C052E101BA86C9400B61952 /* Flat-RedFlag-25@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4C052E1A1BA86C9400B61952 /* Flat-RedFlag-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C052E111BA86C9400B61952 /* Flat-RedFlag-25.png */; settings = {ASSET_TAGS = (); }; };
+		4C052E1B1BA86C9400B61952 /* Flat-RedFlag-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C052E111BA86C9400B61952 /* Flat-RedFlag-25.png */; settings = {ASSET_TAGS = (); }; };
+		4C052E1C1BA86C9400B61952 /* Flat-CyanFlag-25@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C052E121BA86C9400B61952 /* Flat-CyanFlag-25@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4C052E1D1BA86C9400B61952 /* Flat-CyanFlag-25@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C052E121BA86C9400B61952 /* Flat-CyanFlag-25@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4C052E1E1BA86C9400B61952 /* Flat-CyanFlag-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C052E131BA86C9400B61952 /* Flat-CyanFlag-25.png */; settings = {ASSET_TAGS = (); }; };
+		4C052E1F1BA86C9400B61952 /* Flat-CyanFlag-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C052E131BA86C9400B61952 /* Flat-CyanFlag-25.png */; settings = {ASSET_TAGS = (); }; };
 		4C0B2DA51B9F2DF40026A582 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B2DA41B9F2DF40026A582 /* Launch Screen.storyboard */; settings = {ASSET_TAGS = (); }; };
 		4C0B2DA61B9F2DF40026A582 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B2DA41B9F2DF40026A582 /* Launch Screen.storyboard */; settings = {ASSET_TAGS = (); }; };
 		4C0B8D861BA4522900D329BA /* BugFilled-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B8D501BA4522900D329BA /* BugFilled-40.png */; settings = {ASSET_TAGS = (); }; };
@@ -1185,6 +1197,12 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = main.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		32CA4F630368D1EE00C91783 /* HFRplus_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFRplus_Prefix.pch; sourceTree = "<group>"; };
 		4C052DF21BA8537E00B61952 /* fontello.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = fontello.ttf; sourceTree = "<group>"; };
+		4C052E0E1BA86C9400B61952 /* Flat-YellowFlag-25@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Flat-YellowFlag-25@2x.png"; sourceTree = "<group>"; };
+		4C052E0F1BA86C9400B61952 /* Flat-YellowFlag-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Flat-YellowFlag-25.png"; sourceTree = "<group>"; };
+		4C052E101BA86C9400B61952 /* Flat-RedFlag-25@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Flat-RedFlag-25@2x.png"; sourceTree = "<group>"; };
+		4C052E111BA86C9400B61952 /* Flat-RedFlag-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Flat-RedFlag-25.png"; sourceTree = "<group>"; };
+		4C052E121BA86C9400B61952 /* Flat-CyanFlag-25@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Flat-CyanFlag-25@2x.png"; sourceTree = "<group>"; };
+		4C052E131BA86C9400B61952 /* Flat-CyanFlag-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Flat-CyanFlag-25.png"; sourceTree = "<group>"; };
 		4C0B2DA41B9F2DF40026A582 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		4C0B8D501BA4522900D329BA /* BugFilled-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BugFilled-40.png"; sourceTree = "<group>"; };
 		4C0B8D511BA4522900D329BA /* BugFilled-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BugFilled-40@2x.png"; sourceTree = "<group>"; };
@@ -2777,6 +2795,12 @@
 		CA00C5D117C30C370067B457 /* flags */ = {
 			isa = PBXGroup;
 			children = (
+				4C052E0E1BA86C9400B61952 /* Flat-YellowFlag-25@2x.png */,
+				4C052E0F1BA86C9400B61952 /* Flat-YellowFlag-25.png */,
+				4C052E101BA86C9400B61952 /* Flat-RedFlag-25@2x.png */,
+				4C052E111BA86C9400B61952 /* Flat-RedFlag-25.png */,
+				4C052E121BA86C9400B61952 /* Flat-CyanFlag-25@2x.png */,
+				4C052E131BA86C9400B61952 /* Flat-CyanFlag-25.png */,
 				CA00C5D217C30C370067B457 /* flagblue2.png */,
 				CA00C5D317C30C370067B457 /* flagblue2@2x.png */,
 				CA00C5D417C30C370067B457 /* flagred.png */,
@@ -3073,11 +3097,13 @@
 				4C0B8E0F1BA46ADA00D329BA /* dsym_upload.sh in Resources */,
 				CA00C6A317C30C370067B457 /* compose.png in Resources */,
 				4C028AD21A8C635500F542B1 /* hammer.min.map in Resources */,
+				4C052E1C1BA86C9400B61952 /* Flat-CyanFlag-25@2x.png in Resources */,
 				CA00C64117C30C370067B457 /* ohill.gif in Resources */,
 				CA24233E17C3C898002888D3 /* jquery-2.0.3.min.js in Resources */,
 				CA00C6B417C30C370067B457 /* beginon.png in Resources */,
 				CA00C61617C30C370067B457 /* global.gif in Resources */,
 				CA00C66C17C30C370067B457 /* Default@2x.png in Resources */,
+				4C052E161BA86C9400B61952 /* Flat-YellowFlag-25.png in Resources */,
 				4C21E9571BA5C70400691D65 /* CursorFilled-20@2x.png in Resources */,
 				4C0B8DE21BA4522900D329BA /* LaptopFilled-40.png in Resources */,
 				CA00C3B417C2FDB00067B457 /* MWPhotoBrowser.bundle in Resources */,
@@ -3116,6 +3142,7 @@
 				CA00C6D617C30C370067B457 /* toolbar2.png in Resources */,
 				CA00C68417C30C370067B457 /* 122-stats.png in Resources */,
 				4CB133071B90B7550081B44D /* ThorHammerFilled-20@2x.png in Resources */,
+				4C052E181BA86C9400B61952 /* Flat-RedFlag-25@2x.png in Resources */,
 				4CB132CC1B9099270081B44D /* ReplyArrowFilled-20@2x.png in Resources */,
 				01BF878D121C4407007624B6 /* CompteViewController.xib in Resources */,
 				CAF5DB7D19340741000B5215 /* FeedbackTableViewCell.xib in Resources */,
@@ -3269,6 +3296,7 @@
 				4C0B8D881BA4522900D329BA /* BugFilled-40@2x.png in Resources */,
 				CA00C62917C30C370067B457 /* evil.gif in Resources */,
 				CA00C67B17C30C370067B457 /* 08-chat@2x.png in Resources */,
+				4C052E141BA86C9400B61952 /* Flat-YellowFlag-25@2x.png in Resources */,
 				CA00C68E17C30C370067B457 /* 44-shoebox.png in Resources */,
 				CAF5DB891936CD7B000B5215 /* 10-arrows-in@2x.png in Resources */,
 				4C0B8D8A1BA4522900D329BA /* MoneyBoxFilled-40@2x.png in Resources */,
@@ -3306,6 +3334,7 @@
 				CA00C6DD17C30C370067B457 /* img.png in Resources */,
 				CA00C53317C3082F0067B457 /* TopicsTableViewController.xib in Resources */,
 				CA00C63F17C30C370067B457 /* na.gif in Resources */,
+				4C052E1A1BA86C9400B61952 /* Flat-RedFlag-25.png in Resources */,
 				CA00C6CE17C30C370067B457 /* endhover.png in Resources */,
 				CABC727017E605E5003E722E /* upsmall@2x.png in Resources */,
 				4C0B8DB21BA4522900D329BA /* DesignFilled-40@2x.png in Resources */,
@@ -3415,6 +3444,7 @@
 				CA00C6C917C30C370067B457 /* buttonprevioushover@2x.png in Resources */,
 				CA00C67C17C30C370067B457 /* 111-user.png in Resources */,
 				CA00C6CC17C30C370067B457 /* buttonpreviouson.png in Resources */,
+				4C052E1E1BA86C9400B61952 /* Flat-CyanFlag-25.png in Resources */,
 				CA00C64817C30C370067B457 /* redface.gif in Resources */,
 				4C0B8D901BA4522900D329BA /* ThorHammerFilled-40@2x.png in Resources */,
 				4C21E9731BA5C70400691D65 /* SelectAllFilled-20@2x.png in Resources */,
@@ -3499,11 +3529,13 @@
 				4C0B8E101BA46ADB00D329BA /* dsym_upload.sh in Resources */,
 				CA7C6FA5185EF50E00B348BA /* compose.png in Resources */,
 				CA7C6FA6185EF50E00B348BA /* ohill.gif in Resources */,
+				4C052E1D1BA86C9400B61952 /* Flat-CyanFlag-25@2x.png in Resources */,
 				CA7C6FA7185EF50E00B348BA /* jquery-2.0.3.min.js in Resources */,
 				CA7C6FA8185EF50E00B348BA /* beginon.png in Resources */,
 				CA7C6FA9185EF50E00B348BA /* global.gif in Resources */,
 				CA7C6FAA185EF50E00B348BA /* Default@2x.png in Resources */,
 				CA7C6FAB185EF50E00B348BA /* MWPhotoBrowser.bundle in Resources */,
+				4C052E171BA86C9400B61952 /* Flat-YellowFlag-25.png in Resources */,
 				4C21E9581BA5C70400691D65 /* CursorFilled-20@2x.png in Resources */,
 				4C0B8DE31BA4522900D329BA /* LaptopFilled-40.png in Resources */,
 				CA7C6FAC185EF50E00B348BA /* all_categories@2x.png in Resources */,
@@ -3542,6 +3574,7 @@
 				CA7C6FC1185EF50E00B348BA /* 122-stats.png in Resources */,
 				CA7C6FC2185EF50E00B348BA /* CompteViewController.xib in Resources */,
 				4CB133081B90B7550081B44D /* ThorHammerFilled-20@2x.png in Resources */,
+				4C052E191BA86C9400B61952 /* Flat-RedFlag-25@2x.png in Resources */,
 				4CB132CD1B9099270081B44D /* ReplyArrowFilled-20@2x.png in Resources */,
 				CAF5DB7E19340741000B5215 /* FeedbackTableViewCell.xib in Resources */,
 				CA7C6FC3185EF50E00B348BA /* heink.gif in Resources */,
@@ -3695,6 +3728,7 @@
 				4C0B8D891BA4522900D329BA /* BugFilled-40@2x.png in Resources */,
 				CA7C7027185EF50E00B348BA /* 08-chat@2x.png in Resources */,
 				CA7C7028185EF50E00B348BA /* 44-shoebox.png in Resources */,
+				4C052E151BA86C9400B61952 /* Flat-YellowFlag-25@2x.png in Resources */,
 				CAF5DB8A1936CD7B000B5215 /* 10-arrows-in@2x.png in Resources */,
 				CA7C7029185EF50E00B348BA /* nextIcon.png in Resources */,
 				4C0B8D8B1BA4522900D329BA /* MoneyBoxFilled-40@2x.png in Resources */,
@@ -3732,6 +3766,7 @@
 				CA7C7044185EF50E00B348BA /* TopicsTableViewController.xib in Resources */,
 				CA7C7045185EF50E00B348BA /* na.gif in Resources */,
 				CA7C7046185EF50E00B348BA /* endhover.png in Resources */,
+				4C052E1B1BA86C9400B61952 /* Flat-RedFlag-25.png in Resources */,
 				CA7C7047185EF50E00B348BA /* upsmall@2x.png in Resources */,
 				CA7C7048185EF50E00B348BA /* buttonendon@2x.png in Resources */,
 				4C0B8DB31BA4522900D329BA /* DesignFilled-40@2x.png in Resources */,
@@ -3841,6 +3876,7 @@
 				CA7C708D185EF50E00B348BA /* 111-user.png in Resources */,
 				CA7C708E185EF50E00B348BA /* buttonpreviouson.png in Resources */,
 				CA7C7090185EF50E00B348BA /* redface.gif in Resources */,
+				4C052E1F1BA86C9400B61952 /* Flat-CyanFlag-25.png in Resources */,
 				CA7C7091185EF50E00B348BA /* buttonnextoff.png in Resources */,
 				4C0B8D911BA4522900D329BA /* ThorHammerFilled-40@2x.png in Resources */,
 				4C21E9741BA5C70400691D65 /* SelectAllFilled-20@2x.png in Resources */,

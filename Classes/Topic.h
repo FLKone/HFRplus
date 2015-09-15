@@ -60,5 +60,6 @@
 @property int postID;
 @property int catID;
 
+- (NSString*) aTitle;
 
 @end

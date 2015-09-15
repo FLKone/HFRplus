@@ -30,6 +30,13 @@
 }
 
 
+-(void)layoutSubviews {
+    [super layoutSubviews];
+    CGRect adjustedFrame = self.accessoryView.frame;
+    adjustedFrame.origin.x += 10.0f;
+    self.accessoryView.frame = adjustedFrame;
+}
+
 - (void)dealloc {
 
 	[titleLabel release];
