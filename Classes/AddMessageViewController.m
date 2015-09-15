@@ -260,13 +260,16 @@
 //    NSLog(@"mew cell %@", NSStringFromCGRect(self.view.frame));
 
     UIButton* newPhotoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [newPhotoBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10.0f)];
+    [newPhotoBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10)];
+    [newPhotoBtn.titleLabel setFont:[UIFont systemFontOfSize:14.0f]];
     [newPhotoBtn setTitle:@"Nouvelle Photo" forState:UIControlStateNormal];
     newPhotoBtn.frame = CGRectMake(0, 3, headerWidth/2, 50.0f);
     [newPhotoBtn addTarget:self action:@selector(uploadNewPhoto:) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton* oldPhotoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [oldPhotoBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10.0f)];
+    [oldPhotoBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10)];
+    [oldPhotoBtn.titleLabel setFont:[UIFont systemFontOfSize:14.0f]];
+
     [oldPhotoBtn setTitle:@"Photo existante" forState:UIControlStateNormal];
     oldPhotoBtn.frame = CGRectMake(headerWidth/2, 3, headerWidth/2, 50.0f);
     [oldPhotoBtn addTarget:self action:@selector(uploadExistingPhoto:) forControlEvents:UIControlEventTouchUpInside];
