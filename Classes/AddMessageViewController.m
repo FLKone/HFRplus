@@ -679,6 +679,7 @@
 	}
 	else {
 		if ([self.textView text].length > 0 && !self.isDeleteMode) {
+            //NSLog(@"ALERT");
             [self resignAll];
             
             NSString *alertMessage = @"Vous allez perdre le contenu de votre message.";
@@ -688,6 +689,8 @@
             }
             
             if ([UIAlertController class]) {
+                //NSLog(@"UIAlertController");
+
                 UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Attention !"
                                                                                message:alertMessage
                                                                         preferredStyle:UIAlertControllerStyleAlert];
@@ -713,8 +716,10 @@
                 
                 
             } else {
+                //NSLog(@"UIAlertView");
+
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Attention !" message:alertMessage
-                                                               delegate:nil cancelButtonTitle:@"Annuler" otherButtonTitles:@"Confirmer", nil];
+                                                               delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Confirmer", nil];
                 [alert setTag:666];
                 [alert show];
                 [alert release];
@@ -741,7 +746,7 @@
 
 -(void)finishMe {
 
-    
+    //NSLog(@"finishMe");
     [[NSNotificationCenter defaultCenter] postNotificationName:@"VisibilityChanged" object:nil];
     [self.delegate addMessageViewControllerDidFinish:self];
 }
