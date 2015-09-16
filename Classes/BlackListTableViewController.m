@@ -104,7 +104,7 @@ NSInteger Sort_BL_Comparer(id id1, id id2, void *context)
     {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
         
-        cell.accessoryType = UITableViewCellAccessoryDetailButton;
+        cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
     cell.textLabel.text = [[self.blackListDict objectAtIndex:indexPath.row] valueForKey:@"word"];
