@@ -18,9 +18,8 @@
 }
 */
 
-
 - (BOOL)canPerformAction: (SEL)action withSender: (id)sender {
-    //NSLog(@"canPerformAction %@", NSStringFromSelector(action));
+    //NSLog(@"MWVINADDTW %@ %lu", NSStringFromSelector(action), [UIMenuController sharedMenuController].menuItems.count);
     
     
     if (action == @selector(textBold:)) return YES;
@@ -42,7 +41,10 @@
     if (action == @selector(select:)) return  [super canPerformAction:@selector(select:) withSender:sender];
     if (action == @selector(selectAll:)) return [super canPerformAction:@selector(selectAll:) withSender:sender];
     if (action == @selector(paste:)) return NO;
-    
+
+    if (action == @selector(_promptForReplace:)) return [super canPerformAction:@selector(_promptForReplace:) withSender:sender];
+    if (action == @selector(replace:)) return [super canPerformAction:@selector(replace:) withSender:sender];
+
     return NO;
 }
 
