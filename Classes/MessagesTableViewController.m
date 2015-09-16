@@ -642,6 +642,7 @@
     {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIMenuControllerDidHideMenuNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editMenuHidden:) name:UIMenuControllerDidHideMenuNotification object:nil];
+        [self editMenuHidden:nil];
     }
     //[self resignFirstResponder];
 }
