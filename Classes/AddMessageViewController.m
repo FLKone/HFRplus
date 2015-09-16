@@ -18,6 +18,8 @@
 #import "RehostCell.h"
 #import "UIMenuItem+CXAImageSupport.h"
 
+#import "EditMessageViewController.h"
+
 @implementation AddMessageViewController
 @synthesize delegate, textView, arrayInputData, formSubmit, accessoryView, smileView;
 @synthesize request, loadingView, requestSmile;
@@ -676,12 +678,51 @@
         //NSLog(@"====== 777777");
 	}
 	else {
-		if ([self.textView text].length > 0) {
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Attention !" message:@"Vous allez perdre le contenu de votre message."
-														   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Confirmer", nil];
-			[alert setTag:666];
-			[alert show];
-			[alert release];
+		if ([self.textView text].length > 0 && !self.isDeleteMode) {
+            [self resignAll];
+            
+            NSString *alertMessage = @"Vous allez perdre le contenu de votre message.";
+            
+            if ([self isKindOfClass:[EditMessageViewController class]]) {
+                alertMessage = @"Vous allez perdre vos modifications.";
+            }
+            
+            if ([UIAlertController class]) {
+                UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Attention !"
+                                                                               message:alertMessage
+                                                                        preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Annuler" style:UIAlertActionStyleCancel
+                                                                      handler:^(UIAlertAction * action) {
+                                                                          [self.textView becomeFirstResponder];
+                                                                      }];
+                
+                [alert addAction:cancelAction];
+                
+                
+                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"Confirmer" style:UIAlertActionStyleDefault
+                                                                      handler:^(UIAlertAction * action) {
+                                                                          [self finishMe];
+                                                                      }];
+                
+                [alert addAction:defaultAction];
+                [self presentViewController:alert animated:YES completion:^{
+
+                }];
+                
+                
+                
+            } else {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Attention !" message:alertMessage
+                                                               delegate:nil cancelButtonTitle:@"Annuler" otherButtonTitles:@"Confirmer", nil];
+                [alert setTag:666];
+                [alert show];
+                [alert release];
+            }
+            
+            
+            
+
 		}
 		else {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"VisibilityChanged" object:nil];
@@ -690,12 +731,29 @@
 	}
 }
 
+-(void)resignAll {
+    [self.textView endEditing:YES];
+    [self.textFieldSmileys endEditing:YES];
+    [self.textFieldTitle endEditing:YES];
+    [self.textFieldTo endEditing:YES];
+    [self.view endEditing:YES];
+}
+
+-(void)finishMe {
+
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"VisibilityChanged" object:nil];
+    [self.delegate addMessageViewControllerDidFinish:self];
+}
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
 	if (buttonIndex == 1 && alertView.tag == 666) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"VisibilityChanged" object:nil];
-		[self.delegate addMessageViewControllerDidFinish:self];	
+        [self finishMe];
 	}
+    else if (buttonIndex == 0 && alertView.tag == 666) {
+        [self.textView becomeFirstResponder];
+    }
 }
 
 -(bool)isDeleteMode {
@@ -768,21 +826,39 @@
 				[alertKKO release];				
 			}
 			else {
-				UIAlertView *alertOK = [[UIAlertView alloc] initWithTitle:@"Hooray !" message:[[messagesNode contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
-																  delegate:self.delegate cancelButtonTitle:nil otherButtonTitles: nil];
-				[alertOK setTag:666];
-				[alertOK show];
+                [self resignAll];
+                
+                if ([UIAlertController class]) {
+                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Hooray !"
+                                                                                   message:[[messagesNode contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
+                                                                            preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    [self presentViewController:alert animated:YES completion:^{
+                       dispatch_after(200000, dispatch_get_main_queue(), ^{
+                           [alert dismissViewControllerAnimated:YES completion:nil];
+                       });
+                    }];
+                    
+                    
+                    
+                } else {
+                    UIAlertView *alertOK = [[UIAlertView alloc] initWithTitle:@"Hooray !" message:[[messagesNode contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
+                                                                     delegate:self.delegate cancelButtonTitle:nil otherButtonTitles: nil];
+                    [alertOK setTag:666];
+                    [alertOK show];
+                    
+                    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+                    
+                    // Adjust the indicator so it is up a few pixels from the bottom of the alert
+                    indicator.center = CGPointMake(alertOK.bounds.size.width / 2, alertOK.bounds.size.height - 50);
+                    [indicator startAnimating];
+                    [alertOK addSubview:indicator];
+                    [indicator release];
+                    
+                    
+                    [alertOK release];
+                }
 
-				UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-				
-				// Adjust the indicator so it is up a few pixels from the bottom of the alert
-				indicator.center = CGPointMake(alertOK.bounds.size.width / 2, alertOK.bounds.size.height - 50);
-				[indicator startAnimating];
-				[alertOK addSubview:indicator];
-				[indicator release];
-
-				
-				[alertOK release];
 
                 //NSLog(@"responseString %@", [arequest responseString]);
                 

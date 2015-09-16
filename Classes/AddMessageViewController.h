@@ -123,6 +123,7 @@
 -(void)initData;
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
 -(void)setupResponder;
+-(bool)isDeleteMode;
 
 @end
 
