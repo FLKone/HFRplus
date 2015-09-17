@@ -841,11 +841,18 @@
 
 
                 //NSLog(@"responseString %@", [arequest responseString]);
-                
-                // On regarde si on doit pas positionner le scroll sur un topic
-                NSArray * urlArray = [[arequest responseString] arrayOfCaptureComponentsMatchedByRegex:@"<meta http-equiv=\"Refresh\" content=\"[^#]+([^\"]*)\" />"];
-                
                 [self setRefreshAnchor:@""];
+                NSArray * urlArray;
+                // On regarde si on doit pas positionner le scroll sur un topic
+                if ([self isDeleteMode]) {
+                    //recup de l'ID du message supprimé pour positionner le scroll.
+                    urlArray = [((QuoteMessageViewController *)self).urlQuote arrayOfCaptureComponentsMatchedByRegex:@"numreponse=([0-9]+)&"];
+
+                }
+                else {
+                    urlArray = [[arequest responseString] arrayOfCaptureComponentsMatchedByRegex:@"<meta http-equiv=\"Refresh\" content=\"[^#]+([^\"]*)\" />"];
+                    
+                }
                 
                 //NSLog(@"%d", urlArray.count);
                 if (urlArray.count > 0) {
@@ -858,6 +865,7 @@
                     }
                     
                 }
+                
                 NSLog(@"VisibilityChangedVisibilityChanged");
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"VisibilityChanged" object:nil];
 				[self.delegate addMessageViewControllerDidFinishOK:self];	

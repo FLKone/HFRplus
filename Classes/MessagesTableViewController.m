@@ -1577,8 +1577,7 @@
 	[self.arrayData addObjectsFromArray:loadedItems];
 
 
-	NSString *tmpHTML = [[NSString alloc] initWithString:@""];
-	
+	NSString *tmpHTML = @"";
     
     NSLog(@"COUNT = %lu", (unsigned long)[self.arrayData count]);
     
@@ -2342,7 +2341,8 @@
     int curMsg = [curMsgN intValue];
     
     NSString *editUrl = [NSString stringWithFormat:@"%@%@", kForumURL, [[[arrayData objectAtIndex:curMsg] urlEdit] decodeSpanUrlFromString]];
-
+    NSLog(@"DEL editUrl = %@", editUrl);
+    
     DeleteMessageViewController *delMessageViewController = [[DeleteMessageViewController alloc]
                                                               initWithNibName:@"AddMessageViewController" bundle:nil];
     delMessageViewController.delegate = self;
