@@ -19,13 +19,13 @@
 #import "BlackList.h"
 
 @interface ParseMessagesOperation ()
-@property (nonatomic, assign) id <ParseMessagesOperationDelegate> delegate;
-@property (nonatomic, retain) NSData *dataToParse;
-@property (nonatomic, retain) NSMutableArray *workingArray;
-@property (nonatomic, retain) LinkItem *workingEntry;
+@property (nonatomic, weak) id <ParseMessagesOperationDelegate> delegate;
+@property (nonatomic, strong) NSData *dataToParse;
+@property (nonatomic, strong) NSMutableArray *workingArray;
+@property (nonatomic, strong) LinkItem *workingEntry;
 @property (nonatomic, assign) BOOL reverse;
 @property (nonatomic, assign) int index;
-@property (nonatomic, retain) NSOperationQueue *queue;
+@property (nonatomic, strong) NSOperationQueue *queue;
 @end
 
 @implementation ParseMessagesOperation
@@ -43,7 +43,7 @@
 		self.index = theIndex;
 		self.reverse = isReverse;
 
-        self.queue = [[[NSOperationQueue alloc] init] autorelease];
+        self.queue = [[NSOperationQueue alloc] init];
 
     }
     return self;
@@ -52,15 +52,6 @@
 // -------------------------------------------------------------------------------
 //	dealloc:
 // -------------------------------------------------------------------------------
-- (void)dealloc
-{
-
-    [dataToParse release];
-    [workingEntry release];
-    [workingArray release];
-    	
-    [super dealloc];
-}
 
 // -------------------------------------------------------------------------------
 //	main:
@@ -69,20 +60,20 @@
 - (void)main
 {
 
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
     
-	if ([self isCancelled])
-	{
-		//NSLog(@"main canceled");		
-	}	
-	self.workingArray = [NSMutableArray array];
+		if ([self isCancelled])
+		{
+			//NSLog(@"main canceled");		
+		}	
+		self.workingArray = [NSMutableArray array];
 
-	NSError * error = nil;
-	HTMLParser *myParser = [[HTMLParser alloc] initWithData:dataToParse error:&error];
-	
-	if (![self isCancelled])
-	{
-		[self.delegate didStartParsing:myParser];
+		NSError * error = nil;
+		HTMLParser *myParser = [[HTMLParser alloc] initWithData:dataToParse error:&error];
+		
+		if (![self isCancelled])
+		{
+			[self.delegate didStartParsing:myParser];
         
         
         [self parseData:myParser];
@@ -95,11 +86,11 @@
             
         }
         
-	}
+		}
     
-    [myParser release], myParser = nil;
+    myParser = nil;
 	
-	[pool release];
+	}
 	
 
 
@@ -117,7 +108,7 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-	NSString *diskCachePath = [[[paths objectAtIndex:0] stringByAppendingPathComponent:@"ImageCache"] retain];
+	NSString *diskCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"ImageCache"];
 	
 	if (![fileManager fileExistsAtPath:diskCachePath])
 	{
@@ -172,7 +163,6 @@
 			//fasTest.name = [[fasTest.name componentsSeparatedByCharactersInSet:[[NSCharacterSet letterCharacterSet] invertedSet]] componentsJoinedByString:@""];
 			
 			if ([fasTest.name isEqualToString:@"Publicité"]) {
-				[fasTest release];
 				//[pool2 drain];
 				continue;
 			}
@@ -193,6 +183,7 @@
                     }
                 }
             }
+            
             
             //recherche
             NSArray * nodesInMsg = [[messageNode findChildOfClass:@"messCase2"] children];
@@ -325,12 +316,10 @@
             //== AVATAR BY NAME v2
             
 			if ([self isCancelled]) {
-				[fasTest release];
 				break;
 			}
 			
 			[self.workingArray addObject:fasTest];
-			[fasTest release];
 			
 			
 			
@@ -359,9 +348,7 @@
 
 	//NSLog(@"TOPICS Parse Time elapsed Total		: %f", [nowT timeIntervalSinceDate:thenT]);
 
-	[fileManager release];
 	
-	[diskCachePath release];
 
 }
 
