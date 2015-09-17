@@ -34,7 +34,7 @@
 @synthesize haveCategory, textFieldCat;
 @synthesize offsetY, smileyCustom;
 
-@synthesize popover = _popover, refreshAnchor;
+@synthesize popover = _popover, refreshAnchor, statusMessage;
 
 
 #pragma mark -
@@ -820,16 +820,7 @@
                 [self resignAll];
                 
                 if ([UIAlertController class]) {
-                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Hooray !"
-                                                                                   message:[[messagesNode contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
-                                                                            preferredStyle:UIAlertControllerStyleAlert];
-                    
-                    [self presentViewController:alert animated:YES completion:^{
-                       dispatch_after(200000, dispatch_get_main_queue(), ^{
-                           [alert dismissViewControllerAnimated:YES completion:nil];
-                       });
-                    }];
-                    
+                    self.statusMessage = [[messagesNode contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
                     
                     
                 } else {
@@ -867,7 +858,7 @@
                     }
                     
                 }
-                
+                NSLog(@"VisibilityChangedVisibilityChanged");
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"VisibilityChanged" object:nil];
 				[self.delegate addMessageViewControllerDidFinishOK:self];	
 
@@ -1950,7 +1941,7 @@
 }
 
 - (void)dealloc {
-	//NSLog(@"dealloc ADD");
+	NSLog(@"dealloc ADD");
 
 	[textView resignFirstResponder];
 	[self viewDidUnload];

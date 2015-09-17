@@ -64,6 +64,7 @@
     id _popover;    
 	NSString *refreshAnchor;
     
+    NSString *statusMessage;
 }
 
 @property (nonatomic, strong) IBOutlet UIView *loadingView;
@@ -101,6 +102,7 @@
 //@property (nonatomic, retain) IBOutlet UIScrollView *scrollViewer;
 @property (nonatomic, strong) id popover;
 @property (nonatomic, strong) NSString *refreshAnchor;
+@property (nonatomic, strong) NSString *statusMessage;
 
 
 @property (nonatomic, strong) NSMutableDictionary *arrayInputData;

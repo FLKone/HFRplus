@@ -621,8 +621,21 @@
 }
 
 - (void)VisibilityChanged:(NSNotification *)notification {
-   // NSLog(@"VisibilityChanged %@", notification);
+    NSLog(@"VisibilityChanged %@", notification);
+  /*  NSLog(@"TINT 1 %ld", (long)[[HFRplusAppDelegate sharedAppDelegate].window tintAdjustmentMode]);
 
+    [[HFRplusAppDelegate sharedAppDelegate].window setTintAdjustmentMode:UIViewTintAdjustmentModeNormal];
+    [[HFRplusAppDelegate sharedAppDelegate].window setTintColor:[UIColor greenColor]];
+    [[HFRplusAppDelegate sharedAppDelegate].window setTintAdjustmentMode:UIViewTintAdjustmentModeAutomatic];
+    
+    NSLog(@"TINT 2 %ld", (long)[[HFRplusAppDelegate sharedAppDelegate].window tintAdjustmentMode]);
+*/
+//
+
+
+//    NSLog(@"TINT 2 %@", [[HFRplusAppDelegate sharedAppDelegate].window tintColor]);
+
+    
     if ([[notification valueForKey:@"object"] isEqualToString:@"SHOW"]) {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIMenuControllerDidHideMenuNotification object:nil];
     }
@@ -1505,34 +1518,49 @@
 }
 
 - (void)addMessageViewControllerDidFinishOK:(AddMessageViewController *)controller {
-	//NSLog(@"addMessageViewControllerDidFinishOK");
+	NSLog(@"addMessageViewControllerDidFinishOK");
     
-	[self dismissModalViewControllerAnimated:YES];
-    
-    if (self.arrayData.count > 0) {
-		//NSLog(@"curid %d", self.curPostID);
-		NSString *components = [[[self.arrayData objectAtIndex:0] quoteJS] substringFromIndex:7];
-		components = [components stringByReplacingOccurrencesOfString:@"); return false;" withString:@""];
-		components = [components stringByReplacingOccurrencesOfString:@"'" withString:@""];
-		
-		NSArray *quoteComponents = [components componentsSeparatedByString:@","];
-		
-		NSString *nameCookie = [NSString stringWithFormat:@"quotes%@-%@-%@", [quoteComponents objectAtIndex:0], [quoteComponents objectAtIndex:1], [quoteComponents objectAtIndex:2]];
-		
-		[self EffaceCookie:nameCookie];
-	}
-    
-	self.curPostID = -1;
-	
-    [self setStringFlagTopic:[[controller refreshAnchor] copy]];
-    
-    NSLog(@"addMessageViewControllerDidFinishOK stringFlagTopic %@", self.stringFlagTopic);
-    
-    
-	[self searchNewMessages:kNewMessageFromEditor];
-	[self.navigationController popToViewController:self animated:NO];
+    [self.navigationController popToViewController:self animated:NO];
 
+    [self dismissViewControllerAnimated:NO completion:^{
+        if (self.arrayData.count > 0) {
+            //NSLog(@"curid %d", self.curPostID);
+            NSString *components = [[[self.arrayData objectAtIndex:0] quoteJS] substringFromIndex:7];
+            components = [components stringByReplacingOccurrencesOfString:@"); return false;" withString:@""];
+            components = [components stringByReplacingOccurrencesOfString:@"'" withString:@""];
+            
+            NSArray *quoteComponents = [components componentsSeparatedByString:@","];
+            
+            NSString *nameCookie = [NSString stringWithFormat:@"quotes%@-%@-%@", [quoteComponents objectAtIndex:0], [quoteComponents objectAtIndex:1], [quoteComponents objectAtIndex:2]];
+            
+            [self EffaceCookie:nameCookie];
+        }
+        
+        self.curPostID = -1;
+        
+        [self setStringFlagTopic:[[controller refreshAnchor] copy]];
+        
+        NSLog(@"addMessageViewControllerDidFinishOK stringFlagTopic %@", self.stringFlagTopic);
+        
+        
+        [self searchNewMessages:kNewMessageFromEditor];
+        
+    }];
 
+    if ([UIAlertController class]) {
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Hooray !"
+                                                                       message:controller.statusMessage
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        
+        [self presentViewController:alert animated:YES completion:^{
+            dispatch_after(250000, dispatch_get_main_queue(), ^{
+                [alert dismissViewControllerAnimated:YES completion:^{
+                    
+                }];
+            });
+        }];
+    }
+    
 }
 
 #pragma mark -

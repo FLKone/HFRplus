@@ -633,14 +633,14 @@
 #pragma mark -
 #pragma mark AddMessage Delegate
 - (void)addMessageViewControllerDidFinish:(AddMessageViewController *)controller {
-    //NSLog(@"addMessageViewControllerDidFinish %@", self.editFlagTopic);
+    NSLog(@"addMessageViewControllerDidFinish");
 	
 	//[self setEditFlagTopic:nil];
 	[self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)addMessageViewControllerDidFinishOK:(AddMessageViewController *)controller {
-	//NSLog(@"addMessageViewControllerDidFinishOK");
+	NSLog(@"addMessageViewControllerDidFinishOK");
 	
 	[self dismissModalViewControllerAnimated:YES];
 	[self.navigationController popToViewController:self animated:NO];
@@ -648,7 +648,7 @@
 - (void)didPresentAlertView:(UIAlertView *)alertView
 {
 	
-	//NSLog(@"didPresentAlertView PT %@", alertView);
+	NSLog(@"didPresentAlertView PT %@", alertView);
 	
 	if (([alertView tag] == 666)) {
 		usleep(200000);
