@@ -1637,28 +1637,29 @@
         int closePostID = 0;
         
         if(!currentFlagValue) { //si pas de value on cherche soit le premier message (pas de flag) soit le dernier (#bas)
+            NSLog(@"!currentFlagValue");
+            
             ifCurrentFlag = YES;
         }
-        
+
         NSLog(@"Looking for %d", currentFlagValue);
         //NSLog(@"==============");
 
         for (i = 0; i < [self.arrayData count]; i++) { //Loop through all the tags
             tmpHTML = [tmpHTML stringByAppendingString:[[self.arrayData objectAtIndex:i] toHTML:i]];
-            int tmpFlagValue = [[[[self.arrayData objectAtIndex:i] postID] stringByTrimmingCharactersInSet:nonDigits] intValue];
-
-            
-            //NSLog(@"-- curFlagID = %d", tmpFlagValue);
-
-            if (!ifCurrentFlag && tmpFlagValue == currentFlagValue) {
-                //NSLog(@"TROUVE");
-                ifCurrentFlag = YES;
-                closePostID = tmpFlagValue;
-            }
             
             if (!ifCurrentFlag) {
-                //NSLog(@"pas encore trouvé");
 
+                int tmpFlagValue = [[[[self.arrayData objectAtIndex:i] postID] stringByTrimmingCharactersInSet:nonDigits] intValue];
+
+                if (tmpFlagValue == currentFlagValue) {
+                    //NSLog(@"TROUVE");
+                    ifCurrentFlag = YES;
+                    closePostID = tmpFlagValue;
+                }
+
+                //NSLog(@"pas encore trouvé");
+                
                 if (closePostID && currentFlagValue && tmpFlagValue >= currentFlagValue) {
                     //NSLog(@"On a trouvé plus grand, on set");
                     closePostID = tmpFlagValue;
@@ -1668,6 +1669,8 @@
                     //NSLog(@"0, on set le premier");
                     closePostID = tmpFlagValue;
                 }
+                
+                //NSLog(@"-- curFlagID = %d", tmpFlagValue);
             }
 
         }
@@ -1750,7 +1753,7 @@
                                 <style type='text/css'>\
                                 %@\
                                 </style>\
-                                </head><body class='iosversion'>\
+                                </head><body class='iosversion'><a name='top'></a>\
                                 <div class='bunselected nosig' id='qsdoiqjsdkjhqkjhqsdqdilkjqsd2'>%@</div>\
                                 %@\
                                 %@\
@@ -1845,23 +1848,26 @@
     self.loaded = YES;
     
     //Position du Flag
-    NSString* jsString10 = [NSString stringWithFormat:@"window.location.hash='';"];
-    [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString10];
+    //NSString* jsString10 = [NSString stringWithFormat:@"window.location.hash='#top';"];
+    //[self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString10];
     
-    NSString* jsString11 = [NSString stringWithFormat:@"window.location.hash='%@';", self.stringFlagTopic];
-    [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString11];
+    //NSString* jsString11 = [NSString stringWithFormat:@"window.location.hash='%@';", self.stringFlagTopic];
+    //[self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString11];
     
     //bug iOS9--
-    if (SYSTEM_VERSION_LESS_THAN(@"9")) {
+    //if (SYSTEM_VERSION_LESS_THAN(@"9")) {
         NSString* jsString2 = @"window.location.hash='#bas';";
-        NSString* jsString3 = [NSString stringWithFormat:@"window.location.hash='%@'", self.stringFlagTopic];
-        
-        [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString2];
-        [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString3];
-    }
+        NSString* jsString3 = [NSString stringWithFormat:@"window.location.hash='%@'", ![self.stringFlagTopic isEqualToString:@""] ? self.stringFlagTopic : @"#top"];
+    
+        [self.messagesWebView stringByEvaluatingJavaScriptFromString:[jsString2 stringByAppendingString:jsString3]];
+//        [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString3];
+    //}
     //Position du Flag
     
 	NSString *jsString = [[[NSString alloc] initWithString:@""] autorelease];
+    
+    NSLog(@"jsString2 %@", jsString2);
+    NSLog(@"jsString3 %@", jsString3);
     
     
 	//on ajoute le bouton actualiser si besoin
@@ -2605,7 +2611,6 @@
 }
 
 - (NSString *) userTextSizeDidChange {
-    
     if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"size_text"] isEqualToString:@"sys"]) {
         if ([UIFontDescriptor respondsToSelector:@selector(preferredFontDescriptorWithTextStyle:)]) {
             CGFloat userFontSize = [UIFontDescriptor preferredFontDescriptorWithTextStyle:UIFontTextStyleBody].pointSize;
