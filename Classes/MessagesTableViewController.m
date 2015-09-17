@@ -87,6 +87,7 @@
     
     //self.currentUrl = @"/forum2.php?config=hfr.inc&cat=25&post=5925&page=1&p=1&sondage=0&owntopic=1&trash=0&trash_post=0&print=0&numreponse=0&quote_only=0&new=0&nojs=0#t535660";
     
+    //self.currentUrl = @"/forum2.php?config=hfr.inc&cat=25&subcat=525&post=5145&page=87&p=1&sondage=0&owntopic=1&trash=0&trash_post=0&print=0&numreponse=0&quote_only=0&new=0&nojs=0#t540188";
     
     //NSLog(@"URL %@", [self currentUrl]);
     
@@ -1734,7 +1735,7 @@
                                 <script type='text/javascript'>\
                                 document.addEventListener('DOMContentLoaded', loadedML);\
                                 document.addEventListener('touchstart', touchstart);\
-                                function loadedML() { document.location.href = 'oijlkajsdoihjlkjasdopreloaded://preloaded'; setTimeout(function() {document.location.href = 'oijlkajsdoihjlkjasdoloaded://loaded';},700); };\
+                                function loadedML() { setTimeout(function() {document.location.href = 'oijlkajsdoihjlkjasdoloaded://loaded';},700); };\
                                 function HLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bselected'; }\
                                 function UHLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bunselected'; }\
                                 function swap_spoiler_states(obj){var div=obj.getElementsByTagName('div');if(div[0]){if(div[0].style.visibility==\"visible\"){div[0].style.visibility='hidden';}else if(div[0].style.visibility==\"hidden\"||!div[0].style.visibility){div[0].style.visibility='visible';}}}\
@@ -1798,25 +1799,47 @@
 #pragma mark WebView Delegate
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-	//NSLog(@"== webViewDidStartLoad");
+	NSLog(@"== webViewDidStartLoad");
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 }
 
 - (void)webViewDidFinishPreLoadDOM {
-    //NSLog(@"== webViewDidFinishPreLoadDOM");
+    NSLog(@"== webViewDidFinishPreLoadDOM");
 
-    [self userTextSizeDidChange];
+    //[self userTextSizeDidChange];
 }
 
 - (void)webViewDidFinishLoadDOM
 {
-    //NSLog(@"== webViewDidFinishLoadDOM");
-    if (self.loaded) {
-        //NSLog(@"deja DOMed");
+    NSLog(@"== webViewDidFinishLoadDOM");
+    
+    if (!self.loaded) {
+        NSLog(@"== First DOM");
+        self.loaded = YES;
+
+        //if (SYSTEM_VERSION_LESS_THAN(@"9")) {
+        NSString* jsString2 = @"window.location.hash='#bas';";
+        NSString* jsString3 = [NSString stringWithFormat:@"window.location.hash='%@';", ![self.stringFlagTopic isEqualToString:@""] ? self.stringFlagTopic : @"#top"];
+        
+        NSString* result = [self.messagesWebView stringByEvaluatingJavaScriptFromString:[jsString2 stringByAppendingString:jsString3]];
+        //        [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString3];
+        //}
+        //Position du Flag
+        
+        
+        
+        NSLog(@"jsString2 %@", jsString2);
+        NSLog(@"jsString3 %@", jsString3);
+        NSLog(@"result %@", result);
+        
+        self.lastStringFlagTopic = self.stringFlagTopic;
+        self.stringFlagTopic = @"";
+        
+        [self.loadingView setHidden:YES];
+        [self.messagesWebView setHidden:NO];
         return;
     }
-    
-    self.loaded = YES;
+    NSLog(@"== DOMed");
     
     //Position du Flag
     //NSString* jsString10 = [NSString stringWithFormat:@"window.location.hash='#top';"];
@@ -1826,20 +1849,8 @@
     //[self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString11];
     
     //bug iOS9--
-    //if (SYSTEM_VERSION_LESS_THAN(@"9")) {
-        NSString* jsString2 = @"window.location.hash='#bas';";
-        NSString* jsString3 = [NSString stringWithFormat:@"window.location.hash='%@'", ![self.stringFlagTopic isEqualToString:@""] ? self.stringFlagTopic : @"#top"];
-    
-        [self.messagesWebView stringByEvaluatingJavaScriptFromString:[jsString2 stringByAppendingString:jsString3]];
-//        [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString3];
-    //}
-    //Position du Flag
-    
-	NSString *jsString = @"";
-    
-    NSLog(@"jsString2 %@", jsString2);
-    NSLog(@"jsString3 %@", jsString3);
-    
+
+    NSString *jsString = @"";
     
 	//on ajoute le bouton actualiser si besoin
 	if (([self pageNumber] == [self lastPageNumber]) || ([self lastPageNumber] == 0)) {
@@ -1856,20 +1867,15 @@
 
     [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString];
 
-    [self.loadingView setHidden:YES];
-    [self.messagesWebView setHidden:NO];
-
-    self.lastStringFlagTopic = self.stringFlagTopic;
-    self.stringFlagTopic = @"";
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-	//NSLog(@"== webViewDidFinishLoad");
+	NSLog(@"== webViewDidFinishLoad");
     
-    if (!self.loaded) {
-        [self webViewDidFinishPreLoadDOM];
-    }
+    //if (!self.loaded) {
+    //    [self webViewDidFinishPreLoadDOM];
+    //}
     
     [self webViewDidFinishLoadDOM];
     
@@ -1943,7 +1949,7 @@
     return YES;
 }
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)aRequest navigationType:(UIWebViewNavigationType)navigationType {
-	//NSLog(@"expected:%d, got:%d | url:%@", UIWebViewNavigationTypeLinkClicked, navigationType, [aRequest.URL absoluteString]);
+	NSLog(@"expected:%ld, got:%ld | url:%@", (long)UIWebViewNavigationTypeLinkClicked, (long)navigationType, aRequest.URL);
 	
 	if (navigationType == UIWebViewNavigationTypeLinkClicked) {
                     
@@ -2032,7 +2038,7 @@
 			return NO;
 		}
 		else if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdotouch"]) {
-			//NSLog(@"touch %@", [[aRequest.URL absoluteString] lastPathComponent]);
+			// cache le menu controller dès que l'utilisateur touche la WebView
             if ([[[aRequest.URL absoluteString] lastPathComponent] isEqualToString:@"touchstart"]) {
                 if ([UIMenuController sharedMenuController].isMenuVisible) {
                     [[UIMenuController sharedMenuController] setMenuVisible:NO animated:YES];
@@ -2070,9 +2076,21 @@
 
             return NO;
         }
+        else {
+            
+            NSLog(@"OTHHHHERRRREEE %@ %@", [aRequest.URL scheme], [aRequest.URL fragment]);
+            if ([[aRequest.URL fragment] isEqualToString:@"bas"]) {
+                //return NO;
+            }
+
+        }
         
         
 	}
+    else {
+        NSLog(@"VRAIMENT OTHHHHERRRREEE %@ %@", [aRequest.URL scheme], [aRequest.URL fragment]);
+
+    }
     
 	return YES;
 }
