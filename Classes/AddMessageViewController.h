@@ -12,7 +12,7 @@
 @protocol AddMessageViewControllerDelegate;
 
 @interface AddMessageViewController : UIViewController <UITextViewDelegate, UITextFieldDelegate, UIWebViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
-	id <AddMessageViewControllerDelegate> delegate;
+	id <AddMessageViewControllerDelegate> __weak delegate;
 	
 	//bb
 	UITextView *textView;
@@ -20,7 +20,7 @@
 	NSMutableDictionary *arrayInputData;
 	NSString *formSubmit;
 	
-	UIView *accessoryView;
+	UIView *__weak accessoryView;
 
 	NSRange lastSelectedRange;
 
@@ -66,51 +66,51 @@
     
 }
 
-@property (nonatomic, retain) IBOutlet UIView *loadingView;
-@property (nonatomic, assign) id <AddMessageViewControllerDelegate> delegate;
+@property (nonatomic, strong) IBOutlet UIView *loadingView;
+@property (nonatomic, weak) id <AddMessageViewControllerDelegate> delegate;
 
-@property (retain, nonatomic) ASIHTTPRequest *request;
-@property (retain, nonatomic) ASIHTTPRequest *requestSmile;
+@property (strong, nonatomic) ASIHTTPRequest *request;
+@property (strong, nonatomic) ASIHTTPRequest *requestSmile;
 
 //bb
-@property (nonatomic, retain) IBOutlet UITextView *textView;
+@property (nonatomic, strong) IBOutlet UITextView *textView;
 @property BOOL haveCategory;
 @property BOOL haveTitle;
 @property BOOL haveTo;
-@property (nonatomic, retain) UITextField *textFieldTitle;
-@property (nonatomic, retain) UITextField *textFieldTo;
-@property (nonatomic, retain) UITextField *textFieldCat;
+@property (nonatomic, strong) UITextField *textFieldTitle;
+@property (nonatomic, strong) UITextField *textFieldTo;
+@property (nonatomic, strong) UITextField *textFieldCat;
 @property int offsetY;
 
-@property (nonatomic, retain) IBOutlet UIWebView *smileView;
-@property (nonatomic, retain) NSString *smileyCustom;
+@property (nonatomic, strong) IBOutlet UIWebView *smileView;
+@property (nonatomic, strong) NSString *smileyCustom;
 
-@property (nonatomic, retain) IBOutlet UISegmentedControl *segmentControler;
-@property (nonatomic, retain) IBOutlet UISegmentedControl *segmentControlerPage;
-@property (nonatomic, retain) IBOutlet UITextField *textFieldSmileys;
-@property (nonatomic, retain) NSMutableArray *smileyArray;
+@property (nonatomic, strong) IBOutlet UISegmentedControl *segmentControler;
+@property (nonatomic, strong) IBOutlet UISegmentedControl *segmentControlerPage;
+@property (nonatomic, strong) IBOutlet UITextField *textFieldSmileys;
+@property (nonatomic, strong) NSMutableArray *smileyArray;
 @property int smileyPage;
-@property (nonatomic, retain) IBOutlet UITableView *commonTableView;
-@property (nonatomic, retain) NSMutableDictionary *usedSearchDict;
-@property (nonatomic, retain) NSMutableArray *usedSearchSortedArray;
+@property (nonatomic, strong) IBOutlet UITableView *commonTableView;
+@property (nonatomic, strong) NSMutableDictionary *usedSearchDict;
+@property (nonatomic, strong) NSMutableArray *usedSearchSortedArray;
 
-@property (nonatomic, retain) IBOutlet UITableView *rehostTableView;
-@property (nonatomic, retain) NSMutableArray *rehostImagesArray;
-@property (nonatomic, retain) NSMutableArray *rehostImagesSortedArray;
+@property (nonatomic, strong) IBOutlet UITableView *rehostTableView;
+@property (nonatomic, strong) NSMutableArray *rehostImagesArray;
+@property (nonatomic, strong) NSMutableArray *rehostImagesSortedArray;
 
 //@property (nonatomic, retain) IBOutlet UIScrollView *scrollViewer;
-@property (nonatomic, retain) id popover;
-@property (nonatomic, retain) NSString *refreshAnchor;
+@property (nonatomic, strong) id popover;
+@property (nonatomic, strong) NSString *refreshAnchor;
 
 
-@property (nonatomic, retain) NSMutableDictionary *arrayInputData;
-@property (nonatomic, retain) NSString *formSubmit;
+@property (nonatomic, strong) NSMutableDictionary *arrayInputData;
+@property (nonatomic, strong) NSString *formSubmit;
 
 @property NSRange lastSelectedRange;
 @property BOOL loaded;
 @property BOOL isDragging;
 
-@property (nonatomic, assign) IBOutlet UIView *accessoryView;
+@property (nonatomic, weak) IBOutlet UIView *accessoryView;
 
 -(IBAction)cancel;
 -(IBAction)done;

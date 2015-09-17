@@ -91,7 +91,6 @@
 	
 	[self viewDidUnload];
 
-    [super dealloc];
 }
 
 #pragma mark -

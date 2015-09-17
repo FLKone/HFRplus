@@ -28,17 +28,17 @@
     NSMutableArray *arrayData;
 }
 
-@property (nonatomic, retain) IBOutlet UITableView *profilTableView;
-@property (nonatomic, retain) IBOutlet UIView *loadingView;
+@property (nonatomic, strong) IBOutlet UITableView *profilTableView;
+@property (nonatomic, strong) IBOutlet UIView *loadingView;
 
 @property STATUS status;
-@property (nonatomic, retain) NSString *statusMessage;
-@property (nonatomic, retain) IBOutlet UILabel *maintenanceView;
+@property (nonatomic, strong) NSString *statusMessage;
+@property (nonatomic, strong) IBOutlet UILabel *maintenanceView;
 
-@property (retain, nonatomic) NSString *currentUrl;
-@property (retain, nonatomic) ASIHTTPRequest *request;
+@property (strong, nonatomic) NSString *currentUrl;
+@property (strong, nonatomic) ASIHTTPRequest *request;
 
-@property (nonatomic, retain) NSMutableArray *arrayData;
+@property (nonatomic, strong) NSMutableArray *arrayData;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andUrl:(NSString *)theTopicUrl;
 
@@ -59,14 +59,14 @@
     NSMutableArray *arrayData;
 }
 
-@property (nonatomic, retain) IBOutlet UITableView *feedTableView;
+@property (nonatomic, strong) IBOutlet UITableView *feedTableView;
 
-@property (nonatomic, retain) IBOutlet UIView *loadingView;
-@property (nonatomic, retain) NSString *statusMessage;
-@property (nonatomic, retain) IBOutlet UILabel *maintenanceView;
+@property (nonatomic, strong) IBOutlet UIView *loadingView;
+@property (nonatomic, strong) NSString *statusMessage;
+@property (nonatomic, strong) IBOutlet UILabel *maintenanceView;
 
-@property (nonatomic, retain) ASIHTTPRequest *request;
-@property (nonatomic, retain) NSMutableArray *arrayData;
+@property (nonatomic, strong) ASIHTTPRequest *request;
+@property (nonatomic, strong) NSMutableArray *arrayData;
 @property STATUS status;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andUrl:(NSString *)theURL;
@@ -78,8 +78,8 @@
     NSURL *url;
 }
 
-@property (nonatomic, retain) IBOutlet UIWebView *webView;
-@property (nonatomic, retain) IBOutlet NSURL *url;
+@property (nonatomic, strong) IBOutlet UIWebView *webView;
+@property (nonatomic, strong) IBOutlet NSURL *url;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andUrl:(NSString *)theURL;
 
@@ -99,16 +99,16 @@
     NSString *url;
 }
 
-@property (nonatomic, retain) IBOutlet UITextView *textView;
+@property (nonatomic, strong) IBOutlet UITextView *textView;
 
-@property (nonatomic, retain) IBOutlet UIView *loadingView;
-@property (nonatomic, retain) NSString *statusMessage;
-@property (nonatomic, retain) IBOutlet UILabel *maintenanceView;
+@property (nonatomic, strong) IBOutlet UIView *loadingView;
+@property (nonatomic, strong) NSString *statusMessage;
+@property (nonatomic, strong) IBOutlet UILabel *maintenanceView;
 
-@property (nonatomic, retain) ASIHTTPRequest *request;
+@property (nonatomic, strong) ASIHTTPRequest *request;
 @property STATUS status;
 
-@property (nonatomic, retain) IBOutlet NSString *url;
+@property (nonatomic, strong) IBOutlet NSString *url;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andUrl:(NSString *)theURL;
 

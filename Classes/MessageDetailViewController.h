@@ -25,7 +25,7 @@
 	int pageNumber;
 	int curMsg;
 	
-	MessagesTableViewController *parent;
+	MessagesTableViewController *__weak parent;
     MessagesTableViewController *messagesTableViewController;
 
 	UIColor *defaultTintColor;
@@ -40,29 +40,29 @@
     
 }
 
-@property (nonatomic, retain) IBOutlet UIWebView *messageView;
-@property (nonatomic, retain) IBOutlet UILabel *messageAuthor;
-@property (nonatomic, retain) IBOutlet UILabel *messageDate;
-@property (nonatomic, retain) IBOutlet UIImageView *authorAvatar;
-@property (nonatomic, retain) IBOutlet UILabel *messageTitle;
-@property (nonatomic, retain) IBOutlet UIView *messageAvatar;
+@property (nonatomic, strong) IBOutlet UIWebView *messageView;
+@property (nonatomic, strong) IBOutlet UILabel *messageAuthor;
+@property (nonatomic, strong) IBOutlet UILabel *messageDate;
+@property (nonatomic, strong) IBOutlet UIImageView *authorAvatar;
+@property (nonatomic, strong) IBOutlet UILabel *messageTitle;
+@property (nonatomic, strong) IBOutlet UIView *messageAvatar;
 
-@property (nonatomic, retain) IBOutlet UIToolbar *toolbarBtn;
-@property (nonatomic, retain) UIBarButtonItem *quoteBtn;
-@property (nonatomic, retain) UIBarButtonItem *editBtn;
-@property (nonatomic, retain) UIBarButtonItem *actionBtn;
-@property (nonatomic, retain) NSMutableArray *arrayAction;
+@property (nonatomic, strong) IBOutlet UIToolbar *toolbarBtn;
+@property (nonatomic, strong) UIBarButtonItem *quoteBtn;
+@property (nonatomic, strong) UIBarButtonItem *editBtn;
+@property (nonatomic, strong) UIBarButtonItem *actionBtn;
+@property (nonatomic, strong) NSMutableArray *arrayAction;
 
-@property (nonatomic, retain) UIActionSheet *styleAlert;
+@property (nonatomic, strong) UIActionSheet *styleAlert;
 
-@property (nonatomic, retain) NSString *messageTitleString;
+@property (nonatomic, strong) NSString *messageTitleString;
 
-@property (nonatomic, retain) NSMutableArray *arrayData;
+@property (nonatomic, strong) NSMutableArray *arrayData;
 
-@property (nonatomic, assign) MessagesTableViewController *parent;
-@property (nonatomic, retain) MessagesTableViewController *messagesTableViewController;
+@property (nonatomic, weak) MessagesTableViewController *parent;
+@property (nonatomic, strong) MessagesTableViewController *messagesTableViewController;
 
-@property (nonatomic, retain) UIColor *defaultTintColor;
+@property (nonatomic, strong) UIColor *defaultTintColor;
 
 @property int pageNumber;
 @property int curMsg;

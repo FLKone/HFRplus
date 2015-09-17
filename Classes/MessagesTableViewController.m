@@ -53,8 +53,7 @@
 @synthesize firstDate;
 
 - (void)setTopicName:(NSString *)n {
-    [_topicName release];
-    _topicName = [[n filterTU] retain];
+    _topicName = [n filterTU];
     
     
 }
@@ -182,7 +181,6 @@
 	
     [queue addOperation:parser]; // this will start the "ParseOperation"
     
-    [parser release];
 }
 
 - (void)fetchContentFailed:(ASIHTTPRequest *)theRequest
@@ -309,12 +307,10 @@
 			if ([self pageNumber] == [self firstPageNumber]) {
 				NSString *newFirstPageUrl = [[NSString alloc] initWithString:[self currentUrl]];
 				[self setFirstPageUrl:newFirstPageUrl];
-				[newFirstPageUrl release];
 			}
 			else {
 				NSString *newFirstPageUrl = [[NSString alloc] initWithString:[[temporaryNumPagesArray objectAtIndex:2] getAttributeNamed:@"href"]];
 				[self setFirstPageUrl:newFirstPageUrl];
-				[newFirstPageUrl release];
 			}
 			
 
@@ -324,14 +320,12 @@
 			if ([self pageNumber] == [self lastPageNumber]) {
 				NSString *newLastPageUrl = [[NSString alloc] initWithString:[self currentUrl]];
 				[self setLastPageUrl:newLastPageUrl];
-				[newLastPageUrl release];
 			}
 			else {
                 //NSLog(@"lastObject %@", [[temporaryNumPagesArray lastObject] allContents]);
                 
 				NSString *newLastPageUrl = [[NSString alloc] initWithString:[[temporaryNumPagesArray lastObject] getAttributeNamed:@"href"]];
 				[self setLastPageUrl:newLastPageUrl];
-				[newLastPageUrl release];
 			}
 
 			/*
@@ -378,7 +372,6 @@
 			
 			UIBarButtonItem *systemItem3 = [[UIBarButtonItem alloc] initWithCustomView:label];
 			
-			[label release];
 			
 			
 			
@@ -392,16 +385,11 @@
 			NSArray *items = [NSArray arrayWithObjects: systemItem1, flexItem, systemItem3, flexItem, systemItem2, nil];
 			
 			//release buttons
-			[systemItem1 release];
-			[systemItem2 release];
-			[systemItem3 release];
-			[flexItem release];
 			
 			//add array of buttons to toolbar
 			[tmptoolbar setItems:items animated:NO];
 			
 			self.aToolbar = tmptoolbar;
-			[tmptoolbar release];
 			
 		}
 		else {
@@ -471,7 +459,7 @@
 -(void)setupPoll:(HTMLNode *)bodyNode andP:(HTMLParser *)myParser {
     self.pollNode = nil;
     
-	HTMLNode * tmpPollNode = [[bodyNode findChildWithAttribute:@"class" matchingName:@"sondage" allowPartial:NO] retain];
+	HTMLNode * tmpPollNode = [bodyNode findChildWithAttribute:@"class" matchingName:@"sondage" allowPartial:NO];
 	if(tmpPollNode)
     {
         [self setPollNode:rawContentsOfNode([tmpPollNode _node], [myParser _doc])];
@@ -479,7 +467,7 @@
 }
 
 -(void)setupIntrSearch:(HTMLNode *)bodyNode andP:(HTMLParser *)myParser {
-    HTMLNode * tmpSearchNode = [[bodyNode findChildWithAttribute:@"action" matchingName:@"/transsearch.php" allowPartial:NO] retain];
+    HTMLNode * tmpSearchNode = [bodyNode findChildWithAttribute:@"action" matchingName:@"/transsearch.php" allowPartial:NO];
     if(tmpSearchNode)
     {
         [self.searchInputData removeAllObjects];
@@ -582,7 +570,7 @@
 	//Answer Topic URL
 	HTMLNode * topicAnswerNode = [bodyNode findChildWithAttribute:@"id" matchingName:@"repondre_form" allowPartial:NO];
 	topicAnswerUrl = [[NSString alloc] init];
-	topicAnswerUrl = [[[topicAnswerNode findChildTag:@"a"] getAttributeNamed:@"href"] retain];
+	topicAnswerUrl = [[topicAnswerNode findChildTag:@"a"] getAttributeNamed:@"href"];
 	//NSLog(@"new answer: %@", topicAnswerUrl);
 	
 	//form to fast answer
@@ -696,8 +684,8 @@
     UIImage *menuImgQuoteB = [UIImage imageNamed:@"BoldFilled-20"];
     
     
-    UIMenuItem *textQuotinuum = [[[UIMenuItem alloc] initWithTitle:@"Citerexclu" action:@selector(textQuote:) image:menuImgQuote] autorelease];
-    UIMenuItem *textQuotinuumBis = [[[UIMenuItem alloc] initWithTitle:@"Citergras" action:@selector(textQuoteBold:) image:menuImgQuoteB] autorelease];
+    UIMenuItem *textQuotinuum = [[UIMenuItem alloc] initWithTitle:@"Citerexclu" action:@selector(textQuote:) image:menuImgQuote];
+    UIMenuItem *textQuotinuumBis = [[UIMenuItem alloc] initWithTitle:@"Citergras" action:@selector(textQuoteBold:) image:menuImgQuoteB];
 
     UIMenuController *menuController = [UIMenuController sharedMenuController];
     [menuController setMenuItems:[NSArray arrayWithObjects:textQuotinuum, textQuotinuumBis, nil]];
@@ -768,7 +756,6 @@
     [label setText:self.topicName];
     [label adjustFontSizeToFit];
     [self.navigationItem setTitleView:label];
-    [label release];
 
     // fond blanc WebView
     [self.messagesWebView hideGradientBackground];
@@ -787,14 +774,12 @@
 	//De Gauche à droite
 	recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeToRight:)];
 	self.swipeRightRecognizer = (UISwipeGestureRecognizer *)recognizer;
-	[recognizer release];	
 	
 	//De Droite à gauche
 	recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeToLeft:)];
 	self.swipeLeftRecognizer = (UISwipeGestureRecognizer *)recognizer;
     swipeLeftRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
     self.swipeLeftRecognizer = (UISwipeGestureRecognizer *)recognizer;
-	[recognizer release];
 	//-- Gesture
 
 
@@ -805,7 +790,6 @@
         optionsBarItem.enabled = NO;
         
         NSMutableArray *myButtonArray = [[NSMutableArray alloc] initWithObjects:optionsBarItem, nil];
-        [optionsBarItem release];
         
         self.navigationItem.rightBarButtonItems = myButtonArray;
     }
@@ -814,7 +798,6 @@
         optionsBarItem.enabled = NO;
         
         NSMutableArray *myButtonArray = [[NSMutableArray alloc] initWithObjects:optionsBarItem, nil];
-        [optionsBarItem release];
         
         self.navigationItem.rightBarButtonItems = myButtonArray;
     }
@@ -937,7 +920,6 @@
         return;
     }
     else {
-        [styleAlert release];
         styleAlert = [[UIActionSheet alloc] init];
     }
     
@@ -997,18 +979,16 @@
     nc.modalPresentationStyle = UIModalPresentationFormSheet;
 
     [self presentModalViewController:nc animated:YES];
-    [nc release];
     
     
     //[self.navigationController pushViewController:browser animated:YES];
     
-    [pollVC release];
     
 }
 
 -(void)markUnread {
     ASIHTTPRequest  *delrequest =  
-    [[[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, self.isFavoritesOrRead]]] autorelease];
+    [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, self.isFavoritesOrRead]]];
     //delete
     
     [delrequest startSynchronous];
@@ -1079,8 +1059,6 @@
 	// The navigation controller is now owned by the current view controller
 	// and the root view controller is owned by the navigation controller,
 	// so both objects should be released to prevent over-retention.
-	[navigationController release];
-	[addMessageViewController release];
 
 	//[[HFR_AppDelegate sharedAppDelegate] openURL:[NSString stringWithFormat:@"http://forum.hardware.fr%@", topicAnswerUrl]];
 
@@ -1126,8 +1104,6 @@
     // The navigation controller is now owned by the current view controller
     // and the root view controller is owned by the navigation controller,
     // so both objects should be released to prevent over-retention.
-    [navigationController release];
-    [quoteMessageViewController release];
 }
 
 -(void)quoteMessage:(NSString *)quoteUrl andSelectedText:(NSString *)selected {
@@ -1160,8 +1136,6 @@
 	// The navigation controller is now owned by the current view controller
 	// and the root view controller is owned by the navigation controller,
 	// so both objects should be released to prevent over-retention.
-	[navigationController release];
-	[editMessageViewController release];
 	
 }
 
@@ -1230,7 +1204,6 @@
 		 if (self.detailViewController == nil) {
 			 MessageDetailViewController *aView = [[MessageDetailViewController alloc] initWithNibName:@"MessageDetailViewControllerv2" bundle:nil];
 			 self.detailViewController = aView;
-			 [aView release];
 		 }
 		 
 		 
@@ -1295,7 +1268,6 @@
 		[label setText:[NSString stringWithFormat:@"Page: %d — %d/%d", self.pageNumber, index + 1, arrayData.count]];
         
 		[self.detailViewController.navigationItem setTitleView:label];
-        [label release];
 		///===
 		
 		 //setup the URL
@@ -1396,14 +1368,10 @@
     HFRNavigationController *nc = [[HFRNavigationController alloc] initWithRootViewController:browser];
     nc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self presentModalViewController:nc animated:YES];
-    [nc release];    
     
     
     //[self.navigationController pushViewController:browser animated:YES];
     
-    [browser release];
-    [imageArray release];
-	[myParser release];
 }
 
 #pragma mark -
@@ -1426,30 +1394,28 @@
 - (void)fetchContentinBackground:(id)from {
     
     
-	NSAutoreleasePool * pool2;
     
-    pool2 = [[NSAutoreleasePool alloc] init];
-
-    int intfrom = [from intValue];
-    
-    switch (intfrom) {
-        case kNewMessageFromShake:
-            [self setStringFlagTopic:[[self.arrayData lastObject] postID]]; // on flag sur le dernier message pour bien positionner après le rechargement.
-            break;
-        case kNewMessageFromUpdate:
-            [self setStringFlagTopic:[[self.arrayData lastObject] postID]]; // on flag sur le dernier message pour bien positionner après le rechargement.
-            break;
-        case kNewMessageFromEditor:
-            // le flag est mis à jour depuis l'editeur.
-            break;
-        default:
-            [self setStringFlagTopic:[[self.arrayData lastObject] postID]]; // on flag sur le dernier message pour bien positionner après le rechargement.
-            break;
-    }
-    
-	[self fetchContent:intfrom];
+    @autoreleasepool {
+        int intfrom = [from intValue];
+        
+        switch (intfrom) {
+            case kNewMessageFromShake:
+                [self setStringFlagTopic:[[self.arrayData lastObject] postID]]; // on flag sur le dernier message pour bien positionner après le rechargement.
+                break;
+            case kNewMessageFromUpdate:
+                [self setStringFlagTopic:[[self.arrayData lastObject] postID]]; // on flag sur le dernier message pour bien positionner après le rechargement.
+                break;
+            case kNewMessageFromEditor:
+                // le flag est mis à jour depuis l'editeur.
+                break;
+            default:
+                [self setStringFlagTopic:[[self.arrayData lastObject] postID]]; // on flag sur le dernier message pour bien positionner après le rechargement.
+                break;
+        }
+        
+        [self fetchContent:intfrom];
 	
-	[pool2 drain];
+	}
 }
 
 #pragma mark -
@@ -1614,7 +1580,7 @@
 	[self.arrayData addObjectsFromArray:loadedItems];
 
 
-	NSString *tmpHTML = [[[NSString alloc] initWithString:@""] autorelease];
+	NSString *tmpHTML = [[NSString alloc] initWithString:@""];
 	
     
     NSLog(@"COUNT = %lu", (unsigned long)[self.arrayData count]);
@@ -1683,7 +1649,7 @@
         NSLog(@"NEW %@", self.stringFlagTopic);
 
         
-        NSString *refreshBtn = [[[NSString alloc] initWithString:@""] autorelease];
+        NSString *refreshBtn = [[NSString alloc] initWithString:@""];
         
         //on ajoute le bouton actualiser si besoin
         if (([self pageNumber] == [self lastPageNumber]) || ([self lastPageNumber] == 0)) {
@@ -1696,7 +1662,7 @@
             //NSLog(@"autre");
         }
         
-        NSString *tooBar = [[[NSString alloc] initWithString:@""] autorelease];
+        NSString *tooBar = [[NSString alloc] initWithString:@""];
         
         //Toolbar;
         if (self.aToolbar && !self.isSearchInstra) {
@@ -1820,7 +1786,7 @@
 - (void)didFinishParsing:(NSArray *)appList
 {
     [self performSelectorOnMainThread:@selector(handleLoadedApps:) withObject:appList waitUntilDone:NO];
-    [self.queue release], self.queue = nil;
+    self.queue = nil;
 }
 
 #pragma mark -
@@ -1864,7 +1830,7 @@
     //}
     //Position du Flag
     
-	NSString *jsString = [[[NSString alloc] initWithString:@""] autorelease];
+	NSString *jsString = [[NSString alloc] initWithString:@""];
     
     NSLog(@"jsString2 %@", jsString2);
     NSLog(@"jsString3 %@", jsString3);
@@ -1962,7 +1928,6 @@
                 //if (self.messagesTableViewController == nil) {
                 MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[aRequest.URL absoluteString] stringByReplacingOccurrencesOfString:@"file://" withString:@""]];
                 self.messagesTableViewController = aView;
-                [aView release];
                 //}
                 
                 //setup the URL
@@ -1998,7 +1963,6 @@
             
             MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[aRequest.URL absoluteString] stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@", kForumURL] withString:@""]];
             self.messagesTableViewController = aView;
-            [aView release];
             
             //setup the URL
             self.messagesTableViewController.topicName = @"";
@@ -2233,7 +2197,6 @@
 
 	}	
 	[menuController setMenuItems:menuAction];
-	[menuAction release];
 	//NSLog(@"menuAction %d", menuAction.count);
 	
 	//NSLog(@"ypos %d", ypos);
@@ -2300,7 +2263,7 @@
 	//NSLog(@"actionFavoris %@", [[arrayData objectAtIndex:curMsg] addFlagUrl]);
 	
 	ASIHTTPRequest  *aRequest =  
-	[[[ASIHTTPRequest  alloc]  initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [[arrayData objectAtIndex:curMsg] addFlagUrl]]]] autorelease];
+	[[ASIHTTPRequest  alloc]  initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [[arrayData objectAtIndex:curMsg] addFlagUrl]]]];
 	[aRequest startSynchronous];
 	
 	if (request) {
@@ -2309,7 +2272,6 @@
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hmmm" message:[[request error] localizedDescription]
 														   delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 			[alert show];	
-			[alert release];
 			
 			//[responseView setText:[[request error] localizedDescription]];
 		} else if ([aRequest responseString]) {
@@ -2327,7 +2289,6 @@
 				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[[responseString stringByMatching:regExMsg capture:1L] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
 															   delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 				[alert show];	
-				[alert release];
 			}
 		}
 	}	
@@ -2346,7 +2307,6 @@
     nc.modalPresentationStyle = UIModalPresentationFormSheet;
     
     [self presentModalViewController:nc animated:YES];
-    [nc release];
     
     
 	
@@ -2373,8 +2333,6 @@
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
     [self presentModalViewController:navigationController animated:YES];
 
-    [navigationController release];
-    [alerteMessageViewController release];
     
     
 }
@@ -2399,8 +2357,6 @@
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
     [self presentModalViewController:navigationController animated:YES];
 
-    [navigationController release];
-    [delMessageViewController release];
 }
 
 -(void) actionBL:(NSNumber *)curMsgN {
@@ -2422,7 +2378,6 @@
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:promptMsg
                                                    delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
     [alert show];
-    [alert release];
 
     
 }
@@ -2452,8 +2407,6 @@
 	// The navigation controller is now owned by the current view controller
 	// and the root view controller is owned by the navigation controller,
 	// so both objects should be released to prevent over-retention.
-	[navigationController release];
-	[editMessageViewController release];
 }
 
 -(void) EcrireCookie:(NSString *)nom withVal:(NSString *)valeur {
@@ -2676,43 +2629,25 @@
 
 
 	[self.queue cancelAllOperations];
-	[self.queue release];
 	
 	[request cancel];
 	[request setDelegate:nil];
-	self.request = nil;
 	
-	self.topicAnswerUrl = nil;
 	self.topicName = nil;
 	
-    self.pollNode = nil;
     
 	//[self.arrayData removeAllObjects];
-	[self.arrayData release], self.arrayData = nil;
-	[self.updatedArrayData release], self.updatedArrayData = nil;
+	self.arrayData = nil;
+	self.updatedArrayData = nil;
+
 	
-	if(self.detailViewController) self.detailViewController = nil;
-	
-	self.swipeLeftRecognizer = nil;
-	self.swipeRightRecognizer = nil;
 	
     
-    self.styleAlert = nil;
     
-    self.lastStringFlagTopic = nil;
-	self.stringFlagTopic = nil;
-	self.arrayInputData = nil;
 		
-	self.aToolbar = nil;
-	self.editFlagTopic = nil;
 	
-	self.isFavoritesOrRead = nil;
-	self.arrayAction = nil;
-    self.arrayActionsMessages = nil;
     
-    self.searchInputData = nil;
     
-    [super dealloc];
 	
 }
 
@@ -2837,7 +2772,7 @@
     
     //NSString *baseURL = [NSString stringWithFormat:@"/forum2.php?%@", [self serializeParams:self.searchInputData]];
 
-    ASIFormDataRequest  *arequest = [[[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/transsearch.php", kForumURL]]] autorelease];
+    ASIFormDataRequest  *arequest = [[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/transsearch.php", kForumURL]]];
     
     for (NSString *key in self.searchInputData) {
         [arequest setPostValue:[self.searchInputData objectForKey:key] forKey:key];
@@ -2870,7 +2805,6 @@
         
         [alert setTag:780];
         [alert show];
-        [alert release];
         return;
     }
     
@@ -2883,7 +2817,6 @@
     else {
         MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:baseURL];
         self.messagesTableViewController = aView;
-        [aView release];
         
         //setup the URL
         [self.messagesTableViewController setTopicName:[NSString stringWithString:self.topicName]];
@@ -2919,30 +2852,29 @@
         id value = [params objectForKey:key];
         if ([value isKindOfClass:[NSDictionary class]]) {
             for (NSString *subKey in value) {
-                NSString* escaped_value = (NSString *)CFURLCreateStringByAddingPercentEscapes(NULL,
+                NSString* escaped_value = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
                                                                                               (CFStringRef)[value objectForKey:subKey],
                                                                                               NULL,
                                                                                               (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                                                                              kCFStringEncodingUTF8);
+                                                                                              kCFStringEncodingUTF8));
                 [pairs addObject:[NSString stringWithFormat:@"%@[%@]=%@", key, subKey, escaped_value]];
             }
         } else if ([value isKindOfClass:[NSArray class]]) {
             for (NSString *subValue in value) {
-                NSString* escaped_value = (NSString *)CFURLCreateStringByAddingPercentEscapes(NULL,
+                NSString* escaped_value = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
                                                                                               (CFStringRef)subValue,
                                                                                               NULL,
                                                                                               (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                                                                              kCFStringEncodingUTF8);
+                                                                                              kCFStringEncodingUTF8));
                 [pairs addObject:[NSString stringWithFormat:@"%@[]=%@", key, escaped_value]];
             }
         } else {
-            NSString* escaped_value = (NSString *)CFURLCreateStringByAddingPercentEscapes(NULL,
+            NSString* escaped_value = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
                                                                                           (CFStringRef)[params objectForKey:key],
                                                                                           NULL,
                                                                                           (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                                                                          kCFStringEncodingUTF8);
+                                                                                          kCFStringEncodingUTF8));
             [pairs addObject:[NSString stringWithFormat:@"%@=%@", key, escaped_value]];
-            [escaped_value release];
         }
     }
     return [pairs componentsJoinedByString:@"&"];

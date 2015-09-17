@@ -89,7 +89,7 @@
 {
 	//NSLog(@"webViewDidFinishLoad");
 	
-	NSString *jsString = [[[NSString alloc] initWithString:@""] autorelease];
+	NSString *jsString = [[NSString alloc] initWithString:@""];
 	//jsString = [jsString stringByAppendingString:@"$('body').bind('touchmove', function(e){e.preventDefault()});"];
 	//jsString = [jsString stringByAppendingString:@"$('.button').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+encodeURIComponent(this.title); });"];
     
@@ -174,8 +174,8 @@
     
     if ([fileManager fileExistsAtPath:rehostImages]) {
         
-        NSData *savedData = [[NSData dataWithContentsOfFile:rehostImages] retain];
-        self.rehostImagesArray = [[NSKeyedUnarchiver unarchiveObjectWithData:savedData] retain];
+        NSData *savedData = [NSData dataWithContentsOfFile:rehostImages];
+        self.rehostImagesArray = [NSKeyedUnarchiver unarchiveObjectWithData:savedData];
         self.rehostImagesSortedArray =  [NSMutableArray arrayWithArray:[[self.rehostImagesArray reverseObjectEnumerator] allObjects]];
         
     }
@@ -184,22 +184,17 @@
     //NSLog(@"rehostImagesArray AT LAUNCH %@", self.rehostImagesArray);
     //NSLog(@"rehostImagesSortedArray AT LAUNCH %@", self.rehostImagesSortedArray);
     
-    [rehostImages release];
-    [usedSmilieys release];
-    [fileManager release];
     //Smileys / Rehost
     
 	//Bouton Annuler
 	UIBarButtonItem *cancelBarItem = [[UIBarButtonItem alloc] initWithTitle:@"Annuler" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
 	self.navigationItem.leftBarButtonItem = cancelBarItem;
-	[cancelBarItem release];	
 	
 	//Bouton Envoyer
 	UIBarButtonItem *sendBarItem = [[UIBarButtonItem alloc] initWithTitle:@"Envoyer" style:UIBarButtonItemStyleDone target:self action:@selector(done)];
 	self.navigationItem.rightBarButtonItem = sendBarItem;
 	[self.navigationItem.rightBarButtonItem setEnabled:NO];
 	
-	[sendBarItem release];	
 	
 	[self.segmentControlerPage setEnabled:NO forSegmentAtIndex:0];
 	[self.segmentControlerPage setWidth:40.0 forSegmentAtIndex:0];
@@ -260,7 +255,6 @@
 	[self.commonTableView setTableFooterView:v];
 	[self.rehostTableView setTableFooterView:v];
     
-	[v release];
 	
     
     float headerWidth = self.view.bounds.size.width;
@@ -364,15 +358,10 @@
     spinner.frame = frame;
     [spinner startAnimating];
     [subProgressView addSubview:spinner];
-    [spinner release];
     [progressView addSubview:subProgressView];
-    [subProgressView release];
     [headerView addSubview:progressView];
-    [progressView release];
-    [border release];
     
     [self.rehostTableView setTableHeaderView:headerView];
-    [headerView release];
     
 	/*
 	 
@@ -404,19 +393,19 @@
     UIImage *menuImgLink = [UIImage imageNamed:@"LinkFilled-20"];
     UIImage *menuImgImage = [UIImage imageNamed:@"XlargeIconsFilled-20"];
 
-    UIMenuItem *textCutItem = [[[UIMenuItem alloc] initWithTitle:@"HFRCut" action:@selector(textCut:) image:menuImgCut] autorelease];
-    UIMenuItem *textCopyItem = [[[UIMenuItem alloc] initWithTitle:@"HFRCopy" action:@selector(textCopy:) image:menuImgCopy] autorelease];
-    UIMenuItem *textPasteItem = [[[UIMenuItem alloc] initWithTitle:@"HFRPaste" action:@selector(textPaste:) image:menuImgPaste] autorelease];
+    UIMenuItem *textCutItem = [[UIMenuItem alloc] initWithTitle:@"HFRCut" action:@selector(textCut:) image:menuImgCut];
+    UIMenuItem *textCopyItem = [[UIMenuItem alloc] initWithTitle:@"HFRCopy" action:@selector(textCopy:) image:menuImgCopy];
+    UIMenuItem *textPasteItem = [[UIMenuItem alloc] initWithTitle:@"HFRPaste" action:@selector(textPaste:) image:menuImgPaste];
 
-    UIMenuItem *textBoldItem = [[[UIMenuItem alloc] initWithTitle:@"B" action:@selector(textBold:) image:menuImgBold] autorelease];
-    UIMenuItem *textItalicItem = [[[UIMenuItem alloc] initWithTitle:@"I" action:@selector(textItalic:) image:menuImgItalic] autorelease];
-    UIMenuItem *textUnderlineItem = [[[UIMenuItem alloc] initWithTitle:@"U" action:@selector(textUnderline:) image:menuImgUnderline] autorelease];
-    UIMenuItem *textStrikeItem = [[[UIMenuItem alloc] initWithTitle:@"S" action:@selector(textStrike:) image:menuImgStrike] autorelease];
+    UIMenuItem *textBoldItem = [[UIMenuItem alloc] initWithTitle:@"B" action:@selector(textBold:) image:menuImgBold];
+    UIMenuItem *textItalicItem = [[UIMenuItem alloc] initWithTitle:@"I" action:@selector(textItalic:) image:menuImgItalic];
+    UIMenuItem *textUnderlineItem = [[UIMenuItem alloc] initWithTitle:@"U" action:@selector(textUnderline:) image:menuImgUnderline];
+    UIMenuItem *textStrikeItem = [[UIMenuItem alloc] initWithTitle:@"S" action:@selector(textStrike:) image:menuImgStrike];
     
-    UIMenuItem *textSpoilerItem = [[[UIMenuItem alloc] initWithTitle:@"SPOILER" action:@selector(textSpoiler:) image:menuImgSpoiler] autorelease];
-    UIMenuItem *textQuoteItem = [[[UIMenuItem alloc] initWithTitle:@"QUOTE" action:@selector(textQuote:) image:menuImgQuote] autorelease];
-    UIMenuItem *textLinkItem = [[[UIMenuItem alloc] initWithTitle:@"URL" action:@selector(textLink:) image:menuImgLink] autorelease];
-    UIMenuItem *textImgItem = [[[UIMenuItem alloc] initWithTitle:@"IMG" action:@selector(textImg:) image:menuImgImage] autorelease];
+    UIMenuItem *textSpoilerItem = [[UIMenuItem alloc] initWithTitle:@"SPOILER" action:@selector(textSpoiler:) image:menuImgSpoiler];
+    UIMenuItem *textQuoteItem = [[UIMenuItem alloc] initWithTitle:@"QUOTE" action:@selector(textQuote:) image:menuImgQuote];
+    UIMenuItem *textLinkItem = [[UIMenuItem alloc] initWithTitle:@"URL" action:@selector(textLink:) image:menuImgLink];
+    UIMenuItem *textImgItem = [[UIMenuItem alloc] initWithTitle:@"IMG" action:@selector(textImg:) image:menuImgImage];
 
 	// On rajoute les menus pour le style
     
@@ -427,7 +416,7 @@
     UIMenuItem *textStrikeItem = [[[UIMenuItem alloc] initWithTitle:@"S" action:@selector(textStrike:)] autorelease];
     
 	UIMenuItem *textSpoilerItem = [[[UIMenuItem alloc] initWithTitle:@"SPOILER" action:@selector(textSpoiler:)] autorelease];*/
-    UIMenuItem *textFixeItem = [[[UIMenuItem alloc] initWithTitle:@"FIXED" action:@selector(textFixe:)] autorelease];
+    UIMenuItem *textFixeItem = [[UIMenuItem alloc] initWithTitle:@"FIXED" action:@selector(textFixe:)];
     //UIMenuItem *textCppItem = [[[UIMenuItem alloc] initWithTitle:@"CPP" action:@selector(textStrike:)] autorelease];
     //UIMenuItem *textMailItem = [[[UIMenuItem alloc] initWithTitle:@"@" action:@selector(textStrike:)] autorelease];
 	
@@ -722,7 +711,6 @@
                                                                delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Confirmer", nil];
                 [alert setTag:666];
                 [alert show];
-                [alert release];
             }
             
             
@@ -770,7 +758,7 @@
 	//NSLog(@"done %@", self.formSubmit);
     
 	ASIFormDataRequest  *arequest =
-	[[[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:self.formSubmit]] autorelease];
+	[[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:self.formSubmit]];
 	//delete
 	NSString *key;
 	for (key in self.arrayInputData) {
@@ -812,7 +800,6 @@
 			UIAlertView *alertKO = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[[arequest error] localizedDescription]
 														   delegate:self cancelButtonTitle:@"Retour" otherButtonTitles: nil];
 			[alertKO show];
-			[alertKO release];
 		}
 		else if ([arequest responseString])
 		{
@@ -828,7 +815,6 @@
 				UIAlertView *alertKKO = [[UIAlertView alloc] initWithTitle:nil message:[[messagesNode contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
 															   delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
 				[alertKKO show];
-				[alertKKO release];				
 			}
 			else {
                 [self resignAll];
@@ -858,10 +844,8 @@
                     indicator.center = CGPointMake(alertOK.bounds.size.width / 2, alertOK.bounds.size.height - 50);
                     [indicator startAnimating];
                     [alertOK addSubview:indicator];
-                    [indicator release];
                     
                     
-                    [alertOK release];
                 }
 
 
@@ -890,7 +874,6 @@
 			}
 
 
-			[myParser release];
 		}
 	}
 	
@@ -1073,7 +1056,6 @@
 	lastSelectedRange.location += [[notification object] length];
 	
     textView.text = text;
-    [text release];	
 	
 	self.loaded = YES;
 	
@@ -1097,7 +1079,6 @@
 	lastSelectedRange.length = 0;
     
     textView.text = text;
-    [text release];
 	
 	[self cancel];
     
@@ -1147,7 +1128,6 @@
 	lastSelectedRange.length = 0;
 	
     textView.text = text;
-    [text release];	
 	
 	
 	self.loaded = YES;
@@ -1155,7 +1135,7 @@
 	
 	
 	
-	NSString *jsString = [[[NSString alloc] initWithString:@""] autorelease];
+	NSString *jsString = [[NSString alloc] initWithString:@""];
 	jsString = [jsString stringByAppendingString:@"$(\".selected\").each(function (i) {\
 				$(this).delay(800).removeClass('selected');\
 				});"];
@@ -1346,7 +1326,6 @@
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Saisir 3 caractères minimum !" 
 														   delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 			[alert show];
-			[alert release];
 		}
 		else {
 			
@@ -1460,12 +1439,12 @@
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];
 	
     NSString *newString = [NSString stringWithFormat:@"+%@", [[self.textFieldSmileys.text componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] componentsJoinedByString:@" +"]];
-    NSString * encodedString = (NSString *)CFURLCreateStringByAddingPercentEscapes(
+    NSString * encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
                                                                                    NULL,
                                                                                    (CFStringRef)newString,
                                                                                    NULL,
                                                                                    (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                                                                   kCFStringEncodingUTF8 );
+                                                                                   kCFStringEncodingUTF8 ));
     
 	[self setRequestSmile:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/message-smi-mp-aj.php?config=hfr.inc&findsmilies=%@", kForumURL, encodedString]]]];
 	[requestSmile setDelegate:self];
@@ -1509,7 +1488,6 @@
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Aucun résultat !" 
 													   delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 		[alert show];
-		[alert release];
 		
 		[self.textFieldSmileys becomeFirstResponder];
 		[self.smileView stringByEvaluatingJavaScriptFromString:@"$('#container').show();$('#container_ajax').html('');"];
@@ -1549,28 +1527,28 @@
 
 -(void)loadSmileys;
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
 
-	int page = self.smileyPage;
-	
+		int page = self.smileyPage;
+		
 
-	
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-	NSString *diskCachePath = [[[paths objectAtIndex:0] stringByAppendingPathComponent:@"SmileCache"] retain];
-	
-	if (![[NSFileManager defaultManager] fileExistsAtPath:diskCachePath])
-	{
-		//NSLog(@"createDirectoryAtPath");
-		[[NSFileManager defaultManager] createDirectoryAtPath:diskCachePath
-								  withIntermediateDirectories:YES
-												   attributes:nil
-														error:NULL];
-	}
-	else {
-		//NSLog(@"pas createDirectoryAtPath");
-	}
-	
-	int smilePerPage = 40;
+		
+		NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+		NSString *diskCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"SmileCache"];
+		
+		if (![[NSFileManager defaultManager] fileExistsAtPath:diskCachePath])
+		{
+			//NSLog(@"createDirectoryAtPath");
+			[[NSFileManager defaultManager] createDirectoryAtPath:diskCachePath
+									  withIntermediateDirectories:YES
+													   attributes:nil
+															error:NULL];
+		}
+		else {
+			//NSLog(@"pas createDirectoryAtPath");
+		}
+		
+		int smilePerPage = 40;
     float surface = [UIScreen mainScreen].bounds.size.height*[UIScreen mainScreen].bounds.size.width;
     if (surface > 250000) {
         smilePerPage = 65;
@@ -1585,72 +1563,70 @@
     //i4 153600
     //i5 181760
     //i6 250125
-	int firstSmile = page * smilePerPage;
-	int lastSmile = MIN([self.smileyArray count], (page + 1) * smilePerPage);
-	
-	//NSLog(@"%d to %d", firstSmile, lastSmile);
-	
-	int i;
-	
-	NSString *tmpHTML = [[[NSString alloc] initWithString:@""] autorelease];
-	NSFileManager *fileManager = [[NSFileManager alloc] init];
+		int firstSmile = page * smilePerPage;
+		int lastSmile = MIN([self.smileyArray count], (page + 1) * smilePerPage);
+		
+		//NSLog(@"%d to %d", firstSmile, lastSmile);
+		
+		int i;
+		
+		NSString *tmpHTML = [[NSString alloc] initWithString:@""];
+		NSFileManager *fileManager = [[NSFileManager alloc] init];
 
-	for (i = firstSmile; i < lastSmile; i++) { //Loop through all the tags
+		for (i = firstSmile; i < lastSmile; i++) { //Loop through all the tags
 
-		NSString *filename = [[[self.smileyArray objectAtIndex:i] objectForKey:@"source"] stringByReplacingOccurrencesOfString:@"http://forum-images.hardware.fr/" withString:@""];
-		filename = [filename stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
-		filename = [filename stringByReplacingOccurrencesOfString:@" " withString:@"-"];
-		
-		NSString *key = [diskCachePath stringByAppendingPathComponent:filename];
-		
-		//NSLog(@"url %@", [[self.smileyArray objectAtIndex:i] objectForKey:@"source"]);
-		//NSLog(@"key %@", key);
-		
-		if (![fileManager fileExistsAtPath:key])
-		{
-			//NSLog(@"dl %@", key);
+			NSString *filename = [[[self.smileyArray objectAtIndex:i] objectForKey:@"source"] stringByReplacingOccurrencesOfString:@"http://forum-images.hardware.fr/" withString:@""];
+			filename = [filename stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
+			filename = [filename stringByReplacingOccurrencesOfString:@" " withString:@"-"];
 			
-			[fileManager createFileAtPath:key contents:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [[[self.smileyArray objectAtIndex:i] objectForKey:@"source"] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]]]] attributes:nil];					
+			NSString *key = [diskCachePath stringByAppendingPathComponent:filename];
+			
+			//NSLog(@"url %@", [[self.smileyArray objectAtIndex:i] objectForKey:@"source"]);
+			//NSLog(@"key %@", key);
+			
+			if (![fileManager fileExistsAtPath:key])
+			{
+				//NSLog(@"dl %@", key);
+				
+				[fileManager createFileAtPath:key contents:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [[[self.smileyArray objectAtIndex:i] objectForKey:@"source"] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]]]] attributes:nil];					
+			}
+			
+			
+			tmpHTML = [tmpHTML stringByAppendingString:[NSString stringWithFormat:@"<img class=\"smile\" src=\"%@\" alt=\"%@\"/>", key, [[self.smileyArray objectAtIndex:i] objectForKey:@"code"]]];
+			
 		}
+
+
+		tmpHTML = [tmpHTML stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"];
+
+		[self performSelectorOnMainThread:@selector(showSmileResults:) withObject:tmpHTML waitUntilDone:YES];
 		
+		//Pagination
+		//if (firstSmile > 0 || lastSmile < [self.smileyArray count]) {
+			//NSLog(@"pagination needed");
+			
+			[self.segmentControler setAlpha:0];
+			[self.segmentControlerPage setAlpha:1];		
+			
+			if (firstSmile > 0) {
+				[self.segmentControlerPage setEnabled:YES forSegmentAtIndex:0];			
+			}
+			else {
+				[self.segmentControlerPage setEnabled:NO forSegmentAtIndex:0];
+			}
+
+			if (lastSmile < [self.smileyArray count]) {
+				[self.segmentControlerPage setEnabled:YES forSegmentAtIndex:2];			
+			}
+			else {
+				[self.segmentControlerPage setEnabled:NO forSegmentAtIndex:2];
+			}		
+			
+			
+		//}
 		
-		tmpHTML = [tmpHTML stringByAppendingString:[NSString stringWithFormat:@"<img class=\"smile\" src=\"%@\" alt=\"%@\"/>", key, [[self.smileyArray objectAtIndex:i] objectForKey:@"code"]]];
 		
 	}
-
-	[fileManager release];
-
-	tmpHTML = [tmpHTML stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"];
-
-	[self performSelectorOnMainThread:@selector(showSmileResults:) withObject:tmpHTML waitUntilDone:YES];
-	
-	//Pagination
-	//if (firstSmile > 0 || lastSmile < [self.smileyArray count]) {
-		//NSLog(@"pagination needed");
-		
-		[self.segmentControler setAlpha:0];
-		[self.segmentControlerPage setAlpha:1];		
-		
-		if (firstSmile > 0) {
-			[self.segmentControlerPage setEnabled:YES forSegmentAtIndex:0];			
-		}
-		else {
-			[self.segmentControlerPage setEnabled:NO forSegmentAtIndex:0];
-		}
-
-		if (lastSmile < [self.smileyArray count]) {
-			[self.segmentControlerPage setEnabled:YES forSegmentAtIndex:2];			
-		}
-		else {
-			[self.segmentControlerPage setEnabled:NO forSegmentAtIndex:2];
-		}		
-		
-		
-	//}
-	
-	
-	[diskCachePath release];
-	[pool release];
 }
 
 -(void)showSmileResults:(NSString *)tmpHTML {
@@ -1725,7 +1701,7 @@
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
             //NSLog(@"mew cell");
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 
             cell.accessoryType = UITableViewCellAccessoryNone;
             //cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -1981,27 +1957,18 @@
 	
 	[request cancel];
 	[request setDelegate:nil];
-	self.request = nil;
 
 	[requestSmile cancel];
 	[requestSmile setDelegate:nil];
-	self.requestSmile = nil;
 	
-    self.smileyCustom = nil;
     
-	self.smileyArray = nil;
-	self.usedSearchDict = nil;
-	self.usedSearchSortedArray = nil;
-	self.rehostImagesArray = nil;
-	self.rehostImagesSortedArray = nil;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"smileyReceived" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"uploadProgress" object:nil];
 	
 	self.delegate = nil;
-	[self.arrayInputData release];
 
-	[super dealloc];
+
 
 	
 	

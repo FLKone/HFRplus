@@ -40,7 +40,6 @@
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(finish)];
 	
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];	
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -87,7 +86,6 @@
 	
 	self.delegate = nil;
 	
-    [super dealloc];
 }
 /*
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -124,7 +122,7 @@
     
 	//NSLog(@"connexion");
 	ASIFormDataRequest  *request =  
-	[[[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:@"http://www.hardware.fr/membres/popupLogin.php"]] autorelease];
+	[[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:@"http://www.hardware.fr/membres/popupLogin.php"]];
     [request setPostValue:pseudoField.text forKey:@"pseudo"];
     [request setPostValue:passField.text forKey:@"pwd"];
     [request setPostValue:@"send" forKey:@"action"];
@@ -148,7 +146,6 @@
 				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Le pseudo que vous avez saisi n'a pas été trouvé ou votre mot de passe est incorrect.\nVeuillez réessayer."
 															   delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 				[alert show];	
-				[alert release];
 			}
 			else {
 				//NSLog(@"connexion OK");

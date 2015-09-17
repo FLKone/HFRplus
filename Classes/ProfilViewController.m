@@ -61,7 +61,6 @@
 	self.navigationItem.rightBarButtonItem = nil;
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(cancelFetchContent)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];
     
     [self.arrayData removeAllObjects];
 	[self.profilTableView reloadData];
@@ -79,7 +78,6 @@
 	self.navigationItem.rightBarButtonItem = nil;
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];
     
     [self.loadingView setHidden:YES];
     [self.maintenanceView setHidden:YES];
@@ -99,7 +97,6 @@
 	self.navigationItem.rightBarButtonItem = nil;
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];
 	
     [self.maintenanceView setText:@"oops :o"];
     
@@ -110,7 +107,6 @@
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[theRequest.error localizedDescription]
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
 	[alert show];
-	[alert release];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -134,7 +130,6 @@
 	if ([[[bodyNode firstChild] tagName] isEqualToString:@"p"]) {
 		self.status = kMaintenance;
 		self.statusMessage = [[[bodyNode firstChild] contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-		[myParser release];
         
         
         [self.maintenanceView setText:self.statusMessage];
@@ -298,7 +293,6 @@
     [self.arrayData addObjectsFromArray:parsedDataArray];
     //NSLog(@"arrayData %@", self.arrayData);
     //NSLog(@"parsedDataArray %@", parsedDataArray);
-	[myParser release];
 }
 
 #pragma mark -
@@ -321,18 +315,16 @@
     self.title = @"Profil";
     
     // close
-    UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(doneButtonPressed:)] autorelease];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(doneButtonPressed:)];
     self.navigationItem.leftBarButtonItem = doneButton;
     
 	// reload
     UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];
     
     UIView *v = [[UIView alloc] initWithFrame:CGRectZero];
     v.backgroundColor = [UIColor clearColor];
     [self.profilTableView setTableFooterView:v];
-    [v release];
     
     [self fetchContent];
 }
@@ -386,14 +378,14 @@
     CGFloat curWidth = self.view.frame.size.width;
     
     //UIView globale
-	UIView* customView = [[[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,HEIGHT_FOR_HEADER_IN_SECTION)] autorelease];
+	UIView* customView = [[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,HEIGHT_FOR_HEADER_IN_SECTION)];
     customView.backgroundColor = [UIColor colorWithRed:239/255.0f green:239/255.0f blue:244/255.0f alpha:0.7];
 	customView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     
 	//UIImageView de fond
     if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         UIImage *myImage = [UIImage imageNamed:@"bar2.png"];
-        UIImageView *imageView = [[[UIImageView alloc] initWithImage:myImage] autorelease];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:myImage];
         imageView.alpha = 0.9;
         imageView.frame = CGRectMake(0,0,curWidth,HEIGHT_FOR_HEADER_IN_SECTION);
         imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -402,12 +394,12 @@
     }
     else {
         //bordures/iOS7
-        UIView* borderView = [[[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,1/[[UIScreen mainScreen] scale])] autorelease];
+        UIView* borderView = [[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,1/[[UIScreen mainScreen] scale])];
         borderView.backgroundColor = [UIColor colorWithRed:158/255.0f green:158/255.0f blue:114/162.0f alpha:0.7];
         
         //[customView addSubview:borderView];
         
-        UIView* borderView2 = [[[UIView alloc] initWithFrame:CGRectMake(0,HEIGHT_FOR_HEADER_IN_SECTION-1/[[UIScreen mainScreen] scale],curWidth,1/[[UIScreen mainScreen] scale])] autorelease];
+        UIView* borderView2 = [[UIView alloc] initWithFrame:CGRectMake(0,HEIGHT_FOR_HEADER_IN_SECTION-1/[[UIScreen mainScreen] scale],curWidth,1/[[UIScreen mainScreen] scale])];
         borderView2.backgroundColor = [UIColor colorWithRed:158/255.0f green:158/255.0f blue:114/162.0f alpha:0.7];
         
         //[customView addSubview:borderView2];
@@ -475,7 +467,7 @@
         
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
         
         // Configure the cell...
@@ -493,7 +485,7 @@
         
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
         
         // Configure the cell...
@@ -511,7 +503,7 @@
         
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
         
         // Configure the cell...
@@ -528,7 +520,7 @@
         
         AvatarTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
-            cell = [[[AvatarTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+            cell = [[AvatarTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
         
         cell.textLabel.text = [theRow objectForKey:@"data"];
@@ -541,7 +533,7 @@
             //NSLog(@"image base %@", NSStringFromCGSize(image.size));
             
             float newW = image.size.width / ( image.size.height / cell.imageView.frame.size.height );
-            CGRect oldFrame = cell.imageView.frame;
+            __weak CGRect oldFrame = cell.imageView.frame;
 
             oldFrame.size.width = newW;
             cell.imageView.frame = oldFrame;
@@ -565,7 +557,7 @@
         
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         }
         
         // Configure the cell...
@@ -645,7 +637,6 @@
         
         [self.navigationController pushViewController:cVC animated:YES];
         
-        [cVC release];
     }
     else if ([type isEqualToString:@"config"]) {
         self.navigationItem.backBarButtonItem =
@@ -664,7 +655,6 @@
         
         [self.navigationController pushViewController:cVC animated:YES];
         
-        [cVC release];
     }
     else if ([type isEqualToString:@"feedback"]) {
         self.navigationItem.backBarButtonItem =
@@ -683,7 +673,6 @@
         
         [self.navigationController pushViewController:cVC animated:YES];
         
-        [cVC release];
     }
 
 }
@@ -713,12 +702,8 @@
     
 	[request cancel];
 	[request setDelegate:nil];
-	self.request = nil;
-    self.currentUrl = nil;
     
-	self.statusMessage = nil;
     
-    [super dealloc];
 }
 
 
@@ -831,7 +816,6 @@
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
 	[alert setTag:667];
 	[alert show];
-	[alert release];
 }
 
 -(void)loadDataInTableView:(NSData *)contentData
@@ -849,14 +833,12 @@
             
 			self.status = kMaintenance;
 			self.statusMessage = [[[bodyNode firstChild] contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-			[myParser release];
             return;
 		}
         
 		NSLog(@"id");
 		self.status = kNoAuth;
 		self.statusMessage = [[[bodyNode findChildWithAttribute:@"class" matchingName:@"hop" allowPartial:NO] contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-		[myParser release];
 		return;		
 	}
 	   
@@ -903,7 +885,6 @@
 			if ([self pageNumber] == [self firstPageNumber]) {
 				NSString *newFirstPageUrl = [[NSString alloc] initWithString:[self currentUrl]];
 				[self setFirstPageUrl:newFirstPageUrl];
-				[newFirstPageUrl release];
 			}
 			else {
 				NSString *newFirstPageUrl;
@@ -916,7 +897,6 @@
 				}
 				
 				[self setFirstPageUrl:newFirstPageUrl];
-				[newFirstPageUrl release];
 			}
 			
             //NSLog(@"setFirstPageNumber %d", [[[temporaryNumPagesArray lastObject] contents] intValue]);
@@ -926,7 +906,6 @@
 			if ([self pageNumber] == [self lastPageNumber]) {
 				NSString *newLastPageUrl = [[NSString alloc] initWithString:[self currentUrl]];
 				[self setLastPageUrl:newLastPageUrl];
-				[newLastPageUrl release];
 			}
 			else {
 				NSString *newLastPageUrl;
@@ -939,7 +918,6 @@
 				}
 				
 				[self setLastPageUrl:newLastPageUrl];
-				[newLastPageUrl release];
 			}
 			
 			/*
@@ -1048,15 +1026,8 @@
 			NSArray *items = [NSArray arrayWithObjects: systemItem1, fixItem, systemItemPrevious, flexItem, systemItem3, flexItem, systemItemNext, fixItem, systemItem2, nil];
 			
 			//release buttons
-			[systemItem1 release];
-			[systemItem2 release];
-			[systemItem3 release];
-			[systemItemNext release];
-			[systemItemPrevious release];
 			
-			[flexItem release];
 			
-			[fixItem release];
 			
 			//add array of buttons to toolbar
 			[tmptoolbar setItems:items animated:NO];
@@ -1069,7 +1040,6 @@
 			}
             
 			//self.aToolbar = tmptoolbar;
-			[tmptoolbar release];
 			
 		}
 		else {
@@ -1112,7 +1082,7 @@
             continue;
         }
         
-		NSAutoreleasePool * pool2 = [[NSAutoreleasePool alloc] init];
+		@autoreleasepool {
         
 		
         NSArray *nodes = [topicNode children];
@@ -1142,7 +1112,7 @@
         
 		[self.arrayData addObject:feedDic];
         
-		[pool2 drain];
+		}
 		
 	}
 	
@@ -1150,7 +1120,6 @@
     //NSLog(@"self.arrayData %@", self.arrayData);
     
 
-	[myParser release];
 	
 	//NSDate *now = [NSDate date]; // Create a current date
 	
@@ -1429,7 +1398,6 @@
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
 	[alert setTag:667];
 	[alert show];
-	[alert release];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andUrl:(NSString *)theURL

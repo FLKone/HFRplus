@@ -19,14 +19,14 @@
 	
 	UIButton		*catButton;
 }
-@property (nonatomic, retain) NSString *urlQuote;
-@property (nonatomic, retain) NSString *textQuote;
+@property (nonatomic, strong) NSString *urlQuote;
+@property (nonatomic, strong) NSString *textQuote;
 @property BOOL boldQuote;
 
-@property (nonatomic, retain) UIPickerView *myPickerView;
-@property (nonatomic, retain) NSMutableArray *pickerViewArray;
-@property (nonatomic, retain) UIActionSheet *actionSheet;
-@property (nonatomic, retain) UIButton *catButton;
+@property (nonatomic, strong) UIPickerView *myPickerView;
+@property (nonatomic, strong) NSMutableArray *pickerViewArray;
+@property (nonatomic, strong) UIActionSheet *actionSheet;
+@property (nonatomic, strong) UIButton *catButton;
 
 -(void)showPicker:(id)sender;
 - (CGRect)pickerFrameWithSize:(CGSize)size;

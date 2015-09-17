@@ -21,7 +21,6 @@
 	if (self) {
         Forum *aForum = [[Forum alloc] init];
 		[self setForum:aForum];
-        [aForum release];
         
 		self.topics = [NSMutableArray array];        
 	}
@@ -44,7 +43,6 @@
     [aForum setATitle:forumTitle];
 
     self.forum = aForum;
-    [aForum release];    
 }
 
 -(id)addTopicWithNode:(HTMLNode *)node;
@@ -54,8 +52,6 @@
 	NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
 	[dateFormat setDateFormat:@"dd-MM-yyyy"];
 	NSString *theDate = [dateFormat stringFromDate:nowTopic];
-    [nowTopic release];
-    [dateFormat release];
     
     HTMLNode *topicNode = node;
 
@@ -94,11 +90,9 @@
     NSString *aTopicTitle = [[NSString alloc] initWithFormat:@"%@%@%@", aTopicAffix, [[topicTitleNode allContents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]], aTopicSuffix];
     
     [aTopic setATitle:aTopicTitle];
-    [aTopicTitle release];
     
     NSString *aTopicURL = [[NSString alloc] initWithString:[[topicTitleNode findChildTag:@"a"] getAttributeNamed:@"href"]];
     [aTopic setAURLOfFirstPage:aTopicURL];
-    [aTopicURL release];
 
     
     //Answer Count
@@ -110,11 +104,9 @@
     HTMLNode * linkLastRepNode = [lastRepNode firstChild];
     NSString *aAuthorOfLastPost = [[NSString alloc] initWithString:[[linkLastRepNode findChildTag:@"b"] contents]];
     [aTopic setAAuthorOfLastPost:aAuthorOfLastPost];
-    [aAuthorOfLastPost release];
     
     NSString *aURLOfLastPost = [[NSString alloc] initWithString:[linkLastRepNode getAttributeNamed:@"href"]];
     [aTopic setAURLOfLastPost:aURLOfLastPost];
-    [aURLOfLastPost release];
     
     NSString *maDate = [linkLastRepNode contents];
     if ([theDate isEqual:[maDate substringToIndex:10]]) {
@@ -131,7 +123,6 @@
     if (topicLastPageNode) {
         NSString *aURLOfLastPage = [[NSString alloc] initWithString:[topicLastPageNode getAttributeNamed:@"href"]];
         [aTopic setAURLOfLastPage:aURLOfLastPage];
-        [aURLOfLastPage release];
         [aTopic setMaxTopicPage:[[topicLastPageNode contents] intValue]];            
     }
     else {
@@ -147,7 +138,6 @@
         // Si pas de dernier topic = url = last page
         NSString *aTopicURL = [[NSString alloc] initWithString:[linkLastRepNode getAttributeNamed:@"href"]];
         [aTopic setAURL:aTopicURL];
-        [aTopicURL release];
         
         [aTopic setIsViewed:YES];
     }
@@ -155,7 +145,6 @@
     {
         NSString *aTopicURL = [[NSString alloc] initWithString:[topicFlagLinkNode getAttributeNamed:@"href"]];
         [aTopic setAURL:aTopicURL];
-        [aTopicURL release];
     }
 
     
@@ -187,7 +176,6 @@
     //NSLog(@"aTopic %@", aTopic);
     //NSLog(@"aTopic %@", self);
     
-    [aTopic release];
     return nil;
 }
 
@@ -198,11 +186,8 @@
 
 -(void)dealloc {
     
-	self.forum	= nil;
 	[self.topics removeAllObjects];
-    self.topics = nil;
 	
-	[super dealloc];
 }
 
 

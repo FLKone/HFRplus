@@ -127,8 +127,6 @@
 	// The navigation controller is now owned by the current view controller
 	// and the root view controller is owned by the navigation controller,
 	// so both objects should be released to prevent over-retention.
-	[navigationController release];
-	[identificationController release];
 }
 
 - (void)identificationViewControllerDidFinish:(IdentificationViewController *)controller {
@@ -165,7 +163,6 @@
 	//NSLog(@"dealloc CVC");
 	[self viewDidUnload];
 
-    [super dealloc];
 }
 
 // Override to allow orientations other than the default portrait orientation.

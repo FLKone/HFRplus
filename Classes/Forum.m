@@ -108,13 +108,5 @@
     return tmpURL;
 }
 
--(void)dealloc {
-	self.aTitle	= nil;
-	self.aURL	= nil;
-	self.subCats = nil;
-    self.aID	= nil;
-    
-	[super dealloc];
-}
 
 @end

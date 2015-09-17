@@ -52,39 +52,39 @@
     NSString *editedTime;
 }
 
-@property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) NSString *url;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *url;
 
-@property (nonatomic, retain) NSString *flagUrl;
-@property (nonatomic, retain) NSString *typeFlag;
+@property (nonatomic, strong) NSString *flagUrl;
+@property (nonatomic, strong) NSString *typeFlag;
 
-@property (nonatomic, retain) NSString *urlQuote;
-@property (nonatomic, retain) NSString *urlEdit;
-@property (nonatomic, retain) NSString *urlProfil;
-@property (nonatomic, retain) NSString *urlAlert;
+@property (nonatomic, strong) NSString *urlQuote;
+@property (nonatomic, strong) NSString *urlEdit;
+@property (nonatomic, strong) NSString *urlProfil;
+@property (nonatomic, strong) NSString *urlAlert;
 
-@property (nonatomic, retain) NSString *lastPostUrl;
-@property (nonatomic, retain) NSString *lastPageUrl;
+@property (nonatomic, strong) NSString *lastPostUrl;
+@property (nonatomic, strong) NSString *lastPageUrl;
 
-@property (nonatomic, retain) NSString *dicoHTML;
-@property (nonatomic, retain) HTMLNode *messageNode;
+@property (nonatomic, strong) NSString *dicoHTML;
+@property (nonatomic, strong) HTMLNode *messageNode;
 
-@property (nonatomic, retain) NSString *imageUI;
+@property (nonatomic, strong) NSString *imageUI;
 
-@property (nonatomic, retain) NSString *messageDate;
-@property (nonatomic, retain) NSString *messageAuteur;
+@property (nonatomic, strong) NSString *messageDate;
+@property (nonatomic, strong) NSString *messageAuteur;
 
-@property (nonatomic, retain) UIView *textViewMsg;
+@property (nonatomic, strong) UIView *textViewMsg;
 
-@property (nonatomic, retain) NSString *postID;
+@property (nonatomic, strong) NSString *postID;
 
-@property (nonatomic, retain) NSString *addFlagUrl;
-@property (nonatomic, retain) NSString *quoteJS;
-@property (nonatomic, retain) NSString *MPUrl;
+@property (nonatomic, strong) NSString *addFlagUrl;
+@property (nonatomic, strong) NSString *quoteJS;
+@property (nonatomic, strong) NSString *MPUrl;
 
-@property (nonatomic, retain) NSString *quotedNB;
-@property (nonatomic, retain) NSString *quotedLINK;
-@property (nonatomic, retain) NSString *editedTime;
+@property (nonatomic, strong) NSString *quotedNB;
+@property (nonatomic, strong) NSString *quotedLINK;
+@property (nonatomic, strong) NSString *editedTime;
 
 @property int rep;
 @property BOOL viewed;

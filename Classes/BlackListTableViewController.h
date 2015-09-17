@@ -12,6 +12,6 @@
     NSMutableArray *blackListDict;
 }
 
-@property (nonatomic, retain) NSMutableArray *blackListDict;
+@property (nonatomic, strong) NSMutableArray *blackListDict;
 
 @end

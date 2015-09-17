@@ -19,13 +19,6 @@
 
 @synthesize menuList, lastViewController, tmpCell;
 
-- (void)dealloc
-{
-	[menuList release];
-	if(lastViewController) [lastViewController release];
-	
-	[super dealloc];
-}
 
 - (void)viewDidLoad
 {
@@ -109,7 +102,6 @@
 	
 	[self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:NO];
 
-	if(lastViewController) [lastViewController release];
 	[self setLastViewController:nil];
 
     [self.tableView reloadData];

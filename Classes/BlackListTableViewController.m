@@ -42,7 +42,7 @@ NSInteger Sort_BL_Comparer(id id1, id id2, void *context)
 -(void)reloadData {
     //NSLog(@"list: %@", [[BlackList shared] description]);
     
-    NSArray *sortedArray = [[[BlackList shared] getAll] sortedArrayUsingFunction:Sort_BL_Comparer context:self];
+    NSArray *sortedArray = [[[BlackList shared] getAll] sortedArrayUsingFunction:Sort_BL_Comparer context:(__bridge void * _Nullable)(self)];
 
     
     self.blackListDict = (NSMutableArray *)sortedArray;//[[[BlackList shared] getAll] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
@@ -102,7 +102,7 @@ NSInteger Sort_BL_Comparer(id id1, id id2, void *context)
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell)
     {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
@@ -152,7 +152,6 @@ NSInteger Sort_BL_Comparer(id id1, id id2, void *context)
     
     [alert setTag:667];
     [alert show];
-    [alert release];
 }
 
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
@@ -173,9 +172,7 @@ NSInteger Sort_BL_Comparer(id id1, id id2, void *context)
     
     [self viewDidUnload];
     
-    self.blackListDict = nil;
 
-    [super dealloc];
     
     
     

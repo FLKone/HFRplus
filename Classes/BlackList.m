@@ -120,13 +120,13 @@ static BlackList *_shared = nil;    // static instance variable
 
 // singleton methods
 + (id)allocWithZone:(NSZone *)zone {
-    return [[self shared] retain];
+    return [self shared];
 }
 
 - (id)copyWithZone:(NSZone *)zone {
     return self;
 }
-
+/*
 - (id)retain {
     return self;
 }
@@ -142,10 +142,7 @@ static BlackList *_shared = nil;    // static instance variable
 - (id)autorelease {
     return self;
 }
-
--(void)dealloc {
-    [super dealloc];
-}
+*/
 
 
 @end

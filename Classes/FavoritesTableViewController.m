@@ -18,6 +18,7 @@
 #import "ShakeView.h"
 
 #import "Topic.h"
+#import "Forum.h"
 #import "Catcounter.h"
 #import "FavoriteCell.h"
 
@@ -141,7 +142,6 @@
 	self.navigationItem.rightBarButtonItem = nil;	
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(cancelFetchContent)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];
 
     //[self.favoritesTableView.pullToRefreshView stopAnimating];
 
@@ -160,7 +160,6 @@
 	self.navigationItem.rightBarButtonItem = nil;
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];
 	
 	//[self.arrayNewData removeAllObjects];
     //[self.arrayCategories removeAllObjects];
@@ -213,7 +212,6 @@
 	self.navigationItem.rightBarButtonItem = nil;
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];
 	
     [self.maintenanceView setText:@"oops :o"];
     
@@ -227,7 +225,6 @@
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[theRequest.error localizedDescription]
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
 	[alert show];
-	[alert release];
     
 }
 
@@ -272,7 +269,6 @@
         //if (self.messagesTableViewController == nil) {
 		MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:newUrl];
 		self.messagesTableViewController = aView;
-		[aView release];
         //}
         
         
@@ -340,7 +336,6 @@
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kStatusChangedNotification object:self userInfo:notif];
 
-		[myParser release];
 		return;		
 	}
 	
@@ -401,7 +396,6 @@
                     [self.arrayNewData addObject:aFavorite];
                 }
                 [self.arrayCategories addObject:aFavorite];
-                [aFavorite release];
             }
 
             aFavorite = [[Favorite alloc] init];
@@ -424,10 +418,8 @@
             [self.arrayNewData addObject:aFavorite];
         }
         [self.arrayCategories addObject:aFavorite];
-        [aFavorite release];
     }
     
-	[myParser release];
 	if (self.status != kNoResults) {
         
         NSDictionary *notif = [NSDictionary dictionaryWithObjectsAndKeys:   [NSNumber numberWithInt:kComplete], @"status", nil];
@@ -589,7 +581,6 @@
     UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
     //UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"categories"] style:UIBarButtonItemStyleBordered target:self action:@selector(reload)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];		
     
     // showAll
     /*
@@ -689,7 +680,6 @@
         UIBarButtonItem * segmentBarItem2 = [[UIBarButtonItem alloc] initWithCustomView: segmentedControl];
         self.navigationItem.leftBarButtonItem = segmentBarItem2;
         
-        [segmentBarItem2 release];
     }
 /*
 
@@ -879,14 +869,14 @@
     CGFloat curWidth = self.view.frame.size.width;
     
     //UIView globale
-	UIView* customView = [[[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,HEIGHT_FOR_HEADER_IN_SECTION)] autorelease];
+	UIView* customView = [[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,HEIGHT_FOR_HEADER_IN_SECTION)];
     customView.backgroundColor = [UIColor colorWithRed:239/255.0f green:239/255.0f blue:244/255.0f alpha:0.7];
 	customView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
 	//UIImageView de fond
     if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         UIImage *myImage = [UIImage imageNamed:@"bar2.png"];
-        UIImageView *imageView = [[[UIImageView alloc] initWithImage:myImage] autorelease];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:myImage];
         imageView.alpha = 0.9;
         imageView.frame = CGRectMake(0,0,curWidth,HEIGHT_FOR_HEADER_IN_SECTION);
         imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -895,12 +885,12 @@
     }
     else {
         //bordures/iOS7
-        UIView* borderView = [[[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,1/[[UIScreen mainScreen] scale])] autorelease];
+        UIView* borderView = [[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,1/[[UIScreen mainScreen] scale])];
         borderView.backgroundColor = [UIColor colorWithRed:158/255.0f green:158/255.0f blue:114/162.0f alpha:0.7];
         
         //[customView addSubview:borderView];
         
-        UIView* borderView2 = [[[UIView alloc] initWithFrame:CGRectMake(0,HEIGHT_FOR_HEADER_IN_SECTION-1/[[UIScreen mainScreen] scale],curWidth,1/[[UIScreen mainScreen] scale])] autorelease];
+        UIView* borderView2 = [[UIView alloc] initWithFrame:CGRectMake(0,HEIGHT_FOR_HEADER_IN_SECTION-1/[[UIScreen mainScreen] scale],curWidth,1/[[UIScreen mainScreen] scale])];
         borderView2.backgroundColor = [UIColor colorWithRed:158/255.0f green:158/255.0f blue:114/162.0f alpha:0.7];
         
         //[customView addSubview:borderView2];
@@ -979,7 +969,7 @@
         
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
         
         // Configure the cell...
@@ -998,12 +988,11 @@
         
         
         if (cell == nil) {
-            cell = [[[FavoriteCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+            cell = [[FavoriteCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             
             UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc]
                                                                  initWithTarget:self action:@selector(handleLongPress:)];
             [cell addGestureRecognizer:longPressRecognizer];
-            [longPressRecognizer release];
         }
     	
         Topic *tmpTopic = [[[self.arrayData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
@@ -1088,7 +1077,6 @@
         
         MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[aTopic aURL]];
         self.messagesTableViewController = aView;
-        [aView release];
         
         //setup the URL
         self.messagesTableViewController.topicName = [aTopic aTitle];
@@ -1105,7 +1093,7 @@
 		self.pressedIndexPath = [[self.favoritesTableView indexPathForRowAtPoint:longPressLocation] copy];
 
         if (self.topicActionSheet != nil) {
-            [self.topicActionSheet release], self.topicActionSheet = nil;
+            self.topicActionSheet = nil;
         }
         
 		self.topicActionSheet = [[UIActionSheet alloc] initWithTitle:@"Aller à..."
@@ -1142,7 +1130,6 @@
             
 			MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[tmpTopic aURLOfLastPage]];
 			self.messagesTableViewController = aView;
-			[aView release];
 			
 			self.messagesTableViewController.topicName = [tmpTopic aTitle];	
 			
@@ -1158,7 +1145,6 @@
             
 			MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[tmpTopic aURLOfLastPost]];
 			self.messagesTableViewController = aView;
-			[aView release];
 			
 			self.messagesTableViewController.topicName = [tmpTopic aTitle];	
 
@@ -1284,7 +1270,6 @@
 	[alert setTag:669];
 	[alert show];
     
-	[alert release];
 
 }
 
@@ -1360,7 +1345,7 @@
 	{
 		
 		ASIFormDataRequest  *arequest =  
-		[[[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/modo/manageaction.php?config=hfr.inc&cat=0&type_page=forum1f&moderation=0", kForumURL]]] autorelease];
+		[[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/modo/manageaction.php?config=hfr.inc&cat=0&type_page=forum1f&moderation=0", kForumURL]]];
 		//delete
 
 		//NSLog(@"%@", [[HFRplusAppDelegate sharedAppDelegate] hash_check]);
@@ -1448,16 +1433,10 @@
 
 	[request cancel];
 	[request setDelegate:nil];
-	self.request = nil;
 
-	self.statusMessage = nil;
 	
-    self.topicActionSheet = nil;
     
-	self.arrayNewData = nil;
-    self.arrayData = nil;
 
-    [super dealloc];
 }
 
 

@@ -32,7 +32,6 @@
 		[labelTitle setNumberOfLines:0];
 		
 		[self.contentView insertSubview:labelTitle atIndex:1];
-		[labelTitle release];
 		
 		
 		
@@ -53,7 +52,6 @@
 		//[label setOpaque:YES];
 		
 		[self.contentView insertSubview:labelMsg atIndex:2];
-		[labelMsg release];
 		
 		UILabel *labelDate = [[UILabel alloc] initWithFrame:CGRectMake(130, 27, 160, 18)];
 		labelDate.transform = CGAffineTransformIdentity;
@@ -72,16 +70,10 @@
 		//[label setOpaque:YES];
 		
 		[self.contentView insertSubview:labelDate atIndex:3];		
-		[labelDate release];
 		 
     }
     return self;
 }
 
-- (void)dealloc {
-	//NSLog(@"dealloc custom cell topic");
-
-    [super dealloc];
-}
 
 @end

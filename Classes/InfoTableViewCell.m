@@ -25,13 +25,6 @@
 }
 
 
-- (void)dealloc {
-    
-    [titleLabel release];
-    [infoImage release];
-    
-    [super dealloc];
-}
 
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

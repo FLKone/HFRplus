@@ -100,64 +100,64 @@
 }
 
 
-@property (nonatomic, retain) IBOutlet MessageWebView *messagesWebView;
-@property (nonatomic, retain) IBOutlet UIView *loadingView;
-@property (nonatomic, retain) IBOutlet UILabel *errorLabelView;
-@property (nonatomic, retain) IBOutlet UIView *overview;
+@property (nonatomic, strong) IBOutlet MessageWebView *messagesWebView;
+@property (nonatomic, strong) IBOutlet UIView *loadingView;
+@property (nonatomic, strong) IBOutlet UILabel *errorLabelView;
+@property (nonatomic, strong) IBOutlet UIView *overview;
 
-@property (nonatomic, retain) NSString *topicAnswerUrl;
-@property (nonatomic, retain, setter=setTopicName:) NSString *_topicName;
+@property (nonatomic, strong) NSString *topicAnswerUrl;
+@property (nonatomic, strong, setter=setTopicName:) NSString *_topicName;
 
-@property (nonatomic, retain) NSDate *firstDate;
+@property (nonatomic, strong) NSDate *firstDate;
 
 @property BOOL loaded;
 @property BOOL isLoading;
 @property BOOL isRedFlagged;
 @property BOOL isUnreadable;
-@property (nonatomic, retain) NSString *isFavoritesOrRead;
+@property (nonatomic, strong) NSString *isFavoritesOrRead;
 
 @property BOOL isViewed;
 
-@property (nonatomic, retain) NSMutableArray *arrayData;
-@property (nonatomic, retain) NSMutableArray *updatedArrayData;
+@property (nonatomic, strong) NSMutableArray *arrayData;
+@property (nonatomic, strong) NSMutableArray *updatedArrayData;
 
-@property (nonatomic, retain) MessageDetailViewController *detailViewController;
-@property (nonatomic, retain) MessagesTableViewController *messagesTableViewController;
+@property (nonatomic, strong) MessageDetailViewController *detailViewController;
+@property (nonatomic, strong) MessagesTableViewController *messagesTableViewController;
 
-@property (nonatomic, retain) UISwipeGestureRecognizer *swipeLeftRecognizer;
-@property (nonatomic, retain) UISwipeGestureRecognizer *swipeRightRecognizer;
+@property (nonatomic, strong) UISwipeGestureRecognizer *swipeLeftRecognizer;
+@property (nonatomic, strong) UISwipeGestureRecognizer *swipeRightRecognizer;
 
-@property (nonatomic, retain) UIActionSheet *styleAlert;
+@property (nonatomic, strong) UIActionSheet *styleAlert;
 
-@property (nonatomic, retain) NSOperationQueue *queue; //v3
+@property (nonatomic, strong) NSOperationQueue *queue; //v3
 
-@property (nonatomic, retain) NSString *lastStringFlagTopic;
-@property (nonatomic, retain) NSString *stringFlagTopic;
-@property (nonatomic, retain) NSString *editFlagTopic;
+@property (nonatomic, strong) NSString *lastStringFlagTopic;
+@property (nonatomic, strong) NSString *stringFlagTopic;
+@property (nonatomic, strong) NSString *editFlagTopic;
 
-@property (nonatomic, retain) NSMutableDictionary *arrayInputData;
-@property (nonatomic, retain) UIToolbar *aToolbar;
+@property (nonatomic, strong) NSMutableDictionary *arrayInputData;
+@property (nonatomic, strong) UIToolbar *aToolbar;
 
-@property (retain, nonatomic) ASIHTTPRequest *request;
+@property (strong, nonatomic) ASIHTTPRequest *request;
 
-@property (retain, nonatomic) NSMutableArray *arrayAction;
+@property (strong, nonatomic) NSMutableArray *arrayAction;
 @property int curPostID;
 
 @property BOOL isAnimating;
 
-@property (nonatomic, retain) NSString *pollNode;
+@property (nonatomic, strong) NSString *pollNode;
 
-@property (nonatomic, retain) IBOutlet UIView *searchBg;
-@property (nonatomic, retain) IBOutlet UIView *searchBox;
+@property (nonatomic, strong) IBOutlet UIView *searchBg;
+@property (nonatomic, strong) IBOutlet UIView *searchBox;
 
-@property (nonatomic, retain) IBOutlet UITextField *searchKeyword;
-@property (nonatomic, retain) IBOutlet UITextField *searchPseudo;
-@property (nonatomic, retain) IBOutlet UISwitch *searchFilter;
-@property (retain, nonatomic) IBOutlet UISwitch *searchFromFP;
-@property (nonatomic, retain) NSMutableDictionary *searchInputData;
+@property (nonatomic, strong) IBOutlet UITextField *searchKeyword;
+@property (nonatomic, strong) IBOutlet UITextField *searchPseudo;
+@property (nonatomic, strong) IBOutlet UISwitch *searchFilter;
+@property (strong, nonatomic) IBOutlet UISwitch *searchFromFP;
+@property (nonatomic, strong) NSMutableDictionary *searchInputData;
 @property BOOL isSearchInstra;
 
-@property (retain, nonatomic) NSMutableArray *arrayActionsMessages;
+@property (strong, nonatomic) NSMutableArray *arrayActionsMessages;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andUrl:(NSString *)theTopicUrl;
 - (void)optionsTopic:(id)sender;
@@ -186,6 +186,9 @@
 -(void) EcrireCookie:(NSString *)nom withVal:(NSString *)valeur;
 -(NSString *) LireCookie:(NSString *)nom;
 -(void) EffaceCookie:(NSString *)nom;
+
+-(void)textQuote:(id)sender;
+-(void)textQuoteBold:(id)sender;
 
 - (IBAction)searchFilterChanged:(UISwitch *)sender;
 - (IBAction)searchFromFPChanged:(UISwitch *)sender;

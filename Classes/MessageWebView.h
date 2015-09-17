@@ -12,6 +12,6 @@
 @interface MessageWebView : UIWebView {
     MessagesTableViewController *controll;
 }
-@property (nonatomic, retain) MessagesTableViewController *controll;
+@property (nonatomic, strong) MessagesTableViewController *controll;
 
 @end

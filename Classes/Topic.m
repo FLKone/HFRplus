@@ -62,8 +62,7 @@
 }
 
 - (void)setATitle:(NSString *)n {
-    [_aTitle release];
-    _aTitle = [[n filterTU] retain];
+    _aTitle = [n filterTU];
 
 
 }
@@ -73,24 +72,6 @@
     return _aTitle;
 }
 
--(void)dealloc {
-	_aTitle	= nil;
-	self.aURL	= nil;
-
-    self.aURLOfFirstPage		= nil;
-
-	self.aURLOfFlag		= nil;
-	self.aTypeOfFlag	= nil;
-	
-	self.aURLOfLastPost	= nil;
-	self.aURLOfLastPage	= nil;
-	
-	self.aDateOfLastPost	= nil;
-	self.aAuthorOfLastPost	= nil;	
-	self.aAuthorOrInter	= nil;	
-	
-	[super dealloc];
-}
 
 @end
 

@@ -68,7 +68,6 @@
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
 	[alert setTag:777];
 	[alert show];
-	[alert release];	
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -234,16 +233,13 @@
 					//Title
 					NSString *aForumTitle = [[NSString alloc] initWithString:[[catNode allContents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
 					[aForum setATitle:aForumTitle];
-					[aForumTitle release];
 
 					//ID
 					NSString *aForumID = [[NSString alloc] initWithString:[[catNode getAttributeNamed:@"value"] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
 					[aForum setAID:aForumID];
-					[aForumID release];
 					
 					[pickerViewArray addObject:aForum];
 					
-					[aForum release];
 				}
 			}
 			
@@ -327,7 +323,7 @@
         
 		originY += textFieldTo.frame.size.height;
 		
-		UIView* separator = [[[UIView alloc] initWithFrame:CGRectMake(0, originY, frameWidth, 1)] autorelease];
+		UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(0, originY, frameWidth, 1)];
 		separator.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
 		separator.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		
@@ -337,7 +333,6 @@
 		[headerView addSubview:textFieldTo];
 		[headerView addSubview:separator];
 		
-		[titleLabel release];
 		
 		headerView.frame = CGRectMake(headerView.frame.origin.x, headerView.frame.origin.x, headerView.frame.size.width, originY);	
 	}
@@ -367,7 +362,7 @@
 
 		originY += textFieldTitle.frame.size.height;
 		
-		UIView* separator = [[[UIView alloc] initWithFrame:CGRectMake(0, originY, frameWidth, 1)] autorelease];
+		UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(0, originY, frameWidth, 1)];
 		separator.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
 		separator.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		
@@ -377,7 +372,6 @@
 		[headerView addSubview:textFieldTitle];
 		[headerView addSubview:separator];
 		
-		[titleLabel release];
 
 		headerView.frame = CGRectMake(headerView.frame.origin.x, headerView.frame.origin.x, headerView.frame.size.width, originY);
 		
@@ -434,7 +428,7 @@
         
 		originY += textFieldCat.frame.size.height;
 		
-		UIView* separator = [[[UIView alloc] initWithFrame:CGRectMake(0, originY, frameWidth, 1)] autorelease];
+		UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(0, originY, frameWidth, 1)];
 		separator.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
 		separator.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		
@@ -445,7 +439,6 @@
 		[headerView addSubview:catButton];
 		[headerView addSubview:separator];
 		
-		[titleLabel release];
 
 		headerView.frame = CGRectMake(headerView.frame.origin.x, headerView.frame.origin.x, headerView.frame.size.width, originY);
 
@@ -474,7 +467,6 @@
 		closeButton.tintColor = [UIColor blackColor];
 		[closeButton addTarget:self action:@selector(dismissActionSheet) forControlEvents:UIControlEventValueChanged];
 		[actionSheet addSubview:closeButton];
-		[closeButton release];
 		
 		UISegmentedControl *confirmButton = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:@"Valider"]];
 		confirmButton.momentary = YES; 
@@ -484,7 +476,6 @@
 		confirmButton.tintColor = [UIColor colorWithRed:60/255.f green:136/255.f blue:230/255.f alpha:1.00];
 		[confirmButton addTarget:self action:@selector(loadSubCat) forControlEvents:UIControlEventValueChanged];
 		[actionSheet addSubview:confirmButton];
-		[confirmButton release];
 		//-- PICKER
 		
 	}
@@ -496,7 +487,6 @@
 	[self.textView addSubview:headerView];
     textView.tag = 3;        
 
-	[headerView release];
 	
 
 	self.offsetY = originY * -1.0f;
@@ -598,7 +588,6 @@
 
 	NSString *newSubmitForm = [[NSString alloc] initWithFormat:@"%@%@", kForumURL, [fastAnswerNode getAttributeNamed:@"action"]];
 	[self setFormSubmit:newSubmitForm];
-	[newSubmitForm release];
 	
     if(!isLogged) {
         [self.textFieldSmileys setHidden:TRUE];
@@ -610,7 +599,6 @@
     
 	//self.formSubmit = [NSString stringWithFormat:@"http://forum.hardware.fr/%@", [fastAnswerNode getAttributeNamed:@"action"]];
 	//NSLog(@"self.formSubmit2 %@", self.formSubmit);
-	[myParser release];
 	
 
 	//NSDate *nowT = [NSDate date]; // Create a current date
@@ -744,7 +732,7 @@
         
         //NSLog(@"TT %@", [[pickerViewArray objectAtIndex:[myPickerView selectedRowInComponent:0]] aTitle]);
         
-        SubCatTableViewController *subCatTableViewController = [[[SubCatTableViewController alloc] initWithStyle:UITableViewStylePlain] autorelease];
+        SubCatTableViewController *subCatTableViewController = [[SubCatTableViewController alloc] initWithStyle:UITableViewStylePlain];
         subCatTableViewController.suPicker = myPickerView;
         subCatTableViewController.arrayData = pickerViewArray;
         subCatTableViewController.notification = @"CatSelected";
@@ -761,7 +749,7 @@
         }
         else {
             self.popover = nil;
-            self.popover = [[[UIPopoverController alloc] initWithContentViewController:subCatTableViewController] autorelease];
+            self.popover = [[UIPopoverController alloc] initWithContentViewController:subCatTableViewController];
             [_popover presentPopoverFromRect:[(UIButton *)sender frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
 
         }
@@ -810,18 +798,12 @@
 
 
 - (void)dealloc {
-	self.urlQuote = nil;
-    self.textQuote = nil;
     
 	//Picker
-	self.myPickerView = nil;
-	self.actionSheet = nil;
-	self.pickerViewArray = nil;
 	
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CatSelected" object:nil];
 
     
-    [super dealloc];
 }
 
 @end

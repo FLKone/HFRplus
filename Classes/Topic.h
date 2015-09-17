@@ -39,24 +39,24 @@
     bool isClosed;
 }
 
-@property (nonatomic, retain) NSString *_aTitle;
+@property (nonatomic, strong) NSString *_aTitle;
 - (void)setATitle:(NSString *)n;
-@property (nonatomic, retain) NSString *aURL;
+@property (nonatomic, strong) NSString *aURL;
 
 @property int aRepCount;
 @property BOOL isViewed;
 
-@property (nonatomic, retain) NSString *aURLOfFirstPage;
+@property (nonatomic, strong) NSString *aURLOfFirstPage;
 
-@property (nonatomic, retain) NSString *aURLOfFlag;
-@property (nonatomic, retain) NSString *aTypeOfFlag;
+@property (nonatomic, strong) NSString *aURLOfFlag;
+@property (nonatomic, strong) NSString *aTypeOfFlag;
 
-@property (nonatomic, retain) NSString *aURLOfLastPost;
-@property (nonatomic, retain) NSString *aURLOfLastPage;
-@property (nonatomic, retain) NSString *aDateOfLastPost;
-@property (nonatomic, retain) NSString *aAuthorOfLastPost;
+@property (nonatomic, strong) NSString *aURLOfLastPost;
+@property (nonatomic, strong) NSString *aURLOfLastPage;
+@property (nonatomic, strong) NSString *aDateOfLastPost;
+@property (nonatomic, strong) NSString *aAuthorOfLastPost;
 
-@property (nonatomic, retain) NSString *aAuthorOrInter;
+@property (nonatomic, strong) NSString *aAuthorOrInter;
 
 @property int maxTopicPage;
 @property int curTopicPage;

@@ -14,9 +14,9 @@
 	UIButton *profilBtn;
 }
 
-@property (nonatomic, retain) IBOutlet UIView* compteView;
-@property (nonatomic, retain) IBOutlet UIView* loginView;
-@property (nonatomic, retain) IBOutlet UIButton* profilBtn;
+@property (nonatomic, strong) IBOutlet UIView* compteView;
+@property (nonatomic, strong) IBOutlet UIView* loginView;
+@property (nonatomic, strong) IBOutlet UIButton* profilBtn;
 
 - (void)checkLogin;
 - (IBAction)login;

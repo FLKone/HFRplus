@@ -15,11 +15,11 @@
 	NSMutableArray *subCats;
 }
 
-@property (nonatomic, retain) NSString *aTitle;
-@property (nonatomic, retain) NSString *aURL;
-@property (nonatomic, retain) NSString *aID;
+@property (nonatomic, strong) NSString *aTitle;
+@property (nonatomic, strong) NSString *aURL;
+@property (nonatomic, strong) NSString *aID;
 
-@property (nonatomic, retain) NSMutableArray *subCats;
+@property (nonatomic, strong) NSMutableArray *subCats;
 
 -(int)getHFRID;
 -(NSString *)getImage;

@@ -17,13 +17,13 @@
 {
 	NSMutableArray *menuList;
 	
-	UIViewController *lastViewController;
-	IBOutlet InfoTableViewCell *tmpCell;
+	UIViewController *__weak lastViewController;
+	IBOutlet InfoTableViewCell *__weak tmpCell;
 }
 
-@property (nonatomic, retain) NSMutableArray *menuList;
+@property (nonatomic, strong) NSMutableArray *menuList;
 
-@property (nonatomic, assign) UIViewController *lastViewController;
-@property (nonatomic, assign) IBOutlet InfoTableViewCell *tmpCell;
+@property (nonatomic, weak) UIViewController *lastViewController;
+@property (nonatomic, weak) IBOutlet InfoTableViewCell *tmpCell;
 
 @end

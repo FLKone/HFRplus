@@ -223,7 +223,6 @@
 
 	}
 
-	[flexItem release];
 	
 }
 
@@ -308,13 +307,11 @@
 	//defaultTintColor = [segmentedControl.tintColor retain];	// keep track of this for later
 	
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithCustomView:segmentedControl];
-    [segmentedControl release];
     
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
 	[(UISegmentedControl *)self.navigationItem.rightBarButtonItem.customView setEnabled:NO forSegmentAtIndex:0];
 	[(UISegmentedControl *)self.navigationItem.rightBarButtonItem.customView setEnabled:NO forSegmentAtIndex:1];
 	
-    [segmentBarItem release];
 	
 	[messageTitle setText:self.messageTitleString];	
 
@@ -351,7 +348,6 @@
 - (void)viewDidUnload {
 	//NSLog(@"viewDidUnload MessageDetailView");
 	
-    [messageAvatar release];
     messageAvatar = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
@@ -380,22 +376,12 @@
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIContentSizeCategoryDidChangeNotification object:nil];
     }
     
-	self.quoteBtn = nil;
-	self.editBtn = nil;
-	self.actionBtn = nil;
-	self.arrayAction = nil;
 	
-    self.styleAlert = nil;
 	
-	self.messageTitleString = nil;
-	self.arrayData = nil;
 
 	self.parent = nil;
 
-	self.defaultTintColor = nil;
 
-    [messageAvatar release];
-    [super dealloc];
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
@@ -427,7 +413,6 @@
                 //if (self.messagesTableViewController == nil) {
                 MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[aRequest.URL absoluteString] stringByReplacingOccurrencesOfString:@"file://" withString:@""]];
                 self.messagesTableViewController = aView;
-                [aView release];
                 //}
                 
                 self.navigationItem.backBarButtonItem =
@@ -457,7 +442,6 @@
             
             MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[aRequest.URL absoluteString] stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@", kForumURL] withString:@""]];
             self.messagesTableViewController = aView;
-            [aView release];
             
             self.navigationItem.backBarButtonItem =
             [[UIBarButtonItem alloc] initWithTitle:@"Retour"
@@ -586,7 +570,6 @@
         return;
     }
     else {
-        [styleAlert release];
         styleAlert = [[UIActionSheet alloc] init];
     }
     

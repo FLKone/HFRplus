@@ -11,6 +11,6 @@
 @interface CreditsViewController : UIViewController <UIWebViewDelegate> {
 	UIWebView* myWebView;
 }
-@property (nonatomic, retain) IBOutlet UIWebView* myWebView;
+@property (nonatomic, strong) IBOutlet UIWebView* myWebView;
 
 @end
