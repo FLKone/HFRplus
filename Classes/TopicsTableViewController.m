@@ -574,11 +574,11 @@
 			
 			if ([[topicNode className] rangeOfString:@"ligne_sticky"].location != NSNotFound) {
 				aTopicAffix = [aTopicAffix stringByAppendingString:@""];//➫ ➥▶✚
-            aTopic.isSticky = YES;
+                aTopic.isSticky = YES;
 			}
 			if ([topicTitleNode findChildWithAttribute:@"alt" matchingName:@"closed" allowPartial:NO]) {
 				aTopicAffix = [aTopicAffix stringByAppendingString:@""];
-            aTopic.isClosed = YES;
+                aTopic.isClosed = YES;
 			}
 			
 			if (aTopicAffix.length > 0) {
@@ -1475,7 +1475,8 @@
         }
         
         UIFont *font2 = [UIFont fontWithName:@"fontello" size:15];
-        NSDictionary *arialDict2 = [NSDictionary dictionaryWithObject: font2 forKey:NSFontAttributeName];
+        UIColor *fontc = [UIColor lightGrayColor];
+        NSDictionary *arialDict2 = [NSDictionary dictionaryWithObjectsAndKeys:font2, NSFontAttributeName, fontc, NSForegroundColorAttributeName, nil];
         NSMutableAttributedString *aAttrString2 = [[NSMutableAttributedString alloc] initWithString:aTopicAffix attributes: arialDict2];
         
         
