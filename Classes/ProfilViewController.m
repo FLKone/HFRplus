@@ -196,11 +196,11 @@
                     NSString *rowData = [[profilNode findChildWithAttribute:@"class" matchingName:@"profilCase3" allowPartial:NO] allContents];
                     rowData = [[rowData stringByDecodingXMLEntities] stringByReplacingOccurrencesOfString:@"\u00a0: " withString:@""];
                     
-                    NSString *rowType = @"link";
+                    //NSString *rowType = @"link";
                     
-                    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:    @"", @"title",
-                                          rowData, @"data",
-                                          rowType, @"type", nil];
+                    //NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:    @"", @"title",
+                    //                      rowData, @"data",
+                    //                      rowType, @"type", nil];
                     
                     //NSLog(@"dict %@", dict);
                     

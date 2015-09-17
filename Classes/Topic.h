@@ -40,6 +40,7 @@
 }
 
 @property (nonatomic, retain) NSString *_aTitle;
+- (void)setATitle:(NSString *)n;
 @property (nonatomic, retain) NSString *aURL;
 
 @property int aRepCount;
