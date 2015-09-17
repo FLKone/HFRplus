@@ -28,11 +28,10 @@
 @class MessageDetailViewController;
 @class ASIHTTPRequest;
 
-#import "MessageWebView.h"
 
 @interface MessagesTableViewController : PageViewController <UIActionSheetDelegate, ParseMessagesOperationDelegate, AddMessageViewControllerDelegate, UIScrollViewDelegate, AlerteModoViewControllerDelegate> {
     
-	MessageWebView *messagesWebView;
+	UIWebView *messagesWebView;
     UIView *loadingView;
     UILabel *errorLabelView;
 	UIView *overview;
@@ -99,7 +98,7 @@
 }
 
 
-@property (nonatomic, strong) IBOutlet MessageWebView *messagesWebView;
+@property (nonatomic, strong) IBOutlet UIWebView *messagesWebView;
 @property (nonatomic, strong) IBOutlet UIView *loadingView;
 @property (nonatomic, strong) IBOutlet UILabel *errorLabelView;
 @property (nonatomic, strong) IBOutlet UIView *overview;

@@ -27,7 +27,7 @@
 //#import "UIImageView+WebCache.h"
 #import "RangeOfCharacters.h"
 #import "NSData+Base64.h"
-#import "HFRMenuItem.h"
+
 #import "LinkItem.h"
 #import <CommonCrypto/CommonDigest.h>
 
@@ -691,7 +691,7 @@
 }
 
 - (void)editMenuHidden:(id)sender {
-    //NSLog(@"editMenuHidden %@ NOMBRE %lu", sender, [UIMenuController sharedMenuController].menuItems.count);
+    NSLog(@"editMenuHidden %@ NOMBRE %lu", sender, [UIMenuController sharedMenuController].menuItems.count);
     
     UIImage *menuImgQuote = [UIImage imageNamed:@"ReplyArrowFilled-20"];
     UIImage *menuImgQuoteB = [UIImage imageNamed:@"BoldFilled-20"];
@@ -700,6 +700,13 @@
     UIMenuItem *textQuotinuum = [[UIMenuItem alloc] initWithTitle:@"Citerexclu" action:@selector(textQuote:) image:menuImgQuote];
     UIMenuItem *textQuotinuumBis = [[UIMenuItem alloc] initWithTitle:@"Citergras" action:@selector(textQuoteBold:) image:menuImgQuoteB];
 
+    [self.arrayAction removeAllObjects];
+    /*
+    [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Citerexclu", @"textQuote:", menuImgQuote, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
+
+    [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Citergras", @"textQuoteBold:", menuImgQuoteB, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
+    */
+    
     UIMenuController *menuController = [UIMenuController sharedMenuController];
     [menuController setMenuItems:[NSArray arrayWithObjects:textQuotinuum, textQuotinuumBis, nil]];
     //[self resignFirstResponder];
@@ -846,7 +853,7 @@
 
 	[self fetchContent];
     [self editMenuHidden:nil];
-    self.messagesWebView.controll = self;
+    //self.messagesWebView.controll = self;
 }
 
 -(void)fullScreen {
@@ -1164,7 +1171,7 @@
 */
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-	[self.view becomeFirstResponder];
+	//[self.messagesWebView becomeFirstResponder];
 
 	
 	if(self.detailViewController) self.detailViewController = nil;
@@ -1184,7 +1191,7 @@
 	//NSLog(@"viewDidDisappear");
 
     [super viewDidDisappear:animated];
-	[self.view resignFirstResponder];
+    //[self.messagesWebView resignFirstResponder];
 	
 }
 /*
@@ -1645,7 +1652,7 @@
         NSLog(@"NEW %@", self.stringFlagTopic);
 
         
-        NSString *refreshBtn = [[NSString alloc] initWithString:@""];
+        NSString *refreshBtn = @"";
         
         //on ajoute le bouton actualiser si besoin
         if (([self pageNumber] == [self lastPageNumber]) || ([self lastPageNumber] == 0)) {
@@ -1658,7 +1665,7 @@
             //NSLog(@"autre");
         }
         
-        NSString *tooBar = [[NSString alloc] initWithString:@""];
+        NSString *tooBar = @"";
         
         //Toolbar;
         if (self.aToolbar && !self.isSearchInstra) {
@@ -1826,7 +1833,7 @@
     //}
     //Position du Flag
     
-	NSString *jsString = [[NSString alloc] initWithString:@""];
+	NSString *jsString = @"";
     
     NSLog(@"jsString2 %@", jsString2);
     NSLog(@"jsString3 %@", jsString3);
@@ -1864,43 +1871,72 @@
     
     [self webViewDidFinishLoadDOM];
     
-    [webView.scrollView setContentSize: CGSizeMake(300, webView.scrollView.contentSize.height)];
+    //[webView.scrollView setContentSize: CGSizeMake(300, webView.scrollView.contentSize.height)];
     
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
     //NSLog(@"== webViewDidFinishLoad OK");
 
 }
-/*
+
 //NSSelectorFromString([[[self arrayAction] objectAtIndex:curPostID] objectForKey:@"code"])
-- (BOOL) canPerformAction:(SEL)selector withSender:(id) sender {
-    NSLog(@"=== %@ %d %@", NSStringFromSelector(selector), [UIMenuController sharedMenuController].menuItems.count, sender);
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
+    //NSLog(@"MTV %@ nbS=%lu", NSStringFromSelector(action), [UIMenuController sharedMenuController].menuItems.count);
+    
+    BOOL returnA;
+    
+    if ((action == @selector(textQuote:) || action == @selector(textQuoteBold:)) && ([self.searchKeyword isFirstResponder] || [self.searchPseudo isFirstResponder]) ) {
+        returnA = NO;
+    } else {
+        returnA = [super canPerformAction:action withSender:sender];
+    }
 
-    
-    //BOOL canI = [super canPerformAction:selector withSender:sender];
-    
-    //NSLog(@"canPerformAction %d %@", canI, NSStringFromSelector(selector));
-    
-    //return canI;
-    
-    //NSLog(@"editMenuHidden %@ %d", sender, [UIMenuController sharedMenuController].menuItems.count);
+    //NSLog(@"MTV returnA %d", returnA);
+    return returnA;
+}
 
+- (id)targetForAction:(SEL)action
+           withSender:(id)sender {
     
-	for (id tmpAction in self.arrayAction) {
-		if (selector == NSSelectorFromString([tmpAction objectForKey:@"code"])) {
+    //NSLog(@"MTV Target %@ nbS=%lu", NSStringFromSelector(action), [UIMenuController sharedMenuController].menuItems.count);
+    id returnB = [self.messagesWebView targetForAction:action withSender:sender];
+    //NSLog(@"MTV Target returnB %@", returnB);
+    
+    if (!returnB) {
+        returnB = [super targetForAction:action withSender:sender];
+    }
+    //NSLog(@"MTV Target returnB2 %@", returnB);
+
+    return returnB;
+}
+/*
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
+    NSLog(@"MTV %@ %lu", NSStringFromSelector(action), [UIMenuController sharedMenuController].menuItems.count);
+    BOOL returnA = [super canPerformAction:action withSender:sender];//[self.messagesWebView canPerformAction:action withSender:sender];
+    NSLog(@"MTV returnA %d", returnA);
+    
+    return returnA;
+ 
+    NSLog(@"MWV %@ %lu", NSStringFromSelector(action), [UIMenuController sharedMenuController].menuItems.count);
+    
+    for (id tmpAction in self.arrayAction) {
+        NSLog(@"Yes %@ - %@", NSStringFromSelector(action), [tmpAction objectForKey:@"code"]);
+
+        if (action == NSSelectorFromString([tmpAction objectForKey:@"code"])) {
             NSLog(@"YES");
-			return YES;
-		}
-	}
-	
-    
-	
-	return NO;
+            return YES;
+        }
+    }
+
+    BOOL returnB = [self.messagesWebView canPerformAction:action withSender:sender];
+    NSLog(@"MWV returnB %d", returnB);
+    return returnB;
+ 
 }
 */
-	 
+
 - (BOOL) canBecomeFirstResponder {
-	//NSLog(@"canBecomeFirstResponder");
+	NSLog(@"===== canBecomeFirstResponder");
 	
     return YES;
 }
@@ -2591,7 +2627,7 @@
 }
 
 - (void)viewDidUnload {
-	//NSLog(@"viewDidUnload Messages Table View");
+	NSLog(@"viewDidUnload Messages Table View");
 	
     // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
     // For example: self.myOutlet = nil;
