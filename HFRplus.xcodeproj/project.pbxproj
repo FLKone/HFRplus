@@ -632,8 +632,6 @@
 		CA34780B12EB557500D1BA2A /* PayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA34780912EB557500D1BA2A /* PayViewController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		CA34780C12EB557500D1BA2A /* PayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA34780A12EB557500D1BA2A /* PayViewController.xib */; };
 		CA37D50D15A1BD5F002C72C6 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CA37D50C15A1BD5F002C72C6 /* libsqlite3.dylib */; };
-		CA40DA1012845A360051E3A9 /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA40DA0E12845A360051E3A9 /* NewsViewController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		CA40DA1112845A360051E3A9 /* NewsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA40DA0F12845A360051E3A9 /* NewsViewController.xib */; };
 		CA45B60915B89F4F00380CA0 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = CA45B60815B89F4E00380CA0 /* README.md */; };
 		CA4AA6DD15B2553C00E53A1F /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA4AA6DC15B2553C00E53A1F /* CoreText.framework */; };
 		CA4CE81515B185CA0039FC3B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CA4CE81415B185CA0039FC3B /* libz.dylib */; };
@@ -839,7 +837,6 @@
 		CA7C7059185EF50E00B348BA /* ToolBarFastRewind_off.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7472E017E15FE200B45E15 /* ToolBarFastRewind_off.png */; };
 		CA7C705A185EF50E00B348BA /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = CA00C59617C30C370067B457 /* Default.png */; };
 		CA7C705B185EF50E00B348BA /* 18-envelope.png in Resources */ = {isa = PBXBuildFile; fileRef = CA00C5B217C30C370067B457 /* 18-envelope.png */; };
-		CA7C705C185EF50E00B348BA /* NewsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA40DA0F12845A360051E3A9 /* NewsViewController.xib */; };
 		CA7C705D185EF50E00B348BA /* selectedrow.png in Resources */ = {isa = PBXBuildFile; fileRef = CA00C5D917C30C370067B457 /* selectedrow.png */; };
 		CA7C705F185EF50E00B348BA /* 19-gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA00C5B517C30C370067B457 /* 19-gear@2x.png */; };
 		CA7C7060185EF50E00B348BA /* bginput@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA00C5CC17C30C370067B457 /* bginput@2x.png */; };
@@ -984,7 +981,6 @@
 		CA7C70F4185EF50E00B348BA /* UITableViewController+Ext.m in Sources */ = {isa = PBXBuildFile; fileRef = CA00C46917C302610067B457 /* UITableViewController+Ext.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CA7C70F6185EF50E00B348BA /* MWCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA00C3A517C2FDAF0067B457 /* MWCaptionView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CA7C70F7185EF50E00B348BA /* HFRSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA79581912836B24007C4E02 /* HFRSearchViewController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		CA7C70F8185EF50E00B348BA /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA40DA0E12845A360051E3A9 /* NewsViewController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		CA7C70F9185EF50E00B348BA /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = CA00C45117C3000B0067B457 /* NSData+Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CA7C70FA185EF50E00B348BA /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = CA00C43517C2FF3F0067B457 /* ASINetworkQueue.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CA7C70FB185EF50E00B348BA /* PayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA34780912EB557500D1BA2A /* PayViewController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
@@ -1693,9 +1689,6 @@
 		CA34780912EB557500D1BA2A /* PayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PayViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CA34780A12EB557500D1BA2A /* PayViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PayViewController.xib; sourceTree = "<group>"; };
 		CA37D50C15A1BD5F002C72C6 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		CA40DA0D12845A360051E3A9 /* NewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsViewController.h; sourceTree = "<group>"; };
-		CA40DA0E12845A360051E3A9 /* NewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsViewController.m; sourceTree = "<group>"; };
-		CA40DA0F12845A360051E3A9 /* NewsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsViewController.xib; sourceTree = "<group>"; };
 		CA45B60815B89F4E00380CA0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		CA4AA6DC15B2553C00E53A1F /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		CA4CE81415B185CA0039FC3B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -2005,9 +1998,6 @@
 				CA79581812836B24007C4E02 /* HFRSearchViewController.h */,
 				CA79581912836B24007C4E02 /* HFRSearchViewController.m */,
 				CA79581A12836B24007C4E02 /* HFRSearchViewController.xib */,
-				CA40DA0D12845A360051E3A9 /* NewsViewController.h */,
-				CA40DA0E12845A360051E3A9 /* NewsViewController.m */,
-				CA40DA0F12845A360051E3A9 /* NewsViewController.xib */,
 			);
 			name = Forums;
 			sourceTree = "<group>";
@@ -3322,7 +3312,6 @@
 				CA00C66B17C30C370067B457 /* Default.png in Resources */,
 				4C0B8DCC1BA4522900D329BA /* WindowsClientFilled-40.png in Resources */,
 				CA00C68617C30C370067B457 /* 18-envelope.png in Resources */,
-				CA40DA1112845A360051E3A9 /* NewsViewController.xib in Resources */,
 				CA00C6AC17C30C370067B457 /* selectedrow.png in Resources */,
 				CA00C68917C30C370067B457 /* 19-gear@2x.png in Resources */,
 				4C0B8D8E1BA4522900D329BA /* ThorHammerFilled-40.png in Resources */,
@@ -3751,7 +3740,6 @@
 				CA7C705A185EF50E00B348BA /* Default.png in Resources */,
 				CA7C705B185EF50E00B348BA /* 18-envelope.png in Resources */,
 				4C0B8DCD1BA4522900D329BA /* WindowsClientFilled-40.png in Resources */,
-				CA7C705C185EF50E00B348BA /* NewsViewController.xib in Resources */,
 				CA7C705D185EF50E00B348BA /* selectedrow.png in Resources */,
 				CA7C705F185EF50E00B348BA /* 19-gear@2x.png in Resources */,
 				CA7C7060185EF50E00B348BA /* bginput@2x.png in Resources */,
@@ -3953,7 +3941,6 @@
 				4CC3C7501B99BB6F001B8632 /* DeleteMessageViewController.m in Sources */,
 				CA77D0F51261424D00271D62 /* PageViewController.m in Sources */,
 				CA79581B12836B24007C4E02 /* HFRSearchViewController.m in Sources */,
-				CA40DA1012845A360051E3A9 /* NewsViewController.m in Sources */,
 				CA34780B12EB557500D1BA2A /* PayViewController.m in Sources */,
 				CA20FA3512F15CA700EC1771 /* TopicSearchCellView.m in Sources */,
 				CA26862513ADE01100AC5511 /* BrowserViewController.m in Sources */,
@@ -4072,7 +4059,6 @@
 				4CC3C7511B99BB6F001B8632 /* DeleteMessageViewController.m in Sources */,
 				CA7C70F3185EF50E00B348BA /* PageViewController.m in Sources */,
 				CA7C70F7185EF50E00B348BA /* HFRSearchViewController.m in Sources */,
-				CA7C70F8185EF50E00B348BA /* NewsViewController.m in Sources */,
 				CA7C70FB185EF50E00B348BA /* PayViewController.m in Sources */,
 				CA7C70FD185EF50E00B348BA /* TopicSearchCellView.m in Sources */,
 				CA7C7100185EF50E00B348BA /* BrowserViewController.m in Sources */,
