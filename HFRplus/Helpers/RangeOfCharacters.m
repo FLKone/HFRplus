@@ -253,7 +253,7 @@ finish:
 -(NSString*)stringByRemovingAnchor {
     
     NSString *regexString  = @".*#([^&]+).*";
-    NSRange   matchedRange = NSMakeRange(NSNotFound, 0UL);
+    NSRange   matchedRange;// = NSMakeRange(NSNotFound, 0UL);
     NSRange   searchRange = NSMakeRange(0, self.length);
     NSError  *error2        = NULL;
     //int numPage;

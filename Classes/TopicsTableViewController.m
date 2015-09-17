@@ -241,7 +241,7 @@
 
 	//On remplace le numéro de page dans le titre
 	NSString *regexString  = @".*page=([^&]+).*";
-	NSRange   matchedRange = NSMakeRange(NSNotFound, 0UL);
+    NSRange   matchedRange;// = NSMakeRange(NSNotFound, 0UL);
 	NSRange   searchRange = NSMakeRange(0, self.currentUrl.length);
 	NSError  *error2        = NULL;
 	//int numPage;

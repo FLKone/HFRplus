@@ -242,7 +242,7 @@
         //On remplace le numéro de page dans le titre
         int number = [[[alertView textFieldAtIndex:0] text] intValue];
         NSString *regexString  = @".*page=([^&]+).*";
-        NSRange   matchedRange = NSMakeRange(NSNotFound, 0UL);
+        NSRange   matchedRange;// = NSMakeRange(NSNotFound, 0UL);
         NSRange   searchRange = NSMakeRange(0, newUrl.length);
         NSError  *error2        = NULL;
         //int numPage;

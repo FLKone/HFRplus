@@ -10,7 +10,7 @@
 
 -(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    int oldValue = self.selectedSegmentIndex;
+    NSInteger oldValue = self.selectedSegmentIndex;
     
     //NSLog(@"touchesBegan %d", oldValue);
     

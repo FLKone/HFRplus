@@ -22,6 +22,8 @@
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
+    
 	self.title = [NSString stringWithFormat:@"HFR+ %@ (%@)", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
 	
     /*

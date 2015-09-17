@@ -281,16 +281,9 @@
 	
 
 	//EDITOR
-	float offsetforiPad = 0;
-    
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) { 
-        offsetforiPad += 220;
-    }
-    
     float frameWidth = self.view.frame.size.width;
     
     //NSLog(@"self %f", self.view.frame.size.width);
-    //NSLog(@"hard %f", 320 + offsetforiPad);
     
 	float originY = 0;
 	

@@ -53,6 +53,7 @@ NSInteger Sort_BL_Comparer(id id1, id id2, void *context)
 }
 -(void)viewWillAppear:(BOOL)animated {
     NSLog(@"vwa");
+    [super viewWillAppear:animated];
     [self reloadData];
 }
 
