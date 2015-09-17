@@ -42,9 +42,9 @@
     if (action == @selector(selectAll:)) return [super canPerformAction:@selector(selectAll:) withSender:sender];
     if (action == @selector(paste:)) return NO;
 
-    if (action == @selector(_promptForReplace:)) return [super canPerformAction:@selector(_promptForReplace:) withSender:sender];
-    if (action == @selector(replace:)) return [super canPerformAction:@selector(replace:) withSender:sender];
-
+    if ([NSStringFromSelector(action) isEqualToString:@"replace:"]) return [super canPerformAction:action withSender:sender];
+    if ([NSStringFromSelector(action) isEqualToString:@"_promptForReplace:"]) return [super canPerformAction:action withSender:sender];
+    
     return NO;
 }
 
