@@ -499,7 +499,7 @@ a#searchintra_nextbutton {
 /* iOS7 */
 
 .ios7 * {
-    font-family:HelveticaNeue !important;
+    font-family:-apple-system, HelveticaNeue !important;
 }
 
 .ios7.searchintra {
