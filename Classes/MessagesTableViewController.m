@@ -802,7 +802,9 @@
     self.swipeLeftRecognizer = (UISwipeGestureRecognizer *)recognizer;
 	//-- Gesture
 
-
+    [self.messagesWebView.scrollView.panGestureRecognizer requireGestureRecognizerToFail:self.swipeLeftRecognizer];
+    [self.messagesWebView.scrollView.panGestureRecognizer requireGestureRecognizerToFail:self.swipeRightRecognizer];
+    
 	//Bouton Repondre message
     
     if (self.isSearchInstra) {
