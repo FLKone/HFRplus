@@ -22,7 +22,6 @@
 #import "DeleteMessageViewController.h"
 #import "AlerteModoViewController.h"
 
-#import "PhotoViewController.h"
 #import "MWPhotoBrowser.h"
 
 @class HTMLNode;
@@ -31,7 +30,7 @@
 
 #import "MessageWebView.h"
 
-@interface MessagesTableViewController : PageViewController <UIActionSheetDelegate, ParseMessagesOperationDelegate, AddMessageViewControllerDelegate, PhotoViewControllerDelegate, UIScrollViewDelegate, AlerteModoViewControllerDelegate> {
+@interface MessagesTableViewController : PageViewController <UIActionSheetDelegate, ParseMessagesOperationDelegate, AddMessageViewControllerDelegate, UIScrollViewDelegate, AlerteModoViewControllerDelegate> {
     
 	MessageWebView *messagesWebView;
     UIView *loadingView;

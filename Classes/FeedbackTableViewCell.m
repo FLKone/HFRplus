@@ -23,11 +23,4 @@
     // Configure the view for the selected state
 }
 
-- (void)dealloc {
-    [pseudoLabel release];
-    [avisLabel release];
-    [commLabel release];
-    [dateLabel release];
-    [super dealloc];
-}
 @end

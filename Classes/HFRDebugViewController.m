@@ -101,7 +101,7 @@
 #pragma mark network_base
 
 - (IBAction)MakeItRain:(id)sender {
-    [self crash];
+    //[self crash];
 }
 
 -(IBAction) network_base {
@@ -135,7 +135,6 @@
 
 
     // release the connection, and the data object
-    [connection release];
 
     
     // inform the user
@@ -149,7 +148,6 @@
     [self addText:@"connectionDidFinishLoading"];
     
     // release the connection, and the data object
-    [connection release];
 }
 
 #pragma mark -
@@ -227,8 +225,4 @@
 }
 
 
-- (void)dealloc {
-    [choixURL release];
-    [super dealloc];
-}
 @end

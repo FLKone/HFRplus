@@ -265,7 +265,7 @@
     HTMLParser * myParser = [[HTMLParser alloc] initWithString:[request responseString] error:NULL];
 	HTMLNode * bodyNode = [myParser body]; //Find the body tag
     NSLog(@"setupPoll");
-	HTMLNode * tmpPollNode = [[bodyNode findChildWithAttribute:@"class" matchingName:@"sondage" allowPartial:NO] retain];
+	HTMLNode * tmpPollNode = [bodyNode findChildWithAttribute:@"class" matchingName:@"sondage" allowPartial:NO];
 	if(tmpPollNode)
     {
         NSString *pollNode = rawContentsOfNode([tmpPollNode _node], [myParser _doc]);
@@ -319,7 +319,6 @@
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
 	[alert setTag:667];
 	[alert show];
-	[alert release];	
 }
 
 
@@ -349,10 +348,10 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(doneButtonPressed:)] autorelease];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(doneButtonPressed:)];
     self.navigationItem.leftBarButtonItem = doneButton;
     
-    UIBarButtonItem *voteButton = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Vote", nil) style:UIBarButtonItemStyleDone target:self action:@selector(voteButtonPressed:)] autorelease];
+    UIBarButtonItem *voteButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Vote", nil) style:UIBarButtonItemStyleDone target:self action:@selector(voteButtonPressed:)];
     self.navigationItem.rightBarButtonItem = voteButton;
     [self.navigationItem.rightBarButtonItem setEnabled:NO];
     
@@ -380,7 +379,7 @@
     v.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     v.backgroundColor = [UIColor clearColor];
     
-    UILabel* titleLabel = [[[UILabel alloc] initWithFrame:CGRectMake(15, 0, self.view.frame.size.width - 30, height)] autorelease];
+    UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, self.view.frame.size.width - 30, height)];
     [titleLabel setText:text];
     [titleLabel setNumberOfLines:0];
     [titleLabel setFont:[UIFont boldSystemFontOfSize:11]];
@@ -391,7 +390,6 @@
     
     [self.tableViewPoll setTableFooterView:v];
     //[self.tableView setTableHeaderView:v];
-    [v release];
     
     // Get the text so we can measure it
     NSString *text2 = self.stringQuestion;
@@ -411,7 +409,7 @@
     v2.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     //    v2.backgroundColor = [UIColor clearColor];
     
-    UILabel* titleLabel2 = [[[UILabel alloc] initWithFrame:CGRectMake(15, 0, self.view.frame.size.width - 30, height2)] autorelease];
+    UILabel* titleLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, self.view.frame.size.width - 30, height2)];
     [titleLabel2 setText:text2];
     [titleLabel2 setNumberOfLines:0];
     [titleLabel2 setFont:[UIFont boldSystemFontOfSize:13]];
@@ -422,7 +420,6 @@
     
     [self.tableViewPoll setTableHeaderView:v2];
     //[self.tableView setTableHeaderView:v];
-    [v2 release];
     
 
 }
@@ -446,7 +443,7 @@
 
     
     ASIFormDataRequest  *arequest =
-    [[[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/user/vote.php?config=hfr.inc", kForumURL]]] autorelease];
+    [[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/user/vote.php?config=hfr.inc", kForumURL]]];
     
     for (NSString *key in self.arrayInputData) {
         [arequest setPostValue:[self.arrayInputData objectForKey:key] forKey:key];
@@ -472,7 +469,6 @@
             UIAlertView *alertKO = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[[arequest error] localizedDescription]
                                                              delegate:self cancelButtonTitle:@"Retour" otherButtonTitles: nil];
             [alertKO show];
-            [alertKO release];
         }
         else if ([arequest responseString])
         {
@@ -490,7 +486,6 @@
                 UIAlertView *alertKKO = [[UIAlertView alloc] initWithTitle:nil message:[[messagesNode contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
                                                                   delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
                 [alertKKO show];
-                [alertKKO release];
             }
             else {
                 UIAlertView *alertOK = [[UIAlertView alloc] initWithTitle:@"Hooray !" message:[[messagesNode contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
@@ -498,7 +493,6 @@
 
                 [alertOK show];
 
-                [alertOK release];
                 
                 
                 //NSLog(@"responseString %@", [arequest responseString]);
@@ -525,7 +519,6 @@
             }
             
             
-            [myParser release];
         }
     }
 }
@@ -609,7 +602,7 @@
         
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             [cell.textLabel setBackgroundColor:[UIColor redColor]];
             cell.textLabel.numberOfLines = 0;
         }

@@ -65,18 +65,18 @@
     self = [super init];
     if (self) {
 
-        link_full = [[decoder decodeObjectForKey:@"link_full"] retain];
-        link_miniature = [[decoder decodeObjectForKey:@"link_miniature"] retain];
-        link_preview = [[decoder decodeObjectForKey:@"link_preview"] retain];
+        link_full = [decoder decodeObjectForKey:@"link_full"];
+        link_miniature = [decoder decodeObjectForKey:@"link_miniature"];
+        link_preview = [decoder decodeObjectForKey:@"link_preview"];
 
-        nolink_full = [[decoder decodeObjectForKey:@"nolink_full"] retain];
-        nolink_miniature = [[decoder decodeObjectForKey:@"nolink_miniature"] retain];
-        nolink_preview = [[decoder decodeObjectForKey:@"nolink_preview"] retain];
+        nolink_full = [decoder decodeObjectForKey:@"nolink_full"];
+        nolink_miniature = [decoder decodeObjectForKey:@"nolink_miniature"];
+        nolink_preview = [decoder decodeObjectForKey:@"nolink_preview"];
 
         version = [decoder decodeIntForKey:@"version"];
         deleted = [decoder decodeBoolForKey:@"deleted"];
 
-        timeStamp = [[decoder decodeObjectForKey:@"timeStamp"] retain];
+        timeStamp = [decoder decodeObjectForKey:@"timeStamp"];
 
         //NSLog(@"initWithCoder %@", self);
     }
@@ -100,7 +100,7 @@
 -(void)loadData:(UIImage *)picture {
 	
 	
-	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
 	
 	//UIImageOrientation    originalOrientation = picture.imageOrientation;
     
@@ -134,15 +134,15 @@
      }
      */
     
-    picture = [picture scaleAndRotateImage:picture];
-    
-    //NSLog(@"image %f %f", picture.size.width, picture.size.height);
-    
+        picture = [picture scaleAndRotateImage:picture];
+        
+        //NSLog(@"image %f %f", picture.size.width, picture.size.height);
+        
 	NSData* jpegImageData = UIImageJPEGRepresentation(picture, 1);
 	
-    [self performSelectorOnMainThread:@selector(loadData2:) withObject:jpegImageData waitUntilDone:NO];
+        [self performSelectorOnMainThread:@selector(loadData2:) withObject:jpegImageData waitUntilDone:NO];
     
-    [pool release];
+    }
 	
     
 }
@@ -225,13 +225,11 @@
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:@"Erreur inconnue :/"
 													   delegate:self cancelButtonTitle:@"Tant pis..." otherButtonTitles:nil, nil];
 		[alert show];
-		[alert release];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"uploadProgress" object:[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:0] forKey:@"progress"]];
 
 		
 	}
 
-	[myParser release];
 }
 
 - (void)fetchContentFailed:(ASIHTTPRequest *)theRequest
@@ -243,22 +241,9 @@
 												   delegate:self cancelButtonTitle:@"Tant pis..." otherButtonTitles:nil, nil];
 	
     [alert show];
-    [alert release];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"uploadProgress" object:[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:0] forKey:@"progress"]];
 
 }
 
--(void)dealloc {
-    self.link_full = nil;
-    self.link_miniature = nil;
-    self.link_preview = nil;
-    self.nolink_full = nil;
-        
-    self.nolink_miniature = nil;
-    self.nolink_preview = nil;
-    self.timeStamp = nil;
-	
-	[super dealloc];
-}
 
 @end

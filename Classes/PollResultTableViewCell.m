@@ -26,11 +26,4 @@
     
 }
 
-- (void)dealloc {
-    [_labelLabel release];
-    [_pcLabel release];
-    [_nbLabel release];
-    [_pcLabelView release];
-    [super dealloc];
-}
 @end

@@ -98,9 +98,11 @@
         [alert setTag:668];
         [alert show];
 
-        [alert release];
     }
 }
+
+
+
 
 - (void)goToPage:(NSString *)pageType;
 {
@@ -229,6 +231,14 @@
     
     
 }
+- (IBAction)searchSubmit:(UIBarButtonItem *)sender {
+    
+}
+
+- (void)fetchContent:(int)from {
+    
+}
+
 -(void)firstPage {
     [self firstPage:nil];
 }
@@ -251,21 +261,6 @@
 	[self fetchContent];	
 }
 
-- (void)dealloc {
-	
-	self.currentUrl = nil;
-	
-	self.nextPageUrl = nil;
-	self.previousPageUrl = nil;
-
-	self.firstPageUrl = nil;
-	self.lastPageUrl = nil;
-	
-	
-    [super dealloc];
-	
-
-}
 
 - (void)didPresentAlertView:(UIAlertView *)alertView
 {

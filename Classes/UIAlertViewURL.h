@@ -12,6 +12,6 @@
 	NSString *stringURL;
 }
 
-@property (nonatomic, retain) NSString *stringURL;
+@property (nonatomic, strong) NSString *stringURL;
 
 @end

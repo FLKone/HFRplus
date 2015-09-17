@@ -34,7 +34,6 @@
 		//[label setOpaque:YES];
 		
 		[self.contentView insertSubview:labelTitle atIndex:1];
-		[labelTitle release];
 		
 		UILabel *labelMsg = [[UILabel alloc] initWithFrame:CGRectMake(10, 27, 128, 18)];
 		labelMsg.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -53,7 +52,6 @@
 		//[label setOpaque:YES];
 		
 		[self.contentView insertSubview:labelMsg atIndex:2];
-		[labelMsg release];
 		
 		UILabel *labelDate = [[UILabel alloc] initWithFrame:CGRectMake(140, 27, 170, 18)];
 		labelDate.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
@@ -72,7 +70,6 @@
 		//[label setOpaque:YES];
 		
 		[self.contentView insertSubview:labelDate atIndex:3];		
-		[labelDate release];
 				
     }
     return self;
@@ -87,11 +84,6 @@
 }
 
 
-- (void)dealloc {
-	//NSLog(@"dealloc favorite cell");
-
-    [super dealloc];
-}
 
 
 @end

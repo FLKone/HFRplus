@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface PollResultTableViewCell : UITableViewCell
-@property (retain, nonatomic) IBOutlet UILabel *labelLabel;
-@property (retain, nonatomic) IBOutlet UILabel *pcLabel;
-@property (retain, nonatomic) IBOutlet UILabel *nbLabel;
-@property (retain, nonatomic) IBOutlet UILabel *pcLabelView;
-@property (retain, nonatomic) IBOutlet UILabel *pcLabelBgView;
+@property (strong, nonatomic) IBOutlet UILabel *labelLabel;
+@property (strong, nonatomic) IBOutlet UILabel *pcLabel;
+@property (strong, nonatomic) IBOutlet UILabel *nbLabel;
+@property (strong, nonatomic) IBOutlet UILabel *pcLabelView;
+@property (strong, nonatomic) IBOutlet UILabel *pcLabelBgView;
 
 @end

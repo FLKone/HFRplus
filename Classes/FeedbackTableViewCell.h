@@ -15,9 +15,9 @@
     UILabel *dateLabel;
 
 }
-@property (retain, nonatomic) IBOutlet UILabel *pseudoLabel;
-@property (retain, nonatomic) IBOutlet UILabel *avisLabel;
-@property (retain, nonatomic) IBOutlet UILabel *commLabel;
-@property (retain, nonatomic) IBOutlet UILabel *dateLabel;
+@property (strong, nonatomic) IBOutlet UILabel *pseudoLabel;
+@property (strong, nonatomic) IBOutlet UILabel *avisLabel;
+@property (strong, nonatomic) IBOutlet UILabel *commLabel;
+@property (strong, nonatomic) IBOutlet UILabel *dateLabel;
 
 @end

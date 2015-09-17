@@ -80,7 +80,6 @@
     
     self.text = localtext;
     self.selectedRange = localSelectedRange;
-    [localtext release];
     
     if ([UIPasteboard generalPasteboard].string.length) {
         
@@ -91,7 +90,6 @@
                                                            delegate:self cancelButtonTitle:@"Non" otherButtonTitles:@"[url= Oui ]", nil];
             [alert setTag:668];
             [alert show];
-            [alert release];
         }
         else if ([code isEqualToString:@"url"] && !wasSelected) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Insérer le contenu du presse-papier?"
@@ -99,7 +97,6 @@
                                                            delegate:self cancelButtonTitle:@"Non" otherButtonTitles:@"[url= Oui ]", @"[url] Oui [/url]", nil];
             [alert setTag:667];
             [alert show];
-            [alert release];
         }
         else if (!wasSelected) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Insérer le contenu du presse-papier?"
@@ -107,7 +104,6 @@
                                                            delegate:self cancelButtonTitle:@"Non" otherButtonTitles:@"Oui", nil];
             [alert setTag:666];
             [alert show];
-            [alert release];
         }
 
     }

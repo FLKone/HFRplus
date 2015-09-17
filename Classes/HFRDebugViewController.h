@@ -14,10 +14,10 @@
     NSDateFormatter *dateFormatter;
 }
 
-@property (nonatomic, retain) IBOutlet UITextView *textView;
-@property (nonatomic, retain) NSDate *baseDate;
-@property (nonatomic, retain) NSDateFormatter *dateFormatter;
-@property (retain, nonatomic) IBOutlet UISegmentedControl *choixURL;
+@property (nonatomic, strong) IBOutlet UITextView *textView;
+@property (nonatomic, strong) NSDate *baseDate;
+@property (nonatomic, strong) NSDateFormatter *dateFormatter;
+@property (strong, nonatomic) IBOutlet UISegmentedControl *choixURL;
 
 - (IBAction)MakeItRain:(id)sender;
 

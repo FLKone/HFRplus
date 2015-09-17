@@ -26,14 +26,6 @@
 }
 
 
-- (void)dealloc {
-    
-    [titleLabel release];
-    [flagLabel release];
-    [catImage release];
-    
-    [super dealloc];
-}
 
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

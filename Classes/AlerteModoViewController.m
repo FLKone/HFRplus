@@ -70,7 +70,6 @@
                                                    delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
     [alert setTag:777];
     [alert show];
-    [alert release];
 }
 
 
@@ -102,13 +101,11 @@
     //Bouton Annuler
     UIBarButtonItem *cancelBarItem = [[UIBarButtonItem alloc] initWithTitle:@"Annuler" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
     self.navigationItem.leftBarButtonItem = cancelBarItem;
-    [cancelBarItem release];
     
     //Bouton Envoyer
     UIBarButtonItem *sendBarItem = [[UIBarButtonItem alloc] initWithTitle:@"Envoyer" style:UIBarButtonItemStyleDone target:self action:@selector(done)];
     self.navigationItem.rightBarButtonItem = sendBarItem;
     [self.navigationItem.rightBarButtonItem setEnabled:NO];
-    [sendBarItem release];
     
     // Observe keyboard hide and show notifications to resize the text view appropriately.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -144,7 +141,6 @@
         
         [alertKKO setTag:990];
         [alertKKO show];
-        [alertKKO release];
     }
     else {
         HTMLNode * fastAnswerNode = [bodyNode findChildWithAttribute:@"action" matchingName:@"modo.php" allowPartial:YES];
@@ -161,7 +157,6 @@
         
         NSString *newSubmitForm = [[NSString alloc] initWithFormat:@"%@/user/%@", kForumURL, [fastAnswerNode getAttributeNamed:@"action"]];
         [self setFormSubmit:newSubmitForm];
-        [newSubmitForm release];
     }
 }
 #pragma mark -
@@ -173,7 +168,6 @@
                                                        delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Confirmer", nil];
         [alert setTag:666];
         [alert show];
-        [alert release];
     }
     else {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"VisibilityChanged" object:nil];
@@ -186,7 +180,7 @@
     //NSLog(@"done %@", self.formSubmit);
     
     ASIFormDataRequest  *arequest =
-    [[[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:self.formSubmit]] autorelease];
+    [[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:self.formSubmit]];
     //delete
     NSString *key;
     for (key in self.arrayInputData) {
@@ -208,7 +202,6 @@
             UIAlertView *alertKO = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[[arequest error] localizedDescription]
                                                              delegate:self cancelButtonTitle:@"Retour" otherButtonTitles: nil];
             [alertKO show];
-            [alertKO release];
         }
         else if ([arequest responseString])
         {
@@ -232,17 +225,14 @@
             indicator.center = CGPointMake(alertOK.bounds.size.width / 2, alertOK.bounds.size.height - 50);
             [indicator startAnimating];
             [alertOK addSubview:indicator];
-            [indicator release];
             
             
-            [alertOK release];
             
             
             [[NSNotificationCenter defaultCenter] postNotificationName:@"VisibilityChanged" object:nil];
             [self.delegate alertModoViewControllerDidFinishOK:self];
 
             
-            [myParser release];
         }
     }
     
@@ -419,15 +409,10 @@
     
     [request setDelegate:nil];
     [request cancel];
-    self.request = nil;
     
     self.delegate = nil;
     
-    self.url = nil;
-    self.formSubmit = nil;
-    [self.arrayInputData release];
     
-    [super dealloc];
     
         
 }

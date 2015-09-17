@@ -73,7 +73,7 @@
         }
     }
     
-	NSString *result = (NSString *) CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)fakeString, NULL, CFSTR(":/?#[]@!$&’()*+,;="), kCFStringEncodingUTF8);
+	NSString *result = (NSString *) CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)fakeString, NULL, CFSTR(":/?#[]@!$&’()*+,;="), kCFStringEncodingUTF8));
 
 	
     NSURL *xmlURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.google.com/cse?cx=%@&client=google-csbe&output=xml_no_dtd&num=20&q=%@", kGoogleCSEAPI, result]];
@@ -140,7 +140,6 @@
 	UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] 
 														 initWithTarget:self action:@selector(handleTap:)];
 	[self.disableViewOverlay addGestureRecognizer:tapRecognizer];
-	[tapRecognizer release];	
 	
 	[self.maintenanceView setText:@"Aucun résultat"];
 }
@@ -449,7 +448,6 @@
 		UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc]
 															 initWithTarget:self action:@selector(handleLongPress:)];
 		[cell addGestureRecognizer:longPressRecognizer];
-		[longPressRecognizer release];
         
         self.tmpCell = nil;
 		
@@ -493,7 +491,6 @@
 	//if (self.messagesTableViewController == nil) {
 	MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[stories objectAtIndex: storyIndex] objectForKey: @"link"]];
 	self.messagesTableViewController = aView;
-	[aView release];
 	//}
 	
 	
@@ -531,7 +528,7 @@
 		self.pressedIndexPath = [[self.theTableView indexPathForRowAtPoint:longPressLocation] copy];
         
         if (self.topicActionSheet != nil) {
-            [self.topicActionSheet release], self.topicActionSheet = nil;
+            self.topicActionSheet, self.topicActionSheet = nil;
         }
         
 		self.topicActionSheet = [[UIActionSheet alloc] initWithTitle:@":smiley-menu:"
@@ -589,17 +586,12 @@
 
 
 - (void)dealloc {
-	[theTableView release], theTableView = nil;
-    [theSearchBar release], theSearchBar = nil;
-    [stories dealloc];	
-	[disableViewOverlay dealloc];
+	theTableView = nil;
+    theSearchBar = nil;
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
 
-    self.pressedIndexPath = nil;
-    self.topicActionSheet = nil;
     
-    [super dealloc];
 }
 
 

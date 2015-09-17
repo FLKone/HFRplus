@@ -83,11 +83,11 @@
 
     [super viewWillAppear:animated];
 
-	periodicMaintenanceTimer = [[NSTimer scheduledTimerWithTimeInterval:5
+	periodicMaintenanceTimer = [NSTimer scheduledTimerWithTimeInterval:5
 																 target:self
 															   selector:@selector(periodicCheck)
 															   userInfo:nil
-																repeats:YES] retain];
+																repeats:YES];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -97,7 +97,7 @@
     [super viewDidDisappear:animated];
 	
 	[periodicMaintenanceTimer invalidate];
-    [periodicMaintenanceTimer release], periodicMaintenanceTimer = nil;
+    periodicMaintenanceTimer = nil;
 }
 
 
@@ -122,7 +122,6 @@
 
 - (void)viewDidUnload {
 
-    [resutsBtn release];
     resutsBtn = nil;
     [self setResutsBtn:nil];
     
@@ -134,10 +133,8 @@
 
 - (void)dealloc {
 	[periodicMaintenanceTimer invalidate];
-    [periodicMaintenanceTimer release], periodicMaintenanceTimer = nil;
+    periodicMaintenanceTimer = nil;
 
-    [resutsBtn release];
-    [super dealloc];
 }
 
 

@@ -14,8 +14,8 @@
     NSString *notification;
 }
 
-@property (nonatomic, retain) NSArray *arrayData;
-@property (nonatomic, retain) UIPickerView *suPicker;
-@property (nonatomic, retain) NSString *notification;
+@property (nonatomic, strong) NSArray *arrayData;
+@property (nonatomic, strong) UIPickerView *suPicker;
+@property (nonatomic, strong) NSString *notification;
 
 @end

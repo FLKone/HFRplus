@@ -207,7 +207,7 @@ separateSecondaryViewControllerFromPrimaryViewController:(UIViewController *)pri
     [rightNavController popToRootViewControllerAnimated:YES];
     
     [rightNavController setViewControllers:nil];
-    UIViewController * uivc = [[[UIViewController alloc] init] autorelease];
+    UIViewController * uivc = [[UIViewController alloc] init];
     uivc.title = @"HFR+";
     [rightNavController setViewControllers:[NSMutableArray arrayWithObjects:uivc, nil]];
 
@@ -239,7 +239,6 @@ separateSecondaryViewControllerFromPrimaryViewController:(UIViewController *)pri
         
         MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:theUrl];
         [rightNavController setViewControllers:[NSMutableArray arrayWithObjects:aView, nil] animated:YES];
-        [aView release];
 
     }
 
@@ -277,7 +276,6 @@ separateSecondaryViewControllerFromPrimaryViewController:(UIViewController *)pri
         [rightNavController setViewControllers:nil animated:NO];
         [rightNavController setViewControllers:[NSMutableArray arrayWithObjects:browserViewController, nil] animated:NO];
         
-        [browserViewController release];
     }
     
 }
@@ -324,7 +322,6 @@ separateSecondaryViewControllerFromPrimaryViewController:(UIViewController *)pri
     
     MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:theUrl];
     [leftNavController pushViewController:aView animated:YES];
-    [aView release];
     
     BrowserViewController *browserViewController = [[BrowserViewController alloc] initWithURL:url];
     [browserViewController setFullBrowser:YES];
@@ -333,7 +330,6 @@ separateSecondaryViewControllerFromPrimaryViewController:(UIViewController *)pri
     [rightNavController setViewControllers:nil animated:NO];
     [rightNavController setViewControllers:[NSMutableArray arrayWithObjects:browserViewController, nil] animated:NO];
     
-    [browserViewController release];
     NSLog(@"END MoveRightToLeft");
 }
 

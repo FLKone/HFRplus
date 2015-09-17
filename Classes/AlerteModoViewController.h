@@ -13,29 +13,29 @@
 @protocol AlerteModoViewControllerDelegate;
 
 @interface AlerteModoViewController : UIViewController <UITextViewDelegate, UINavigationControllerDelegate>{
-    id <AlerteModoViewControllerDelegate> delegate;
+    id <AlerteModoViewControllerDelegate> __weak delegate;
     
     IBOutlet UITextView *textView;
     
     IBOutlet UIView *loadingView;
-    IBOutlet UIView *accessoryView;
+    IBOutlet UIView *__weak accessoryView;
     
     NSString *url;
     ASIHTTPRequest *request;
     NSMutableDictionary *arrayInputData;
     NSString *formSubmit;
 }
-@property (nonatomic, assign) id <AlerteModoViewControllerDelegate> delegate;
+@property (nonatomic, weak) id <AlerteModoViewControllerDelegate> delegate;
 
-@property (retain, nonatomic) IBOutlet UITextView *textView;
+@property (strong, nonatomic) IBOutlet UITextView *textView;
 
-@property (nonatomic, retain) IBOutlet UIView *loadingView;
-@property (nonatomic, assign) IBOutlet UIView *accessoryView;
+@property (nonatomic, strong) IBOutlet UIView *loadingView;
+@property (nonatomic, weak) IBOutlet UIView *accessoryView;
 
-@property (nonatomic, retain) NSString *url;
-@property (nonatomic, retain) ASIHTTPRequest *request;
-@property (nonatomic, retain) NSMutableDictionary *arrayInputData;
-@property (nonatomic, retain) NSString *formSubmit;
+@property (nonatomic, strong) NSString *url;
+@property (nonatomic, strong) ASIHTTPRequest *request;
+@property (nonatomic, strong) NSMutableDictionary *arrayInputData;
+@property (nonatomic, strong) NSString *formSubmit;
 
 @end
 

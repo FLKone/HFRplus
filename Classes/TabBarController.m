@@ -63,7 +63,6 @@
 	label.text= [NSString stringWithFormat:@"HFR+ %@ (%@)", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];	
 	//label.text= [NSString stringWithFormat:@"HFR+ (%@)", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];	
 	moreNavigationBar.topItem.titleView = label;		
-	[label release];
 	 
 	//moreNavigationBar.topItem.title = [NSString stringWithFormat:@"HFR+ (%@)", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
 	//UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithTitle:@"Déconnexion" style:UIBarButtonItemStyleBordered target:self action:nil];
@@ -139,9 +138,6 @@
 	NSLog(@"new orientation: %d", [[UIDevice currentDevice] orientation]);
 }
 */
-- (void)dealloc {
-    [super dealloc];
-}
 
 
 @end

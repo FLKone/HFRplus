@@ -14,8 +14,8 @@
     IBOutlet UIImageView *catImage;
 }
 
-@property (nonatomic, retain) IBOutlet UILabel *titleLabel;
-@property (nonatomic, retain) IBOutlet UILabel *flagLabel;
-@property (nonatomic, retain) IBOutlet UIImageView *catImage;
+@property (nonatomic, strong) IBOutlet UILabel *titleLabel;
+@property (nonatomic, strong) IBOutlet UILabel *flagLabel;
+@property (nonatomic, strong) IBOutlet UIImageView *catImage;
 
 @end

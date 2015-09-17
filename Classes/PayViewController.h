@@ -13,7 +13,7 @@
     IBOutlet UIButton *resutsBtn;
 
 }
-@property (retain, nonatomic) IBOutlet UIButton *resutsBtn;
+@property (strong, nonatomic) IBOutlet UIButton *resutsBtn;
 
 - (IBAction) achat;
 - (void)periodicCheck;

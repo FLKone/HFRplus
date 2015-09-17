@@ -34,7 +34,7 @@
 	
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
 	if (cell == nil) {
-		cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:MyIdentifier] autorelease];
+		cell = [[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:MyIdentifier];
 	}
 	
 	// Set up the cell
@@ -193,19 +193,6 @@
 }
 
 
-- (void)dealloc {
-	
-	[currentElement release];
-	[rssParser release];
-	[stories release];
-	[item release];
-	[currentTitle release];
-	[currentDate release];
-	[currentSummary release];
-	[currentLink release];
-	
-	[super dealloc];
-}
 
 
 @end

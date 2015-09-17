@@ -57,11 +57,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [super dealloc];
-    //NSLog(@"deallocdeallocdeallocdeallocdealloc");
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -136,7 +131,7 @@
 
 -(void)loadView {
     
-    UIView *view = [[[UIView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame] autorelease];
+    UIView *view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame];
     view.backgroundColor = [UIColor whiteColor];
     view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.view = view;
@@ -181,15 +176,11 @@
     NSArray *items = [NSArray arrayWithObjects: systemItem1, flexItem, systemItem2, nil];
     
     //release buttons
-    [systemItem1 release];
-    [systemItem2 release];
-    [flexItem release];
     
     //add array of buttons to toolbar
     [toolbar setItems:items animated:NO];
     
     [self.view addSubview:toolbar];
-    [toolbar release];
 
 }
 
@@ -214,7 +205,7 @@
 
     if (!self.fullBrowser) {
         // close
-        UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancel)] autorelease];
+        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
         self.navigationItem.leftBarButtonItem = doneButton;
     }
     
@@ -224,21 +215,18 @@
     self.navigationItem.rightBarButtonItem = segmentBarItem;
 	
     NSMutableArray *myButtonArray = [[NSMutableArray alloc] initWithObjects:segmentBarItem, nil];
-    [segmentBarItem release];
     
     if (self.fullBrowser) {
         
-        UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancel)] autorelease];
+        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
         
         [myButtonArray addObject:doneButton];
-        [doneButton release];
         
     }
     else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
-        UIBarButtonItem *navPButton = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Navigateur✚", nil) style:UIBarButtonItemStylePlain target:self action:@selector(navPlus)] autorelease];
+        UIBarButtonItem *navPButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Navigateur✚", nil) style:UIBarButtonItemStylePlain target:self action:@selector(navPlus)];
         
         [myButtonArray addObject:navPButton];
-        [navPButton release];
     }
     
 	self.navigationItem.rightBarButtonItems = myButtonArray;
@@ -252,7 +240,6 @@
         [[self.myWebView scrollView] setScrollIndicatorInsets:UIEdgeInsetsMake(0, 0, 44, 0)];
     }
 
-    [segmentBarItem release];
 }
 
 - (void)viewDidUnload

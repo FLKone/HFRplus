@@ -11,7 +11,7 @@
 @protocol BrowserViewControllerDelegate;
 
 @interface BrowserViewController : UIViewController <UIWebViewDelegate, WKNavigationDelegate> {
-    id <BrowserViewControllerDelegate> delegate;
+    id <BrowserViewControllerDelegate> __weak delegate;
     
 	UIWebView* myWebView;
 	WKWebView* myModernWebView;
@@ -21,10 +21,10 @@
 
 }
 
-@property (nonatomic, retain) UIWebView * myWebView;
-@property (nonatomic, retain) WKWebView * myModernWebView;
-@property (nonatomic, retain) NSString* currentUrl;
-@property (nonatomic, assign) id <BrowserViewControllerDelegate> delegate;
+@property (nonatomic, strong) UIWebView * myWebView;
+@property (nonatomic, strong) WKWebView * myModernWebView;
+@property (nonatomic, strong) NSString* currentUrl;
+@property (nonatomic, weak) id <BrowserViewControllerDelegate> delegate;
 @property BOOL fullBrowser;
 
 -(IBAction)cancel;

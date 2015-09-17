@@ -17,9 +17,9 @@
 
 }
 
-@property (nonatomic, retain) UIImageView *image;
-@property (nonatomic, retain) UILabel *label;
-@property (nonatomic, retain) NSDictionary *dico;
+@property (nonatomic, strong) UIImageView *image;
+@property (nonatomic, strong) UILabel *label;
+@property (nonatomic, strong) NSDictionary *dico;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andDico:(NSDictionary*) dic;
 -(void)sizeToFit;

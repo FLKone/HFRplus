@@ -103,7 +103,7 @@
         
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     // Configure the cell...
@@ -118,7 +118,6 @@
     UIView * selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
     [selectedBackgroundView setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.6]]; // set color here
     [cell setSelectedBackgroundView:selectedBackgroundView];
-    [selectedBackgroundView release];
     
     return cell;
 }

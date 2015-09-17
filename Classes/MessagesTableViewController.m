@@ -1334,27 +1334,6 @@
 	// The new view controller configures a Cancel and Done button for the
 	// navigation bar.
 	
-
-	
-    /*
-    PhotoViewController *photoViewController;
-    
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        photoViewController = [[PhotoViewController alloc] initWithNibName:@"PhotoViewController-iPad" bundle:nil];        
-    else
-        photoViewController = [[PhotoViewController alloc] initWithNibName:@"PhotoViewController" bundle:nil];
-    
-	photoViewController.delegate = self;
-	[photoViewController setImageURL:selectedURL];
-	[photoViewController setImageData:imageArray];
-	[photoViewController setSelectedIndex:selectedIndex];
-	[imageArray release];
-    	
-	// The navigation controller is now owned by the current view controller
-	// and the root view controller is owned by the navigation controller,
-	// so both objects should be released to prevent over-retention.
-	[photoViewController release];
-    */
     
     // Create & present browser
     MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithPhotos:imageArray];
@@ -1451,16 +1430,6 @@
         [self previousPage:recognizer];
     }
 }
-
-#pragma mark -
-#pragma mark Photo Delegate
-
-- (void)photoViewControllerDidFinish:(PhotoViewController *)controller {
-   // NSLog(@"photoViewControllerDidFinish");
-
-	[self dismissModalViewControllerAnimated:YES];
-}
-
 
 #pragma mark -
 #pragma mark AlerteModo Delegate

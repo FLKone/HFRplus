@@ -42,14 +42,6 @@
     }
 }
 
-- (void)dealloc {
-
-	[titleLabel release];
-	[msgLabel release];
-	[timeLabel release];	
-	
-    [super dealloc];
-}
 
 
 @end

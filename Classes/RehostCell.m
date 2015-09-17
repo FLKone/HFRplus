@@ -96,7 +96,6 @@
 	
 	[alert setTag:111];
 	[alert show];
-	[alert release];
 }
 
 -(IBAction)copyPreview {
@@ -105,7 +104,6 @@
 	
 	[alert setTag:222];
 	[alert show];
-	[alert release];
 }
 
 -(IBAction)copyMini {
@@ -116,7 +114,6 @@
 	
 	[alert setTag:333];
 	[alert show];
-	[alert release];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
