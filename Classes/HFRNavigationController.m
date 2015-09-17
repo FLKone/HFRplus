@@ -49,7 +49,7 @@
 }
 
 /* for iOS6 support */
-- (NSUInteger)supportedInterfaceOrientations
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
     //NSLog(@"supportedInterfaceOrientations");
     

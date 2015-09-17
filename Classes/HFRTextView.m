@@ -7,8 +7,11 @@
 //
 
 #import "HFRTextView.h"
+#import "UIMenuItem+CXAImageSupport.h"
+#import "HFRplusAppDelegate.h"
 
 @implementation HFRTextView
+
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -18,8 +21,65 @@
 }
 */
 
+-(void)awakeFromNib
+{
+    NSLog(@"awakeFromNib");
+    [super awakeFromNib]; // Don't forget to call super
+    
+    //Do more intitialization here
+    
+
+    UIImage *menuImgCopy = [UIImage imageNamed:@"CopyFilled-20"];
+    UIImage *menuImgCut = [UIImage imageNamed:@"CutFilled-20"];
+    UIImage *menuImgPaste = [UIImage imageNamed:@"PasteFilled-20"];
+    
+    UIImage *menuImgBold = [UIImage imageNamed:@"BoldEFilled-20"];
+    UIImage *menuImgItalic = [UIImage imageNamed:@"ItalicFilled-20"];
+    UIImage *menuImgUnderline = [UIImage imageNamed:@"UnderlineFilled-20"];
+    UIImage *menuImgStrike = [UIImage imageNamed:@"StrikethroughFilled-20"];
+    
+    UIImage *menuImgSpoiler = [UIImage imageNamed:@"InvisibleFilled-20"];
+    UIImage *menuImgQuote = [UIImage imageNamed:@"QuoteEFilled-20"];
+    UIImage *menuImgLink = [UIImage imageNamed:@"LinkFilled-20"];
+    UIImage *menuImgImage = [UIImage imageNamed:@"XlargeIconsFilled-20"];
+    
+    UIMenuItem *textCutItem = [[UIMenuItem alloc] initWithTitle:@"HFRCut" action:@selector(textCut:) image:menuImgCut];
+    UIMenuItem *textCopyItem = [[UIMenuItem alloc] initWithTitle:@"HFRCopy" action:@selector(textCopy:) image:menuImgCopy];
+    UIMenuItem *textPasteItem = [[UIMenuItem alloc] initWithTitle:@"HFRPaste" action:@selector(textPaste:) image:menuImgPaste];
+    
+    UIMenuItem *textBoldItem = [[UIMenuItem alloc] initWithTitle:@"B" action:@selector(textBold:) image:menuImgBold];
+    UIMenuItem *textItalicItem = [[UIMenuItem alloc] initWithTitle:@"I" action:@selector(textItalic:) image:menuImgItalic];
+    UIMenuItem *textUnderlineItem = [[UIMenuItem alloc] initWithTitle:@"U" action:@selector(textUnderline:) image:menuImgUnderline];
+    UIMenuItem *textStrikeItem = [[UIMenuItem alloc] initWithTitle:@"S" action:@selector(textStrike:) image:menuImgStrike];
+    
+    UIMenuItem *textSpoilerItem = [[UIMenuItem alloc] initWithTitle:@"SPOILER" action:@selector(textSpoiler:) image:menuImgSpoiler];
+    UIMenuItem *textQuoteItem = [[UIMenuItem alloc] initWithTitle:@"QUOTE" action:@selector(textQuote:) image:menuImgQuote];
+    UIMenuItem *textLinkItem = [[UIMenuItem alloc] initWithTitle:@"URL" action:@selector(textLink:) image:menuImgLink];
+    UIMenuItem *textImgItem = [[UIMenuItem alloc] initWithTitle:@"IMG" action:@selector(textImg:) image:menuImgImage];
+    
+    // On rajoute les menus pour le style
+    
+    /*
+     UIMenuItem *textBoldItem = [[[UIMenuItem alloc] initWithTitle:@"B" action:@selector(textBold:)] autorelease];
+     UIMenuItem *textItalicItem = [[[UIMenuItem alloc] initWithTitle:@"I" action:@selector(textItalic:)] autorelease];
+     UIMenuItem *textUnderlineItem = [[[UIMenuItem alloc] initWithTitle:@"U" action:@selector(textUnderline:)] autorelease];
+     UIMenuItem *textStrikeItem = [[[UIMenuItem alloc] initWithTitle:@"S" action:@selector(textStrike:)] autorelease];
+     
+     UIMenuItem *textSpoilerItem = [[[UIMenuItem alloc] initWithTitle:@"SPOILER" action:@selector(textSpoiler:)] autorelease];*/
+    UIMenuItem *textFixeItem = [[UIMenuItem alloc] initWithTitle:@"FIXED" action:@selector(textFixe:)];
+    //UIMenuItem *textCppItem = [[[UIMenuItem alloc] initWithTitle:@"CPP" action:@selector(textStrike:)] autorelease];
+    //UIMenuItem *textMailItem = [[[UIMenuItem alloc] initWithTitle:@"@" action:@selector(textStrike:)] autorelease];
+    
+    [[UIMenuController sharedMenuController] setMenuItems:[NSArray arrayWithObjects:textCutItem, textCopyItem, textPasteItem,
+                                                           textBoldItem, textItalicItem, textUnderlineItem, textStrikeItem,
+                                                           textSpoilerItem, textQuoteItem, textLinkItem, textImgItem, textFixeItem, nil]];
+    
+}
+
+
 - (BOOL)canPerformAction: (SEL)action withSender: (id)sender {
     //NSLog(@"MWVINADDTW %@ %lu", NSStringFromSelector(action), [UIMenuController sharedMenuController].menuItems.count);
+
     
     
     if (action == @selector(textBold:)) return YES;

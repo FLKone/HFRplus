@@ -1122,9 +1122,11 @@
     
     // setup pull-to-refresh
     
+    __weak TopicsTableViewController *self_ = self;
+
     [self.topicsTableView addPullToRefreshWithActionHandler:^{
         //NSLog(@"=== BEGIN");
-        [self fetchContentTrigger];
+        [self_ fetchContentTrigger];
         //NSLog(@"=== END");
     }];
     

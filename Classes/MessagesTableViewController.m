@@ -691,7 +691,7 @@
 }
 
 - (void)editMenuHidden:(id)sender {
-    NSLog(@"editMenuHidden %@ NOMBRE %lu", sender, [UIMenuController sharedMenuController].menuItems.count);
+    NSLog(@"editMenuHidden %@ NOMBRE %u", sender, [UIMenuController sharedMenuController].menuItems.count);
     
     UIImage *menuImgQuote = [UIImage imageNamed:@"ReplyArrowFilled-20"];
     UIImage *menuImgQuoteB = [UIImage imageNamed:@"BoldFilled-20"];

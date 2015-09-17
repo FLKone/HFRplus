@@ -710,9 +710,11 @@
 
     // setup pull-to-refresh
     
+    __weak FavoritesTableViewController *self_ = self;
+
     [self.favoritesTableView addPullToRefreshWithActionHandler:^{
         //NSLog(@"=== BEGIN");
-        [self fetchContent];
+        [self_ fetchContent];
         //NSLog(@"=== END");
     }];
     

@@ -528,7 +528,7 @@
 		self.pressedIndexPath = [[self.theTableView indexPathForRowAtPoint:longPressLocation] copy];
         
         if (self.topicActionSheet != nil) {
-            self.topicActionSheet, self.topicActionSheet = nil;
+            self.topicActionSheet = nil;
         }
         
 		self.topicActionSheet = [[UIActionSheet alloc] initWithTitle:@":smiley-menu:"

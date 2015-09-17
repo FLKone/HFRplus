@@ -19,7 +19,7 @@
     UITabBarItem *tabBarItem1 = [self.tabBar.items objectAtIndex:0];
     UITabBarItem *tabBarItem2 = [self.tabBar.items objectAtIndex:1];
     UITabBarItem *tabBarItem3 = [self.tabBar.items objectAtIndex:2];
-    UITabBarItem *tabBarItem4 = [self.tabBar.items objectAtIndex:3];
+    //UITabBarItem *tabBarItem4 = [self.tabBar.items objectAtIndex:3];
     
     if (SYSTEM_VERSION_LESS_THAN(@"7")) {
         [tabBarItem1 setImage:[UIImage imageNamed:@"44-shoebox"]];
@@ -98,7 +98,7 @@
 }
 
 /* for iOS6 support */
-- (NSUInteger)supportedInterfaceOrientations
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
     //NSLog(@"supportedInterfaceOrientations");
     

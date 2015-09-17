@@ -125,11 +125,13 @@
 -(void)dismissActionSheet;
 -(void)segmentFilterAction;
 
+- (void)cancelFetchContent;
 - (void)fetchContentStarted:(ASIHTTPRequest *)theRequest;
 - (void)fetchContentComplete:(ASIHTTPRequest *)theRequest;
 - (void)fetchContentFailed:(ASIHTTPRequest *)theRequest;
 
 - (void)chooseTopicPage;
+- (void)newTopic;
 
 - (void)setTopicViewed;
 - (void)pushTopic;

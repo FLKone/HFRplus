@@ -72,18 +72,21 @@
 	url = [url stringByReplacingOccurrencesOfString:@"[/img]" withString:@""];
 	url = [url stringByReplacingOccurrencesOfString:@"hfr-rehost.net" withString:@"reho.st"];
     //NSLog(@"url = %@", url);
+
+    __weak RehostCell *self_ = self;
+
     [self.previewImage setImageWithURL:[NSURL URLWithString:url] success:^(UIImage *image) {
         //sd
        // NSLog(@"OK %@", image);
-        [self.previewImage setImage:image];
-        [self.previewImage setHidden:NO];
+        [self_.previewImage setImage:image];
+        [self_.previewImage setHidden:NO];
 
-        [self.miniBtn setHidden:NO];
-        [self.previewBtn setHidden:NO];
-        [self.fullBtn setHidden:NO];
-        [self.miniBtn setHidden:NO];
+        [self_.miniBtn setHidden:NO];
+        [self_.previewBtn setHidden:NO];
+        [self_.fullBtn setHidden:NO];
+        [self_.miniBtn setHidden:NO];
         
-        [self.spinner stopAnimating];
+        [self_.spinner stopAnimating];
 
     } failure:^(NSError *error) {
         //sd

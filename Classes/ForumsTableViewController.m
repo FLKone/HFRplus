@@ -285,11 +285,11 @@
                         aSubForum2 = [[Forum alloc] init];
                         
                         //Title
-                        aSubForum2Title = [[NSString alloc] initWithString:@"Divers"];
+                        aSubForum2Title = @"Divers";
                         [aSubForum2 setATitle:aSubForum2Title];
                         
                         //URL
-                        aSubForum2URL = [[NSString alloc] initWithString:@"/hfr/Programmation/Divers-6/liste_sujet-1.htm"];
+                        aSubForum2URL = @"/hfr/Programmation/Divers-6/liste_sujet-1.htm";
                         [aSubForum2 setAURL:aSubForum2URL];
                         
                         [tmpSubCatArray addObject:aSubForum2];     
@@ -298,11 +298,12 @@
                         aSubForum2 = [[Forum alloc] init];
                         
                         //Title
-                        aSubForum2Title = [[NSString alloc] initWithString:@"ADA"];
+                        aSubForum2Title = @"ADA";
                         [aSubForum2 setATitle:aSubForum2Title];
                         
+                        
                         //URL
-                        aSubForum2URL = [[NSString alloc] initWithString:@"/hfr/Programmation/ADA/liste_sujet-1.htm"];
+                        aSubForum2URL = @"/hfr/Programmation/ADA/liste_sujet-1.htm";
                         [aSubForum2 setAURL:aSubForum2URL];
                         
                         [tmpSubCatArray addObject:aSubForum2];                    
@@ -311,11 +312,11 @@
                         aSubForum2 = [[Forum alloc] init];
                         
                         //Title
-                        aSubForum2Title = [[NSString alloc] initWithString:@"Algo"];
+                        aSubForum2Title = @"Algo";
                         [aSubForum2 setATitle:aSubForum2Title];
                         
                         //URL
-                        aSubForum2URL = [[NSString alloc] initWithString:@"/hfr/Programmation/Algo/liste_sujet-1.htm"];
+                        aSubForum2URL = @"/hfr/Programmation/Algo/liste_sujet-1.htm";
                         [aSubForum2 setAURL:aSubForum2URL];
                         
                         [tmpSubCatArray addObject:aSubForum2];                    
@@ -329,11 +330,12 @@
                         Forum *aSubForum2= [[Forum alloc] init];
                         
                         //Title
-                        NSString *aSubForum2Title = [[NSString alloc] initWithString:@"Bench"];
+                        NSString *aSubForum2Title = @"Bench";
                         [aSubForum2 setATitle:aSubForum2Title];
                         
                         //URL
-                        NSString *aSubForum2URL = [[NSString alloc] initWithString:@"/hfr/Hardware/Benchs/liste_sujet-1.htm"];
+                    
+                        NSString *aSubForum2URL = @"/hfr/Hardware/Benchs/liste_sujet-1.htm";
                         [aSubForum2 setAURL:aSubForum2URL];
                         
                         [tmpSubCatArray addObject:aSubForum2];     
@@ -345,11 +347,11 @@
                         Forum *aSubForum2= [[Forum alloc] init];
                         
                         //Title
-                        NSString *aSubForum2Title = [[NSString alloc] initWithString:@"Divers"];
+                        NSString *aSubForum2Title = @"Divers";
                         [aSubForum2 setATitle:aSubForum2Title];
                         
                         //URL
-                        NSString *aSubForum2URL = [[NSString alloc] initWithString:@"/hfr/OverclockingCoolingModding/Divers-8/liste_sujet-1.htm"];
+                        NSString *aSubForum2URL = @"/hfr/OverclockingCoolingModding/Divers-8/liste_sujet-1.htm";
                         [aSubForum2 setAURL:aSubForum2URL];
                         
                         [tmpSubCatArray addObject:aSubForum2];     
@@ -361,11 +363,11 @@
                         Forum *aSubForum2= [[Forum alloc] init];
                         
                         //Title
-                        NSString *aSubForum2Title = [[NSString alloc] initWithString:@"Divers"];
+                        NSString *aSubForum2Title = @"Divers";
                         [aSubForum2 setATitle:aSubForum2Title];
                         
                         //URL
-                        NSString *aSubForum2URL = [[NSString alloc] initWithString:@"/hfr/Photonumerique/Divers-7/liste_sujet-1.htm"];
+                        NSString *aSubForum2URL = @"/hfr/Photonumerique/Divers-7/liste_sujet-1.htm";
                         [aSubForum2 setAURL:aSubForum2URL];
                         
                         [tmpSubCatArray addObject:aSubForum2];     
@@ -377,11 +379,11 @@
                         Forum *aSubForum2= [[Forum alloc] init];
                         
                         //Title
-                        NSString *aSubForum2Title = [[NSString alloc] initWithString:@"Win 9x/Me"];
+                        NSString *aSubForum2Title = @"Win 9x/Me";
                         [aSubForum2 setATitle:aSubForum2Title];
                         
                         //URL
-                        NSString *aSubForum2URL = [[NSString alloc] initWithString:@"/hfr/WindowsSoftware/Win-9x-me/liste_sujet-1.htm"];
+                        NSString *aSubForum2URL = @"/hfr/WindowsSoftware/Win-9x-me/liste_sujet-1.htm";
                         [aSubForum2 setAURL:aSubForum2URL];
                         
                         [tmpSubCatArray addObject:aSubForum2];     
@@ -397,11 +399,11 @@
                         aSubForum2 = [[Forum alloc] init];
                         
                         //Title
-                        aSubForum2Title = [[NSString alloc] initWithString:@"ASM"];
+                        aSubForum2Title = @"ASM";
                         [aSubForum2 setATitle:aSubForum2Title];
                         
                         //URL
-                        aSubForum2URL = [[NSString alloc] initWithString:@"/hfr/Programmation/ASM/liste_sujet-1.htm"];
+                        aSubForum2URL = @"/hfr/Programmation/ASM/liste_sujet-1.htm";
                         [aSubForum2 setAURL:aSubForum2URL];
                         
                         [tmpSubCatArray addObject:aSubForum2];     
@@ -410,11 +412,11 @@
                         aSubForum2 = [[Forum alloc] init];
                         
                         //Title
-                        aSubForum2Title = [[NSString alloc] initWithString:@"ASP"];
+                        aSubForum2Title = @"ASP";
                         [aSubForum2 setATitle:aSubForum2Title];
                         
                         //URL
-                        aSubForum2URL = [[NSString alloc] initWithString:@"/hfr/Programmation/ASP/liste_sujet-1.htm"];
+                        aSubForum2URL = @"/hfr/Programmation/ASP/liste_sujet-1.htm";
                         [aSubForum2 setAURL:aSubForum2URL];
                         
                         [tmpSubCatArray addObject:aSubForum2];                    
@@ -423,11 +425,11 @@
                         aSubForum2 = [[Forum alloc] init];
                         
                         //Title
-                        aSubForum2Title = [[NSString alloc] initWithString:@"Biblio Links"];
+                        aSubForum2Title = @"Biblio Links";
                         [aSubForum2 setATitle:aSubForum2Title];
                         
                         //URL
-                        aSubForum2URL = [[NSString alloc] initWithString:@"/hfr/Programmation/BiblioLinks/liste_sujet-1.htm"];
+                        aSubForum2URL = @"/hfr/Programmation/BiblioLinks/liste_sujet-1.htm";
                         [aSubForum2 setAURL:aSubForum2URL];
                         
                         [tmpSubCatArray addObject:aSubForum2];                    
@@ -436,11 +438,11 @@
                         aSubForum2 = [[Forum alloc] init];
                         
                         //Title
-                        aSubForum2Title = [[NSString alloc] initWithString:@"C"];
+                        aSubForum2Title = @"C";
                         [aSubForum2 setATitle:aSubForum2Title];
                         
                         //URL
-                        aSubForum2URL = [[NSString alloc] initWithString:@"/hfr/Programmation/C/liste_sujet-1.htm"];
+                        aSubForum2URL = @"/hfr/Programmation/C/liste_sujet-1.htm";
                         [aSubForum2 setAURL:aSubForum2URL];
                         
                         [tmpSubCatArray addObject:aSubForum2];                    
@@ -452,11 +454,11 @@
                         Forum *aSubForum2= [[Forum alloc] init];
                         
                         //Title
-                        NSString *aSubForum2Title = [[NSString alloc] initWithString:@"C#/.NET managed"];
+                        NSString *aSubForum2Title = @"C#/.NET managed";
                         [aSubForum2 setATitle:aSubForum2Title];
                         
                         //URL
-                        NSString *aSubForum2URL = [[NSString alloc] initWithString:@"/hfr/Programmation/CNET-managed/liste_sujet-1.htm"];
+                        NSString *aSubForum2URL = @"/hfr/Programmation/CNET-managed/liste_sujet-1.htm";
                         [aSubForum2 setAURL:aSubForum2URL];
                         
                         [tmpSubCatArray addObject:aSubForum2];     
@@ -468,11 +470,11 @@
                         Forum *aSubForum2= [[Forum alloc] init];
                         
                         //Title
-                        NSString *aSubForum2Title = [[NSString alloc] initWithString:@"Flash/ActionScript"];
+                        NSString *aSubForum2Title = @"Flash/ActionScript";
                         [aSubForum2 setATitle:aSubForum2Title];
                         
                         //URL
-                        NSString *aSubForum2URL = [[NSString alloc] initWithString:@"/hfr/Programmation/Flash-ActionScript/liste_sujet-1.htm"];
+                        NSString *aSubForum2URL = @"/hfr/Programmation/Flash-ActionScript/liste_sujet-1.htm";
                         [aSubForum2 setAURL:aSubForum2URL];
                         
                         [tmpSubCatArray addObject:aSubForum2];     
@@ -488,11 +490,11 @@
                         aSubForum2 = [[Forum alloc] init];
                         
                         //Title
-                        aSubForum2Title = [[NSString alloc] initWithString:@"Langages fonctionnels"];
+                        aSubForum2Title = @"Langages fonctionnels";
                         [aSubForum2 setATitle:aSubForum2Title];
                         
                         //URL
-                        aSubForum2URL = [[NSString alloc] initWithString:@"/hfr/Programmation/Langages-fonctionnels/liste_sujet-1.htm"];
+                        aSubForum2URL = @"/hfr/Programmation/Langages-fonctionnels/liste_sujet-1.htm";
                         [aSubForum2 setAURL:aSubForum2URL];
                         
                         [tmpSubCatArray addObject:aSubForum2];     
@@ -501,11 +503,11 @@
                         aSubForum2 = [[Forum alloc] init];
                         
                         //Title
-                        aSubForum2Title = [[NSString alloc] initWithString:@"PDA"];
+                        aSubForum2Title = @"PDA";
                         [aSubForum2 setATitle:aSubForum2Title];
                         
                         //URL
-                        aSubForum2URL = [[NSString alloc] initWithString:@"/hfr/Programmation/PDA/liste_sujet-1.htm"];
+                        aSubForum2URL = @"/hfr/Programmation/PDA/liste_sujet-1.htm";
                         [aSubForum2 setAURL:aSubForum2URL];
                         
                         [tmpSubCatArray addObject:aSubForum2];                    
@@ -514,11 +516,11 @@
                         aSubForum2 = [[Forum alloc] init];
                         
                         //Title
-                        aSubForum2Title = [[NSString alloc] initWithString:@"Perl"];
+                        aSubForum2Title = @"Perl";
                         [aSubForum2 setATitle:aSubForum2Title];
                         
                         //URL
-                        aSubForum2URL = [[NSString alloc] initWithString:@"/hfr/Programmation/Perl/liste_sujet-1.htm"];
+                        aSubForum2URL = @"/hfr/Programmation/Perl/liste_sujet-1.htm";
                         [aSubForum2 setAURL:aSubForum2URL];
                         
                         [tmpSubCatArray addObject:aSubForum2];                    
@@ -534,11 +536,11 @@
                         aSubForum2 = [[Forum alloc] init];
                         
                         //Title
-                        aSubForum2Title = [[NSString alloc] initWithString:@"Python"];
+                        aSubForum2Title = @"Python";
                         [aSubForum2 setATitle:aSubForum2Title];
                         
                         //URL
-                        aSubForum2URL = [[NSString alloc] initWithString:@"/hfr/Programmation/Python/liste_sujet-1.htm"];
+                        aSubForum2URL = @"/hfr/Programmation/Python/liste_sujet-1.htm";
                         [aSubForum2 setAURL:aSubForum2URL];
                         
                         [tmpSubCatArray addObject:aSubForum2];     
@@ -547,11 +549,11 @@
                         aSubForum2 = [[Forum alloc] init];
                         
                         //Title
-                        aSubForum2Title = [[NSString alloc] initWithString:@"Ruby/Rails"];
+                        aSubForum2Title = @"Ruby/Rails";
                         [aSubForum2 setATitle:aSubForum2Title];
                         
                         //URL
-                        aSubForum2URL = [[NSString alloc] initWithString:@"/hfr/Programmation/Ruby/liste_sujet-1.htm"];
+                        aSubForum2URL = @"/hfr/Programmation/Ruby/liste_sujet-1.htm";
                         [aSubForum2 setAURL:aSubForum2URL];
                         
                         [tmpSubCatArray addObject:aSubForum2];                    
@@ -563,11 +565,11 @@
                         Forum *aSubForum2= [[Forum alloc] init];
                         
                         //Title
-                        NSString *aSubForum2Title = [[NSString alloc] initWithString:@"Shell/Batch"];
+                        NSString *aSubForum2Title = @"Shell/Batch";
                         [aSubForum2 setATitle:aSubForum2Title];
                         
                         //URL
-                        NSString *aSubForum2URL = [[NSString alloc] initWithString:@"/hfr/Programmation/Shell-Batch/liste_sujet-1.htm"];
+                        NSString *aSubForum2URL = @"/hfr/Programmation/Shell-Batch/liste_sujet-1.htm";
                         [aSubForum2 setAURL:aSubForum2URL];
                         
                         [tmpSubCatArray addObject:aSubForum2];     
@@ -579,11 +581,11 @@
                         Forum *aSubForum2= [[Forum alloc] init];
                         
                         //Title
-                        NSString *aSubForum2Title = [[NSString alloc] initWithString:@"XML/XSL"];
+                        NSString *aSubForum2Title = @"XML/XSL";
                         [aSubForum2 setATitle:aSubForum2Title];
                         
                         //URL
-                        NSString *aSubForum2URL = [[NSString alloc] initWithString:@"/hfr/Programmation/XML-XSL/liste_sujet-1.htm"];
+                        NSString *aSubForum2URL = @"/hfr/Programmation/XML-XSL/liste_sujet-1.htm";
                         [aSubForum2 setAURL:aSubForum2URL];
                         
                         [tmpSubCatArray addObject:aSubForum2];     
@@ -599,11 +601,11 @@
                         aSubForum2 = [[Forum alloc] init];
                         
                         //Title
-                        aSubForum2Title = [[NSString alloc] initWithString:@"Concours"];
+                        aSubForum2Title = @"Concours";
                         [aSubForum2 setATitle:aSubForum2Title];
                         
                         //URL
-                        aSubForum2URL = [[NSString alloc] initWithString:@"/hfr/Graphisme/Concours-2/liste_sujet-1.htm"];
+                        aSubForum2URL = @"/hfr/Graphisme/Concours-2/liste_sujet-1.htm";
                         [aSubForum2 setAURL:aSubForum2URL];
                         
                         [tmpSubCatArray addObject:aSubForum2];     
@@ -612,11 +614,11 @@
                         aSubForum2 = [[Forum alloc] init];
                         
                         //Title
-                        aSubForum2Title = [[NSString alloc] initWithString:@"Ressources"];
+                        aSubForum2Title = @"Ressources";
                         [aSubForum2 setATitle:aSubForum2Title];
                         
                         //URL
-                        aSubForum2URL = [[NSString alloc] initWithString:@"/hfr/Graphisme/Ressources/liste_sujet-1.htm"];
+                        aSubForum2URL = @"/hfr/Graphisme/Ressources/liste_sujet-1.htm";
                         [aSubForum2 setAURL:aSubForum2URL];
                         
                         [tmpSubCatArray addObject:aSubForum2];                    
@@ -625,11 +627,11 @@
                         aSubForum2 = [[Forum alloc] init];
                         
                         //Title
-                        aSubForum2Title = [[NSString alloc] initWithString:@"Divers"];
+                        aSubForum2Title = @"Divers";
                         [aSubForum2 setATitle:aSubForum2Title];
                         
                         //URL
-                        aSubForum2URL = [[NSString alloc] initWithString:@"/hfr/Graphisme/Divers-5/liste_sujet-1.htm"];
+                        aSubForum2URL = @"/hfr/Graphisme/Divers-5/liste_sujet-1.htm";
                         [aSubForum2 setAURL:aSubForum2URL];
                         
                         [tmpSubCatArray addObject:aSubForum2];                    
@@ -641,11 +643,11 @@
                         Forum *aSubForum2= [[Forum alloc] init];
                         
                         //Title
-                        NSString *aSubForum2Title = [[NSString alloc] initWithString:@"Divers"];
+                        NSString *aSubForum2Title = @"Divers";
                         [aSubForum2 setATitle:aSubForum2Title];
                         
                         //URL
-                        NSString *aSubForum2URL = [[NSString alloc] initWithString:@"/hfr/AchatsVentes/Divers-4/liste_sujet-1.htm"];
+                        NSString *aSubForum2URL = @"/hfr/AchatsVentes/Divers-4/liste_sujet-1.htm";
                         [aSubForum2 setAURL:aSubForum2URL];
                         
                         [tmpSubCatArray addObject:aSubForum2];     
@@ -657,11 +659,11 @@
                         Forum *aSubForum2= [[Forum alloc] init];
                         
                         //Title
-                        NSString *aSubForum2Title = [[NSString alloc] initWithString:@"Règles et coutumes"];
+                        NSString *aSubForum2Title = @"Règles et coutumes";
                         [aSubForum2 setATitle:aSubForum2Title];
                         
                         //URL
-                        NSString *aSubForum2URL = [[NSString alloc] initWithString:@"/hfr/AchatsVentes/Regles-coutumes/liste_sujet-1.htm"];
+                        NSString *aSubForum2URL = @"/hfr/AchatsVentes/Regles-coutumes/liste_sujet-1.htm";
                         [aSubForum2 setAURL:aSubForum2URL];
                         
                         [tmpSubCatArray addObject:aSubForum2];     
@@ -780,9 +782,10 @@
     v.backgroundColor = [UIColor clearColor];
     [self.forumsTableView setTableFooterView:v];
     
+    __weak ForumsTableViewController *self_ = self;
     [self.forumsTableView addPullToRefreshWithActionHandler:^{
         //NSLog(@"=== BEGIN");
-        [self fetchContent];
+        [self_ fetchContent];
         //NSLog(@"=== END");
     }];
     

@@ -206,7 +206,7 @@ separateSecondaryViewControllerFromPrimaryViewController:(UIViewController *)pri
     
     [rightNavController popToRootViewControllerAnimated:YES];
     
-    [rightNavController setViewControllers:nil];
+    [rightNavController setViewControllers:[NSArray array]];
     UIViewController * uivc = [[UIViewController alloc] init];
     uivc.title = @"HFR+";
     [rightNavController setViewControllers:[NSMutableArray arrayWithObjects:uivc, nil]];
@@ -247,7 +247,7 @@ separateSecondaryViewControllerFromPrimaryViewController:(UIViewController *)pri
 
 -(void)NavPlus:(NSString *)url {
     //Les deux controllers
-    TabBarController *leftTabBarController = [self.viewControllers objectAtIndex:0];
+    //TabBarController *leftTabBarController = [self.viewControllers objectAtIndex:0];
     UINavigationController *rightNavController = [self.viewControllers objectAtIndex:1];
     
     //Première tab > navController
@@ -273,7 +273,7 @@ separateSecondaryViewControllerFromPrimaryViewController:(UIViewController *)pri
         [browserViewController setFullBrowser:YES];
         
         [rightNavController popToRootViewControllerAnimated:NO];
-        [rightNavController setViewControllers:nil animated:NO];
+        [rightNavController setViewControllers:[NSArray array] animated:NO];
         [rightNavController setViewControllers:[NSMutableArray arrayWithObjects:browserViewController, nil] animated:NO];
         
     }
@@ -327,7 +327,7 @@ separateSecondaryViewControllerFromPrimaryViewController:(UIViewController *)pri
     [browserViewController setFullBrowser:YES];
     
     [rightNavController popToRootViewControllerAnimated:NO];
-    [rightNavController setViewControllers:nil animated:NO];
+    [rightNavController setViewControllers:[NSArray array] animated:NO];
     [rightNavController setViewControllers:[NSMutableArray arrayWithObjects:browserViewController, nil] animated:NO];
     
     NSLog(@"END MoveRightToLeft");
@@ -338,7 +338,7 @@ separateSecondaryViewControllerFromPrimaryViewController:(UIViewController *)pri
 }
 
 /* for iOS6 support */
-- (NSUInteger)supportedInterfaceOrientations
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
 	if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"landscape_mode"] isEqualToString:@"all"]) {
         //NSLog(@"All");

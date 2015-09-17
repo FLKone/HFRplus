@@ -298,9 +298,10 @@
 					//async dl 
                     
                     ASIHTTPRequest *operation = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:tmpURL]];
+                    __weak ASIHTTPRequest *operation_ = operation;
                     [operation setCompletionBlock:^{
                         //NSLog(@"setCompletionBlock");
-                        [fileManager createFileAtPath:key contents:[operation responseData] attributes:nil];
+                        [fileManager createFileAtPath:key contents:[operation_ responseData] attributes:nil];
                         fasTest.imageUI = key;
                     }];
                     [operation setFailedBlock:^{

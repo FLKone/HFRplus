@@ -526,19 +526,19 @@
         cell.textLabel.text = [theRow objectForKey:@"data"];
         //NSLog(@"theRow %@", theRow);
 
-        
+        __weak AvatarTableViewCell *cell_ = cell;
         [cell.imageView setImageWithURL:[theRow objectForKey:@"url"] placeholderImage:[UIImage imageNamed:@"avatar_male_gray_on_light_48x48"] success:^(UIImage *image) {
 
             //NSLog(@"frame base %@", NSStringFromCGRect(cell.imageView.frame));
             //NSLog(@"image base %@", NSStringFromCGSize(image.size));
             
             float newW = image.size.width / ( image.size.height / cell.imageView.frame.size.height );
-            __weak CGRect oldFrame = cell.imageView.frame;
-
+             CGRect oldFrame = cell_.imageView.frame;
+//__weak
             oldFrame.size.width = newW;
-            cell.imageView.frame = oldFrame;
+            cell_.imageView.frame = oldFrame;
 
-            [cell layoutSubviews];
+            [cell_ layoutSubviews];
             
             //NSLog(@"frame base %@", NSStringFromCGRect(cell.imageView.frame));
 

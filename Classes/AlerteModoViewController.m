@@ -343,7 +343,7 @@
 #pragma mark -
 #pragma mark Orientation
 /* for iOS6 support */
-- (NSUInteger)supportedInterfaceOrientations
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
     if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"landscape_mode"] isEqualToString:@"all"]) {
         return UIInterfaceOrientationMaskAll;
