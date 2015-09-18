@@ -93,23 +93,23 @@
 		//Replacing Links with IMG with custom IMG
 		NSString *regEx3 = @"<a rel=\"nofollow\" href=\"([^\"]+)\" target=\"_blank\" class=\"cLink\"><img src=\"([^\"]+)\" alt=\"[^\"]+\" title=\"[^\"]+\" onload=\"[^\"]+\" style=\"[^\"]+\"></a>";			
 		myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx3
-															  withString:@"<img class=\"hfrplusimg\" title=\"%%ID%%\" src=\"121-landscapebig.png\" alt=\"$2\" longdesc=\"$1\">"];
+															  withString:@"<img onClick=\"window.location = 'oijlkajsdoihjlkjasdoimbrows://'+this.title+'/'+encodeURIComponent(this.alt); return false;\" class=\"hfrplusimg\" title=\"%%ID%%\" src=\"121-landscapebig.png\" alt=\"$2\" longdesc=\"$1\">"];
 		
 		//External Images			
 		NSString *regEx = @"<img src=\"([^\"]+)\" alt=\"[^\"]+\" title=\"[^\"]+\" onload=\"[^\"]+\" style=\"[^\"]+\">";			
 		myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx
-															  withString:@"<img class=\"hfrplusimg\" title=\"%%ID%%\" src=\"121-landscapebig.png\" alt=\"$1\" longdesc=\"\">"];
+															  withString:@"<img onClick=\"window.location = 'oijlkajsdoihjlkjasdoimbrows://'+this.title+'/'+encodeURIComponent(this.alt); return false;\" class=\"hfrplusimg\" title=\"%%ID%%\" src=\"121-landscapebig.png\" alt=\"$1\" longdesc=\"\">"];
 		
 		
 	} else if ([display isEqualToString:@"yes"]) {
 		NSString *regEx3 = @"<a rel=\"nofollow\" href=\"([^\"]+)\" target=\"_blank\" class=\"cLink\"><img src=\"([^\"]+)\" alt=\"[^\"]+\" title=\"[^\"]+\" onload=\"[^\"]+\" style=\"[^\"]+\"></a>";			
 		myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx3
-															  withString:@"<img class=\"hfrplusimg\" title=\"%%ID%%\" src=\"$2\" alt=\"$2\" longdesc=\"$1\">"];
+															  withString:@"<img onClick=\"window.location = 'oijlkajsdoihjlkjasdoimbrows://'+this.title+'/'+encodeURIComponent(this.alt); return false;\" class=\"hfrplusimg\" title=\"%%ID%%\" src=\"$2\" alt=\"$2\" longdesc=\"$1\">"];
 		
 		//External Images			
 		NSString *regEx = @"<img src=\"([^\"]+)\" alt=\"[^\"]+\" title=\"[^\"]+\" onload=\"[^\"]+\" style=\"[^\"]+\">";			
 		myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx
-															  withString:@"<img class=\"hfrplusimg\" title=\"%%ID%%\" src=\"$1\" alt=\"$1\" longdesc=\"\">"];	
+															  withString:@"<img onClick=\"window.location = 'oijlkajsdoihjlkjasdoimbrows://'+this.title+'/'+encodeURIComponent(this.alt); return false;\" class=\"hfrplusimg\" title=\"%%ID%%\" src=\"$1\" alt=\"$1\" longdesc=\"\">"];
 	} else if ([display isEqualToString:@"wifi"]) {
         
         NetworkStatus netStatus = [[[HFRplusAppDelegate sharedAppDelegate] internetReach] currentReachabilityStatus];
@@ -122,12 +122,12 @@
                 //Replacing Links with IMG with custom IMG
                 NSString *regEx3 = @"<a rel=\"nofollow\" href=\"([^\"]+)\" target=\"_blank\" class=\"cLink\"><img src=\"([^\"]+)\" alt=\"[^\"]+\" title=\"[^\"]+\" onload=\"[^\"]+\" style=\"[^\"]+\"></a>";			
                 myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx3
-                                                                      withString:@"<img class=\"hfrplusimg\" title=\"%%ID%%\" src=\"121-landscapebig.png\" alt=\"$2\" longdesc=\"$1\">"];
+                                                                      withString:@"<img onClick=\"window.location = 'oijlkajsdoihjlkjasdoimbrows://'+this.title+'/'+encodeURIComponent(this.alt); return false;\" class=\"hfrplusimg\" title=\"%%ID%%\" src=\"121-landscapebig.png\" alt=\"$2\" longdesc=\"$1\">"];
                 
                 //External Images			
                 NSString *regEx = @"<img src=\"([^\"]+)\" alt=\"[^\"]+\" title=\"[^\"]+\" onload=\"[^\"]+\" style=\"[^\"]+\">";			
                 myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx
-                                                                      withString:@"<img class=\"hfrplusimg\" title=\"%%ID%%\" src=\"121-landscapebig.png\" alt=\"$1\" longdesc=\"\">"];	                
+                                                                      withString:@"<img onClick=\"window.location = 'oijlkajsdoihjlkjasdoimbrows://'+this.title+'/'+encodeURIComponent(this.alt); return false;\" class=\"hfrplusimg\" title=\"%%ID%%\" src=\"121-landscapebig.png\" alt=\"$1\" longdesc=\"\">"];
                 break;
             }
             case ReachableViaWiFi:
@@ -135,12 +135,12 @@
                // NSLog( @"Reachable WiFi");
                 NSString *regEx3 = @"<a rel=\"nofollow\" href=\"([^\"]+)\" target=\"_blank\" class=\"cLink\"><img src=\"([^\"]+)\" alt=\"[^\"]+\" title=\"[^\"]+\" onload=\"[^\"]+\" style=\"[^\"]+\"></a>";			
                 myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx3
-                                                                      withString:@"<img class=\"hfrplusimg\" title=\"%%ID%%\" src=\"$2\" alt=\"$2\" longdesc=\"$1\">"];
+                                                                      withString:@"<img onClick=\"window.location = 'oijlkajsdoihjlkjasdoimbrows://'+this.title+'/'+encodeURIComponent(this.alt); return false;\" class=\"hfrplusimg\" title=\"%%ID%%\" src=\"$2\" alt=\"$2\" longdesc=\"$1\">"];
                 
                 //External Images			
                 NSString *regEx = @"<img src=\"([^\"]+)\" alt=\"[^\"]+\" title=\"[^\"]+\" onload=\"[^\"]+\" style=\"[^\"]+\">";			
                 myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx
-                                                                      withString:@"<img class=\"hfrplusimg\" title=\"%%ID%%\" src=\"$1\" alt=\"$1\" longdesc=\"\">"];	
+                                                                      withString:@"<img onClick=\"window.location = 'oijlkajsdoihjlkjasdoimbrows://'+this.title+'/'+encodeURIComponent(this.alt); return false;\" class=\"hfrplusimg\" title=\"%%ID%%\" src=\"$1\" alt=\"$1\" longdesc=\"\">"];
                 
                 break;
             }

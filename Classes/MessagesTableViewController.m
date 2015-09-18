@@ -1662,8 +1662,8 @@
         if (([self pageNumber] == [self lastPageNumber]) || ([self lastPageNumber] == 0)) {
             //NSLog(@"premiere et unique ou dernier");
             //'before'
-            refreshBtn = @"<div id=\"actualiserbtn\">Actualiser</div>";
-            
+            refreshBtn = @"<div id=\"actualiserbtn\" onClick=\"window.location = 'oijlkajsdoihjlkjasdorefresh://data'; return false;\">Actualiser</div>";
+
         }
         else {
             //NSLog(@"autre");
@@ -1827,8 +1827,8 @@
         //}
         //Position du Flag
         
-        
-        
+
+
         NSLog(@"jsString2 %@", jsString2);
         NSLog(@"jsString3 %@", jsString3);
         NSLog(@"result %@", result);
@@ -1838,6 +1838,11 @@
         
         [self.loadingView setHidden:YES];
         [self.messagesWebView setHidden:NO];
+        
+        NSString *jsString = @"";
+
+        jsString = [jsString stringByAppendingString:@"$('.message').addSwipeEvents().bind('doubletap', function(evt, touch) { window.location = 'oijlkajsdoihjlkjasdodetails://'+this.id; });"];
+        [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString];
         return;
     }
     NSLog(@"== DOMed");
@@ -1851,22 +1856,20 @@
     
     //bug iOS9--
 
-    NSString *jsString = @"";
+    
     
 	//on ajoute le bouton actualiser si besoin
-	if (([self pageNumber] == [self lastPageNumber]) || ([self lastPageNumber] == 0)) {
+	//if (([self pageNumber] == [self lastPageNumber]) || ([self lastPageNumber] == 0)) {
 		//NSLog(@"premiere et unique ou dernier");
 		//'before'
-		jsString = [jsString stringByAppendingString:[NSString stringWithFormat:@"$('#actualiserbtn').click( function(){ window.location = 'oijlkajsdoihjlkjasdorefresh://data'; });"]];
+		//jsString = [jsString stringByAppendingString:[NSString stringWithFormat:@"$('#actualiserbtn').click( function(){ window.location = 'oijlkajsdoihjlkjasdorefresh://data'; });"]];
 		
-	}
+	//}
 	
-	jsString = [jsString stringByAppendingString:@"$('.message').addSwipeEvents().bind('doubletap', function(evt, touch) { window.location = 'oijlkajsdoihjlkjasdodetails://'+this.id; });"];
-	jsString = [jsString stringByAppendingString:@"$('.header').click(function(event) { var offset = $(this).offset(); event.stopPropagation(); window.location = 'oijlkajsdoihjlkjasdopopup://'+(offset.top-window.pageYOffset)+'/'+this.parentNode.id; });"];
+//	jsString = [jsString stringByAppendingString:@"$('.header').click(function(event) { var offset = $(this).offset(); event.stopPropagation(); window.location = 'oijlkajsdoihjlkjasdopopup://'+(offset.top-window.pageYOffset)+'/'+this.parentNode.id; });"];
 	
-	jsString = [jsString stringByAppendingString:@"$('.hfrplusimg').click(function() { window.location = 'oijlkajsdoihjlkjasdoimbrows://'+this.title+'/'+encodeURIComponent(this.alt); });"];
+//	jsString = [jsString stringByAppendingString:@"$('.hfrplusimg').click(function() { window.location = 'oijlkajsdoihjlkjasdoimbrows://'+this.title+'/'+encodeURIComponent(this.alt); });"];
 
-    [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString];
 
 }
 
@@ -1890,7 +1893,7 @@
 
 //NSSelectorFromString([[[self arrayAction] objectAtIndex:curPostID] objectForKey:@"code"])
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
-    //NSLog(@"MTV %@ nbS=%lu", NSStringFromSelector(action), [UIMenuController sharedMenuController].menuItems.count);
+    NSLog(@"MTV %@ nbS=%lu", NSStringFromSelector(action), [UIMenuController sharedMenuController].menuItems.count);
     
     BOOL returnA;
     
@@ -1898,23 +1901,35 @@
         returnA = NO;
     } else {
         returnA = [super canPerformAction:action withSender:sender];
+
+        if ([NSStringFromSelector(action) isEqualToString:@"selectAll:"]) { NSLog(@"selectAllselectAllselectAll");returnA = NO; }
+        if ([NSStringFromSelector(action) isEqualToString:@"_define:"]) returnA = NO;
+        if ([NSStringFromSelector(action) isEqualToString:@"_share:"]) returnA = NO;
+
     }
 
-    //NSLog(@"MTV returnA %d", returnA);
+    NSLog(@"MTV returnA %d", returnA);
     return returnA;
 }
 
 - (id)targetForAction:(SEL)action
            withSender:(id)sender {
     
-    //NSLog(@"MTV Target %@ nbS=%lu", NSStringFromSelector(action), [UIMenuController sharedMenuController].menuItems.count);
+    NSLog(@"MTV Target %@ nbS=%lu", NSStringFromSelector(action), [UIMenuController sharedMenuController].menuItems.count);
     id returnB = [self.messagesWebView targetForAction:action withSender:sender];
-    //NSLog(@"MTV Target returnB %@", returnB);
+    NSLog(@"MTV Target returnB %@", returnB);
     
     if (!returnB) {
         returnB = [super targetForAction:action withSender:sender];
+        
+
     }
-    //NSLog(@"MTV Target returnB2 %@", returnB);
+    
+    if ([NSStringFromSelector(action) isEqualToString:@"selectAll:"]) returnB = nil;
+    if ([NSStringFromSelector(action) isEqualToString:@"_define:"]) returnB = nil;
+    if ([NSStringFromSelector(action) isEqualToString:@"_share:"]) returnB = nil;
+    
+    NSLog(@"MTV Target returnB2 %@", returnB);
 
     return returnB;
 }
