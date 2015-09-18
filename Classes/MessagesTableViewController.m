@@ -1883,8 +1883,9 @@
     
     [self webViewDidFinishLoadDOM];
     
-    //[webView.scrollView setContentSize: CGSizeMake(300, webView.scrollView.contentSize.height)];
-    
+//    [webView.scrollView setContentSize: CGSizeMake(300, webView.scrollView.contentSize.height)];
+    [webView.scrollView setContentSize: CGSizeMake(webView.frame.size.width, webView.scrollView.contentSize.height)];
+
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
     //NSLog(@"== webViewDidFinishLoad OK");
