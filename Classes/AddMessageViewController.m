@@ -297,9 +297,9 @@
     else
     {
         [oldPhotoBtn setImage:[UIImage imageNamed:@"6-Folder-32"] forState:UIControlStateNormal];
-        [newPhotoBtn setImage:[UIImage imageNamed:@"6-Folder-32"] forState:UIControlStateHighlighted];
+        [oldPhotoBtn setImage:[UIImage imageNamed:@"6-Folder-32"] forState:UIControlStateHighlighted];
         
-        [oldPhotoBtn setImage:[UIImage imageNamed:@"6-Camera-32"] forState:UIControlStateNormal];
+        [newPhotoBtn setImage:[UIImage imageNamed:@"6-Camera-32"] forState:UIControlStateNormal];
         [newPhotoBtn setImage:[UIImage imageNamed:@"6-Camera-32"] forState:UIControlStateHighlighted];
 
         [newPhotoBtn setTitleColor:[UIColor colorWithRed:56/255.0f green:84/255.0f blue:135/255.0f alpha:1.0] forState:UIControlStateNormal];
