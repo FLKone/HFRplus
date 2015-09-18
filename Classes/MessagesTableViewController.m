@@ -1174,7 +1174,7 @@
 */
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-	//[self.messagesWebView becomeFirstResponder];
+	[self.messagesWebView becomeFirstResponder];
 
 	
 	if(self.detailViewController) self.detailViewController = nil;
@@ -1194,7 +1194,7 @@
 	//NSLog(@"viewDidDisappear");
 
     [super viewDidDisappear:animated];
-    //[self.messagesWebView resignFirstResponder];
+    [self.messagesWebView resignFirstResponder];
 	
 }
 /*
@@ -2317,35 +2317,57 @@
 	
 	ASIHTTPRequest  *aRequest =  
 	[[ASIHTTPRequest  alloc]  initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [[arrayData objectAtIndex:curMsg] addFlagUrl]]]];
-	[aRequest startSynchronous];
-	
-	if (request) {
-		
-		if ([aRequest error]) {
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hmmm" message:[[request error] localizedDescription]
-														   delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-			[alert show];	
-			
-			//[responseView setText:[[request error] localizedDescription]];
-		} else if ([aRequest responseString]) {
-			NSString *responseString = [aRequest responseString];
-			responseString = [responseString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-			responseString = [responseString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-			
-			NSString *regExMsg = @".*<div class=\"hop\">([^<]+)</div>.*";
-			NSPredicate *regExErrorPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regExMsg];
-			BOOL isRegExMsg = [regExErrorPredicate evaluateWithObject:responseString];
-			
-			if (isRegExMsg) {
-				//KO
-                //NSLog(@"%@", [responseString stringByMatching:regExMsg capture:1L]);
-				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[[responseString stringByMatching:regExMsg capture:1L] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
-															   delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-				[alert show];	
-			}
-		}
-	}	
-	
+    
+    
+    [aRequest setStartedBlock:^{
+        //alert = [[UIAlertView alloc] initWithTitle:nil message:@"Ajout aux favoris en cours..." delegate:nil cancelButtonTitle:nil otherButtonTitles: nil];
+        //[alert show];
+    }];
+    
+    __weak ASIHTTPRequest*aRequest_ = aRequest;
+
+    [aRequest setCompletionBlock:^{
+        NSString *responseString = [aRequest_ responseString];
+        responseString = [responseString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        responseString = [responseString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        
+        NSString *regExMsg = @".*<div class=\"hop\">([^<]+)</div>.*";
+        NSPredicate *regExErrorPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regExMsg];
+        BOOL isRegExMsg = [regExErrorPredicate evaluateWithObject:responseString];
+        
+        if (isRegExMsg) {
+            //KO
+            //NSLog(@"%@", [responseString stringByMatching:regExMsg capture:1L]);
+  //          usleep(1000000);
+//            [alert dismissWithClickedButtonIndex:0 animated:NO];
+//            [alert dismissWithClickedButtonIndex:0 animated:NO];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[[responseString stringByMatching:regExMsg capture:1L] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
+                                                           delegate:self cancelButtonTitle:nil otherButtonTitles: nil];
+            alert.tag = 6666;
+
+            
+            [alert show];
+            
+            UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+            
+            // Adjust the indicator so it is up a few pixels from the bottom of the alert
+            indicator.center = CGPointMake(alert.bounds.size.width / 2, alert.bounds.size.height - 50);
+            [indicator startAnimating];
+            [alert addSubview:indicator];
+            NSLog(@"Show Alerte");
+        }
+    }];
+    
+    [aRequest setFailedBlock:^{
+        //[alert dismissWithClickedButtonIndex:0 animated:0];
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Hmmm" message:[[aRequest_ error] localizedDescription]
+                                                       delegate:self cancelButtonTitle:@":(" otherButtonTitles: nil];
+        alert.tag = 666;
+    
+        [alert show];
+    }];
+    
+    [aRequest startSynchronous];
 	
 }
 -(void)actionProfil:(NSNumber *)curMsgN {

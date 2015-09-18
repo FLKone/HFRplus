@@ -264,16 +264,21 @@
 
 - (void)didPresentAlertView:(UIAlertView *)alertView
 {
-	//NSLog(@"didPresentAlertView PT %@", alertView);
+	NSLog(@"didPresentAlertView PT %@", alertView);
 	
 	if (([alertView tag] == 666)) {
-        dispatch_after(200000, dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
             [alertView dismissWithClickedButtonIndex:0 animated:YES];
         });
     }
 	else if (([alertView tag] == 668)) {
 		//NSLog(@"keud");
 	}
+    else if (([alertView tag] == 6666)) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [alertView dismissWithClickedButtonIndex:0 animated:YES];
+        });
+    }
 	
 	
 }

@@ -9,6 +9,7 @@
 #import "UITableViewController+Ext.h"
 #import "NSDictionary+Merging.h"
 #import "HFRNavigationController.h"
+#import "UIColor+Extension.h"
 
 #ifdef CONFIGURATION_Release
 #define NSLog(__FORMAT__, ...)

@@ -322,6 +322,8 @@
 		4CC3C75C1B99BC18001B8632 /* AlerteModoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CC3C7581B99BC18001B8632 /* AlerteModoViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		4CC3C7661B9A1513001B8632 /* UITextView+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC3C7651B9A1513001B8632 /* UITextView+Placeholder.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4CC3C7671B9A1513001B8632 /* UITextView+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC3C7651B9A1513001B8632 /* UITextView+Placeholder.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4CC814FD1BAC86ED00F8BB81 /* UIColor+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC814FC1BAC86ED00F8BB81 /* UIColor+Extension.m */; settings = {ASSET_TAGS = (); }; };
+		4CC814FE1BAC86ED00F8BB81 /* UIColor+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC814FC1BAC86ED00F8BB81 /* UIColor+Extension.m */; settings = {ASSET_TAGS = (); }; };
 		4CD6B8801B977E06007FC29E /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD6B87F1B977E06007FC29E /* SafariServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4CD6B8811B977E0E007FC29E /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD6B87F1B977E06007FC29E /* SafariServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4CD6B8831B9796F5007FC29E /* CancelFilled-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6B8821B9796F5007FC29E /* CancelFilled-20.png */; settings = {ASSET_TAGS = (); }; };
@@ -1330,6 +1332,8 @@
 		4CC3C7581B99BC18001B8632 /* AlerteModoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlerteModoViewController.xib; sourceTree = "<group>"; };
 		4CC3C7641B9A1513001B8632 /* UITextView+Placeholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+Placeholder.h"; sourceTree = "<group>"; };
 		4CC3C7651B9A1513001B8632 /* UITextView+Placeholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+Placeholder.m"; sourceTree = "<group>"; };
+		4CC814FB1BAC86ED00F8BB81 /* UIColor+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Extension.h"; sourceTree = "<group>"; };
+		4CC814FC1BAC86ED00F8BB81 /* UIColor+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Extension.m"; sourceTree = "<group>"; };
 		4CD6B87F1B977E06007FC29E /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		4CD6B8821B9796F5007FC29E /* CancelFilled-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CancelFilled-20.png"; sourceTree = "<group>"; };
 		4CD6B8851B979713007FC29E /* CancelFilled-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CancelFilled-20@2x.png"; sourceTree = "<group>"; };
@@ -2518,6 +2522,8 @@
 				CA00C46B17C302610067B457 /* UIWebView+Tools.m */,
 				4CC3C7641B9A1513001B8632 /* UITextView+Placeholder.h */,
 				4CC3C7651B9A1513001B8632 /* UITextView+Placeholder.m */,
+				4CC814FB1BAC86ED00F8BB81 /* UIColor+Extension.h */,
+				4CC814FC1BAC86ED00F8BB81 /* UIColor+Extension.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -3977,6 +3983,7 @@
 				CA00C45917C300140067B457 /* RegexKitLite.m in Sources */,
 				CA00C3ED17C2FE1B0067B457 /* IASKSettingsStoreUserDefaults.m in Sources */,
 				CA00C44417C2FF3F0067B457 /* ASIInputStream.m in Sources */,
+				4CC814FD1BAC86ED00F8BB81 /* UIColor+Extension.m in Sources */,
 				CA00C3B617C2FDB00067B457 /* MWTapDetectingImageView.m in Sources */,
 				CA00C3EE17C2FE1B0067B457 /* IASKSpecifier.m in Sources */,
 				CA00C44F17C2FF4E0067B457 /* MKStoreObserver.m in Sources */,
@@ -4095,6 +4102,7 @@
 				CA7C70F6185EF50E00B348BA /* MWCaptionView.m in Sources */,
 				CA7C7107185EF50E00B348BA /* MWZoomingScrollView.m in Sources */,
 				CA7C7109185EF50E00B348BA /* MWTapDetectingView.m in Sources */,
+				4CC814FE1BAC86ED00F8BB81 /* UIColor+Extension.m in Sources */,
 				CA7C70D9185EF50E00B348BA /* MWTapDetectingImageView.m in Sources */,
 				CA7C710D185EF50E00B348BA /* MWPhoto.m in Sources */,
 				CA7C70BD185EF50E00B348BA /* UIImageView+WebCache.m in Sources */,
