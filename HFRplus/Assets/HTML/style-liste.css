@@ -294,6 +294,8 @@ table.code *, table.fixed * {
 	text-align:center;
 	width:100%;
     background:white;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
 }
 
 #actualiserbtn.loading {
@@ -433,6 +435,8 @@ table.code *, table.fixed * {
     text-align:center;
     text-decoration:none;
     font-weight:bold;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
 }
 
 .message .content .right p.editedhfrlink {
@@ -440,6 +444,8 @@ table.code *, table.fixed * {
     font-style:italic;
     text-align:right;
     clear:both;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
 }
 
 .message .content {
