@@ -1470,22 +1470,45 @@
         NSDictionary *arialDict = [NSDictionary dictionaryWithObject: font1 forKey:NSFontAttributeName];
         NSMutableAttributedString *aAttrString1 = [[NSMutableAttributedString alloc] initWithString:[aTopic aTitle] attributes: arialDict];
         
-        NSString *aTopicAffix = @"";
-        if (aTopic.isSticky) {
-            aTopicAffix = [aTopicAffix stringByAppendingString:@" "];
-        }
-        if (aTopic.isClosed) {
-            aTopicAffix = [aTopicAffix stringByAppendingString:@" "];
-        }
-        
         UIFont *font2 = [UIFont fontWithName:@"fontello" size:15];
-        UIColor *fontc = [UIColor lightGrayColor];
-        NSDictionary *arialDict2 = [NSDictionary dictionaryWithObjectsAndKeys:font2, NSFontAttributeName, fontc, NSForegroundColorAttributeName, nil];
-        NSMutableAttributedString *aAttrString2 = [[NSMutableAttributedString alloc] initWithString:aTopicAffix attributes: arialDict2];
+
+        NSMutableAttributedString *finalString = [[NSMutableAttributedString alloc]initWithString:@""];
+        
+        if (aTopic.isSticky) {
+//            UIColor *fontsC = [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
+            UIColor *fontsC = [UIColor colorWithHex:@"#e74c3c" alpha:1.0];
+            
+
+            NSDictionary *arialDict2S = [NSDictionary dictionaryWithObjectsAndKeys:font2, NSFontAttributeName, fontsC, NSForegroundColorAttributeName, nil];
+            NSMutableAttributedString *aAttrString2S = [[NSMutableAttributedString alloc] initWithString:@" " attributes: arialDict2S];
+            
+            [finalString appendAttributedString:aAttrString2S];
+            //NSLog(@"finalString2 %@", finalString);
+            
+        }
+        
+        if (aTopic.isClosed) {
+//            UIColor *fontcC = [UIColor orangeColor];
+            UIColor *fontcC = [UIColor colorWithHex:@"#4A4A4A" alpha:1.0];
+
+
+            NSDictionary *arialDict2c = [NSDictionary dictionaryWithObjectsAndKeys:font2, NSFontAttributeName, fontcC, NSForegroundColorAttributeName, nil];
+            NSMutableAttributedString *aAttrString2C = [[NSMutableAttributedString alloc] initWithString:@" " attributes: arialDict2c];
+            
+            [finalString appendAttributedString:aAttrString2C];
+            //NSLog(@"finalString1 %@", finalString);
+        }
         
         
-        [aAttrString2 appendAttributedString:aAttrString1];
-        cell.titleLabel.attributedText = aAttrString2;
+
+
+        
+        [finalString appendAttributedString:aAttrString1];
+        //NSLog(@"finalString3 %@", finalString);
+
+        
+        
+        cell.titleLabel.attributedText = finalString;
         
         
 //        [ setText:[aTopic aTitle]];

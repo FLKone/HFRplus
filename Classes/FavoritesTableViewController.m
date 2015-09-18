@@ -1008,21 +1008,48 @@
             NSDictionary *arialDict = [NSDictionary dictionaryWithObject: font1 forKey:NSFontAttributeName];
             NSMutableAttributedString *aAttrString1 = [[NSMutableAttributedString alloc] initWithString:[tmpTopic aTitle] attributes: arialDict];
             
-            NSString *aTopicAffix = @"";
-            if (tmpTopic.isSticky) {
-                aTopicAffix = [aTopicAffix stringByAppendingString:@" "];
-            }
-            if (tmpTopic.isClosed) {
-                aTopicAffix = [aTopicAffix stringByAppendingString:@" "];
-            }
-            
             UIFont *font2 = [UIFont fontWithName:@"fontello" size:15];
-            NSDictionary *arialDict2 = [NSDictionary dictionaryWithObject: font2 forKey:NSFontAttributeName];
-            NSMutableAttributedString *aAttrString2 = [[NSMutableAttributedString alloc] initWithString:aTopicAffix attributes: arialDict2];
+            
+            NSMutableAttributedString *finalString = [[NSMutableAttributedString alloc]initWithString:@""];
+            
+            if (tmpTopic.isSticky) {
+                //            UIColor *fontsC = [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
+                UIColor *fontsC = [UIColor colorWithHex:@"#e74c3c" alpha:1.0];
+                
+                
+                NSDictionary *arialDict2S = [NSDictionary dictionaryWithObjectsAndKeys:font2, NSFontAttributeName, fontsC, NSForegroundColorAttributeName, nil];
+                NSMutableAttributedString *aAttrString2S = [[NSMutableAttributedString alloc] initWithString:@" " attributes: arialDict2S];
+                
+                [finalString appendAttributedString:aAttrString2S];
+                //NSLog(@"finalString2 %@", finalString);
+                
+            }
+            
+            if (tmpTopic.isClosed) {
+                //            UIColor *fontcC = [UIColor orangeColor];
+                UIColor *fontcC = [UIColor colorWithHex:@"#4A4A4A" alpha:1.0];
+                
+                
+                NSDictionary *arialDict2c = [NSDictionary dictionaryWithObjectsAndKeys:font2, NSFontAttributeName, fontcC, NSForegroundColorAttributeName, nil];
+                NSMutableAttributedString *aAttrString2C = [[NSMutableAttributedString alloc] initWithString:@" " attributes: arialDict2c];
+                
+                [finalString appendAttributedString:aAttrString2C];
+                //NSLog(@"finalString1 %@", finalString);
+            }
             
             
-            [aAttrString2 appendAttributedString:aAttrString1];
-            [(UILabel *)[cell.contentView viewWithTag:999] setAttributedText:aAttrString2];
+            
+            
+            
+            [finalString appendAttributedString:aAttrString1];
+            //NSLog(@"finalString3 %@", finalString);
+            
+            
+            
+            [(UILabel *)[cell.contentView viewWithTag:999] setAttributedText:finalString];
+
+            
+            
             
         }
         else {
