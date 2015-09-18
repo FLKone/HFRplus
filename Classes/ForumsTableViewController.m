@@ -82,16 +82,17 @@
     NSLog(@"cancelFetchContent");
 
     [self.request cancel];
+    [self setRequest:nil];
 }
 
 - (void)fetchContent
 {
 	self.status = kIdle;	
 
-    [ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];    
-    
+    [ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];
     [self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:kForumURL]]];
     [request setDelegate:self];
+
     [request setDidStartSelector:@selector(fetchContentStarted:)];
     [request setDidFinishSelector:@selector(fetchContentComplete:)];
     [request setDidFailSelector:@selector(fetchContentFailed:)];
@@ -108,6 +109,7 @@
 	self.navigationItem.rightBarButtonItem = nil;	
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(cancelFetchContent)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
+
 /*
     [self.arrayData removeAllObjects];
 	[self.forumsTableView reloadData];
@@ -146,6 +148,8 @@
     [self.forumsTableView.pullToRefreshView stopAnimating];
     [self.forumsTableView.pullToRefreshView setLastUpdatedDate:[NSDate date]];
 
+    [self cancelFetchContent];
+
 }
 
 - (void)fetchContentFailed:(ASIHTTPRequest *)theRequest
@@ -168,6 +172,8 @@
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[theRequest.error localizedDescription]
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
 	[alert show];
+    
+    [self cancelFetchContent];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -802,9 +808,9 @@
 	[self.view becomeFirstResponder];
 
 	if (self.topicsTableViewController) {
-		//NSLog(@"viewWillAppear Forums Table View RELEASE %@", topicsTableViewController);
+		NSLog(@"viewWillAppear Forums Table View RELEASE %@", topicsTableViewController);
 
-		//self.topicsTableViewController = nil;
+		self.topicsTableViewController = nil;
 	}
 }
 
@@ -1133,10 +1139,11 @@
     
     
 	[request cancel];
-	//[request setDelegate:nil];
+	[request setDelegate:nil];
 
 	
 	if (self.topicsTableViewController) {
+        self.topicsTableViewController = nil;
 	}
 	
 

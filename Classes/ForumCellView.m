@@ -13,7 +13,8 @@
 @synthesize titleLabel, flagLabel, catImage;
 
 - (void)awakeFromNib {
-    
+    NSLog(@"awakeFromNib");
+
     [super awakeFromNib];
     
     
@@ -32,6 +33,16 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+-(void)viewDidUnload {
+    NSLog(@"viewDidUnload");
+    self.titleLabel = nil;
+    self.flagLabel = nil;
+}
+-(void)dealloc {
+    NSLog(@"dealloc");
+    [self viewDidUnload];
 }
 
 @end

@@ -216,8 +216,9 @@
         self.nolink_full = [[codeArray objectAtIndex:4] allContents];
         self.nolink_preview = [[codeArray objectAtIndex:5] allContents];
         self.nolink_miniature = [[codeArray objectAtIndex:7] allContents];
-        
+
         [[NSNotificationCenter defaultCenter] postNotificationName:@"uploadProgress" object:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithFloat:2.0f], self, nil] forKeys:[NSArray arrayWithObjects:@"progress", @"rehostImage", nil]]];
+        
 	}
 	else {
 		// ERROR .x
@@ -226,7 +227,6 @@
 													   delegate:self cancelButtonTitle:@"Tant pis..." otherButtonTitles:nil, nil];
 		[alert show];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"uploadProgress" object:[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:0] forKey:@"progress"]];
-
 		
 	}
 
@@ -242,7 +242,10 @@
 	
     [alert show];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"uploadProgress" object:[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:0] forKey:@"progress"]];
+}
 
+-(void)dealloc {
+    NSLog(@"deallocdealloc");
 }
 
 

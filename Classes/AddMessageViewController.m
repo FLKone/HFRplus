@@ -272,7 +272,6 @@
     UIButton* oldPhotoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [oldPhotoBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10)];
     [oldPhotoBtn.titleLabel setFont:[UIFont systemFontOfSize:14.0f]];
-
     [oldPhotoBtn setTitle:@"Photo existante" forState:UIControlStateNormal];
     oldPhotoBtn.frame = CGRectMake(headerWidth/2, 3, headerWidth/2, 50.0f);
     [oldPhotoBtn addTarget:self action:@selector(uploadExistingPhoto:) forControlEvents:UIControlEventTouchUpInside];
@@ -1381,7 +1380,9 @@
 
 - (void)cancelFetchContent
 {
-	[request cancel];
+	[self.request cancel];
+    [self setRequest:nil];
+    
 }
 
 - (void)fetchSmileys
@@ -1453,10 +1454,12 @@
 	//NSDate *nowT = [NSDate date]; // Create a current date
 	
 	//NSLog(@"SMILEYS Parse Time elapsed Total		: %f", [nowT timeIntervalSinceDate:thenT]);
+    [self cancelFetchContent];
 }
 
 - (void)fetchSmileContentFailed:(ASIHTTPRequest *)theRequest
 {
+    [self cancelFetchContent];
 	//NSLog(@"fetchContentFailed %@", [theRequest.error localizedDescription]);
 
 	//UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[theRequest.error localizedDescription]
@@ -1824,8 +1827,9 @@
 
         if ([self respondsToSelector:@selector(traitCollection)] && [HFRplusAppDelegate sharedAppDelegate].window.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact){
 
-            [self presentModalViewController:picker animated:YES];
-
+            [self presentViewController:picker animated:YES completion:^{
+                NSLog(@"présenté");
+            }];
         }
         else if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             self.popover = nil;
@@ -1833,7 +1837,10 @@
             [popover presentPopoverFromRect:sender.frame inView:[self.rehostTableView tableHeaderView] permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
             self.popover = popover;
         } else {
-            [self presentModalViewController:picker animated:YES];
+            [self presentViewController:picker animated:YES completion:^{
+                NSLog(@"présenté");
+            }];
+            //[self presentModalViewController:picker animated:YES];
         }
     }
 
@@ -1858,7 +1865,7 @@
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    //NSLog(@"didFinishPickingMediaWithInfo %@", info);
+    NSLog(@"didFinishPickingMediaWithInfo %@", info);
     
     [self imagePickerControllerDidCancel:picker];
 
@@ -1867,7 +1874,10 @@
 
     [rehostImage upload:image];
     
-    [self imagePickerControllerDidCancel:picker];
+    //[self dismissViewControllerAnimated:YES completion:^{
+      //  NSLog(@"dismissed!");
+    //}];
+//    [self imagePickerControllerDidCancel:picker];
 
 }
 
@@ -1876,6 +1886,8 @@
 #pragma mark Memory
 
 - (void)viewDidUnload {
+    NSLog(@"viewDidUnload ADD");
+
     [super viewDidUnload];
     
 	self.loadingView = nil;	
@@ -1915,7 +1927,8 @@
 
 	[requestSmile cancel];
 	[requestSmile setDelegate:nil];
-	
+    [self.rehostImagesArray removeAllObjects];
+    [self.rehostImagesSortedArray removeAllObjects];
     
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"smileyReceived" object:nil];

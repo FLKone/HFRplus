@@ -74,7 +74,8 @@
 
 - (void)cancelFetchContent
 {
-	[request cancel];
+    [self.request cancel];
+    [self setRequest:nil];
 }
 
 - (void)fetchContent:(int)from
@@ -181,7 +182,7 @@
     ParseMessagesOperation *parser = [[ParseMessagesOperation alloc] initWithData:[request responseData] index:0 reverse:NO delegate:self];
 	
     [queue addOperation:parser]; // this will start the "ParseOperation"
-    
+    [self cancelFetchContent];
 }
 
 - (void)fetchContentFailed:(ASIHTTPRequest *)theRequest
@@ -196,8 +197,9 @@
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
     
     [alert setTag:667];
-	//[alert show];
-	//[alert release];
+	[alert show];
+    
+    [self cancelFetchContent];
 }
 
 #pragma mark -
@@ -1522,7 +1524,7 @@
 
 - (void)addMessageViewControllerDidFinish:(AddMessageViewController *)controller {
     //NSLog(@"addMessageViewControllerDidFinish %@", self.editFlagTopic);
-	
+
 	[self setEditFlagTopic:nil];
 	[self dismissModalViewControllerAnimated:YES];
 }
@@ -1569,6 +1571,7 @@
                 }];
             });
         }];
+        
     }
     
 }

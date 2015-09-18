@@ -19,7 +19,8 @@
 @synthesize myPickerView, pickerViewArray, actionSheet, catButton, textQuote, boldQuote;
 - (void)cancelFetchContent
 {
-	[request cancel];
+	[self.request cancel];
+    [self setRequest:nil];
 }
 
 - (void)fetchContent
@@ -57,6 +58,7 @@
 	
 	[self setupResponder];
 	//NSLog(@"======== fetchContentComplete");
+    [self cancelFetchContent];
 	
 }
 
@@ -68,6 +70,8 @@
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
 	[alert setTag:777];
 	[alert show];
+    
+    [self cancelFetchContent];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -791,11 +795,10 @@
 
 
 - (void)dealloc {
-    
+    NSLog(@"dealloc Quote");
 	//Picker
 	
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CatSelected" object:nil];
-
     
 }
 

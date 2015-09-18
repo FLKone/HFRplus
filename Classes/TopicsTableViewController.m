@@ -55,7 +55,8 @@
 
 - (void)cancelFetchContent
 {
-	[request cancel];
+    [self.request cancel];
+    [self setRequest:nil];
 }
 
 - (void)fetchContent
@@ -139,6 +140,7 @@
     */
 	
 	[(UISegmentedControl *)[self.navigationItem.titleView.subviews objectAtIndex:0] setUserInteractionEnabled:YES];
+    [self cancelFetchContent];
 }
 
 - (void)fetchContentFailed:(ASIHTTPRequest *)theRequest
@@ -158,6 +160,8 @@
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
 	[alert setTag:667];
 	[alert show];
+    
+    [self cancelFetchContent];
 }
 
 
@@ -2065,7 +2069,7 @@
 - (void)viewDidUnload {
     // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
     // For example: self.myOutlet = nil;
-	//NSLog(@"viewDidUnload");
+	NSLog(@"viewDidUnload");
 		
 	self.loadingView = nil;
 	self.topicsTableView = nil;
@@ -2077,7 +2081,7 @@
 }
 
 - (void)dealloc {
-	//NSLog(@"dealloc Topics Table View");
+	NSLog(@"dealloc Topics Table View");
 	
 	[self viewDidUnload];
     
