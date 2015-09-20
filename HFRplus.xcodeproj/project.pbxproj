@@ -249,6 +249,8 @@
 		4C9C2B201BAE66EB00511853 /* ThorHammerBlack-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B1D1BAE66EB00511853 /* ThorHammerBlack-20@2x.png */; settings = {ASSET_TAGS = (); }; };
 		4C9C2B211BAE66EB00511853 /* ThorHammerBlack-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B1E1BAE66EB00511853 /* ThorHammerBlack-20.png */; settings = {ASSET_TAGS = (); }; };
 		4C9C2B221BAE66EB00511853 /* ThorHammerBlack-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B1E1BAE66EB00511853 /* ThorHammerBlack-20.png */; settings = {ASSET_TAGS = (); }; };
+		4C9C2B241BAE744800511853 /* Launch Screen RE.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B231BAE744800511853 /* Launch Screen RE.storyboard */; settings = {ASSET_TAGS = (); }; };
+		4C9C2B251BAE744800511853 /* Launch Screen RE.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B231BAE744800511853 /* Launch Screen RE.storyboard */; settings = {ASSET_TAGS = (); }; };
 		4CB132941B9058530081B44D /* 146-gavel.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132921B9058530081B44D /* 146-gavel.png */; settings = {ASSET_TAGS = (); }; };
 		4CB132951B9058530081B44D /* 146-gavel.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132921B9058530081B44D /* 146-gavel.png */; settings = {ASSET_TAGS = (); }; };
 		4CB132961B9058530081B44D /* 146-gavel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132931B9058530081B44D /* 146-gavel@2x.png */; settings = {ASSET_TAGS = (); }; };
@@ -1298,6 +1300,7 @@
 		4C9C2B1A1BAE62C500511853 /* InsetLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InsetLabel.m; sourceTree = "<group>"; };
 		4C9C2B1D1BAE66EB00511853 /* ThorHammerBlack-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ThorHammerBlack-20@2x.png"; sourceTree = "<group>"; };
 		4C9C2B1E1BAE66EB00511853 /* ThorHammerBlack-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ThorHammerBlack-20.png"; sourceTree = "<group>"; };
+		4C9C2B231BAE744800511853 /* Launch Screen RE.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen RE.storyboard"; sourceTree = "<group>"; };
 		4CB132921B9058530081B44D /* 146-gavel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "146-gavel.png"; sourceTree = "<group>"; };
 		4CB132931B9058530081B44D /* 146-gavel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "146-gavel@2x.png"; sourceTree = "<group>"; };
 		4CB132981B905BF80081B44D /* BlackListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlackListTableViewController.h; sourceTree = "<group>"; };
@@ -2519,6 +2522,7 @@
 				CA00C45B17C301650067B457 /* MainWindow-iPad.xib */,
 				CA00C45C17C301650067B457 /* MainWindow.xib */,
 				4C0B2DA41B9F2DF40026A582 /* Launch Screen.storyboard */,
+				4C9C2B231BAE744800511853 /* Launch Screen RE.storyboard */,
 			);
 			path = XIB;
 			sourceTree = "<group>";
@@ -3176,6 +3180,7 @@
 				CA00C6E517C30C370067B457 /* previousIcon.png in Resources */,
 				4CC3C75B1B99BC18001B8632 /* AlerteModoViewController.xib in Resources */,
 				CA00C6B817C30C370067B457 /* buttonbeginoff.png in Resources */,
+				4C9C2B241BAE744800511853 /* Launch Screen RE.storyboard in Resources */,
 				CA00C45D17C301650067B457 /* MainWindow-iPad.xib in Resources */,
 				CAF5DB901936D013000B5215 /* 71-compass@2x.png in Resources */,
 				CA00C3F817C2FE1B0067B457 /* IASKPSSliderSpecifierViewCell.xib in Resources */,
@@ -3607,6 +3612,7 @@
 				CA7C6FEE185EF50E00B348BA /* buttonbeginoff.png in Resources */,
 				4CC3C75C1B99BC18001B8632 /* AlerteModoViewController.xib in Resources */,
 				CA7C6FEF185EF50E00B348BA /* MainWindow-iPad.xib in Resources */,
+				4C9C2B251BAE744800511853 /* Launch Screen RE.storyboard in Resources */,
 				CAF5DB911936D013000B5215 /* 71-compass@2x.png in Resources */,
 				CA7C6FF0185EF50E00B348BA /* IASKPSSliderSpecifierViewCell.xib in Resources */,
 				CA7C6FF1185EF50E00B348BA /* vomi.gif in Resources */,
