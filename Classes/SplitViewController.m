@@ -94,6 +94,8 @@
 
         }
         DetailNavigationViewController *navigationController = [[DetailNavigationViewController alloc] initWithRootViewController:[[UIViewController alloc] init]];
+        navigationController.delegate = navigationController;
+
         [[HFRplusAppDelegate sharedAppDelegate] setDetailNavigationController:navigationController];
 
         // If the detail controller doesn't have an item, display the primary view controller instead
@@ -139,6 +141,8 @@
                 return nil;
             }
             DetailNavigationViewController *navigationController = [[DetailNavigationViewController alloc] initWithRootViewController:[[UIViewController alloc] init]];
+            navigationController.delegate = navigationController;
+        
             //NSLog(@"arrVC %@", arrVC);
             [navigationController setViewControllers:[[arrVC reverseObjectEnumerator] allObjects]];
             //NSLog(@"vc.count %lu", (unsigned long)navigationController.viewControllers.count);
