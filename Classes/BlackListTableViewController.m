@@ -157,32 +157,16 @@ NSInteger Sort_BL_Comparer(id id1, id id2, void *context)
 }
 
 
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // If row is deleted, remove it from the list.
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        [[BlackList shared] removeWord:[[self.blackListDict objectAtIndex:indexPath.row] valueForKey:@"word"]];
+        [self reloadData];
+        
+    }
 }
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 
 #pragma mark - Table view delegate
@@ -190,36 +174,13 @@ NSInteger Sort_BL_Comparer(id id1, id id2, void *context)
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"Supprimer %@ de la liste noire ?", [[self.blackListDict objectAtIndex:indexPath.row] valueForKey:@"word"]]
-                                                   delegate:self cancelButtonTitle:@"Non" otherButtonTitles:@"Oui", nil];
-    
-    [alert setTag:667];
-    [alert show];
-}
-
-- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
-    [self reloadData];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex > 0) {
-        [[BlackList shared] removeWord:[[self.blackListDict objectAtIndex:self.tableView.indexPathForSelectedRow.row] valueForKey:@"word"]];
-    }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)dealloc {
     //NSLog(@"dealloc ADD");
     
     [self viewDidUnload];
-    
-
-    
-    
-    
 }
 
 @end
