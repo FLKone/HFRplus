@@ -1012,19 +1012,6 @@
             
             NSMutableAttributedString *finalString = [[NSMutableAttributedString alloc]initWithString:@""];
             
-            if (tmpTopic.isSticky) {
-                //            UIColor *fontsC = [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
-                UIColor *fontsC = [UIColor colorWithHex:@"#e74c3c" alpha:1.0];
-                
-                
-                NSDictionary *arialDict2S = [NSDictionary dictionaryWithObjectsAndKeys:font2, NSFontAttributeName, fontsC, NSForegroundColorAttributeName, nil];
-                NSMutableAttributedString *aAttrString2S = [[NSMutableAttributedString alloc] initWithString:@" " attributes: arialDict2S];
-                
-                [finalString appendAttributedString:aAttrString2S];
-                //NSLog(@"finalString2 %@", finalString);
-                
-            }
-            
             if (tmpTopic.isClosed) {
                 //            UIColor *fontcC = [UIColor orangeColor];
                 UIColor *fontcC = [UIColor colorWithHex:@"#4A4A4A" alpha:1.0];
