@@ -7,6 +7,7 @@
 
 #import "TabBarController.h"
 #import "HFRplusAppDelegate.h"
+#import "FavoritesTableViewController.h"
 
 @implementation TabBarController
 
@@ -46,6 +47,8 @@
         
         //tabBarItem4.selectedImage = [[UIImage imageNamed:@"search_on"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate ];
         //tabBarItem4.image = [[UIImage imageNamed:@"search"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate ];
+        
+        
     }
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -79,16 +82,36 @@
      
 }
 
-- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
-{
-	//NSLog(@"didSelectViewController %@", viewController);
-	/*
-	if ([[NSString stringWithFormat:@"%@", [viewController class]] isEqualToString:@"UIMoreNavigationController"]) {
-		NSLog(@"UIMoreNavigationController");
-	}
-	*/
+- (BOOL)tabBarController:(UITabBarController * _Nonnull)tabBarController shouldSelectViewController:(UIViewController * _Nonnull)viewController {
+
+    if ([viewController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController *nv = (UINavigationController *)viewController;
+//      NSLog(@"curtab %lu", (unsigned long)tabBarController.selectedIndex);
+//      NSLog("class top : %@ !!!", [nv.topViewController class]);
+        
+        //actualisation si tap sur l'onglet
+        if (tabBarController.selectedIndex == 1 && [nv.topViewController isKindOfClass:[FavoritesTableViewController class]]) {
+            [(FavoritesTableViewController *)nv.topViewController reload];
+        }
+
+    }
+    return YES;
 }
 
+/*
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
+{
+	NSLog(@"didSelectViewController %@", viewController);
+	
+    if ([viewController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController *nv = (UINavigationController *)viewController;
+        if ([nv.topViewController isKindOfClass:[FavoritesTableViewController class]]) {
+            NSLog("favprotes !!!");
+        }
+    }
+
+}
+*/
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
 	
