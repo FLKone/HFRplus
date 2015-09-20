@@ -1003,6 +1003,15 @@
 	
 	//NSLog(@"%d - %d", text.length, lastSelectedRange.location);
 
+    if (!lastSelectedRange.location) {
+        lastSelectedRange = NSMakeRange(0, 0);
+    }
+    
+    if (text.length < lastSelectedRange.location) {
+        NSLog(@"sdsdsd");
+        lastSelectedRange.location = text.length;
+    }
+    
     [text insertString:[notification object] atIndex:lastSelectedRange.location];
 	
 	lastSelectedRange.location += [[notification object] length];
@@ -1022,6 +1031,15 @@
     NSMutableString *text = [textView.text mutableCopy];
 	
 	//NSLog(@"%d - %d", text.length, lastSelectedRange.location);
+    
+    if (!lastSelectedRange.location) {
+        lastSelectedRange = NSMakeRange(0, 0);
+    }
+    
+    if (text.length < lastSelectedRange.location) {
+        lastSelectedRange.location = text.length;
+    }
+    
     
     [text insertString:[notification object] atIndex:lastSelectedRange.location];
 	
