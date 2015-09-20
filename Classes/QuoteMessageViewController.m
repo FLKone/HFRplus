@@ -539,12 +539,12 @@
                     //case BOLD
                     if (self.boldQuote) {
                         //on laisse le txt du qtemsg et on bold
-                        txtTW = quoteTxt;
+                        txtTW = [NSString stringWithFormat:@"%@\n", quoteTxt];
                         txtTW = [txtTW stringByReplacingOccurrencesOfString:self.textQuote withString:[NSString stringWithFormat:@"[b]%@[/b]", self.textQuote]];
                     }
                     else {
                         //case EXCLU
-                        txtTW = [NSString stringWithFormat:@"[quotemsg=%d,%d,%d]%@[/quotemsg]", [[txtTW substringWithRange:[quoteA rangeAtIndex:1]] intValue], [[txtTW substringWithRange:[quoteA rangeAtIndex:2]] intValue], [[txtTW substringWithRange:[quoteA rangeAtIndex:3]] intValue], self.textQuote];
+                        txtTW = [NSString stringWithFormat:@"[quotemsg=%d,%d,%d]%@[/quotemsg]\n", [[txtTW substringWithRange:[quoteA rangeAtIndex:1]] intValue], [[txtTW substringWithRange:[quoteA rangeAtIndex:2]] intValue], [[txtTW substringWithRange:[quoteA rangeAtIndex:3]] intValue], self.textQuote];
                         //recup le quotemsg et y inserer le msg
                     }
                     break;
@@ -562,7 +562,7 @@
             }
             else {
                 //recup le quotemsg et y inserer le msg
-                txtTW = [NSString stringWithFormat:@"[quotemsg=%d,%d,%d]%@[/quotemsg]", [[txtTW substringWithRange:[capturesArray[0] rangeAtIndex:1]] intValue], [[txtTW substringWithRange:[capturesArray[0] rangeAtIndex:2]] intValue], [[txtTW substringWithRange:[capturesArray[0] rangeAtIndex:3]] intValue], self.textQuote];
+                txtTW = [NSString stringWithFormat:@"[quotemsg=%d,%d,%d]%@[/quotemsg]\n", [[txtTW substringWithRange:[capturesArray[0] rangeAtIndex:1]] intValue], [[txtTW substringWithRange:[capturesArray[0] rangeAtIndex:2]] intValue], [[txtTW substringWithRange:[capturesArray[0] rangeAtIndex:3]] intValue], self.textQuote];
             }
         }
         else {
