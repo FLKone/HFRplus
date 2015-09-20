@@ -5,6 +5,26 @@
 	<key>PreferenceSpecifiers</key>
 	<array>
 		<dict>
+			<key>IASKCellImage</key>
+			<string>CircledUserMaleFilled-25</string>
+			<key>IASKViewControllerClass</key>
+			<string>CompteViewController</string>
+			<key>Title</key>
+			<string>Mon Compte</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>IASKCellImage</key>
+			<string>QuestionsFilled-25</string>
+			<key>IASKViewControllerClass</key>
+			<string>AideViewController</string>
+			<key>Title</key>
+			<string>Aide</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
 			<key>Title</key>
 			<string>Général</string>
 			<key>Type</key>
@@ -38,7 +58,7 @@
 			<key>Key</key>
 			<string>default_tab</string>
 			<key>Title</key>
-			<string>Onglet par defaut</string>
+			<string>Onglet par défaut</string>
 			<key>Titles</key>
 			<array>
 				<string>Catégories</string>
@@ -78,9 +98,19 @@
 		</dict>
 		<dict>
 			<key>Title</key>
-			<string>Liste des messages</string>
+			<string>Sujets</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>IASKCellImage</key>
+			<string>ThorHammerFilled-25</string>
+			<key>IASKViewControllerClass</key>
+			<string>BlackListTableViewController</string>
+			<key>Title</key>
+			<string>Liste noire</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
 		</dict>
 		<dict>
 			<key>File</key>
@@ -172,7 +202,7 @@
 		</dict>
 		<dict>
 			<key>Title</key>
-			<string>Debug</string>
+			<string>Activation du Menu debug = 1 TT offert !</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
@@ -185,6 +215,18 @@
 			<string>menu_debug</string>
 			<key>DefaultValue</key>
 			<false/>
+		</dict>
+		<dict>
+			<key>IASKCellImage</key>
+			<string>BugFilled-25</string>
+			<key>IASKViewControllerClass</key>
+			<string>HFRDebugViewController</string>
+			<key>Title</key>
+			<string>Debug</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+			<key>Key</key>
+			<string>menu_debug_entry</string>
 		</dict>
 	</array>
 </dict>

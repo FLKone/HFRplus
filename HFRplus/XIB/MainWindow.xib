@@ -21,7 +21,11 @@
             </connections>
         </customObject>
         <customObject id="112" customClass="TabBarController"/>
-        <customObject id="189" customClass="SettingsViewController"/>
+        <customObject id="189" customClass="SettingsViewController">
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="boolean" keyPath="neverShowPrivacySettings" value="NO"/>
+            </userDefinedRuntimeAttributes>
+        </customObject>
         <window opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="2">
             <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -32,7 +36,7 @@
         <tabBarController id="10" customClass="TabBarController">
             <extendedEdge key="edgesForExtendedLayout"/>
             <nil key="simulatedBottomBarMetrics"/>
-            <tabBar key="tabBar" contentMode="scaleToFill" id="11">
+            <tabBar key="tabBar" contentMode="scaleToFill" selectedItem="74A-e7-Gdm" id="11">
                 <rect key="frame" x="0.0" y="519" width="320" height="49"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                 <animations/>
@@ -87,20 +91,32 @@
                         </viewController>
                     </viewControllers>
                 </navigationController>
-                <navigationController id="191">
+                <navigationController id="EgT-mU-RFn">
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <tabBarItem key="tabBarItem" systemItem="more" id="194"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="192">
+                    <tabBarItem key="tabBarItem" title="Réglages" image="20-gear2.png" id="74A-e7-Gdm"/>
+                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translucent="NO" id="yZU-Qs-sTq">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </navigationBar>
                     <viewControllers>
-                        <viewController id="193" customClass="InfosViewController">
-                            <toolbarItems/>
-                            <navigationItem key="navigationItem" title="Item" id="195"/>
-                        </viewController>
+                        <tableViewController title="Réglages" automaticallyAdjustsScrollViewInsets="NO" id="GVX-YK-j2V" customClass="IASKAppSettingsViewController">
+                            <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="uDi-uo-5iE">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="GVX-YK-j2V" id="Ssx-lA-TfJ"/>
+                                    <outlet property="delegate" destination="GVX-YK-j2V" id="hjX-kw-Iyy"/>
+                                </connections>
+                            </tableView>
+                            <extendedEdge key="edgesForExtendedLayout"/>
+                            <navigationItem key="navigationItem" title="Réglages" id="WB3-fg-zCe"/>
+                            <connections>
+                                <outlet property="delegate" destination="189" id="hyK-L9-hh2"/>
+                            </connections>
+                        </tableViewController>
                     </viewControllers>
                 </navigationController>
             </viewControllers>
@@ -111,6 +127,7 @@
     </objects>
     <resources>
         <image name="18-envelope.png" width="24" height="16"/>
+        <image name="20-gear2.png" width="26" height="28"/>
         <image name="28-star.png" width="26" height="26"/>
         <image name="44-shoebox.png" width="24" height="22"/>
     </resources>

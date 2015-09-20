@@ -116,6 +116,10 @@
 		[[cell textLabel] setText:[self.settingsReader titleForStringId:[titles objectAtIndex:indexPath.row]]];
 	}
 	@catch (NSException * e) {}
+    
+    cell.textLabel.font = [UIFont systemFontOfSize:14.0f];
+    cell.detailTextLabel.font = [UIFont systemFontOfSize:14.0f];
+    
     return cell;
 }
 

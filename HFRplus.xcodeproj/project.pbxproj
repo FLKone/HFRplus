@@ -281,6 +281,26 @@
 		4C9C2B731BAE77ED00511853 /* IASKSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9C2B551BAE77ED00511853 /* IASKSwitch.m */; settings = {ASSET_TAGS = (); }; };
 		4C9C2B741BAE77ED00511853 /* IASKTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9C2B571BAE77ED00511853 /* IASKTextField.m */; settings = {ASSET_TAGS = (); }; };
 		4C9C2B751BAE77ED00511853 /* IASKTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9C2B571BAE77ED00511853 /* IASKTextField.m */; settings = {ASSET_TAGS = (); }; };
+		4C9C2B781BAE7E6E00511853 /* CircledUserMaleFilled-25@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B761BAE7E6E00511853 /* CircledUserMaleFilled-25@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4C9C2B791BAE7E6E00511853 /* CircledUserMaleFilled-25@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B761BAE7E6E00511853 /* CircledUserMaleFilled-25@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4C9C2B7A1BAE7E6E00511853 /* CircledUserMaleFilled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B771BAE7E6E00511853 /* CircledUserMaleFilled-25.png */; settings = {ASSET_TAGS = (); }; };
+		4C9C2B7B1BAE7E6E00511853 /* CircledUserMaleFilled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B771BAE7E6E00511853 /* CircledUserMaleFilled-25.png */; settings = {ASSET_TAGS = (); }; };
+		4C9C2B841BAE801700511853 /* AboutFilled-25@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B7C1BAE801700511853 /* AboutFilled-25@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4C9C2B851BAE801700511853 /* AboutFilled-25@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B7C1BAE801700511853 /* AboutFilled-25@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4C9C2B861BAE801700511853 /* AboutFilled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B7D1BAE801700511853 /* AboutFilled-25.png */; settings = {ASSET_TAGS = (); }; };
+		4C9C2B871BAE801700511853 /* AboutFilled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B7D1BAE801700511853 /* AboutFilled-25.png */; settings = {ASSET_TAGS = (); }; };
+		4C9C2B881BAE801700511853 /* ThorHammerFilled-25@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B7E1BAE801700511853 /* ThorHammerFilled-25@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4C9C2B891BAE801700511853 /* ThorHammerFilled-25@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B7E1BAE801700511853 /* ThorHammerFilled-25@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4C9C2B8A1BAE801700511853 /* ThorHammerFilled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B7F1BAE801700511853 /* ThorHammerFilled-25.png */; settings = {ASSET_TAGS = (); }; };
+		4C9C2B8B1BAE801700511853 /* ThorHammerFilled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B7F1BAE801700511853 /* ThorHammerFilled-25.png */; settings = {ASSET_TAGS = (); }; };
+		4C9C2B8C1BAE801700511853 /* QuestionsFilled-25@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B801BAE801700511853 /* QuestionsFilled-25@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4C9C2B8D1BAE801700511853 /* QuestionsFilled-25@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B801BAE801700511853 /* QuestionsFilled-25@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4C9C2B8E1BAE801700511853 /* BugFilled-25@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B811BAE801700511853 /* BugFilled-25@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4C9C2B8F1BAE801700511853 /* BugFilled-25@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B811BAE801700511853 /* BugFilled-25@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4C9C2B901BAE801700511853 /* BugFilled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B821BAE801700511853 /* BugFilled-25.png */; settings = {ASSET_TAGS = (); }; };
+		4C9C2B911BAE801700511853 /* BugFilled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B821BAE801700511853 /* BugFilled-25.png */; settings = {ASSET_TAGS = (); }; };
+		4C9C2B921BAE801700511853 /* QuestionsFilled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B831BAE801700511853 /* QuestionsFilled-25.png */; settings = {ASSET_TAGS = (); }; };
+		4C9C2B931BAE801700511853 /* QuestionsFilled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B831BAE801700511853 /* QuestionsFilled-25.png */; settings = {ASSET_TAGS = (); }; };
 		4CB132941B9058530081B44D /* 146-gavel.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132921B9058530081B44D /* 146-gavel.png */; settings = {ASSET_TAGS = (); }; };
 		4CB132951B9058530081B44D /* 146-gavel.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132921B9058530081B44D /* 146-gavel.png */; settings = {ASSET_TAGS = (); }; };
 		4CB132961B9058530081B44D /* 146-gavel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132931B9058530081B44D /* 146-gavel@2x.png */; settings = {ASSET_TAGS = (); }; };
@@ -1333,6 +1353,16 @@
 		4C9C2B551BAE77ED00511853 /* IASKSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKSwitch.m; sourceTree = "<group>"; };
 		4C9C2B561BAE77ED00511853 /* IASKTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKTextField.h; sourceTree = "<group>"; };
 		4C9C2B571BAE77ED00511853 /* IASKTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKTextField.m; sourceTree = "<group>"; };
+		4C9C2B761BAE7E6E00511853 /* CircledUserMaleFilled-25@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CircledUserMaleFilled-25@2x.png"; sourceTree = "<group>"; };
+		4C9C2B771BAE7E6E00511853 /* CircledUserMaleFilled-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CircledUserMaleFilled-25.png"; sourceTree = "<group>"; };
+		4C9C2B7C1BAE801700511853 /* AboutFilled-25@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AboutFilled-25@2x.png"; sourceTree = "<group>"; };
+		4C9C2B7D1BAE801700511853 /* AboutFilled-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AboutFilled-25.png"; sourceTree = "<group>"; };
+		4C9C2B7E1BAE801700511853 /* ThorHammerFilled-25@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ThorHammerFilled-25@2x.png"; sourceTree = "<group>"; };
+		4C9C2B7F1BAE801700511853 /* ThorHammerFilled-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ThorHammerFilled-25.png"; sourceTree = "<group>"; };
+		4C9C2B801BAE801700511853 /* QuestionsFilled-25@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "QuestionsFilled-25@2x.png"; sourceTree = "<group>"; };
+		4C9C2B811BAE801700511853 /* BugFilled-25@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BugFilled-25@2x.png"; sourceTree = "<group>"; };
+		4C9C2B821BAE801700511853 /* BugFilled-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BugFilled-25.png"; sourceTree = "<group>"; };
+		4C9C2B831BAE801700511853 /* QuestionsFilled-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "QuestionsFilled-25.png"; sourceTree = "<group>"; };
 		4CB132921B9058530081B44D /* 146-gavel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "146-gavel.png"; sourceTree = "<group>"; };
 		4CB132931B9058530081B44D /* 146-gavel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "146-gavel@2x.png"; sourceTree = "<group>"; };
 		4CB132981B905BF80081B44D /* BlackListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlackListTableViewController.h; sourceTree = "<group>"; };
@@ -2115,6 +2145,16 @@
 		4C0B8D4F1BA4521000D329BA /* CatIcons */ = {
 			isa = PBXGroup;
 			children = (
+				4C9C2B761BAE7E6E00511853 /* CircledUserMaleFilled-25@2x.png */,
+				4C9C2B771BAE7E6E00511853 /* CircledUserMaleFilled-25.png */,
+				4C9C2B7C1BAE801700511853 /* AboutFilled-25@2x.png */,
+				4C9C2B7D1BAE801700511853 /* AboutFilled-25.png */,
+				4C9C2B7E1BAE801700511853 /* ThorHammerFilled-25@2x.png */,
+				4C9C2B7F1BAE801700511853 /* ThorHammerFilled-25.png */,
+				4C9C2B801BAE801700511853 /* QuestionsFilled-25@2x.png */,
+				4C9C2B831BAE801700511853 /* QuestionsFilled-25.png */,
+				4C9C2B811BAE801700511853 /* BugFilled-25@2x.png */,
+				4C9C2B821BAE801700511853 /* BugFilled-25.png */,
 				4C0B8D501BA4522900D329BA /* BugFilled-40.png */,
 				4C0B8D511BA4522900D329BA /* BugFilled-40@2x.png */,
 				4C0B8D521BA4522900D329BA /* MoneyBoxFilled-40@2x.png */,
@@ -3091,6 +3131,7 @@
 				CA7472F017E15FE300B45E15 /* ToolBarPrevious_off.png in Resources */,
 				CA00C69A17C30C370067B457 /* arrowR.png in Resources */,
 				CA2E4C0E17E5095000E95622 /* all_categories_land.png in Resources */,
+				4C9C2B841BAE801700511853 /* AboutFilled-25@2x.png in Resources */,
 				CA00C63117C30C370067B457 /* hap.gif in Resources */,
 				4CB132D51B9099BA0081B44D /* StarFilled-20@2x.png in Resources */,
 				4CB132F01B909D760081B44D /* ReplyAllArrow-20.png in Resources */,
@@ -3169,6 +3210,7 @@
 				CA00C62117C30C370067B457 /* calimero.gif in Resources */,
 				CABC726E17E605E5003E722E /* downsmall@2x.png in Resources */,
 				CAF5DB731933D408000B5215 /* PersonnalLinkViewController.xib in Resources */,
+				4C9C2B861BAE801700511853 /* AboutFilled-25.png in Resources */,
 				4CB132DB1B909C730081B44D /* QuoteFilled-20.png in Resources */,
 				4CD6B8AD1B97AC9D007FC29E /* Folder-32@2x.png in Resources */,
 				CA00C6C017C30C370067B457 /* buttonendon.png in Resources */,
@@ -3203,6 +3245,7 @@
 				CA00C6B017C30C370067B457 /* alert-overlay.png in Resources */,
 				CA00C68B17C30C370067B457 /* 20-gear2@2x.png in Resources */,
 				013F0EAD121E117900BEBEB1 /* MessagesTableViewController.xib in Resources */,
+				4C9C2B8A1BAE801700511853 /* ThorHammerFilled-25.png in Resources */,
 				CA00C63A17C30C370067B457 /* love.gif in Resources */,
 				4C0B8DEC1BA4522900D329BA /* ProcessorFilled-40.png in Resources */,
 				4C9C2B1F1BAE66EB00511853 /* ThorHammerBlack-20@2x.png in Resources */,
@@ -3220,6 +3263,7 @@
 				CA00C6C617C30C370067B457 /* buttonnexton.png in Resources */,
 				4CB132FE1B90B7060081B44D /* ThorHammer-20@2x.png in Resources */,
 				CABC727617E6077A003E722E /* downsmall7@2x.png in Resources */,
+				4C9C2B901BAE801700511853 /* BugFilled-25.png in Resources */,
 				CAF5DB761933D422000B5215 /* ConfigurationViewController.xib in Resources */,
 				4C0B8D981BA4522900D329BA /* QuestionsFilled-40@2x.png in Resources */,
 				CA7472EF17E15FE300B45E15 /* ToolBarFastRewind_on@2x.png in Resources */,
@@ -3284,6 +3328,7 @@
 				CA00C64717C30C370067B457 /* pt1cable.gif in Resources */,
 				4C0B8DE01BA4522900D329BA /* SmartphoneTabletFilled-40@2x.png in Resources */,
 				CA00C67D17C30C370067B457 /* 111-user@2x.png in Resources */,
+				4C9C2B921BAE801700511853 /* QuestionsFilled-25.png in Resources */,
 				CA00C41817C2FE240067B457 /* LICENSE in Resources */,
 				CA00C61917C30C370067B457 /* multipleflag1.gif in Resources */,
 				CA00C6B517C30C370067B457 /* blank15.gif in Resources */,
@@ -3300,6 +3345,7 @@
 				CA00C69217C30C370067B457 /* arrowback.png in Resources */,
 				CA00C69E17C30C370067B457 /* bgbigiPad.png in Resources */,
 				CA00C63717C30C370067B457 /* jap.gif in Resources */,
+				4C9C2B781BAE7E6E00511853 /* CircledUserMaleFilled-25@2x.png in Resources */,
 				CA00C62217C30C370067B457 /* confused.gif in Resources */,
 				CA00C69D17C30C370067B457 /* avatar_male_gray_on_light_48x48.png in Resources */,
 				CA00C64A17C30C370067B457 /* sleep.gif in Resources */,
@@ -3324,6 +3370,7 @@
 				CA7472F217E15FE300B45E15 /* ToolBarPrevious_on.png in Resources */,
 				CA00C63817C30C370067B457 /* kaola.gif in Resources */,
 				CA00C63B17C30C370067B457 /* mad.gif in Resources */,
+				4C9C2B881BAE801700511853 /* ThorHammerFilled-25@2x.png in Resources */,
 				4C0B8DFE1BA455BF00D329BA /* InfoTableViewCell.xib in Resources */,
 				CA00C6DA17C30C370067B457 /* icon_smile_face.png in Resources */,
 				CA00C62F17C30C370067B457 /* gratgrat.gif in Resources */,
@@ -3379,6 +3426,7 @@
 				CA00C6B717C30C370067B457 /* buttonbeginhover@2x.png in Resources */,
 				CA00C53517C308360067B457 /* ForumsTableViewController.xib in Resources */,
 				CA00C64017C30C370067B457 /* non.gif in Resources */,
+				4C9C2B8E1BAE801700511853 /* BugFilled-25@2x.png in Resources */,
 				4C0B8DEE1BA4522900D329BA /* cat-apple@2x.png in Resources */,
 				4C0B8DDC1BA4522900D329BA /* SupportFilled-40.png in Resources */,
 				CA00C63D17C30C370067B457 /* mmmfff.gif in Resources */,
@@ -3386,6 +3434,7 @@
 				CA00C66717C30C370067B457 /* template.htm in Resources */,
 				CA00C6D117C30C370067B457 /* grayButton.png in Resources */,
 				CA00C6EB17C310E90067B457 /* commonsmile.plist in Resources */,
+				4C9C2B7A1BAE7E6E00511853 /* CircledUserMaleFilled-25.png in Resources */,
 				CA00C6A517C30C370067B457 /* flagblue2.png in Resources */,
 				CA7472EE17E15FE300B45E15 /* ToolBarFastRewind_on.png in Resources */,
 				CABC726F17E605E5003E722E /* upsmall.png in Resources */,
@@ -3449,6 +3498,7 @@
 				CA00C64917C30C370067B457 /* sarcastic.gif in Resources */,
 				CAFD004415B9B665003CA3FC /* HFRDebugViewController.xib in Resources */,
 				4C21E9551BA5C70400691D65 /* CursorFilled-20.png in Resources */,
+				4C9C2B8C1BAE801700511853 /* QuestionsFilled-25@2x.png in Resources */,
 				CA00C66617C30C370067B457 /* style-smile.css in Resources */,
 				CA00C61A17C30C370067B457 /* 24.gif in Resources */,
 				4C0B8E061BA45B0100D329BA /* ForumCellView.xib in Resources */,
@@ -3518,6 +3568,7 @@
 				CA7C6FB1185EF50E00B348BA /* arrowR.png in Resources */,
 				CA7C6FB2185EF50E00B348BA /* all_categories_land.png in Resources */,
 				CA7C6FB3185EF50E00B348BA /* hap.gif in Resources */,
+				4C9C2B851BAE801700511853 /* AboutFilled-25@2x.png in Resources */,
 				CA7C6FB4185EF50E00B348BA /* CreditsViewController.xib in Resources */,
 				4CB132D61B9099BA0081B44D /* StarFilled-20@2x.png in Resources */,
 				4CB132F11B909D760081B44D /* ReplyAllArrow-20.png in Resources */,
@@ -3596,6 +3647,7 @@
 				CA7C6FE4185EF50E00B348BA /* downsmall@2x.png in Resources */,
 				CAF5DB741933D408000B5215 /* PersonnalLinkViewController.xib in Resources */,
 				CA7C6FE7185EF50E00B348BA /* buttonendon.png in Resources */,
+				4C9C2B871BAE801700511853 /* AboutFilled-25.png in Resources */,
 				4CB132DC1B909C730081B44D /* QuoteFilled-20.png in Resources */,
 				4CD6B8AE1B97AC9D007FC29E /* Folder-32@2x.png in Resources */,
 				CA7C6FE8185EF50E00B348BA /* foudtag.gif in Resources */,
@@ -3630,6 +3682,7 @@
 				CA7C6FFE185EF50E00B348BA /* 20-gear2@2x.png in Resources */,
 				CA7C6FFF185EF50E00B348BA /* MessagesTableViewController.xib in Resources */,
 				CA7C7000185EF50E00B348BA /* love.gif in Resources */,
+				4C9C2B8B1BAE801700511853 /* ThorHammerFilled-25.png in Resources */,
 				CA7C7001185EF50E00B348BA /* MessageDetailViewController.xib in Resources */,
 				4C0B8DED1BA4522900D329BA /* ProcessorFilled-40.png in Resources */,
 				4C9C2B201BAE66EB00511853 /* ThorHammerBlack-20@2x.png in Resources */,
@@ -3647,6 +3700,7 @@
 				CA7C7009185EF50E00B348BA /* downsmall7@2x.png in Resources */,
 				4CB132FF1B90B7060081B44D /* ThorHammer-20@2x.png in Resources */,
 				CAF5DB771933D422000B5215 /* ConfigurationViewController.xib in Resources */,
+				4C9C2B911BAE801700511853 /* BugFilled-25.png in Resources */,
 				CA7C700A185EF50E00B348BA /* ToolBarFastRewind_on@2x.png in Resources */,
 				4C0B8D991BA4522900D329BA /* QuestionsFilled-40@2x.png in Resources */,
 				CA7C700B185EF50E00B348BA /* style-aide.css in Resources */,
@@ -3711,6 +3765,7 @@
 				CA7C7032185EF50E00B348BA /* 111-user@2x.png in Resources */,
 				4C0B8DE11BA4522900D329BA /* SmartphoneTabletFilled-40@2x.png in Resources */,
 				CA7C7034185EF50E00B348BA /* LICENSE in Resources */,
+				4C9C2B931BAE801700511853 /* QuestionsFilled-25.png in Resources */,
 				CA7C7035185EF50E00B348BA /* multipleflag1.gif in Resources */,
 				CA7C7036185EF50E00B348BA /* blank15.gif in Resources */,
 				CA7C7037185EF50E00B348BA /* unselectedrow@2x.png in Resources */,
@@ -3727,6 +3782,7 @@
 				CA7C703D185EF50E00B348BA /* bgbigiPad.png in Resources */,
 				CA7C703E185EF50E00B348BA /* jap.gif in Resources */,
 				CA7C7040185EF50E00B348BA /* confused.gif in Resources */,
+				4C9C2B791BAE7E6E00511853 /* CircledUserMaleFilled-25@2x.png in Resources */,
 				CA7C7041185EF50E00B348BA /* avatar_male_gray_on_light_48x48.png in Resources */,
 				CA7C7042185EF50E00B348BA /* sleep.gif in Resources */,
 				CA7C7043185EF50E00B348BA /* img.png in Resources */,
@@ -3751,6 +3807,7 @@
 				CA7C704D185EF50E00B348BA /* kaola.gif in Resources */,
 				CA7C704E185EF50E00B348BA /* mad.gif in Resources */,
 				CA7C704F185EF50E00B348BA /* icon_smile_face.png in Resources */,
+				4C9C2B891BAE801700511853 /* ThorHammerFilled-25@2x.png in Resources */,
 				4C0B8DFF1BA455BF00D329BA /* InfoTableViewCell.xib in Resources */,
 				CA7C7050185EF50E00B348BA /* gratgrat.gif in Resources */,
 				CA7C7051185EF50E00B348BA /* beginoff.png in Resources */,
@@ -3806,6 +3863,7 @@
 				CA7C7072185EF50E00B348BA /* ForumsTableViewController.xib in Resources */,
 				CA7C7073185EF50E00B348BA /* non.gif in Resources */,
 				CA7C7075185EF50E00B348BA /* mmmfff.gif in Resources */,
+				4C9C2B8F1BAE801700511853 /* BugFilled-25@2x.png in Resources */,
 				4C0B8DEF1BA4522900D329BA /* cat-apple@2x.png in Resources */,
 				4C0B8DDD1BA4522900D329BA /* SupportFilled-40.png in Resources */,
 				CA7C7076185EF50E00B348BA /* flagred.png in Resources */,
@@ -3813,6 +3871,7 @@
 				CA7C7078185EF50E00B348BA /* grayButton.png in Resources */,
 				CA7C707A185EF50E00B348BA /* commonsmile.plist in Resources */,
 				CA7C707C185EF50E00B348BA /* flagblue2.png in Resources */,
+				4C9C2B7B1BAE7E6E00511853 /* CircledUserMaleFilled-25.png in Resources */,
 				CA7C707D185EF50E00B348BA /* ToolBarFastRewind_on.png in Resources */,
 				CA7C707E185EF50E00B348BA /* upsmall.png in Resources */,
 				CA019F1819CD77D500F67C47 /* jquery-2.1.1.min.js in Resources */,
@@ -3876,6 +3935,7 @@
 				CA7C70A0185EF50E00B348BA /* HFRDebugViewController.xib in Resources */,
 				4C21E9561BA5C70400691D65 /* CursorFilled-20.png in Resources */,
 				CA7C70A2185EF50E00B348BA /* style-smile.css in Resources */,
+				4C9C2B8D1BAE801700511853 /* QuestionsFilled-25@2x.png in Resources */,
 				CA7C70A3185EF50E00B348BA /* 24.gif in Resources */,
 				CA7C70A4185EF50E00B348BA /* arrowend.png in Resources */,
 				4C0B8E071BA45B0100D329BA /* ForumCellView.xib in Resources */,
@@ -4360,7 +4420,7 @@
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_BUNDLE_IDENTIFIER = hfrplus.red;
 				PRODUCT_NAME = HFRplusRED;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "c99e59bc-3e03-4ece-8ebf-e042787c8ac0";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;

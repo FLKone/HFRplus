@@ -199,7 +199,7 @@ CGRect IASKCGRectSwap(CGRect rect);
 		self.navigationItem.rightBarButtonItem = buttonItem;
 	} 
 	if (!self.title) {
-		self.title = NSLocalizedString(@"Settings", @"");
+		//self.title = NSLocalizedString(@"Settings", @"");
 	}
 	
 	if ([self.settingsStore isKindOfClass:[IASKSettingsStoreUserDefaults class]]) {
@@ -528,10 +528,6 @@ CGRect IASKCGRectSwap(CGRect rect);
 		}
 	}
     
-    cell.textLabel.font = [UIFont systemFontOfSize:15.0f];
-    cell.detailTextLabel.font = [UIFont systemFontOfSize:15.0f];
-
-    
 
 	IASK_IF_PRE_IOS6(cell.textLabel.minimumFontSize = kIASKMinimumFontSize;
 					 cell.detailTextLabel.minimumFontSize = kIASKMinimumFontSize;);
@@ -667,15 +663,10 @@ CGRect IASKCGRectSwap(CGRect rect);
     cell.textLabel.adjustsFontSizeToFitWidth = specifier.adjustsFontSizeToFitWidth;
     cell.detailTextLabel.adjustsFontSizeToFitWidth = specifier.adjustsFontSizeToFitWidth;
     
-    IASK_IF_IOS7_OR_GREATER
-    (
-        cell.textLabel.font = [UIFont systemFontOfSize:15.0f];
-        cell.detailTextLabel.font = [UIFont systemFontOfSize:15.0f];
-    )
-    else {
-        cell.textLabel.font = [UIFont systemFontOfSize:14.0f];
-        cell.detailTextLabel.font = [UIFont systemFontOfSize:14.0f];
-    }
+    
+    
+    cell.textLabel.font = [UIFont systemFontOfSize:14.0f];
+    cell.detailTextLabel.font = [UIFont systemFontOfSize:14.0f];
 
     return cell;
 }

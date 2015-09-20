@@ -7,6 +7,7 @@
 
 #import "SettingsViewController.h"
 #import "HFRplusAppDelegate.h"
+#import "IASKSettingsReader.h"
 
 @implementation SettingsViewController
 
@@ -19,6 +20,28 @@
     }
     return self;
 }
+
+- (void)awakeFromNib {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingDidChange:) name:kIASKAppSettingChanged object:nil];
+    BOOL enabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"menu_debug"];
+    ((IASKAppSettingsViewController *)((UINavigationController *)[[HFRplusAppDelegate sharedAppDelegate] rootController].viewControllers[3]).viewControllers[0]).hiddenKeys = enabled ? nil : [NSSet setWithObjects:@"menu_debug_entry", nil];
+    NSLog(@"awakeFromNib");
+}
+
+#pragma mark kIASKAppSettingChanged notification
+- (void)settingDidChange:(NSNotification*)notification {
+    NSLog(@"settingDidChange %@", notification);
+
+    if ([notification.object isEqual:@"menu_debug"]) {
+        //IASKAppSettingsViewController *activeController = self;
+        BOOL enabled = (BOOL)[[notification.userInfo objectForKey:@"menu_debug"] intValue];
+        
+        ((IASKAppSettingsViewController *)((UINavigationController *)[[HFRplusAppDelegate sharedAppDelegate] rootController].viewControllers[3]).viewControllers[0]).hiddenKeys = enabled ? nil : [NSSet setWithObjects:@"menu_debug_entry", nil];
+        
+        //[activeController setHiddenKeys:enabled ? nil : [NSSet setWithObjects:@"AutoConnectTest", nil] animated:YES];
+    }
+}
+
 
 #pragma mark -
 - (void)settingsViewController:(IASKAppSettingsViewController*)sender buttonTappedForKey:(NSString*)key {
