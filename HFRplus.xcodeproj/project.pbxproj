@@ -243,6 +243,12 @@
 		4C21E9841BA5CC1200691D65 /* HFRTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C21E9821BA5CC1200691D65 /* HFRTextView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		4C265D4D1BAE511800B1A244 /* HFRWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C265D4C1BAE511800B1A244 /* HFRWebView.m */; settings = {ASSET_TAGS = (); }; };
 		4C265D4E1BAE511800B1A244 /* HFRWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C265D4C1BAE511800B1A244 /* HFRWebView.m */; settings = {ASSET_TAGS = (); }; };
+		4C9C2B1B1BAE62C500511853 /* InsetLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9C2B1A1BAE62C500511853 /* InsetLabel.m */; settings = {ASSET_TAGS = (); }; };
+		4C9C2B1C1BAE62C500511853 /* InsetLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9C2B1A1BAE62C500511853 /* InsetLabel.m */; settings = {ASSET_TAGS = (); }; };
+		4C9C2B1F1BAE66EB00511853 /* ThorHammerBlack-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B1D1BAE66EB00511853 /* ThorHammerBlack-20@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4C9C2B201BAE66EB00511853 /* ThorHammerBlack-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B1D1BAE66EB00511853 /* ThorHammerBlack-20@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4C9C2B211BAE66EB00511853 /* ThorHammerBlack-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B1E1BAE66EB00511853 /* ThorHammerBlack-20.png */; settings = {ASSET_TAGS = (); }; };
+		4C9C2B221BAE66EB00511853 /* ThorHammerBlack-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B1E1BAE66EB00511853 /* ThorHammerBlack-20.png */; settings = {ASSET_TAGS = (); }; };
 		4CB132941B9058530081B44D /* 146-gavel.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132921B9058530081B44D /* 146-gavel.png */; settings = {ASSET_TAGS = (); }; };
 		4CB132951B9058530081B44D /* 146-gavel.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132921B9058530081B44D /* 146-gavel.png */; settings = {ASSET_TAGS = (); }; };
 		4CB132961B9058530081B44D /* 146-gavel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132931B9058530081B44D /* 146-gavel@2x.png */; settings = {ASSET_TAGS = (); }; };
@@ -1288,6 +1294,10 @@
 		4C21E9821BA5CC1200691D65 /* HFRTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFRTextView.m; sourceTree = "<group>"; };
 		4C265D4B1BAE511800B1A244 /* HFRWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFRWebView.h; sourceTree = "<group>"; };
 		4C265D4C1BAE511800B1A244 /* HFRWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFRWebView.m; sourceTree = "<group>"; };
+		4C9C2B191BAE62C500511853 /* InsetLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InsetLabel.h; sourceTree = "<group>"; };
+		4C9C2B1A1BAE62C500511853 /* InsetLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InsetLabel.m; sourceTree = "<group>"; };
+		4C9C2B1D1BAE66EB00511853 /* ThorHammerBlack-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ThorHammerBlack-20@2x.png"; sourceTree = "<group>"; };
+		4C9C2B1E1BAE66EB00511853 /* ThorHammerBlack-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ThorHammerBlack-20.png"; sourceTree = "<group>"; };
 		4CB132921B9058530081B44D /* 146-gavel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "146-gavel.png"; sourceTree = "<group>"; };
 		4CB132931B9058530081B44D /* 146-gavel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "146-gavel@2x.png"; sourceTree = "<group>"; };
 		4CB132981B905BF80081B44D /* BlackListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlackListTableViewController.h; sourceTree = "<group>"; };
@@ -1984,6 +1994,8 @@
 				CAC4966815B77357009128BC /* HFRNavigationController.m */,
 				CAF5DB5619328EB4000B5215 /* PullToRefreshErrorViewController.h */,
 				CAF5DB5719328EB4000B5215 /* PullToRefreshErrorViewController.m */,
+				4C9C2B191BAE62C500511853 /* InsetLabel.h */,
+				4C9C2B1A1BAE62C500511853 /* InsetLabel.m */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -2254,6 +2266,8 @@
 				4CB132EF1B909D760081B44D /* ReplyAllArrow-20.png */,
 				4CB132FD1B90B7060081B44D /* ThorHammer-20@2x.png */,
 				4CB132FA1B90B7010081B44D /* ThorHammer-20.png */,
+				4C9C2B1D1BAE66EB00511853 /* ThorHammerBlack-20@2x.png */,
+				4C9C2B1E1BAE66EB00511853 /* ThorHammerBlack-20.png */,
 				4CB133061B90B7550081B44D /* ThorHammerFilled-20@2x.png */,
 				4CB133091B90B7590081B44D /* ThorHammerFilled-20.png */,
 				4CB1330C1B90B7940081B44D /* Thor Hammer Filled-23@2x.png */,
@@ -3187,6 +3201,7 @@
 				013F0EAD121E117900BEBEB1 /* MessagesTableViewController.xib in Resources */,
 				CA00C63A17C30C370067B457 /* love.gif in Resources */,
 				4C0B8DEC1BA4522900D329BA /* ProcessorFilled-40.png in Resources */,
+				4C9C2B1F1BAE66EB00511853 /* ThorHammerBlack-20@2x.png in Resources */,
 				4CB132CF1B9099900081B44D /* MessageFilled-20.png in Resources */,
 				4CB132A31B9068250081B44D /* InfosViewController.xib in Resources */,
 				013F0EAF121E117900BEBEB1 /* MessageDetailViewController.xib in Resources */,
@@ -3293,6 +3308,7 @@
 				CA00C6CE17C30C370067B457 /* endhover.png in Resources */,
 				CABC727017E605E5003E722E /* upsmall@2x.png in Resources */,
 				4C0B8DB21BA4522900D329BA /* DesignFilled-40@2x.png in Resources */,
+				4C9C2B211BAE66EB00511853 /* ThorHammerBlack-20.png in Resources */,
 				CA00C6C117C30C370067B457 /* buttonendon@2x.png in Resources */,
 				4C0B8D941BA4522900D329BA /* AboutFilled-40.png in Resources */,
 				CA00C68F17C30C370067B457 /* 44-shoebox@2x.png in Resources */,
@@ -3616,6 +3632,7 @@
 				CA7C7000185EF50E00B348BA /* love.gif in Resources */,
 				CA7C7001185EF50E00B348BA /* MessageDetailViewController.xib in Resources */,
 				4C0B8DED1BA4522900D329BA /* ProcessorFilled-40.png in Resources */,
+				4C9C2B201BAE66EB00511853 /* ThorHammerBlack-20@2x.png in Resources */,
 				4CB132D01B9099900081B44D /* MessageFilled-20.png in Resources */,
 				4CB132A41B9068250081B44D /* InfosViewController.xib in Resources */,
 				CA7C7002185EF50E00B348BA /* 122-stats@2x.png in Resources */,
@@ -3722,6 +3739,7 @@
 				CA7C7047185EF50E00B348BA /* upsmall@2x.png in Resources */,
 				CA7C7048185EF50E00B348BA /* buttonendon@2x.png in Resources */,
 				4C0B8DB31BA4522900D329BA /* DesignFilled-40@2x.png in Resources */,
+				4C9C2B221BAE66EB00511853 /* ThorHammerBlack-20.png in Resources */,
 				CA7C7049185EF50E00B348BA /* 44-shoebox@2x.png in Resources */,
 				4C0B8D951BA4522900D329BA /* AboutFilled-40.png in Resources */,
 				CAC7FCD3190DBD450083BB4E /* PollResultTableViewCell.xib in Resources */,
@@ -3943,6 +3961,7 @@
 				013F0EAE121E117900BEBEB1 /* MessageDetailViewController.m in Sources */,
 				4C0B8E041BA45B0100D329BA /* ForumCellView.m in Sources */,
 				013F0EB1121E117900BEBEB1 /* AddMessageViewController.m in Sources */,
+				4C9C2B1B1BAE62C500511853 /* InsetLabel.m in Sources */,
 				013F0EB2121E117900BEBEB1 /* QuoteMessageViewController.m in Sources */,
 				CA81D28D12281D5800AC6ADA /* EditMessageViewController.m in Sources */,
 				CA63F38C185EC1220092E9F9 /* RehostCell.m in Sources */,
@@ -4063,6 +4082,7 @@
 				CA7C70DA185EF50E00B348BA /* MessageDetailViewController.m in Sources */,
 				4C0B8E051BA45B0100D329BA /* ForumCellView.m in Sources */,
 				CA7C70DF185EF50E00B348BA /* AddMessageViewController.m in Sources */,
+				4C9C2B1C1BAE62C500511853 /* InsetLabel.m in Sources */,
 				CA7C70E1185EF50E00B348BA /* QuoteMessageViewController.m in Sources */,
 				CA7C70E3185EF50E00B348BA /* EditMessageViewController.m in Sources */,
 				CA7C70E4185EF50E00B348BA /* RehostCell.m in Sources */,

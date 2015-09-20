@@ -9,7 +9,7 @@
 #import "HFRplusAppDelegate.h"
 #import "BlackListTableViewController.h"
 #import "BlackList.h"
-
+#import "InsetLabel.h"
 @interface BlackListTableViewController ()
 
 @end
@@ -64,15 +64,13 @@ NSInteger Sort_BL_Comparer(id id1, id id2, void *context)
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    //self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
-    
     [self hideEmptySeparators];
 
-    
     self.title = @"Liste noire";
     //[self reloadData];
     
@@ -87,7 +85,52 @@ NSInteger Sort_BL_Comparer(id id1, id id2, void *context)
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    
+    if (self.blackListDict.count) {
+        self.tableView.backgroundView = nil;
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        
+        return 1;
+    }
+    else {
+        // Display a message when the table is empty
+        InsetLabel *messageLabel = [[InsetLabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+
+        
+        if ([NSTextAttachment class]) {
+            NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"Pour ajouter quelqu'un, selectionnez son pseudo, puis "];
+            
+            // creates a text attachment with an image
+            
+            NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
+            
+            attachment.image = [UIImage imageNamed:@"ThorHammerBlack-20"];
+            
+            NSAttributedString *imageAttrString = [NSAttributedString attributedStringWithAttachment:attachment];
+            
+            [attributedString appendAttributedString:imageAttrString];
+            [attributedString appendAttributedString:[[NSAttributedString alloc] initWithString:@" !"]];
+            
+            messageLabel.attributedText = attributedString;
+        }
+        else {
+            messageLabel.text = @"Pour ajouter quelqu'un, selectionnez son pseudo dans un sujet.";
+            messageLabel.font = [UIFont systemFontOfSize:15.0f];
+        }
+
+        //messageLabel.textColor = [UIColor blackColor];
+        messageLabel.numberOfLines = 0;
+        messageLabel.textAlignment = NSTextAlignmentCenter;
+        //messageLabel.font = [UIFont systemFontOfSize:15.0f];
+        [messageLabel sizeToFit];
+        
+        self.tableView.backgroundView = messageLabel;
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    }
+
+    
+    
+    return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
