@@ -25,6 +25,16 @@
 			<string>PSChildPaneSpecifier</string>
 		</dict>
 		<dict>
+			<key>IASKCellImage</key>
+			<string>AboutFilled-25</string>
+			<key>IASKViewControllerClass</key>
+			<string>CreditViewController</string>
+			<key>Title</key>
+			<string>Crédits</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
 			<key>Title</key>
 			<string>Général</string>
 			<key>Type</key>
