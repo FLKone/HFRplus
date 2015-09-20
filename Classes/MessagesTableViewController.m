@@ -2361,7 +2361,8 @@
     
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:promptMsg
-                                                   delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                                                   delegate:self cancelButtonTitle:nil otherButtonTitles: nil];
+    alert.tag = kAlertBlackListOK;
     [alert show];
 
     
