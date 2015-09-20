@@ -25,7 +25,8 @@
     [super viewDidLoad];
     
 	self.title = [NSString stringWithFormat:@"HFR+ %@ (%@)", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
-	
+    self.navigationController.navigationBar.translucent = NO;
+
     /*
 	// Make the title of this page the same as the title of this app
 	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 400, 44)];
