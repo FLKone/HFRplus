@@ -21,8 +21,9 @@
 
 @property (nonatomic, strong) NSMutableArray *subCats;
 
--(int)getHFRID;
+-(NSInteger)getHFRID;
 -(NSString *)getImage;
+-(NSString *)getImageFromID;
 -(NSString *)URLforType:(FLAGTYPE)type;
 
 @end

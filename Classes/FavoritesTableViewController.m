@@ -27,6 +27,7 @@
 
 #import "AKSingleSegmentedControl.h"
 #import "TopicsTableViewController.h"
+#import "ForumCellView.h"
 
 #import "UIScrollView+SVPullToRefresh.h"
 #import "PullToRefreshErrorViewController.h"
@@ -567,6 +568,9 @@
     self.showAll = NO;
     self.navigationController.navigationBar.translucent = NO;
     
+    UINib *nib = [UINib nibWithNibName:@"ForumCellView" bundle:nil];
+    [self.favoritesTableView registerNib:nib forCellReuseIdentifier:@"ForumCellID"];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(OrientationChanged)
                                                  name:UIApplicationDidChangeStatusBarOrientationNotification
@@ -967,18 +971,22 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (self.showAll) {
-        static NSString *CellIdentifier = @"Cell";
+        static NSString *CellIdentifier = @"ForumCellID";
+
         
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        }
+        ForumCellView *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+
         
         // Configure the cell...
-        cell.textLabel.text = [NSString stringWithFormat:@"%@", [[[arrayCategories objectAtIndex:indexPath.row] forum] aTitle]];
-        cell.textLabel.font = [UIFont boldSystemFontOfSize:17];
+        cell.titleLabel.text = [NSString stringWithFormat:@"%@", [[[arrayCategories objectAtIndex:indexPath.row] forum] aTitle]];
+        [cell.catImage setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@", [[[arrayCategories objectAtIndex:indexPath.row] forum] getImageFromID]]]];
+
+        cell.flagLabel.text = @"";
         
+        //cell.flagLabel.font = [UIFont boldSystemFontOfSize:17];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+
         return cell;
     }
     else {

@@ -746,6 +746,9 @@
 	self.title = @"Catégories";
     self.navigationController.navigationBar.translucent = NO;
 
+    UINib *nib = [UINib nibWithNibName:@"ForumCellView" bundle:nil];
+    [self.forumsTableView registerNib:nib forCellReuseIdentifier:@"ForumCellID"];
+    
     self.metaDataList = [[NSMutableDictionary alloc] init];
     
     NSFileManager *fileManager = [[NSFileManager alloc] init];
@@ -851,23 +854,13 @@
     static NSString *CellIdentifier = @"ForumCellID";
     
     ForumCellView *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        
-        [[NSBundle mainBundle] loadNibNamed:@"ForumCellView" owner:self options:nil];
-        cell = tmpCell;
-        
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-        
+
+    if (cell.gestureRecognizers.count == 0) {
         UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc]
                                                              initWithTarget:self action:@selector(handleLongPress:)];
         [cell addGestureRecognizer:longPressRecognizer];
-        
-        self.tmpCell = nil;
     }
 
-    
-    
     cell.titleLabel.text = [NSString stringWithFormat:@"%@", [[arrayData objectAtIndex:indexPath.row] aTitle]];
     [cell.catImage setImage:[UIImage imageNamed:[[arrayData objectAtIndex:indexPath.row] getImage]]];
     
@@ -894,6 +887,9 @@
     else {
         cell.flagLabel.text = @"";
     }
+    
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     
     return cell;
 }
