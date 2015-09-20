@@ -6,9 +6,9 @@
 //  Luc Vandal, Edovia Inc., http://www.edovia.com
 //  Ortwin Gentz, FutureTap GmbH, http://www.futuretap.com
 //  All rights reserved.
-// 
-//  It is appreciated but not required that you give credit to Luc Vandal and Ortwin Gentz, 
-//  as the original authors of this code. You can give credit in a blog post, a tweet or on 
+//
+//  It is appreciated but not required that you give credit to Luc Vandal and Ortwin Gentz,
+//  as the original authors of this code. You can give credit in a blog post, a tweet or on
 //  a info page of your app. Also, the original authors appreciate letting them know if you use this code.
 //
 //  This code is licensed under the BSD license that is available at: http://www.opensource.org/licenses/bsd-license.php
@@ -19,17 +19,21 @@
 
 @class IASKSettingsReader;
 
-@interface IASKSpecifier : NSObject {
-    NSDictionary    *_specifierDict;
-    NSDictionary    *_multipleValuesDict;
-	IASKSettingsReader *_settingsReader;
-}
+@interface IASKSpecifier : NSObject
+
 @property (nonatomic, retain) NSDictionary  *specifierDict;
-@property (nonatomic, assign) IASKSettingsReader *settingsReader;
+@property (nonatomic, weak) IASKSettingsReader *settingsReader;
 
 - (id)initWithSpecifier:(NSDictionary*)specifier;
+/// A specifier for one entry in a radio group preceeded by a radio group specifier.
+- (id)initWithSpecifier:(NSDictionary *)specifier
+        radioGroupValue:(NSString *)radioGroupValue;
+
+- (void)sortIfNeeded;
+
 - (NSString*)localizedObjectForKey:(NSString*)key;
 - (NSString*)title;
+- (NSString*)subtitle;
 - (NSString*)key;
 - (NSString*)type;
 - (NSString*)titleForCurrentValue:(id)currentValue;
@@ -47,13 +51,21 @@
 - (NSString*)minimumValueImage;
 - (NSString*)maximumValueImage;
 - (BOOL)isSecure;
+- (BOOL)displaySortedByTitle;
 - (UIKeyboardType)keyboardType;
 - (UITextAutocapitalizationType)autocapitalizationType;
 - (UITextAutocorrectionType)autoCorrectionType;
 - (NSString*)footerText;
 - (Class)viewControllerClass;
 - (SEL)viewControllerSelector;
--(Class)buttonClass;
--(SEL)buttonAction;
-	
+- (NSString*)viewControllerStoryBoardFile;
+- (NSString*)viewControllerStoryBoardID;
+- (Class)buttonClass;
+- (SEL)buttonAction;
+- (UIImage *)cellImage;
+- (UIImage *)highlightedCellImage;
+- (BOOL)adjustsFontSizeToFitWidth;
+- (NSTextAlignment)textAlignment;
+- (NSArray *)userInterfaceIdioms;
+- (NSString *)radioGroupValue;
 @end

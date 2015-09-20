@@ -15,51 +15,48 @@
 //
 
 #import "IASKAppSettingsWebViewController.h"
+#import "IASKSettingsReader.h"
 
 @implementation IASKAppSettingsWebViewController
 
-@synthesize url;
-@synthesize webView;
+- (id)initWithFile:(NSString*)urlString specifier:(IASKSpecifier*)specifier {
+    self = [super init];
+    if (self) {
+        self.url = [NSURL URLWithString:urlString];
+        if (!self.url || ![self.url scheme]) {
+            NSString *path = [[NSBundle mainBundle] pathForResource:[urlString stringByDeletingPathExtension] ofType:[urlString pathExtension]];
+            if(path)
+                self.url = [NSURL fileURLWithPath:path];
+            else
+                self.url = nil;
+        }
+		self.customTitle = [specifier localizedObjectForKey:kIASKChildTitle];
+		self.title = self.customTitle ? : specifier.title;
+    }
+    return self;
+}
 
-- (id)initWithFile:(NSString*)urlString key:(NSString*)key {
-	if (!(self = [super initWithNibName:nil bundle:nil])) {
-		return nil;
-	}
+- (void)loadView {
+    self.webView = [[UIWebView alloc] init];
+    self.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.webView.delegate = self;
+    
+    self.view = self.webView;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
 	
-	self.url = [NSURL URLWithString:urlString];
-	if (!self.url || ![self.url scheme]) {
-		NSString *path = [[NSBundle mainBundle] pathForResource:[urlString stringByDeletingPathExtension] ofType:[urlString pathExtension]];
-		if(path)
-			self.url = [NSURL fileURLWithPath:path];
-		else
-			self.url = nil;
-	}
-	return self;
-}
-
-
-- (void)dealloc {
-	[webView release], webView = nil;
-	[url release], url = nil;
-	
-	[super dealloc];
-}
-
-- (void)viewWillAppear:(BOOL)animated {  
-	[webView loadRequest:[NSURLRequest requestWithURL:self.url]];
-}
-
-- (void)viewDidUnload {
-	[super viewDidUnload];
-	self.webView = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return YES;
+	UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 40, 20)];
+	activityIndicatorView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
+	[activityIndicatorView startAnimating];
+	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:activityIndicatorView];
+	[self.webView loadRequest:[NSURLRequest requestWithURL:self.url]];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-	self.navigationItem.title = [self.webView stringByEvaluatingJavaScriptFromString:@"document.title"];
+	self.navigationItem.rightBarButtonItem = nil;
+	self.title = self.customTitle.length ? self.customTitle : [self.webView stringByEvaluatingJavaScriptFromString:@"document.title"];
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
@@ -94,11 +91,10 @@
 				NSString *key = [[keyValue objectAtIndex:0] lowercaseString];
 				NSString *value = [keyValue objectAtIndex:1];
 				
-				value =  (NSString *)CFURLCreateStringByReplacingPercentEscapesUsingEncoding(kCFAllocatorDefault,
+				value =  CFBridgingRelease(CFURLCreateStringByReplacingPercentEscapesUsingEncoding(kCFAllocatorDefault,
 																							 (CFStringRef)value,
 																							 CFSTR(""),
-																							 kCFStringEncodingUTF8);
-				[value autorelease];
+																							 kCFStringEncodingUTF8));
 				
 				if ([key isEqualToString:@"subject"]) {
 					[mailViewController setSubject:value];
@@ -126,8 +122,14 @@
 		
 		[mailViewController setToRecipients:toRecipients];
 
-		[self presentModalViewController:mailViewController animated:YES];
-		[mailViewController release];
+		mailViewController.navigationBar.barStyle = self.navigationController.navigationBar.barStyle;
+		IASK_IF_IOS7_OR_GREATER(mailViewController.navigationBar.tintColor = self.navigationController.navigationBar.tintColor;);
+		mailViewController.navigationBar.titleTextAttributes =  self.navigationController.navigationBar.titleTextAttributes;
+
+		UIStatusBarStyle savedStatusBarStyle = [UIApplication sharedApplication].statusBarStyle;
+		[self presentViewController:mailViewController animated:YES completion:^{
+			[UIApplication sharedApplication].statusBarStyle = savedStatusBarStyle;
+		}];
 		return NO;
 	}
 	
@@ -140,9 +142,7 @@
 }
 
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
-	[self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
-
-
 
 @end
