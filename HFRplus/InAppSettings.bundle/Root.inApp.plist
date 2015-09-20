@@ -28,7 +28,7 @@
 			<key>IASKCellImage</key>
 			<string>AboutFilled-25</string>
 			<key>IASKViewControllerClass</key>
-			<string>CreditViewController</string>
+			<string>CreditsViewController</string>
 			<key>Title</key>
 			<string>Crédits</string>
 			<key>Type</key>
