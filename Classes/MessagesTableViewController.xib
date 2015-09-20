@@ -24,7 +24,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <webView hidden="YES" opaque="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" id="17">
+                <webView hidden="YES" opaque="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" id="17" customClass="HFRWebView">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <animations/>

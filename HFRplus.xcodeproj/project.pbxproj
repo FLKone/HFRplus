@@ -241,6 +241,8 @@
 		4C21E9801BA5C70400691D65 /* XlargeIconsFilled-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C21E94C1BA5C70400691D65 /* XlargeIconsFilled-20@2x.png */; settings = {ASSET_TAGS = (); }; };
 		4C21E9831BA5CC1200691D65 /* HFRTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C21E9821BA5CC1200691D65 /* HFRTextView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		4C21E9841BA5CC1200691D65 /* HFRTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C21E9821BA5CC1200691D65 /* HFRTextView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		4C265D4D1BAE511800B1A244 /* HFRWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C265D4C1BAE511800B1A244 /* HFRWebView.m */; settings = {ASSET_TAGS = (); }; };
+		4C265D4E1BAE511800B1A244 /* HFRWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C265D4C1BAE511800B1A244 /* HFRWebView.m */; settings = {ASSET_TAGS = (); }; };
 		4CB132941B9058530081B44D /* 146-gavel.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132921B9058530081B44D /* 146-gavel.png */; settings = {ASSET_TAGS = (); }; };
 		4CB132951B9058530081B44D /* 146-gavel.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132921B9058530081B44D /* 146-gavel.png */; settings = {ASSET_TAGS = (); }; };
 		4CB132961B9058530081B44D /* 146-gavel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132931B9058530081B44D /* 146-gavel@2x.png */; settings = {ASSET_TAGS = (); }; };
@@ -1284,6 +1286,8 @@
 		4C21E94C1BA5C70400691D65 /* XlargeIconsFilled-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "XlargeIconsFilled-20@2x.png"; path = "Editor/XlargeIconsFilled-20@2x.png"; sourceTree = "<group>"; };
 		4C21E9811BA5CC1200691D65 /* HFRTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFRTextView.h; sourceTree = "<group>"; };
 		4C21E9821BA5CC1200691D65 /* HFRTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFRTextView.m; sourceTree = "<group>"; };
+		4C265D4B1BAE511800B1A244 /* HFRWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFRWebView.h; sourceTree = "<group>"; };
+		4C265D4C1BAE511800B1A244 /* HFRWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFRWebView.m; sourceTree = "<group>"; };
 		4CB132921B9058530081B44D /* 146-gavel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "146-gavel.png"; sourceTree = "<group>"; };
 		4CB132931B9058530081B44D /* 146-gavel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "146-gavel@2x.png"; sourceTree = "<group>"; };
 		4CB132981B905BF80081B44D /* BlackListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlackListTableViewController.h; sourceTree = "<group>"; };
@@ -1872,6 +1876,8 @@
 				013F0E97121E117800BEBEB1 /* MessagesTableViewController.h */,
 				013F0E98121E117800BEBEB1 /* MessagesTableViewController.m */,
 				013F0E99121E117800BEBEB1 /* MessagesTableViewController.xib */,
+				4C265D4B1BAE511800B1A244 /* HFRWebView.h */,
+				4C265D4C1BAE511800B1A244 /* HFRWebView.m */,
 				4CB133121B90E9530081B44D /* MessagesSearchTableViewController.h */,
 				4CB133131B90E9530081B44D /* MessagesSearchTableViewController.m */,
 				013F0E9D121E117900BEBEB1 /* ParseMessagesOperation.h */,
@@ -4017,6 +4023,7 @@
 				CA00C3E917C2FE1B0067B457 /* IASKSpecifierValuesViewController.m in Sources */,
 				CA00C3E817C2FE1B0067B457 /* IASKAppSettingsWebViewController.m in Sources */,
 				CA00C44017C2FF3F0067B457 /* ASIDataDecompressor.m in Sources */,
+				4C265D4D1BAE511800B1A244 /* HFRWebView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4136,6 +4143,7 @@
 				CA7C70FA185EF50E00B348BA /* ASINetworkQueue.m in Sources */,
 				CA7C710B185EF50E00B348BA /* ASIFormDataRequest.m in Sources */,
 				CA7C711C185EF50E00B348BA /* ASIDataDecompressor.m in Sources */,
+				4C265D4E1BAE511800B1A244 /* HFRWebView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

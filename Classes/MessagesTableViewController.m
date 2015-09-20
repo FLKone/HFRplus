@@ -712,7 +712,9 @@
     
     UIMenuController *menuController = [UIMenuController sharedMenuController];
     [menuController setMenuItems:[NSArray arrayWithObjects:textQuotinuum, textQuotinuumBis, nil]];
-    //[self resignFirstResponder];
+    //[self.messagesWebView becomeFirstResponder];
+//    [self becomeFirstResponder];
+
 }
 
 - (void)viewDidLoad {
@@ -1156,53 +1158,21 @@
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
 	[self presentModalViewController:navigationController animated:YES];
     
-	// The navigation controller is now owned by the current view controller
-	// and the root view controller is owned by the navigation controller,
-	// so both objects should be released to prevent over-retention.
-	
 }
 
-
-
-/*
-- (void)viewDidAppear:(BOOL)animated {
-
-    [super viewDidAppear:animated];
-
-	//NSLog(@"toscroll, %d", messageToScroll);
-}
-*/
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-	[self.messagesWebView becomeFirstResponder];
-
 	
 	if(self.detailViewController) self.detailViewController = nil;
 	if(self.messagesTableViewController) self.messagesTableViewController = nil;
  
 }
 
-/*
-- (void)viewDidAppear:(BOOL)animated {
-	[super viewDidAppear:animated];
-	
-}
-*/
-
-
 - (void)viewDidDisappear:(BOOL)animated {
 	//NSLog(@"viewDidDisappear");
 
     [super viewDidDisappear:animated];
-    [self.messagesWebView resignFirstResponder];
-	
 }
-/*
- - (void)viewDidDisappear:(BOOL)animated {
- [super viewDidDisappear:animated];
- }
- */
-
 
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -1838,7 +1808,8 @@
         
         [self.loadingView setHidden:YES];
         [self.messagesWebView setHidden:NO];
-        
+        [self.messagesWebView becomeFirstResponder];
+
         NSString *jsString = @"";
 
         jsString = [jsString stringByAppendingString:@"$('.message').addSwipeEvents().bind('doubletap', function(evt, touch) { window.location = 'oijlkajsdoihjlkjasdodetails://'+this.id; });"];
@@ -1847,30 +1818,6 @@
     }
     NSLog(@"== DOMed");
     
-    //Position du Flag
-    //NSString* jsString10 = [NSString stringWithFormat:@"window.location.hash='#top';"];
-    //[self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString10];
-    
-    //NSString* jsString11 = [NSString stringWithFormat:@"window.location.hash='%@';", self.stringFlagTopic];
-    //[self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString11];
-    
-    //bug iOS9--
-
-    
-    
-	//on ajoute le bouton actualiser si besoin
-	//if (([self pageNumber] == [self lastPageNumber]) || ([self lastPageNumber] == 0)) {
-		//NSLog(@"premiere et unique ou dernier");
-		//'before'
-		//jsString = [jsString stringByAppendingString:[NSString stringWithFormat:@"$('#actualiserbtn').click( function(){ window.location = 'oijlkajsdoihjlkjasdorefresh://data'; });"]];
-		
-	//}
-	
-//	jsString = [jsString stringByAppendingString:@"$('.header').click(function(event) { var offset = $(this).offset(); event.stopPropagation(); window.location = 'oijlkajsdoihjlkjasdopopup://'+(offset.top-window.pageYOffset)+'/'+this.parentNode.id; });"];
-	
-//	jsString = [jsString stringByAppendingString:@"$('.hfrplusimg').click(function() { window.location = 'oijlkajsdoihjlkjasdoimbrows://'+this.title+'/'+encodeURIComponent(this.alt); });"];
-
-
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
@@ -1892,7 +1839,6 @@
 
 }
 
-//NSSelectorFromString([[[self arrayAction] objectAtIndex:curPostID] objectForKey:@"code"])
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
     NSLog(@"MTV %@ nbS=%lu", NSStringFromSelector(action), [UIMenuController sharedMenuController].menuItems.count);
     
@@ -1902,68 +1848,16 @@
         returnA = NO;
     } else {
         returnA = [super canPerformAction:action withSender:sender];
-
-        if ([NSStringFromSelector(action) isEqualToString:@"selectAll:"]) { NSLog(@"selectAllselectAllselectAll");returnA = NO; }
-        if ([NSStringFromSelector(action) isEqualToString:@"_define:"]) returnA = NO;
-        if ([NSStringFromSelector(action) isEqualToString:@"_share:"]) returnA = NO;
-
     }
 
     NSLog(@"MTV returnA %d", returnA);
     return returnA;
 }
-
-- (id)targetForAction:(SEL)action
-           withSender:(id)sender {
-    
-    NSLog(@"MTV Target %@ nbS=%lu", NSStringFromSelector(action), [UIMenuController sharedMenuController].menuItems.count);
-    id returnB = [self.messagesWebView targetForAction:action withSender:sender];
-    NSLog(@"MTV Target returnB %@", returnB);
-    
-    if (!returnB) {
-        returnB = [super targetForAction:action withSender:sender];
-        
-
-    }
-    
-    if ([NSStringFromSelector(action) isEqualToString:@"selectAll:"]) returnB = nil;
-    if ([NSStringFromSelector(action) isEqualToString:@"_define:"]) returnB = nil;
-    if ([NSStringFromSelector(action) isEqualToString:@"_share:"]) returnB = nil;
-    
-    NSLog(@"MTV Target returnB2 %@", returnB);
-
-    return returnB;
-}
-/*
-- (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
-    NSLog(@"MTV %@ %lu", NSStringFromSelector(action), [UIMenuController sharedMenuController].menuItems.count);
-    BOOL returnA = [super canPerformAction:action withSender:sender];//[self.messagesWebView canPerformAction:action withSender:sender];
-    NSLog(@"MTV returnA %d", returnA);
-    
-    return returnA;
- 
-    NSLog(@"MWV %@ %lu", NSStringFromSelector(action), [UIMenuController sharedMenuController].menuItems.count);
-    
-    for (id tmpAction in self.arrayAction) {
-        NSLog(@"Yes %@ - %@", NSStringFromSelector(action), [tmpAction objectForKey:@"code"]);
-
-        if (action == NSSelectorFromString([tmpAction objectForKey:@"code"])) {
-            NSLog(@"YES");
-            return YES;
-        }
-    }
-
-    BOOL returnB = [self.messagesWebView canPerformAction:action withSender:sender];
-    NSLog(@"MWV returnB %d", returnB);
-    return returnB;
- 
-}
-*/
 
 - (BOOL) canBecomeFirstResponder {
 	NSLog(@"===== canBecomeFirstResponder");
 	
-    return YES;
+    return NO;
 }
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)aRequest navigationType:(UIWebViewNavigationType)navigationType {
 	NSLog(@"expected:%ld, got:%ld | url:%@", (long)UIWebViewNavigationTypeLinkClicked, (long)navigationType, aRequest.URL);
@@ -1978,7 +1872,6 @@
             
             if ([[[aRequest.URL pathComponents] objectAtIndex:0] isEqualToString:@"/"] && ([[[aRequest.URL pathComponents] objectAtIndex:1] isEqualToString:@"forum2.php"] || [[[aRequest.URL pathComponents] objectAtIndex:1] isEqualToString:@"hfr"])) {
                 //NSLog(@"pas la meme page / topic");
-                // Navigation logic may go here. Create and push another view controller.
                 
                 //NSLog(@"did Select row Topics table views: %d", indexPath.row);
                 
