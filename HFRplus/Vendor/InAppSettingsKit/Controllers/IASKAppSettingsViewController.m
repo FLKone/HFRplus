@@ -165,7 +165,7 @@ CGRect IASKCGRectSwap(CGRect rect);
 - (void)configure {
 	_reloadDisabled = NO;
 	_showDoneButton = YES;
-	_showCreditsFooter = YES; // display credits for InAppSettingsKit creators
+	_showCreditsFooter = NO; // display credits for InAppSettingsKit creators
 }
 
 - (void)viewDidLoad {
@@ -425,6 +425,7 @@ CGRect IASKCGRectSwap(CGRect rect);
 			return 0;
 		}
 	}
+    /*
 	IASK_IF_IOS7_OR_GREATER
 	(
 	 NSDictionary *rowHeights = @{UIContentSizeCategoryExtraSmall: @(44),
@@ -434,6 +435,7 @@ CGRect IASKCGRectSwap(CGRect rect);
 								  UIContentSizeCategoryExtraLarge: @(47)};
 	 return (CGFloat)[rowHeights[UIApplication.sharedApplication.preferredContentSizeCategory] doubleValue] ? : 51;
 	);
+    */
 	return 44;
 }
 
@@ -451,6 +453,12 @@ CGRect IASKCGRectSwap(CGRect rect);
 	} else {
 		return nil;
 	}
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
+    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+    
+    [header.textLabel setFont:[UIFont systemFontOfSize:14]];
 }
 
 - (CGFloat)tableView:(UITableView*)tableView heightForHeaderInSection:(NSInteger)section {
@@ -519,10 +527,18 @@ CGRect IASKCGRectSwap(CGRect rect);
 			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		}
 	}
+    
+    cell.textLabel.font = [UIFont systemFontOfSize:15.0f];
+    cell.detailTextLabel.font = [UIFont systemFontOfSize:15.0f];
+
+    
+
 	IASK_IF_PRE_IOS6(cell.textLabel.minimumFontSize = kIASKMinimumFontSize;
 					 cell.detailTextLabel.minimumFontSize = kIASKMinimumFontSize;);
 	IASK_IF_IOS6_OR_GREATER(cell.textLabel.minimumScaleFactor = kIASKMinimumFontSize / cell.textLabel.font.pointSize;
 							cell.detailTextLabel.minimumScaleFactor = kIASKMinimumFontSize / cell.detailTextLabel.font.pointSize;);
+     
+
 	return cell;
 }
 
@@ -647,8 +663,20 @@ CGRect IASKCGRectSwap(CGRect rect);
 		cell.textLabel.textAlignment = specifier.textAlignment;
 	}
 	cell.detailTextLabel.textAlignment = specifier.textAlignment;
-	cell.textLabel.adjustsFontSizeToFitWidth = specifier.adjustsFontSizeToFitWidth;
-	cell.detailTextLabel.adjustsFontSizeToFitWidth = specifier.adjustsFontSizeToFitWidth;
+    
+    cell.textLabel.adjustsFontSizeToFitWidth = specifier.adjustsFontSizeToFitWidth;
+    cell.detailTextLabel.adjustsFontSizeToFitWidth = specifier.adjustsFontSizeToFitWidth;
+    
+    IASK_IF_IOS7_OR_GREATER
+    (
+        cell.textLabel.font = [UIFont systemFontOfSize:15.0f];
+        cell.detailTextLabel.font = [UIFont systemFontOfSize:15.0f];
+    )
+    else {
+        cell.textLabel.font = [UIFont systemFontOfSize:14.0f];
+        cell.detailTextLabel.font = [UIFont systemFontOfSize:14.0f];
+    }
+
     return cell;
 }
 
@@ -669,7 +697,8 @@ CGRect IASKCGRectSwap(CGRect rect);
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     IASKSpecifier *specifier  = [self.settingsReader specifierForIndexPath:indexPath];
-    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
     //switches and sliders can't be selected (should be captured by tableView:willSelectRowAtIndexPath: delegate method)
     assert(![[specifier type] isEqualToString:kIASKPSToggleSwitchSpecifier]);
     assert(![[specifier type] isEqualToString:kIASKPSSliderSpecifier]);
@@ -893,7 +922,8 @@ CGRect IASKCGRectSwap(CGRect rect);
 
 static NSDictionary *oldUserDefaults = nil;
 - (void)userDefaultsDidChange {
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 		IASKSettingsStoreUserDefaults *udSettingsStore = (id)self.settingsStore;
 		NSDictionary *currentDict = udSettingsStore.defaults.dictionaryRepresentation;
 		NSMutableArray *indexPathsToUpdate = [NSMutableArray array];
