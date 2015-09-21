@@ -717,6 +717,22 @@
 
 }
 
+-(void)forceButtonMenu {
+    if ([self.splitViewController respondsToSelector:@selector(displayModeButtonItem)]) {
+
+        [[HFRplusAppDelegate sharedAppDelegate] detailNavigationController].viewControllers[0].navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
+        [[HFRplusAppDelegate sharedAppDelegate] detailNavigationController].viewControllers[0].navigationItem.leftItemsSupplementBackButton = YES;
+ 
+    }
+    else {
+        UINavigationItem *navItem = [[[[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] viewControllers] objectAtIndex:0] navigationItem];
+
+        [navItem setLeftBarButtonItem:((SplitViewController *)self.splitViewController).mybarButtonItem animated:YES];
+        [navItem setLeftItemsSupplementBackButton:YES];
+    }
+}
+
+
 - (void)viewDidLoad {
 	//NSLog(@"viewDidLoad %@", self.topicName);
 
@@ -858,6 +874,7 @@
 
 	[self fetchContent];
     [self editMenuHidden:nil];
+    [self forceButtonMenu];
     //self.messagesWebView.controll = self;
 }
 

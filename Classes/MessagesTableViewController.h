@@ -177,6 +177,7 @@
 -(void)searchNewMessages:(int)from;
 -(void)searchNewMessages;
 -(void)fetchContentinBackground:(id)from;
+-(void)forceButtonMenu;
 
 -(void)webViewDidFinishLoadDOM;
 
