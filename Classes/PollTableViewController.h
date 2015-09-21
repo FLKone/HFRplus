@@ -10,7 +10,7 @@
 @class MessagesTableViewController;
 @class ASIHTTPRequest;
 
-@interface PollTableViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+@interface PollTableViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate> {
     
     IBOutlet UITableView *tableViewPoll;
 	IBOutlet UIView *loadingView;

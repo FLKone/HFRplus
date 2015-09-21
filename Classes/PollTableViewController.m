@@ -488,7 +488,7 @@
             //NSLog(@"error: %@", [[arequest error] localizedDescription]);
             
             UIAlertView *alertKO = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[[arequest error] localizedDescription]
-                                                             delegate:self cancelButtonTitle:@"Retour" otherButtonTitles: nil];
+                                                             delegate:nil cancelButtonTitle:@"Retour" otherButtonTitles: nil];
             [alertKO show];
         }
         else if ([arequest responseString])
@@ -510,8 +510,8 @@
             }
             else {
                 UIAlertView *alertOK = [[UIAlertView alloc] initWithTitle:@"Hooray !" message:[[messagesNode contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
-                                                                 delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-
+                                                                 delegate:self cancelButtonTitle:nil otherButtonTitles: nil];
+                [alertOK setTag:kAlertSondageOK];
                 [alertOK show];
 
                 
@@ -548,6 +548,30 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - AlertView Delegate
+
+- (void)didPresentAlertView:(UIAlertView *)alertView
+{
+    NSLog(@"didPresentAlertView PT %@", alertView);
+    
+    if ([alertView tag] == kAlertSondageOK) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [alertView dismissWithClickedButtonIndex:0 animated:YES];
+        });
+    }
+    
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"clickedButtonAtIndex PT %@ index : %ld", alertView, (long)buttonIndex);
+    
+    if (buttonIndex == 1 && alertView.tag == 667) {
+        [self fetchContent];
+    }
 }
 
 #pragma mark - Table view data source

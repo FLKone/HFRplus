@@ -57,9 +57,9 @@ typedef enum {
 	#define DEBUG_LOGS 0
 #endif
 
-//Alerts Tags
-#define kAlertBlackListOK      1000001 //100+ ####
-
+//Alerts Tags 100 + ####
+#define kAlertBlackListOK       1000001
+#define kAlertSondageOK         1000002
 
 #define REHOST_IMAGE_FILE @"rehostImages.plist"
 #define USED_SMILEYS_FILE @"usedSmilieys.plist"
