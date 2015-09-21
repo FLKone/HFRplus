@@ -40,6 +40,8 @@
         
         //[activeController setHiddenKeys:enabled ? nil : [NSSet setWithObjects:@"AutoConnectTest", nil] animated:YES];
     }
+    
+    [self.tableView reloadData];
 }
 
 

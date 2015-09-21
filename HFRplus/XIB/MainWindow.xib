@@ -21,11 +21,6 @@
             </connections>
         </customObject>
         <customObject id="112" customClass="TabBarController"/>
-        <customObject id="189" customClass="SettingsViewController">
-            <userDefinedRuntimeAttributes>
-                <userDefinedRuntimeAttribute type="boolean" keyPath="neverShowPrivacySettings" value="NO"/>
-            </userDefinedRuntimeAttributes>
-        </customObject>
         <window opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="2">
             <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -100,7 +95,7 @@
                         <animations/>
                     </navigationBar>
                     <viewControllers>
-                        <tableViewController title="Réglages" automaticallyAdjustsScrollViewInsets="NO" id="GVX-YK-j2V" customClass="IASKAppSettingsViewController">
+                        <tableViewController title="Réglages" automaticallyAdjustsScrollViewInsets="NO" id="GVX-YK-j2V" customClass="SettingsViewController">
                             <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="uDi-uo-5iE">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -113,9 +108,6 @@
                             </tableView>
                             <extendedEdge key="edgesForExtendedLayout"/>
                             <navigationItem key="navigationItem" title="Réglages" id="WB3-fg-zCe"/>
-                            <connections>
-                                <outlet property="delegate" destination="189" id="hyK-L9-hh2"/>
-                            </connections>
                         </tableViewController>
                     </viewControllers>
                 </navigationController>

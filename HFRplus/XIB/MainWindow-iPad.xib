@@ -22,11 +22,6 @@
                 <outlet property="window" destination="2" id="5"/>
             </connections>
         </customObject>
-        <customObject id="uMH-nD-8yd" customClass="SettingsViewController">
-            <userDefinedRuntimeAttributes>
-                <userDefinedRuntimeAttribute type="boolean" keyPath="neverShowPrivacySettings" value="NO"/>
-            </userDefinedRuntimeAttributes>
-        </customObject>
         <customObject id="252" customClass="SplitViewController"/>
         <customObject id="260" customClass="TabBarController"/>
         <customObject id="305" customClass="DetailNavigationViewController"/>
@@ -108,7 +103,7 @@
                             <animations/>
                         </navigationBar>
                         <viewControllers>
-                            <tableViewController title="Réglages" automaticallyAdjustsScrollViewInsets="NO" id="SII-b9-qTN" customClass="IASKAppSettingsViewController">
+                            <tableViewController title="Réglages" automaticallyAdjustsScrollViewInsets="NO" id="SII-b9-qTN" customClass="SettingsViewController">
                                 <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="hHi-PJ-hcs">
                                     <rect key="frame" x="0.0" y="20" width="320" height="699"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -121,9 +116,6 @@
                                 </tableView>
                                 <extendedEdge key="edgesForExtendedLayout"/>
                                 <navigationItem key="navigationItem" title="Réglages" id="BCI-Lp-zHK"/>
-                                <connections>
-                                    <outlet property="delegate" destination="uMH-nD-8yd" id="prQ-hQ-rPg"/>
-                                </connections>
                             </tableViewController>
                         </viewControllers>
                     </navigationController>
