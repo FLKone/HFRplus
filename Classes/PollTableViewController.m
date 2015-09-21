@@ -59,7 +59,10 @@
     
     //LA Question
     HTMLNode *titleNode = [aPollNode findChildWithAttribute:@"class" matchingName:@"s2" allowPartial:NO];
-    self.stringQuestion = [titleNode allContents];
+   
+    
+    
+    self.stringQuestion =  [self fixedString:[titleNode allContents]];
     
     //Header infos
     NSString *regularExpressionString = @".*</b>(.*)<ol type=\"1\">.*";
@@ -97,6 +100,7 @@
     //Footer infos
     self.stringFooter = rawContentsOfNode([[[aPollNode children] objectAtIndex:[aPollNode children].count-2] _node], [myParser _doc]);
     self.stringFooter = [[[self.stringFooter stringByReplacingOccurrencesOfString:@"<br>" withString:@"\r"] stripHTML] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    self.stringFooter = [self fixedString:self.stringFooter];
     
     
     NSArray *temporaryAllInputArray = [aPollNode findChildTags:@"input"];
@@ -136,8 +140,10 @@
             //                                    [[inputallRadio findChildTag:@"input"] getAttributeNamed:@"value"],
             //                                    [[inputallRadio findChildTag:@"input"] getAttributeNamed:@"type"]);
             //NSLog(@"text %@", [[inputallRadio findChildTag:@"label"] allContents]);
+
+
             
-            [self.arrayOptions addObject:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d. %@", nbO, [[inputallRadio findChildTag:@"label"] allContents]], [[inputallRadio findChildTag:@"input"] getAttributeNamed:@"name"], nil]];
+            [self.arrayOptions addObject:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d. %@", nbO, [self fixedString:[[inputallRadio findChildTag:@"label"] allContents]]], [[inputallRadio findChildTag:@"input"] getAttributeNamed:@"name"], nil]];
             
             //setObject:[[[inputallRadio children] objectAtIndex:1] allContents] forKey:[[[inputallRadio children] objectAtIndex:0] getAttributeNamed:@"name"]];
             nbO++;
@@ -165,13 +171,18 @@
             
             if ([[inputResult getAttributeNamed:@"class"] isEqualToString:@"sondageLeft"]) {
                 //
-                [(NSMutableDictionary *)[arrayResults objectAtIndex:i] setObject:[NSNumber numberWithInt:[[[[inputResult children] objectAtIndex:3] allContents] integerValue]] forKey:@"pcVote"];
-                [(NSMutableDictionary *)[arrayResults objectAtIndex:i] setObject:[NSNumber numberWithInt:[[[[inputResult children] objectAtIndex:5] allContents] integerValue]] forKey:@"nbVote"];
+                
+                [(NSMutableDictionary *)[arrayResults objectAtIndex:i] setObject:[NSNumber numberWithInt:[[self fixedString:[[[inputResult children] objectAtIndex:3] allContents]] integerValue]] forKey:@"pcVote"];
+                [(NSMutableDictionary *)[arrayResults objectAtIndex:i] setObject:[NSNumber numberWithInt:[[self fixedString:[[[inputResult children] objectAtIndex:5] allContents]] integerValue]] forKey:@"nbVote"];
                 continue;
             }
             else if ([[inputResult getAttributeNamed:@"class"] isEqualToString:@"sondageRight"]) {
                 //
-                [(NSMutableDictionary *)[arrayResults objectAtIndex:i] setObject:[[inputResult allContents] stringByReplacingOccurrencesOfString:@"\u00a0" withString:@""] forKey:@"labelVote"];
+
+                [(NSMutableDictionary *)[arrayResults objectAtIndex:i] setObject:[[self fixedString:[inputResult allContents]] stringByReplacingOccurrencesOfString:@"  " withString:@" "] forKey:@"labelVote"];
+
+                
+                
                 continue;
             }
             else if ([[inputResult getAttributeNamed:@"class"] isEqualToString:@"spacer"]) {
@@ -219,6 +230,16 @@
         }
         
     });
+
+}
+
+-(NSString *)fixedString:(NSString *)orig {
+
+    if (SYSTEM_VERSION_GREATER_THAN(@"9.0")) {
+        return [[NSString alloc] initWithCString:[orig cStringUsingEncoding:NSISOLatin1StringEncoding] encoding:NSUTF8StringEncoding];
+    }
+    else
+        return orig;
 
 }
 
