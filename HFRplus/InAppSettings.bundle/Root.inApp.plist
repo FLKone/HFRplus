@@ -238,6 +238,16 @@
 			<key>Key</key>
 			<string>menu_debug_entry</string>
 		</dict>
+		<dict>
+			<key>DefaultValue</key>
+			<string>1.0</string>
+			<key>Key</key>
+			<string>version</string>
+			<key>Title</key>
+			<string>Version</string>
+			<key>Type</key>
+			<string>PSTitleValueSpecifier</string>
+		</dict>
 	</array>
 </dict>
 </plist>

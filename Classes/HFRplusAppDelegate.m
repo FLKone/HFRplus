@@ -78,6 +78,22 @@
 #endif
     [self registerDefaultsFromSettingsBundle];
     
+    NSLog(@"");
+    
+    NSString *version = [NSString stringWithFormat:@"HFR+ %@ (%@)", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *web = [defaults stringForKey:@"default_web"];
+    NSLog(@"web %@", web);
+
+    NSDictionary *appDefaults =  [NSDictionary dictionaryWithObjectsAndKeys:
+                                  version, @"version", nil];
+    
+    [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+        
+        
     //UserAgent
     /*
     NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:
@@ -135,6 +151,7 @@
         NSString *key = [prefSpecification objectForKey:@"Key"];
         
         if(key && [prefSpecification objectForKey:@"DefaultValue"]) {
+            //NSLog(@"Reg %@ = %@", key, [prefSpecification objectForKey:@"DefaultValue"]);
             [defaultsToRegister setObject:[prefSpecification objectForKey:@"DefaultValue"] forKey:key];
         }
     }
