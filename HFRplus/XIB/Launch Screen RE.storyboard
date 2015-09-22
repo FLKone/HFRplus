@@ -13,7 +13,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchFace" id="mAF-xd-4Pa">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchLogo" id="mAF-xd-4Pa">
                                 <rect key="frame" x="122" y="246" width="76" height="76"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <animations/>
@@ -29,6 +29,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LaunchFace" width="76" height="76"/>
+        <image name="LaunchLogo" width="76" height="76"/>
     </resources>
 </document>

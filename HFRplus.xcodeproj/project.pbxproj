@@ -243,6 +243,10 @@
 		4C21E9841BA5CC1200691D65 /* HFRTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C21E9821BA5CC1200691D65 /* HFRTextView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		4C265D4D1BAE511800B1A244 /* HFRWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C265D4C1BAE511800B1A244 /* HFRWebView.m */; settings = {ASSET_TAGS = (); }; };
 		4C265D4E1BAE511800B1A244 /* HFRWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C265D4C1BAE511800B1A244 /* HFRWebView.m */; settings = {ASSET_TAGS = (); }; };
+		4C444AF21BB0DE0D000EF444 /* LaunchLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C444AF01BB0DE0D000EF444 /* LaunchLogo.png */; settings = {ASSET_TAGS = (); }; };
+		4C444AF31BB0DE0D000EF444 /* LaunchLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C444AF01BB0DE0D000EF444 /* LaunchLogo.png */; settings = {ASSET_TAGS = (); }; };
+		4C444AF41BB0DE0D000EF444 /* LaunchLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C444AF11BB0DE0D000EF444 /* LaunchLogo@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4C444AF51BB0DE0D000EF444 /* LaunchLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C444AF11BB0DE0D000EF444 /* LaunchLogo@2x.png */; settings = {ASSET_TAGS = (); }; };
 		4C9C2B1B1BAE62C500511853 /* InsetLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9C2B1A1BAE62C500511853 /* InsetLabel.m */; settings = {ASSET_TAGS = (); }; };
 		4C9C2B1C1BAE62C500511853 /* InsetLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9C2B1A1BAE62C500511853 /* InsetLabel.m */; settings = {ASSET_TAGS = (); }; };
 		4C9C2B1F1BAE66EB00511853 /* ThorHammerBlack-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B1D1BAE66EB00511853 /* ThorHammerBlack-20@2x.png */; settings = {ASSET_TAGS = (); }; };
@@ -1304,6 +1308,8 @@
 		4C21E9821BA5CC1200691D65 /* HFRTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFRTextView.m; sourceTree = "<group>"; };
 		4C265D4B1BAE511800B1A244 /* HFRWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFRWebView.h; sourceTree = "<group>"; };
 		4C265D4C1BAE511800B1A244 /* HFRWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFRWebView.m; sourceTree = "<group>"; };
+		4C444AF01BB0DE0D000EF444 /* LaunchLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchLogo.png; sourceTree = "<group>"; };
+		4C444AF11BB0DE0D000EF444 /* LaunchLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LaunchLogo@2x.png"; sourceTree = "<group>"; };
 		4C9C2B191BAE62C500511853 /* InsetLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InsetLabel.h; sourceTree = "<group>"; };
 		4C9C2B1A1BAE62C500511853 /* InsetLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InsetLabel.m; sourceTree = "<group>"; };
 		4C9C2B1D1BAE66EB00511853 /* ThorHammerBlack-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ThorHammerBlack-20@2x.png"; sourceTree = "<group>"; };
@@ -2697,6 +2703,8 @@
 		CA00C59417C30C370067B457 /* iTunes */ = {
 			isa = PBXGroup;
 			children = (
+				4C444AF01BB0DE0D000EF444 /* LaunchLogo.png */,
+				4C444AF11BB0DE0D000EF444 /* LaunchLogo@2x.png */,
 				CA00C59517C30C370067B457 /* Default-568h@2x.png */,
 				CA00C59617C30C370067B457 /* Default.png */,
 				CA00C59717C30C370067B457 /* Default@2x.png */,
@@ -3440,6 +3448,7 @@
 				CABC726F17E605E5003E722E /* upsmall.png in Resources */,
 				4C21E94D1BA5C70400691D65 /* BoldEFilled-20.png in Resources */,
 				4CD6B8861B979713007FC29E /* CancelFilled-20@2x.png in Resources */,
+				4C444AF41BB0DE0D000EF444 /* LaunchLogo@2x.png in Resources */,
 				4C0B8DDE1BA4522900D329BA /* SmartphoneTabletFilled-40.png in Resources */,
 				CA019F1719CD77D500F67C47 /* jquery-2.1.1.min.js in Resources */,
 				CA7472E817E15FE300B45E15 /* ToolBarFastForward_off.png in Resources */,
@@ -3471,6 +3480,7 @@
 				4C21E9731BA5C70400691D65 /* SelectAllFilled-20@2x.png in Resources */,
 				CA00C6C417C30C370067B457 /* buttonnextoff.png in Resources */,
 				CA00C6D517C30C370067B457 /* toolbar.png in Resources */,
+				4C444AF21BB0DE0D000EF444 /* LaunchLogo.png in Resources */,
 				CAA1F69217E5DFA20006E785 /* plus@2x.png in Resources */,
 				4C052DF81BA8537E00B61952 /* fontello.ttf in Resources */,
 				4C0B8D8C1BA4522900D329BA /* MoneyBoxFilled-40.png in Resources */,
@@ -3877,6 +3887,7 @@
 				CA019F1819CD77D500F67C47 /* jquery-2.1.1.min.js in Resources */,
 				4C21E94E1BA5C70400691D65 /* BoldEFilled-20.png in Resources */,
 				4CD6B8871B979713007FC29E /* CancelFilled-20@2x.png in Resources */,
+				4C444AF51BB0DE0D000EF444 /* LaunchLogo@2x.png in Resources */,
 				4C0B8DDF1BA4522900D329BA /* SmartphoneTabletFilled-40.png in Resources */,
 				CA7C7080185EF50E00B348BA /* ToolBarFastForward_off.png in Resources */,
 				CA7C7081185EF50E00B348BA /* arrowend@2x.png in Resources */,
@@ -3908,6 +3919,7 @@
 				4C21E9741BA5C70400691D65 /* SelectAllFilled-20@2x.png in Resources */,
 				CA7C7092185EF50E00B348BA /* toolbar.png in Resources */,
 				CA7C7093185EF50E00B348BA /* plus@2x.png in Resources */,
+				4C444AF31BB0DE0D000EF444 /* LaunchLogo.png in Resources */,
 				CA7C7094185EF50E00B348BA /* lightBlue.png in Resources */,
 				4C052DF91BA8537E00B61952 /* fontello.ttf in Resources */,
 				4C0B8D8D1BA4522900D329BA /* MoneyBoxFilled-40.png in Resources */,
