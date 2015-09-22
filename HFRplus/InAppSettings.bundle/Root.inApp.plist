@@ -107,6 +107,30 @@
 			</array>
 		</dict>
 		<dict>
+			<key>DefaultValue</key>
+			<string>0</string>
+			<key>FooterText</key>
+			<string>Lorsque le mode &quot;Main Gauche&quot; est activé le bouton &quot;Actualiser&quot; dans &quot;Catégories&quot;, &quot;Vos Sujets&quot; et &quot;Messages&quot; est placé en haut à gauche au lieu d&apos;en haut à droite.
+
+Work in Progress</string>
+			<key>Key</key>
+			<string>main_gauche</string>
+			<key>Title</key>
+			<string>Main Gauche WIP</string>
+			<key>Titles</key>
+			<array>
+				<string>Désactivé</string>
+				<string>Activé</string>
+			</array>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Values</key>
+			<array>
+				<string>0</string>
+				<string>1</string>
+			</array>
+		</dict>
+		<dict>
 			<key>Title</key>
 			<string>Sujets</string>
 			<key>Type</key>

@@ -39,6 +39,14 @@ typedef enum {
     kRed
 } FLAGTYPE;
 
+typedef enum {
+    kSync, //pour repositionner les boutons en fonction du mode Main Gauche
+    kReload,
+    kCancel,
+    kNewTopic,
+    kAllCat
+} BARBTNTYPE;
+
 #define kStatusChangedNotification  @"kStatusChangedNotification"
 #define kLoginChangedNotification  @"kLoginChangedNotification"
 

@@ -67,6 +67,7 @@
 
 - (void)fetchContentTrigger
 {
+
 	//NSLog(@"fetchContent %@", [NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]);
 	self.status = kIdle;
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];
@@ -145,7 +146,7 @@
 
 - (void)fetchContentFailed:(ASIHTTPRequest *)theRequest
 {
-
+    NSLog(@"fetchContentFailed");
     [self.maintenanceView setText:@"oops :o"];
     
     //[self.loadingView setHidden:YES];
