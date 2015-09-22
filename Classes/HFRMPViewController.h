@@ -10,8 +10,11 @@
 
 
 @interface HFRMPViewController : TopicsTableViewController {
+    bool reloadOnAppear;
 
 }
+@property bool reloadOnAppear;
+
 
 - (void)fetchContentStarted:(ASIHTTPRequest *)theRequest;
 - (void)fetchContentComplete:(ASIHTTPRequest *)theRequest;

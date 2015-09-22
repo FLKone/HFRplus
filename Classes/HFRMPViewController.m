@@ -14,7 +14,7 @@
 #import "TopicCellView.h"
 
 @implementation HFRMPViewController
-
+@synthesize reloadOnAppear;
 
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
@@ -49,7 +49,11 @@
 	
 	segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(fetchContent)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
-	
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(LoginChanged:)
+                                                 name:kLoginChangedNotification
+                                               object:nil];
 }
 
 /*
@@ -67,10 +71,40 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+-(void)LoginChanged:(NSNotification *)notification {
+    NSLog(@"loginChanged %@", notification);
+    
+    self.reloadOnAppear = YES;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    //NSLog(@"viewWillAppear Forums Table View");
+    
+    
+    [super viewWillAppear:animated];
+
+    if (self.reloadOnAppear) {
+        [self fetchContent];
+        self.reloadOnAppear = NO;
+    }
+}
+
+
 - (void)viewDidUnload {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+
+
+- (void)dealloc {
+    //NSLog(@"dealloc Forums Table View");
+    [self viewDidUnload];
+
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kLoginChangedNotification object:nil];
+ 
+    
 }
 
 

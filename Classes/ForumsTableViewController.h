@@ -22,6 +22,7 @@
 	
 	TopicsTableViewController *topicsTableViewController;
 	
+    bool reloadOnAppear;
 	STATUS status;
 	NSString *statusMessage;
 	IBOutlet UILabel *maintenanceView;
@@ -43,6 +44,7 @@
 
 @property (strong, nonatomic) ASIHTTPRequest *request;
 
+@property bool reloadOnAppear;
 @property STATUS status;
 @property (nonatomic, strong) NSString *statusMessage;
 @property (nonatomic, strong) IBOutlet UILabel *maintenanceView;

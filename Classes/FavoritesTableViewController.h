@@ -24,6 +24,7 @@
 
 	ASIHTTPRequest *request;
 	
+    bool reloadOnAppear;
 	STATUS status;
 	NSString *statusMessage;
 	IBOutlet UILabel *maintenanceView;	
@@ -46,6 +47,7 @@
 
 @property BOOL showAll;
 
+@property bool reloadOnAppear;
 @property STATUS status;
 @property (nonatomic, strong) NSString *statusMessage;
 @property (nonatomic, strong) IBOutlet UILabel *maintenanceView;

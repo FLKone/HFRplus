@@ -27,7 +27,7 @@
 @implementation ForumsTableViewController
 @synthesize request;
 @synthesize forumsTableView, loadingView, arrayData, arrayNewData, topicsTableViewController;
-@synthesize status, statusMessage, maintenanceView, metaDataList, pressedIndexPath, forumActionSheet;
+@synthesize reloadOnAppear, status, statusMessage, maintenanceView, metaDataList, pressedIndexPath, forumActionSheet;
 @synthesize tmpCell;
 
 #pragma mark -
@@ -711,6 +711,11 @@
 	}
 	
 }
+-(void)LoginChanged:(NSNotification *)notification {
+    NSLog(@"loginChanged %@", notification); 
+
+    self.reloadOnAppear = YES;
+}
 
 -(void)StatusChanged:(NSNotification *)notification {
     
@@ -772,6 +777,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(StatusChanged:)
                                                  name:kStatusChangedNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(LoginChanged:)
+                                                 name:kLoginChangedNotification
                                                object:nil];
     
 	//Bouton Reload
@@ -843,6 +853,11 @@
 
 		self.topicsTableViewController = nil;
 	}
+    
+    if (self.reloadOnAppear) {
+        [self reload];
+        self.reloadOnAppear = NO;
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -1159,6 +1174,7 @@
 	[self viewDidUnload];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kStatusChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kLoginChangedNotification object:nil];
 
     
     

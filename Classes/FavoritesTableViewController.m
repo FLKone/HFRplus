@@ -39,7 +39,7 @@
 
 @synthesize request;
 
-@synthesize status, statusMessage, maintenanceView, topicActionSheet;
+@synthesize reloadOnAppear, status, statusMessage, maintenanceView, topicActionSheet;
 
 #pragma mark -
 #pragma mark Data lifecycle
@@ -511,6 +511,12 @@
 //    [[[self.navigationController.navigationBar subviews] objectAtIndex:0] setFrame:CGRect]
 }
 
+-(void)LoginChanged:(NSNotification *)notification {
+    NSLog(@"loginChanged %@", notification);
+
+    self.reloadOnAppear = YES;
+}
+
 -(void)StatusChanged:(NSNotification *)notification {
     
     if ([[notification object] class] != [self class]) {
@@ -580,6 +586,13 @@
                                              selector:@selector(StatusChanged:)
                                                  name:kStatusChangedNotification
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(LoginChanged:)
+                                                 name:kLoginChangedNotification
+                                               object:nil];
+    
+    
     
 	// reload
     UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
@@ -762,6 +775,12 @@
     }
     else {
         [[self.navigationController.navigationBar viewWithTag:237] setHidden:NO];
+    }
+    
+    
+    if (self.reloadOnAppear) {
+        [self reload];
+        self.reloadOnAppear = NO;
     }
 }
 - (void)viewWillDisappear:(BOOL)animated {
@@ -1454,6 +1473,7 @@
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kStatusChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kLoginChangedNotification object:nil];
 
 	[request cancel];
 	[request setDelegate:nil];

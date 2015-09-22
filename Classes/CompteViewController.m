@@ -62,6 +62,7 @@
 		[self.loginView setHidden:YES];
 
 		[[HFRplusAppDelegate sharedAppDelegate] login];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kLoginChangedNotification object:nil];
 
 	}
 	else {
@@ -102,6 +103,7 @@
 		[self.loginView setHidden:NO];
 
 		[[HFRplusAppDelegate sharedAppDelegate] logout];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kLoginChangedNotification object:nil];
 
 	}
 }
