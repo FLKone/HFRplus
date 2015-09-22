@@ -10,7 +10,7 @@
 
 @protocol BrowserViewControllerDelegate;
 
-@interface BrowserViewController : UIViewController <UIWebViewDelegate, WKNavigationDelegate> {
+@interface BrowserViewController : UIViewController <UIWebViewDelegate, WKNavigationDelegate, WKUIDelegate> {
     id <BrowserViewControllerDelegate> __weak delegate;
     
 	UIWebView* myWebView;
@@ -18,6 +18,7 @@
 	NSString* currentUrl;
     
     BOOL fullBrowser;
+    BOOL needDismiss;
 
 }
 
@@ -26,6 +27,7 @@
 @property (nonatomic, strong) NSString* currentUrl;
 @property (nonatomic, weak) id <BrowserViewControllerDelegate> delegate;
 @property BOOL fullBrowser;
+@property BOOL needDismiss;
 
 -(IBAction)cancel;
 //- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andURL:(NSString *)theURL;

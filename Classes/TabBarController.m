@@ -98,6 +98,18 @@
     return YES;
 }
 
+- (void)presentViewController:(UIViewController *)viewControllerToPresent animated:(BOOL)flag completion:(void (^)(void))completion {
+    
+    // Unsure why WKWebView calls this controller - instead of it's own parent controller
+    if (self.presentedViewController) {
+        NSLog(@"PRESENTED %@", self.presentedViewController);
+        [self.presentedViewController presentViewController:viewControllerToPresent animated:flag completion:completion];
+    } else {
+        [super presentViewController:viewControllerToPresent animated:flag completion:completion];
+    }
+}
+
+
 /*
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
