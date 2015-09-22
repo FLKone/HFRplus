@@ -140,6 +140,12 @@
     
     self.arrayData = [NSMutableArray arrayWithArray:self.arrayNewData];
     
+    NSString *directory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *forumsCache = [[NSString alloc] initWithString:[directory stringByAppendingPathComponent:FORUMS_CACHE_FILE]];
+    NSData *savedData = [NSKeyedArchiver archivedDataWithRootObject:self.arrayData];
+    [savedData writeToFile:forumsCache atomically:YES];
+    
+    
     [self.arrayNewData removeAllObjects];
     
 	[self.forumsTableView reloadData];
@@ -798,7 +804,29 @@
         //NSLog(@"=== END");
     }];
     
-    [self.forumsTableView triggerPullToRefresh];
+    
+    
+    //HFR REHOST
+    NSString *forumsCache = [[NSString alloc] initWithString:[directory stringByAppendingPathComponent:FORUMS_CACHE_FILE]];
+    
+    if ([fileManager fileExistsAtPath:forumsCache]) {
+        
+        NSData *savedData = [NSData dataWithContentsOfFile:forumsCache];
+        
+        [self.arrayData removeAllObjects];
+        [self.arrayNewData removeAllObjects];
+        
+        self.arrayData = [NSKeyedUnarchiver unarchiveObjectWithData:savedData];
+        [self.forumsTableView reloadData];
+    }
+    else {
+        [self.forumsTableView triggerPullToRefresh];
+    }
+    
+    
+    
+
+    
     
 	//[self fetchContent];
 }

@@ -65,6 +65,7 @@ typedef enum {
 #define USED_SMILEYS_FILE @"usedSmilieys.plist"
 #define BLACKLIST_FILE @"blackList.plist"
 #define FORUMSMETA_FILE @"forumsMeta.plist"
+#define FORUMS_CACHE_FILE @"forumsCache.plist"
 
 #define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
 #define SYSTEM_VERSION_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)

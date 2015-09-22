@@ -119,6 +119,32 @@
     
 }
 
+- (void) encodeWithCoder:(NSCoder *)encoder {
+    NSLog(@"encodeWithCoder %@", self);
+    
+    [encoder encodeObject:aTitle forKey:@"aTitle"];
+    [encoder encodeObject:aURL forKey:@"aURL"];
+    [encoder encodeObject:aID forKey:@"aID"];
+    
+    [encoder encodeObject:subCats forKey:@"subCats"];
+}
+
+- (id)initWithCoder:(NSCoder *)decoder {
+    
+    self = [super init];
+    if (self) {
+        
+        aTitle = [decoder decodeObjectForKey:@"aTitle"];
+        aURL = [decoder decodeObjectForKey:@"aURL"];
+        aID = [decoder decodeObjectForKey:@"aID"];
+        
+        subCats = [decoder decodeObjectForKey:@"subCats"];
+        
+        //NSLog(@"initWithCoder %@", self);
+    }
+    return self;
+}
+
 
 -(NSString *)URLforType:(FLAGTYPE)type {
     
