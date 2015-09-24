@@ -16,16 +16,6 @@
 		</dict>
 		<dict>
 			<key>IASKCellImage</key>
-			<string>QuestionsFilled-25</string>
-			<key>IASKViewControllerClass</key>
-			<string>AideViewController</string>
-			<key>Title</key>
-			<string>Aide</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>IASKCellImage</key>
 			<string>AboutFilled-25</string>
 			<key>IASKViewControllerClass</key>
 			<string>CreditsViewController</string>
