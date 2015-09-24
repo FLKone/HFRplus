@@ -270,10 +270,19 @@ background:-webkit-gradient(
 	font-size:0.8em !important;
 }
 
-table.code, table.fixed, table.quote, table.citation {
+table.code, table.fixed, table.quote, table.citation, table.oldcitation {
     table-layout:fixed;
     border: none;
     border-left: 3px solid  silver;
+}
+
+hr {
+    visibility:hidden;
+    height:12px;
+}
+
+hr:last-child {
+    display:none;
 }
 
 table.code p, table.fixed p {
