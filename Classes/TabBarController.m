@@ -8,6 +8,8 @@
 #import "TabBarController.h"
 #import "HFRplusAppDelegate.h"
 #import "FavoritesTableViewController.h"
+#import "HFRMPViewController.h"
+#import "ForumsTableViewController.h"
 
 @implementation TabBarController
 
@@ -90,8 +92,16 @@
 //      NSLog("class top : %@ !!!", [nv.topViewController class]);
         
         //actualisation si tap sur l'onglet
+        if (tabBarController.selectedIndex == 0 && [nv.topViewController isKindOfClass:[ForumsTableViewController class]]) {
+            [(ForumsTableViewController *)nv.topViewController reload];
+        }
+        
         if (tabBarController.selectedIndex == 1 && [nv.topViewController isKindOfClass:[FavoritesTableViewController class]]) {
             [(FavoritesTableViewController *)nv.topViewController reload];
+        }
+        
+        if (tabBarController.selectedIndex == 2 && [nv.topViewController isKindOfClass:[HFRMPViewController class]]) {
+            [(HFRMPViewController *)nv.topViewController fetchContent];
         }
 
     }
