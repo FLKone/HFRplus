@@ -321,7 +321,7 @@
 
 -(void)statusBarButton:(BARBTNTYPE)type enable:(bool)enable {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSInteger vos_sujets = [defaults integerForKey:@"main_gauche"];
+    NSInteger vos_sujets = [defaults integerForKey:@"main_gaucheWIP"];
 
     
     
@@ -365,7 +365,7 @@
 -(void)showBarButton:(BARBTNTYPE)type {
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSInteger vos_sujets = [defaults integerForKey:@"main_gauche"];
+    NSInteger vos_sujets = [defaults integerForKey:@"main_gaucheWIP"];
     //NSLog(@"maingauche %d", (vos_sujets == 0));
     //NSLog(@"maingauche %d", ([self respondsToSelector:@selector(traitCollection)] && [HFRplusAppDelegate sharedAppDelegate].window.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact));
     
