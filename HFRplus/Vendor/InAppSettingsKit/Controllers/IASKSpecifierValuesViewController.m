@@ -77,7 +77,11 @@
 
 - (void)viewDidDisappear:(BOOL)animated {
 	[super viewDidDisappear:animated];
-    _selection.tableView = nil;
+    //_selection.tableView = nil;
+}
+
+- (void)dealloc {
+    NSLog(@"deallocdeallocdeallocdealloc");
 }
 
 - (void)didReceiveMemoryWarning {
