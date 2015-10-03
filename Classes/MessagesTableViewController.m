@@ -2110,8 +2110,23 @@
 	}
 
 
+    if ([self canBeFavorite]) {
+        //NSLog(@"isRedFlagged ★");
+        [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Favoris", @"actionFavoris", menuImgFav, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
+    }
+    
+    
     if(![[arrayData objectAtIndex:curMsg] urlEdit]){
         
+
+        
+        if([[arrayData objectAtIndex:curMsg] urlAlert]){
+
+            [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Alerter", @"actionAlerter", menuImgAlerte, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
+        }
+        
+        [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Profil", @"actionProfil", menuImgProfil, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
+
         if([[arrayData objectAtIndex:curMsg] MPUrl]){
             //NSLog(@"MPUrl");
             
@@ -2120,19 +2135,12 @@
         
         [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Blacklist", @"actionBL", menuImgBan, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
         
-        [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Profil", @"actionProfil", menuImgProfil, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
+        
 
-        if([[arrayData objectAtIndex:curMsg] urlAlert]){
-
-            [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Alerter", @"actionAlerter", menuImgAlerte, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
-        }
     }
     
     
-    if ([self canBeFavorite]) {
-        //NSLog(@"isRedFlagged ★");
-        [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Favoris", @"actionFavoris", menuImgFav, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
-    }
+
     
 	
 	self.curPostID = curMsg;
