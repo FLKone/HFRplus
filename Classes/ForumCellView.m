@@ -13,7 +13,7 @@
 @synthesize titleLabel, flagLabel, catImage;
 
 - (void)awakeFromNib {
-    NSLog(@"awakeFromNib");
+    //NSLog(@"awakeFromNib");
 
     [super awakeFromNib];
     
@@ -36,12 +36,12 @@
 }
 
 -(void)viewDidUnload {
-    NSLog(@"viewDidUnload");
+    //NSLog(@"viewDidUnload");
     self.titleLabel = nil;
     self.flagLabel = nil;
 }
 -(void)dealloc {
-    NSLog(@"dealloc");
+    //NSLog(@"dealloc");
     [self viewDidUnload];
 }
 

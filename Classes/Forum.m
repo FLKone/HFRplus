@@ -120,7 +120,7 @@
 }
 
 - (void) encodeWithCoder:(NSCoder *)encoder {
-    NSLog(@"encodeWithCoder %@", self);
+    //NSLog(@"encodeWithCoder %@", self);
     
     [encoder encodeObject:aTitle forKey:@"aTitle"];
     [encoder encodeObject:aURL forKey:@"aURL"];

@@ -11,13 +11,7 @@
 
 #import <Foundation/Foundation.h>
 #import "CrittercismDelegate.h"
-
-typedef NS_ENUM(NSInteger, CRLoggingLevel) {
-  CRLoggingLevelSilent = 0,
-  CRLoggingLevelError = 1,
-  CRLoggingLevelWarning = 2,
-  CRLoggingLevelInfo = 3,
-};
+#import "CrittercismLoggingLevel.h"
 
 @interface CrittercismConfig : NSObject
 
@@ -55,7 +49,7 @@ typedef NS_ENUM(NSInteger, CRLoggingLevel) {
 @property (nonatomic, assign) BOOL enableServiceMonitoring;
 
 // This flag determines the verbosity of Crittercism log messages
-@property (nonatomic, assign) CRLoggingLevel loggingLevel;
+@property (nonatomic, assign) CRLoggingLevel loggingLevel DEPRECATED_MSG_ATTRIBUTE("Use [Crittercism setLoggingLevel:] instead");
 
 // An array of CRFilter objects. These filters are used to make it so certain
 // network performance information is not reported to Crittercism, for example

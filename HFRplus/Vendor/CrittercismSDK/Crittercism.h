@@ -8,6 +8,7 @@
 #import "CrittercismDelegate.h"
 #import "CRFilter.h"
 #import "CrittercismConfig.h"
+#import "CrittercismLoggingLevel.h"
 
 // Operating System Support
 //
@@ -224,5 +225,11 @@
 // Set the currency cents value of a transaction.
 
 + (void)setValue:(int)value forTransaction:(NSString*)name;
+
+// Set the logging level to tune the verbosity of Crittercism log messages
+
++ (void)setLoggingLevel:(CRLoggingLevel)loggingLevel;
+
++ (CRLoggingLevel)loggingLevel;
 
 @end

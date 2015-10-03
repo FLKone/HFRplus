@@ -69,6 +69,8 @@
     }
     else
     {
+        [Crittercism enableWithAppID:kTestFlightAPI];
+
         //[TestFlight takeOff:kTestFlightAPI];
         [MKStoreManager sharedManager];
 
@@ -76,6 +78,7 @@
 #else
     NSLog(@"DEBUUUUUGGGGG");
 #endif
+    
     [self registerDefaultsFromSettingsBundle];
     
     NSLog(@"");

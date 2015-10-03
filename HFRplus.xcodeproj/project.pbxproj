@@ -185,8 +185,6 @@
 		4C0B8E071BA45B0100D329BA /* ForumCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B8E031BA45B0100D329BA /* ForumCellView.xib */; settings = {ASSET_TAGS = (); }; };
 		4C0B8E0F1BA46ADA00D329BA /* dsym_upload.sh in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B8E0D1BA46ADA00D329BA /* dsym_upload.sh */; settings = {ASSET_TAGS = (); }; };
 		4C0B8E101BA46ADB00D329BA /* dsym_upload.sh in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B8E0D1BA46ADA00D329BA /* dsym_upload.sh */; settings = {ASSET_TAGS = (); }; };
-		4C0B8E111BA46ADB00D329BA /* libCrittercism_v5_3_0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C0B8E0E1BA46ADA00D329BA /* libCrittercism_v5_3_0.a */; settings = {ASSET_TAGS = (); }; };
-		4C0B8E121BA46ADB00D329BA /* libCrittercism_v5_3_0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C0B8E0E1BA46ADA00D329BA /* libCrittercism_v5_3_0.a */; settings = {ASSET_TAGS = (); }; };
 		4C21E94D1BA5C70400691D65 /* BoldEFilled-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C21E9331BA5C70400691D65 /* BoldEFilled-20.png */; settings = {ASSET_TAGS = (); }; };
 		4C21E94E1BA5C70400691D65 /* BoldEFilled-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C21E9331BA5C70400691D65 /* BoldEFilled-20.png */; settings = {ASSET_TAGS = (); }; };
 		4C21E94F1BA5C70400691D65 /* BoldEFilled-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C21E9341BA5C70400691D65 /* BoldEFilled-20@2x.png */; settings = {ASSET_TAGS = (); }; };
@@ -247,6 +245,8 @@
 		4C444AF31BB0DE0D000EF444 /* LaunchLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C444AF01BB0DE0D000EF444 /* LaunchLogo.png */; settings = {ASSET_TAGS = (); }; };
 		4C444AF41BB0DE0D000EF444 /* LaunchLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C444AF11BB0DE0D000EF444 /* LaunchLogo@2x.png */; settings = {ASSET_TAGS = (); }; };
 		4C444AF51BB0DE0D000EF444 /* LaunchLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C444AF11BB0DE0D000EF444 /* LaunchLogo@2x.png */; settings = {ASSET_TAGS = (); }; };
+		4C6C654A1BC00DAC009141AB /* libCrittercism_v5_4_0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6C65491BC00DAC009141AB /* libCrittercism_v5_4_0.a */; settings = {ASSET_TAGS = (); }; };
+		4C6C654B1BC00DAC009141AB /* libCrittercism_v5_4_0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6C65491BC00DAC009141AB /* libCrittercism_v5_4_0.a */; settings = {ASSET_TAGS = (); }; };
 		4C9C2B1B1BAE62C500511853 /* InsetLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9C2B1A1BAE62C500511853 /* InsetLabel.m */; settings = {ASSET_TAGS = (); }; };
 		4C9C2B1C1BAE62C500511853 /* InsetLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9C2B1A1BAE62C500511853 /* InsetLabel.m */; settings = {ASSET_TAGS = (); }; };
 		4C9C2B1F1BAE66EB00511853 /* ThorHammerBlack-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B1D1BAE66EB00511853 /* ThorHammerBlack-20@2x.png */; settings = {ASSET_TAGS = (); }; };
@@ -1277,7 +1277,6 @@
 		4C0B8E0B1BA46ADA00D329BA /* CrittercismConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrittercismConfig.h; sourceTree = "<group>"; };
 		4C0B8E0C1BA46ADA00D329BA /* CrittercismDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrittercismDelegate.h; sourceTree = "<group>"; };
 		4C0B8E0D1BA46ADA00D329BA /* dsym_upload.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = dsym_upload.sh; sourceTree = "<group>"; };
-		4C0B8E0E1BA46ADA00D329BA /* libCrittercism_v5_3_0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCrittercism_v5_3_0.a; sourceTree = "<group>"; };
 		4C21E9331BA5C70400691D65 /* BoldEFilled-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BoldEFilled-20.png"; path = "Editor/BoldEFilled-20.png"; sourceTree = "<group>"; };
 		4C21E9341BA5C70400691D65 /* BoldEFilled-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BoldEFilled-20@2x.png"; path = "Editor/BoldEFilled-20@2x.png"; sourceTree = "<group>"; };
 		4C21E9351BA5C70400691D65 /* CopyFilled-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "CopyFilled-20.png"; path = "Editor/CopyFilled-20.png"; sourceTree = "<group>"; };
@@ -1310,6 +1309,8 @@
 		4C265D4C1BAE511800B1A244 /* HFRWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFRWebView.m; sourceTree = "<group>"; };
 		4C444AF01BB0DE0D000EF444 /* LaunchLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchLogo.png; sourceTree = "<group>"; };
 		4C444AF11BB0DE0D000EF444 /* LaunchLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LaunchLogo@2x.png"; sourceTree = "<group>"; };
+		4C6C65491BC00DAC009141AB /* libCrittercism_v5_4_0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCrittercism_v5_4_0.a; sourceTree = "<group>"; };
+		4C6C654C1BC00DB7009141AB /* CrittercismLoggingLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrittercismLoggingLevel.h; sourceTree = "<group>"; };
 		4C9C2B191BAE62C500511853 /* InsetLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InsetLabel.h; sourceTree = "<group>"; };
 		4C9C2B1A1BAE62C500511853 /* InsetLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InsetLabel.m; sourceTree = "<group>"; };
 		4C9C2B1D1BAE66EB00511853 /* ThorHammerBlack-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ThorHammerBlack-20@2x.png"; sourceTree = "<group>"; };
@@ -1866,7 +1867,6 @@
 				CA4CE89215B1B30B0039FC3B /* ImageIO.framework in Frameworks */,
 				CA1070B415A4CEFE002E6C19 /* MessageUI.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
-				4C0B8E111BA46ADB00D329BA /* libCrittercism_v5_3_0.a in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
 				01BF87DA121C45B9007624B6 /* CFNetwork.framework in Frameworks */,
@@ -1877,6 +1877,7 @@
 				CA8DDC9C12EB30AC00635441 /* StoreKit.framework in Frameworks */,
 				CA05A37715B48B750083EB64 /* libxml2.dylib in Frameworks */,
 				CA37D50D15A1BD5F002C72C6 /* libsqlite3.dylib in Frameworks */,
+				4C6C654A1BC00DAC009141AB /* libCrittercism_v5_4_0.a in Frameworks */,
 				CA4CE81515B185CA0039FC3B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1892,7 +1893,6 @@
 				CA7C7120185EF50E00B348BA /* ImageIO.framework in Frameworks */,
 				CA7C7121185EF50E00B348BA /* MessageUI.framework in Frameworks */,
 				CA7C7122185EF50E00B348BA /* Foundation.framework in Frameworks */,
-				4C0B8E121BA46ADB00D329BA /* libCrittercism_v5_3_0.a in Frameworks */,
 				CA7C7123185EF50E00B348BA /* UIKit.framework in Frameworks */,
 				CA7C7124185EF50E00B348BA /* CoreGraphics.framework in Frameworks */,
 				CA7C7125185EF50E00B348BA /* CFNetwork.framework in Frameworks */,
@@ -1903,6 +1903,7 @@
 				CA7C712B185EF50E00B348BA /* StoreKit.framework in Frameworks */,
 				CA7C712C185EF50E00B348BA /* libxml2.dylib in Frameworks */,
 				CA7C712D185EF50E00B348BA /* libsqlite3.dylib in Frameworks */,
+				4C6C654B1BC00DAC009141AB /* libCrittercism_v5_4_0.a in Frameworks */,
 				CA7C712E185EF50E00B348BA /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2246,8 +2247,9 @@
 				4C0B8E0A1BA46ADA00D329BA /* Crittercism.h */,
 				4C0B8E0B1BA46ADA00D329BA /* CrittercismConfig.h */,
 				4C0B8E0C1BA46ADA00D329BA /* CrittercismDelegate.h */,
+				4C6C654C1BC00DB7009141AB /* CrittercismLoggingLevel.h */,
 				4C0B8E0D1BA46ADA00D329BA /* dsym_upload.sh */,
-				4C0B8E0E1BA46ADA00D329BA /* libCrittercism_v5_3_0.a */,
+				4C6C65491BC00DAC009141AB /* libCrittercism_v5_4_0.a */,
 			);
 			path = CrittercismSDK;
 			sourceTree = "<group>";
@@ -4005,7 +4007,6 @@
 				01BF8786121C4407007624B6 /* AideViewController.m in Sources */,
 				4C0B8DFC1BA455BF00D329BA /* InfoTableViewCell.m in Sources */,
 				01BF8787121C4407007624B6 /* CreditsViewController.m in Sources */,
-				4C9C2B6E1BAE77ED00511853 /* IASKPSTextFieldSpecifierViewCell.m in Sources */,
 				01BF878A121C4407007624B6 /* IdentificationViewController.m in Sources */,
 				01BF878B121C4407007624B6 /* CompteViewController.m in Sources */,
 				01BF8A17121D7469007624B6 /* TopicsCell.m in Sources */,
@@ -4019,7 +4020,6 @@
 				01BF8B70121DAEF3007624B6 /* Topic.m in Sources */,
 				013F0EAB121E117900BEBEB1 /* LinkItem.m in Sources */,
 				013F0EB0121E117900BEBEB1 /* ParseMessagesOperation.m in Sources */,
-				4C9C2B601BAE77ED00511853 /* IASKSettingsReader.m in Sources */,
 				4CB132F81B90A1930081B44D /* BlackList.m in Sources */,
 				CA8A79B215BB404700D8E9E7 /* Favorite.m in Sources */,
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
@@ -4028,20 +4028,17 @@
 				01BF8C4C121DBB09007624B6 /* UIAlertViewURL.m in Sources */,
 				0140ABAF121E011D001C35C4 /* FavoriteCell.m in Sources */,
 				0140ABB0121E011D001C35C4 /* Catcounter.m in Sources */,
-				4C9C2B581BAE77ED00511853 /* IASKAppSettingsViewController.m in Sources */,
 				4CC3C7591B99BC18001B8632 /* AlerteModoViewController.m in Sources */,
 				013F0EAC121E117900BEBEB1 /* MessagesTableViewController.m in Sources */,
 				013F0EAE121E117900BEBEB1 /* MessageDetailViewController.m in Sources */,
 				4C0B8E041BA45B0100D329BA /* ForumCellView.m in Sources */,
 				013F0EB1121E117900BEBEB1 /* AddMessageViewController.m in Sources */,
 				4C9C2B1B1BAE62C500511853 /* InsetLabel.m in Sources */,
-				4C9C2B701BAE77ED00511853 /* IASKSlider.m in Sources */,
 				013F0EB2121E117900BEBEB1 /* QuoteMessageViewController.m in Sources */,
 				CA81D28D12281D5800AC6ADA /* EditMessageViewController.m in Sources */,
 				CA63F38C185EC1220092E9F9 /* RehostCell.m in Sources */,
 				CA9E86891243C11A000EE882 /* TabBarController.m in Sources */,
 				CAB16278124B9F8300D12569 /* TopicCellView.m in Sources */,
-				4C9C2B681BAE77ED00511853 /* IASKSpecifier.m in Sources */,
 				CAA1B092125C0A53009C80E3 /* AKSegmentedControl.m in Sources */,
 				CAAFAFDC125E2A58001B90EC /* NewMessageViewController.m in Sources */,
 				4CC3C7501B99BB6F001B8632 /* DeleteMessageViewController.m in Sources */,
@@ -4051,14 +4048,11 @@
 				CA20FA3512F15CA700EC1771 /* TopicSearchCellView.m in Sources */,
 				CA26862513ADE01100AC5511 /* BrowserViewController.m in Sources */,
 				CA7E25E315A1D17500721F6D /* SplitViewController.m in Sources */,
-				4C9C2B5E1BAE77ED00511853 /* IASKSpecifierValuesViewController.m in Sources */,
 				CA7E25F115A1F4AA00721F6D /* DetailNavigationViewController.m in Sources */,
 				CAF5DB7B19340741000B5215 /* FeedbackTableViewCell.m in Sources */,
 				CA7E260215A24A9B00721F6D /* SubCatTableViewController.m in Sources */,
 				CA5E109518AC2A4F00C481A9 /* PollTableViewController.m in Sources */,
-				4C9C2B741BAE77ED00511853 /* IASKTextField.m in Sources */,
 				4CB133141B90E9530081B44D /* MessagesSearchTableViewController.m in Sources */,
-				4C9C2B621BAE77ED00511853 /* IASKSettingsStore.m in Sources */,
 				4C21E9831BA5CC1200691D65 /* HFRTextView.m in Sources */,
 				CA1070C915A5F408002E6C19 /* SettingsViewController.m in Sources */,
 				CAC4966915B77357009128BC /* HFRNavigationController.m in Sources */,
@@ -4081,26 +4075,20 @@
 				CA00C44717C2FF3F0067B457 /* HTMLNode.m in Sources */,
 				CA00C45917C300140067B457 /* RegexKitLite.m in Sources */,
 				CA00C44417C2FF3F0067B457 /* ASIInputStream.m in Sources */,
-				4C9C2B721BAE77ED00511853 /* IASKSwitch.m in Sources */,
-				4C9C2B641BAE77ED00511853 /* IASKSettingsStoreFile.m in Sources */,
 				4CC814FD1BAC86ED00F8BB81 /* UIColor+Extension.m in Sources */,
 				CA00C3B617C2FDB00067B457 /* MWTapDetectingImageView.m in Sources */,
 				CA00C44F17C2FF4E0067B457 /* MKStoreObserver.m in Sources */,
-				4C9C2B5A1BAE77ED00511853 /* IASKAppSettingsWebViewController.m in Sources */,
 				CA00C41F17C2FE240067B457 /* UIButton+WebCache.m in Sources */,
 				CA00C44E17C2FF4E0067B457 /* MKStoreManager.m in Sources */,
-				4C9C2B661BAE77ED00511853 /* IASKSettingsStoreUserDefaults.m in Sources */,
 				CA00C44817C2FF3F0067B457 /* HTMLParser.m in Sources */,
 				CA00C43F17C2FF3F0067B457 /* ASIDataCompressor.m in Sources */,
 				CA00C44317C2FF3F0067B457 /* ASIHTTPRequest.m in Sources */,
 				CA00C3B517C2FDB00067B457 /* MWPhotoBrowser.m in Sources */,
-				4C9C2B6C1BAE77ED00511853 /* IASKPSSliderSpecifierViewCell.m in Sources */,
 				CA00C3B217C2FDB00067B457 /* MWCaptionView.m in Sources */,
 				CA00C45417C3000B0067B457 /* NSData+Base64.m in Sources */,
 				CA00C44517C2FF3F0067B457 /* ASINetworkQueue.m in Sources */,
 				CA00C41D17C2FE240067B457 /* SDWebImageManager.m in Sources */,
 				CA00C44117C2FF3F0067B457 /* ASIDownloadCache.m in Sources */,
-				4C9C2B5C1BAE77ED00511853 /* IASKMultipleValueSelection.m in Sources */,
 				CA00C41E17C2FE240067B457 /* SDWebImagePrefetcher.m in Sources */,
 				CA00C3B817C2FDB00067B457 /* MWZoomingScrollView.m in Sources */,
 				CA00C3B717C2FDB00067B457 /* MWTapDetectingView.m in Sources */,
@@ -4111,6 +4099,20 @@
 				CA00C41B17C2FE240067B457 /* SDWebImageDecoder.m in Sources */,
 				CA00C41C17C2FE240067B457 /* SDWebImageDownloader.m in Sources */,
 				CA00C44017C2FF3F0067B457 /* ASIDataDecompressor.m in Sources */,
+				4C9C2B6E1BAE77ED00511853 /* IASKPSTextFieldSpecifierViewCell.m in Sources */,
+				4C9C2B601BAE77ED00511853 /* IASKSettingsReader.m in Sources */,
+				4C9C2B581BAE77ED00511853 /* IASKAppSettingsViewController.m in Sources */,
+				4C9C2B701BAE77ED00511853 /* IASKSlider.m in Sources */,
+				4C9C2B681BAE77ED00511853 /* IASKSpecifier.m in Sources */,
+				4C9C2B5E1BAE77ED00511853 /* IASKSpecifierValuesViewController.m in Sources */,
+				4C9C2B741BAE77ED00511853 /* IASKTextField.m in Sources */,
+				4C9C2B621BAE77ED00511853 /* IASKSettingsStore.m in Sources */,
+				4C9C2B721BAE77ED00511853 /* IASKSwitch.m in Sources */,
+				4C9C2B641BAE77ED00511853 /* IASKSettingsStoreFile.m in Sources */,
+				4C9C2B5A1BAE77ED00511853 /* IASKAppSettingsWebViewController.m in Sources */,
+				4C9C2B661BAE77ED00511853 /* IASKSettingsStoreUserDefaults.m in Sources */,
+				4C9C2B6C1BAE77ED00511853 /* IASKPSSliderSpecifierViewCell.m in Sources */,
+				4C9C2B5C1BAE77ED00511853 /* IASKMultipleValueSelection.m in Sources */,
 				4C265D4D1BAE511800B1A244 /* HFRWebView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4125,7 +4127,6 @@
 				CA7C70C0185EF50E00B348BA /* AideViewController.m in Sources */,
 				4C0B8DFD1BA455BF00D329BA /* InfoTableViewCell.m in Sources */,
 				CA7C70C1185EF50E00B348BA /* CreditsViewController.m in Sources */,
-				4C9C2B6F1BAE77ED00511853 /* IASKPSTextFieldSpecifierViewCell.m in Sources */,
 				CA7C70C2185EF50E00B348BA /* IdentificationViewController.m in Sources */,
 				CA7C70C3185EF50E00B348BA /* CompteViewController.m in Sources */,
 				CA7C70C4185EF50E00B348BA /* TopicsCell.m in Sources */,
@@ -4139,7 +4140,6 @@
 				CA7C70CB185EF50E00B348BA /* Topic.m in Sources */,
 				CA7C70D5185EF50E00B348BA /* LinkItem.m in Sources */,
 				CA7C70DB185EF50E00B348BA /* ParseMessagesOperation.m in Sources */,
-				4C9C2B611BAE77ED00511853 /* IASKSettingsReader.m in Sources */,
 				4CB132F91B90A1930081B44D /* BlackList.m in Sources */,
 				CA7C7112185EF50E00B348BA /* Favorite.m in Sources */,
 				CA7C70BB185EF50E00B348BA /* main.m in Sources */,
@@ -4148,20 +4148,17 @@
 				CA7C70CC185EF50E00B348BA /* UIAlertViewURL.m in Sources */,
 				CA7C70D0185EF50E00B348BA /* FavoriteCell.m in Sources */,
 				CA7C70D1185EF50E00B348BA /* Catcounter.m in Sources */,
-				4C9C2B591BAE77ED00511853 /* IASKAppSettingsViewController.m in Sources */,
 				4CC3C75A1B99BC18001B8632 /* AlerteModoViewController.m in Sources */,
 				CA7C70D8185EF50E00B348BA /* MessagesTableViewController.m in Sources */,
 				CA7C70DA185EF50E00B348BA /* MessageDetailViewController.m in Sources */,
 				4C0B8E051BA45B0100D329BA /* ForumCellView.m in Sources */,
 				CA7C70DF185EF50E00B348BA /* AddMessageViewController.m in Sources */,
 				4C9C2B1C1BAE62C500511853 /* InsetLabel.m in Sources */,
-				4C9C2B711BAE77ED00511853 /* IASKSlider.m in Sources */,
 				CA7C70E1185EF50E00B348BA /* QuoteMessageViewController.m in Sources */,
 				CA7C70E3185EF50E00B348BA /* EditMessageViewController.m in Sources */,
 				CA7C70E4185EF50E00B348BA /* RehostCell.m in Sources */,
 				CA7C70EC185EF50E00B348BA /* TabBarController.m in Sources */,
 				CA7C70ED185EF50E00B348BA /* TopicCellView.m in Sources */,
-				4C9C2B691BAE77ED00511853 /* IASKSpecifier.m in Sources */,
 				CA7C70EE185EF50E00B348BA /* AKSegmentedControl.m in Sources */,
 				CA7C70F0185EF50E00B348BA /* NewMessageViewController.m in Sources */,
 				4CC3C7511B99BB6F001B8632 /* DeleteMessageViewController.m in Sources */,
@@ -4171,14 +4168,11 @@
 				CA7C70FD185EF50E00B348BA /* TopicSearchCellView.m in Sources */,
 				CA7C7100185EF50E00B348BA /* BrowserViewController.m in Sources */,
 				CA7C7101185EF50E00B348BA /* SplitViewController.m in Sources */,
-				4C9C2B5F1BAE77ED00511853 /* IASKSpecifierValuesViewController.m in Sources */,
 				CA7C7102185EF50E00B348BA /* DetailNavigationViewController.m in Sources */,
 				CAF5DB7C19340741000B5215 /* FeedbackTableViewCell.m in Sources */,
 				CA7C7104185EF50E00B348BA /* SubCatTableViewController.m in Sources */,
 				CA5E109618AC2A4F00C481A9 /* PollTableViewController.m in Sources */,
-				4C9C2B751BAE77ED00511853 /* IASKTextField.m in Sources */,
 				4CB133151B90E9530081B44D /* MessagesSearchTableViewController.m in Sources */,
-				4C9C2B631BAE77ED00511853 /* IASKSettingsStore.m in Sources */,
 				4C21E9841BA5CC1200691D65 /* HFRTextView.m in Sources */,
 				CA7C710E185EF50E00B348BA /* SettingsViewController.m in Sources */,
 				CA7C7110185EF50E00B348BA /* HFRNavigationController.m in Sources */,
@@ -4202,25 +4196,20 @@
 				CA7C70DE185EF50E00B348BA /* MKStoreObserver.m in Sources */,
 				CA7C70E7185EF50E00B348BA /* MKStoreManager.m in Sources */,
 				4C9C2B731BAE77ED00511853 /* IASKSwitch.m in Sources */,
-				4C9C2B651BAE77ED00511853 /* IASKSettingsStoreFile.m in Sources */,
 				CA7C70E9185EF50E00B348BA /* HTMLParser.m in Sources */,
 				CA7C70F1185EF50E00B348BA /* MWPhotoBrowser.m in Sources */,
 				CA7C70F6185EF50E00B348BA /* MWCaptionView.m in Sources */,
-				4C9C2B5B1BAE77ED00511853 /* IASKAppSettingsWebViewController.m in Sources */,
 				CA7C7107185EF50E00B348BA /* MWZoomingScrollView.m in Sources */,
 				CA7C7109185EF50E00B348BA /* MWTapDetectingView.m in Sources */,
-				4C9C2B671BAE77ED00511853 /* IASKSettingsStoreUserDefaults.m in Sources */,
 				4CC814FE1BAC86ED00F8BB81 /* UIColor+Extension.m in Sources */,
 				CA7C70D9185EF50E00B348BA /* MWTapDetectingImageView.m in Sources */,
 				CA7C710D185EF50E00B348BA /* MWPhoto.m in Sources */,
 				CA7C70BD185EF50E00B348BA /* UIImageView+WebCache.m in Sources */,
-				4C9C2B6D1BAE77ED00511853 /* IASKPSSliderSpecifierViewCell.m in Sources */,
 				CA7C70E2185EF50E00B348BA /* UIButton+WebCache.m in Sources */,
 				CA7C70FE185EF50E00B348BA /* SDWebImageManager.m in Sources */,
 				CA7C7105185EF50E00B348BA /* SDWebImagePrefetcher.m in Sources */,
 				CA7C7118185EF50E00B348BA /* SDImageCache.m in Sources */,
 				CA7C7114185EF50E00B348BA /* SDWebImageDownloader.m in Sources */,
-				4C9C2B5D1BAE77ED00511853 /* IASKMultipleValueSelection.m in Sources */,
 				CA7C710F185EF50E00B348BA /* SDWebImageDecoder.m in Sources */,
 				CA7C70C6185EF50E00B348BA /* ASIAuthenticationDialog.m in Sources */,
 				CA7C70D7185EF50E00B348BA /* ASIInputStream.m in Sources */,
@@ -4231,6 +4220,19 @@
 				CA7C70FA185EF50E00B348BA /* ASINetworkQueue.m in Sources */,
 				CA7C710B185EF50E00B348BA /* ASIFormDataRequest.m in Sources */,
 				CA7C711C185EF50E00B348BA /* ASIDataDecompressor.m in Sources */,
+				4C9C2B6F1BAE77ED00511853 /* IASKPSTextFieldSpecifierViewCell.m in Sources */,
+				4C9C2B611BAE77ED00511853 /* IASKSettingsReader.m in Sources */,
+				4C9C2B591BAE77ED00511853 /* IASKAppSettingsViewController.m in Sources */,
+				4C9C2B711BAE77ED00511853 /* IASKSlider.m in Sources */,
+				4C9C2B691BAE77ED00511853 /* IASKSpecifier.m in Sources */,
+				4C9C2B5F1BAE77ED00511853 /* IASKSpecifierValuesViewController.m in Sources */,
+				4C9C2B751BAE77ED00511853 /* IASKTextField.m in Sources */,
+				4C9C2B631BAE77ED00511853 /* IASKSettingsStore.m in Sources */,
+				4C9C2B651BAE77ED00511853 /* IASKSettingsStoreFile.m in Sources */,
+				4C9C2B5B1BAE77ED00511853 /* IASKAppSettingsWebViewController.m in Sources */,
+				4C9C2B671BAE77ED00511853 /* IASKSettingsStoreUserDefaults.m in Sources */,
+				4C9C2B6D1BAE77ED00511853 /* IASKPSSliderSpecifierViewCell.m in Sources */,
+				4C9C2B5D1BAE77ED00511853 /* IASKMultipleValueSelection.m in Sources */,
 				4C265D4E1BAE511800B1A244 /* HFRWebView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4340,6 +4342,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -4375,6 +4378,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -4410,7 +4414,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon RE";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -4443,7 +4446,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon RE";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
