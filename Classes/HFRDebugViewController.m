@@ -102,6 +102,9 @@
 
 - (IBAction)MakeItRain:(id)sender {
     //[self crash];
+    
+    [[HFRplusAppDelegate sharedAppDelegate] openURL:@"hfr://test"];
+
 }
 
 -(IBAction) network_base {

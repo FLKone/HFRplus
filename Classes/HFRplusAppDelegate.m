@@ -403,29 +403,36 @@
                  NSArray *youtubeHost = [NSArray arrayWithObjects:@"youtu.be", @"www.youtube.com", @"m.youtube.com", nil];
                  
                  if ([imtsHost indexOfObject:tmpURL.host] != NSNotFound) {
-                 NSRange rangeOfScheme = [[tmpURL absoluteString] rangeOfString:[tmpURL scheme]];
-                 tmpURL = [NSURL URLWithString:[[tmpURL absoluteString] stringByReplacingCharactersInRange:rangeOfScheme withString:@"itms-apps"]];
-                 
-                 
-                 if ([[UIApplication sharedApplication] canOpenURL:tmpURL]) {
-                 [[UIApplication sharedApplication] openURL:tmpURL];
-                 return;
-                 }
-                 
-                 }
-                 else if ([youtubeHost indexOfObject:tmpURL.host] != NSNotFound) {
-                 NSRange rangeOfScheme = [[tmpURL absoluteString] rangeOfString:[tmpURL scheme]];
-                 tmpURL = [NSURL URLWithString:[[tmpURL absoluteString] stringByReplacingCharactersInRange:rangeOfScheme withString:@"youtube"]];
-                 
-                 
-                 if ([[UIApplication sharedApplication] canOpenURL:tmpURL]) {
-                 [[UIApplication sharedApplication] openURL:tmpURL];
-                 return;
-                 }
+                     NSRange rangeOfScheme = [[tmpURL absoluteString] rangeOfString:[tmpURL scheme]];
+                     tmpURL = [NSURL URLWithString:[[tmpURL absoluteString] stringByReplacingCharactersInRange:rangeOfScheme withString:@"itms-apps"]];
+                     
+                     
+                     if ([[UIApplication sharedApplication] canOpenURL:tmpURL]) {
+                        [[UIApplication sharedApplication] openURL:tmpURL];
+                         return;
+                     }
+                     
+                }
+                else if ([youtubeHost indexOfObject:tmpURL.host] != NSNotFound) {
+                    NSRange rangeOfScheme = [[tmpURL absoluteString] rangeOfString:[tmpURL scheme]];
+                    tmpURL = [NSURL URLWithString:[[tmpURL absoluteString] stringByReplacingCharactersInRange:rangeOfScheme withString:@"youtube"]];
+
+
+                    if ([[UIApplication sharedApplication] canOpenURL:tmpURL]) {
+                        [[UIApplication sharedApplication] openURL:tmpURL];
+                        return;
+                    }
                  
                  }
 
-                
+                if ([[UIApplication sharedApplication] canOpenURL:tmpURL]) {
+                    NSLog(@"YES YOU CAN %@", tmpURL);
+                    [[UIApplication sharedApplication] openURL:tmpURL];
+                    return;
+                }
+                else {
+                    NSLog(@"NO YOU CANT %@", tmpURL);
+                }
                 
                 SFSafariViewController *svc = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:stringUrl]];
                 
