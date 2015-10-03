@@ -115,16 +115,6 @@
 	UITableViewCell *cell;
 	
     if ((cell = [super tableView:tableView cellForRowAtIndexPath:indexPath])) {
-        // Custom initialization
-		
-		if ([(Topic *)[arrayData objectAtIndex:indexPath.row] isViewed]) {
-			[[(TopicCellView *)cell titleLabel] setFont:[UIFont systemFontOfSize:14]];
-		}
-		else {
-			[[(TopicCellView *)cell titleLabel] setFont:[UIFont boldSystemFontOfSize:14]];
-
-		}
-
 		
 		if ([[(TopicCellView *)cell titleLabel] numberOfLines] > 0) {
 			[[(TopicCellView *)cell titleLabel] setNumberOfLines:0];
