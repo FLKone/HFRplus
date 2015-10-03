@@ -126,7 +126,11 @@
                 if (![[(UINavigationController*)masterVC.selectedViewController topViewController] isKindOfClass:[TopicsTableViewController class]]
                     && ![[(UINavigationController*)masterVC.selectedViewController topViewController] isKindOfClass:[FavoritesTableViewController class]]) {
                     UIViewController *tmpVCC = [(UINavigationController*)masterVC.selectedViewController popViewControllerAnimated:NO];
-                    [arrVC addObject:tmpVCC];
+                    
+                    if (tmpVCC) {
+                        [arrVC addObject:tmpVCC];
+                    }
+                    
                     //NSLog(@"class %@", [tmpVCC class]);
 
                 }
