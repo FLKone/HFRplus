@@ -72,7 +72,7 @@
         [Crittercism enableWithAppID:kTestFlightAPI];
 
         //[TestFlight takeOff:kTestFlightAPI];
-        [MKStoreManager sharedManager];
+        //[MKStoreManager sharedManager];
 
     }
 #else
