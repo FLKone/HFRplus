@@ -2,8 +2,20 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>hfrplus.urlscheme</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>hfr</string>
+			</array>
+		</dict>
+	</array>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>hfr</string>
 		<string>itms-apps</string>
 		<string>googlechrome</string>
 		<string>youtube</string>
