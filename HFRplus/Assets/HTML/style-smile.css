@@ -148,13 +148,13 @@ body.ios7 #container_ajax img.smile, body.ios7 #smileperso img.smile {
     );
     border-bottom:1px solid rgb(136,138,142);
 }
-body.ios7 #container_ajax img.smile.selected, body.ios7 #smileperso img.smile.selected {
+body.ios7 .button.selected, body.ios7 #container_ajax img.smile.selected, body.ios7 #smileperso img.smile.selected {
     background-image: 	-webkit-gradient(
     linear,
     left bottom,
     left top,
-    color-stop(0.09, rgb(255,255,255)),
-    color-stop(0.47, rgb(255,255,255))
+    color-stop(0.09, rgb(136,138,142)),
+    color-stop(0.47, rgb(136,138,142))
     );
 }
 

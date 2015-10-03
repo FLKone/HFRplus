@@ -227,7 +227,7 @@
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"iosversion" withString:@"ios7"];
-        [self.smileView setBackgroundColor:[UIColor colorWithRed:210/255.f green:213/255.f blue:219/255.f alpha:1.00]];
+        [self.smileView setBackgroundColor:[UIColor colorWithRed:187/255.f green:194/255.f blue:201/255.f alpha:1.00]];
     }
     else {
         [self.smileView setBackgroundColor:[UIColor colorWithRed:46/255.f green:46/255.f blue:46/255.f alpha:1.00]];
