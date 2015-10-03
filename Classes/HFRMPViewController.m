@@ -363,7 +363,7 @@
         //On inverse les boutons
         if ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && [self respondsToSelector:@selector(traitCollection)] && [HFRplusAppDelegate sharedAppDelegate].window.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) ||
             vos_sujets == 0) {
-            NSLog(@"DROITE ");
+            //NSLog(@"DROITE ");
             if (!(self.navigationItem.leftBarButtonItem.action == @selector(newTopic))) {
                 self.navigationItem.rightBarButtonItem = self.navigationItem.leftBarButtonItem;
                 self.navigationItem.leftBarButtonItem = self.actionButton;
@@ -372,10 +372,10 @@
             
         }
         else {
-            NSLog(@"GAUCHE");
+            //NSLog(@"GAUCHE");
             
             if ((self.navigationItem.leftBarButtonItem.action == @selector(newTopic))) {
-                NSLog(@"IN GAUCHE");
+                //NSLog(@"IN GAUCHE");
                 self.navigationItem.leftBarButtonItem = self.navigationItem.rightBarButtonItem;
                 self.navigationItem.rightBarButtonItem = self.actionButton;
             }
@@ -392,52 +392,52 @@
     
     if ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && [self respondsToSelector:@selector(traitCollection)] && [HFRplusAppDelegate sharedAppDelegate].window.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) ||
         vos_sujets == 0) {
-        NSLog(@"à droite");
+        //NSLog(@"à droite");
         
         switch (type) {
             case kNewTopic:
             {
-                NSLog(@"NEW TOPIC");
+                //NSLog(@"NEW TOPIC");
                 self.actionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(newTopic)];
                 self.navigationItem.leftBarButtonItem = self.actionButton;
             }
                 break;
             case kCancel:
             {
-                NSLog(@"CANCEL");
+                //NSLog(@"CANCEL");
                 self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(cancelFetchContent)];
             }
                 break;
             case kReload:
             default:
             {
-                NSLog(@"RELOAD");
+                //NSLog(@"RELOAD");
                 self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(fetchContent)];
             }
                 break;
         }
     }
     else {
-        NSLog(@"à gauche");
+        //NSLog(@"à gauche");
         
         switch (type) {
             case kNewTopic:
             {
-                NSLog(@"NEW TOPIC");
+               //NSLog(@"NEW TOPIC");
                 self.actionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(newTopic)];
                 self.navigationItem.rightBarButtonItem = self.actionButton;
             }
                 break;
             case kCancel:
             {
-                NSLog(@"CANCEL");
+                //NSLog(@"CANCEL");
                 self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(cancelFetchContent)];
             }
                 break;
             case kReload:
             default:
             {
-                NSLog(@"RELOAD");
+                //NSLog(@"RELOAD");
                 self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(fetchContent)];
             }
                 break;

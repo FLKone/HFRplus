@@ -331,7 +331,6 @@ static NSOperationQueue *sharedQueue = nil;
 
 - (void)dealloc
 {
-    NSLog(@"ASIHTTPREQUEST DELLAOC");
 	[self setAuthenticationNeeded:ASINoAuthenticationNeededYet];
 	if (requestAuthentication) {
 		CFRelease(requestAuthentication);

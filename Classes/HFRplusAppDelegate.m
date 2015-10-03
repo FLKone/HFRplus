@@ -76,18 +76,13 @@
 
     }
 #else
-    NSLog(@"DEBUUUUUGGGGG");
+    //NSLog(@"DEBUUUUUGGGGG");
 #endif
     
     [self registerDefaultsFromSettingsBundle];
     
-    NSLog(@"");
     
     NSString *version = [NSString stringWithFormat:@"HFR+ %@ (%@)", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *web = [defaults stringForKey:@"default_web"];
-    NSLog(@"web %@", web);
 
     NSDictionary *appDefaults =  [NSDictionary dictionaryWithObjectsAndKeys:
                                   version, @"version", nil];
