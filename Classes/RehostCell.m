@@ -75,22 +75,21 @@
 
     __weak RehostCell *self_ = self;
 
-    [self.previewImage setImageWithURL:[NSURL URLWithString:url] success:^(UIImage *image) {
-        //sd
-       // NSLog(@"OK %@", image);
-        [self_.previewImage setImage:image];
-        [self_.previewImage setHidden:NO];
-
-        [self_.miniBtn setHidden:NO];
-        [self_.previewBtn setHidden:NO];
-        [self_.fullBtn setHidden:NO];
-        [self_.miniBtn setHidden:NO];
+    [self.previewImage sd_setImageWithURL:[NSURL URLWithString:url] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        //
+        if (image) {
+            [self_.previewImage setImage:image];
+            [self_.previewImage setHidden:NO];
+            
+            [self_.miniBtn setHidden:NO];
+            [self_.previewBtn setHidden:NO];
+            [self_.fullBtn setHidden:NO];
+            [self_.miniBtn setHidden:NO];
+        }
         
         [self_.spinner stopAnimating];
-
-    } failure:^(NSError *error) {
-        //sd
     }];
+    
 }
 
 -(IBAction)copyFull {

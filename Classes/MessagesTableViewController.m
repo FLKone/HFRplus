@@ -466,7 +466,7 @@
 	HTMLNode * tmpPollNode = [bodyNode findChildWithAttribute:@"class" matchingName:@"sondage" allowPartial:NO];
 	if(tmpPollNode)
     {
-        NSLog(@"Raw Poll %@", rawContentsOfNode([tmpPollNode _node], [myParser _doc]));
+        //NSLog(@"Raw Poll %@", rawContentsOfNode([tmpPollNode _node], [myParser _doc]));
         [self setPollNode:tmpPollNode];
         [self setPollParser:myParser];
     }

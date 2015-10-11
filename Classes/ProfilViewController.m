@@ -527,24 +527,24 @@
         //NSLog(@"theRow %@", theRow);
 
         __weak AvatarTableViewCell *cell_ = cell;
-        [cell.imageView setImageWithURL:[theRow objectForKey:@"url"] placeholderImage:[UIImage imageNamed:@"avatar_male_gray_on_light_48x48"] success:^(UIImage *image) {
-
-            //NSLog(@"frame base %@", NSStringFromCGRect(cell.imageView.frame));
-            //NSLog(@"image base %@", NSStringFromCGSize(image.size));
+        
+        [cell.imageView sd_setImageWithURL:[theRow objectForKey:@"url"] placeholderImage:[UIImage imageNamed:@"avatar_male_gray_on_light_48x48"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             
-            float newW = image.size.width / ( image.size.height / cell.imageView.frame.size.height );
-             CGRect oldFrame = cell_.imageView.frame;
-//__weak
-            oldFrame.size.width = newW;
-            cell_.imageView.frame = oldFrame;
-
-            [cell_ layoutSubviews];
+            if (image) {
+                //NSLog(@"frame base %@", NSStringFromCGRect(cell.imageView.frame));
+                //NSLog(@"image base %@", NSStringFromCGSize(image.size));
+                
+                float newW = image.size.width / ( image.size.height / cell.imageView.frame.size.height );
+                CGRect oldFrame = cell_.imageView.frame;
+                //__weak
+                oldFrame.size.width = newW;
+                cell_.imageView.frame = oldFrame;
+                
+                [cell_ layoutSubviews];
+                
+                //NSLog(@"frame base %@", NSStringFromCGRect(cell.imageView.frame));
+            }
             
-            //NSLog(@"frame base %@", NSStringFromCGRect(cell.imageView.frame));
-
-
-        } failure:^(NSError *error) {
-            //NSLog(@"err");
         }];
         
         cell.accessoryType = UITableViewCellAccessoryNone;

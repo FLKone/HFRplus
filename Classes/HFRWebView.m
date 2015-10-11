@@ -19,14 +19,14 @@
 */
 
 - (BOOL) canBecomeFirstResponder {
-    NSLog(@"===== WV canBecomeFirstResponder");
+    //NSLog(@"===== WV canBecomeFirstResponder");
     
     return YES;//[super canBecomeFirstResponder];
 }
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
 
-    NSLog(@"===== WW canPerformAction %@ nbS=%@", NSStringFromSelector(action), sender);
+    //NSLog(@"===== WW canPerformAction %@ nbS=%@", NSStringFromSelector(action), sender);
 
     if ([NSStringFromSelector(action) isEqualToString:@"selectAll:"]) return NO;
     if ([NSStringFromSelector(action) isEqualToString:@"_define:"]) return NO;
@@ -37,7 +37,7 @@
 
 - (id)targetForAction:(SEL)action withSender:(id)sender {
     
-    NSLog(@"===== WW targetForAction %@ nbS=%@", NSStringFromSelector(action), sender);
+    //NSLog(@"===== WW targetForAction %@ nbS=%@", NSStringFromSelector(action), sender);
 
     return [super targetForAction:action withSender:sender];
 }
