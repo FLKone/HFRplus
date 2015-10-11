@@ -449,8 +449,15 @@
         }
     }
     else {
+        //iOS9 + Phone || Pad+Compact = pas de confirm
+        NSLog(@"alerte");
         
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0")) {
+        if ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0")) ||
+            (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad   && SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0") &&
+             [[HFRplusAppDelegate sharedAppDelegate].window respondsToSelector:@selector(traitCollection)] && [HFRplusAppDelegate sharedAppDelegate].window.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact)) {
+            
+                        NSLog(@"compact ios 9");
+                
             NSURL *tmpURL2 = [NSURL URLWithString:stringUrl];
 
             if ([[UIApplication sharedApplication] canOpenURL:tmpURL2]) {
@@ -463,6 +470,8 @@
             }
         }
         
+        //iOS9 + Pad + FullScreen = confirme (Nav+)
+
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
             NSString *msg = [NSString stringWithFormat:@"Vous allez quitter HFR+ et être redirigé vers :\n %@\n", stringUrl];
             

@@ -256,6 +256,10 @@ separateSecondaryViewControllerFromPrimaryViewController:(UIViewController *)pri
 -(void)NavPlus:(NSString *)url {
     //Les deux controllers
     //TabBarController *leftTabBarController = [self.viewControllers objectAtIndex:0];
+    if (self.viewControllers.count < 2) {
+        return;
+    }
+    
     UINavigationController *rightNavController = [self.viewControllers objectAtIndex:1];
     
     //Première tab > navController

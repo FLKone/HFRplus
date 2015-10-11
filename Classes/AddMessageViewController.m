@@ -1846,7 +1846,7 @@
         if ([self respondsToSelector:@selector(traitCollection)] && [HFRplusAppDelegate sharedAppDelegate].window.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact){
 
             [self presentViewController:picker animated:YES completion:^{
-                NSLog(@"présenté");
+                //NSLog(@"présenté");
             }];
         }
         else if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
@@ -1856,7 +1856,7 @@
             self.popover = popover;
         } else {
             [self presentViewController:picker animated:YES completion:^{
-                NSLog(@"présenté");
+                //NSLog(@"présenté");
             }];
             //[self presentModalViewController:picker animated:YES];
         }
