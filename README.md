@@ -9,8 +9,8 @@
 <td>HFR+REDFACE</td>
 </tr>   
 <tr>   
-<td>[AppStore](https://itunes.apple.com/app/hfr/id384464712?mt=8)</td>
-<td>[AppStore](https://itunes.apple.com/app/hfr+redface/id781621952?mt=8)</td>
+<td> [AppStore](https://itunes.apple.com/app/hfr/id384464712) </td>
+<td> [AppStore](https://itunes.apple.com/app/hfr+redface/id781621952) </td>
 </tr>   
 </table>
 
