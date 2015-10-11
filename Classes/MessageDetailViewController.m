@@ -258,6 +258,13 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userTextSizeDidChange) name:UIContentSizeCategoryDidChangeNotification object:nil];
     }
     
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+         self.toolbarBtn.frame = CGRectMake(self.toolbarBtn.frame.origin.x, self.toolbarBtn.frame.origin.y - 49, self.toolbarBtn.frame.size.width, self.toolbarBtn.frame.size.height);
+         self.messageAuthor.frame = CGRectMake(self.messageAuthor.frame.origin.x, self.messageAuthor.frame.origin.y - 49, self.messageAuthor.frame.size.width, self.messageAuthor.frame.size.height);
+         self.messageDate.frame = CGRectMake(self.messageDate.frame.origin.x, self.messageDate.frame.origin.y - 49, self.messageDate.frame.size.width, self.messageDate.frame.size.height);
+         self.messageAvatar.frame = CGRectMake(self.messageAvatar.frame.origin.x, self.messageAvatar.frame.origin.y - 49, self.messageAvatar.frame.size.width, self.messageAvatar.frame.size.height);
+    }
+    
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         [self.messageAuthor setFont:[UIFont boldSystemFontOfSize:17.0f]];
         [self.messageDate setFont:[UIFont boldSystemFontOfSize:8.0f]];

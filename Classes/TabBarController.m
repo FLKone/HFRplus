@@ -19,7 +19,7 @@
 	NSLog(@"TBC viewDidLoad");
     self.title = @"Menu";
     if ([self.tabBar respondsToSelector:@selector(setTranslucent:)]) {
-        self.tabBar.translucent = NO;
+        //self.tabBar.translucent = NO;
     }
 
     
