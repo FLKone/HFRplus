@@ -55,3 +55,4 @@ Crédits
 * [SDWebImage](https://github.com/rs/SDWebImage)
 * [RegexKitLite](http://regexkit.sourceforge.net/RegexKitLite/)
 * [UIMenuItem+CXAImageSupport](https://github.com/cxa/UIMenuItem-CXAImageSupport)
+* Icônes/Picto [icons8](https://icons8.com/)
