@@ -1,6 +1,21 @@
-<img src="http://a252.phobos.apple.com/us/r1000/119/Purple/v4/d1/89/07/d18907cd-3fd2-a828-cbcd-1c9ffeb4e6d0/mza_7454098853510851857.170x170-75.png" alt="HFR+" title="HFR+" style="display:block; margin: 10px auto 30px auto;" class="center">
+<table>
+<tr>
+<td><img src="https://raw.githubusercontent.com/FLKone/HFRplus/1.9/HFRplus/Images.xcassets/AppIcon.appiconset/appicon-Small%403x.png" alt="HFR+" title="HFR+" style="display:block; margin: 10px auto 30px auto;" class="center"></td>
+<td><img src="https://raw.githubusercontent.com/FLKone/HFRplus/1.9/HFRplus/Images.xcassets/AppIcon%20RE.appiconset/appicon-Small%403x.png" alt="HFR+" title="HFR+REDFACE" style="display:block; margin: 10px auto 30px auto;" class="center"></td>
+</tr>   
 
-HFR+ v1 - Compatible iOS 5 - 8
+<tr>   
+<td>HFR+</td>
+<td>HFR+REDFACE</td>
+</tr>   
+<tr>   
+<td>[AppStore](https://itunes.apple.com/app/hfr/id384464712?mt=8)</td>
+<td>[AppStore](https://itunes.apple.com/app/hfr+redface/id781621952?mt=8)</td>
+</tr>   
+</table>
+
+
+HFR+ v1 - Compatible iOS 5 - 9
 =========================
 Application iOS (iPhone, iPod Touch et iPad) pour le forum hardware.fr
 
@@ -11,9 +26,6 @@ Roadmap
 <table>
   <tr>
     <th>Version</th><th>Type</th><th>Sortie</th>
-  </tr>
-<tr>
-<td>1.9</td><td>Compatibilité iOS9 + :o</td><td>late-2015</td>
   </tr>
 <tr>
     <td><a href="https://github.com/FLKone/HFRplus/tree/devel">2.0</a></td><td>Nouvelle version. <a href="https://github.com/FLKone/HFRplus/tree/devel">cf ~devel</a></td><td>TBD</td>
