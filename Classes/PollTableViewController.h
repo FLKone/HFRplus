@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 @class MessagesTableViewController;
 @class ASIHTTPRequest;
+@class HTMLNode;
+@class HTMLParser;
 
 @interface PollTableViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate> {
     
@@ -55,6 +57,6 @@
 
 @property int intNombreChoix;
 
-- (id)initWithPollNode:(NSString *)aPollNode;
+- (id)initWithPollNode:(HTMLNode *)aPollNode andParser:(HTMLParser *)aPollParser;
 
 @end

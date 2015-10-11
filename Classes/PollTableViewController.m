@@ -28,25 +28,27 @@
 
 @synthesize arrayInputData, arraySubmitBtn, arrayOptions, arrayResults, stringQuestion, stringFooter, intNombreChoix, arraySelectedRows, delegate, tableViewPoll, loadingView, maintenanceView, statusMessage, request, status;
 
-- (id)initWithPollNode:(NSString *)aPollNodeString;
+- (id)initWithPollNode:(HTMLNode *)aPollNode andParser:(HTMLParser *)aPollParser;
 {
     self = [super init];
     if (self) {
 
         
         // Custom initialization
-        [self setupFromPollString:aPollNodeString];
+        [self setupFromPollNode:aPollNode andParser:aPollParser];
         
     }
     return self;
 }
 
-- (void)setupFromPollString:(NSString *)aPollNodeString {
-    //SONDAGE PARSE
-    HTMLParser * myParser = [[HTMLParser alloc] initWithString:aPollNodeString error:NULL];
-    HTMLNode * aPollNode = [myParser body]; //Find the body tag
-    aPollNode = [aPollNode findChildWithAttribute:@"class" matchingName:@"sondage" allowPartial:NO];
+
+- (void)setupFromPollNode:(HTMLNode *)aPollNode andParser:(HTMLParser *)myParser {
     
+    //SONDAGE PARSE
+    //HTMLNode * aPollNode = [myParser body]; //Find the body tag
+    //aPollNode = [aPollNode findChildWithAttribute:@"class" matchingName:@"sondage" allowPartial:NO];
+    
+    NSString *aPollNodeString = rawContentsOfNode([aPollNode _node], [myParser _doc]);
     //NSLog(@"aPollNode %@", rawContentsOfNode([aPollNode _node], [myParser _doc]));
     
     //INIT
@@ -98,7 +100,7 @@
     //NSLog(@"intNombreChoix %d", self.intNombreChoix);
     
     //Footer infos
-    self.stringFooter = rawContentsOfNode([[[aPollNode children] objectAtIndex:[aPollNode children].count-2] _node], [myParser _doc]);
+    self.stringFooter = rawContentsOfNode([[[aPollNode children] objectAtIndex:[aPollNode children].count-1] _node], [myParser _doc]);
     self.stringFooter = [[[self.stringFooter stringByReplacingOccurrencesOfString:@"<br>" withString:@"\r"] stripHTML] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     self.stringFooter = [self fixedString:self.stringFooter];
     
@@ -162,7 +164,7 @@
         
         for (HTMLNode * inputResult in temporaryAllResultsArray) { //Loop through all the tags
             
-            //NSLog(@"inputResult %@", rawContentsOfNode([inputResult _node], [myParser _doc]));
+    
             
             
             if (![arrayResults objectAtIndex:i]) {
@@ -172,14 +174,15 @@
             if ([[inputResult getAttributeNamed:@"class"] isEqualToString:@"sondageLeft"]) {
                 //
                 
-                [(NSMutableDictionary *)[arrayResults objectAtIndex:i] setObject:[NSNumber numberWithInt:[[self fixedString:[[[inputResult children] objectAtIndex:3] allContents]] integerValue]] forKey:@"pcVote"];
-                [(NSMutableDictionary *)[arrayResults objectAtIndex:i] setObject:[NSNumber numberWithInt:[[self fixedString:[[[inputResult children] objectAtIndex:5] allContents]] integerValue]] forKey:@"nbVote"];
+                
+                [(NSMutableDictionary *)[arrayResults objectAtIndex:i] setObject:[NSNumber numberWithInt:[[self fixedString:[[[inputResult children] objectAtIndex:1] allContents]] integerValue]] forKey:@"pcVote"];
+                [(NSMutableDictionary *)[arrayResults objectAtIndex:i] setObject:[NSNumber numberWithInt:[[self fixedString:[[[inputResult children] objectAtIndex:2] allContents]] integerValue]] forKey:@"nbVote"];
                 continue;
             }
             else if ([[inputResult getAttributeNamed:@"class"] isEqualToString:@"sondageRight"]) {
                 //
 
-                [(NSMutableDictionary *)[arrayResults objectAtIndex:i] setObject:[[self fixedString:[inputResult allContents]] stringByReplacingOccurrencesOfString:@"  " withString:@" "] forKey:@"labelVote"];
+                [(NSMutableDictionary *)[arrayResults objectAtIndex:i] setObject:[([self fixedString:[inputResult allContents]] ? [self fixedString:[inputResult allContents]] : @"") stringByReplacingOccurrencesOfString:@"  " withString:@" "] forKey:@"labelVote"];
 
                 
                 
@@ -234,7 +237,8 @@
 }
 
 -(NSString *)fixedString:(NSString *)orig {
-
+    return orig;
+    
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0")) {
         return [[NSString alloc] initWithCString:[orig cStringUsingEncoding:NSISOLatin1StringEncoding] encoding:NSUTF8StringEncoding];
     }
@@ -289,10 +293,11 @@
 	HTMLNode * tmpPollNode = [bodyNode findChildWithAttribute:@"class" matchingName:@"sondage" allowPartial:NO];
 	if(tmpPollNode)
     {
-        NSString *pollNode = rawContentsOfNode([tmpPollNode _node], [myParser _doc]);
-        [self setupFromPollString:pollNode];
+        //NSString *pollNode = rawContentsOfNode([tmpPollNode _node], [myParser _doc]);
+        [self setupFromPollNode:tmpPollNode andParser:myParser];
         [self setupHeaders];
-        [self.delegate setPollNode:pollNode];
+        [self.delegate setPollNode:tmpPollNode];
+        [self.delegate setPollParser:myParser];
     }
     
 	//[self.arrayData removeAllObjects];

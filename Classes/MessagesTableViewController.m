@@ -36,7 +36,7 @@
 #import "BlackList.h"
 
 @implementation MessagesTableViewController
-@synthesize loaded, isLoading, _topicName, topicAnswerUrl, loadingView, errorLabelView, messagesWebView, arrayData, updatedArrayData, detailViewController, messagesTableViewController, pollNode;
+@synthesize loaded, isLoading, _topicName, topicAnswerUrl, loadingView, errorLabelView, messagesWebView, arrayData, updatedArrayData, detailViewController, messagesTableViewController, pollNode, pollParser;
 @synthesize swipeLeftRecognizer, swipeRightRecognizer, overview, arrayActionsMessages, lastStringFlagTopic;
 @synthesize searchBg, searchBox, searchKeyword, searchPseudo, searchFilter, searchFromFP, searchInputData, isSearchInstra;
 
@@ -461,11 +461,14 @@
 
 -(void)setupPoll:(HTMLNode *)bodyNode andP:(HTMLParser *)myParser {
     self.pollNode = nil;
+    self.pollParser = nil;
     
 	HTMLNode * tmpPollNode = [bodyNode findChildWithAttribute:@"class" matchingName:@"sondage" allowPartial:NO];
 	if(tmpPollNode)
     {
-        [self setPollNode:rawContentsOfNode([tmpPollNode _node], [myParser _doc])];
+        NSLog(@"Raw Poll %@", rawContentsOfNode([tmpPollNode _node], [myParser _doc]));
+        [self setPollNode:tmpPollNode];
+        [self setPollParser:myParser];
     }
 }
 
@@ -1010,7 +1013,7 @@
 
 -(void)showPoll {
     
-    PollTableViewController *pollVC = [[PollTableViewController alloc] initWithPollNode:self.pollNode];
+    PollTableViewController *pollVC = [[PollTableViewController alloc] initWithPollNode:self.pollNode andParser:self.pollParser];
     pollVC.delegate = self;
     
     // Set options

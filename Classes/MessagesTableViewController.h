@@ -83,7 +83,8 @@
     UIActionSheet *styleAlert;
     
     //Poll
-    NSString *pollNode;
+    HTMLNode *pollNode;
+    HTMLParser *pollParser;
     
     //Search
     UIView *searchBg;
@@ -143,7 +144,8 @@
 
 @property BOOL isAnimating;
 
-@property (nonatomic, strong) NSString *pollNode;
+@property (nonatomic, strong) HTMLNode *pollNode;
+@property (nonatomic, strong) HTMLParser *pollParser;
 
 @property (nonatomic, strong) IBOutlet UIView *searchBg;
 @property (nonatomic, strong) IBOutlet UIView *searchBox;
