@@ -243,10 +243,11 @@
         
         if (matchedRange.location == NSNotFound) {
             NSRange rangeNumPage =  [[self currentUrl] rangeOfCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] options:NSBackwardsSearch];
-            if (matchedRange.location == NSNotFound) {
+            if (rangeNumPage.location == NSNotFound) {
                 //
                 NSLog(@"something went wrong");
-                [self.navigationController popViewControllerAnimated:YES];
+                return;
+                //[self.navigationController popViewControllerAnimated:YES];
             }
             else {
                 self.pageNumber = [[self.currentUrl substringWithRange:rangeNumPage] intValue];
@@ -279,6 +280,10 @@
 
 -(void)setupPageToolbar:(HTMLNode *)bodyNode andP:(HTMLParser *)myParser;
 {
+    if (!self.pageNumber) {
+        [self.navigationController popViewControllerAnimated:YES];
+        return;
+    }
 	//NSLog(@"setupPageToolbar");
     //Titre
 	HTMLNode *titleNode = [[bodyNode findChildWithAttribute:@"class" matchingName:@"fondForum2Title" allowPartial:YES] findChildTag:@"h3"]; //Get all the <img alt="" />
@@ -304,7 +309,7 @@
 		HTMLNode * pagesLinkNode = [pagesTrNode findChildWithAttribute:@"class" matchingName:@"left" allowPartial:NO];
 		
 		if (pagesLinkNode) {
-			//NSLog(@"pages %@", rawContentsOfNode([pagesLinkNode _node], [myParser _doc]));
+			NSLog(@"pages %@", rawContentsOfNode([pagesLinkNode _node], [myParser _doc]));
 			
 			//NSArray *temporaryNumPagesArray = [[NSArray alloc] init];
 			NSArray *temporaryNumPagesArray = [pagesLinkNode children];
@@ -319,6 +324,7 @@
 				[self setFirstPageUrl:newFirstPageUrl];
 			}
 			else {
+                NSLog(@"[temporaryNumPagesArray objectAtIndex:2] %@", [temporaryNumPagesArray objectAtIndex:2]);
 				NSString *newFirstPageUrl = [[NSString alloc] initWithString:[[temporaryNumPagesArray objectAtIndex:2] getAttributeNamed:@"href"]];
 				[self setFirstPageUrl:newFirstPageUrl];
 			}
@@ -1810,6 +1816,10 @@
 - (void)webViewDidFinishLoadDOM
 {
     NSLog(@"== webViewDidFinishLoadDOM");
+    
+    if (!self.pageNumber) {
+        return;
+    }
     
     if (!self.loaded) {
         NSLog(@"== First DOM");
