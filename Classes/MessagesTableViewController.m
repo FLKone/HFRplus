@@ -243,7 +243,14 @@
         
         if (matchedRange.location == NSNotFound) {
             NSRange rangeNumPage =  [[self currentUrl] rangeOfCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] options:NSBackwardsSearch];
-            self.pageNumber = [[self.currentUrl substringWithRange:rangeNumPage] intValue];
+            if (matchedRange.location == NSNotFound) {
+                //
+                NSLog(@"something went wrong");
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+            else {
+                self.pageNumber = [[self.currentUrl substringWithRange:rangeNumPage] intValue];
+            }
         }
         else {
             self.pageNumber = [[self.currentUrl substringWithRange:matchedRange] intValue];
