@@ -425,14 +425,7 @@
                  
                  }
 
-                if ([[UIApplication sharedApplication] canOpenURL:tmpURL]) {
-                    NSLog(@"YES YOU CAN %@", tmpURL);
-                    [[UIApplication sharedApplication] openURL:tmpURL];
-                    return;
-                }
-                else {
-                    NSLog(@"NO YOU CANT %@", tmpURL);
-                }
+
                 
                 SFSafariViewController *svc = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:stringUrl]];
                 
@@ -456,6 +449,20 @@
         }
     }
     else {
+        
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0")) {
+            NSURL *tmpURL2 = [NSURL URLWithString:stringUrl];
+
+            if ([[UIApplication sharedApplication] canOpenURL:tmpURL2]) {
+                NSLog(@"YES YOU CAN %@", tmpURL2);
+                [[UIApplication sharedApplication] openURL:tmpURL2];
+                return;
+            }
+            else {
+                NSLog(@"NO YOU CANT %@", tmpURL2);
+            }
+        }
+        
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
             NSString *msg = [NSString stringWithFormat:@"Vous allez quitter HFR+ et être redirigé vers :\n %@\n", stringUrl];
             
@@ -475,6 +482,7 @@
             
             [alert show];
         }
+
     }
     
 
