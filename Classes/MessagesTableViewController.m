@@ -309,7 +309,7 @@
 		HTMLNode * pagesLinkNode = [pagesTrNode findChildWithAttribute:@"class" matchingName:@"left" allowPartial:NO];
 		
 		if (pagesLinkNode) {
-			NSLog(@"pages %@", rawContentsOfNode([pagesLinkNode _node], [myParser _doc]));
+			//NSLog(@"pages %@", rawContentsOfNode([pagesLinkNode _node], [myParser _doc]));
 			
 			//NSArray *temporaryNumPagesArray = [[NSArray alloc] init];
 			NSArray *temporaryNumPagesArray = [pagesLinkNode children];

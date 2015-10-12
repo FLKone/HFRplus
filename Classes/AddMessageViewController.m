@@ -1433,12 +1433,12 @@
 
 - (void)fetchSmileContentStarted:(ASIHTTPRequest *)theRequest
 {
-	//NSLog(@"fetchContentStarted");
+    NSLog(@"fetchSmileContentStarted %@", theRequest);
 }
 
 - (void)fetchSmileContentComplete:(ASIHTTPRequest *)theRequest
 {
-//	NSLog(@"%@", [theRequest responseString]);
+    NSLog(@"fetchSmileContentComplete %@", theRequest);
 	[self.segmentControlerPage setTitle:@"Smilies" forSegmentAtIndex:1];
 
 	//NSDate *thenT = [NSDate date]; // Create a current date
@@ -1534,24 +1534,26 @@
         }
 
         
-        NSLog(@"SMILEYS %f = %d", surface, smilePerPage);
+        //NSLog(@"SMILEYS %f = %d", surface, smilePerPage);
         
         //i4 153600
         //i5 181760
         //i6 250125
+        NSArray *localsmileyArray = [[NSArray alloc] initWithArray:self.smileyArray copyItems:true];
+
+        
 		int firstSmile = page * smilePerPage;
-		int lastSmile = MIN([self.smileyArray count], (page + 1) * smilePerPage);
-		
+		int lastSmile = MIN([localsmileyArray count], (page + 1) * smilePerPage);
 		//NSLog(@"%d to %d", firstSmile, lastSmile);
 		
 		int i;
 		
 		NSString *tmpHTML = @"";
 		NSFileManager *fileManager = [[NSFileManager alloc] init];
-
+        
+        
 		for (i = firstSmile; i < lastSmile; i++) { //Loop through all the tags
-
-			NSString *filename = [[[self.smileyArray objectAtIndex:i] objectForKey:@"source"] stringByReplacingOccurrencesOfString:@"http://forum-images.hardware.fr/" withString:@""];
+			NSString *filename = [[[localsmileyArray objectAtIndex:i] objectForKey:@"source"] stringByReplacingOccurrencesOfString:@"http://forum-images.hardware.fr/" withString:@""];
 			filename = [filename stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
 			filename = [filename stringByReplacingOccurrencesOfString:@" " withString:@"-"];
 			
@@ -1564,11 +1566,11 @@
 			{
 				//NSLog(@"dl %@", key);
 				
-				[fileManager createFileAtPath:key contents:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [[[self.smileyArray objectAtIndex:i] objectForKey:@"source"] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]]]] attributes:nil];					
+				[fileManager createFileAtPath:key contents:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [[[localsmileyArray objectAtIndex:i] objectForKey:@"source"] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]]]] attributes:nil];
 			}
 			
 			
-			tmpHTML = [tmpHTML stringByAppendingString:[NSString stringWithFormat:@"<img class=\"smile\" src=\"%@\" alt=\"%@\"/>", key, [[self.smileyArray objectAtIndex:i] objectForKey:@"code"]]];
+			tmpHTML = [tmpHTML stringByAppendingString:[NSString stringWithFormat:@"<img class=\"smile\" src=\"%@\" alt=\"%@\"/>", key, [[localsmileyArray objectAtIndex:i] objectForKey:@"code"]]];
 			
 		}
 
@@ -1591,7 +1593,7 @@
 				[self.segmentControlerPage setEnabled:NO forSegmentAtIndex:0];
 			}
 
-			if (lastSmile < [self.smileyArray count]) {
+			if (lastSmile < [localsmileyArray count]) {
 				[self.segmentControlerPage setEnabled:YES forSegmentAtIndex:2];			
 			}
 			else {
