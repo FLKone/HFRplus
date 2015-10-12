@@ -26,6 +26,8 @@
     BOOL enabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"menu_debug"];
     ((IASKAppSettingsViewController *)((UINavigationController *)[[HFRplusAppDelegate sharedAppDelegate] rootController].viewControllers[3]).viewControllers[0]).hiddenKeys = enabled ? nil : [NSSet setWithObjects:@"menu_debug_entry", nil];
     NSLog(@"awakeFromNib");
+    
+    self.delegate = self;
 }
 
 #pragma mark kIASKAppSettingChanged notification
@@ -47,6 +49,9 @@
 
 #pragma mark -
 - (void)settingsViewController:(IASKAppSettingsViewController*)sender buttonTappedForKey:(NSString*)key {
+    NSLog(@"settingsViewController");
+    
+    
     
 	if ([key isEqualToString:@"EmptyCacheButton"]) {
 
