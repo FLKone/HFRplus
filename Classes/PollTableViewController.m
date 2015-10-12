@@ -238,13 +238,6 @@
 
 -(NSString *)fixedString:(NSString *)orig {
     return orig;
-    
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0")) {
-        return [[NSString alloc] initWithCString:[orig cStringUsingEncoding:NSISOLatin1StringEncoding] encoding:NSUTF8StringEncoding];
-    }
-    else
-        return orig;
-
 }
 
 #pragma mark -
