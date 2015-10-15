@@ -46,6 +46,12 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
+		4C0031231BD01CE700F87F13 /* HFRTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0031221BD01CE700F87F13 /* HFRTabBar.m */; settings = {ASSET_TAGS = (); }; };
+		4C0031241BD01CE700F87F13 /* HFRTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0031221BD01CE700F87F13 /* HFRTabBar.m */; settings = {ASSET_TAGS = (); }; };
+		4C00313D1BD0404500F87F13 /* UIWebView+FLUIWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C00313A1BD0404500F87F13 /* UIWebView+FLUIWebView.m */; settings = {ASSET_TAGS = (); }; };
+		4C00313E1BD0404500F87F13 /* UIWebView+FLUIWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C00313A1BD0404500F87F13 /* UIWebView+FLUIWebView.m */; settings = {ASSET_TAGS = (); }; };
+		4C00313F1BD0404500F87F13 /* WKWebView+FLWKWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C00313C1BD0404500F87F13 /* WKWebView+FLWKWebView.m */; settings = {ASSET_TAGS = (); }; };
+		4C0031401BD0404500F87F13 /* WKWebView+FLWKWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C00313C1BD0404500F87F13 /* WKWebView+FLWKWebView.m */; settings = {ASSET_TAGS = (); }; };
 		4C028AD21A8C635500F542B1 /* hammer.min.map in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311EE19FAFCAE0097D84D /* hammer.min.map */; };
 		4C052DF81BA8537E00B61952 /* fontello.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4C052DF21BA8537E00B61952 /* fontello.ttf */; settings = {ASSET_TAGS = (); }; };
 		4C052DF91BA8537E00B61952 /* fontello.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4C052DF21BA8537E00B61952 /* fontello.ttf */; settings = {ASSET_TAGS = (); }; };
@@ -1248,6 +1254,13 @@
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = main.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		32CA4F630368D1EE00C91783 /* HFRplus_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFRplus_Prefix.pch; sourceTree = "<group>"; };
+		4C0031211BD01CE700F87F13 /* HFRTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFRTabBar.h; sourceTree = "<group>"; };
+		4C0031221BD01CE700F87F13 /* HFRTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFRTabBar.m; sourceTree = "<group>"; };
+		4C0031381BD0404500F87F13 /* FLWebViewProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLWebViewProvider.h; sourceTree = "<group>"; };
+		4C0031391BD0404500F87F13 /* UIWebView+FLUIWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+FLUIWebView.h"; sourceTree = "<group>"; };
+		4C00313A1BD0404500F87F13 /* UIWebView+FLUIWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+FLUIWebView.m"; sourceTree = "<group>"; };
+		4C00313B1BD0404500F87F13 /* WKWebView+FLWKWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WKWebView+FLWKWebView.h"; sourceTree = "<group>"; };
+		4C00313C1BD0404500F87F13 /* WKWebView+FLWKWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WKWebView+FLWKWebView.m"; sourceTree = "<group>"; };
 		4C052DF21BA8537E00B61952 /* fontello.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = fontello.ttf; sourceTree = "<group>"; };
 		4C052E0E1BA86C9400B61952 /* Flat-YellowFlag-25@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Flat-YellowFlag-25@2x.png"; sourceTree = "<group>"; };
 		4C052E0F1BA86C9400B61952 /* Flat-YellowFlag-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Flat-YellowFlag-25.png"; sourceTree = "<group>"; };
@@ -2114,6 +2127,8 @@
 				CA7E25E215A1D17500721F6D /* SplitViewController.m */,
 				CA9E86871243C11A000EE882 /* TabBarController.h */,
 				CA9E86881243C11A000EE882 /* TabBarController.m */,
+				4C0031211BD01CE700F87F13 /* HFRTabBar.h */,
+				4C0031221BD01CE700F87F13 /* HFRTabBar.m */,
 				CA77D0F31261424D00271D62 /* PageViewController.h */,
 				CA77D0F41261424D00271D62 /* PageViewController.m */,
 				CA1070C715A5F406002E6C19 /* SettingsViewController.h */,
@@ -2239,6 +2254,18 @@
 				CA18B160126245AB008B8466 /* AssetsLibrary.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4C0031371BD0404500F87F13 /* FLWebView */ = {
+			isa = PBXGroup;
+			children = (
+				4C0031381BD0404500F87F13 /* FLWebViewProvider.h */,
+				4C0031391BD0404500F87F13 /* UIWebView+FLUIWebView.h */,
+				4C00313A1BD0404500F87F13 /* UIWebView+FLUIWebView.m */,
+				4C00313B1BD0404500F87F13 /* WKWebView+FLWKWebView.h */,
+				4C00313C1BD0404500F87F13 /* WKWebView+FLWKWebView.m */,
+			);
+			path = FLWebView;
 			sourceTree = "<group>";
 		};
 		4C0B8D4F1BA4521000D329BA /* CatIcons */ = {
@@ -2554,6 +2581,7 @@
 		CA00C35717C2FC620067B457 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				4C0031371BD0404500F87F13 /* FLWebView */,
 				CA00C42217C2FF3F0067B457 /* ASIHTTPRequest */,
 				4C3903341BCACE4D00FD6F1F /* DACircularProgress */,
 				4C3903391BCACEC200FD6F1F /* PSTCollectionView */,
@@ -3228,6 +3256,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0700;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
@@ -4231,6 +4260,7 @@
 				CA34780B12EB557500D1BA2A /* PayViewController.m in Sources */,
 				CA20FA3512F15CA700EC1771 /* TopicSearchCellView.m in Sources */,
 				CA26862513ADE01100AC5511 /* BrowserViewController.m in Sources */,
+				4C00313F1BD0404500F87F13 /* WKWebView+FLWKWebView.m in Sources */,
 				4C3903C51BCAD0EC00FD6F1F /* SDWebImageManager.m in Sources */,
 				CA7E25E315A1D17500721F6D /* SplitViewController.m in Sources */,
 				CA7E25F115A1F4AA00721F6D /* DetailNavigationViewController.m in Sources */,
@@ -4275,6 +4305,7 @@
 				4C39035A1BCACEC200FD6F1F /* PSTCollectionViewCell.m in Sources */,
 				CA00C44817C2FF3F0067B457 /* HTMLParser.m in Sources */,
 				4C3903B71BCAD0EC00FD6F1F /* MKAnnotationView+WebCache.m in Sources */,
+				4C0031231BD01CE700F87F13 /* HFRTabBar.m in Sources */,
 				CA00C43F17C2FF3F0067B457 /* ASIDataCompressor.m in Sources */,
 				CA00C44317C2FF3F0067B457 /* ASIHTTPRequest.m in Sources */,
 				CA00C45417C3000B0067B457 /* NSData+Base64.m in Sources */,
@@ -4282,6 +4313,7 @@
 				4C3903C71BCAD0EC00FD6F1F /* SDWebImagePrefetcher.m in Sources */,
 				CA00C44117C2FF3F0067B457 /* ASIDownloadCache.m in Sources */,
 				4C3903BB1BCAD0EC00FD6F1F /* SDImageCache.m in Sources */,
+				4C00313D1BD0404500F87F13 /* UIWebView+FLUIWebView.m in Sources */,
 				4C3903661BCACEC200FD6F1F /* PSTCollectionViewUpdateItem.m in Sources */,
 				CA00C44617C2FF3F0067B457 /* Reachability.m in Sources */,
 				CA00C44217C2FF3F0067B457 /* ASIFormDataRequest.m in Sources */,
@@ -4376,6 +4408,7 @@
 				CA7C70FB185EF50E00B348BA /* PayViewController.m in Sources */,
 				CA7C70FD185EF50E00B348BA /* TopicSearchCellView.m in Sources */,
 				CA7C7100185EF50E00B348BA /* BrowserViewController.m in Sources */,
+				4C0031401BD0404500F87F13 /* WKWebView+FLWKWebView.m in Sources */,
 				4C3903C61BCAD0EC00FD6F1F /* SDWebImageManager.m in Sources */,
 				CA7C7101185EF50E00B348BA /* SplitViewController.m in Sources */,
 				CA7C7102185EF50E00B348BA /* DetailNavigationViewController.m in Sources */,
@@ -4420,6 +4453,7 @@
 				CA7C70E9185EF50E00B348BA /* HTMLParser.m in Sources */,
 				4C39035B1BCACEC200FD6F1F /* PSTCollectionViewCell.m in Sources */,
 				4C3903B81BCAD0EC00FD6F1F /* MKAnnotationView+WebCache.m in Sources */,
+				4C0031241BD01CE700F87F13 /* HFRTabBar.m in Sources */,
 				4CC814FE1BAC86ED00F8BB81 /* UIColor+Extension.m in Sources */,
 				4C3903671BCACEC200FD6F1F /* PSTCollectionViewUpdateItem.m in Sources */,
 				CA7C70C6185EF50E00B348BA /* ASIAuthenticationDialog.m in Sources */,
@@ -4427,6 +4461,7 @@
 				4C3903C81BCAD0EC00FD6F1F /* SDWebImagePrefetcher.m in Sources */,
 				CA7C7103185EF50E00B348BA /* ASIDownloadCache.m in Sources */,
 				4C3903BC1BCAD0EC00FD6F1F /* SDImageCache.m in Sources */,
+				4C00313E1BD0404500F87F13 /* UIWebView+FLUIWebView.m in Sources */,
 				CA7C710A185EF50E00B348BA /* Reachability.m in Sources */,
 				4C3903591BCACEC200FD6F1F /* PSTCollectionView.m in Sources */,
 				CA7C70EA185EF50E00B348BA /* ASIDataCompressor.m in Sources */,

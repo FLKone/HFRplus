@@ -13,6 +13,8 @@
 #import "TopicsTableViewController.h"
 #import "PollTableViewController.h"
 
+//#import "HFR_EditorViewController.h"
+
 
 #import "RegexKitLite.h"
 #import "HTMLParser.h"
@@ -1100,16 +1102,22 @@
 	}
     //NSLog(@"isOK");
 
-	NewMessageViewController *addMessageViewController = [[NewMessageViewController alloc]
-														   initWithNibName:@"AddMessageViewController" bundle:nil];
-	addMessageViewController.delegate = self;
-	[addMessageViewController setUrlQuote:[NSString stringWithFormat:@"%@%@", kForumURL, topicAnswerUrl]];
-	addMessageViewController.title = @"Nouv. Réponse";
-	
+    HFRNavigationController *navigationController;
+    
+     {
+        NewMessageViewController *addMessageViewController = [[NewMessageViewController alloc]
+                                                              initWithNibName:@"AddMessageViewController" bundle:nil];
+        addMessageViewController.delegate = self;
+        [addMessageViewController setUrlQuote:[NSString stringWithFormat:@"%@%@", kForumURL, topicAnswerUrl]];
+        addMessageViewController.title = @"Nouv. Réponse";
+
+        navigationController = [[HFRNavigationController alloc]
+                                                         initWithRootViewController:addMessageViewController];
+    }
+		
 	
 	// Create the navigation controller and present it modally.
-	HFRNavigationController *navigationController = [[HFRNavigationController alloc]
-													initWithRootViewController:addMessageViewController];
+
     
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
 	[self presentModalViewController:navigationController animated:YES];

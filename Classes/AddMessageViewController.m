@@ -20,7 +20,11 @@
 
 #import "EditMessageViewController.h"
 
+#import "UIWebView+FLUIWebView.h"
+#import "WKWebView+FLWKWebView.h"
+
 @implementation AddMessageViewController
+
 @synthesize delegate, textView, arrayInputData, formSubmit, accessoryView, smileView;
 @synthesize request, loadingView, requestSmile;
 
@@ -78,33 +82,169 @@
     return self;
 }
 
-- (void)webViewDidStartLoad:(UIWebView *)webView
+#pragma mark - UIWebView Delegate Methods
+
+/*
+ * Called on iOS devices that do not have WKWebView when the UIWebView requests to start loading a URL request.
+ * Note that it just calls shouldStartDecidePolicy, which is a shared delegate method.
+ * Returning YES here would allow the request to complete, returning NO would stop it.
+ */
+- (BOOL) webView: (UIWebView *) webView shouldStartLoadWithRequest: (NSURLRequest *) aRequest navigationType: (UIWebViewNavigationType) navigationType
 {
-	//NSLog(@"webViewDidStartLoad");
-	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-	
+    return [self shouldStartDecidePolicy: aRequest];
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView
+/*
+ * Called on iOS devices that do not have WKWebView when the UIWebView starts loading a URL request.
+ * Note that it just calls didStartNavigation, which is a shared delegate method.
+ */
+- (void) webViewDidStartLoad: (UIWebView *) webView
 {
-	//NSLog(@"webViewDidFinishLoad");
-	
-	NSString *jsString = @"";
-	//jsString = [jsString stringByAppendingString:@"$('body').bind('touchmove', function(e){e.preventDefault()});"];
-	//jsString = [jsString stringByAppendingString:@"$('.button').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+encodeURIComponent(this.title); });"];
+    [self didStartNavigation];
+}
+
+/*
+ * Called on iOS devices that do not have WKWebView when a URL request load failed.
+ * Note that it just calls failLoadOrNavigation, which is a shared delegate method.
+ */
+- (void) webView: (UIWebView *) webView didFailLoadWithError: (NSError *) error
+{
+    [self failLoadOrNavigation: [webView request] withError: error];
+}
+
+/*
+ * Called on iOS devices that do not have WKWebView when the UIWebView finishes loading a URL request.
+ * Note that it just calls finishLoadOrNavigation, which is a shared delegate method.
+ */
+- (void) webViewDidFinishLoad: (UIWebView *) webView
+{
+    [self finishLoadOrNavigation: [webView request]];
+}
+
+#pragma mark - WKWebView Delegate Methods
+
+/*
+ * Called on iOS devices that have WKWebView when the web view wants to start navigation.
+ * Note that it calls shouldStartDecidePolicy, which is a shared delegate method,
+ * but it's essentially passing the result of that method into decisionHandler, which is a block.
+ */
+- (void) webView: (WKWebView *) webView decidePolicyForNavigationAction: (WKNavigationAction *) navigationAction decisionHandler: (void (^)(WKNavigationActionPolicy)) decisionHandler
+{
+    decisionHandler([self shouldStartDecidePolicy: [navigationAction request]]);
+}
+
+/*
+ * Called on iOS devices that have WKWebView when the web view starts loading a URL request.
+ * Note that it just calls didStartNavigation, which is a shared delegate method.
+ */
+- (void) webView: (WKWebView *) webView didStartProvisionalNavigation: (WKNavigation *) navigation
+{
+    [self didStartNavigation];
+}
+
+/*
+ * Called on iOS devices that have WKWebView when the web view fails to load a URL request.
+ * Note that it just calls failLoadOrNavigation, which is a shared delegate method,
+ * but it has to retrieve the active request from the web view as WKNavigation doesn't contain a reference to it.
+ */
+- (void) webView:(WKWebView *) webView didFailProvisionalNavigation: (WKNavigation *) navigation withError: (NSError *) error
+{
+    [self failLoadOrNavigation: [webView request] withError: error];
+}
+
+/*
+ * Called on iOS devices that have WKWebView when the web view begins loading a URL request.
+ * This could call some sort of shared delegate method, but is unused currently.
+ */
+- (void) webView: (WKWebView *) webView didCommitNavigation: (WKNavigation *) navigation
+{
+    // do nothing
+}
+
+/*
+ * Called on iOS devices that have WKWebView when the web view fails to load a URL request.
+ * Note that it just calls failLoadOrNavigation, which is a shared delegate method.
+ */
+- (void) webView: (WKWebView *) webView didFailNavigation: (WKNavigation *) navigation withError: (NSError *) error
+{
+    [self failLoadOrNavigation: [webView request] withError: error];
+}
+
+/*
+ * Called on iOS devices that have WKWebView when the web view finishes loading a URL request.
+ * Note that it just calls finishLoadOrNavigation, which is a shared delegate method.
+ */
+- (void) webView: (WKWebView *) webView didFinishNavigation: (WKNavigation *) navigation
+{
+    [self finishLoadOrNavigation: [webView request]];
+}
+
+#pragma mark - Shared Delegate Methods
+
+/*
+ * This is called whenever the web view wants to navigate.
+ */
+- (BOOL) shouldStartDecidePolicy: (NSURLRequest *) aRequest
+{
+    NSLog(@"shouldStartDecidePolicy url:%@", [aRequest.URL absoluteString]);
     
-	//jsString = [jsString stringByAppendingString:@"$('#smileperso img.smile').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+encodeURIComponent(this.alt); });"];
+    // Determine whether or not navigation should be allowed.
+    // Return YES if it should, NO if not.
+    if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdosmile"]) {
+        
+        //NSLog(@"parameterString %@", [aRequest.URL query]);
+        
+        NSArray *queryComponents = [[aRequest.URL query] componentsSeparatedByString:@"&"];
+        NSArray *firstParam = [[queryComponents objectAtIndex:0] componentsSeparatedByString:@"="];
+        
+        [self didSelectSmile:[[[firstParam objectAtIndex:1] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        
+        return NO;
+    }
+    
+    return YES;
+}
+
+/*
+ * This is called whenever the web view has started navigating.
+ */
+- (void) didStartNavigation
+{
+    // Update things like loading indicators here.
+}
+
+/*
+ * This is called when navigation failed.
+ */
+- (void) failLoadOrNavigation: (NSURLRequest *) request withError: (NSError *) error
+{
+    // Notify the user that navigation failed, provide information on the error, and so on.
+}
+
+/*
+ * This is called when navigation succeeds and is complete.
+ */
+- (void) finishLoadOrNavigation: (NSURLRequest *) request
+{
+    // Remove the loading indicator, maybe update the navigation bar's title if you have one.
+    //NSLog(@"webViewDidFinishLoad");
+    
+    NSString *jsString = @"";
+    //jsString = [jsString stringByAppendingString:@"$('body').bind('touchmove', function(e){e.preventDefault()});"];
+    //jsString = [jsString stringByAppendingString:@"$('.button').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+encodeURIComponent(this.title); });"];
+    
+    //jsString = [jsString stringByAppendingString:@"$('#smileperso img.smile').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+encodeURIComponent(this.alt); });"];
     
     jsString = [jsString stringByAppendingString:@"var hammertime = $('.button').hammer({ hold_timeout: 0.000001 }); \
-                                                    hammertime.on('touchstart touchend', function(ev) {\
-                                                    if(ev.type === 'touchstart'){\
-                                                        $(this).addClass('selected');\
-                                                    }\
-                                                    if(ev.type === 'touchend'){\
-                                                        $(this).removeClass('selected');\
-                                                        window.location = 'oijlkajsdoihjlkjasdosmile://internal?query='+encodeURIComponent(this.title).replace(/\\(/g, '%28').replace(/\\)/g, '%29');\
-                                                    }\
-                                                    });"];
+                hammertime.on('touchstart touchend', function(ev) {\
+                if(ev.type === 'touchstart'){\
+                $(this).addClass('selected');\
+                }\
+                if(ev.type === 'touchend'){\
+                $(this).removeClass('selected');\
+                window.location = 'oijlkajsdoihjlkjasdosmile://internal?query='+encodeURIComponent(this.title).replace(/\\(/g, '%28').replace(/\\)/g, '%29');\
+                }\
+                });"];
     
     jsString = [jsString stringByAppendingString:@"var hammertime2 = $('#smileperso img.smile').hammer({ hold_timeout: 0.000001 }); \
                 hammertime2.on('touchstart touchend', function(ev) {\
@@ -119,33 +259,13 @@
     
     //NSLog(@"jsString %@", jsString);
     
-	[webView stringByEvaluatingJavaScriptFromString:jsString];
-	
-	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    [self.smileView evaluateJavaScript:jsString completionHandler:nil];
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    
 }
 
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)aRequest navigationType:(UIWebViewNavigationType)navigationType {
-	//NSLog(@"expected:%ld, got:%ld | url:%@", (long)UIWebViewNavigationTypeLinkClicked, navigationType, [aRequest.URL absoluteString]);
-	
-	if (navigationType == UIWebViewNavigationTypeLinkClicked) {
-		return NO;
-	}
-	else if (navigationType == UIWebViewNavigationTypeOther) {
-		if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdosmile"]) {
 
-            //NSLog(@"parameterString %@", [aRequest.URL query]);
-
-            NSArray *queryComponents = [[aRequest.URL query] componentsSeparatedByString:@"&"];
-            NSArray *firstParam = [[queryComponents objectAtIndex:0] componentsSeparatedByString:@"="];
-            
-            [self didSelectSmile:[[[firstParam objectAtIndex:1] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-            
-			return NO;
-		}		
-	}
-	
-	return YES;
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -153,6 +273,24 @@
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
 
+    
+    // SMILEY WEBVIEW
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0")) {
+        smileView = [[WKWebView alloc] initWithFrame: [[self view] bounds]];
+    } else {
+        smileView = [[UIWebView alloc] initWithFrame: [[self view] bounds]];
+        [self.smileView hideGradientBackground];
+    }
+    
+    [smileView setDelegateViews:self];
+    smileView.alpha = 0;
+    [smileView setHidden:YES];
+    [[self smileView] setAutoresizingMask: UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+
+    [[self accessoryView] insertSubview:[self smileView] belowSubview:self.rehostTableView];
+    // SMILEY WEBVIEW
+
+    
     // Recherche Smileys utilises
     NSFileManager *fileManager = [[NSFileManager alloc] init];
     
@@ -210,6 +348,9 @@
     
     
 }
+
+
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)initData { //- (void)viewDidLoad {
 	//NSLog(@"viewDidLoad add");
@@ -223,6 +364,8 @@
 	NSString *path = [[NSBundle mainBundle] bundlePath];
 	NSURL *baseURL = [NSURL fileURLWithPath:path];
 
+    NSLog(@"baseURL %@", baseURL);
+    
     NSString *tempHTML = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"smileybase" ofType:@"html"] encoding:NSUTF8StringEncoding error:NULL];
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
@@ -233,11 +376,55 @@
         [self.smileView setBackgroundColor:[UIColor colorWithRed:46/255.f green:46/255.f blue:46/255.f alpha:1.00]];
     }
     
-    [self.smileView hideGradientBackground];
     
-    [self.smileView loadHTMLString:[tempHTML stringByReplacingOccurrencesOfString:@"%SMILEYCUSTOM%"
-                                                                       withString:[NSString stringWithFormat:@"<div id='smileperso'>%@</div>",
-                                                                                   self.smileyCustom]] baseURL:baseURL];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *diskCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"SmileCache"];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:diskCachePath])
+    {
+        //NSLog(@"createDirectoryAtPath");
+        [[NSFileManager defaultManager] createDirectoryAtPath:diskCachePath
+                                  withIntermediateDirectories:YES
+                                                   attributes:nil
+                                                        error:NULL];
+        
+
+        
+        
+    }
+    else {
+        //NSLog(@"pas createDirectoryAtPath");
+    }
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithFormat:@"%@/assets/", diskCachePath]])
+    {
+        //NSLog(@"createDirectoryAtPath");
+        [[NSFileManager defaultManager] createDirectoryAtPath:[NSString stringWithFormat:@"%@/assets/", diskCachePath]
+                                  withIntermediateDirectories:YES
+                                                   attributes:nil
+                                                        error:NULL];
+        
+        
+    }
+    else {
+        //NSLog(@"pas createDirectoryAtPath");
+    }
+    
+
+    tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"%SMILEYCUSTOM%"
+                                                   withString:[NSString stringWithFormat:@"<div id='smileperso'>%@</div>",
+                                                               self.smileyCustom]];
+    
+    tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"%bundleurl%"
+                                                   withString:baseURL.absoluteString];
+    
+    
+    baseURL = [NSURL fileURLWithPath:diskCachePath];
+
+    NSError *err;
+    [tempHTML writeToFile:[NSString stringWithFormat:@"%@/assets/index.html", diskCachePath] atomically:YES encoding:NSASCIIStringEncoding error:&err];
+
+    [self.smileView loadFromString:tempHTML baseURL:baseURL];
     
 //	[self.smileView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"smileybase" ofType:@"html"] isDirectory:NO]]];
     //==
@@ -963,18 +1150,22 @@
 			case 1:
 			{
 				//NSLog(@"smile");
-				NSString *translatable = [self.smileView stringByEvaluatingJavaScriptFromString:@"$('#container').css('display');"];
+                [self.smileView evaluateJavaScript:@"$('#container').css('display');" completionHandler:^(NSString *result, NSError *error) {
+                    
+                    //NSLog(@"result %@", result);
+                    
+                    if ([result isEqualToString:@"none"]) {
+                        [self.smileView evaluateJavaScript:@"$('#container').show();$('#container_ajax').html('');" completionHandler:nil];
+                        [self.segmentControlerPage setEnabled:NO forSegmentAtIndex:0];
+                        [self.segmentControlerPage setEnabled:NO forSegmentAtIndex:2];
+                        [self.segmentControlerPage setTitle:@"Annuler" forSegmentAtIndex:1];
+                    }
+                    else {
+                        [self cancel];
+                    }
+                }];
 				
-				if ([translatable isEqualToString:@"none"]) {
-					[self.smileView stringByEvaluatingJavaScriptFromString:@"$('#container').show();$('#container_ajax').html('');"];
-					[self.segmentControlerPage setEnabled:NO forSegmentAtIndex:0];
-					[self.segmentControlerPage setEnabled:NO forSegmentAtIndex:2];
-					[self.segmentControlerPage setTitle:@"Annuler" forSegmentAtIndex:1];
 
-				}
-				else {
-					[self cancel];
-				}
 
 				break;				
 			}
@@ -1110,9 +1301,11 @@
 				$(this).delay(800).removeClass('selected');\
 				});"];
 	
-	[self.smileView stringByEvaluatingJavaScriptFromString:jsString];
+	[self.smileView evaluateJavaScript:jsString completionHandler:^(NSString *resp, NSError *err) {
+        [self cancel];
+    }];
 	
-	[self cancel];
+	
 	
 }
 
@@ -1425,8 +1618,12 @@
 	[requestSmile setDidFinishSelector:@selector(fetchSmileContentComplete:)];
 	[requestSmile setDidFailSelector:@selector(fetchSmileContentFailed:)];
 
-	[self.smileView stringByEvaluatingJavaScriptFromString:@"$('#container').hide();$('#container_ajax').html('<div class=\"loading\"><span class=\"spinner\">&#xe800;</span> Recherche en cours...</div>');"];
-	[requestSmile startAsynchronous];
+    [self.smileView evaluateJavaScript:@"$('#container').hide();$('#container_ajax').html('<div class=\"loading\"><span class=\"spinner\">&#xe800;</span> Recherche en cours...</div>');" completionHandler:^(NSString *resp, NSError *err) {
+        [requestSmile startAsynchronous];
+
+    }];
+    
+
 	//NSLog(@"fetchSmileys");
 
 }
@@ -1462,7 +1659,7 @@
 		[alert show];
 		
 		[self.textFieldSmileys becomeFirstResponder];
-		[self.smileView stringByEvaluatingJavaScriptFromString:@"$('#container').show();$('#container_ajax').html('');"];
+        [self.smileView evaluateJavaScript:@"$('#container').show();$('#container_ajax').html('');" completionHandler:nil];
 		return;
 	}
 	
@@ -1490,12 +1687,15 @@
 {
 	self.smileyPage = page;
 	
-	[self.smileView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"\
+	[self.smileView evaluateJavaScript:[NSString stringWithFormat:@"\
 															$('#container').hide();\
 															$('#container_ajax').html('<div class=\"loading\"><span class=\"spinner\">&#xe800;</span> Page n˚%d...</div>');\
-															", page + 1]];
+                                        ", page + 1]  completionHandler:^(NSString *resp, NSError *err) {
+        [self performSelectorInBackground:@selector(loadSmileys) withObject:nil];
+        
+    }];
 	
-	[self performSelectorInBackground:@selector(loadSmileys) withObject:nil];
+	
 
 }	
 
@@ -1510,6 +1710,8 @@
 		NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
 		NSString *diskCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"SmileCache"];
 		
+
+        
 		if (![[NSFileManager defaultManager] fileExistsAtPath:diskCachePath])
 		{
 			//NSLog(@"createDirectoryAtPath");
@@ -1611,7 +1813,9 @@
 	
 	//NSLog(@"showSmileResults");
 	
-	[self.smileView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"\
+
+    
+	[self.smileView evaluateJavaScript:[NSString stringWithFormat:@"\
 															$('#container').hide();\
 															$('#container_ajax').html('%@');\
                                                             var hammertime2 = $('#container_ajax img').hammer({ hold_timeout: 0.000001 }); \
@@ -1624,7 +1828,7 @@
                                                             window.location = 'oijlkajsdoihjlkjasdosmile://internal?query='+encodeURIComponent(this.alt).replace(/\\(/g, '%%28').replace(/\\)/g, '%%29');\
                                                             }\
                                                             });\
-                                                            ", tmpHTML]];
+                                                            ", tmpHTML] completionHandler:nil];
     
     
 }
@@ -1919,8 +2123,8 @@
     self.refreshAnchor = nil;
 	self.accessoryView = nil;
 	
-	[self.smileView stopLoading];
-	self.smileView.delegate = nil;
+	//[self.smileView stopLoading];
+	[self.smileView setDelegateViews:nil];
 	self.smileView = nil;
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;	
 	

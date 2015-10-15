@@ -8,10 +8,11 @@
 #import <UIKit/UIKit.h>
 
 #import "ASIHTTPRequest.h"
-
+#import "FLWebViewProvider.h"
+#import <WebKit/WebKit.h>
 @protocol AddMessageViewControllerDelegate;
 
-@interface AddMessageViewController : UIViewController <UITextViewDelegate, UITextFieldDelegate, UIWebViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
+@interface AddMessageViewController : UIViewController <UITextViewDelegate, UITextFieldDelegate, UIWebViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, WKNavigationDelegate, WKUIDelegate> {
 	id <AddMessageViewControllerDelegate> __weak delegate;
 	
 	//bb
@@ -27,7 +28,7 @@
 	BOOL loaded; //to load data only once
 	BOOL isDragging;
 
-	UIWebView *smileView;
+    UIView <FLWebViewProvider> *smileView;
 	UISegmentedControl *segmentControler;
 	UISegmentedControl *segmentControlerPage;
 	
@@ -83,7 +84,7 @@
 @property (nonatomic, strong) UITextField *textFieldCat;
 @property int offsetY;
 
-@property (nonatomic, strong) IBOutlet UIWebView *smileView;
+@property (nonatomic) UIView <FLWebViewProvider> *smileView;
 @property (nonatomic, strong) NSString *smileyCustom;
 
 @property (nonatomic, strong) IBOutlet UISegmentedControl *segmentControler;

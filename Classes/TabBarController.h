@@ -8,8 +8,9 @@
 #import <UIKit/UIKit.h>
 #import "BrowserViewController.h"
 
-@interface TabBarController : UITabBarController {
+@interface TabBarController : UITabBarController <UITabBarControllerDelegate> {
 
 }
+
 -(void)popAllToRoot:(BOOL)includingSelectedIndex;
 @end
