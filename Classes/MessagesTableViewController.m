@@ -40,7 +40,7 @@
 @implementation MessagesTableViewController
 @synthesize loaded, isLoading, _topicName, topicAnswerUrl, loadingView, errorLabelView, messagesWebView, arrayData, updatedArrayData, detailViewController, messagesTableViewController, pollNode, pollParser;
 @synthesize swipeLeftRecognizer, swipeRightRecognizer, overview, arrayActionsMessages, lastStringFlagTopic;
-@synthesize searchBg, searchBox, searchKeyword, searchPseudo, searchFilter, searchFromFP, searchInputData, isSearchInstra;
+@synthesize searchBg, searchBox, searchKeyword, searchPseudo, searchFilter, searchFromFP, searchInputData, isSearchInstra, errorReported;
 
 @synthesize queue; //v3
 @synthesize stringFlagTopic;
@@ -282,7 +282,22 @@
 
 -(void)setupPageToolbar:(HTMLNode *)bodyNode andP:(HTMLParser *)myParser;
 {
-    if (!self.pageNumber) {
+    if (!self.pageNumber && !self.errorReported) {
+        NSLog(@"ERR %@", [self currentUrl]);
+        
+        ASIFormDataRequest  *errRequest = [[ASIFormDataRequest  alloc] initWithURL:[NSURL URLWithString:@"https://api.flkone.com/hfrplus/"]];
+        
+        [errRequest setPostValue:[self currentUrl] forKey:@"url"];
+        [errRequest setPostValue:@"no page" forKey:@"data"];
+        [errRequest setPostValue:kHFRAPI forKey:@"AID"];
+        __weak ASIFormDataRequest *errRequest_ = errRequest;
+        [errRequest setCompletionBlock:^{
+            NSLog(@"setCompletionBlock %@", errRequest_.responseString);
+        }];
+        
+        [errRequest startAsynchronous];
+        self.errorReported = YES;
+        
         [self.navigationController popViewControllerAnimated:YES];
         return;
     }
@@ -618,7 +633,7 @@
 		self.loaded = NO;
 		self.isViewed = YES;
         [self setIsSearchInstra:NO];
-
+        self.errorReported = NO;
 
 	}
 	return self;
@@ -1601,7 +1616,29 @@
 
 	NSString *tmpHTML = @"";
     
+    
     NSLog(@"COUNT = %lu", (unsigned long)[self.arrayData count]);
+    
+    if (!self.isSearchInstra && self.arrayData.count == 0 && !self.errorReported) {
+        NSLog(@"ERR %@", [self currentUrl]);
+        
+        ASIFormDataRequest  *errRequest = [[ASIFormDataRequest  alloc] initWithURL:[NSURL URLWithString:@"https://api.flkone.com/hfrplus/"]];
+        
+        [errRequest setPostValue:[self currentUrl] forKey:@"url"];
+        [errRequest setPostValue:@"count = 0" forKey:@"data"];
+        [errRequest setPostValue:kHFRAPI forKey:@"AID"];
+        __weak ASIFormDataRequest *errRequest_ = errRequest;
+        [errRequest setCompletionBlock:^{
+            NSLog(@"setCompletionBlock %@", errRequest_.responseString);
+        }];
+        
+        [errRequest startAsynchronous];
+        self.errorReported = YES;
+        
+        [self.navigationController popViewControllerAnimated:YES];
+        return;
+    }
+
     
     if (self.isSearchInstra && self.arrayData.count == 0) {
         NSLog(@"BZAAAAA %@", self.currentUrl);

@@ -57,7 +57,8 @@
         
 		self.loaded = NO;
 		self.isDragging = NO;
-		
+        self.smileLoaded = NO;
+        
         self.lastSelectedRange = NSMakeRange(NSNotFound, NSNotFound);
 
 		self.haveCategory = NO;
@@ -1073,7 +1074,7 @@
                         NSString *diskCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"SmileCache"];
                         
                         [self.smileView loadFromString:[NSURL URLWithString:[NSString stringWithFormat:@"file://%@/assets/index.html", diskCachePath]] baseURL:[NSURL URLWithString:[NSString stringWithFormat:@"file://%@/", diskCachePath]]];
-                        self.smileLoaded = 1;
+                        self.smileLoaded = YES;
                     }
                     
 					[UIView beginAnimations:nil context:nil];

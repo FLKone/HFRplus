@@ -39,7 +39,8 @@
 
 	
 	NSString *topicAnswerUrl;
-	
+	BOOL errorReported;
+    
 	BOOL loaded; //to load data only once
 	BOOL isLoading; //to check is refresh ON
 	BOOL isRedFlagged; //to check is refresh ON
@@ -108,6 +109,8 @@
 @property (nonatomic, strong, setter=setTopicName:) NSString *_topicName;
 
 @property (nonatomic, strong) NSDate *firstDate;
+
+@property BOOL errorReported;
 
 @property BOOL loaded;
 @property BOOL isLoading;
