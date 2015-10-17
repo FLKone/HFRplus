@@ -288,7 +288,7 @@
         ASIFormDataRequest  *errRequest = [[ASIFormDataRequest  alloc] initWithURL:[NSURL URLWithString:@"https://api.flkone.com/hfrplus/"]];
         
         [errRequest setPostValue:[self currentUrl] forKey:@"url"];
-        [errRequest setPostValue:@"no page" forKey:@"data"];
+        [errRequest setPostValue:[NSString stringWithFormat:@"{ \"reason\" : \"no page\", \"version\" : \"%@\"}", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]] forKey:@"data"];
         [errRequest setPostValue:kHFRAPI forKey:@"AID"];
         __weak ASIFormDataRequest *errRequest_ = errRequest;
         [errRequest setCompletionBlock:^{
@@ -298,7 +298,14 @@
         [errRequest startAsynchronous];
         self.errorReported = YES;
         
-        [self.navigationController popViewControllerAnimated:YES];
+        dispatch_queue_t backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
+        dispatch_async(backgroundQueue, ^{
+            // Do your long running code
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.4 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        });
+        
         return;
     }
 	//NSLog(@"setupPageToolbar");
@@ -1625,7 +1632,7 @@
         ASIFormDataRequest  *errRequest = [[ASIFormDataRequest  alloc] initWithURL:[NSURL URLWithString:@"https://api.flkone.com/hfrplus/"]];
         
         [errRequest setPostValue:[self currentUrl] forKey:@"url"];
-        [errRequest setPostValue:@"count = 0" forKey:@"data"];
+        [errRequest setPostValue:[NSString stringWithFormat:@"{ \"reason\" : \"count = 0\", \"version\" : \"%@\"}", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]] forKey:@"data"];
         [errRequest setPostValue:kHFRAPI forKey:@"AID"];
         __weak ASIFormDataRequest *errRequest_ = errRequest;
         [errRequest setCompletionBlock:^{
@@ -1635,7 +1642,16 @@
         [errRequest startAsynchronous];
         self.errorReported = YES;
         
-        [self.navigationController popViewControllerAnimated:YES];
+
+        
+        dispatch_queue_t backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
+        dispatch_async(backgroundQueue, ^{
+            // Do your long running code
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.4 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        });
+
         return;
     }
 
