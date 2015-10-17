@@ -26,6 +26,7 @@
 	NSRange lastSelectedRange;
 
 	BOOL loaded; //to load data only once
+    BOOL smileLoaded;
 	BOOL isDragging;
 
     UIView <FLWebViewProvider> *smileView;
@@ -112,6 +113,7 @@
 @property NSRange lastSelectedRange;
 @property BOOL loaded;
 @property BOOL isDragging;
+@property BOOL smileLoaded;
 
 @property (nonatomic, weak) IBOutlet UIView *accessoryView;
 

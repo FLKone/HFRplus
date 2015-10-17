@@ -40,7 +40,8 @@
  * Convenience method to load a request from a string.
 */
 - (void) loadRequestFromString: (NSString *) urlNameAsString;
-- (void) loadFromString: (NSString *) htmlString baseURL:(NSURL *) baseURL;
+- (void) loadFromString: (NSURL *) htmlURL baseURL:(NSURL *) baseURL;
+- (void) loadFromString: (NSString *) htmlString;
 
 - (void) hideGradientBackground;
 

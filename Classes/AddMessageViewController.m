@@ -25,7 +25,7 @@
 
 @implementation AddMessageViewController
 
-@synthesize delegate, textView, arrayInputData, formSubmit, accessoryView, smileView;
+@synthesize delegate, textView, arrayInputData, formSubmit, accessoryView, smileView, smileLoaded;
 @synthesize request, loadingView, requestSmile;
 
 @synthesize lastSelectedRange, loaded;//navBar, 
@@ -367,9 +367,11 @@
     NSLog(@"baseURL %@", baseURL);
     
     NSString *tempHTML = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"smileybase" ofType:@"html"] encoding:NSUTF8StringEncoding error:NULL];
-    
+    NSString *loadHTML = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"smileyloading" ofType:@"html"] encoding:NSUTF8StringEncoding error:NULL];
+
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"iosversion" withString:@"ios7"];
+        loadHTML = [loadHTML stringByReplacingOccurrencesOfString:@"iosversion" withString:@"ios7"];
         [self.smileView setBackgroundColor:[UIColor colorWithRed:187/255.f green:194/255.f blue:201/255.f alpha:1.00]];
     }
     else {
@@ -418,13 +420,22 @@
     tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"%bundleurl%"
                                                    withString:baseURL.absoluteString];
     
+    loadHTML = [loadHTML stringByReplacingOccurrencesOfString:@"%bundleurl%"
+                                                   withString:baseURL.absoluteString];
+    
+    loadHTML = [loadHTML stringByReplacingOccurrencesOfString:@"%spinner%"
+                                                   withString:@"&#xe800;"];
+    
+
+        [self.smileView loadFromString:loadHTML];
     
     baseURL = [NSURL fileURLWithPath:diskCachePath];
 
     NSError *err;
     [tempHTML writeToFile:[NSString stringWithFormat:@"%@/assets/index.html", diskCachePath] atomically:YES encoding:NSASCIIStringEncoding error:&err];
 
-    [self.smileView loadFromString:tempHTML baseURL:baseURL];
+    //LoadingView
+
     
 //	[self.smileView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"smileybase" ofType:@"html"] isDirectory:NO]]];
     //==
@@ -1057,7 +1068,13 @@
                     
                     [self segmentToWhite];
                     
-
+                    if (!self.smileLoaded) {
+                        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+                        NSString *diskCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"SmileCache"];
+                        
+                        [self.smileView loadFromString:[NSURL URLWithString:[NSString stringWithFormat:@"file://%@/assets/index.html", diskCachePath]] baseURL:[NSURL URLWithString:[NSString stringWithFormat:@"file://%@/", diskCachePath]]];
+                        self.smileLoaded = 1;
+                    }
                     
 					[UIView beginAnimations:nil context:nil];
 					[UIView setAnimationDuration:0.2];		
@@ -1155,7 +1172,7 @@
                     //NSLog(@"result %@", result);
                     
                     if ([result isEqualToString:@"none"]) {
-                        [self.smileView evaluateJavaScript:@"$('#container').show();$('#container_ajax').html('');" completionHandler:nil];
+                        [self.smileView evaluateJavaScript:@"$('#container').show();$('#container_ajax').hide();$('#container_ajax').html('');" completionHandler:nil];
                         [self.segmentControlerPage setEnabled:NO forSegmentAtIndex:0];
                         [self.segmentControlerPage setEnabled:NO forSegmentAtIndex:2];
                         [self.segmentControlerPage setTitle:@"Annuler" forSegmentAtIndex:1];
@@ -1618,7 +1635,7 @@
 	[requestSmile setDidFinishSelector:@selector(fetchSmileContentComplete:)];
 	[requestSmile setDidFailSelector:@selector(fetchSmileContentFailed:)];
 
-    [self.smileView evaluateJavaScript:@"$('#container').hide();$('#container_ajax').html('<div class=\"loading\"><span class=\"spinner\">&#xe800;</span> Recherche en cours...</div>');" completionHandler:^(NSString *resp, NSError *err) {
+    [self.smileView evaluateJavaScript:@"$('#container').hide();$('#container_ajax').show();$('#container_ajax').html('<div class=\"loading\"><span class=\"spinner\">&#xe800;</span> Recherche en cours...</div>');" completionHandler:^(NSString *resp, NSError *err) {
         [requestSmile startAsynchronous];
 
     }];
@@ -1659,7 +1676,7 @@
 		[alert show];
 		
 		[self.textFieldSmileys becomeFirstResponder];
-        [self.smileView evaluateJavaScript:@"$('#container').show();$('#container_ajax').html('');" completionHandler:nil];
+        [self.smileView evaluateJavaScript:@"$('#container').show();$('#container_ajax').hide();$('#container_ajax').html('');" completionHandler:nil];
 		return;
 	}
 	
@@ -1689,6 +1706,7 @@
 	
 	[self.smileView evaluateJavaScript:[NSString stringWithFormat:@"\
 															$('#container').hide();\
+                                                            $('#container_ajax').show();\
 															$('#container_ajax').html('<div class=\"loading\"><span class=\"spinner\">&#xe800;</span> Page n˚%d...</div>');\
                                         ", page + 1]  completionHandler:^(NSString *resp, NSError *err) {
         [self performSelectorInBackground:@selector(loadSmileys) withObject:nil];
@@ -1817,6 +1835,7 @@
     
 	[self.smileView evaluateJavaScript:[NSString stringWithFormat:@"\
 															$('#container').hide();\
+                                                            $('#container_ajax').show();\
 															$('#container_ajax').html('%@');\
                                                             var hammertime2 = $('#container_ajax img').hammer({ hold_timeout: 0.000001 }); \
                                                             hammertime2.on('touchstart touchend', function(ev) {\

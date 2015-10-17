@@ -157,15 +157,53 @@
 	
     self.smileyCustom = [[NSString alloc] init];
     
-	//Traitement des smileys (to Array)
-	[self.smileyArray removeAllObjects]; //RaZ
-	
-	for (HTMLNode * imgNode in tmpImageArray) { //Loop through all the tags
-		self.smileyCustom = [self.smileyCustom stringByAppendingFormat:@"<img class=\"smile\" src=\"%@\" alt=\"%@\"/>", [imgNode getAttributeNamed:@"src"], [imgNode getAttributeNamed:@"alt"]];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *diskCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"SmileCache"];
+
+    if (![[NSFileManager defaultManager] fileExistsAtPath:diskCachePath])
+    {
+        //NSLog(@"createDirectoryAtPath");
+        [[NSFileManager defaultManager] createDirectoryAtPath:diskCachePath
+                                  withIntermediateDirectories:YES
+                                                   attributes:nil
+                                                        error:NULL];
+    }
+    else {
+        //NSLog(@"pas createDirectoryAtPath");
+    }
+    
+    NSFileManager *fileManager = [[NSFileManager alloc] init];
+
+    //Traitement des smileys (to Array)
+    [self.smileyArray removeAllObjects]; //RaZ
+    
+    for (HTMLNode * imgNode in tmpImageArray) { //Loop through all the tags
+        
+        NSString *filename = [[imgNode getAttributeNamed:@"src"] stringByReplacingOccurrencesOfString:@"http://forum-images.hardware.fr/" withString:@""];
+        filename = [filename stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
+        filename = [filename stringByReplacingOccurrencesOfString:@" " withString:@"-"];
+        
+        NSString *key = [diskCachePath stringByAppendingPathComponent:filename];
+        
+        //NSLog(@"url %@", [imgNode getAttributeNamed:@"src"]);
+        //NSLog(@"key %@", key);
+        
+        if (![fileManager fileExistsAtPath:key])
+        {
+            //NSLog(@"dl %@", key);
+            
+            [fileManager createFileAtPath:key contents:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [[imgNode getAttributeNamed:@"src"] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]]]] attributes:nil];
+        }
+        
+        
+        self.smileyCustom = [self.smileyCustom stringByAppendingFormat:@"<img class=\"smile\" src=\"%@\" alt=\"%@\"/>", key, [imgNode getAttributeNamed:@"alt"]];
+        
+        
+        
+        //self.smileyCustom = [self.smileyCustom stringByAppendingFormat:@"<img class=\"smile\" src=\"%@\" alt=\"%@\"/>", [imgNode getAttributeNamed:@"src"], [imgNode getAttributeNamed:@"alt"]];
         //[self.smileyArray addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[imgNode getAttributeNamed:@"src"], [imgNode getAttributeNamed:@"alt"], nil] forKeys:[NSArray arrayWithObjects:@"source", @"code", nil]]];
         
-	}
-    
+    }
 
     //NSLog(@"smileyNode %@", rawContentsOfNode([smileyNode _node], [myParser _doc]));
     //NSLog(@"smileyCustom %@", self.smileyCustom);

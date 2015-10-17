@@ -50,12 +50,23 @@
     [self loadRequest: [NSURLRequest requestWithURL:[NSURL URLWithString: urlNameAsString]]];
 }
 
-- (void) loadFromString: (NSString *) htmlString baseURL:(NSURL *) baseURL;
+- (void) loadFromString: (NSURL *) htmlURL baseURL:(NSURL *) baseURL;
 {
-    NSLog(@"UIWEBVIEW");
+    NSLog(@"UIWEBVIEW v1");
     
-    [self loadHTMLString:htmlString baseURL:baseURL];
+    NSString*html = [NSString stringWithContentsOfURL:htmlURL encoding:NSASCIIStringEncoding error:nil];
+    //NSLog(@"html %@", html);
+    
+    [self loadHTMLString:html baseURL:baseURL];
 }
+
+- (void) loadFromString: (NSString *) htmlString;
+{
+    NSLog(@"UIWEBVIEW v2");
+    
+    [self loadHTMLString:htmlString baseURL:nil];
+}
+
 
 
 /*

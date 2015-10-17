@@ -17,7 +17,7 @@
 -(void)viewDidLoad {
 	[super viewDidLoad];
 	
-	NSLog(@"TBC viewDidLoad %@", self.tabBar);
+	//NSLog(@"TBC viewDidLoad %@", self.tabBar);
     self.title = @"Menu";
 
     
@@ -33,7 +33,7 @@
         [tabBarItem4 setImage:[UIImage imageNamed:@"19-gear.png"]];
         
     } else {
-        NSLog(@"////// %@", self.tabBar.items);
+        //NSLog(@"////// %@", self.tabBar.items);
         tabBarItem1.selectedImage = [[UIImage imageNamed:@"categories_on"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate ];
         tabBarItem1.image = [[UIImage imageNamed:@"categories"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate ];
         tabBarItem1.title = @"Catégories";

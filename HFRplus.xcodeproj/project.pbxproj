@@ -67,6 +67,8 @@
 		4C052E1D1BA86C9400B61952 /* Flat-CyanFlag-25@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C052E121BA86C9400B61952 /* Flat-CyanFlag-25@2x.png */; settings = {ASSET_TAGS = (); }; };
 		4C052E1E1BA86C9400B61952 /* Flat-CyanFlag-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C052E131BA86C9400B61952 /* Flat-CyanFlag-25.png */; settings = {ASSET_TAGS = (); }; };
 		4C052E1F1BA86C9400B61952 /* Flat-CyanFlag-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C052E131BA86C9400B61952 /* Flat-CyanFlag-25.png */; settings = {ASSET_TAGS = (); }; };
+		4C061D721BD275410034CD0A /* smileyloading.html in Resources */ = {isa = PBXBuildFile; fileRef = 4C061D711BD275410034CD0A /* smileyloading.html */; settings = {ASSET_TAGS = (); }; };
+		4C061D731BD275410034CD0A /* smileyloading.html in Resources */ = {isa = PBXBuildFile; fileRef = 4C061D711BD275410034CD0A /* smileyloading.html */; settings = {ASSET_TAGS = (); }; };
 		4C0B2DA51B9F2DF40026A582 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B2DA41B9F2DF40026A582 /* Launch Screen.storyboard */; settings = {ASSET_TAGS = (); }; };
 		4C0B2DA61B9F2DF40026A582 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B2DA41B9F2DF40026A582 /* Launch Screen.storyboard */; settings = {ASSET_TAGS = (); }; };
 		4C0B8D861BA4522900D329BA /* BugFilled-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B8D501BA4522900D329BA /* BugFilled-40.png */; settings = {ASSET_TAGS = (); }; };
@@ -1268,6 +1270,7 @@
 		4C052E111BA86C9400B61952 /* Flat-RedFlag-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Flat-RedFlag-25.png"; sourceTree = "<group>"; };
 		4C052E121BA86C9400B61952 /* Flat-CyanFlag-25@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Flat-CyanFlag-25@2x.png"; sourceTree = "<group>"; };
 		4C052E131BA86C9400B61952 /* Flat-CyanFlag-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Flat-CyanFlag-25.png"; sourceTree = "<group>"; };
+		4C061D711BD275410034CD0A /* smileyloading.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = smileyloading.html; sourceTree = "<group>"; };
 		4C0B2DA41B9F2DF40026A582 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		4C0B8D501BA4522900D329BA /* BugFilled-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BugFilled-40.png"; sourceTree = "<group>"; };
 		4C0B8D511BA4522900D329BA /* BugFilled-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BugFilled-40@2x.png"; sourceTree = "<group>"; };
@@ -2878,6 +2881,7 @@
 				4CB311EE19FAFCAE0097D84D /* hammer.min.map */,
 				4CB311F119FAFF2C0097D84D /* jquery.hammer.js */,
 				CA00C58817C30C370067B457 /* smileybase.html */,
+				4C061D711BD275410034CD0A /* smileyloading.html */,
 				CA00C58917C30C370067B457 /* style-aide.css */,
 				CA00C59017C30C370067B457 /* style-smile.css */,
 				CA00C59117C30C370067B457 /* template.htm */,
@@ -3326,6 +3330,7 @@
 				4C052E1C1BA86C9400B61952 /* Flat-CyanFlag-25@2x.png in Resources */,
 				CA00C64117C30C370067B457 /* ohill.gif in Resources */,
 				CA24233E17C3C898002888D3 /* jquery-2.0.3.min.js in Resources */,
+				4C061D721BD275410034CD0A /* smileyloading.html in Resources */,
 				CA00C6B417C30C370067B457 /* beginon.png in Resources */,
 				CA00C61617C30C370067B457 /* global.gif in Resources */,
 				CA00C66C17C30C370067B457 /* Default@2x.png in Resources */,
@@ -3764,6 +3769,7 @@
 				4C052E1D1BA86C9400B61952 /* Flat-CyanFlag-25@2x.png in Resources */,
 				CA7C6FA7185EF50E00B348BA /* jquery-2.0.3.min.js in Resources */,
 				CA7C6FA8185EF50E00B348BA /* beginon.png in Resources */,
+				4C061D731BD275410034CD0A /* smileyloading.html in Resources */,
 				CA7C6FA9185EF50E00B348BA /* global.gif in Resources */,
 				CA7C6FAA185EF50E00B348BA /* Default@2x.png in Resources */,
 				4C052E171BA86C9400B61952 /* Flat-YellowFlag-25.png in Resources */,

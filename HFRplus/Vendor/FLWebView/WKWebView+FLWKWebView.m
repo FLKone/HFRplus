@@ -62,22 +62,21 @@
 //    [self loadRequest: [NSURLRequest requestWithURL:[NSURL URLWithString: urlNameAsString]]];
 }
 
-- (void) loadFromString: (NSString *) htmlString baseURL:(NSURL *) baseURL;
+- (void) loadFromString: (NSURL *) htmlURL baseURL:(NSURL *) baseURL;
 {
-    NSLog(@"WKWKWKWKWWEBVIEW");
+    NSLog(@"WKWKWKWKWWEBVIEW v1");
 
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *diskCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"SmileCache"];
+    [self loadFileURL:htmlURL allowingReadAccessToURL:baseURL];
+}
+
+- (void) loadFromString: (NSString *) htmlString;
+{
+    NSLog(@"WKWKWKWKWWEBVIEW v2");
+
+    NSString *path = [[NSBundle mainBundle] bundlePath];
+    NSURL *baseURL = [NSURL fileURLWithPath:path];
     
-    NSURL*smilURL = [[NSBundle mainBundle] URLForResource:@"smileybase" withExtension:@"html"];
-    
-    //NSLog(@"smilURL %@", smilURL);
-    //NSLog(@"smilCacheURL %@", [NSURL URLWithString:[NSString stringWithFormat:@"file://%@/", diskCachePath]]);
-    
-    [self loadFileURL:[NSURL URLWithString:[NSString stringWithFormat:@"file://%@/assets/index.html", diskCachePath]] allowingReadAccessToURL:[NSURL URLWithString:[NSString stringWithFormat:@"file://%@/", diskCachePath]]];
-    
-    
-    //[self loadHTMLString:htmlString baseURL:baseURL];
+    [self loadHTMLString:htmlString baseURL:baseURL];
 }
 
 /*
