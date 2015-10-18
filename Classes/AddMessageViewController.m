@@ -20,15 +20,11 @@
 
 #import "EditMessageViewController.h"
 
-#import "UIWebView+FLUIWebView.h"
-#import "WKWebView+FLWKWebView.h"
-
 @implementation AddMessageViewController
-
-@synthesize delegate, textView, arrayInputData, formSubmit, accessoryView, smileView, smileLoaded;
+@synthesize delegate, textView, arrayInputData, formSubmit, accessoryView, smileView;
 @synthesize request, loadingView, requestSmile;
 
-@synthesize lastSelectedRange, loaded;//navBar, 
+@synthesize lastSelectedRange, loaded;//navBar,
 @synthesize segmentControler, isDragging, textFieldSmileys, smileyArray, segmentControlerPage, smileyPage, commonTableView, usedSearchDict, usedSearchSortedArray;
 
 @synthesize rehostTableView, rehostImagesArray, rehostImagesSortedArray;
@@ -48,186 +44,49 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
         // Custom initialization
-		//NSLog(@"initWithNibName add");
-		
-		self.arrayInputData = [[NSMutableDictionary alloc] init];
-		self.smileyArray = [[NSMutableArray alloc] init];
-		self.formSubmit = [[NSString alloc] init];
-		self.refreshAnchor = [[NSString alloc] init];
+        //NSLog(@"initWithNibName add");
         
-		self.loaded = NO;
-		self.isDragging = NO;
-        self.smileLoaded = NO;
+        self.arrayInputData = [[NSMutableDictionary alloc] init];
+        self.smileyArray = [[NSMutableArray alloc] init];
+        self.formSubmit = [[NSString alloc] init];
+        self.refreshAnchor = [[NSString alloc] init];
+        
+        self.loaded = NO;
+        self.isDragging = NO;
         
         self.lastSelectedRange = NSMakeRange(NSNotFound, NSNotFound);
-
-		self.haveCategory = NO;
-		self.haveTitle = NO;
-		self.haveTo	= NO;
-		
-		self.offsetY = 0;
-		
+        
+        self.haveCategory = NO;
+        self.haveTitle = NO;
+        self.haveTo	= NO;
+        
+        self.offsetY = 0;
+        
         
         //Smileys / Rehost
-		self.usedSearchDict = [[NSMutableDictionary alloc] init];
-		self.usedSearchSortedArray = [[NSMutableArray alloc] init];
+        self.usedSearchDict = [[NSMutableDictionary alloc] init];
+        self.usedSearchSortedArray = [[NSMutableArray alloc] init];
         self.rehostImagesArray = [[NSMutableArray alloc] init];
         self.rehostImagesSortedArray = [[NSMutableArray alloc] init];
-
-
-		//NSLog(@"usedSearchDict AT LAUNCH %@", self.usedSearchDict);
-		//NSLog(@"usedSearchSortedArray %@", self.usedSearchSortedArray);
-		
-		self.title = @"Nouv. message";
+        
+        
+        //NSLog(@"usedSearchDict AT LAUNCH %@", self.usedSearchDict);
+        //NSLog(@"usedSearchSortedArray %@", self.usedSearchSortedArray);
+        
+        self.title = @"Nouv. message";
     }
     return self;
 }
 
-#pragma mark - UIWebView Delegate Methods
-
-/*
- * Called on iOS devices that do not have WKWebView when the UIWebView requests to start loading a URL request.
- * Note that it just calls shouldStartDecidePolicy, which is a shared delegate method.
- * Returning YES here would allow the request to complete, returning NO would stop it.
- */
-- (BOOL) webView: (UIWebView *) webView shouldStartLoadWithRequest: (NSURLRequest *) aRequest navigationType: (UIWebViewNavigationType) navigationType
+- (void)webViewDidStartLoad:(UIWebView *)webView
 {
-    return [self shouldStartDecidePolicy: aRequest];
-}
-
-/*
- * Called on iOS devices that do not have WKWebView when the UIWebView starts loading a URL request.
- * Note that it just calls didStartNavigation, which is a shared delegate method.
- */
-- (void) webViewDidStartLoad: (UIWebView *) webView
-{
-    [self didStartNavigation];
-}
-
-/*
- * Called on iOS devices that do not have WKWebView when a URL request load failed.
- * Note that it just calls failLoadOrNavigation, which is a shared delegate method.
- */
-- (void) webView: (UIWebView *) webView didFailLoadWithError: (NSError *) error
-{
-    [self failLoadOrNavigation: [webView request] withError: error];
-}
-
-/*
- * Called on iOS devices that do not have WKWebView when the UIWebView finishes loading a URL request.
- * Note that it just calls finishLoadOrNavigation, which is a shared delegate method.
- */
-- (void) webViewDidFinishLoad: (UIWebView *) webView
-{
-    [self finishLoadOrNavigation: [webView request]];
-}
-
-#pragma mark - WKWebView Delegate Methods
-
-/*
- * Called on iOS devices that have WKWebView when the web view wants to start navigation.
- * Note that it calls shouldStartDecidePolicy, which is a shared delegate method,
- * but it's essentially passing the result of that method into decisionHandler, which is a block.
- */
-- (void) webView: (WKWebView *) webView decidePolicyForNavigationAction: (WKNavigationAction *) navigationAction decisionHandler: (void (^)(WKNavigationActionPolicy)) decisionHandler
-{
-    decisionHandler([self shouldStartDecidePolicy: [navigationAction request]]);
-}
-
-/*
- * Called on iOS devices that have WKWebView when the web view starts loading a URL request.
- * Note that it just calls didStartNavigation, which is a shared delegate method.
- */
-- (void) webView: (WKWebView *) webView didStartProvisionalNavigation: (WKNavigation *) navigation
-{
-    [self didStartNavigation];
-}
-
-/*
- * Called on iOS devices that have WKWebView when the web view fails to load a URL request.
- * Note that it just calls failLoadOrNavigation, which is a shared delegate method,
- * but it has to retrieve the active request from the web view as WKNavigation doesn't contain a reference to it.
- */
-- (void) webView:(WKWebView *) webView didFailProvisionalNavigation: (WKNavigation *) navigation withError: (NSError *) error
-{
-    [self failLoadOrNavigation: [webView request] withError: error];
-}
-
-/*
- * Called on iOS devices that have WKWebView when the web view begins loading a URL request.
- * This could call some sort of shared delegate method, but is unused currently.
- */
-- (void) webView: (WKWebView *) webView didCommitNavigation: (WKNavigation *) navigation
-{
-    // do nothing
-}
-
-/*
- * Called on iOS devices that have WKWebView when the web view fails to load a URL request.
- * Note that it just calls failLoadOrNavigation, which is a shared delegate method.
- */
-- (void) webView: (WKWebView *) webView didFailNavigation: (WKNavigation *) navigation withError: (NSError *) error
-{
-    [self failLoadOrNavigation: [webView request] withError: error];
-}
-
-/*
- * Called on iOS devices that have WKWebView when the web view finishes loading a URL request.
- * Note that it just calls finishLoadOrNavigation, which is a shared delegate method.
- */
-- (void) webView: (WKWebView *) webView didFinishNavigation: (WKNavigation *) navigation
-{
-    [self finishLoadOrNavigation: [webView request]];
-}
-
-#pragma mark - Shared Delegate Methods
-
-/*
- * This is called whenever the web view wants to navigate.
- */
-- (BOOL) shouldStartDecidePolicy: (NSURLRequest *) aRequest
-{
-    NSLog(@"shouldStartDecidePolicy url:%@", [aRequest.URL absoluteString]);
+    //NSLog(@"webViewDidStartLoad");
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
-    // Determine whether or not navigation should be allowed.
-    // Return YES if it should, NO if not.
-    if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdosmile"]) {
-        
-        //NSLog(@"parameterString %@", [aRequest.URL query]);
-        
-        NSArray *queryComponents = [[aRequest.URL query] componentsSeparatedByString:@"&"];
-        NSArray *firstParam = [[queryComponents objectAtIndex:0] componentsSeparatedByString:@"="];
-        
-        [self didSelectSmile:[[[firstParam objectAtIndex:1] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-        
-        return NO;
-    }
-    
-    return YES;
 }
 
-/*
- * This is called whenever the web view has started navigating.
- */
-- (void) didStartNavigation
+- (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    // Update things like loading indicators here.
-}
-
-/*
- * This is called when navigation failed.
- */
-- (void) failLoadOrNavigation: (NSURLRequest *) request withError: (NSError *) error
-{
-    // Notify the user that navigation failed, provide information on the error, and so on.
-}
-
-/*
- * This is called when navigation succeeds and is complete.
- */
-- (void) finishLoadOrNavigation: (NSURLRequest *) request
-{
-    // Remove the loading indicator, maybe update the navigation bar's title if you have one.
     //NSLog(@"webViewDidFinishLoad");
     
     NSString *jsString = @"";
@@ -260,37 +119,39 @@
     
     //NSLog(@"jsString %@", jsString);
     
-    [self.smileView evaluateJavaScript:jsString completionHandler:nil];
+    [webView stringByEvaluatingJavaScriptFromString:jsString];
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    
 }
 
-
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)aRequest navigationType:(UIWebViewNavigationType)navigationType {
+    //NSLog(@"expected:%ld, got:%ld | url:%@", (long)UIWebViewNavigationTypeLinkClicked, navigationType, [aRequest.URL absoluteString]);
+    
+    if (navigationType == UIWebViewNavigationTypeLinkClicked) {
+        return NO;
+    }
+    else if (navigationType == UIWebViewNavigationTypeOther) {
+        if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdosmile"]) {
+            
+            //NSLog(@"parameterString %@", [aRequest.URL query]);
+            
+            NSArray *queryComponents = [[aRequest.URL query] componentsSeparatedByString:@"&"];
+            NSArray *firstParam = [[queryComponents objectAtIndex:0] componentsSeparatedByString:@"="];
+            
+            [self didSelectSmile:[[[firstParam objectAtIndex:1] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            
+            return NO;
+        }
+    }
+    
+    return YES;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
-
-    
-    // SMILEY WEBVIEW
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0")) {
-        smileView = [[WKWebView alloc] initWithFrame: [[self view] bounds]];
-    } else {
-        smileView = [[UIWebView alloc] initWithFrame: [[self view] bounds]];
-        [self.smileView hideGradientBackground];
-    }
-    
-    [smileView setDelegateViews:self];
-    smileView.alpha = 0;
-    [smileView setHidden:YES];
-    [[self smileView] setAutoresizingMask: UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-
-    [[self accessoryView] insertSubview:[self smileView] belowSubview:self.rehostTableView];
-    // SMILEY WEBVIEW
-
     
     // Recherche Smileys utilises
     NSFileManager *fileManager = [[NSFileManager alloc] init];
@@ -318,28 +179,28 @@
         self.rehostImagesSortedArray =  [NSMutableArray arrayWithArray:[[self.rehostImagesArray reverseObjectEnumerator] allObjects]];
         
     }
-
+    
     
     //NSLog(@"rehostImagesArray AT LAUNCH %@", self.rehostImagesArray);
     //NSLog(@"rehostImagesSortedArray AT LAUNCH %@", self.rehostImagesSortedArray);
     
     //Smileys / Rehost
     
-	//Bouton Annuler
-	UIBarButtonItem *cancelBarItem = [[UIBarButtonItem alloc] initWithTitle:@"Annuler" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
-	self.navigationItem.leftBarButtonItem = cancelBarItem;
-	
-	//Bouton Envoyer
-	UIBarButtonItem *sendBarItem = [[UIBarButtonItem alloc] initWithTitle:@"Envoyer" style:UIBarButtonItemStyleDone target:self action:@selector(done)];
-	self.navigationItem.rightBarButtonItem = sendBarItem;
-	[self.navigationItem.rightBarButtonItem setEnabled:NO];
-	
-	
-	[self.segmentControlerPage setEnabled:NO forSegmentAtIndex:0];
-	[self.segmentControlerPage setWidth:40.0 forSegmentAtIndex:0];
-	[self.segmentControlerPage setWidth:40.0 forSegmentAtIndex:2];	
-
-	[self.segmentControlerPage setEnabled:NO forSegmentAtIndex:2];
+    //Bouton Annuler
+    UIBarButtonItem *cancelBarItem = [[UIBarButtonItem alloc] initWithTitle:@"Annuler" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
+    self.navigationItem.leftBarButtonItem = cancelBarItem;
+    
+    //Bouton Envoyer
+    UIBarButtonItem *sendBarItem = [[UIBarButtonItem alloc] initWithTitle:@"Envoyer" style:UIBarButtonItemStyleDone target:self action:@selector(done)];
+    self.navigationItem.rightBarButtonItem = sendBarItem;
+    [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    
+    
+    [self.segmentControlerPage setEnabled:NO forSegmentAtIndex:0];
+    [self.segmentControlerPage setWidth:40.0 forSegmentAtIndex:0];
+    [self.segmentControlerPage setWidth:40.0 forSegmentAtIndex:2];
+    
+    [self.segmentControlerPage setEnabled:NO forSegmentAtIndex:2];
     
     
     if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
@@ -349,118 +210,58 @@
     
     
 }
-
-
-
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)initData { //- (void)viewDidLoad {
-	//NSLog(@"viewDidLoad add");
-	
-   // [super viewDidLoad];
-
+    //NSLog(@"viewDidLoad add");
+    
+    // [super viewDidLoad];
+    
     
     
     // LOAD SMILEY HTML
     
-	NSString *path = [[NSBundle mainBundle] bundlePath];
-	NSURL *baseURL = [NSURL fileURLWithPath:path];
-
-    NSLog(@"baseURL %@", baseURL);
+    NSString *path = [[NSBundle mainBundle] bundlePath];
+    NSURL *baseURL = [NSURL fileURLWithPath:path];
     
     NSString *tempHTML = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"smileybase" ofType:@"html"] encoding:NSUTF8StringEncoding error:NULL];
-    NSString *loadHTML = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"smileyloading" ofType:@"html"] encoding:NSUTF8StringEncoding error:NULL];
-
+    
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"iosversion" withString:@"ios7"];
-        loadHTML = [loadHTML stringByReplacingOccurrencesOfString:@"iosversion" withString:@"ios7"];
         [self.smileView setBackgroundColor:[UIColor colorWithRed:187/255.f green:194/255.f blue:201/255.f alpha:1.00]];
     }
     else {
         [self.smileView setBackgroundColor:[UIColor colorWithRed:46/255.f green:46/255.f blue:46/255.f alpha:1.00]];
     }
     
+    [self.smileView hideGradientBackground];
     
+    [self.smileView loadHTMLString:[tempHTML stringByReplacingOccurrencesOfString:@"%SMILEYCUSTOM%"
+                                                                       withString:[NSString stringWithFormat:@"<div id='smileperso'>%@</div>",
+                                                                                   self.smileyCustom]] baseURL:baseURL];
     
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *diskCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"SmileCache"];
-    if (![[NSFileManager defaultManager] fileExistsAtPath:diskCachePath])
-    {
-        //NSLog(@"createDirectoryAtPath");
-        [[NSFileManager defaultManager] createDirectoryAtPath:diskCachePath
-                                  withIntermediateDirectories:YES
-                                                   attributes:nil
-                                                        error:NULL];
-        
-
-        
-        
-    }
-    else {
-        //NSLog(@"pas createDirectoryAtPath");
-    }
-    
-    if (![[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithFormat:@"%@/assets/", diskCachePath]])
-    {
-        //NSLog(@"createDirectoryAtPath");
-        [[NSFileManager defaultManager] createDirectoryAtPath:[NSString stringWithFormat:@"%@/assets/", diskCachePath]
-                                  withIntermediateDirectories:YES
-                                                   attributes:nil
-                                                        error:NULL];
-        
-        
-    }
-    else {
-        //NSLog(@"pas createDirectoryAtPath");
-    }
-    
-
-    tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"%SMILEYCUSTOM%"
-                                                   withString:[NSString stringWithFormat:@"<div id='smileperso'>%@</div>",
-                                                               self.smileyCustom]];
-    
-    tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"%bundleurl%"
-                                                   withString:baseURL.absoluteString];
-    
-    loadHTML = [loadHTML stringByReplacingOccurrencesOfString:@"%bundleurl%"
-                                                   withString:baseURL.absoluteString];
-    
-    loadHTML = [loadHTML stringByReplacingOccurrencesOfString:@"%spinner%"
-                                                   withString:@"&#xe800;"];
-    
-
-        [self.smileView loadFromString:loadHTML];
-    
-    baseURL = [NSURL fileURLWithPath:diskCachePath];
-
-    NSError *err;
-    [tempHTML writeToFile:[NSString stringWithFormat:@"%@/assets/index.html", diskCachePath] atomically:YES encoding:NSASCIIStringEncoding error:&err];
-
-    //LoadingView
-
-    
-//	[self.smileView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"smileybase" ofType:@"html"] isDirectory:NO]]];
+    //	[self.smileView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"smileybase" ofType:@"html"] isDirectory:NO]]];
     //==
     
-	self.formSubmit = [NSString stringWithFormat:@"%@/bddpost.php", kForumURL];
-
+    self.formSubmit = [NSString stringWithFormat:@"%@/bddpost.php", kForumURL];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(smileyReceived:) name:@"smileyReceived" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadProgress:) name:@"uploadProgress" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageReceived:) name:@"imageReceived" object:nil];
     
-	UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 40)];
-	v.backgroundColor = [UIColor whiteColor];
-	[self.commonTableView setTableFooterView:v];
-	[self.rehostTableView setTableFooterView:v];
+    UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 40)];
+    v.backgroundColor = [UIColor whiteColor];
+    [self.commonTableView setTableFooterView:v];
+    [self.rehostTableView setTableFooterView:v];
     
-	
+    
     
     float headerWidth = self.view.bounds.size.width;
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, headerWidth, 50)];
-
-//    NSLog(@"mew cell %@", NSStringFromCGRect(self.view.frame));
-
+    
+    //    NSLog(@"mew cell %@", NSStringFromCGRect(self.view.frame));
+    
     UIButton* newPhotoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [newPhotoBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10)];
     [newPhotoBtn.titleLabel setFont:[UIFont systemFontOfSize:14.0f]];
@@ -485,10 +286,10 @@
         
         [newPhotoBtn setImage:[UIImage imageNamed:@"Camera-32"] forState:UIControlStateNormal];
         [newPhotoBtn setImage:[UIImage imageNamed:@"Camera-32"] forState:UIControlStateHighlighted];
-
+        
         [newPhotoBtn setTitleColor:[UIColor colorWithRed:0/255.0f green:122/255.0f blue:255/255.0f alpha:1.0] forState:UIControlStateNormal];
         [newPhotoBtn setTitleColor:[UIColor colorWithRed:0/255.0f green:122/255.0f blue:255/255.0f alpha:1.0] forState:UIControlStateHighlighted];
-
+        
         [oldPhotoBtn setTitleColor:[UIColor colorWithRed:0/255.0f green:122/255.0f blue:255/255.0f alpha:1.0] forState:UIControlStateNormal];
         [oldPhotoBtn setTitleColor:[UIColor colorWithRed:0/255.0f green:122/255.0f blue:255/255.0f alpha:1.0] forState:UIControlStateHighlighted];
     }
@@ -499,7 +300,7 @@
         
         [newPhotoBtn setImage:[UIImage imageNamed:@"6-Camera-32"] forState:UIControlStateNormal];
         [newPhotoBtn setImage:[UIImage imageNamed:@"6-Camera-32"] forState:UIControlStateHighlighted];
-
+        
         [newPhotoBtn setTitleColor:[UIColor colorWithRed:56/255.0f green:84/255.0f blue:135/255.0f alpha:1.0] forState:UIControlStateNormal];
         [newPhotoBtn setTitleColor:[UIColor colorWithRed:56/255.0f green:84/255.0f blue:135/255.0f alpha:1.0] forState:UIControlStateHighlighted];
         
@@ -541,7 +342,7 @@
     }
     else {
         subProgressView.backgroundColor = [UIColor colorWithRed:0.22 green:0.33 blue:0.53 alpha:1.0];
-
+        
     }
     
     subProgressView.tag = 54321;
@@ -561,25 +362,25 @@
     
     [self.rehostTableView setTableHeaderView:headerView];
     
-	/*
-	 
-	 self.smileysWebView.layer.cornerRadius = 10;
-	 [self.smileysWebView.layer setBorderColor: [[UIColor darkGrayColor] CGColor]];
-	 [self.smileysWebView.layer setBorderWidth: 1.0];
-		
-	 for (id subview in smileView.subviews)
-		 if ([[subview class] isSubclassOfClass: [UIScrollView class]])
-			 ((UIScrollView *)subview).bounces = NO;
-	 
-	 */
-	
+    /*
+     
+     self.smileysWebView.layer.cornerRadius = 10;
+     [self.smileysWebView.layer setBorderColor: [[UIColor darkGrayColor] CGColor]];
+     [self.smileysWebView.layer setBorderWidth: 1.0];
+     
+     for (id subview in smileView.subviews)
+     if ([[subview class] isSubclassOfClass: [UIScrollView class]])
+     ((UIScrollView *)subview).bounces = NO;
+     
+     */
+    
     // Observe keyboard hide and show notifications to resize the text view appropriately.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-	
-	[segmentControler setEnabled:YES forSegmentAtIndex:0];
-	[segmentControler setEnabled:YES forSegmentAtIndex:1];
-
+    
+    [segmentControler setEnabled:YES forSegmentAtIndex:0];
+    [segmentControler setEnabled:YES forSegmentAtIndex:1];
+    
 }
 
 #pragma mark -
@@ -587,75 +388,75 @@
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-	//NSLog(@"scrollViewWillBeginDragging");
-	self.isDragging = YES;
+    //NSLog(@"scrollViewWillBeginDragging");
+    self.isDragging = YES;
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-	//NSLog(@"scrollViewDidEndDragging");
-	if (!decelerate) {
-		self.isDragging = NO;
-	} 
+    //NSLog(@"scrollViewDidEndDragging");
+    if (!decelerate) {
+        self.isDragging = NO;
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-	//NSLog(@"scrollViewDidScroll");
-	//self.scrollViewer.contentOffset = CGPointMake(self.scrollViewer.contentOffset.x, self.scrollViewer.contentOffset.y + 20);
-	if (![self.textView isFirstResponder] && !self.isDragging) {
-	//	//NSLog(@"contentOffset 1");
-		self.textView.contentOffset = CGPointMake(0, self.offsetY);
-	}
-
+    //NSLog(@"scrollViewDidScroll");
+    //self.scrollViewer.contentOffset = CGPointMake(self.scrollViewer.contentOffset.x, self.scrollViewer.contentOffset.y + 20);
+    if (![self.textView isFirstResponder] && !self.isDragging) {
+        //	//NSLog(@"contentOffset 1");
+        self.textView.contentOffset = CGPointMake(0, self.offsetY);
+    }
+    
 }
 
 - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
 {
-	//NSLog(@"scrollViewWillBeginDecelerating");
-	
+    //NSLog(@"scrollViewWillBeginDecelerating");
+    
 }
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-	//NSLog(@"scrollViewDidEndDecelerating");
-	self.isDragging = NO;
-	
+    //NSLog(@"scrollViewDidEndDecelerating");
+    self.isDragging = NO;
+    
 }
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView;
 {
-	//NSLog(@"scrollViewDidEndScrollingAnimation");
-	
-	//[self.textView scrollRangeToVisible:self.textView.selectedRange];
-	if (![self.textView isFirstResponder] && !self.isDragging) {
-	//NSLog(@"contentOffset 2");
-	
-		self.textView.contentOffset = CGPointMake(0, self.offsetY);
-	}
+    //NSLog(@"scrollViewDidEndScrollingAnimation");
     
-
+    //[self.textView scrollRangeToVisible:self.textView.selectedRange];
+    if (![self.textView isFirstResponder] && !self.isDragging) {
+        //NSLog(@"contentOffset 2");
+        
+        self.textView.contentOffset = CGPointMake(0, self.offsetY);
+    }
+    
+    
 }
 
 #pragma mark -
 #pragma mark Responding to keyboard events
 
 - (void)textViewDidChange:(UITextView *)ftextView {
-
-	if ([ftextView text].length > 0) {
-		[self.navigationItem.rightBarButtonItem setEnabled:YES];
-	}
-	else {
-		[self.navigationItem.rightBarButtonItem setEnabled:NO];
-	}
+    
+    if ([ftextView text].length > 0) {
+        [self.navigationItem.rightBarButtonItem setEnabled:YES];
+    }
+    else {
+        [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    }
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7,0")) {
-
+        
         
         CGRect line = [ftextView caretRectForPosition:ftextView.selectedTextRange.start];
         CGFloat overflow = line.origin.y + line.size.height
-                            - ( ftextView.contentOffset.y + ftextView.bounds.size.height - ftextView.contentInset.bottom - ftextView.contentInset.top ) + self.offsetY;
+        - ( ftextView.contentOffset.y + ftextView.bounds.size.height - ftextView.contentInset.bottom - ftextView.contentInset.top ) + self.offsetY;
         
         //NSLog(@"offsetY %d", self.offsetY);
-
+        
         
         if ( overflow > 0 ) {
             //NSLog(@"overflow %f", overflow);
@@ -672,68 +473,68 @@
                 [ftextView setContentOffset:offset];
             }];
         }
-    
+        
     }
 }
 /*
-
-- (void)textViewDidChange:(UITextView *)ftextView
-{
+ 
+ - (void)textViewDidChange:(UITextView *)ftextView
+ {
 	//NSLog(@"textViewDidChange");
 	
 	if ([ftextView text].length > 0) {
-		[self.navigationItem.rightBarButtonItem setEnabled:YES];
+ [self.navigationItem.rightBarButtonItem setEnabled:YES];
 	}
 	else {
-		[self.navigationItem.rightBarButtonItem setEnabled:NO];
+ [self.navigationItem.rightBarButtonItem setEnabled:NO];
 	}
-    
-    //[ftextView scrollRangeToVisible:NSMakeRange([ftextView.text length], 0)];
-
-}
-
-*/
+ 
+ //[ftextView scrollRangeToVisible:NSMakeRange([ftextView.text length], 0)];
+ 
+ }
+ 
+ */
 - (void)viewWillAppear:(BOOL)animated{
-	NSLog(@"viewWillAppear");
+    NSLog(@"viewWillAppear");
     [[NSNotificationCenter defaultCenter] postNotificationName:@"VisibilityChanged" object:@"SHOW"];
-
-	[super viewWillAppear:animated];
     
-	if(self.lastSelectedRange.location != NSNotFound)
-	{
-		self.textView.selectedRange = lastSelectedRange;
-	}
-
+    [super viewWillAppear:animated];
+    
+    if(self.lastSelectedRange.location != NSNotFound)
+    {
+        self.textView.selectedRange = lastSelectedRange;
+    }
+    
 }
 
 -(void)setupResponder {
-	if (self.haveTo && ![[textFieldTo text] length]) {
-		[self.textFieldTo becomeFirstResponder];
-	}
-	else if (self.haveTitle) {
-		[self.textFieldTitle becomeFirstResponder];
-	}
-	else {
-		[self.textView becomeFirstResponder];
-	}
+    if (self.haveTo && ![[textFieldTo text] length]) {
+        [self.textFieldTo becomeFirstResponder];
+    }
+    else if (self.haveTitle) {
+        [self.textFieldTitle becomeFirstResponder];
+    }
+    else {
+        [self.textView becomeFirstResponder];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
-	//NSLog(@"viewWillDisappear");
-	[super viewWillDisappear:animated];
-	
-	[self.view endEditing:YES];
-
+    //NSLog(@"viewWillDisappear");
+    [super viewWillDisappear:animated];
+    
+    [self.view endEditing:YES];
+    
 }
 
 /* for iOS6 support */
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-	if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"landscape_mode"] isEqualToString:@"all"]) {
-		return UIInterfaceOrientationMaskAll;
-	} else {
-		return UIInterfaceOrientationMaskPortrait;
-	}
+    if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"landscape_mode"] isEqualToString:@"all"]) {
+        return UIInterfaceOrientationMaskAll;
+    } else {
+        return UIInterfaceOrientationMaskPortrait;
+    }
 }
 
 - (BOOL)shouldAutorotate
@@ -747,17 +548,17 @@
 
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-
+    
     // Return YES for supported orientations
-	// Get user preference
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSString *enabled = [defaults stringForKey:@"landscape_mode"];
-	
-	if (![enabled isEqualToString:@"none"]) {
-		return YES;
-	} else {
-		return (interfaceOrientation == UIInterfaceOrientationPortrait);
-	}
+    // Get user preference
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *enabled = [defaults stringForKey:@"landscape_mode"];
+    
+    if (![enabled isEqualToString:@"none"]) {
+        return YES;
+    } else {
+        return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -768,58 +569,58 @@
 }
 
 - (IBAction)cancel {
-	//NSLog(@"cancel %@", self.formSubmit);
-
-	if (self.smileView.alpha != 0) {
-		[UIView beginAnimations:nil context:nil];
-		[UIView setAnimationDuration:0.2];		
-		[self.smileView setAlpha:0];
-		
-		[self.segmentControler setAlpha:1];
-		[self.segmentControlerPage setAlpha:0];		
-		
-		[UIView commitAnimations];	
-		
-		[self.textView becomeFirstResponder];
+    //NSLog(@"cancel %@", self.formSubmit);
+    
+    if (self.smileView.alpha != 0) {
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:0.2];
+        [self.smileView setAlpha:0];
+        
+        [self.segmentControler setAlpha:1];
+        [self.segmentControlerPage setAlpha:0];
+        
+        [UIView commitAnimations];
+        
+        [self.textView becomeFirstResponder];
         
         [self segmentToBlue];
         
         //NSLog(@"====== 666666");
-	}
-	else if (self.commonTableView.alpha != 0) {
-		[UIView beginAnimations:nil context:nil];
-		[UIView setAnimationDuration:0.2];		
-		[self.commonTableView setAlpha:0];
-		
-		[self.segmentControler setAlpha:1];
-		[self.segmentControlerPage setAlpha:0];		
-		
-		[UIView commitAnimations];	
-		
-		[self.textView becomeFirstResponder];
+    }
+    else if (self.commonTableView.alpha != 0) {
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:0.2];
+        [self.commonTableView setAlpha:0];
+        
+        [self.segmentControler setAlpha:1];
+        [self.segmentControlerPage setAlpha:0];
+        
+        [UIView commitAnimations];
+        
+        [self.textView becomeFirstResponder];
         
         [self segmentToBlue];
         
         //NSLog(@"====== 777777");
-	}
-	else if (self.rehostTableView.alpha != 0) {
-		[UIView beginAnimations:nil context:nil];
-		[UIView setAnimationDuration:0.2];
-		[self.rehostTableView setAlpha:0];
-		
-		[self.segmentControler setAlpha:1];
-		[self.segmentControlerPage setAlpha:0];
-		
-		[UIView commitAnimations];
-		
-		[self.textView becomeFirstResponder];
+    }
+    else if (self.rehostTableView.alpha != 0) {
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:0.2];
+        [self.rehostTableView setAlpha:0];
+        
+        [self.segmentControler setAlpha:1];
+        [self.segmentControlerPage setAlpha:0];
+        
+        [UIView commitAnimations];
+        
+        [self.textView becomeFirstResponder];
         
         [self segmentToBlue];
         
         //NSLog(@"====== 777777");
-	}
-	else {
-		if ([self.textView text].length > 0 && !self.isDeleteMode) {
+    }
+    else {
+        if ([self.textView text].length > 0 && !self.isDeleteMode) {
             //NSLog(@"ALERT");
             [self resignAll];
             
@@ -831,15 +632,15 @@
             
             if ([UIAlertController class]) {
                 //NSLog(@"UIAlertController");
-
+                
                 UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Attention !"
                                                                                message:alertMessage
                                                                         preferredStyle:UIAlertControllerStyleAlert];
                 
                 UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Annuler" style:UIAlertActionStyleCancel
-                                                                      handler:^(UIAlertAction * action) {
-                                                                          [self.textView becomeFirstResponder];
-                                                                      }];
+                                                                     handler:^(UIAlertAction * action) {
+                                                                         [self.textView becomeFirstResponder];
+                                                                     }];
                 
                 [alert addAction:cancelAction];
                 
@@ -851,14 +652,14 @@
                 
                 [alert addAction:defaultAction];
                 [self presentViewController:alert animated:YES completion:^{
-
+                    
                 }];
                 
                 
                 
             } else {
                 //NSLog(@"UIAlertView");
-
+                
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Attention !" message:alertMessage
                                                                delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Confirmer", nil];
                 [alert setTag:666];
@@ -867,13 +668,13 @@
             
             
             
-
-		}
-		else {
+            
+        }
+        else {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"VisibilityChanged" object:nil];
-			[self.delegate addMessageViewControllerDidFinish:self];	
-		}
-	}
+            [self.delegate addMessageViewControllerDidFinish:self];
+        }
+    }
 }
 
 -(void)resignAll {
@@ -885,7 +686,7 @@
 }
 
 -(void)finishMe {
-
+    
     //NSLog(@"finishMe");
     [[NSNotificationCenter defaultCenter] postNotificationName:@"VisibilityChanged" object:nil];
     [self.delegate addMessageViewControllerDidFinish:self];
@@ -893,9 +694,9 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-	if (buttonIndex == 1 && alertView.tag == 666) {
+    if (buttonIndex == 1 && alertView.tag == 666) {
         [self finishMe];
-	}
+    }
     else if (buttonIndex == 0 && alertView.tag == 666) {
         [self.textView becomeFirstResponder];
     }
@@ -907,68 +708,68 @@
 }
 
 - (IBAction)done {
-	//NSLog(@"done %@", self.formSubmit);
+    //NSLog(@"done %@", self.formSubmit);
     
-	ASIFormDataRequest  *arequest =
-	[[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:self.formSubmit]];
-	//delete
-	NSString *key;
-	for (key in self.arrayInputData) {
-		//NSLog(@"POST: %@ : %@", key, [self.arrayInputData objectForKey:key]);
-		if ([key isEqualToString:@"allowvisitor"] || [key isEqualToString:@"have_sondage"] || [key isEqualToString:@"sticky"] || [key isEqualToString:@"sticky_everywhere"]) {
-			if ([[self.arrayInputData objectForKey:key] isEqualToString:@"1"]) {
-				[arequest setPostValue:[self.arrayInputData objectForKey:key] forKey:key];
-			}
-		}
-		else if ([key isEqualToString:@"delete"]) {
+    ASIFormDataRequest  *arequest =
+    [[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:self.formSubmit]];
+    //delete
+    NSString *key;
+    for (key in self.arrayInputData) {
+        //NSLog(@"POST: %@ : %@", key, [self.arrayInputData objectForKey:key]);
+        if ([key isEqualToString:@"allowvisitor"] || [key isEqualToString:@"have_sondage"] || [key isEqualToString:@"sticky"] || [key isEqualToString:@"sticky_everywhere"]) {
+            if ([[self.arrayInputData objectForKey:key] isEqualToString:@"1"]) {
+                [arequest setPostValue:[self.arrayInputData objectForKey:key] forKey:key];
+            }
+        }
+        else if ([key isEqualToString:@"delete"]) {
             if ([self isDeleteMode]) {
                 [arequest setPostValue:@"1" forKey:key];
             }
-		}
-		else
-			[arequest setPostValue:[self.arrayInputData objectForKey:key] forKey:key];
-	}	
-	
+        }
+        else
+            [arequest setPostValue:[self.arrayInputData objectForKey:key] forKey:key];
+    }
+    
     NSString* txtTW = [[textView text] removeEmoji];
     txtTW = [txtTW stringByReplacingOccurrencesOfString:@"\n" withString:@"\r\n"];
     
     [arequest setPostValue:txtTW forKey:@"content_form"];
     
-	if (self.haveTitle) {
-		[arequest setPostValue:[textFieldTitle text] forKey:@"sujet"];
-	}
-	if (self.haveCategory) {
-		[arequest setPostValue:[textFieldCat text] forKey:@"subcat"];
-	}	
-	if (self.haveTo) {
-		[arequest setPostValue:[textFieldTo text] forKey:@"dest"];
-	}	
-	[arequest startSynchronous];
-	
-	if (arequest) {
-		if ([arequest error]) {
-			//NSLog(@"error: %@", [[arequest error] localizedDescription]);
-
-			UIAlertView *alertKO = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[[arequest error] localizedDescription]
-														   delegate:self cancelButtonTitle:@"Retour" otherButtonTitles: nil];
-			[alertKO show];
-		}
-		else if ([arequest responseString])
-		{
-			NSError * error = nil;
-			HTMLParser *myParser = [[HTMLParser alloc] initWithString:[arequest responseString] error:&error];
-
-			HTMLNode * bodyNode = [myParser body]; //Find the body tag
-			
-			HTMLNode * messagesNode = [bodyNode findChildWithAttribute:@"class" matchingName:@"hop" allowPartial:NO]; //Get all the <img alt="" />
-			
-			
-			if ([messagesNode findChildTag:@"a"] || [messagesNode findChildTag:@"input"]) {
-				UIAlertView *alertKKO = [[UIAlertView alloc] initWithTitle:nil message:[[messagesNode contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
-															   delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-				[alertKKO show];
-			}
-			else {
+    if (self.haveTitle) {
+        [arequest setPostValue:[textFieldTitle text] forKey:@"sujet"];
+    }
+    if (self.haveCategory) {
+        [arequest setPostValue:[textFieldCat text] forKey:@"subcat"];
+    }
+    if (self.haveTo) {
+        [arequest setPostValue:[textFieldTo text] forKey:@"dest"];
+    }
+    [arequest startSynchronous];
+    
+    if (arequest) {
+        if ([arequest error]) {
+            //NSLog(@"error: %@", [[arequest error] localizedDescription]);
+            
+            UIAlertView *alertKO = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[[arequest error] localizedDescription]
+                                                             delegate:self cancelButtonTitle:@"Retour" otherButtonTitles: nil];
+            [alertKO show];
+        }
+        else if ([arequest responseString])
+        {
+            NSError * error = nil;
+            HTMLParser *myParser = [[HTMLParser alloc] initWithString:[arequest responseString] error:&error];
+            
+            HTMLNode * bodyNode = [myParser body]; //Find the body tag
+            
+            HTMLNode * messagesNode = [bodyNode findChildWithAttribute:@"class" matchingName:@"hop" allowPartial:NO]; //Get all the <img alt="" />
+            
+            
+            if ([messagesNode findChildTag:@"a"] || [messagesNode findChildTag:@"input"]) {
+                UIAlertView *alertKKO = [[UIAlertView alloc] initWithTitle:nil message:[[messagesNode contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
+                                                                  delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                [alertKKO show];
+            }
+            else {
                 [self resignAll];
                 
                 if ([UIAlertController class]) {
@@ -990,8 +791,8 @@
                     
                     
                 }
-
-
+                
+                
                 //NSLog(@"responseString %@", [arequest responseString]);
                 [self setRefreshAnchor:@""];
                 NSArray * urlArray;
@@ -999,7 +800,7 @@
                 if ([self isDeleteMode]) {
                     //recup de l'ID du message supprimé pour positionner le scroll.
                     urlArray = [((QuoteMessageViewController *)self).urlQuote arrayOfCaptureComponentsMatchedByRegex:@"numreponse=([0-9]+)&"];
-
+                    
                 }
                 else {
                     urlArray = [[arequest responseString] arrayOfCaptureComponentsMatchedByRegex:@"<meta http-equiv=\"Refresh\" content=\"[^#]+([^\"]*)\" />"];
@@ -1020,14 +821,14 @@
                 
                 NSLog(@"VisibilityChangedVisibilityChanged");
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"VisibilityChanged" object:nil];
-				[self.delegate addMessageViewControllerDidFinishOK:self];	
-
-			}
-
-
-		}
-	}
-	
+                [self.delegate addMessageViewControllerDidFinishOK:self];
+                
+            }
+            
+            
+        }
+    }
+    
 }
 
 -(void)segmentToWhite {
@@ -1035,7 +836,7 @@
         self.segmentControler.tintColor = [UIColor whiteColor];
         self.segmentControlerPage.tintColor = [UIColor whiteColor];
     }
-
+    
 }
 
 -(void)segmentToBlue {
@@ -1047,102 +848,96 @@
 
 - (IBAction)segmentFilterAction:(id)sender
 {
-	
-	// The segmented control was clicked, handle it here 
-	
-	//NSLog(@"Segment clicked: %d", [(UISegmentedControl *)sender selectedSegmentIndex]);
-	
-	//[(UISegmentedControl *)[self.navigationItem.titleView.subviews objectAtIndex:0] setUserInteractionEnabled:NO];
-	if (sender == self.segmentControler) {
-		switch ([(UISegmentedControl *)sender selectedSegmentIndex]) {
-			case 0:
-			{
-				if (self.smileView.alpha == 0.0) {
-					self.loaded = NO;
-					[textView resignFirstResponder];
-					[textFieldSmileys resignFirstResponder];
-					NSRange newRange = textView.selectedRange;
-					newRange.length = 0;
-					textView.selectedRange = newRange;
-					
-					[self.smileView setHidden:NO];
+    
+    // The segmented control was clicked, handle it here
+    
+    //NSLog(@"Segment clicked: %d", [(UISegmentedControl *)sender selectedSegmentIndex]);
+    
+    //[(UISegmentedControl *)[self.navigationItem.titleView.subviews objectAtIndex:0] setUserInteractionEnabled:NO];
+    if (sender == self.segmentControler) {
+        switch ([(UISegmentedControl *)sender selectedSegmentIndex]) {
+            case 0:
+            {
+                if (self.smileView.alpha == 0.0) {
+                    self.loaded = NO;
+                    [textView resignFirstResponder];
+                    [textFieldSmileys resignFirstResponder];
+                    NSRange newRange = textView.selectedRange;
+                    newRange.length = 0;
+                    textView.selectedRange = newRange;
+                    
+                    [self.smileView setHidden:NO];
                     
                     [self segmentToWhite];
                     
-                    if (!self.smileLoaded) {
-                        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-                        NSString *diskCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"SmileCache"];
-                        
-                        [self.smileView loadFromString:[NSURL URLWithString:[NSString stringWithFormat:@"file://%@/assets/index.html", diskCachePath]] baseURL:[NSURL URLWithString:[NSString stringWithFormat:@"file://%@/", diskCachePath]]];
-                        self.smileLoaded = YES;
-                    }
                     
-					[UIView beginAnimations:nil context:nil];
-					[UIView setAnimationDuration:0.2];		
-					[self.commonTableView setAlpha:0];
-					[self.rehostTableView setAlpha:0];
-					
+                    
+                    [UIView beginAnimations:nil context:nil];
+                    [UIView setAnimationDuration:0.2];
+                    [self.commonTableView setAlpha:0];
+                    [self.rehostTableView setAlpha:0];
+                    
                     [self.smileView setAlpha:1];
-					[self.segmentControler setAlpha:0];
-					[self.segmentControlerPage setAlpha:1];	
-					
-					[UIView commitAnimations];
+                    [self.segmentControler setAlpha:0];
+                    [self.segmentControlerPage setAlpha:1];
+                    
+                    [UIView commitAnimations];
                     
                     //NSLog(@"======= 2222");
-				}
-				else {
-					[UIView beginAnimations:nil context:nil];
-					[UIView setAnimationDuration:0.2];		
-					[self.smileView setAlpha:0];
-					[UIView commitAnimations];	
-					[(UISegmentedControl *)sender setSelectedSegmentIndex:UISegmentedControlNoSegment];
-					[self.textView becomeFirstResponder];
+                }
+                else {
+                    [UIView beginAnimations:nil context:nil];
+                    [UIView setAnimationDuration:0.2];
+                    [self.smileView setAlpha:0];
+                    [UIView commitAnimations];
+                    [(UISegmentedControl *)sender setSelectedSegmentIndex:UISegmentedControlNoSegment];
+                    [self.textView becomeFirstResponder];
                     
                     [self segmentToBlue];
-
                     
-
+                    
+                    
                     
                     //NSLog(@"======= 3333");
-				}			
-				break;
-			}
-			case 1:
+                }
+                break;
+            }
+            case 1:
             {
-				if (self.rehostTableView.alpha == 0.0) {
-					[textView resignFirstResponder];
-					[textFieldSmileys resignFirstResponder];
-					NSRange newRange = textView.selectedRange;
-					newRange.length = 0;
-					textView.selectedRange = newRange;
-					
-					[self.rehostTableView setHidden:NO];
+                if (self.rehostTableView.alpha == 0.0) {
+                    [textView resignFirstResponder];
+                    [textFieldSmileys resignFirstResponder];
+                    NSRange newRange = textView.selectedRange;
+                    newRange.length = 0;
+                    textView.selectedRange = newRange;
+                    
+                    [self.rehostTableView setHidden:NO];
                     
                     //[self segmentToWhite];
                     [self segmentToBlue];
-
                     
                     
-					[UIView beginAnimations:nil context:nil];
-					[UIView setAnimationDuration:0.2];
-					[self.smileView setAlpha:0];
-					[self.commonTableView setAlpha:0];
-					[self.rehostTableView setAlpha:1];
                     
-					[self.segmentControler setAlpha:0];
-					[self.segmentControlerPage setAlpha:1];
-					
-					[UIView commitAnimations];
+                    [UIView beginAnimations:nil context:nil];
+                    [UIView setAnimationDuration:0.2];
+                    [self.smileView setAlpha:0];
+                    [self.commonTableView setAlpha:0];
+                    [self.rehostTableView setAlpha:1];
+                    
+                    [self.segmentControler setAlpha:0];
+                    [self.segmentControlerPage setAlpha:1];
+                    
+                    [UIView commitAnimations];
                     
                     NSLog(@"======= 2222");
-				}
-				else {
-					[UIView beginAnimations:nil context:nil];
-					[UIView setAnimationDuration:0.2];
-					[self.rehostTableView setAlpha:0];
-					[UIView commitAnimations];
-					[(UISegmentedControl *)sender setSelectedSegmentIndex:UISegmentedControlNoSegment];
-					[self.textView becomeFirstResponder];
+                }
+                else {
+                    [UIView beginAnimations:nil context:nil];
+                    [UIView setAnimationDuration:0.2];
+                    [self.rehostTableView setAlpha:0];
+                    [UIView commitAnimations];
+                    [(UISegmentedControl *)sender setSelectedSegmentIndex:UISegmentedControlNoSegment];
+                    [self.textView becomeFirstResponder];
                     
                     [self segmentToBlue];
                     
@@ -1150,54 +945,50 @@
                     
                     
                     //NSLog(@"======= 3333");
-				}
-
-				break;
+                }
+                
+                break;
             }
-			default:
-				break;
-		}
-	}
-	else if (sender == self.segmentControlerPage) {
-		switch ([(UISegmentedControl *)sender selectedSegmentIndex]) {
-
-			case 0:
-				//NSLog(@"previous");
-				[self loadSmileys:--self.smileyPage];	
-				break;
-			case 1:
-			{
-				//NSLog(@"smile");
-                [self.smileView evaluateJavaScript:@"$('#container').css('display');" completionHandler:^(NSString *result, NSError *error) {
+            default:
+                break;
+        }
+    }
+    else if (sender == self.segmentControlerPage) {
+        switch ([(UISegmentedControl *)sender selectedSegmentIndex]) {
+                
+            case 0:
+                //NSLog(@"previous");
+                [self loadSmileys:--self.smileyPage];
+                break;
+            case 1:
+            {
+                //NSLog(@"smile");
+                NSString *translatable = [self.smileView stringByEvaluatingJavaScriptFromString:@"$('#container').css('display');"];
+                
+                if ([translatable isEqualToString:@"none"]) {
+                    [self.smileView stringByEvaluatingJavaScriptFromString:@"$('#container').show();$('#container_ajax').hide();$('#container_ajax').html('');"];
+                    [self.segmentControlerPage setEnabled:NO forSegmentAtIndex:0];
+                    [self.segmentControlerPage setEnabled:NO forSegmentAtIndex:2];
+                    [self.segmentControlerPage setTitle:@"Annuler" forSegmentAtIndex:1];
                     
-                    //NSLog(@"result %@", result);
-                    
-                    if ([result isEqualToString:@"none"]) {
-                        [self.smileView evaluateJavaScript:@"$('#container').show();$('#container_ajax').hide();$('#container_ajax').html('');" completionHandler:nil];
-                        [self.segmentControlerPage setEnabled:NO forSegmentAtIndex:0];
-                        [self.segmentControlerPage setEnabled:NO forSegmentAtIndex:2];
-                        [self.segmentControlerPage setTitle:@"Annuler" forSegmentAtIndex:1];
-                    }
-                    else {
-                        [self cancel];
-                    }
-                }];
-				
-
-
-				break;				
-			}
-					
-			case 2:
-				//NSLog(@"next");
-				[self loadSmileys:++self.smileyPage];	
-				break;					
-			default:
-				break;
-		}
-	}
-
-	
+                }
+                else {
+                    [self cancel];
+                }
+                
+                break;
+            }
+                
+            case 2:
+                //NSLog(@"next");
+                [self loadSmileys:++self.smileyPage];
+                break;
+            default:
+                break;
+        }
+    }
+    
+    
 }
 
 
@@ -1205,13 +996,13 @@
 #pragma mark TextView Mod
 
 - (void) smileyReceived: (NSNotification *) notification {
-	//NSLog(@"%@", notification);
-
-	// When the accessory view button is tapped, add a suitable string to the text view.
+    //NSLog(@"%@", notification);
+    
+    // When the accessory view button is tapped, add a suitable string to the text view.
     NSMutableString *text = [textView.text mutableCopy];
-	
-	//NSLog(@"%d - %d", text.length, lastSelectedRange.location);
-
+    
+    //NSLog(@"%d - %d", text.length, lastSelectedRange.location);
+    
     if (!lastSelectedRange.location) {
         lastSelectedRange = NSMakeRange(0, 0);
     }
@@ -1222,24 +1013,24 @@
     }
     
     [text insertString:[notification object] atIndex:lastSelectedRange.location];
-	
-	lastSelectedRange.location += [[notification object] length];
-	
+    
+    lastSelectedRange.location += [[notification object] length];
+    
     textView.text = text;
-	
-	self.loaded = YES;
-	
-	[self textViewDidChange:self.textView];
-
+    
+    self.loaded = YES;
+    
+    [self textViewDidChange:self.textView];
+    
 }
 
 - (void) imageReceived: (NSNotification *) notification {
-	//NSLog(@"%@", notification);
+    //NSLog(@"%@", notification);
     
-	// When the accessory view button is tapped, add a suitable string to the text view.
+    // When the accessory view button is tapped, add a suitable string to the text view.
     NSMutableString *text = [textView.text mutableCopy];
-	
-	//NSLog(@"%d - %d", text.length, lastSelectedRange.location);
+    
+    //NSLog(@"%d - %d", text.length, lastSelectedRange.location);
     
     if (!lastSelectedRange.location) {
         lastSelectedRange = NSMakeRange(0, 0);
@@ -1251,128 +1042,126 @@
     
     
     [text insertString:[notification object] atIndex:lastSelectedRange.location];
-	
-	lastSelectedRange.location += [[notification object] length];
-	
+    
+    lastSelectedRange.location += [[notification object] length];
+    
     lastSelectedRange.location += [text length];
-	lastSelectedRange.length = 0;
+    lastSelectedRange.length = 0;
     
     textView.text = text;
-	
-	[self cancel];
+    
+    [self cancel];
     
     [self textViewDidChange:self.textView];
-
+    
 }
 
 
 - (void) didSelectSmile:(NSString *)smile {
-
+    
     smile = [NSString stringWithFormat:@" %@ ", smile]; // ajout des espaces avant/aprés le smiley.
     
-	//NSLog(@"didSelectSmile");
-
-	//STATS RECHERCHES
-	// Recherche Smileys utilises
-	if (self.textFieldSmileys.text.length >= 3) {
-		NSNumber *val;
-		if ((val = [self.usedSearchDict valueForKey:self.textFieldSmileys.text])) {
-			//NSLog(@"existe %@", val);
-			[self.usedSearchDict setObject:[NSNumber numberWithInt:[val intValue]+1] forKey:self.textFieldSmileys.text];
-		}
-		else {
-			//NSLog(@"nouveau");
-			[self.usedSearchDict setObject:[NSNumber numberWithInt:1] forKey:self.textFieldSmileys.text];
-			
-		}
-		
-		//NSLog(@"%@", self.usedSearchDict);
-		
-		NSString *directory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-		NSString *usedSmilieys = [[NSString alloc] initWithString:[directory stringByAppendingPathComponent:USED_SMILEYS_FILE]];
-		
-		[self.usedSearchDict writeToFile:usedSmilieys atomically:YES];
+    //NSLog(@"didSelectSmile");
+    
+    //STATS RECHERCHES
+    // Recherche Smileys utilises
+    if (self.textFieldSmileys.text.length >= 3) {
+        NSNumber *val;
+        if ((val = [self.usedSearchDict valueForKey:self.textFieldSmileys.text])) {
+            //NSLog(@"existe %@", val);
+            [self.usedSearchDict setObject:[NSNumber numberWithInt:[val intValue]+1] forKey:self.textFieldSmileys.text];
+        }
+        else {
+            //NSLog(@"nouveau");
+            [self.usedSearchDict setObject:[NSNumber numberWithInt:1] forKey:self.textFieldSmileys.text];
+            
+        }
+        
+        //NSLog(@"%@", self.usedSearchDict);
+        
+        NSString *directory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+        NSString *usedSmilieys = [[NSString alloc] initWithString:[directory stringByAppendingPathComponent:USED_SMILEYS_FILE]];
+        
+        [self.usedSearchDict writeToFile:usedSmilieys atomically:YES];
         
         //NSLog(@"usedSearchDict AFTER SAVE %@", self.usedSearchDict);
-		// Recherche Smileys utilises
-	}
-	
-	NSMutableString *text = [textView.text mutableCopy];
-	
-	//NSLog(@"%@ - %d - %d", smile, text.length, lastSelectedRange.location);
-	
+        // Recherche Smileys utilises
+    }
+    
+    NSMutableString *text = [textView.text mutableCopy];
+    
+    //NSLog(@"%@ - %d - %d", smile, text.length, lastSelectedRange.location);
+    
     [text insertString:smile atIndex:lastSelectedRange.location];
-	
-	lastSelectedRange.location += [smile length];
-	lastSelectedRange.length = 0;
-	
+    
+    lastSelectedRange.location += [smile length];
+    lastSelectedRange.length = 0;
+    
     textView.text = text;
-	
-	
-	self.loaded = YES;
-	[self textViewDidChange:self.textView];
-	
-	
-	
-	NSString *jsString = @"";
-	jsString = [jsString stringByAppendingString:@"$(\".selected\").each(function (i) {\
-				$(this).delay(800).removeClass('selected');\
-				});"];
-	
-	[self.smileView evaluateJavaScript:jsString completionHandler:^(NSString *resp, NSError *err) {
-        [self cancel];
-    }];
-	
-	
-	
+    
+    
+    self.loaded = YES;
+    [self textViewDidChange:self.textView];
+    
+    
+    
+    NSString *jsString = @"";
+    jsString = [jsString stringByAppendingString:@"$(\".selected\").each(function (i) {\
+                $(this).delay(800).removeClass('selected');\
+                });"];
+    
+    [self.smileView stringByEvaluatingJavaScriptFromString:jsString];
+    
+    [self cancel];
+    
 }
 
 #pragma mark -
 #pragma mark Text view delegate methods
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)aTextView {
-	//NSLog(@"textViewShouldBeginEditing");
-
-	if(lastSelectedRange.location != NSNotFound) 
-	{
-		textView.selectedRange = lastSelectedRange;
-	}
-	
-	
-    return YES;  
-	
+    //NSLog(@"textViewShouldBeginEditing");
+    
+    if(lastSelectedRange.location != NSNotFound)
+    {
+        textView.selectedRange = lastSelectedRange;
+    }
+    
+    
+    return YES;
+    
     /*
      You can create the accessory view programmatically (in code), in the same nib file as the view controller's main view, or from a separate nib file. This example illustrates the latter; it means the accessory view is loaded lazily -- only if it is required.
-	 */
+     */
     
     if (textView.inputAccessoryView == nil) {
         [[NSBundle mainBundle] loadNibNamed:@"AccessoryView" owner:self options:nil];
         // Loading the AccessoryView nib file sets the accessoryView outlet.
-        textView.inputAccessoryView = accessoryView;    
-
+        textView.inputAccessoryView = accessoryView;
+        
         // After setting the accessory view for the text view, we no longer need a reference to the accessory view.
         self.accessoryView = nil;
     }
-	
+    
     return YES;
 }
 
 
 - (BOOL)textViewShouldEndEditing:(UITextView *)aTextView {
-	//NSLog(@"textViewShouldEndEditing");
-
-	if(self.loaded)
-	{
-		//NSLog(@"textViewShouldEndEditing NO");
-		self.loaded = NO;
-		return NO;
-	}
-	
-	self.lastSelectedRange = textView.selectedRange;
-	
+    //NSLog(@"textViewShouldEndEditing");
+    
+    if(self.loaded)
+    {
+        //NSLog(@"textViewShouldEndEditing NO");
+        self.loaded = NO;
+        return NO;
+    }
+    
+    self.lastSelectedRange = textView.selectedRange;
+    
     [textView resignFirstResponder];
-	//NSLog(@"textViewShouldEndEditing YES");
-	
+    //NSLog(@"textViewShouldEndEditing YES");
+    
     return YES;
 }
 
@@ -1380,18 +1169,18 @@
 #pragma mark Responding to keyboard events
 
 - (void)keyboardWillShow:(NSNotification *)notification {
-	//NSLog(@"keyboardWillShow ADD %@", notification);
-
+    //NSLog(@"keyboardWillShow ADD %@", notification);
+    
     /*
      Reduce the size of the text view so that it's not obscured by the keyboard.
      Animate the resize so that it's in sync with the appearance of the keyboard.
      */
-	
+    
     NSDictionary *userInfo = [notification userInfo];
     
     // Get the origin of the keyboard when it's displayed.
     NSValue* aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
-	
+    
     // Get the top of the keyboard as the y coordinate of its origin in self's view's coordinate system. The bottom of the text view's frame should align with the top of the keyboard's final position.
     CGRect keyboardRect = [aValue CGRectValue];
     keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
@@ -1410,15 +1199,15 @@
     [UIView setAnimationDuration:animationDuration];
     
     self.accessoryView.frame = newTextViewFrame;
-
+    
     [UIView commitAnimations];
-	//[self.scrollViewer setContentSize:CGSizeMake(self.textView.frame.size.width, MAX(self.textView.frame.size.height, newTextViewFrame.size.height - segmentControler.frame.size.height - 5))];
-
+    //[self.scrollViewer setContentSize:CGSizeMake(self.textView.frame.size.width, MAX(self.textView.frame.size.height, newTextViewFrame.size.height - segmentControler.frame.size.height - 5))];
+    
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification {
-	//NSLog(@"keyboardWillHide ADD");
-
+    //NSLog(@"keyboardWillHide ADD");
+    
     NSDictionary* userInfo = [notification userInfo];
     
     /*
@@ -1433,24 +1222,24 @@
     [UIView setAnimationDuration:animationDuration];
     
     self.accessoryView.frame = self.view.bounds;
-
+    
     [UIView commitAnimations];
-	//[self.scrollViewer setContentSize:CGSizeMake(self.textView.frame.size.width, MAX(self.textView.frame.size.height, self.view.bounds.size.height - segmentControler.frame.size.height - 5))];
-
+    //[self.scrollViewer setContentSize:CGSizeMake(self.textView.frame.size.width, MAX(self.textView.frame.size.height, self.view.bounds.size.height - segmentControler.frame.size.height - 5))];
+    
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-	//NSLog(@"textFieldDidBeginEditing %@", textField);
-	
+    //NSLog(@"textFieldDidBeginEditing %@", textField);
+    
     //NSLog(@"textFieldDidBeginEditing BEGIN %@", self.usedSearchDict);
     
-	if (textField != textFieldSmileys) {
-		[segmentControler setEnabled:NO forSegmentAtIndex:0];
-		[segmentControler setEnabled:NO forSegmentAtIndex:1];
-		[textFieldSmileys setEnabled:NO];
-	}
-	else {
+    if (textField != textFieldSmileys) {
+        [segmentControler setEnabled:NO forSegmentAtIndex:0];
+        [segmentControler setEnabled:NO forSegmentAtIndex:1];
+        [textFieldSmileys setEnabled:NO];
+    }
+    else {
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDuration:0.2];
         [self.smileView setAlpha:0];
@@ -1461,147 +1250,147 @@
         
         [UIView commitAnimations];
         
-		if (self.usedSearchDict.count > 0) {
-
-
-			
-			[self textFieldSmileChange:self.textFieldSmileys]; //on affiche les recherches
-
-			[self.commonTableView reloadData];
-			
-			[UIView beginAnimations:nil context:nil];
-			[UIView setAnimationDuration:0.2];		
-			[self.commonTableView setAlpha:1];
-			[UIView commitAnimations];
+        if (self.usedSearchDict.count > 0) {
+            
+            
+            
+            [self textFieldSmileChange:self.textFieldSmileys]; //on affiche les recherches
+            
+            [self.commonTableView reloadData];
+            
+            [UIView beginAnimations:nil context:nil];
+            [UIView setAnimationDuration:0.2];
+            [self.commonTableView setAlpha:1];
+            [UIView commitAnimations];
             
             [self segmentToBlue];
             
             //NSLog(@"======= 5555");
-		}
-
-
-	}
+        }
+        
+        
+    }
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-	//NSLog(@"textFieldDidEndEditing %@", textField);
-	
-	[segmentControler setEnabled:YES forSegmentAtIndex:0];
-	[segmentControler setEnabled:YES forSegmentAtIndex:1];
-	[textFieldSmileys setEnabled:YES];
+    //NSLog(@"textFieldDidEndEditing %@", textField);
+    
+    [segmentControler setEnabled:YES forSegmentAtIndex:0];
+    [segmentControler setEnabled:YES forSegmentAtIndex:1];
+    [textFieldSmileys setEnabled:YES];
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-	//NSLog(@"textFieldShouldReturn");
-	
-	//[textField resignFirstResponder];
-	if (textField == self.textFieldTo) {
-		[self.textFieldTitle becomeFirstResponder];
-	}
-	else if (textField == self.textFieldTitle)
-	{
-		[self.textView becomeFirstResponder];
-	}
-	else if (textField == self.textFieldSmileys)
-	{
-		if (self.textFieldSmileys.text.length < 3) {
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Saisir 3 caractères minimum !" 
-														   delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-			[alert show];
-		}
-		else {
-			
-			if (self.smileView.alpha == 0.0) {
-				// BUG pas de selection ///
-				self.loaded = NO;
-				[textView resignFirstResponder];
-				NSRange newRange = textView.selectedRange;
-				newRange.length = 0;
-				textView.selectedRange = newRange;
-				
-				[self.smileView setHidden:NO];
-				[UIView beginAnimations:nil context:nil];
-				[UIView setAnimationDuration:0.2];		
-				[self.smileView setAlpha:1];
-				[UIView commitAnimations];
+    //NSLog(@"textFieldShouldReturn");
+    
+    //[textField resignFirstResponder];
+    if (textField == self.textFieldTo) {
+        [self.textFieldTitle becomeFirstResponder];
+    }
+    else if (textField == self.textFieldTitle)
+    {
+        [self.textView becomeFirstResponder];
+    }
+    else if (textField == self.textFieldSmileys)
+    {
+        if (self.textFieldSmileys.text.length < 3) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Saisir 3 caractères minimum !"
+                                                           delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+        }
+        else {
+            
+            if (self.smileView.alpha == 0.0) {
+                // BUG pas de selection ///
+                self.loaded = NO;
+                [textView resignFirstResponder];
+                NSRange newRange = textView.selectedRange;
+                newRange.length = 0;
+                textView.selectedRange = newRange;
+                
+                [self.smileView setHidden:NO];
+                [UIView beginAnimations:nil context:nil];
+                [UIView setAnimationDuration:0.2];
+                [self.smileView setAlpha:1];
+                [UIView commitAnimations];
                 
                 [self segmentToWhite];
                 
                 //NSLog(@"====== 1111");
-			}
-			
-			[self.commonTableView setAlpha:0];
-			
-			[textFieldSmileys resignFirstResponder];
-			[self fetchSmileys];
-			/*
-			[self.smileView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"\
-			$.ajax({ url: '%@/message-smi-mp-aj.php?config=hfr.inc&findsmilies=%@',\
-			success: function(data){\
-				$('#container').hide();\
-				$('#container_ajax').html(data);\
-				$('#container_ajax img').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+$.base64.encode(this.alt); });\
-			}\
-			\
-			});", kForumURL, self.textFieldSmileys.text]];
-			 */
-		}
-	}
-	return NO;
-
+            }
+            
+            [self.commonTableView setAlpha:0];
+            
+            [textFieldSmileys resignFirstResponder];
+            [self fetchSmileys];
+            /*
+             [self.smileView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"\
+             $.ajax({ url: '%@/message-smi-mp-aj.php?config=hfr.inc&findsmilies=%@',\
+             success: function(data){\
+             $('#container').hide();\
+             $('#container_ajax').html(data);\
+             $('#container_ajax img').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+$.base64.encode(this.alt); });\
+             }\
+             \
+             });", kForumURL, self.textFieldSmileys.text]];
+             */
+        }
+    }
+    return NO;
+    
 }
 /*- (BOOL)textFieldShouldClear:(UITextField *)textField
-{
+ {
 	NSLog(@"textFieldShouldClear %@", textField.text);
-
+ 
 	
 	return YES;
-
-}*/
+ 
+ }*/
 -(IBAction)textFieldSmileChange:(id)sender
 {
-	//NSLog(@"textFieldSmileChange %@", [(UITextField *)sender text]);
-	if ([(UITextField *)sender text].length > 0) {
+    //NSLog(@"textFieldSmileChange %@", [(UITextField *)sender text]);
+    if ([(UITextField *)sender text].length > 0) {
         //NSLog(@"text: %@", [[(UITextField *)sender text] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]);
-		self.usedSearchSortedArray = (NSMutableArray *)[[self.usedSearchDict allKeys] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:[NSString stringWithFormat:@"SELF contains[c] '%@'", [[(UITextField *)sender text] stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"]]]];
-		[self.commonTableView reloadData];
-		//NSLog(@"usedSearchSortedArray %@", usedSearchSortedArray);		
-	}
-	else {
-		self.usedSearchSortedArray = (NSMutableArray *)[[self.usedSearchDict allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-		[self.commonTableView reloadData];
-		//NSLog(@"usedSearchSortedArray %@", usedSearchSortedArray);				
-	}
-	
-	if (self.usedSearchSortedArray.count == 0) {
-		[self.commonTableView setHidden:YES];
-		/*
-		UILabel *labelTitle = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 480, 44)] autorelease];
-		labelTitle.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		
-		[labelTitle setFont:[UIFont systemFontOfSize:14.0]];
-		[labelTitle setAdjustsFontSizeToFitWidth:NO];
-		[labelTitle setLineBreakMode:NSLineBreakByTruncatingTail];
-		//[labelTitle setBackgroundColor:[UIColor blueColor]];
-		[labelTitle setTextAlignment:NSTextAlignmentCenter];
-		[labelTitle setHighlightedTextColor:[UIColor whiteColor]];
-		[labelTitle setTag:999];
-		[labelTitle setText:@"Pas de résultats"];
-		[labelTitle setTextColor:[UIColor blackColor]];
-		[labelTitle setNumberOfLines:0];
-		//[label setOpaque:YES];
-		
-		[self.commonTableView setTableFooterView:labelTitle];
-		 */
-	}
-	else {
-		[self.commonTableView setHidden:NO];
-		
-		//[self.commonTableView setTableFooterView:nil];
-	}
-
-	
-	
-
+        self.usedSearchSortedArray = (NSMutableArray *)[[self.usedSearchDict allKeys] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:[NSString stringWithFormat:@"SELF contains[c] '%@'", [[(UITextField *)sender text] stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"]]]];
+        [self.commonTableView reloadData];
+        //NSLog(@"usedSearchSortedArray %@", usedSearchSortedArray);
+    }
+    else {
+        self.usedSearchSortedArray = (NSMutableArray *)[[self.usedSearchDict allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+        [self.commonTableView reloadData];
+        //NSLog(@"usedSearchSortedArray %@", usedSearchSortedArray);
+    }
+    
+    if (self.usedSearchSortedArray.count == 0) {
+        [self.commonTableView setHidden:YES];
+        /*
+         UILabel *labelTitle = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 480, 44)] autorelease];
+         labelTitle.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+         
+         [labelTitle setFont:[UIFont systemFontOfSize:14.0]];
+         [labelTitle setAdjustsFontSizeToFitWidth:NO];
+         [labelTitle setLineBreakMode:NSLineBreakByTruncatingTail];
+         //[labelTitle setBackgroundColor:[UIColor blueColor]];
+         [labelTitle setTextAlignment:NSTextAlignmentCenter];
+         [labelTitle setHighlightedTextColor:[UIColor whiteColor]];
+         [labelTitle setTag:999];
+         [labelTitle setText:@"Pas de résultats"];
+         [labelTitle setTextColor:[UIColor blackColor]];
+         [labelTitle setNumberOfLines:0];
+         //[label setOpaque:YES];
+         
+         [self.commonTableView setTableFooterView:labelTitle];
+         */
+    }
+    else {
+        [self.commonTableView setHidden:NO];
+        
+        //[self.commonTableView setTableFooterView:nil];
+    }
+    
+    
+    
+    
 }
 
 #pragma mark -
@@ -1609,41 +1398,37 @@
 
 - (void)cancelFetchContent
 {
-	[self.request cancel];
+    [self.request cancel];
     [self setRequest:nil];
     
 }
 
 - (void)fetchSmileys
 {
-	//NSLog(@"fetchSmileys");
-
-	
-	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];
-	
+    //NSLog(@"fetchSmileys");
+    
+    
+    [ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];
+    
     NSString *newString = [NSString stringWithFormat:@"+%@", [[self.textFieldSmileys.text componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] componentsJoinedByString:@" +"]];
     NSString * encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
-                                                                                   NULL,
-                                                                                   (CFStringRef)newString,
-                                                                                   NULL,
-                                                                                   (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                                                                   kCFStringEncodingUTF8 ));
+                                                                                                     NULL,
+                                                                                                     (CFStringRef)newString,
+                                                                                                     NULL,
+                                                                                                     (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                                     kCFStringEncodingUTF8 ));
     
-	[self setRequestSmile:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/message-smi-mp-aj.php?config=hfr.inc&findsmilies=%@", kForumURL, encodedString]]]];
-	[requestSmile setDelegate:self];
-	
-	[requestSmile setDidStartSelector:@selector(fetchSmileContentStarted:)];
-	[requestSmile setDidFinishSelector:@selector(fetchSmileContentComplete:)];
-	[requestSmile setDidFailSelector:@selector(fetchSmileContentFailed:)];
-
-    [self.smileView evaluateJavaScript:@"$('#container').hide();$('#container_ajax').show();$('#container_ajax').html('<div class=\"loading\"><span class=\"spinner\">&#xe800;</span> Recherche en cours...</div>');" completionHandler:^(NSString *resp, NSError *err) {
-        [requestSmile startAsynchronous];
-
-    }];
+    [self setRequestSmile:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/message-smi-mp-aj.php?config=hfr.inc&findsmilies=%@", kForumURL, encodedString]]]];
+    [requestSmile setDelegate:self];
     
-
-	//NSLog(@"fetchSmileys");
-
+    [requestSmile setDidStartSelector:@selector(fetchSmileContentStarted:)];
+    [requestSmile setDidFinishSelector:@selector(fetchSmileContentComplete:)];
+    [requestSmile setDidFailSelector:@selector(fetchSmileContentFailed:)];
+    
+    [self.smileView stringByEvaluatingJavaScriptFromString:@"$('#container').hide();$('#container_ajax').show();$('#container_ajax').html('<div class=\"loading\"><span class=\"spinner\">&#xe800;</span> Recherche en cours...</div>');"];
+    [requestSmile startAsynchronous];
+    //NSLog(@"fetchSmileys");
+    
 }
 
 - (void)fetchSmileContentStarted:(ASIHTTPRequest *)theRequest
@@ -1654,96 +1439,91 @@
 - (void)fetchSmileContentComplete:(ASIHTTPRequest *)theRequest
 {
     NSLog(@"fetchSmileContentComplete %@", theRequest);
-	[self.segmentControlerPage setTitle:@"Smilies" forSegmentAtIndex:1];
-
-	//NSDate *thenT = [NSDate date]; // Create a current date
-	
-	HTMLParser * myParser = [[HTMLParser alloc] initWithString:[theRequest responseString] error:NULL];
-	HTMLNode * smileNode = [myParser doc]; //Find the body tag
-	
-	NSArray * tmpImageArray =  [smileNode findChildTags:@"img"];
-	
-	//Traitement des smileys (to Array)
-	[self.smileyArray removeAllObjects]; //RaZ
-	
-	for (HTMLNode * imgNode in tmpImageArray) { //Loop through all the tags
-		[self.smileyArray addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[imgNode getAttributeNamed:@"src"], [imgNode getAttributeNamed:@"alt"], nil] forKeys:[NSArray arrayWithObjects:@"source", @"code", nil]]];
-	}
-	//NSLog(@"%@", self.smileyArray);
-	
-	if (self.smileyArray.count == 0) {
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Aucun résultat !" 
-													   delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-		[alert show];
-		
-		[self.textFieldSmileys becomeFirstResponder];
-        [self.smileView evaluateJavaScript:@"$('#container').show();$('#container_ajax').hide();$('#container_ajax').html('');" completionHandler:nil];
-		return;
-	}
-	
-	[self loadSmileys:0];
-	//[self loadSmileys:smileyPage];	
-
-	//NSDate *nowT = [NSDate date]; // Create a current date
-	
-	//NSLog(@"SMILEYS Parse Time elapsed Total		: %f", [nowT timeIntervalSinceDate:thenT]);
+    [self.segmentControlerPage setTitle:@"Smilies" forSegmentAtIndex:1];
+    
+    //NSDate *thenT = [NSDate date]; // Create a current date
+    
+    HTMLParser * myParser = [[HTMLParser alloc] initWithString:[theRequest responseString] error:NULL];
+    HTMLNode * smileNode = [myParser doc]; //Find the body tag
+    
+    NSArray * tmpImageArray =  [smileNode findChildTags:@"img"];
+    
+    //Traitement des smileys (to Array)
+    [self.smileyArray removeAllObjects]; //RaZ
+    
+    for (HTMLNode * imgNode in tmpImageArray) { //Loop through all the tags
+        [self.smileyArray addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[imgNode getAttributeNamed:@"src"], [imgNode getAttributeNamed:@"alt"], nil] forKeys:[NSArray arrayWithObjects:@"source", @"code", nil]]];
+    }
+    //NSLog(@"%@", self.smileyArray);
+    
+    if (self.smileyArray.count == 0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Aucun résultat !"
+                                                       delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        
+        [self.textFieldSmileys becomeFirstResponder];
+        [self.smileView stringByEvaluatingJavaScriptFromString:@"$('#container').show();$('#container_ajax').hide();$('#container_ajax').html('');"];
+        return;
+    }
+    
+    [self loadSmileys:0];
+    //[self loadSmileys:smileyPage];
+    
+    //NSDate *nowT = [NSDate date]; // Create a current date
+    
+    //NSLog(@"SMILEYS Parse Time elapsed Total		: %f", [nowT timeIntervalSinceDate:thenT]);
     [self cancelFetchContent];
 }
 
 - (void)fetchSmileContentFailed:(ASIHTTPRequest *)theRequest
 {
     [self cancelFetchContent];
-	//NSLog(@"fetchContentFailed %@", [theRequest.error localizedDescription]);
-
-	//UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[theRequest.error localizedDescription]
-	//											   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
-	//[alert show];
-	//[alert release];	
+    //NSLog(@"fetchContentFailed %@", [theRequest.error localizedDescription]);
+    
+    //UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[theRequest.error localizedDescription]
+    //											   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
+    //[alert show];
+    //[alert release];
 }
 
 -(void)loadSmileys:(int)page;
 {
-	self.smileyPage = page;
-	
-	[self.smileView evaluateJavaScript:[NSString stringWithFormat:@"\
-															$('#container').hide();\
+    self.smileyPage = page;
+    
+    [self.smileView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"\
+                                                            $('#container').hide();\
                                                             $('#container_ajax').show();\
-															$('#container_ajax').html('<div class=\"loading\"><span class=\"spinner\">&#xe800;</span> Page n˚%d...</div>');\
-                                        ", page + 1]  completionHandler:^(NSString *resp, NSError *err) {
-        [self performSelectorInBackground:@selector(loadSmileys) withObject:nil];
-        
-    }];
-	
-	
-
-}	
+                                                            $('#container_ajax').html('<div class=\"loading\"><span class=\"spinner\">&#xe800;</span> Page n˚%d...</div>');\
+                                                            ", page + 1]];
+    
+    [self performSelectorInBackground:@selector(loadSmileys) withObject:nil];
+    
+}
 
 -(void)loadSmileys;
 {
-	@autoreleasepool {
-
-		int page = self.smileyPage;
-		
-
-		
-		NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-		NSString *diskCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"SmileCache"];
-		
-
+    @autoreleasepool {
         
-		if (![[NSFileManager defaultManager] fileExistsAtPath:diskCachePath])
-		{
-			//NSLog(@"createDirectoryAtPath");
-			[[NSFileManager defaultManager] createDirectoryAtPath:diskCachePath
-									  withIntermediateDirectories:YES
-													   attributes:nil
-															error:NULL];
-		}
-		else {
-			//NSLog(@"pas createDirectoryAtPath");
-		}
-		
-		int smilePerPage = 40;
+        int page = self.smileyPage;
+        
+        
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+        NSString *diskCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"SmileCache"];
+        
+        if (![[NSFileManager defaultManager] fileExistsAtPath:diskCachePath])
+        {
+            //NSLog(@"createDirectoryAtPath");
+            [[NSFileManager defaultManager] createDirectoryAtPath:diskCachePath
+                                      withIntermediateDirectories:YES
+                                                       attributes:nil
+                                                            error:NULL];
+        }
+        else {
+            //NSLog(@"pas createDirectoryAtPath");
+        }
+        
+        int smilePerPage = 40;
         float surface = [UIScreen mainScreen].bounds.size.height*[UIScreen mainScreen].bounds.size.width;
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
             if (surface > 250000) {
@@ -1753,7 +1533,7 @@
                 smilePerPage = 45;
             }
         }
-
+        
         
         //NSLog(@"SMILEYS %f = %d", surface, smilePerPage);
         
@@ -1761,83 +1541,81 @@
         //i5 181760
         //i6 250125
         NSArray *localsmileyArray = [[NSArray alloc] initWithArray:self.smileyArray copyItems:true];
-
-        
-		int firstSmile = page * smilePerPage;
-		int lastSmile = MIN([localsmileyArray count], (page + 1) * smilePerPage);
-		//NSLog(@"%d to %d", firstSmile, lastSmile);
-		
-		int i;
-		
-		NSString *tmpHTML = @"";
-		NSFileManager *fileManager = [[NSFileManager alloc] init];
         
         
-		for (i = firstSmile; i < lastSmile; i++) { //Loop through all the tags
-			NSString *filename = [[[localsmileyArray objectAtIndex:i] objectForKey:@"source"] stringByReplacingOccurrencesOfString:@"http://forum-images.hardware.fr/" withString:@""];
-			filename = [filename stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
-			filename = [filename stringByReplacingOccurrencesOfString:@" " withString:@"-"];
-			
-			NSString *key = [diskCachePath stringByAppendingPathComponent:filename];
-			
-			//NSLog(@"url %@", [[self.smileyArray objectAtIndex:i] objectForKey:@"source"]);
-			//NSLog(@"key %@", key);
-			
-			if (![fileManager fileExistsAtPath:key])
-			{
-				//NSLog(@"dl %@", key);
-				
-				[fileManager createFileAtPath:key contents:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [[[localsmileyArray objectAtIndex:i] objectForKey:@"source"] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]]]] attributes:nil];
-			}
-			
-			
-			tmpHTML = [tmpHTML stringByAppendingString:[NSString stringWithFormat:@"<img class=\"smile\" src=\"%@\" alt=\"%@\"/>", key, [[localsmileyArray objectAtIndex:i] objectForKey:@"code"]]];
-			
-		}
-
-
-		tmpHTML = [tmpHTML stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"];
-
-		[self performSelectorOnMainThread:@selector(showSmileResults:) withObject:tmpHTML waitUntilDone:YES];
-		
-		//Pagination
-		//if (firstSmile > 0 || lastSmile < [self.smileyArray count]) {
-			//NSLog(@"pagination needed");
-			
-			[self.segmentControler setAlpha:0];
-			[self.segmentControlerPage setAlpha:1];		
-			
-			if (firstSmile > 0) {
-				[self.segmentControlerPage setEnabled:YES forSegmentAtIndex:0];			
-			}
-			else {
-				[self.segmentControlerPage setEnabled:NO forSegmentAtIndex:0];
-			}
-
-			if (lastSmile < [localsmileyArray count]) {
-				[self.segmentControlerPage setEnabled:YES forSegmentAtIndex:2];			
-			}
-			else {
-				[self.segmentControlerPage setEnabled:NO forSegmentAtIndex:2];
-			}		
-			
-			
-		//}
-		
-		
-	}
+        int firstSmile = page * smilePerPage;
+        int lastSmile = MIN([localsmileyArray count], (page + 1) * smilePerPage);
+        //NSLog(@"%d to %d", firstSmile, lastSmile);
+        
+        int i;
+        
+        NSString *tmpHTML = @"";
+        NSFileManager *fileManager = [[NSFileManager alloc] init];
+        
+        
+        for (i = firstSmile; i < lastSmile; i++) { //Loop through all the tags
+            NSString *filename = [[[localsmileyArray objectAtIndex:i] objectForKey:@"source"] stringByReplacingOccurrencesOfString:@"http://forum-images.hardware.fr/" withString:@""];
+            filename = [filename stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
+            filename = [filename stringByReplacingOccurrencesOfString:@" " withString:@"-"];
+            
+            NSString *key = [diskCachePath stringByAppendingPathComponent:filename];
+            
+            //NSLog(@"url %@", [[self.smileyArray objectAtIndex:i] objectForKey:@"source"]);
+            //NSLog(@"key %@", key);
+            
+            if (![fileManager fileExistsAtPath:key])
+            {
+                //NSLog(@"dl %@", key);
+                
+                [fileManager createFileAtPath:key contents:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [[[localsmileyArray objectAtIndex:i] objectForKey:@"source"] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]]]] attributes:nil];
+            }
+            
+            
+            tmpHTML = [tmpHTML stringByAppendingString:[NSString stringWithFormat:@"<img class=\"smile\" src=\"%@\" alt=\"%@\"/>", key, [[localsmileyArray objectAtIndex:i] objectForKey:@"code"]]];
+            
+        }
+        
+        
+        tmpHTML = [tmpHTML stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"];
+        
+        [self performSelectorOnMainThread:@selector(showSmileResults:) withObject:tmpHTML waitUntilDone:YES];
+        
+        //Pagination
+        //if (firstSmile > 0 || lastSmile < [self.smileyArray count]) {
+        //NSLog(@"pagination needed");
+        
+        [self.segmentControler setAlpha:0];
+        [self.segmentControlerPage setAlpha:1];
+        
+        if (firstSmile > 0) {
+            [self.segmentControlerPage setEnabled:YES forSegmentAtIndex:0];
+        }
+        else {
+            [self.segmentControlerPage setEnabled:NO forSegmentAtIndex:0];
+        }
+        
+        if (lastSmile < [localsmileyArray count]) {
+            [self.segmentControlerPage setEnabled:YES forSegmentAtIndex:2];
+        }
+        else {
+            [self.segmentControlerPage setEnabled:NO forSegmentAtIndex:2];
+        }
+        
+        
+        //}
+        
+        
+    }
 }
 
 -(void)showSmileResults:(NSString *)tmpHTML {
-	
-	//NSLog(@"showSmileResults");
-	
-
     
-	[self.smileView evaluateJavaScript:[NSString stringWithFormat:@"\
-															$('#container').hide();\
+    //NSLog(@"showSmileResults");
+    
+    [self.smileView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"\
+                                                            $('#container').hide();\
                                                             $('#container_ajax').show();\
-															$('#container_ajax').html('%@');\
+                                                            $('#container_ajax').html('%@');\
                                                             var hammertime2 = $('#container_ajax img').hammer({ hold_timeout: 0.000001 }); \
                                                             hammertime2.on('touchstart touchend', function(ev) {\
                                                             if(ev.type === 'touchstart'){\
@@ -1848,7 +1626,7 @@
                                                             window.location = 'oijlkajsdoihjlkjasdosmile://internal?query='+encodeURIComponent(this.alt).replace(/\\(/g, '%%28').replace(/\\)/g, '%%29');\
                                                             }\
                                                             });\
-                                                            ", tmpHTML] completionHandler:nil];
+                                                            ", tmpHTML]];
     
     
 }
@@ -1863,23 +1641,23 @@
     else {
         return 80.0f;
     }
-
+    
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-	//NSLog(@"NB Section %d", arrayDataID.count);
-
+    //NSLog(@"NB Section %d", arrayDataID.count);
+    
     return 1;
 }
 /* (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
+ {
 	return @"Recherche(s)";
-}
+ }
  */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	//NSLog(@"%@", self.usedSearchDict);
-
+    //NSLog(@"%@", self.usedSearchDict);
+    
     if (tableView == commonTableView) {
         return self.usedSearchSortedArray.count;
     }
@@ -1893,7 +1671,7 @@
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-
+    
     
     if (tableView == commonTableView) {
         
@@ -1904,20 +1682,20 @@
         if (cell == nil) {
             //NSLog(@"mew cell");
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-
+            
             cell.accessoryType = UITableViewCellAccessoryNone;
             //cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
-
-        cell.textLabel.text = [self.usedSearchSortedArray objectAtIndex:indexPath.row];	
+        
+        cell.textLabel.text = [self.usedSearchSortedArray objectAtIndex:indexPath.row];
         return cell;
-
+        
     }
     else {
         
-
+        
         static NSString *CellRehostIdentifier = @"RehostCell";
-
+        
         RehostCell *cell = (RehostCell *)[tableView dequeueReusableCellWithIdentifier:CellRehostIdentifier];
         
         if (cell == nil)
@@ -1934,9 +1712,9 @@
         [cell configureWithRehostImage:[rehostImagesSortedArray objectAtIndex:indexPath.row]];
         
         return cell;
-
+        
     }
-
+    
     
 }
 
@@ -1965,7 +1743,7 @@
         NSLog(@"DELTE REHOST");
         RehostImage*rehostImage = [self.rehostImagesSortedArray objectAtIndex:indexPath.row];
         NSLog(@"rehostImage %@", rehostImage.nolink_full);
-    
+        
         [self.rehostImagesArray removeObjectIdenticalTo:rehostImage];
         
         NSString *directory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
@@ -1974,7 +1752,7 @@
         [savedData writeToFile:rehostImages atomically:YES];
         
         self.rehostImagesSortedArray =  [NSMutableArray arrayWithArray:[[self.rehostImagesArray reverseObjectEnumerator] allObjects]];
-
+        
         [self.rehostTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
         
     }
@@ -1983,14 +1761,14 @@
 #pragma mark -
 #pragma mark Rehost
 - (void) uploadProgress: (NSNotification *) notification {
-   // NSLog(@"notif %@", notification);
+    // NSLog(@"notif %@", notification);
     
     float progressFloat = [[[notification object] valueForKey:@"progress"] floatValue];
     
     if (progressFloat > 0) {
         if (progressFloat == 2) {
             RehostImage* rehostImage = (RehostImage *)[[notification object] objectForKey:@"rehostImage"];
-
+            
             [self.rehostImagesArray addObject:rehostImage];
             
             NSString *directory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
@@ -2008,12 +1786,12 @@
             [UIView beginAnimations:nil context:nil];
             [UIView setAnimationDuration:0.1];
             [[[self.rehostTableView tableHeaderView] viewWithTag:12345] setHidden:NO];
-
+            
             [[[self.rehostTableView tableHeaderView] viewWithTag:12345] setAlpha:1];
             
             
             [UIView commitAnimations];
-
+            
             UIView* progressView = [[self.rehostTableView tableHeaderView] viewWithTag:54321];
             CGRect globalFrame = [progressView superview].frame;
             CGRect progressFrame = progressView.frame;
@@ -2034,16 +1812,16 @@
                 
             }
         }
-  
+        
         
     }
     else {
-		[UIView beginAnimations:nil context:nil];
-		[UIView setAnimationDuration:0.5];
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:0.5];
         
         [[[self.rehostTableView tableHeaderView] viewWithTag:12345] setAlpha:0];
-		
-		[UIView commitAnimations];
+        
+        [UIView commitAnimations];
     }
 }
 
@@ -2068,9 +1846,9 @@
         picker.delegate = self;
         picker.allowsEditing = NO;
         picker.sourceType = sourceType;
-
+        
         if ([self respondsToSelector:@selector(traitCollection)] && [HFRplusAppDelegate sharedAppDelegate].window.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact){
-
+            
             [self presentViewController:picker animated:YES completion:^{
                 //NSLog(@"présenté");
             }];
@@ -2087,7 +1865,7 @@
             //[self presentModalViewController:picker animated:YES];
         }
     }
-
+    
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -2112,17 +1890,17 @@
     NSLog(@"didFinishPickingMediaWithInfo %@", info);
     
     [self imagePickerControllerDidCancel:picker];
-
+    
     RehostImage *rehostImage = [[RehostImage alloc] init];
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-
+    
     [rehostImage upload:image];
     
     //[self dismissViewControllerAnimated:YES completion:^{
-      //  NSLog(@"dismissed!");
+    //  NSLog(@"dismissed!");
     //}];
-//    [self imagePickerControllerDidCancel:picker];
-
+    //    [self imagePickerControllerDidCancel:picker];
+    
 }
 
 
@@ -2131,59 +1909,59 @@
 
 - (void)viewDidUnload {
     NSLog(@"viewDidUnload ADD");
-
+    
     [super viewDidUnload];
     
-	self.loadingView = nil;	
-	
-	self.textView.delegate = nil;
+    self.loadingView = nil;	
+    
+    self.textView.delegate = nil;
     self.textView = nil;
-	
+    
     self.formSubmit = nil;
     self.refreshAnchor = nil;
-	self.accessoryView = nil;
-	
-	//[self.smileView stopLoading];
-	[self.smileView setDelegateViews:nil];
-	self.smileView = nil;
-	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;	
-	
-	self.segmentControler = nil;
-	
-	self.textFieldTitle = nil;
-	self.textFieldTo = nil;
-	
-	self.commonTableView = nil;
-	self.rehostTableView = nil;
+    self.accessoryView = nil;
+    
+    [self.smileView stopLoading];
+    self.smileView.delegate = nil;
+    self.smileView = nil;
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;	
+    
+    self.segmentControler = nil;
+    
+    self.textFieldTitle = nil;
+    self.textFieldTo = nil;
+    
+    self.commonTableView = nil;
+    self.rehostTableView = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     
 }
 
 - (void)dealloc {
-	NSLog(@"dealloc ADD");
-
-	[textView resignFirstResponder];
-	[self viewDidUnload];
-	
-	[request cancel];
-	[request setDelegate:nil];
-
-	[requestSmile cancel];
-	[requestSmile setDelegate:nil];
+    NSLog(@"dealloc ADD");
+    
+    [textView resignFirstResponder];
+    [self viewDidUnload];
+    
+    [request cancel];
+    [request setDelegate:nil];
+    
+    [requestSmile cancel];
+    [requestSmile setDelegate:nil];
     [self.rehostImagesArray removeAllObjects];
     [self.rehostImagesSortedArray removeAllObjects];
     
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"smileyReceived" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"uploadProgress" object:nil];
-	
-	self.delegate = nil;
-
-
-
-	
-	
+    
+    self.delegate = nil;
+    
+    
+    
+    
+    
 }
 
 @end

@@ -8,63 +8,61 @@
 #import <UIKit/UIKit.h>
 
 #import "ASIHTTPRequest.h"
-#import "FLWebViewProvider.h"
-#import <WebKit/WebKit.h>
+
 @protocol AddMessageViewControllerDelegate;
 
-@interface AddMessageViewController : UIViewController <UITextViewDelegate, UITextFieldDelegate, UIWebViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, WKNavigationDelegate, WKUIDelegate> {
-	id <AddMessageViewControllerDelegate> __weak delegate;
-	
-	//bb
-	UITextView *textView;
-	
-	NSMutableDictionary *arrayInputData;
-	NSString *formSubmit;
-	
-	UIView *__weak accessoryView;
-
-	NSRange lastSelectedRange;
-
-	BOOL loaded; //to load data only once
-    BOOL smileLoaded;
-	BOOL isDragging;
-
-    UIView <FLWebViewProvider> *smileView;
-	UISegmentedControl *segmentControler;
-	UISegmentedControl *segmentControlerPage;
-	
-	//UIScrollView *scrollViewer;
-	UITextField *textFieldSmileys;
-	NSMutableArray *smileyArray;
-	int smileyPage;
-	UITableView *commonTableView;
-	NSMutableDictionary *usedSearchDict;
-	NSMutableArray *usedSearchSortedArray;
+@interface AddMessageViewController : UIViewController <UITextViewDelegate, UITextFieldDelegate, UIWebViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
+    id <AddMessageViewControllerDelegate> __weak delegate;
+    
+    //bb
+    UITextView *textView;
+    
+    NSMutableDictionary *arrayInputData;
+    NSString *formSubmit;
+    
+    UIView *__weak accessoryView;
+    
+    NSRange lastSelectedRange;
+    
+    BOOL loaded; //to load data only once
+    BOOL isDragging;
+    
+    UIWebView *smileView;
+    UISegmentedControl *segmentControler;
+    UISegmentedControl *segmentControlerPage;
+    
+    //UIScrollView *scrollViewer;
+    UITextField *textFieldSmileys;
+    NSMutableArray *smileyArray;
+    int smileyPage;
+    UITableView *commonTableView;
+    NSMutableDictionary *usedSearchDict;
+    NSMutableArray *usedSearchSortedArray;
     
     NSString *smileyCustom;
-	
+    
     //HFR REHOST
     UITableView *rehostTableView;
     NSMutableArray *rehostImagesArray;
     NSMutableArray* rehostImagesSortedArray;
     
-	BOOL haveTitle;
-	UITextField *textFieldTitle;
-
-	BOOL haveTo;
-	UITextField *textFieldTo;
-	
-	BOOL haveCategory;
-	UITextField *textFieldCat;
-	
-	int offsetY;
-
-	IBOutlet UIView *loadingView;
-	ASIHTTPRequest *request;
-	ASIHTTPRequest *requestSmile;
-	
-    id _popover;    
-	NSString *refreshAnchor;
+    BOOL haveTitle;
+    UITextField *textFieldTitle;
+    
+    BOOL haveTo;
+    UITextField *textFieldTo;
+    
+    BOOL haveCategory;
+    UITextField *textFieldCat;
+    
+    int offsetY;
+    
+    IBOutlet UIView *loadingView;
+    ASIHTTPRequest *request;
+    ASIHTTPRequest *requestSmile;
+    
+    id _popover;
+    NSString *refreshAnchor;
     
     NSString *statusMessage;
 }
@@ -85,7 +83,7 @@
 @property (nonatomic, strong) UITextField *textFieldCat;
 @property int offsetY;
 
-@property (nonatomic) UIView <FLWebViewProvider> *smileView;
+@property (nonatomic, strong) IBOutlet UIWebView *smileView;
 @property (nonatomic, strong) NSString *smileyCustom;
 
 @property (nonatomic, strong) IBOutlet UISegmentedControl *segmentControler;
@@ -113,7 +111,6 @@
 @property NSRange lastSelectedRange;
 @property BOOL loaded;
 @property BOOL isDragging;
-@property BOOL smileLoaded;
 
 @property (nonatomic, weak) IBOutlet UIView *accessoryView;
 

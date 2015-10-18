@@ -132,6 +132,17 @@
     return YES;
 }
 
+-(BOOL)application:(UIApplication *)application shouldAllowExtensionPointIdentifier:(NSString *)extensionPointIdentifier
+{
+    //NSLog(@"extensionPointIdentifier %@", extensionPointIdentifier);
+    if (extensionPointIdentifier == UIApplicationKeyboardExtensionPointIdentifier)
+    {
+        return NO;
+    }
+    
+    return YES;
+}
+
 - (void)registerDefaultsFromSettingsBundle {
     
     NSString *settingsBundle = [[NSBundle mainBundle] pathForResource:@"InAppSettings" ofType:@"bundle"];

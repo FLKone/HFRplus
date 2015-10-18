@@ -13,6 +13,7 @@
                 <outlet property="rehostTableView" destination="e0C-PW-RY7" id="6oa-0K-nUq"/>
                 <outlet property="segmentControler" destination="59" id="61"/>
                 <outlet property="segmentControlerPage" destination="72" id="74"/>
+                <outlet property="smileView" destination="44" id="46"/>
                 <outlet property="textFieldSmileys" destination="69" id="71"/>
                 <outlet property="textView" destination="62" id="64"/>
                 <outlet property="view" destination="1" id="3"/>
@@ -61,6 +62,15 @@
                                 <outlet property="delegate" destination="-1" id="63"/>
                             </connections>
                         </textView>
+                        <webView hidden="YES" alpha="0.0" contentMode="scaleToFill" id="44">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <animations/>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="45"/>
+                            </connections>
+                        </webView>
                         <tableView clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" id="e0C-PW-RY7">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="440"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
