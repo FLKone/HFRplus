@@ -83,7 +83,7 @@
 - (void)fetchContent:(int)from
 {
     //self.firstDate = [NSDate date];
-    
+    self.errorReported = NO;
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMaxi];
     //self.currentUrl = @"/forum2.php?config=hfr.inc&cat=25&post=1711&page=301&p=1&sondage=0&owntopic=1&trash=0&trash_post=0&print=0&numreponse=0&quote_only=0&new=0&nojs=0#t530526";
     
@@ -1641,18 +1641,6 @@
         
         [errRequest startAsynchronous];
         self.errorReported = YES;
-        
-
-        
-        dispatch_queue_t backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
-        dispatch_async(backgroundQueue, ^{
-            // Do your long running code
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.4 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                [self.navigationController popViewControllerAnimated:YES];
-            });
-        });
-
-        return;
     }
 
     
