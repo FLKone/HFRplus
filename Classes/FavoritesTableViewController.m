@@ -1213,6 +1213,13 @@
             UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
             pasteboard.string = [NSString stringWithFormat:@"%@%@", kForumURL, [tmpTopic aURLOfFirstPage]];
 
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Lien copié dans le presse-papiers"
+                                                           delegate:self cancelButtonTitle:nil otherButtonTitles: nil];
+            alert.tag = kAlertPasteBoardOK;
+            
+            
+            [alert show];
+            
 			break;
 			
 		}
@@ -1362,6 +1369,11 @@
 	if (([alertView tag] == 669)) {
 
 	}
+    else if ([alertView tag] == kAlertPasteBoardOK) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [alertView dismissWithClickedButtonIndex:0 animated:YES];
+        });
+    }
 }
 
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex

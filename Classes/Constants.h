@@ -69,6 +69,7 @@ typedef enum {
 //Alerts Tags 100 + ####
 #define kAlertBlackListOK       1000001
 #define kAlertSondageOK         1000002
+#define kAlertPasteBoardOK      1000003
 
 #define REHOST_IMAGE_FILE @"rehostImages.plist"
 #define USED_SMILEYS_FILE @"usedSmilieys.plist"

@@ -1703,6 +1703,12 @@
             UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
             pasteboard.string = [NSString stringWithFormat:@"%@%@", kForumURL, [[arrayData objectAtIndex:pressedIndexPath.row] aURL]];
             
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Lien copié dans le presse-papiers"
+                                                           delegate:self cancelButtonTitle:nil otherButtonTitles: nil];
+            alert.tag = kAlertPasteBoardOK;
+            
+            
+            [alert show];
 			break;
 			
 		}

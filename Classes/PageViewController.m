@@ -279,6 +279,11 @@
             [alertView dismissWithClickedButtonIndex:0 animated:YES];
         });
     }
+    else if ([alertView tag] == kAlertPasteBoardOK) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [alertView dismissWithClickedButtonIndex:0 animated:YES];
+        });
+    }
 	
 	
 }
