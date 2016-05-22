@@ -1062,7 +1062,13 @@
     
     if (self.pickerViewArray.count) {
         actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:nil cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
-        [actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+        
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+            [actionSheet setBackgroundColor:[UIColor whiteColor]];
+        }
+        else {
+            [actionSheet setActionSheetStyle:UIActionSheetStyleDefault];
+        }
         
         myPickerView = [[UIPickerView alloc] initWithFrame:CGRectZero];
         //myPickerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -1071,7 +1077,11 @@
         myPickerView.showsSelectionIndicator = YES;
         myPickerView.dataSource = self;
         myPickerView.delegate = self;
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+            [myPickerView setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.03]];
+        }
         
+
         [actionSheet addSubview:myPickerView];
         
         UISegmentedControl *closeButton = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:@"Retour"]];
@@ -2049,8 +2059,8 @@
         [UIView beginAnimations:nil context:nil];
         
         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
-            [actionSheet setFrame:CGRectMake(0, self.view.frame.size.height - myPickerView.frame.size.height + 20,
-                                             self.view.frame.size.width, myPickerView.frame.size.height + 44)];
+            [actionSheet setFrame:CGRectMake(0, self.view.frame.size.height - myPickerView.frame.size.height + 34,
+                                             self.view.frame.size.width, myPickerView.frame.size.height + 34)];
         }
         else
         {
