@@ -191,8 +191,6 @@
 		4C0B8E051BA45B0100D329BA /* ForumCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0B8E021BA45B0100D329BA /* ForumCellView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		4C0B8E061BA45B0100D329BA /* ForumCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B8E031BA45B0100D329BA /* ForumCellView.xib */; };
 		4C0B8E071BA45B0100D329BA /* ForumCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B8E031BA45B0100D329BA /* ForumCellView.xib */; };
-		4C0B8E0F1BA46ADA00D329BA /* dsym_upload.sh in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B8E0D1BA46ADA00D329BA /* dsym_upload.sh */; };
-		4C0B8E101BA46ADB00D329BA /* dsym_upload.sh in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B8E0D1BA46ADA00D329BA /* dsym_upload.sh */; };
 		4C21E94D1BA5C70400691D65 /* BoldEFilled-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C21E9331BA5C70400691D65 /* BoldEFilled-20.png */; };
 		4C21E94E1BA5C70400691D65 /* BoldEFilled-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C21E9331BA5C70400691D65 /* BoldEFilled-20.png */; };
 		4C21E94F1BA5C70400691D65 /* BoldEFilled-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C21E9341BA5C70400691D65 /* BoldEFilled-20@2x.png */; };
@@ -331,8 +329,8 @@
 		4C444AF31BB0DE0D000EF444 /* LaunchLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C444AF01BB0DE0D000EF444 /* LaunchLogo.png */; };
 		4C444AF41BB0DE0D000EF444 /* LaunchLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C444AF11BB0DE0D000EF444 /* LaunchLogo@2x.png */; };
 		4C444AF51BB0DE0D000EF444 /* LaunchLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C444AF11BB0DE0D000EF444 /* LaunchLogo@2x.png */; };
-		4C6C654A1BC00DAC009141AB /* libCrittercism_v5_4_0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6C65491BC00DAC009141AB /* libCrittercism_v5_4_0.a */; };
-		4C6C654B1BC00DAC009141AB /* libCrittercism_v5_4_0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6C65491BC00DAC009141AB /* libCrittercism_v5_4_0.a */; };
+		4C5334B61CF1FDF000C353DC /* Crittercism.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C5334B51CF1FDF000C353DC /* Crittercism.framework */; };
+		4C5334B71CF1FDF000C353DC /* Crittercism.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C5334B51CF1FDF000C353DC /* Crittercism.framework */; };
 		4C80A4F81CF1B0E60093CF9B /* ResistorFilled-40@x2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C80A4F61CF1B0E60093CF9B /* ResistorFilled-40@x2.png */; };
 		4C80A4F91CF1B0E60093CF9B /* ResistorFilled-40@x2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C80A4F61CF1B0E60093CF9B /* ResistorFilled-40@x2.png */; };
 		4C80A4FA1CF1B0E60093CF9B /* ResistorFilled-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C80A4F71CF1B0E60093CF9B /* ResistorFilled-40.png */; };
@@ -1342,11 +1340,6 @@
 		4C0B8E011BA45B0100D329BA /* ForumCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForumCellView.h; sourceTree = "<group>"; };
 		4C0B8E021BA45B0100D329BA /* ForumCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForumCellView.m; sourceTree = "<group>"; };
 		4C0B8E031BA45B0100D329BA /* ForumCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ForumCellView.xib; sourceTree = "<group>"; };
-		4C0B8E091BA46ADA00D329BA /* CRFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRFilter.h; sourceTree = "<group>"; };
-		4C0B8E0A1BA46ADA00D329BA /* Crittercism.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Crittercism.h; sourceTree = "<group>"; };
-		4C0B8E0B1BA46ADA00D329BA /* CrittercismConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrittercismConfig.h; sourceTree = "<group>"; };
-		4C0B8E0C1BA46ADA00D329BA /* CrittercismDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrittercismDelegate.h; sourceTree = "<group>"; };
-		4C0B8E0D1BA46ADA00D329BA /* dsym_upload.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = dsym_upload.sh; sourceTree = "<group>"; };
 		4C21E9331BA5C70400691D65 /* BoldEFilled-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BoldEFilled-20.png"; path = "Editor/BoldEFilled-20.png"; sourceTree = "<group>"; };
 		4C21E9341BA5C70400691D65 /* BoldEFilled-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BoldEFilled-20@2x.png"; path = "Editor/BoldEFilled-20@2x.png"; sourceTree = "<group>"; };
 		4C21E9351BA5C70400691D65 /* CopyFilled-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "CopyFilled-20.png"; path = "Editor/CopyFilled-20.png"; sourceTree = "<group>"; };
@@ -1462,8 +1455,7 @@
 		4C3903B61BCAD0EC00FD6F1F /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		4C444AF01BB0DE0D000EF444 /* LaunchLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchLogo.png; sourceTree = "<group>"; };
 		4C444AF11BB0DE0D000EF444 /* LaunchLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LaunchLogo@2x.png"; sourceTree = "<group>"; };
-		4C6C65491BC00DAC009141AB /* libCrittercism_v5_4_0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCrittercism_v5_4_0.a; sourceTree = "<group>"; };
-		4C6C654C1BC00DB7009141AB /* CrittercismLoggingLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrittercismLoggingLevel.h; sourceTree = "<group>"; };
+		4C5334B51CF1FDF000C353DC /* Crittercism.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crittercism.framework; sourceTree = "<group>"; };
 		4C80A4F61CF1B0E60093CF9B /* ResistorFilled-40@x2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ResistorFilled-40@x2.png"; sourceTree = "<group>"; };
 		4C80A4F71CF1B0E60093CF9B /* ResistorFilled-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ResistorFilled-40.png"; sourceTree = "<group>"; };
 		4C80A4FC1CF1B2610093CF9B /* CircuitFilled-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CircuitFilled-40@2x.png"; sourceTree = "<group>"; };
@@ -1999,7 +1991,7 @@
 				CA18B161126245AB008B8466 /* AssetsLibrary.framework in Frameworks */,
 				CA05A37715B48B750083EB64 /* libxml2.dylib in Frameworks */,
 				CA37D50D15A1BD5F002C72C6 /* libsqlite3.dylib in Frameworks */,
-				4C6C654A1BC00DAC009141AB /* libCrittercism_v5_4_0.a in Frameworks */,
+				4C5334B61CF1FDF000C353DC /* Crittercism.framework in Frameworks */,
 				CA4CE81515B185CA0039FC3B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2024,7 +2016,7 @@
 				CA7C712A185EF50E00B348BA /* AssetsLibrary.framework in Frameworks */,
 				CA7C712C185EF50E00B348BA /* libxml2.dylib in Frameworks */,
 				CA7C712D185EF50E00B348BA /* libsqlite3.dylib in Frameworks */,
-				4C6C654B1BC00DAC009141AB /* libCrittercism_v5_4_0.a in Frameworks */,
+				4C5334B71CF1FDF000C353DC /* Crittercism.framework in Frameworks */,
 				CA7C712E185EF50E00B348BA /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2250,6 +2242,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4C5334B51CF1FDF000C353DC /* Crittercism.framework */,
 				4CD6B87F1B977E06007FC29E /* SafariServices.framework */,
 				CA2E6DE419DB08CC0089B5CF /* WebKit.framework */,
 				CA05A37615B48B750083EB64 /* libxml2.dylib */,
@@ -2376,20 +2369,6 @@
 				4C0B8E031BA45B0100D329BA /* ForumCellView.xib */,
 			);
 			name = ForumsCell;
-			sourceTree = "<group>";
-		};
-		4C0B8E081BA46ADA00D329BA /* CrittercismSDK */ = {
-			isa = PBXGroup;
-			children = (
-				4C0B8E091BA46ADA00D329BA /* CRFilter.h */,
-				4C0B8E0A1BA46ADA00D329BA /* Crittercism.h */,
-				4C0B8E0B1BA46ADA00D329BA /* CrittercismConfig.h */,
-				4C0B8E0C1BA46ADA00D329BA /* CrittercismDelegate.h */,
-				4C6C654C1BC00DB7009141AB /* CrittercismLoggingLevel.h */,
-				4C0B8E0D1BA46ADA00D329BA /* dsym_upload.sh */,
-				4C6C65491BC00DAC009141AB /* libCrittercism_v5_4_0.a */,
-			);
-			path = CrittercismSDK;
 			sourceTree = "<group>";
 		};
 		4C21E9321BA5C5E200691D65 /* Editor */ = {
@@ -2613,7 +2592,6 @@
 				CA00C45617C300140067B457 /* RegexKitLite */,
 				CA00C3FE17C2FE240067B457 /* SDWebImage */,
 				CA00C45017C3000B0067B457 /* NSData+Base64.h */,
-				4C0B8E081BA46ADA00D329BA /* CrittercismSDK */,
 				CA00C45117C3000B0067B457 /* NSData+Base64.m */,
 				CA00C45217C3000B0067B457 /* ShakeView.h */,
 				CA00C45317C3000B0067B457 /* ShakeView.m */,
@@ -3340,7 +3318,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C0B8E0F1BA46ADA00D329BA /* dsym_upload.sh in Resources */,
 				CA00C6A317C30C370067B457 /* compose.png in Resources */,
 				4C028AD21A8C635500F542B1 /* hammer.min.map in Resources */,
 				4C052E1C1BA86C9400B61952 /* Flat-CyanFlag-25@2x.png in Resources */,
@@ -3783,7 +3760,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C0B8E101BA46ADB00D329BA /* dsym_upload.sh in Resources */,
 				CA7C6FA5185EF50E00B348BA /* compose.png in Resources */,
 				CA7C6FA6185EF50E00B348BA /* ohill.gif in Resources */,
 				4C052E1D1BA86C9400B61952 /* Flat-CyanFlag-25@2x.png in Resources */,
@@ -4567,7 +4543,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: julien Alexandre (F5S3AE68QG)";
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -4599,7 +4578,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: julien Alexandre (4Z4VCUMET3)";
 				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = HFRplus_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "CONFIGURATION_$(CONFIGURATION)";
@@ -4701,7 +4683,10 @@
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -4733,7 +4718,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: julien Alexandre (4Z4VCUMET3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: julien Alexandre (4Z4VCUMET3)";
 				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = HFRplus_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "CONFIGURATION_$(CONFIGURATION)";

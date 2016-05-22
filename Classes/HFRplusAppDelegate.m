@@ -17,7 +17,7 @@
 
 #import <SafariServices/SafariServices.h>
 
-#import "Crittercism.h"
+#import <Crittercism/Crittercism.h>
 
 @implementation HFRplusAppDelegate
 
