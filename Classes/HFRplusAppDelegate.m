@@ -449,20 +449,45 @@
         
         if ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0")) ||
             (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad   && SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0") &&
-             [[HFRplusAppDelegate sharedAppDelegate].window respondsToSelector:@selector(traitCollection)] && [HFRplusAppDelegate sharedAppDelegate].window.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact)) {
+             [[HFRplusAppDelegate sharedAppDelegate].window respondsToSelector:@selector(traitCollection)] && [HFRplusAppDelegate sharedAppDelegate].window.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact))
+        {
             
-                        NSLog(@"compact ios 9");
-                
-            NSURL *tmpURL2 = [NSURL URLWithString:stringUrl];
+            NSLog(@"compact ios 9");
 
-            if ([[UIApplication sharedApplication] canOpenURL:tmpURL2]) {
-                NSLog(@"YES YOU CAN %@", tmpURL2);
-                [[UIApplication sharedApplication] openURL:tmpURL2];
+            NSURL *tmpURL2 = [NSURL URLWithString:stringUrl];
+            NSURL *tURL = [NSURL URLWithString:stringUrl];
+
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            NSString *web = [defaults stringForKey:@"default_web"];
+            
+            if ([web isEqualToString:@"googlechrome"]) {
+                NSRange rangeOfScheme = [[tmpURL2 absoluteString] rangeOfString:[tmpURL2 scheme]];
+                tURL = [NSURL URLWithString:[[tmpURL2 absoluteString] stringByReplacingCharactersInRange:rangeOfScheme withString:web]];
+                NSLog(@"new url for GChrome URL %@", tURL);
+            }
+            
+            if ([[UIApplication sharedApplication] canOpenURL:tURL]) {
+                NSLog(@"YES YOU CAN GChrome%@", tURL);
+                [[UIApplication sharedApplication] openURL:tURL];
                 return;
+
             }
             else {
-                NSLog(@"NO YOU CANT %@", tmpURL2);
+                NSLog(@"NO YOU CANT GChrome %@", tURL);
+                
+                if ([[UIApplication sharedApplication] canOpenURL:tmpURL2]) {
+                    NSLog(@"YES YOU CAN %@", tmpURL2);
+                    [[UIApplication sharedApplication] openURL:tmpURL2];
+                    return;
+                }
+                else {
+                    NSLog(@"NO YOU CANT %@", tmpURL2);
+                }
             }
+            
+            
+                
+
         }
         
         //iOS9 + Pad + FullScreen = confirme (Nav+)
