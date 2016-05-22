@@ -384,7 +384,7 @@
     
     
     //Check Youtube/AppStore.
-    //- http://itunes.apple.com/fr/app/id1022177308
+    //- http://itunes.apple.com/fr/app/idXXXXXXXX
     //- http://appstore.com/apple/keynote
 
     
@@ -440,11 +440,6 @@
                 nc.modalPresentationStyle = UIModalPresentationFullScreen;
                 
                 [self.rootController presentModalViewController:nc animated:YES];
-                
-                // The navigation controller is now owned by the current view controller
-                // and the root view controller is owned by the navigation controller,
-                // so both objects should be released to prevent over-retention.
-
             }
         }
     }
