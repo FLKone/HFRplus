@@ -166,6 +166,26 @@
 		</dict>
 		<dict>
 			<key>DefaultValue</key>
+			<string>no</string>
+			<key>Key</key>
+			<string>display_sig</string>
+			<key>Title</key>
+			<string>Afficher les signatures</string>
+			<key>Titles</key>
+			<array>
+				<string>Oui</string>
+				<string>Non</string>
+			</array>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Values</key>
+			<array>
+				<string>yes</string>
+				<string>no</string>
+			</array>
+		</dict>
+		<dict>
+			<key>DefaultValue</key>
 			<string>http</string>
 			<key>Key</key>
 			<string>default_web</string>

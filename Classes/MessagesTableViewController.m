@@ -1762,6 +1762,14 @@
         }
         
         
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSString *display_sig = [defaults stringForKey:@"display_sig"];
+        
+        NSString *display_sig_css = @"nosig";
+        
+        if ([display_sig isEqualToString:@"yes"]) {
+            display_sig_css = @"";
+        }
         
         NSString *customFontSize = [self userTextSizeDidChange];
         
@@ -1779,7 +1787,9 @@
                                 %@\
                                 </style>\
                                 </head><body class='iosversion'><a name='top'></a>\
-                                <div class='bunselected nosig' id='qsdoiqjsdkjhqkjhqsdqdilkjqsd2'>%@</div>\
+                                <div class='bunselected %@' id='qsdoiqjsdkjhqkjhqsdqdilkjqsd2'>\
+                                %@\
+                                </div>\
                                 %@\
                                 %@\
                                 <div id='endofpage'></div>\
@@ -1795,7 +1805,7 @@
                                 $('img').error(function(){ $(this).attr('src', 'photoDefaultfailmini.png');});\
                                 function touchstart() { document.location.href = 'oijlkajsdoihjlkjasdotouch://touchstart'};\
                                 </script>\
-                                </body></html>", customFontSize, tmpHTML, refreshBtn, tooBar];
+                                </body></html>", customFontSize, display_sig_css, tmpHTML, refreshBtn, tooBar];
         
         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
             if (self.isSearchInstra) {

@@ -57,6 +57,10 @@
 	//myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regExQuoteTitle
 	//													  withString:@"$1"];
 	
+    myRawContent = [myRawContent stringByReplacingOccurrencesOfString:@"---------------" withString:@""];
+
+    
+    
 	
 	//Custom Internal Images
 	NSString *regEx2 = @"<img src=\"http://forum-images.hardware.fr/([^\"]+)\" alt=\"\\[[^\"]+\" title=\"[^\"]+\">";			

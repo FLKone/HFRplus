@@ -38,6 +38,21 @@ img {
     max-width: 100% !important;
 }
 
+span.signature {
+    display: block;
+    border-top: 1px dashed lightgray;
+    padding-top: 10px !important;
+    /*color: rgb(140, 140, 140) !important;*/
+}
+
+span.signature * {
+    /*color: rgb(140, 140, 140) !important;*/
+}
+
+span.signature > br:first-child {
+    display: none;
+}
+
 .nosig span.signature, div.edited {
 	display:none;
 }
@@ -653,6 +668,7 @@ background-size:100% 100%;
 .ios7 #toolbarpage .button2.end.hover {
     opacity:0.4;
 }
+
 /* -- iOS7 */
 
 /* iPhone 3.4 landscape */
