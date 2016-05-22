@@ -197,13 +197,17 @@
 	UIBarButtonItem *flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
 																			  target:nil
 																			  action:nil];
-
+    UIBarButtonItem *fixedItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                                                              target:nil
+                                                                              action:nil];
+    fixedItem.width = 10;
+    
 	if([[arrayData objectAtIndex:curMsg] urlEdit]){
-		[toolbarBtn setItems:[NSArray arrayWithObjects: flexItem, editBtn, actionBtn, nil] animated:NO];
+		[toolbarBtn setItems:[NSArray arrayWithObjects: flexItem, editBtn, fixedItem, actionBtn, nil] animated:NO];
 		
 	}
 	else if([[arrayData objectAtIndex:curMsg] urlQuote]){
-		[toolbarBtn setItems:[NSArray arrayWithObjects: flexItem, quoteBtn, actionBtn, nil] animated:NO];
+		[toolbarBtn setItems:[NSArray arrayWithObjects: flexItem, quoteBtn, fixedItem, actionBtn, nil] animated:NO];
 	}
 	else {
 		[toolbarBtn setItems:[NSArray arrayWithObjects: flexItem, actionBtn, nil] animated:NO];
