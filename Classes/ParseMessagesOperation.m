@@ -229,7 +229,9 @@
 			
 			//NSDate *then2 = [NSDate date]; // Create a current date
 
-
+            // Message URL =
+            // http://forum.hardware.fr/forum2.php?config=hfr.inc&cat=_CATID_&subcat=_SUBCATID_&post=__TOPIC_ID&page=1&p=1&sondage=&owntopic=&trash=&trash_post=&print=
+            //          &numreponse=_POSTID_&quote_only=0&new=0&nojs=0#t_POSTID_
 
 			//NSDate *then3 = [NSDate date]; // Create a current date
 
