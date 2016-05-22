@@ -569,6 +569,11 @@
 		
 	}
     
+    if (![self.parent isSearchInstra]) {
+        [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Copier le lien", @"actionLink:", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+    }
+    
+    
     if ([styleAlert isVisible]) {
         [styleAlert dismissWithClickedButtonIndex:self.arrayAction.count animated:YES];
         return;

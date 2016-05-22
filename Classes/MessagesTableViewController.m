@@ -2392,6 +2392,27 @@
     
 	
 }
+-(void)actionLink:(NSNumber *)curMsgN {
+    int curMsg = [curMsgN intValue];
+    
+    //NSLog("actionLink ID = %@", [[arrayData objectAtIndex:curMsg] postID]);
+    NSLog("actionLink URL = %@%@#%@", kForumURL, self.currentUrl, [[arrayData objectAtIndex:curMsg] postID]);
+    
+    
+    //Topic *tmpTopic = [[[self.arrayData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
+    
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    pasteboard.string = [NSString stringWithFormat:@"actionLink URL = %@%@#%@", kForumURL, self.currentUrl, [[arrayData objectAtIndex:curMsg] postID]];
+    
+
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Lien copié dans le presse-papiers"
+                                                   delegate:self cancelButtonTitle:nil otherButtonTitles: nil];
+    alert.tag = kAlertPasteBoardOK;
+    
+    
+    [alert show];
+    
+}
 
 -(void) actionAlerter:(NSNumber *)curMsgN {
     NSLog(@"actionAlerter %@", curMsgN);
@@ -2635,6 +2656,10 @@
 
 -(void)actionCiter {
 	[self actionCiter:[NSNumber numberWithInt:curPostID]];
+}
+
+-(void)actionLink {
+    [self actionLink:[NSNumber numberWithInt:curPostID]];
 }
 
 -(void)EditMessage {
