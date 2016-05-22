@@ -38,6 +38,7 @@
     if ([self.aURL isEqualToString:@"/hfr/OrdinateursPortables/liste_sujet-1.htm"]) return 15;
     if ([self.aURL isEqualToString:@"/hfr/gsmgpspda/liste_sujet-1.htm"]) return 23;
     if ([self.aURL isEqualToString:@"/hfr/OverclockingCoolingModding/liste_sujet-1.htm"]) return 2;
+    if ([self.aURL isEqualToString:@"/hfr/electroniquedomotiquediy/liste_sujet-1.htm"]) return 30;
     if ([self.aURL isEqualToString:@"/hfr/apple/liste_sujet-1.htm"]) return 25;
     if ([self.aURL isEqualToString:@"/hfr/VideoSon/liste_sujet-1.htm"]) return 3;
     if ([self.aURL isEqualToString:@"/hfr/Photonumerique/liste_sujet-1.htm"]) return 14;
@@ -64,6 +65,7 @@
     if ([self.aURL isEqualToString:@"/hfr/OrdinateursPortables/liste_sujet-1.htm"]) return [self getImageFromID:15];
     if ([self.aURL isEqualToString:@"/hfr/gsmgpspda/liste_sujet-1.htm"]) return [self getImageFromID:23];
     if ([self.aURL isEqualToString:@"/hfr/OverclockingCoolingModding/liste_sujet-1.htm"]) return [self getImageFromID:2];
+    if ([self.aURL isEqualToString:@"/hfr/electroniquedomotiquediy/liste_sujet-1.htm"]) return [self getImageFromID:30];
     if ([self.aURL isEqualToString:@"/hfr/apple/liste_sujet-1.htm"]) return [self getImageFromID:25];
     if ([self.aURL isEqualToString:@"/hfr/VideoSon/liste_sujet-1.htm"]) return [self getImageFromID:3];
     if ([self.aURL isEqualToString:@"/hfr/Photonumerique/liste_sujet-1.htm"]) return [self getImageFromID:14];
@@ -98,6 +100,7 @@
         case 15: return @"LaptopFilled-40"; break;
         case 23: return @"SmartphoneTabletFilled-40"; break;
         case 2: return @"SupportFilled-40"; break;
+        case 30: return @"CircuitFilled-40"; break;
         case 25: return @"cat-apple"; break;
         case 3: return @"VideoCallFilled-40"; break;
         case 14: return @"CameraFilled-40"; break;
