@@ -391,7 +391,7 @@ separateSecondaryViewControllerFromPrimaryViewController:(UIViewController *)pri
     
     if (aViewController.view.frame.size.width > 320) {
         
-        aViewController.view.frame = CGRectMake(0, 0, 320, self.view.frame.size.height);
+        //aViewController.view.frame = CGRectMake(0, 0, 320, self.view.frame.size.height);
         
         NSInteger selected = [aViewController selectedIndex];
         
