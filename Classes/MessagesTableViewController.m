@@ -1862,26 +1862,26 @@
 #pragma mark WebView Delegate
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-	NSLog(@"== webViewDidStartLoad");
+	//NSLog(@"== webViewDidStartLoad");
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 }
 
 - (void)webViewDidFinishPreLoadDOM {
-    NSLog(@"== webViewDidFinishPreLoadDOM");
+    //NSLog(@"== webViewDidFinishPreLoadDOM");
 
     //[self userTextSizeDidChange];
 }
 
 - (void)webViewDidFinishLoadDOM
 {
-    NSLog(@"== webViewDidFinishLoadDOM");
+    //NSLog(@"== webViewDidFinishLoadDOM");
     
     if (!self.pageNumber) {
         return;
     }
     
     if (!self.loaded) {
-        NSLog(@"== First DOM");
+        //NSLog(@"== First DOM");
         self.loaded = YES;
 
         //if (SYSTEM_VERSION_LESS_THAN(@"9")) {
@@ -1895,9 +1895,9 @@
         
 
 
-        NSLog(@"jsString2 %@", jsString2);
-        NSLog(@"jsString3 %@", jsString3);
-        NSLog(@"result %@", result);
+        //NSLog(@"jsString2 %@", jsString2);
+        //NSLog(@"jsString3 %@", jsString3);
+        //NSLog(@"result %@", result);
         
         self.lastStringFlagTopic = self.stringFlagTopic;
         self.stringFlagTopic = @"";
@@ -1912,13 +1912,13 @@
         [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString];
         return;
     }
-    NSLog(@"== DOMed");
+    //NSLog(@"== DOMed");
     
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-	NSLog(@"== webViewDidFinishLoad");
+	//NSLog(@"== webViewDidFinishLoad");
     
     //if (!self.loaded) {
     //    [self webViewDidFinishPreLoadDOM];
@@ -1936,7 +1936,7 @@
 }
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
-    NSLog(@"MTV %@ nbS=%lu", NSStringFromSelector(action), [UIMenuController sharedMenuController].menuItems.count);
+    //NSLog(@"MTV %@ nbS=%lu", NSStringFromSelector(action), [UIMenuController sharedMenuController].menuItems.count);
     
     BOOL returnA;
     
@@ -1946,17 +1946,17 @@
         returnA = [super canPerformAction:action withSender:sender];
     }
 
-    NSLog(@"MTV returnA %d", returnA);
+    //NSLog(@"MTV returnA %d", returnA);
     return returnA;
 }
 
 - (BOOL) canBecomeFirstResponder {
-	NSLog(@"===== canBecomeFirstResponder");
+	//NSLog(@"===== canBecomeFirstResponder");
 	
     return NO;
 }
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)aRequest navigationType:(UIWebViewNavigationType)navigationType {
-	NSLog(@"expected:%ld, got:%ld | url:%@", (long)UIWebViewNavigationTypeLinkClicked, (long)navigationType, aRequest.URL);
+	//NSLog(@"expected:%ld, got:%ld | url:%@", (long)UIWebViewNavigationTypeLinkClicked, (long)navigationType, aRequest.URL);
 	
 	if (navigationType == UIWebViewNavigationTypeLinkClicked) {
                     
@@ -2084,7 +2084,7 @@
         }
         else {
             
-            NSLog(@"OTHHHHERRRREEE %@ %@", [aRequest.URL scheme], [aRequest.URL fragment]);
+            //NSLog(@"OTHHHHERRRREEE %@ %@", [aRequest.URL scheme], [aRequest.URL fragment]);
             if ([[aRequest.URL fragment] isEqualToString:@"bas"]) {
                 //return NO;
             }
@@ -2094,7 +2094,7 @@
         
 	}
     else {
-        NSLog(@"VRAIMENT OTHHHHERRRREEE %@ %@", [aRequest.URL scheme], [aRequest.URL fragment]);
+        //NSLog(@"VRAIMENT OTHHHHERRRREEE %@ %@", [aRequest.URL scheme], [aRequest.URL fragment]);
 
     }
     
