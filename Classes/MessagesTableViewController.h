@@ -36,8 +36,8 @@
     UILabel *errorLabelView;
 	UIView *overview;
 	
+    ASIHTTPRequest *request;
 
-	
 	NSString *topicAnswerUrl;
 	BOOL errorReported;
     
@@ -55,7 +55,7 @@
 	
     MessagesTableViewController *messagesTableViewController;
 	MessageDetailViewController *detailViewController;
-	
+
 	//Gesture
 	UISwipeGestureRecognizer *swipeLeftRecognizer;
 	UISwipeGestureRecognizer *swipeRightRecognizer;
@@ -97,6 +97,13 @@
     UISwitch *searchFromFP;
     NSMutableDictionary *searchInputData;
     BOOL isSearchInstra;
+
+    //Live
+    BOOL firstLoad;
+    BOOL gestureEnabled;
+    BOOL paginationEnabled;
+
+
 }
 
 
@@ -119,6 +126,12 @@
 @property (nonatomic, strong) NSString *isFavoritesOrRead;
 
 @property BOOL isViewed;
+
+//Live
+@property BOOL firstLoad;
+@property BOOL gestureEnabled;
+@property BOOL paginationEnabled;
+
 
 @property (nonatomic, strong) NSMutableArray *arrayData;
 @property (nonatomic, strong) NSMutableArray *updatedArrayData;
@@ -161,6 +174,8 @@
 @property BOOL isSearchInstra;
 
 @property (strong, nonatomic) NSMutableArray *arrayActionsMessages;
+
+- (NSString*) topicName;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andUrl:(NSString *)theTopicUrl;
 - (void)optionsTopic:(id)sender;

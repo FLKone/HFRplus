@@ -54,6 +54,9 @@
 
 @synthesize firstDate;
 
+// Live
+@synthesize firstLoad, gestureEnabled, paginationEnabled;
+
 - (void)setTopicName:(NSString *)n {
     _topicName = [n filterTU];
     
@@ -110,8 +113,8 @@
 	[request setDidFinishSelector:@selector(fetchContentComplete:)];
 	[request setDidFailSelector:@selector(fetchContentFailed:)];
     
-	[self.view removeGestureRecognizer:swipeLeftRecognizer];
-	[self.view removeGestureRecognizer:swipeRightRecognizer];
+	if (self.swipeLeftRecognizer) [self.view removeGestureRecognizer:self.swipeLeftRecognizer];
+    if (self.swipeRightRecognizer) [self.view removeGestureRecognizer:self.swipeRightRecognizer];
 	
 	if ([NSThread isMainThread]) {
         [self.messagesWebView setHidden:YES];
@@ -447,7 +450,7 @@
 		NSArray *temporaryPagesArray = [pagesTrNode findChildrenWithAttribute:@"class" matchingName:@"pagepresuiv" allowPartial:YES];
 		
         if (self.isSearchInstra) {
-            [self.view addGestureRecognizer:swipeLeftRecognizer];
+            if (self.swipeLeftRecognizer) [self.view addGestureRecognizer:self.swipeLeftRecognizer];
         }
 		else if(temporaryPagesArray.count != 3)
 		{
@@ -461,7 +464,7 @@
             if (nextUrlNode) {
                 //nextPageUrl = [[NSString stringWithFormat:@"%@", [topicUrl stringByReplacingCharactersInRange:rangeNumPage withString:[NSString stringWithFormat:@"%d", (pageNumber + 1)]]] retain];
                 //nextPageUrl = [[NSString stringWithFormat:@"%@", [topicUrl stringByReplacingCharactersInRange:rangeNumPage withString:[NSString stringWithFormat:@"%d", (pageNumber + 1)]]] retain];
-                [self.view addGestureRecognizer:swipeLeftRecognizer];
+                if (self.swipeLeftRecognizer) [self.view addGestureRecognizer:self.swipeLeftRecognizer];
                 self.nextPageUrl = [[nextUrlNode getAttributeNamed:@"href"] copy];
                 //NSLog(@"nextPageUrl = %@", nextPageUrl);
                 
@@ -475,7 +478,7 @@
             
             if (previousUrlNode) {
                 //previousPageUrl = [[topicUrl stringByReplacingCharactersInRange:rangeNumPage withString:[NSString stringWithFormat:@"%d", (pageNumber - 1)]] retain];
-                [self.view addGestureRecognizer:swipeRightRecognizer];
+                if (self.swipeRightRecognizer) [self.view addGestureRecognizer:self.swipeRightRecognizer];
                 self.previousPageUrl = [[previousUrlNode getAttributeNamed:@"href"] copy];
                 //NSLog(@"previousPageUrl = %@", previousPageUrl);
                 
@@ -642,6 +645,9 @@
         [self setIsSearchInstra:NO];
         self.errorReported = NO;
 
+        self.firstLoad = YES;
+        self.gestureEnabled = YES;
+        self.paginationEnabled = YES;
 	}
 	return self;
 }
@@ -850,17 +856,19 @@
     }
     
 	//Gesture
-	UIGestureRecognizer *recognizer;
+    if (self.gestureEnabled) {
+        UIGestureRecognizer *recognizer;
 
-	//De Gauche à droite
-	recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeToRight:)];
-	self.swipeRightRecognizer = (UISwipeGestureRecognizer *)recognizer;
-	
-	//De Droite à gauche
-	recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeToLeft:)];
-	self.swipeLeftRecognizer = (UISwipeGestureRecognizer *)recognizer;
-    swipeLeftRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
-    self.swipeLeftRecognizer = (UISwipeGestureRecognizer *)recognizer;
+        //De Gauche à droite
+        recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeToRight:)];
+        self.swipeRightRecognizer = (UISwipeGestureRecognizer *)recognizer;
+
+        //De Droite à gauche
+        recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeToLeft:)];
+        self.swipeLeftRecognizer = (UISwipeGestureRecognizer *)recognizer;
+        swipeLeftRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+        self.swipeLeftRecognizer = (UISwipeGestureRecognizer *)recognizer;
+    }
 	//-- Gesture
 
 
@@ -1724,7 +1732,7 @@
         NSString *tooBar = @"";
         
         //Toolbar;
-        if (self.aToolbar && !self.isSearchInstra) {
+        if (self.paginationEnabled && self.aToolbar && !self.isSearchInstra) {
             NSString *buttonBegin, *buttonEnd;
             NSString *buttonPrevious, *buttonNext;
             
@@ -1806,7 +1814,8 @@
                                 function touchstart() { document.location.href = 'oijlkajsdoihjlkjasdotouch://touchstart'};\
                                 </script>\
                                 </body></html>", customFontSize, display_sig_css, tmpHTML, refreshBtn, tooBar];
-        
+
+
         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
             if (self.isSearchInstra) {
                 HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"iosversion" withString:@"ios7 searchintra"];
