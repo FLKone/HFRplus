@@ -12,8 +12,8 @@
 
 - (void)viewDidLoad {
     NSLog(@"LvDid %@", self.topicName);
-    self.gestureEnabled = NO;
-    self.paginationEnabled = NO;
+    self.gestureEnabled = YES;
+    self.paginationEnabled = YES;
     self.autoUpdate = YES;
 
     [super viewDidLoad];
@@ -21,6 +21,14 @@
     self.navigationItem.rightBarButtonItems = nil;
 
     self.tabBarItem.title = @"Live";
+
+    UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(cancelLive)];
+    self.navigationItem.rightBarButtonItem = segmentBarItem;
+
+}
+
+-(void)cancelLive {
+    NSLog(@"cancelLive");
 }
 
 @end

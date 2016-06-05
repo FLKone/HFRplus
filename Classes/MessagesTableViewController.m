@@ -187,7 +187,7 @@
 	
     //NSLog(@"%@", [request responseString]);
     
-    ParseMessagesOperation *parser = [[ParseMessagesOperation alloc] initWithData:[request responseData] index:0 reverse:NO delegate:self];
+    ParseMessagesOperation *parser = [[ParseMessagesOperation alloc] initWithData:[request responseData] index:0 reverse:self.firstLoad delegate:self];
 	
     [queue addOperation:parser]; // this will start the "ParseOperation"
     [self cancelFetchContent];
@@ -796,7 +796,7 @@
     [super viewDidLoad];
 	self.isAnimating = NO;
 
-	self.title = self.topicName;  
+	self.title = self.topicName;
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(VisibilityChanged:) name:@"VisibilityChanged" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editMenuHidden:) name:UIMenuControllerDidHideMenuNotification object:nil];
@@ -1699,7 +1699,9 @@
                 tmpHTML = [tmpHTML stringByAppendingString:[[loadedItems objectAtIndex:i] toHTML:i]];
                 [self.arrayData addObject:[loadedItems objectAtIndex:i]];
                 nbAdded = nbAdded + 1;
+                /* Live test
                 if(nbAdded >= 2) break;
+                 */
             }
 
         }

@@ -321,7 +321,12 @@
 			if ([self isCancelled]) {
 				break;
 			}
-			
+
+            /* Live test
+            if (self.workingArray.count >= 4 && self.reverse) {
+                break;
+            }
+            */
 			[self.workingArray addObject:fasTest];
 			
 			
