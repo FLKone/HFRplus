@@ -136,6 +136,7 @@
 @property BOOL paginationEnabled;
 @property BOOL autoUpdate;
 
+@property (nonatomic, strong) NSTimer *liveTimer;
 
 @property (nonatomic, strong) NSMutableArray *arrayData;
 @property (nonatomic, strong) NSMutableArray *updatedArrayData;
@@ -222,5 +223,6 @@
 
 -(void)newMessageAutoAdded:(int)number;
 -(void)stopTimer;
+-(void)setupTimer:(int)sec;
 
 @end

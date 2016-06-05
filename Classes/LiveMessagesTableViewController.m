@@ -31,6 +31,8 @@
 
     self.navigationItem.rightBarButtonItems = myButtonArray;
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appInBackground:) name:@"appInBackground" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appInForeground:) name:@"appInForeground" object:nil];
 
 }
 
@@ -83,6 +85,18 @@
     [[HFRplusAppDelegate sharedAppDelegate].rootController setViewControllers:currCtrls animated:YES];
     [[HFRplusAppDelegate sharedAppDelegate].rootController setSelectedIndex:1];
 
+}
+
+
+-(void)appInBackground:(NSNotification *)notification {
+    NSLog(@"appInBackground");
+    [self stopTimer];
+}
+
+-(void)appInForeground:(NSNotification *)notification {
+    NSLog(@"appInForeground");
+
+    [self setupTimer:10];
 }
 
 

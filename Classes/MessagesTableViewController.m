@@ -55,7 +55,7 @@
 @synthesize firstDate;
 
 // Live
-@synthesize firstLoad, gestureEnabled, paginationEnabled, autoUpdate, isLive;
+@synthesize firstLoad, gestureEnabled, paginationEnabled, autoUpdate, isLive, liveTimer;
 
 - (void)setTopicName:(NSString *)n {
     _topicName = [n filterTU];
@@ -1637,14 +1637,14 @@
 }
 -(void)stopTimer {
     NSLog(@"STOP TIMER");
-    [liveTimer invalidate];
-    liveTimer = nil;
+    [self.liveTimer invalidate];
+    self.liveTimer = nil;
 }
 
 -(void)setupTimer:(int)sec {
     NSLog(@"SETUP TIMER %d", sec);
-
-    liveTimer = [NSTimer scheduledTimerWithTimeInterval:sec
+    [self stopTimer];
+    self.liveTimer = [NSTimer scheduledTimerWithTimeInterval:sec
                                                  target:self
                                                selector:@selector(liveTimerSelector)
                                                userInfo:nil
@@ -2939,7 +2939,9 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIMenuControllerDidHideMenuNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"VisibilityChanged" object:nil];
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"appInBackground" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"appInForeground" object:nil];
+
     if ([UIFontDescriptor respondsToSelector:@selector(preferredFontDescriptorWithTextStyle:)]) {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIContentSizeCategoryDidChangeNotification object:nil];
     }

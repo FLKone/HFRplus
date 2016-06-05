@@ -189,7 +189,12 @@
      */
 	NSLog(@"applicationDidEnterBackground");
     [periodicMaintenanceTimer invalidate];
-    periodicMaintenanceTimer = nil;	
+    periodicMaintenanceTimer = nil;
+
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"appInBackground" object:nil];
+
+
 }
 
 
@@ -198,6 +203,7 @@
      Called as part of  transition from the background to the inactive state: here you can undo many of the changes made on entering the background.
      */
 	NSLog(@"applicationWillEnterForeground");
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"appInForeground" object:nil];
 
 	periodicMaintenanceTimer = [NSTimer scheduledTimerWithTimeInterval:60*10
 																 target:self
