@@ -48,7 +48,7 @@
 @synthesize arrayInputData;
 @synthesize aToolbar, styleAlert;
 
-@synthesize isFavoritesOrRead, isRedFlagged, isUnreadable, isAnimating, isViewed;
+@synthesize isFavoritesOrRead, isRedFlagged, isUnreadable, isAnimating, isViewed, isMP;
 
 @synthesize request, arrayAction, curPostID;
 
@@ -174,12 +174,11 @@
     //
 	
 	//MaJ de la puce MP
-	if (!self.isViewed) {
+	if (!self.isViewed && self.isMP) {
 		//NSLog(@"pas lu");
 		[[HFRplusAppDelegate sharedAppDelegate] readMPBadge];
+        self.isViewed = YES;
 	}
-	
-	
 	//MaJ de la puce MP
 	
     //NSLog(@"%@", [request responseString]);

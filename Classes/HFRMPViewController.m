@@ -155,7 +155,7 @@
 	//setup the URL
 	self.messagesTableViewController.topicName = [[arrayData objectAtIndex:indexPath.row] aTitle];	
 	self.messagesTableViewController.isViewed = [[arrayData objectAtIndex:indexPath.row] isViewed];	
-
+    self.messagesTableViewController.isMP = YES;
     [self pushTopic];
 	//NSLog(@"push message liste");
 
@@ -231,6 +231,7 @@
 			
 			self.messagesTableViewController.topicName = [[arrayData objectAtIndex:pressedIndexPath.row] aTitle];	
 			self.messagesTableViewController.isViewed = [[arrayData objectAtIndex:pressedIndexPath.row] isViewed];	
+            self.messagesTableViewController.isMP = YES;
 
 			[self pushTopic];
 			
@@ -246,7 +247,8 @@
 			
 			self.messagesTableViewController.topicName = [[arrayData objectAtIndex:pressedIndexPath.row] aTitle];	
 			self.messagesTableViewController.isViewed = [[arrayData objectAtIndex:pressedIndexPath.row] isViewed];	
-
+            self.messagesTableViewController.isMP = YES;
+            
 			[self pushTopic];
 			 
 			//NSLog(@"url pressed last post: %@", [[arrayData objectAtIndex:pressedIndexPath.row] aURL]);

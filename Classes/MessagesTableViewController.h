@@ -48,8 +48,8 @@
 	NSString *isFavoritesOrRead; //to check is refresh ON
 
 	BOOL isViewed; //to check if isViewed (bold & +1)
+    BOOL isMP;
 
-	
 	NSMutableArray *arrayData;
 	NSMutableArray *updatedArrayData;
 	
@@ -126,6 +126,7 @@
 @property (nonatomic, strong) NSString *isFavoritesOrRead;
 
 @property BOOL isViewed;
+@property BOOL isMP;
 
 //Live
 @property BOOL firstLoad;
