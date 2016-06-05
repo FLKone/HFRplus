@@ -1720,6 +1720,9 @@
            //NSLog(@"jsQuery %@", jsQuery);
            [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsQuery];
 
+           NSString *jsString = [NSString stringWithFormat:@"$('.message').addSwipeEvents().bind('doubletap', function(evt, touch) { window.location = 'oijlkajsdoihjlkjasdodetails://'+this.id; });"];
+           [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString];
+
            if (self.autoUpdate) {
                liveTimer = [NSTimer scheduledTimerWithTimeInterval:3
                                                             target:self
