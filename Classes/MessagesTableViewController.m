@@ -1756,12 +1756,18 @@
            tmpHTML = [tmpHTML stringByReplacingOccurrencesOfString:@"\n" withString:@""];
            tmpHTML = [tmpHTML stringByReplacingOccurrencesOfString:@"\r" withString:@""];
 
+           NSString *animate = @"";
+
+           if (!self.autoUpdate) {
+               animate = @"$('html, body').animate({scrollTop:new_div.offset().top-50}, 'slow');";
+           }
+
            //NSString *jsQuery = [NSString stringWithFormat:@"$('#qsdoiqjsdkjhqkjhqsdqdilkjqsd2').append('%@')", tmpHTML];
            NSString *jsQuery = [NSString stringWithFormat:@"var new_div = $('%@');\
                                 new_div.hide().appendTo('#qsdoiqjsdkjhqkjhqsdqdilkjqsd2').slideDown('fast', function() {\
-                                    $('html, body').animate({scrollTop:new_div.offset().top-50}, 'slow');\
+                                    %@\
                                 });\
-                                ", tmpHTML];
+                                ", tmpHTML, animate];
 
            NSLog(@"Messages Added %d", nbAdded);
            //NSLog(@"jsQuery %@", jsQuery);
