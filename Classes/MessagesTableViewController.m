@@ -55,7 +55,7 @@
 @synthesize firstDate;
 
 // Live
-@synthesize firstLoad, gestureEnabled, paginationEnabled;
+@synthesize firstLoad, gestureEnabled, paginationEnabled, autoUpdate;
 
 - (void)setTopicName:(NSString *)n {
     _topicName = [n filterTU];
@@ -85,6 +85,9 @@
 
 - (void)fetchContent:(int)from
 {
+    [liveTimer invalidate];
+    liveTimer = nil;
+
     //self.firstDate = [NSDate date];
     self.errorReported = NO;
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMaxi];
@@ -125,7 +128,8 @@
     [self.errorLabelView setHidden:YES];
 
     if(from == kNewMessageFromNext) self.stringFlagTopic = @"#bas";
-    
+    if(from != kNewMessageFromUpdate) self.firstLoad = YES;
+
     switch (from) {
         case kNewMessageFromShake:
         case kNewMessageFromUpdate:
@@ -199,8 +203,14 @@
 	
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[theRequest.error localizedDescription]
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
-    
-    [alert setTag:667];
+
+    if (self.firstLoad) {
+        [alert setTag:667];
+    }
+    else {
+        [alert setTag:6677];
+    }
+
 	[alert show];
     
     [self cancelFetchContent];
@@ -647,6 +657,8 @@
         self.firstLoad = YES;
         self.gestureEnabled = YES;
         self.paginationEnabled = YES;
+        self.autoUpdate = NO;
+        self.isMP = NO;
 	}
 	return self;
 }
@@ -1421,8 +1433,12 @@
 
 -(void)searchNewMessages:(int)from {
     
-	if (![self.messagesWebView isLoading]) {	
-		[self.messagesWebView stringByEvaluatingJavaScriptFromString:@"$('#actualiserbtn').addClass('loading');"];
+	if (![self.messagesWebView isLoading]) {
+        dispatch_async(dispatch_get_main_queue(),
+           ^{
+                [self.messagesWebView stringByEvaluatingJavaScriptFromString:@"$('#actualiserbtn').addClass('loading');"];
+           });
+
 		[self performSelectorInBackground:@selector(fetchContentinBackground:) withObject:[NSNumber numberWithInt:from]];
 	}    
 }
@@ -1623,13 +1639,75 @@
 
 - (void)handleLoadedApps:(NSArray *)loadedItems
 {
-    
+    int i;
+    NSString *tmpHTML = @"";
+
+   if (!self.firstLoad) {
+       int nbAdded = 0;
+
+        for (i = 0; i < [loadedItems count]; i++) { //Loop through all the tags
+
+            if (self.arrayData.count > i) {
+                //NSLog(@"postID new: %@ | old: %@", [[loadedItems objectAtIndex:i] postID], [[self.arrayData objectAtIndex:i] postID]);
+            }
+            else {
+                //NSLog(@"postID new: %@ | old: -----", [[loadedItems objectAtIndex:i] postID]);
+                tmpHTML = [tmpHTML stringByAppendingString:[[loadedItems objectAtIndex:i] toHTML:i]];
+                [self.arrayData addObject:[loadedItems objectAtIndex:i]];
+                nbAdded = nbAdded + 1;
+                if(nbAdded >= 2) break;
+            }
+
+        }
+
+       if (tmpHTML.length > 0) {
+           tmpHTML = [tmpHTML stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"];
+           tmpHTML = [tmpHTML stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+           tmpHTML = [tmpHTML stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+
+           //NSString *jsQuery = [NSString stringWithFormat:@"$('#qsdoiqjsdkjhqkjhqsdqdilkjqsd2').append('%@')", tmpHTML];
+           NSString *jsQuery = [NSString stringWithFormat:@"var new_div = $('%@');\
+                                new_div.hide().appendTo('#qsdoiqjsdkjhqkjhqsdqdilkjqsd2').slideDown('fast', function() {\
+                                    $('html, body').animate({scrollTop:new_div.offset().top-50}, 'slow');\
+                                });\
+                                ", tmpHTML];
+
+           NSLog(@"Messages Added %d", nbAdded);
+           NSLog(@"jsQuery %@", jsQuery);
+           [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsQuery];
+
+           if (self.autoUpdate) {
+               liveTimer = [NSTimer scheduledTimerWithTimeInterval:3
+                                                            target:self
+                                                          selector:@selector(liveTimerSelector)
+                                                          userInfo:nil
+                                                           repeats:YES];
+           }
+
+       }
+       else {
+           if (self.autoUpdate) {
+
+               liveTimer = [NSTimer scheduledTimerWithTimeInterval:6
+                                                            target:self
+                                                          selector:@selector(liveTimerSelector)
+                                                          userInfo:nil
+                                                           repeats:YES];
+           }
+       }
+
+       dispatch_async(dispatch_get_main_queue(),
+                      ^{
+                          [self.messagesWebView stringByEvaluatingJavaScriptFromString:@"$('#actualiserbtn').removeClass('loading');"];
+                      });
+       return;
+    }
+
 	[self.arrayData removeAllObjects];
 	[self.arrayData addObjectsFromArray:loadedItems];
 
 
-	NSString *tmpHTML = @"";
-    
+
     
     NSLog(@"COUNT = %lu", (unsigned long)[self.arrayData count]);
     
@@ -1660,7 +1738,7 @@
         [self toggleSearch:YES];
     }
     else {
-        int i;
+
         NSLog(@"OLD %@", self.stringFlagTopic);
 
         NSCharacterSet* nonDigits = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
@@ -1727,7 +1805,7 @@
         else {
             //NSLog(@"autre");
         }
-        
+
         NSString *tooBar = @"";
         
         //Toolbar;
@@ -1914,6 +1992,17 @@
         [self.messagesWebView setHidden:NO];
         [self.messagesWebView becomeFirstResponder];
 
+        self.firstLoad = NO;
+
+        if (self.autoUpdate) {
+
+            liveTimer = [NSTimer scheduledTimerWithTimeInterval:3
+                                                                        target:self
+                                                                      selector:@selector(liveTimerSelector)
+                                                                      userInfo:nil
+                                                                       repeats:YES];
+
+        }
         NSString *jsString = @"";
 
         jsString = [jsString stringByAppendingString:@"$('.message').addSwipeEvents().bind('doubletap', function(evt, touch) { window.location = 'oijlkajsdoihjlkjasdodetails://'+this.id; });"];
@@ -1923,6 +2012,33 @@
     //NSLog(@"== DOMed");
     
 }
+
+- (void)liveTimerSelector
+{
+    NSLog(@"liveTimer");
+
+    [self performSelectorInBackground:@selector(liveTimerSelectorBack) withObject:nil];
+}
+
+- (void)liveTimerSelectorBack
+{
+
+    @autoreleasepool {
+
+        [liveTimer invalidate];
+        liveTimer = nil;
+        NSLog(@"liveTimerBack");
+
+        [self searchNewMessages:kNewMessageFromUpdate];
+        // If another same maintenance operation is already sceduled, cancel it so this new operation will be executed after other
+        // operations of the queue, so we can group more work together
+        //[periodicMaintenanceOperation cancel];
+        //self.periodicMaintenanceOperation = nil;
+
+    }
+    
+}
+
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
@@ -2766,14 +2882,8 @@
 	self.arrayData = nil;
 	self.updatedArrayData = nil;
 
-	
-	
-    
-    
-		
-	
-    
-    
+    [liveTimer invalidate];
+    liveTimer = nil;
 	
 }
 

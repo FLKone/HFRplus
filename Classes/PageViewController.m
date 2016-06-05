@@ -304,6 +304,11 @@
 	if (buttonIndex == 1 && alertView.tag == 667) {
 		[self fetchContent];
 	}
+    else if (buttonIndex == 1 && alertView.tag == 6677) {
+        if ([self isKindOfClass:[MessagesTableViewController class]]) {
+            [(MessagesTableViewController *)self searchNewMessages:kNewMessageFromUpdate];
+        }
+    }
 	else if (buttonIndex == 1 && alertView.tag == 668) {
 		[self gotoPageNumber:[[[alertView textFieldAtIndex:0] text] intValue]];
     }

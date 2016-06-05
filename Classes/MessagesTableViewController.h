@@ -102,7 +102,8 @@
     BOOL firstLoad;
     BOOL gestureEnabled;
     BOOL paginationEnabled;
-
+    BOOL autoUpdate;
+    NSTimer *liveTimer;
 
 }
 
@@ -132,6 +133,7 @@
 @property BOOL firstLoad;
 @property BOOL gestureEnabled;
 @property BOOL paginationEnabled;
+@property BOOL autoUpdate;
 
 
 @property (nonatomic, strong) NSMutableArray *arrayData;

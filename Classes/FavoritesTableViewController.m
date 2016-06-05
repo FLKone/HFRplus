@@ -31,6 +31,8 @@
 
 #import "UIScrollView+SVPullToRefresh.h"
 #import "PullToRefreshErrorViewController.h"
+#import "HFRNavigationController.h"
+#import "LiveMessagesTableViewController.h"
 
 @implementation FavoritesTableViewController
 @synthesize pressedIndexPath, favoritesTableView, loadingView, showAll;
@@ -1142,7 +1144,7 @@
 		self.topicActionSheet = [[UIActionSheet alloc] initWithTitle:@"Aller à..."
 																delegate:self cancelButtonTitle:@"Annuler"
 												  destructiveButtonTitle:nil
-													   otherButtonTitles:	@"la dernière page", @"la dernière réponse", @"la page numéro...", @"Copier le lien",
+													   otherButtonTitles:	@"la dernière page", @"la dernière réponse", @"la page numéro...", @"Copier le lien", @"Beta: LIVE",
 									 nil,
 									 nil];
 		
@@ -1223,6 +1225,55 @@
 			break;
 			
 		}
+        case 4:
+        {
+            NSLog(@"goto live");
+            NSIndexPath *indexPath = pressedIndexPath;
+            Topic *tmpTopic = [[[self.arrayData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
+
+
+
+
+            LiveMessagesTableViewController *aView = [[LiveMessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[tmpTopic aURL]];
+
+
+            //setup the URL
+            aView.topicName = [tmpTopic aTitle];
+            aView.isViewed = [tmpTopic isViewed];
+
+            UITabBarItem *thirdTab = [[HFRplusAppDelegate sharedAppDelegate].rootController.tabBar.items objectAtIndex:3];
+            if ([thirdTab.title isEqual: @"Live"]) {
+                // Deja Live
+                HFRNavigationController *nc = [[HFRplusAppDelegate sharedAppDelegate].rootController.viewControllers objectAtIndex:3];
+                //[nc setViewControllers:nil animated:YES];
+                [nc setViewControllers:[NSArray arrayWithObject:aView] animated:YES];
+
+            }
+            else {
+                // New Live
+                HFRNavigationController *nc = [[HFRNavigationController alloc] initWithRootViewController:aView];
+
+                NSMutableArray *currCtrls = [NSMutableArray arrayWithArray:[HFRplusAppDelegate sharedAppDelegate].rootController.viewControllers];
+                NSLog(@"currCtrls a %@", [currCtrls description]);
+                [currCtrls insertObject:nc atIndex:3];
+                NSLog(@"currCtrls b %@", [currCtrls description]);
+
+                [[HFRplusAppDelegate sharedAppDelegate].rootController setViewControllers:currCtrls animated:YES];
+
+                UITabBarItem *liveItem = [[HFRplusAppDelegate sharedAppDelegate].rootController.tabBar.items objectAtIndex:3];
+                liveItem.selectedImage = [[UIImage imageNamed:@"live_on"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate ];
+                liveItem.image = [[UIImage imageNamed:@"live"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate ];
+                liveItem.title = @"Live";
+
+            }
+
+            [[HFRplusAppDelegate sharedAppDelegate].rootController setSelectedIndex:3];
+
+
+
+            break;
+            
+        }
         default:
         {
             NSLog(@"default");

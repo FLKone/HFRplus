@@ -12,13 +12,15 @@
 
 - (void)viewDidLoad {
     NSLog(@"LvDid %@", self.topicName);
-    self.gestureEnabled = YES;
-    self.paginationEnabled = YES;
+    self.gestureEnabled = NO;
+    self.paginationEnabled = NO;
     self.autoUpdate = YES;
 
     [super viewDidLoad];
 
     self.navigationItem.rightBarButtonItems = nil;
+
+    self.tabBarItem.title = @"Live";
 }
 
 @end
