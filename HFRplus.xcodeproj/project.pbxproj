@@ -339,6 +339,8 @@
 		4C80A4FF1CF1B2610093CF9B /* CircuitFilled-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C80A4FC1CF1B2610093CF9B /* CircuitFilled-40@2x.png */; };
 		4C80A5001CF1B2610093CF9B /* CircuitFilled-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C80A4FD1CF1B2610093CF9B /* CircuitFilled-40.png */; };
 		4C80A5011CF1B2610093CF9B /* CircuitFilled-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C80A4FD1CF1B2610093CF9B /* CircuitFilled-40.png */; };
+		4C89E6B21D03335500D32E76 /* LiveMessagesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C89E6B11D03335500D32E76 /* LiveMessagesTableViewController.m */; };
+		4C89E6B31D03335500D32E76 /* LiveMessagesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C89E6B11D03335500D32E76 /* LiveMessagesTableViewController.m */; };
 		4C9C2B1B1BAE62C500511853 /* InsetLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9C2B1A1BAE62C500511853 /* InsetLabel.m */; };
 		4C9C2B1C1BAE62C500511853 /* InsetLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9C2B1A1BAE62C500511853 /* InsetLabel.m */; };
 		4C9C2B1F1BAE66EB00511853 /* ThorHammerBlack-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B1D1BAE66EB00511853 /* ThorHammerBlack-20@2x.png */; };
@@ -1460,6 +1462,8 @@
 		4C80A4F71CF1B0E60093CF9B /* ResistorFilled-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ResistorFilled-40.png"; sourceTree = "<group>"; };
 		4C80A4FC1CF1B2610093CF9B /* CircuitFilled-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CircuitFilled-40@2x.png"; sourceTree = "<group>"; };
 		4C80A4FD1CF1B2610093CF9B /* CircuitFilled-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CircuitFilled-40.png"; sourceTree = "<group>"; };
+		4C89E6B01D03335500D32E76 /* LiveMessagesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveMessagesTableViewController.h; sourceTree = "<group>"; };
+		4C89E6B11D03335500D32E76 /* LiveMessagesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveMessagesTableViewController.m; sourceTree = "<group>"; };
 		4C9C2B191BAE62C500511853 /* InsetLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InsetLabel.h; sourceTree = "<group>"; };
 		4C9C2B1A1BAE62C500511853 /* InsetLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InsetLabel.m; sourceTree = "<group>"; };
 		4C9C2B1D1BAE66EB00511853 /* ThorHammerBlack-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ThorHammerBlack-20@2x.png"; sourceTree = "<group>"; };
@@ -2034,6 +2038,8 @@
 				013F0E97121E117800BEBEB1 /* MessagesTableViewController.h */,
 				013F0E98121E117800BEBEB1 /* MessagesTableViewController.m */,
 				013F0E99121E117800BEBEB1 /* MessagesTableViewController.xib */,
+				4C89E6B01D03335500D32E76 /* LiveMessagesTableViewController.h */,
+				4C89E6B11D03335500D32E76 /* LiveMessagesTableViewController.m */,
 				4C265D4B1BAE511800B1A244 /* HFRWebView.h */,
 				4C265D4C1BAE511800B1A244 /* HFRWebView.m */,
 				4CB133121B90E9530081B44D /* MessagesSearchTableViewController.h */,
@@ -4324,6 +4330,7 @@
 				CA00C44617C2FF3F0067B457 /* Reachability.m in Sources */,
 				CA00C44217C2FF3F0067B457 /* ASIFormDataRequest.m in Sources */,
 				4C3903BD1BCAD0EC00FD6F1F /* SDWebImageCompat.m in Sources */,
+				4C89E6B21D03335500D32E76 /* LiveMessagesTableViewController.m in Sources */,
 				CA00C45517C3000B0067B457 /* ShakeView.m in Sources */,
 				4C3903581BCACEC200FD6F1F /* PSTCollectionView.m in Sources */,
 				4C39036E1BCACEC200FD6F1F /* PSTGridLayoutSection.m in Sources */,
@@ -4472,6 +4479,7 @@
 				4C3903591BCACEC200FD6F1F /* PSTCollectionView.m in Sources */,
 				CA7C70EA185EF50E00B348BA /* ASIDataCompressor.m in Sources */,
 				4C3903BE1BCAD0EC00FD6F1F /* SDWebImageCompat.m in Sources */,
+				4C89E6B31D03335500D32E76 /* LiveMessagesTableViewController.m in Sources */,
 				4C39036F1BCACEC200FD6F1F /* PSTGridLayoutSection.m in Sources */,
 				CA7C70EF185EF50E00B348BA /* ASIHTTPRequest.m in Sources */,
 				CA7C70FA185EF50E00B348BA /* ASINetworkQueue.m in Sources */,
