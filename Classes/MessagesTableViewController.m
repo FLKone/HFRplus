@@ -55,7 +55,7 @@
 @synthesize firstDate;
 
 // Live
-@synthesize firstLoad, gestureEnabled, paginationEnabled, autoUpdate;
+@synthesize firstLoad, gestureEnabled, paginationEnabled, autoUpdate, isLive;
 
 - (void)setTopicName:(NSString *)n {
     _topicName = [n filterTU];
@@ -85,8 +85,7 @@
 
 - (void)fetchContent:(int)from
 {
-    [liveTimer invalidate];
-    liveTimer = nil;
+    [self stopTimer];
 
     //self.firstDate = [NSDate date];
     self.errorReported = NO;
@@ -659,6 +658,7 @@
         self.paginationEnabled = YES;
         self.autoUpdate = NO;
         self.isMP = NO;
+        self.isLive = NO;
 	}
 	return self;
 }
@@ -677,6 +677,12 @@
     
 	[super viewDidAppear:animated];
 	self.isAnimating = NO;
+
+    if (!self.firstLoad && self.autoUpdate) {
+
+        [self stopTimer];
+        [self setupTimer:2];
+    }
     
 }
 
@@ -1629,6 +1635,45 @@
     }
     
 }
+-(void)stopTimer {
+    NSLog(@"STOP TIMER");
+    [liveTimer invalidate];
+    liveTimer = nil;
+}
+
+-(void)setupTimer:(int)sec {
+    NSLog(@"SETUP TIMER %d", sec);
+
+    liveTimer = [NSTimer scheduledTimerWithTimeInterval:sec
+                                                 target:self
+                                               selector:@selector(liveTimerSelector)
+                                               userInfo:nil
+                                                repeats:YES];
+}
+-(void)newMessagesAutoAdded:(int)number {
+
+
+    //NSLog(@"MTVC newMessagesAutoAdded %d", number);
+
+    if (self.isLive && self.tabBarController.selectedIndex != 3) {
+
+        [self stopTimer];
+
+      //  NSLog(@">> %@ < %@", self.tabBarItem, [NSString stringWithFormat:@"%d", [self.tabBarItem.badgeValue intValue] + number]);
+        dispatch_async(dispatch_get_main_queue(),
+                       ^{
+                           int curV = [[[[HFRplusAppDelegate sharedAppDelegate].rootController tabBar] items] objectAtIndex:3].badgeValue.intValue;
+                           [[[[[HFRplusAppDelegate sharedAppDelegate].rootController tabBar] items] objectAtIndex:3] setBadgeValue:[NSString stringWithFormat:@"%d", curV + number]];
+                       });
+
+    }
+    else if (self.isLive) {
+        [self setupTimer:5];
+
+    }
+
+
+}
 
 - (NSString*)generateHTMLToolbar {
 
@@ -1720,35 +1765,31 @@
 
            NSLog(@"Messages Added %d", nbAdded);
            //NSLog(@"jsQuery %@", jsQuery);
+
+
+
            [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsQuery];
 
            NSString *jsString = [NSString stringWithFormat:@"$('.message').addSwipeEvents().bind('doubletap', function(evt, touch) { window.location = 'oijlkajsdoihjlkjasdodetails://'+this.id; });"];
            [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString];
 
            if (self.autoUpdate) {
-               liveTimer = [NSTimer scheduledTimerWithTimeInterval:3
-                                                            target:self
-                                                          selector:@selector(liveTimerSelector)
-                                                          userInfo:nil
-                                                           repeats:YES];
+               [self newMessagesAutoAdded:nbAdded];
            }
 
        }
        else {
            if (self.autoUpdate) {
 
-               liveTimer = [NSTimer scheduledTimerWithTimeInterval:6
-                                                            target:self
-                                                          selector:@selector(liveTimerSelector)
-                                                          userInfo:nil
-                                                           repeats:YES];
+               [self setupTimer:10];
+
            }
        }
 
        if (self.autoUpdate && [(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:4] isEnabled]) {
            // page suivante dispo, stop autoupdate
-           [liveTimer invalidate];
-           liveTimer = nil;
+           [self stopTimer];
+
            dispatch_async(dispatch_get_main_queue(),
                           ^{
                               [self.messagesWebView stringByEvaluatingJavaScriptFromString:@"$('#actualiserbtn').remove()"];
@@ -2028,11 +2069,7 @@
 
         if (self.autoUpdate) {
 
-            liveTimer = [NSTimer scheduledTimerWithTimeInterval:3
-                                                                        target:self
-                                                                      selector:@selector(liveTimerSelector)
-                                                                      userInfo:nil
-                                                                       repeats:YES];
+            [self setupTimer:5];
 
         }
         NSString *jsString = @"";
@@ -2057,8 +2094,8 @@
 
     @autoreleasepool {
 
-        [liveTimer invalidate];
-        liveTimer = nil;
+        [self stopTimer];
+
         NSLog(@"liveTimerBack");
 
         [self searchNewMessages:kNewMessageFromUpdate];
@@ -2914,8 +2951,7 @@
 	self.arrayData = nil;
 	self.updatedArrayData = nil;
 
-    [liveTimer invalidate];
-    liveTimer = nil;
+    [self stopTimer];
 	
 }
 

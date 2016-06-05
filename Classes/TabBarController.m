@@ -10,6 +10,7 @@
 #import "FavoritesTableViewController.h"
 #import "HFRMPViewController.h"
 #import "ForumsTableViewController.h"
+#import "LiveMessagesTableViewController.h"
 #import "HFRTabBar.h"
 
 @implementation TabBarController
@@ -83,23 +84,31 @@
 
     if ([viewController isKindOfClass:[UINavigationController class]]) {
         UINavigationController *nv = (UINavigationController *)viewController;
-//      NSLog(@"curtab %lu", (unsigned long)tabBarController.selectedIndex);
-//      NSLog("class top : %@ !!!", [nv.topViewController class]);
+      //NSLog(@"curtab %lu", (unsigned long)tabBarController.selectedIndex);
+      //NSLog("class top : %@ !!!", [nv.topViewController class]);
         
         //actualisation si tap sur l'onglet
         if (tabBarController.selectedIndex == 0 && [nv.topViewController isKindOfClass:[ForumsTableViewController class]]) {
             [(ForumsTableViewController *)nv.topViewController reload];
         }
-        
-        if (tabBarController.selectedIndex == 1 && [nv.topViewController isKindOfClass:[FavoritesTableViewController class]]) {
+        else if (tabBarController.selectedIndex == 1 && [nv.topViewController isKindOfClass:[FavoritesTableViewController class]]) {
             [(FavoritesTableViewController *)nv.topViewController reload];
         }
-        
-        if (tabBarController.selectedIndex == 2 && [nv.topViewController isKindOfClass:[HFRMPViewController class]]) {
+        else if (tabBarController.selectedIndex == 2 && [nv.topViewController isKindOfClass:[HFRMPViewController class]]) {
             [(HFRMPViewController *)nv.topViewController fetchContent];
         }
+        else if ([nv.topViewController isKindOfClass:[LiveMessagesTableViewController class]]) {
+            //NSLog(@"RESET BADGE");
+            dispatch_async(dispatch_get_main_queue(),
+                           ^{
+                               [[[[[HFRplusAppDelegate sharedAppDelegate].rootController tabBar] items] objectAtIndex:3] setBadgeValue:nil];
+                           });
+        }
+
 
     }
+
+
     return YES;
 }
 

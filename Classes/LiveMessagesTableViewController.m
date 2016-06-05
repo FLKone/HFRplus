@@ -15,6 +15,7 @@
     self.gestureEnabled = YES;
     self.paginationEnabled = YES;
     self.autoUpdate = YES;
+    self.isLive = YES;
 
     [super viewDidLoad];
 
@@ -73,8 +74,7 @@
 -(void)stopLive {
     NSLog(@"stop Live");
 
-    [liveTimer invalidate];
-    liveTimer = nil;
+    [self stopTimer];
 
     NSMutableArray *currCtrls = [NSMutableArray arrayWithArray:[HFRplusAppDelegate sharedAppDelegate].rootController.viewControllers];
 
@@ -84,5 +84,6 @@
     [[HFRplusAppDelegate sharedAppDelegate].rootController setSelectedIndex:1];
 
 }
+
 
 @end
