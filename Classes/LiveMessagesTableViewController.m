@@ -23,13 +23,66 @@
     self.title = @"Live";
     self.tabBarItem.title = @"Live";
 
-    UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(cancelLive)];
-    self.navigationItem.rightBarButtonItem = segmentBarItem;
+    UIBarButtonItem *optionsBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(optionsLive:)];
+    optionsBarItem.enabled = NO;
+
+    NSMutableArray *myButtonArray = [[NSMutableArray alloc] initWithObjects:optionsBarItem, nil];
+
+    self.navigationItem.rightBarButtonItems = myButtonArray;
+
 
 }
 
--(void)cancelLive {
+-(void)optionsLive:(id)sender {
     NSLog(@"cancelLive");
+
+
+    [self.arrayActionsMessages removeAllObjects];
+
+    [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Mettre fin au Live", @"stopLive", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && ![self.parentViewController isMemberOfClass:[UINavigationController class]]) {
+        // olol
+    }
+
+    if ([styleAlert isVisible]) {
+        [styleAlert dismissWithClickedButtonIndex:styleAlert.numberOfButtons-1 animated:YES];
+        return;
+    }
+    else {
+        styleAlert = [[UIActionSheet alloc] init];
+    }
+
+    styleAlert.delegate = self;
+
+    styleAlert.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+
+    for( NSDictionary *dico in arrayActionsMessages)
+        [styleAlert addButtonWithTitle:[dico valueForKey:@"title"]];
+
+    [styleAlert addButtonWithTitle:@"Annuler"];
+    styleAlert.cancelButtonIndex = styleAlert.numberOfButtons-1;
+
+    // use the same style as the nav bar
+    styleAlert.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+
+    [styleAlert showFromBarButtonItem:sender animated:YES];
+
+}
+
+-(void)stopLive {
+    NSLog(@"stop Live");
+
+    [liveTimer invalidate];
+    liveTimer = nil;
+
+    NSMutableArray *currCtrls = [NSMutableArray arrayWithArray:[HFRplusAppDelegate sharedAppDelegate].rootController.viewControllers];
+
+    [currCtrls removeObjectAtIndex:3];
+
+    [[HFRplusAppDelegate sharedAppDelegate].rootController setViewControllers:currCtrls animated:YES];
+    [[HFRplusAppDelegate sharedAppDelegate].rootController setSelectedIndex:1];
+
 }
 
 @end
