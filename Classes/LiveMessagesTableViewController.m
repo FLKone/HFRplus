@@ -20,6 +20,7 @@
 
     self.navigationItem.rightBarButtonItems = nil;
 
+    self.title = @"Live";
     self.tabBarItem.title = @"Live";
 
     UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(cancelLive)];
