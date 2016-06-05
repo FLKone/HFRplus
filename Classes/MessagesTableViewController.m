@@ -360,7 +360,7 @@
 				[self setFirstPageUrl:newFirstPageUrl];
 			}
 			else {
-                NSLog(@"[temporaryNumPagesArray objectAtIndex:2] %@", [temporaryNumPagesArray objectAtIndex:2]);
+                //NSLog(@"[temporaryNumPagesArray objectAtIndex:2] %@", [temporaryNumPagesArray objectAtIndex:2]);
 				NSString *newFirstPageUrl = [[NSString alloc] initWithString:[[temporaryNumPagesArray objectAtIndex:2] getAttributeNamed:@"href"]];
 				[self setFirstPageUrl:newFirstPageUrl];
 			}
@@ -553,11 +553,11 @@
                 else if ([[no getAttributeNamed:@"name"] isEqualToString:@"filter"]) {
                     //NSLog(@"name %@ = %@", [no getAttributeNamed:@"name"], [no getAttributeNamed:@"checked"]);
                     if ([[no getAttributeNamed:@"checked"] isEqualToString:@"checked"]) {
-                        NSLog(@"FILTER ON");
+                        //NSLog(@"FILTER ON");
                         [self.searchFilter setOn:YES animated:NO];
                     }
                     else {
-                        NSLog(@"FILTER OFF");
+                        //NSLog(@"FILTER OFF");
                         [self.searchFilter setOn:NO animated:NO];
                     }
                 }
@@ -1630,6 +1630,50 @@
     
 }
 
+- (NSString*)generateHTMLToolbar {
+
+    NSString *tooBar = @"";
+
+    //Toolbar;
+    if (self.aToolbar && !self.isSearchInstra) {
+        NSString *buttonBegin, *buttonEnd;
+        NSString *buttonPrevious, *buttonNext;
+
+        if ([(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:0] isEnabled]) {
+            buttonBegin = @"<div class=\"button begin active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://begin\">begin</a></div>";
+            buttonPrevious = @"<div class=\"button2 begin active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://previous\">previous</a></div>";
+        }
+        else {
+            buttonBegin = @"<div class=\"button begin\"></div>";
+            buttonPrevious = @"<div class=\"button2 begin\"></div>";
+        }
+
+        if ([(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:4] isEnabled]) {
+            buttonEnd = @"<div class=\"button end active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://end\">end</a></div>";
+            buttonNext = @"<div class=\"button2 end active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://next\">next</a></div>";
+        }
+        else {
+            buttonEnd = @"<div class=\"button end\"></div>";
+            buttonNext = @"<div class=\"button2 end\"></div>";
+        }
+
+
+        //[NSString stringWithString:@"<div class=\"button end\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://end\">end</a></div>"];
+
+        tooBar =  [NSString stringWithFormat:@"<div id=\"toolbarpage\">\
+                   %@\
+                   %@\
+                   <a href=\"oijlkajsdoihjlkjasdoauto://choose\">%d/%d</a>\
+                   %@\
+                   %@\
+                   </div>", buttonBegin, buttonPrevious, [self pageNumber], [self lastPageNumber], buttonNext, buttonEnd];
+    }
+    else if (self.isSearchInstra) {
+        tooBar = [NSString stringWithFormat:@"<a href=\"oijlkajsdoihjlkjasdoauto://submitsearch\" id=\"searchintra_nextbutton\">Résultats suivants &raquo;</a>"];
+    }
+    return tooBar;
+}
+
 #pragma mark -
 #pragma mark Parse Operation Delegate
 
@@ -1673,7 +1717,7 @@
                                 ", tmpHTML];
 
            NSLog(@"Messages Added %d", nbAdded);
-           NSLog(@"jsQuery %@", jsQuery);
+           //NSLog(@"jsQuery %@", jsQuery);
            [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsQuery];
 
            if (self.autoUpdate) {
@@ -1696,10 +1740,32 @@
            }
        }
 
+       if (self.autoUpdate && [(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:4] isEnabled]) {
+           // page suivante dispo, stop autoupdate
+           [liveTimer invalidate];
+           liveTimer = nil;
+           dispatch_async(dispatch_get_main_queue(),
+                          ^{
+                              [self.messagesWebView stringByEvaluatingJavaScriptFromString:@"$('#actualiserbtn').remove()"];
+                          });
+       }
+       else {
        dispatch_async(dispatch_get_main_queue(),
                       ^{
                           [self.messagesWebView stringByEvaluatingJavaScriptFromString:@"$('#actualiserbtn').removeClass('loading');"];
                       });
+
+       }
+       NSString *tooBar = [self generateHTMLToolbar];
+       NSString *jsQuery2 = [NSString stringWithFormat:@"var new_div2 = $('%@');\
+                             var old_div = $('#toolbarpage');\
+                             if (old_div.length > 0) { $(old_div).replaceWith(new_div2) }\
+                             else { $('#endofpage').before(new_div2); } \
+                            ", tooBar];
+       //NSLog(@"jsQuery %@", jsQuery2);
+
+       [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsQuery2];
+
        return;
     }
 
@@ -1806,47 +1872,8 @@
             //NSLog(@"autre");
         }
 
-        NSString *tooBar = @"";
-        
-        //Toolbar;
-        if (self.paginationEnabled && self.aToolbar && !self.isSearchInstra) {
-            NSString *buttonBegin, *buttonEnd;
-            NSString *buttonPrevious, *buttonNext;
-            
-            if ([(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:0] isEnabled]) {
-                buttonBegin = @"<div class=\"button begin active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://begin\">begin</a></div>";
-                buttonPrevious = @"<div class=\"button2 begin active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://previous\">previous</a></div>";
-            }
-            else {
-                buttonBegin = @"<div class=\"button begin\"></div>";
-                buttonPrevious = @"<div class=\"button2 begin\"></div>";
-            }
-            
-            if ([(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:4] isEnabled]) {
-                buttonEnd = @"<div class=\"button end active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://end\">end</a></div>";
-                buttonNext = @"<div class=\"button2 end active\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://next\">next</a></div>";
-            }
-            else {
-                buttonEnd = @"<div class=\"button end\"></div>";
-                buttonNext = @"<div class=\"button2 end\"></div>";
-            }
-            
-            
-            //[NSString stringWithString:@"<div class=\"button end\" ontouchstart=\"$(this).addClass(\\'hover\\')\" ontouchend=\"$(this).removeClass(\\'hover\\')\" ><a href=\"oijlkajsdoihjlkjasdoauto://end\">end</a></div>"];
-            
-            tooBar =  [NSString stringWithFormat:@"<div id=\"toolbarpage\">\
-                       %@\
-                       %@\
-                       <a href=\"oijlkajsdoihjlkjasdoauto://choose\">%d/%d</a>\
-                       %@\
-                       %@\
-                       </div>", buttonBegin, buttonPrevious, [self pageNumber], [self lastPageNumber], buttonNext, buttonEnd];
-        }
-        else if (self.isSearchInstra) {
-            tooBar = [NSString stringWithFormat:@"<a href=\"oijlkajsdoihjlkjasdoauto://submitsearch\" id=\"searchintra_nextbutton\">Résultats suivants &raquo;</a>"];
-        }
-        
-        
+        NSString *tooBar = [self generateHTMLToolbar];
+
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSString *display_sig = [defaults stringForKey:@"display_sig"];
         
@@ -2015,7 +2042,7 @@
 
 - (void)liveTimerSelector
 {
-    NSLog(@"liveTimer");
+    //NSLog(@"liveTimer");
 
     [self performSelectorInBackground:@selector(liveTimerSelectorBack) withObject:nil];
 }
