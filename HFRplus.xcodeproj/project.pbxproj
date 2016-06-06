@@ -399,6 +399,8 @@
 		4C9C2B911BAE801700511853 /* BugFilled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B821BAE801700511853 /* BugFilled-25.png */; };
 		4C9C2B921BAE801700511853 /* QuestionsFilled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B831BAE801700511853 /* QuestionsFilled-25.png */; };
 		4C9C2B931BAE801700511853 /* QuestionsFilled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B831BAE801700511853 /* QuestionsFilled-25.png */; };
+		4CA169C61D05A43B00BE27E5 /* OrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA169C51D05A43B00BE27E5 /* OrderedDictionary.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4CA169C71D05A43B00BE27E5 /* OrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA169C51D05A43B00BE27E5 /* OrderedDictionary.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4CB132941B9058530081B44D /* 146-gavel.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132921B9058530081B44D /* 146-gavel.png */; };
 		4CB132951B9058530081B44D /* 146-gavel.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132921B9058530081B44D /* 146-gavel.png */; };
 		4CB132961B9058530081B44D /* 146-gavel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132931B9058530081B44D /* 146-gavel@2x.png */; };
@@ -1523,6 +1525,8 @@
 		4C9C2B811BAE801700511853 /* BugFilled-25@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BugFilled-25@2x.png"; sourceTree = "<group>"; };
 		4C9C2B821BAE801700511853 /* BugFilled-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BugFilled-25.png"; sourceTree = "<group>"; };
 		4C9C2B831BAE801700511853 /* QuestionsFilled-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "QuestionsFilled-25.png"; sourceTree = "<group>"; };
+		4CA169C41D05A43B00BE27E5 /* OrderedDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderedDictionary.h; sourceTree = "<group>"; };
+		4CA169C51D05A43B00BE27E5 /* OrderedDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderedDictionary.m; sourceTree = "<group>"; };
 		4CB132921B9058530081B44D /* 146-gavel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "146-gavel.png"; sourceTree = "<group>"; };
 		4CB132931B9058530081B44D /* 146-gavel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "146-gavel@2x.png"; sourceTree = "<group>"; };
 		4CB132981B905BF80081B44D /* BlackListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlackListTableViewController.h; sourceTree = "<group>"; };
@@ -2523,6 +2527,15 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		4CA169C31D05A43B00BE27E5 /* OrderedDictionary */ = {
+			isa = PBXGroup;
+			children = (
+				4CA169C41D05A43B00BE27E5 /* OrderedDictionary.h */,
+				4CA169C51D05A43B00BE27E5 /* OrderedDictionary.m */,
+			);
+			path = OrderedDictionary;
+			sourceTree = "<group>";
+		};
 		4CB132A91B9094BD0081B44D /* MenuItem */ = {
 			isa = PBXGroup;
 			children = (
@@ -2594,6 +2607,7 @@
 				CA00C3E317C2FE1B0067B457 /* MBProgressHUD */,
 				CA00C44917C2FF4E0067B457 /* MKStoreManager */,
 				CA00C3A317C2FDAF0067B457 /* MWPhotoBrowser */,
+				4CA169C31D05A43B00BE27E5 /* OrderedDictionary */,
 				4C9C2B261BAE77EC00511853 /* InAppSettingsKit */,
 				CA00C45617C300140067B457 /* RegexKitLite */,
 				CA00C3FE17C2FE240067B457 /* SDWebImage */,
@@ -4286,6 +4300,7 @@
 				4C3903C31BCAD0EC00FD6F1F /* SDWebImageDownloaderOperation.m in Sources */,
 				CAFD004315B9B665003CA3FC /* HFRDebugViewController.m in Sources */,
 				CAC7FCD0190DBD450083BB4E /* PollResultTableViewCell.m in Sources */,
+				4CA169C61D05A43B00BE27E5 /* OrderedDictionary.m in Sources */,
 				4C3903CD1BCAD0EC00FD6F1F /* UIImage+MultiFormat.m in Sources */,
 				4CB132A71B908EC00081B44D /* UIMenuItem+CXAImageSupport.m in Sources */,
 				4C3903D51BCAD0EC00FD6F1F /* UIView+WebCacheOperation.m in Sources */,
@@ -4435,6 +4450,7 @@
 				4C3903C41BCAD0EC00FD6F1F /* SDWebImageDownloaderOperation.m in Sources */,
 				CA7C7111185EF50E00B348BA /* HFRDebugViewController.m in Sources */,
 				CAC7FCD1190DBD450083BB4E /* PollResultTableViewCell.m in Sources */,
+				4CA169C71D05A43B00BE27E5 /* OrderedDictionary.m in Sources */,
 				4C3903CE1BCAD0EC00FD6F1F /* UIImage+MultiFormat.m in Sources */,
 				4CB132A81B908EC00081B44D /* UIMenuItem+CXAImageSupport.m in Sources */,
 				4C3903D61BCAD0EC00FD6F1F /* UIView+WebCacheOperation.m in Sources */,
