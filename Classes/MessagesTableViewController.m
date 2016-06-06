@@ -291,22 +291,10 @@
 	
 }
 
--(void)setupPageToolbar:(HTMLNode *)bodyNode andP:(HTMLParser *)myParser;
+-(void)setupPageToolbar:(HTMLNode *)bodyNode andP:(HTMLParser *)myParser
 {
     if (!self.pageNumber && !self.errorReported) {
-        NSLog(@"ERR %@", [self currentUrl]);
-        
-        ASIFormDataRequest  *errRequest = [[ASIFormDataRequest  alloc] initWithURL:[NSURL URLWithString:@"https://api.flkone.com/hfrplus/"]];
-        
-        [errRequest setPostValue:[self currentUrl] forKey:@"url"];
-        [errRequest setPostValue:[NSString stringWithFormat:@"{ \"reason\" : \"no page\", \"version\" : \"%@\"}", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]] forKey:@"data"];
-        [errRequest setPostValue:kHFRAPI forKey:@"AID"];
-        __weak ASIFormDataRequest *errRequest_ = errRequest;
-        [errRequest setCompletionBlock:^{
-            NSLog(@"setCompletionBlock %@", errRequest_.responseString);
-        }];
-        
-        [errRequest startAsynchronous];
+
         self.errorReported = YES;
         
         dispatch_queue_t backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
@@ -1803,25 +1791,7 @@
 
     
     NSLog(@"COUNT = %lu", (unsigned long)[self.arrayData count]);
-    
-    if (!self.isSearchInstra && self.arrayData.count == 0 && !self.errorReported) {
-        NSLog(@"ERR %@", [self currentUrl]);
-        
-        ASIFormDataRequest  *errRequest = [[ASIFormDataRequest  alloc] initWithURL:[NSURL URLWithString:@"https://api.flkone.com/hfrplus/"]];
-        
-        [errRequest setPostValue:[self currentUrl] forKey:@"url"];
-        [errRequest setPostValue:[NSString stringWithFormat:@"{ \"reason\" : \"count = 0\", \"version\" : \"%@\"}", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]] forKey:@"data"];
-        [errRequest setPostValue:kHFRAPI forKey:@"AID"];
-        __weak ASIFormDataRequest *errRequest_ = errRequest;
-        [errRequest setCompletionBlock:^{
-            NSLog(@"setCompletionBlock %@", errRequest_.responseString);
-        }];
-        
-        [errRequest startAsynchronous];
-        self.errorReported = YES;
-    }
 
-    
     if (self.isSearchInstra && self.arrayData.count == 0) {
         NSLog(@"BZAAAAA %@", self.currentUrl);
         [self.loadingView setHidden:YES];
