@@ -1641,8 +1641,9 @@
 }
 
 -(void)setupTimer:(int)sec {
-    NSLog(@"SETUP TIMER %d", sec);
     [self stopTimer];
+
+    NSLog(@"SETUP TIMER %d", sec);
     self.liveTimer = [NSTimer scheduledTimerWithTimeInterval:sec
                                                  target:self
                                                selector:@selector(liveTimerSelector)
