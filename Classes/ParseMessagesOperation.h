@@ -7,6 +7,8 @@
 
 @class LinkItem;
 @class HTMLParser;
+@class OrderedDictionary;
+
 @protocol ParseMessagesOperationDelegate;
 
 
@@ -17,7 +19,7 @@
     
     NSData          *dataToParse;
     
-    NSMutableArray		*workingArray;
+    OrderedDictionary		*workingArray;
     LinkItem		*workingEntry;
     BOOL            reverse;
 	int				index;
@@ -31,6 +33,6 @@
 @end
 
 @protocol ParseMessagesOperationDelegate
-- (void)didFinishParsing:(NSArray *)appList;
+- (void)didFinishParsing:(OrderedDictionary *)appList;
 - (void)didStartParsing:(HTMLParser *)myParser;
 @end

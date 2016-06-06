@@ -20,7 +20,7 @@
 
 @implementation MessageDetailViewController
 @synthesize messageView, messageAuthor, messageDate, authorAvatar, messageTitle, messageTitleString, messageAvatar;
-@synthesize pageNumber, curMsg, arrayData;
+@synthesize pageNumber, currentPostID;
 @synthesize parent, defaultTintColor, messagesTableViewController;
 @synthesize toolbarBtn, quoteBtn, editBtn, actionBtn, arrayAction, styleAlert;
 
@@ -83,14 +83,15 @@
     }
 }
 
+-(OrderedDictionary *)arrayData {
+
+    return self.parent.arrayData;
+}
+
 -(void)setupData
 {
-	//NSLog(@"curmsg");
-	//NSLog(@"curmsg %d - arraydata %d", curMsg, arrayData.count);
-	
-
     
-	if (curMsg > 0) {
+	if ([[self arrayData] indexForKey:self.currentPostID] > 0) {
 		[(UISegmentedControl *)self.navigationItem.rightBarButtonItem.customView setEnabled:YES forSegmentAtIndex:0];
 
 	}
@@ -100,7 +101,7 @@
 	}
 
 	
-	if(curMsg < arrayData.count - 1)
+	if([[self arrayData] indexForKey:self.currentPostID] < [self arrayData].count - 1)
 	{
 		[(UISegmentedControl *)self.navigationItem.rightBarButtonItem.customView setEnabled:YES forSegmentAtIndex:1];
 
@@ -111,15 +112,15 @@
 	}
     
 
-	[[self.parent messagesWebView] stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"window.location.hash='%@';", [[arrayData objectAtIndex:curMsg] postID]]];
+	[[self.parent messagesWebView] stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"window.location.hash='anch%@';", self.currentPostID]];
 
-    NSString *myRawContent = [[arrayData objectAtIndex:curMsg] dicoHTML];
+    NSString *myRawContent = [[[self arrayData] objectForKey:self.currentPostID] dicoHTML];
     
-    if ([[arrayData objectAtIndex:curMsg] quotedNB]) {
-        myRawContent = [myRawContent stringByAppendingString:[NSString stringWithFormat:@"<a class=\"quotedhfrlink\" href=\"%@\">%@</a>", [[arrayData objectAtIndex:curMsg] quotedLINK], [[arrayData objectAtIndex:curMsg] quotedNB]]];
+    if ([[[self arrayData] objectForKey:self.currentPostID] quotedNB]) {
+        myRawContent = [myRawContent stringByAppendingString:[NSString stringWithFormat:@"<a class=\"quotedhfrlink\" href=\"%@\">%@</a>", [[[self arrayData] objectForKey:self.currentPostID] quotedLINK], [[[self arrayData] objectForKey:self.currentPostID] quotedNB]]];
     }
-    if ([[arrayData objectAtIndex:curMsg] editedTime ]) {
-        myRawContent = [myRawContent stringByAppendingString:[NSString stringWithFormat:@"<br/><p class=\"editedhfrlink\">édité par %@</p>", [[arrayData objectAtIndex:curMsg] editedTime]]];
+    if ([[[self arrayData] objectForKey:self.currentPostID] editedTime ]) {
+        myRawContent = [myRawContent stringByAppendingString:[NSString stringWithFormat:@"<br/><p class=\"editedhfrlink\">édité par %@</p>", [[[self arrayData] objectForKey:self.currentPostID] editedTime]]];
     }
     
     NSString *customFontSize = [self userTextSizeDidChange];
@@ -173,17 +174,15 @@
 	
 	//[HTMLString release];
 	
-	[messageDate setText:(NSString *)[[arrayData objectAtIndex:curMsg] messageDate]];
-	[messageAuthor setText:[[arrayData objectAtIndex:curMsg] name]];
-
-	//NSLog(@"avat: %@", [[arrayData objectAtIndex:curMsg] imageUrl]);
+	[messageDate setText:(NSString *)[[[self arrayData] objectForKey:self.currentPostID] messageDate]];
+	[messageAuthor setText:[[[self arrayData] objectForKey:self.currentPostID] name]];
 
 	//NSString* imageURL = @"http://theurl.com/image.gif";
 
 	
-	if ([[arrayData objectAtIndex:curMsg] imageUI]) {
+	if ([[[self arrayData] objectForKey:self.currentPostID] imageUI]) {
 
-		[authorAvatar setImage:[UIImage imageWithContentsOfFile:[[arrayData objectAtIndex:curMsg] imageUI]]];
+		[authorAvatar setImage:[UIImage imageWithContentsOfFile:[[[self arrayData] objectForKey:self.currentPostID] imageUI]]];
 
 		
 	}
@@ -202,11 +201,11 @@
                                                                               action:nil];
     fixedItem.width = 10;
     
-	if([[arrayData objectAtIndex:curMsg] urlEdit]){
+	if([[[self arrayData] objectForKey:self.currentPostID] urlEdit]){
 		[toolbarBtn setItems:[NSArray arrayWithObjects: flexItem, editBtn, fixedItem, actionBtn, nil] animated:NO];
 		
 	}
-	else if([[arrayData objectAtIndex:curMsg] urlQuote]){
+	else if([[[self arrayData] objectForKey:self.currentPostID] urlQuote]){
 		[toolbarBtn setItems:[NSArray arrayWithObjects: flexItem, quoteBtn, fixedItem, actionBtn, nil] animated:NO];
 	}
 	else {
@@ -218,7 +217,7 @@
 	}
 	else {
 		quoteBtn.enabled = NO;	
-		if([[arrayData objectAtIndex:curMsg] urlEdit]){
+		if([[[self arrayData] objectForKey:self.currentPostID] urlEdit]){
 			actionBtn.enabled = NO;
 		}
 		else {
@@ -494,36 +493,37 @@
 	// The segmented control was clicked, handle it here 
 	UISegmentedControl *segmentedControl = (UISegmentedControl *)sender;
 	//NSLog(@"Segment clicked: %d", segmentedControl.selectedSegmentIndex);
-	
+
+
+
 	switch (segmentedControl.selectedSegmentIndex) {
 		case 0:
-			curMsg -=1;
+            self.currentPostID = [[[self arrayData] previousObjectForKey:self.currentPostID] postID];
 			[self setupData];
 			break;
 		case 1:
 			//down
-			curMsg +=1;			
+            self.currentPostID = [[[self arrayData] nextObjectForKey:self.currentPostID] postID];
 			[self setupData];
 			break;
 		default:
 			break;
 	}
 	
-	[(UILabel *)self.navigationItem.titleView setText:[NSString stringWithFormat:@"Page: %d — %d/%d", self.pageNumber, curMsg + 1, arrayData.count]];
+	[(UILabel *)self.navigationItem.titleView setText:[NSString stringWithFormat:@"Page: %d — %lu/%lu", self.pageNumber, [self.arrayData indexForKey:self.currentPostID] + 1, (unsigned long)[self arrayData].count]];
 
-	//[parent.messagesTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:curMsg] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
-	
+
 }
 
 -(void)QuoteMessage
 {
-	[parent quoteMessage:[NSString stringWithFormat:@"%@%@", kForumURL, [[[arrayData objectAtIndex:curMsg] urlQuote] decodeSpanUrlFromString] ]];
+	[parent quoteMessage:[NSString stringWithFormat:@"%@%@", kForumURL, [[[[self arrayData] objectForKey:self.currentPostID] urlQuote] decodeSpanUrlFromString] ]];
 }
 
 -(void)EditMessage
 {
-	[parent setEditFlagTopic:[[arrayData objectAtIndex:curMsg] postID]];
-	[parent editMessage:[NSString stringWithFormat:@"%@%@", kForumURL, [[[arrayData objectAtIndex:curMsg] urlEdit] decodeSpanUrlFromString] ]];
+	[parent setEditFlagTopic:self.currentPostID];
+	[parent editMessage:[NSString stringWithFormat:@"%@%@", kForumURL, [[[[self arrayData] objectForKey:self.currentPostID] urlEdit] decodeSpanUrlFromString] ]];
 
 }
 
@@ -537,19 +537,19 @@
 		[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Ajouter aux favoris", @"actionFavoris:", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
 	} 
 	
-	if([[arrayData objectAtIndex:curMsg] urlEdit] && self.parent.navigationItem.rightBarButtonItem.enabled){
+	if([[[self arrayData] objectForKey:self.currentPostID] urlEdit] && self.parent.navigationItem.rightBarButtonItem.enabled){
 		[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Répondre", @"QuoteMessage:", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
 	}
 	else  {
 		//[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Voir le profil", @"actionProfil:", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
-		if([[arrayData objectAtIndex:curMsg] MPUrl]){
+		if([[[self arrayData] objectForKey:self.currentPostID] MPUrl]){
 			[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Envoyer un message", @"actionMessage:", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
 		}
 	}
 	
 	//"Citer ☑"@"Citer ☒"@"Citer ☐"	
-	if([[arrayData objectAtIndex:curMsg] quoteJS] && self.parent.navigationItem.rightBarButtonItem.enabled) {
-		NSString *components = [[[arrayData objectAtIndex:curMsg] quoteJS] substringFromIndex:7];
+	if([[[self arrayData] objectForKey:self.currentPostID] quoteJS] && self.parent.navigationItem.rightBarButtonItem.enabled) {
+		NSString *components = [[[[self arrayData] objectForKey:self.currentPostID] quoteJS] substringFromIndex:7];
 		components = [components stringByReplacingOccurrencesOfString:@"); return false;" withString:@""];
 		components = [components stringByReplacingOccurrencesOfString:@"'" withString:@""];
 		
@@ -606,11 +606,10 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
 
 	if (buttonIndex < [self.arrayAction count]) {
-		//NSLog(@"clickedButtonAtIndex %d %@", buttonIndex, [NSNumber numberWithInt:curMsg]);
 
 
         
-        [self.parent performSelectorOnMainThread:NSSelectorFromString([[self.arrayAction objectAtIndex:buttonIndex] objectForKey:@"code"]) withObject:[NSNumber numberWithInt:curMsg] waitUntilDone:NO];
+        [self.parent performSelectorOnMainThread:NSSelectorFromString([[self.arrayAction objectAtIndex:buttonIndex] objectForKey:@"code"]) withObject:self.currentPostID waitUntilDone:NO];
         
     }
 	

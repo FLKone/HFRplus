@@ -10,6 +10,7 @@
 #import "NewMessageViewController.h"
 
 @class MessagesTableViewController;
+@class OrderedDictionary;
 
 @interface MessageDetailViewController : UIViewController <AddMessageViewControllerDelegate, UIActionSheetDelegate, UIWebViewDelegate> {
 	IBOutlet UIWebView *messageView;
@@ -21,9 +22,9 @@
 	IBOutlet UILabel *messageTitle;
 
 	NSString *messageTitleString;
-	NSMutableArray *arrayData;
+
 	int pageNumber;
-	int curMsg;
+	NSString *currentPostID;
 	
 	MessagesTableViewController *__weak parent;
     MessagesTableViewController *messagesTableViewController;
@@ -57,19 +58,17 @@
 
 @property (nonatomic, strong) NSString *messageTitleString;
 
-@property (nonatomic, strong) NSMutableArray *arrayData;
-
 @property (nonatomic, weak) MessagesTableViewController *parent;
 @property (nonatomic, strong) MessagesTableViewController *messagesTableViewController;
 
 @property (nonatomic, strong) UIColor *defaultTintColor;
 
 @property int pageNumber;
-@property int curMsg;
+@property (nonatomic, strong) NSString *currentPostID;
 
 //- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andContent:(LinkItem *)myItem;
 -(void)QuoteMessage;
 -(void)EditMessage;
 -(void)ActionList:(id)sender;
-	
+-(OrderedDictionary *)arrayData;
 @end

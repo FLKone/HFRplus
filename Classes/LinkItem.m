@@ -16,7 +16,7 @@
 
 @synthesize quotedNB, quotedLINK, editedTime;
 
--(NSString *)toHTML:(int)index
+-(NSString *)toHTML
 {
 	NSString *tempHTML = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"templatev2" ofType:@"htm"] encoding:NSUTF8StringEncoding error:NULL];
 
@@ -175,7 +175,7 @@
     
 	tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"%%MESSAGE_CONTENT%%" withString:myRawContent];
 	
-	tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"%%ID%%" withString:[NSString stringWithFormat:@"%d", index]];
+	tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"%%ID%%" withString:self.postID];
 
 	
 	tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"\n" withString:@""];	

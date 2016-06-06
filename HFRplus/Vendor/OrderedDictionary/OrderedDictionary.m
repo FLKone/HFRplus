@@ -91,6 +91,51 @@ NSString *DescriptionForObject(NSObject *object, id locale, NSUInteger indent)
 	return [dictionary objectForKey:aKey];
 }
 
+- (id)objectAtIndex:(NSUInteger)anIndex
+{
+    return [dictionary objectForKey:[array objectAtIndex:anIndex]];
+}
+
+- (id)lastObject {
+    return [self objectAtIndex:self.count - 1];
+}
+
+- (NSUInteger)indexForKey:(id)aKey {
+    return [array indexOfObject:aKey];
+}
+
+- (id)nextObjectForKey:(id)aKey {
+
+    // current Key
+    NSUInteger curIdx = [self indexForKey:aKey];
+
+    //NSLog(@"n curIdx %lu", (unsigned long)curIdx);
+
+    if (curIdx + 1 < array.count) {
+
+        //NSLog(@"next %@", [self objectAtIndex:curIdx + 1]);
+
+
+        return [self objectAtIndex:curIdx + 1];
+    }
+
+    return nil;
+}
+
+- (id)previousObjectForKey:(id)aKey {
+
+    // current Key
+    NSUInteger curIdx = [self indexForKey:aKey];
+
+    //NSLog(@"p curIdx %lu", (unsigned long)curIdx);
+
+    //NSLog(@"previous %@", [self objectAtIndex:curIdx - 1]);
+
+    return [self objectAtIndex:curIdx - 1];
+}
+
+
+
 - (NSEnumerator *)keyEnumerator
 {
 	return [array objectEnumerator];

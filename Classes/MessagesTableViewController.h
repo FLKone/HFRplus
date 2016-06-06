@@ -23,6 +23,7 @@
 #import "AlerteModoViewController.h"
 
 #import "MWPhotoBrowser.h"
+#import "OrderedDictionary.h"
 
 @class HTMLNode;
 @class MessageDetailViewController;
@@ -50,9 +51,8 @@
 	BOOL isViewed; //to check if isViewed (bold & +1)
     BOOL isMP;
 
-	NSMutableArray *arrayData;
-	NSMutableArray *updatedArrayData;
-	
+	OrderedDictionary *arrayData;
+
     MessagesTableViewController *messagesTableViewController;
 	MessageDetailViewController *detailViewController;
 
@@ -73,7 +73,7 @@
 	
 	UIToolbar *aToolbar;
 	NSMutableArray *arrayAction;
-	int curPostID;
+	NSString *curPostID;
 	
     NSMutableArray *arrayActionsMessages;
 
@@ -137,8 +137,7 @@
 
 @property (nonatomic, strong) NSTimer *liveTimer;
 
-@property (nonatomic, strong) NSMutableArray *arrayData;
-@property (nonatomic, strong) NSMutableArray *updatedArrayData;
+@property (nonatomic, strong) OrderedDictionary *arrayData;
 
 @property (nonatomic, strong) MessageDetailViewController *detailViewController;
 @property (nonatomic, strong) MessagesTableViewController *messagesTableViewController;
@@ -160,7 +159,7 @@
 @property (strong, nonatomic) ASIHTTPRequest *request;
 
 @property (strong, nonatomic) NSMutableArray *arrayAction;
-@property int curPostID;
+@property (strong, nonatomic) NSString *curPostID;
 
 @property BOOL isAnimating;
 

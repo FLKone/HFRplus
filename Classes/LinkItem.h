@@ -91,6 +91,6 @@
 @property BOOL isDel;
 @property BOOL isBL;
 
--(NSString *)toHTML:(int)index;
+-(NSString *)toHTML;
 
 @end

@@ -22,6 +22,12 @@
 
 - (void)insertObject:(id)anObject forKey:(id)aKey atIndex:(NSUInteger)anIndex;
 - (id)keyAtIndex:(NSUInteger)anIndex;
+- (id)objectAtIndex:(NSUInteger)anIndex;
+- (id)lastObject;
+- (NSUInteger)indexForKey:(id)aKey;
+- (id)nextObjectForKey:(id)aKey;
+- (id)previousObjectForKey:(id)aKey;
+
 - (NSEnumerator *)reverseKeyEnumerator;
 
 @end

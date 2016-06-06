@@ -11,6 +11,7 @@
 #import "LinkItem.h"
 #import "RegexKitLite.h"
 #import "HTMLParser.h"
+#import "OrderedDictionary.h"
 
 #import "RangeOfCharacters.h"
 #import <CommonCrypto/CommonDigest.h>
@@ -21,7 +22,7 @@
 @interface ParseMessagesOperation ()
 @property (nonatomic, weak) id <ParseMessagesOperationDelegate> delegate;
 @property (nonatomic, strong) NSData *dataToParse;
-@property (nonatomic, strong) NSMutableArray *workingArray;
+@property (nonatomic, strong) OrderedDictionary *workingArray;
 @property (nonatomic, strong) LinkItem *workingEntry;
 @property (nonatomic, assign) BOOL reverse;
 @property (nonatomic, assign) int index;
@@ -66,7 +67,7 @@
 		{
 			//NSLog(@"main canceled");		
 		}	
-		self.workingArray = [NSMutableArray array];
+		self.workingArray = [[OrderedDictionary alloc] init];
 
 		NSError * error = nil;
 		HTMLParser *myParser = [[HTMLParser alloc] initWithData:dataToParse error:&error];
@@ -82,6 +83,10 @@
         
         if (![self isCancelled])
         {
+
+            NSLog(@"Contents of the dictionary: %@", self.workingArray);
+
+
             [self.delegate didFinishParsing:self.workingArray];
             
         }
@@ -322,12 +327,11 @@
 				break;
 			}
 
-            /* Live test
-            if (self.workingArray.count >= 4 && self.reverse) {
-                break;
-            }
-            */
-			[self.workingArray addObject:fasTest];
+            // Live test
+            //if (self.workingArray.count >= 4 && self.reverse) break;
+
+
+            [self.workingArray setObject:fasTest forKey:fasTest.postID];
 			
 			
 			

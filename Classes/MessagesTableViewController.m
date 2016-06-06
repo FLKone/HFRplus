@@ -38,7 +38,7 @@
 #import "BlackList.h"
 
 @implementation MessagesTableViewController
-@synthesize loaded, isLoading, _topicName, topicAnswerUrl, loadingView, errorLabelView, messagesWebView, arrayData, updatedArrayData, detailViewController, messagesTableViewController, pollNode, pollParser;
+@synthesize loaded, isLoading, _topicName, topicAnswerUrl, loadingView, errorLabelView, messagesWebView, arrayData, detailViewController, messagesTableViewController, pollNode, pollParser;
 @synthesize swipeLeftRecognizer, swipeRightRecognizer, overview, arrayActionsMessages, lastStringFlagTopic;
 @synthesize searchBg, searchBox, searchKeyword, searchPseudo, searchFilter, searchFromFP, searchInputData, isSearchInstra, errorReported;
 
@@ -724,13 +724,11 @@
         baseElem = [baseElem stringByAppendingString:@".parentElement"];
     }
     NSLog(@"ID %@", [self.messagesWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"%@.parentElement.id", baseElem]]);
-    int curMsg = [[self.messagesWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"%@.parentElement.id", baseElem]] intValue];
+    NSString *selectedPostID = [self.messagesWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"%@.parentElement.id", baseElem]];
 
     NSLog(@"theSelectedText %@", theSelectedText);
-    
-    //int curMsg = [[NSNumber numberWithInt:curPostID] intValue];
-        
-    [self quoteMessage:[NSString stringWithFormat:@"%@%@", kForumURL, [[[arrayData objectAtIndex:curMsg] urlQuote] decodeSpanUrlFromString]] andSelectedText:theSelectedText];
+
+    [self quoteMessage:[NSString stringWithFormat:@"%@%@", kForumURL, [[[arrayData objectForKey:selectedPostID] urlQuote] decodeSpanUrlFromString]] andSelectedText:theSelectedText];
 }
 
 -(void)textQuoteBold:(id)sender {
@@ -744,19 +742,17 @@
         baseElem = [baseElem stringByAppendingString:@".parentElement"];
     }
     NSLog(@"ID %@", [self.messagesWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"%@.parentElement.id", baseElem]]);
-    int curMsg = [[self.messagesWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"%@.parentElement.id", baseElem]] intValue];
+    NSString *selectedPostID = [self.messagesWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"%@.parentElement.id", baseElem]];
 
     NSLog(@"theSelectedText Bold %@", theSelectedText);
-    
-    //int curMsg = [[NSNumber numberWithInt:curPostID] intValue];
-    
-    [self quoteMessage:[NSString stringWithFormat:@"%@%@", kForumURL, [[[arrayData objectAtIndex:curMsg] urlQuote] decodeSpanUrlFromString]] andSelectedText:theSelectedText withBold:YES];
+
+    [self quoteMessage:[NSString stringWithFormat:@"%@%@", kForumURL, [[[arrayData objectForKey:selectedPostID] urlQuote] decodeSpanUrlFromString]] andSelectedText:theSelectedText withBold:YES];
     
 
 }
 
 - (void)editMenuHidden:(id)sender {
-    NSLog(@"editMenuHidden %@ NOMBRE %u", sender, [UIMenuController sharedMenuController].menuItems.count);
+    NSLog(@"editMenuHidden %@ NOMBRE %lu", sender, [UIMenuController sharedMenuController].menuItems.count);
     
     UIImage *menuImgQuote = [UIImage imageNamed:@"ReplyArrowFilled-20"];
     UIImage *menuImgQuoteB = [UIImage imageNamed:@"BoldFilled-20"];
@@ -916,8 +912,8 @@
 	self.arrayAction = [[NSMutableArray alloc] init];
 	self.arrayActionsMessages = [[NSMutableArray alloc] init];
     
-	self.arrayData = [[NSMutableArray alloc] init];
-	self.updatedArrayData = [[NSMutableArray alloc] init];
+	self.arrayData = [[OrderedDictionary alloc] init];
+
 	self.arrayInputData = [[NSMutableDictionary alloc] init];
 	self.editFlagTopic = [[NSString	alloc] init];
 	self.stringFlagTopic = [[NSString	alloc] init];
@@ -925,7 +921,7 @@
 
 	self.isFavoritesOrRead = [[NSString	alloc] init];
 	self.isUnreadable = NO;
-	self.curPostID = -1;
+	self.curPostID = @"";
 	
     if (!self.searchInputData) {
         NSLog(@"NO searchInputData");
@@ -1276,8 +1272,11 @@
 
 }
 
-- (void)didSelectMessage:(int)index
+- (void)didSelectMessage:(NSString *)selectedPostID
 {
+
+    NSLog(@"selectedPostID %@", selectedPostID);
+
 	{
 		// Navigation logic may go here. Create and push another view controller.
 
@@ -1345,7 +1344,7 @@
         
         [label setNumberOfLines:0];
         
-		[label setText:[NSString stringWithFormat:@"Page: %d — %d/%d", self.pageNumber, index + 1, arrayData.count]];
+		[label setText:[NSString stringWithFormat:@"Page : %d — %lu/%lu", self.pageNumber, [self.arrayData indexForKey:selectedPostID] + 1, (unsigned long)arrayData.count]];
         
 		[self.detailViewController.navigationItem setTitleView:label];
 		///===
@@ -1356,8 +1355,7 @@
 		 //NSLog(@"push message details");
 		 // andContent:[arrayData objectAtIndex:indexPath.section]
 		 
-		 self.detailViewController.arrayData = arrayData;	
-		 self.detailViewController.curMsg = index;	
+		 self.detailViewController.currentPostID = selectedPostID;
 		 self.detailViewController.pageNumber = self.pageNumber;	
 		 self.detailViewController.parent = self;	
 		 self.detailViewController.messageTitleString = self.topicName;	
@@ -1367,16 +1365,12 @@
 	}
 }
 
-- (void) didSelectImage:(int)index withUrl:(NSString *)selectedURL {
+- (void) didSelectImage:(NSString *)selectedPostID withUrl:(NSString *)selectedURL {
 	if (self.isAnimating) {
 		return;
 	}
-	
-	//On récupe les images du message:
-	//NSLog(@"%@", [[arrayData objectAtIndex:index] toHTML:index]);
-	//NSLog(@"selectedURL %@", selectedURL);
-	
-	HTMLParser * myParser = [[HTMLParser alloc] initWithString:[[arrayData objectAtIndex:index] toHTML:index] error:NULL];
+
+	HTMLParser * myParser = [[HTMLParser alloc] initWithString:[[arrayData objectForKey:selectedPostID] toHTML] error:NULL];
 	HTMLNode * msgNode = [myParser doc]; //Find the body tag
 
 	NSArray * tmpImageArray =  [msgNode findChildrenWithAttribute:@"class" matchingName:@"hfrplusimg" allowPartial:NO];
@@ -1607,7 +1601,7 @@
             [self EffaceCookie:nameCookie];
         }
         
-        self.curPostID = -1;
+        self.curPostID = @"";
         
         [self setStringFlagTopic:[[controller refreshAnchor] copy]];
         
@@ -1707,8 +1701,9 @@
 //	handleLoadedApps:notif
 // -------------------------------------------------------------------------------
 
-- (void)handleLoadedApps:(NSArray *)loadedItems
+- (void)handleLoadedApps:(OrderedDictionary *)loadedItems
 {
+
     int i;
     NSString *tmpHTML = @"";
 
@@ -1718,16 +1713,15 @@
         for (i = 0; i < [loadedItems count]; i++) { //Loop through all the tags
 
             if (self.arrayData.count > i) {
-                //NSLog(@"postID new: %@ | old: %@", [[loadedItems objectAtIndex:i] postID], [[self.arrayData objectAtIndex:i] postID]);
+                NSLog(@"postID new: %@ | old: %@", [[loadedItems objectAtIndex:i] postID], [[self.arrayData objectAtIndex:i] postID]);
             }
             else {
-                //NSLog(@"postID new: %@ | old: -----", [[loadedItems objectAtIndex:i] postID]);
-                tmpHTML = [tmpHTML stringByAppendingString:[[loadedItems objectAtIndex:i] toHTML:i]];
-                [self.arrayData addObject:[loadedItems objectAtIndex:i]];
+                NSLog(@"postID new: %@ | old: -----", [[loadedItems objectAtIndex:i] postID]);
+                tmpHTML = [tmpHTML stringByAppendingString:[[loadedItems objectAtIndex:i] toHTML]];
+                [self.arrayData insertObject:[loadedItems objectAtIndex:i] forKey:[loadedItems keyAtIndex:i] atIndex:i];
                 nbAdded = nbAdded + 1;
-                /* Live test
-                if(nbAdded >= 2) break;
-                 */
+                // Live test
+                //if(nbAdded >= 2) break;
             }
 
         }
@@ -1803,7 +1797,7 @@
     }
 
 	[self.arrayData removeAllObjects];
-	[self.arrayData addObjectsFromArray:loadedItems];
+	self.arrayData = loadedItems;
 
 
 
@@ -1855,7 +1849,7 @@
         //NSLog(@"==============");
 
         for (i = 0; i < [self.arrayData count]; i++) { //Loop through all the tags
-            tmpHTML = [tmpHTML stringByAppendingString:[[self.arrayData objectAtIndex:i] toHTML:i]];
+            tmpHTML = [tmpHTML stringByAppendingString:[[self.arrayData objectAtIndex:i] toHTML]];
             
             if (!ifCurrentFlag) {
 
@@ -1998,7 +1992,7 @@
     [self performSelectorOnMainThread:@selector(handleLoadedParser:) withObject:myParser waitUntilDone:NO];
 }
 
-- (void)didFinishParsing:(NSArray *)appList
+- (void)didFinishParsing:(OrderedDictionary *)appList
 {
     [self performSelectorOnMainThread:@selector(handleLoadedApps:) withObject:appList waitUntilDone:NO];
     self.queue = nil;
@@ -2032,8 +2026,9 @@
 
         //if (SYSTEM_VERSION_LESS_THAN(@"9")) {
         NSString* jsString2 = @"window.location.hash='#bas';";
-        NSString* jsString3 = [NSString stringWithFormat:@"window.location.hash='%@';", ![self.stringFlagTopic isEqualToString:@""] ? self.stringFlagTopic : @"#top"];
-        
+        NSString* jsString3 = [NSString stringWithFormat:@"window.location.hash='%@';", ![self.stringFlagTopic isEqualToString:@""] ? [NSString stringWithFormat:@"anch%@", self.stringFlagTopic] : @"#top"];
+        NSLog(@"jsString3 %@", jsString3);
+
         NSString* result = [self.messagesWebView stringByEvaluatingJavaScriptFromString:[jsString2 stringByAppendingString:jsString3]];
         //        [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString3];
         //}
@@ -2219,8 +2214,8 @@
 	}
 	else if (navigationType == UIWebViewNavigationTypeOther) {
 		if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdodetails"]) {
-            //NSLog(@"details ==========");
-			[self didSelectMessage:[[[aRequest.URL absoluteString] lastPathComponent] intValue]];
+            NSLog(@"details ========== %@", [[aRequest.URL absoluteString] lastPathComponent]);
+			[self didSelectMessage:[[aRequest.URL absoluteString] lastPathComponent]];
 			return NO;
 		}
 		else if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdotouch"]) {
@@ -2241,16 +2236,17 @@
 			return NO;
 		}
 		else if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdorefresh"]) {
-			[self searchNewMessages:kNewMessageFromUpdate];
+
+            [self searchNewMessages:kNewMessageFromUpdate];
 			return NO;
 		}
 		else if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdopopup"]) {
 			//NSLog(@"oijlkajsdoihjlkjasdopopup");
 			int ypos = [[[[aRequest.URL absoluteString] pathComponents] objectAtIndex:1] intValue];
-			int curMsg = [[[[aRequest.URL absoluteString] pathComponents] objectAtIndex:2] intValue];
-			//NSLog(@"%d %d", ypos, curMsg);
+			NSString *tappedPostID = [[[aRequest.URL absoluteString] pathComponents] objectAtIndex:2];
+			NSLog(@"%d %@", ypos, tappedPostID);
 
-			[self performSelector:@selector(showMenuCon:andPos:) withObject:[NSNumber numberWithInt:curMsg]  withObject:[NSNumber numberWithInt:ypos]];
+			[self performSelector:@selector(showMenuCon:andPos:) withObject:tappedPostID withObject:[NSNumber numberWithInt:ypos]];
 			return NO;
 		}
         else if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdoimbrows"]) {
@@ -2258,7 +2254,7 @@
             
             NSString *imgUrl = [[[[aRequest.URL absoluteString] stringByMatching:regularExpressionString capture:1L] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
             
-            [self didSelectImage:[[[[aRequest.URL absoluteString] pathComponents] objectAtIndex:1] intValue] withUrl:imgUrl];
+            [self didSelectImage:[[[aRequest.URL absoluteString] pathComponents] objectAtIndex:1] withUrl:imgUrl];
 
             return NO;
         }
@@ -2281,11 +2277,10 @@
 	return YES;
 }
 
--(void) showMenuCon:(NSNumber *)curMsgN andPos:(NSNumber *)posN {
+-(void) showMenuCon:(NSString *)tappedPostID andPos:(NSNumber *)posN {
 	
 	[self.arrayAction removeAllObjects];
-	
-	int curMsg = [curMsgN intValue];
+
 	int ypos = [posN intValue];
 	
     
@@ -2302,7 +2297,7 @@
     
     //UIImage *menuImgBan = [UIImage imageNamed:@"RemoveUserFilled-20"];
     UIImage *menuImgBan = [UIImage imageNamed:@"ThorHammer-20"];
-    if ([[BlackList shared] isBL:[[arrayData objectAtIndex:curMsg] name]]) {
+    if ([[BlackList shared] isBL:[[arrayData objectForKey:tappedPostID] name]]) {
         menuImgBan = [UIImage imageNamed:@"ThorHammerFilled-20"];
     }
 
@@ -2321,11 +2316,11 @@
     UIImage *menuImgDelete = [UIImage imageNamed:@"DeleteColumnFilled-20"];
     UIImage *menuImgAlerte = [UIImage imageNamed:@"HighPriorityFilled-20"];
 
-	if([[arrayData objectAtIndex:curMsg] urlEdit]){
+	if([[arrayData objectForKey:tappedPostID] urlEdit]){
 		//NSLog(@"urlEdit");
 		[self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Editer", @"EditMessage", menuImgEdit, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
         
-        if (curMsg) { //Pas de suppression du premier message d'un topic (curMsg = 0);
+        if ([arrayData indexForKey:tappedPostID] > 0) { //Pas de suppression du premier message d'un topic (curMsg = 0);
             [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Supprimer", @"actionSupprimer", menuImgDelete, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
         }
 
@@ -2347,8 +2342,8 @@
 
 	
 	//"Citer ☑"@"Citer ☒"@"Citer ☐"	
-	if([[arrayData objectAtIndex:curMsg] quoteJS] && self.navigationItem.rightBarButtonItem.enabled) {
-		NSString *components = [[[arrayData objectAtIndex:curMsg] quoteJS] substringFromIndex:7];
+	if([[arrayData objectForKey:tappedPostID] quoteJS] && self.navigationItem.rightBarButtonItem.enabled) {
+		NSString *components = [[[arrayData objectForKey:tappedPostID] quoteJS] substringFromIndex:7];
 		components = [components stringByReplacingOccurrencesOfString:@"); return false;" withString:@""];
 		components = [components stringByReplacingOccurrencesOfString:@"'" withString:@""];
 		
@@ -2375,11 +2370,11 @@
     }
     
     
-    if(![[arrayData objectAtIndex:curMsg] urlEdit]){
+    if(![[arrayData objectForKey:tappedPostID] urlEdit]){
         
 
         
-        if([[arrayData objectAtIndex:curMsg] urlAlert]){
+        if([[arrayData objectForKey:tappedPostID] urlAlert]){
 
             [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Alerter", @"actionAlerter", menuImgAlerte, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
         }
@@ -2387,9 +2382,9 @@
 
     [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Profil", @"actionProfil", menuImgProfil, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
 
-    if(![[arrayData objectAtIndex:curMsg] urlEdit]){
+    if(![[arrayData objectForKey:tappedPostID] urlEdit]){
 
-        if([[arrayData objectAtIndex:curMsg] MPUrl]){
+        if([[arrayData objectForKey:tappedPostID] MPUrl]){
             //NSLog(@"MPUrl");
             
             [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"MP", @"actionMessage", menuImgMP, nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", @"image", nil]]];
@@ -2405,7 +2400,7 @@
 
     
 	
-	self.curPostID = curMsg;
+	self.curPostID = tappedPostID;
 	/*
 	UIActionSheet *styleAlert = [[UIActionSheet alloc] init];
 	for (id tmpAction in self.arrayAction) {
@@ -2506,13 +2501,11 @@
 #pragma mark sharedMenuController management
 
 
--(void)actionFavoris:(NSNumber *)curMsgN {
-	int curMsg = [curMsgN intValue];
+-(void)actionFavoris:(NSString *)selectedPostID {
 
-	//NSLog(@"actionFavoris %@", [[arrayData objectAtIndex:curMsg] addFlagUrl]);
-	
+
 	ASIHTTPRequest  *aRequest =  
-	[[ASIHTTPRequest  alloc]  initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [[arrayData objectAtIndex:curMsg] addFlagUrl]]]];
+	[[ASIHTTPRequest  alloc]  initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [[arrayData objectForKey:selectedPostID] addFlagUrl]]]];
     
     
     [aRequest setStartedBlock:^{
@@ -2566,10 +2559,9 @@
     [aRequest startSynchronous];
 	
 }
--(void)actionProfil:(NSNumber *)curMsgN {
-    int curMsg = [curMsgN intValue];
+-(void)actionProfil:(NSString *)selectedPostID {
 
-    ProfilViewController *profilVC = [[ProfilViewController alloc] initWithNibName:@"ProfilViewController" bundle:nil andUrl:[[arrayData objectAtIndex:curMsg] urlProfil]];
+    ProfilViewController *profilVC = [[ProfilViewController alloc] initWithNibName:@"ProfilViewController" bundle:nil andUrl:[[arrayData objectForKey:selectedPostID] urlProfil]];
     
     // Set options
     profilVC.wantsFullScreenLayout = YES;
@@ -2582,17 +2574,15 @@
     
 	
 }
--(void)actionLink:(NSNumber *)curMsgN {
-    int curMsg = [curMsgN intValue];
-    
-    //NSLog("actionLink ID = %@", [[arrayData objectAtIndex:curMsg] postID]);
-    NSLog("actionLink URL = %@%@#%@", kForumURL, self.currentUrl, [[arrayData objectAtIndex:curMsg] postID]);
+-(void)actionLink:(NSString *)selectedPostID {
+
+    NSLog("actionLink URL = %@%@#%@", kForumURL, self.currentUrl, [[arrayData objectForKey:selectedPostID] postID]);
     
     
     //Topic *tmpTopic = [[[self.arrayData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
     
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-    pasteboard.string = [NSString stringWithFormat:@"actionLink URL = %@%@#%@", kForumURL, self.currentUrl, [[arrayData objectAtIndex:curMsg] postID]];
+    pasteboard.string = [NSString stringWithFormat:@"actionLink URL = %@%@#%@", kForumURL, self.currentUrl, [[arrayData objectForKey:selectedPostID] postID]];
     
 
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Lien copié dans le presse-papiers"
@@ -2604,15 +2594,13 @@
     
 }
 
--(void) actionAlerter:(NSNumber *)curMsgN {
-    NSLog(@"actionAlerter %@", curMsgN);
+-(void) actionAlerter:(NSString *)selectedPostID {
+    NSLog(@"actionAlerter %@", selectedPostID);
     if (self.isAnimating) {
         return;
     }
     
-    int curMsg = [curMsgN intValue];
-    
-    NSString *alertUrl = [NSString stringWithFormat:@"%@%@", kForumURL, [[arrayData objectAtIndex:curMsg] urlAlert]];
+    NSString *alertUrl = [NSString stringWithFormat:@"%@%@", kForumURL, [[arrayData objectForKey:selectedPostID] urlAlert]];
     
     AlerteModoViewController *alerteMessageViewController = [[AlerteModoViewController alloc]
                                                              initWithNibName:@"AlerteModoViewController" bundle:nil];
@@ -2628,15 +2616,13 @@
     
     
 }
--(void) actionSupprimer:(NSNumber *)curMsgN {
-    NSLog(@"actionSupprimer %@", curMsgN);
+-(void) actionSupprimer:(NSString *)selectedPostID {
+    NSLog(@"actionSupprimer %@", selectedPostID);
     if (self.isAnimating) {
         return;
     }
-
-    int curMsg = [curMsgN intValue];
     
-    NSString *editUrl = [NSString stringWithFormat:@"%@%@", kForumURL, [[[arrayData objectAtIndex:curMsg] urlEdit] decodeSpanUrlFromString]];
+    NSString *editUrl = [NSString stringWithFormat:@"%@%@", kForumURL, [[[arrayData objectForKey:selectedPostID] urlEdit] decodeSpanUrlFromString]];
     NSLog(@"DEL editUrl = %@", editUrl);
     
     DeleteMessageViewController *delMessageViewController = [[DeleteMessageViewController alloc]
@@ -2652,11 +2638,9 @@
 
 }
 
--(void) actionBL:(NSNumber *)curMsgN {
+-(void) actionBL:(NSString *)selectedPostID {
     
-    int curMsg = [curMsgN intValue];
-    
-    NSString *username = [[arrayData objectAtIndex:curMsg] name];
+    NSString *username = [[arrayData objectForKey:selectedPostID] name];
     NSString *promptMsg = @"";
     
     if ([[BlackList shared] removeWord:username]) {
@@ -2676,20 +2660,17 @@
     
 }
 
--(void)actionMessage:(NSNumber *)curMsgN {
+-(void)actionMessage:(NSString *)selectedPostID {
 	if (self.isAnimating) {
 		return;
 	}
-	
-	int curMsg = [curMsgN intValue];
-	
-	//NSLog(@"actionMessage %d = %@", curMsg, curMsgN);
+
 	//[[HFRplusAppDelegate sharedAppDelegate] openURL:[NSString stringWithFormat:@"http://forum.hardware.fr%@", forumNewTopicUrl]];
 	
 	NewMessageViewController *editMessageViewController = [[NewMessageViewController alloc]
 														   initWithNibName:@"AddMessageViewController" bundle:nil];
 	editMessageViewController.delegate = self;
-	[editMessageViewController setUrlQuote:[NSString stringWithFormat:@"%@%@", kForumURL, [[arrayData objectAtIndex:curMsg] MPUrl]]];
+	[editMessageViewController setUrlQuote:[NSString stringWithFormat:@"%@%@", kForumURL, [[arrayData objectForKey:selectedPostID] MPUrl]]];
 	editMessageViewController.title = @"Nouv. Message";
 	// Create the navigation controller and present it modally.
 	HFRNavigationController *navigationController = [[HFRNavigationController alloc]
@@ -2740,7 +2721,7 @@
 	return @"";
 	
 }
--(void)  EffaceCookie:(NSString *)nom {
+-(void)EffaceCookie:(NSString *)nom {
 	//NSLog(@"EffaceCookie");
 	
 	NSHTTPCookieStorage *cookShared = [NSHTTPCookieStorage sharedHTTPCookieStorage];
@@ -2757,11 +2738,9 @@
 }
 
 
--(void)actionCiter:(NSNumber *)curMsgN {
-	//NSLog(@"actionCiter %@", curMsgN);
-	
-	int curMsg = [curMsgN intValue];
-	NSString *components = [[[arrayData objectAtIndex:curMsg] quoteJS] substringFromIndex:7];
+-(void)actionCiter:(NSString *)selectedPostID {
+
+	NSString *components = [[[arrayData objectForKey:selectedPostID] quoteJS] substringFromIndex:7];
 	components = [components stringByReplacingOccurrencesOfString:@"); return false;" withString:@""];
 	components = [components stringByReplacingOccurrencesOfString:@"'" withString:@""];
 	
@@ -2805,60 +2784,58 @@
 	
 }
 
--(void)EditMessage:(NSNumber *)curMsgN {
-	int curMsg = [curMsgN intValue];
+-(void)EditMessage:(NSString *)selectedPostID {
 	
-	[self setEditFlagTopic:[[arrayData objectAtIndex:curMsg] postID]];
-	[self editMessage:[NSString stringWithFormat:@"%@%@", kForumURL, [[[arrayData objectAtIndex:curMsg] urlEdit] decodeSpanUrlFromString]]];
+	[self setEditFlagTopic:[[arrayData objectForKey:selectedPostID] postID]];
+	[self editMessage:[NSString stringWithFormat:@"%@%@", kForumURL, [[[arrayData objectForKey:selectedPostID] urlEdit] decodeSpanUrlFromString]]];
 	
 }
 
--(void)QuoteMessage:(NSNumber *)curMsgN {
-	int curMsg = [curMsgN intValue];
+-(void)QuoteMessage:(NSString *)selectedPostID {
 	
-	[self quoteMessage:[NSString stringWithFormat:@"%@%@", kForumURL, [[[arrayData objectAtIndex:curMsg] urlQuote] decodeSpanUrlFromString]]];
+	[self quoteMessage:[NSString stringWithFormat:@"%@%@", kForumURL, [[[arrayData objectForKey:selectedPostID] urlQuote] decodeSpanUrlFromString]]];
 }
 
 -(void)actionFavoris {
-	[self actionFavoris:[NSNumber numberWithInt:curPostID]];
+	[self actionFavoris:curPostID];
 	
 }
 -(void)actionProfil {
-	[self actionProfil:[NSNumber numberWithInt:curPostID]];
+	[self actionProfil:curPostID];
 	
 }	
 -(void)actionMessage {
-	[self actionMessage:[NSNumber numberWithInt:curPostID]];
+	[self actionMessage:curPostID];
 	
 }
 -(void)actionBL {
-    [self actionBL:[NSNumber numberWithInt:curPostID]];
+    [self actionBL:curPostID];
     
 }
 -(void)actionAlerter {
-    [self actionAlerter:[NSNumber numberWithInt:curPostID]];
+    [self actionAlerter:curPostID];
     
 }
 -(void)actionSupprimer {
-    [self actionSupprimer:[NSNumber numberWithInt:curPostID]];
+    [self actionSupprimer:curPostID];
     
 }
 
 -(void)actionCiter {
-	[self actionCiter:[NSNumber numberWithInt:curPostID]];
+	[self actionCiter:curPostID];
 }
 
 -(void)actionLink {
-    [self actionLink:[NSNumber numberWithInt:curPostID]];
+    [self actionLink:curPostID];
 }
 
 -(void)EditMessage {
-	[self EditMessage:[NSNumber numberWithInt:curPostID]];	
+	[self EditMessage:curPostID];
 }
 
 -(void)QuoteMessage
 {
-	[self QuoteMessage:[NSNumber numberWithInt:curPostID]];
+	[self QuoteMessage:curPostID];
 }
 
 - (NSString *) userTextSizeDidChange {
@@ -2938,7 +2915,6 @@
     
 	//[self.arrayData removeAllObjects];
 	self.arrayData = nil;
-	self.updatedArrayData = nil;
 
     [self stopTimer];
 	
