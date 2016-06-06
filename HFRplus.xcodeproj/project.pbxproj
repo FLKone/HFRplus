@@ -401,6 +401,8 @@
 		4C9C2B931BAE801700511853 /* QuestionsFilled-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B831BAE801700511853 /* QuestionsFilled-25.png */; };
 		4CA169C61D05A43B00BE27E5 /* OrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA169C51D05A43B00BE27E5 /* OrderedDictionary.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4CA169C71D05A43B00BE27E5 /* OrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA169C51D05A43B00BE27E5 /* OrderedDictionary.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4CA169CA1D05F6C100BE27E5 /* BaseMessagesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA169C91D05F6C100BE27E5 /* BaseMessagesTableViewController.m */; };
+		4CA169CB1D05F6C100BE27E5 /* BaseMessagesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA169C91D05F6C100BE27E5 /* BaseMessagesTableViewController.m */; };
 		4CB132941B9058530081B44D /* 146-gavel.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132921B9058530081B44D /* 146-gavel.png */; };
 		4CB132951B9058530081B44D /* 146-gavel.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132921B9058530081B44D /* 146-gavel.png */; };
 		4CB132961B9058530081B44D /* 146-gavel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB132931B9058530081B44D /* 146-gavel@2x.png */; };
@@ -467,8 +469,6 @@
 		4CB1330E1B90B7940081B44D /* Thor Hammer Filled-23@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB1330C1B90B7940081B44D /* Thor Hammer Filled-23@2x.png */; };
 		4CB133101B90B7990081B44D /* Thor Hammer Filled-23.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB1330F1B90B7990081B44D /* Thor Hammer Filled-23.png */; };
 		4CB133111B90B7990081B44D /* Thor Hammer Filled-23.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB1330F1B90B7990081B44D /* Thor Hammer Filled-23.png */; };
-		4CB133141B90E9530081B44D /* MessagesSearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB133131B90E9530081B44D /* MessagesSearchTableViewController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		4CB133151B90E9530081B44D /* MessagesSearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB133131B90E9530081B44D /* MessagesSearchTableViewController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		4CB311EC19FAF8750097D84D /* hammer.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311EB19FAF8750097D84D /* hammer.min.js */; };
 		4CB311ED19FAF8750097D84D /* hammer.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311EB19FAF8750097D84D /* hammer.min.js */; };
 		4CB311F019FAFCAE0097D84D /* hammer.min.map in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311EE19FAFCAE0097D84D /* hammer.min.map */; };
@@ -1527,6 +1527,8 @@
 		4C9C2B831BAE801700511853 /* QuestionsFilled-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "QuestionsFilled-25.png"; sourceTree = "<group>"; };
 		4CA169C41D05A43B00BE27E5 /* OrderedDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderedDictionary.h; sourceTree = "<group>"; };
 		4CA169C51D05A43B00BE27E5 /* OrderedDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderedDictionary.m; sourceTree = "<group>"; };
+		4CA169C81D05F6C100BE27E5 /* BaseMessagesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseMessagesTableViewController.h; sourceTree = "<group>"; };
+		4CA169C91D05F6C100BE27E5 /* BaseMessagesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseMessagesTableViewController.m; sourceTree = "<group>"; };
 		4CB132921B9058530081B44D /* 146-gavel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "146-gavel.png"; sourceTree = "<group>"; };
 		4CB132931B9058530081B44D /* 146-gavel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "146-gavel@2x.png"; sourceTree = "<group>"; };
 		4CB132981B905BF80081B44D /* BlackListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlackListTableViewController.h; sourceTree = "<group>"; };
@@ -1563,8 +1565,6 @@
 		4CB133091B90B7590081B44D /* ThorHammerFilled-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ThorHammerFilled-20.png"; sourceTree = "<group>"; };
 		4CB1330C1B90B7940081B44D /* Thor Hammer Filled-23@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Thor Hammer Filled-23@2x.png"; sourceTree = "<group>"; };
 		4CB1330F1B90B7990081B44D /* Thor Hammer Filled-23.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Thor Hammer Filled-23.png"; sourceTree = "<group>"; };
-		4CB133121B90E9530081B44D /* MessagesSearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagesSearchTableViewController.h; sourceTree = "<group>"; };
-		4CB133131B90E9530081B44D /* MessagesSearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagesSearchTableViewController.m; sourceTree = "<group>"; };
 		4CB311EB19FAF8750097D84D /* hammer.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = hammer.min.js; sourceTree = "<group>"; };
 		4CB311EE19FAFCAE0097D84D /* hammer.min.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = hammer.min.map; sourceTree = "<group>"; };
 		4CB311F119FAFF2C0097D84D /* jquery.hammer.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.hammer.js; sourceTree = "<group>"; };
@@ -2039,15 +2039,15 @@
 				CA5E109118AC290C00C481A9 /* Poll */,
 				013F0E95121E117800BEBEB1 /* LinkItem.h */,
 				013F0E96121E117800BEBEB1 /* LinkItem.m */,
+				4CA169C81D05F6C100BE27E5 /* BaseMessagesTableViewController.h */,
+				4CA169C91D05F6C100BE27E5 /* BaseMessagesTableViewController.m */,
 				013F0E97121E117800BEBEB1 /* MessagesTableViewController.h */,
 				013F0E98121E117800BEBEB1 /* MessagesTableViewController.m */,
-				013F0E99121E117800BEBEB1 /* MessagesTableViewController.xib */,
 				4C89E6B01D03335500D32E76 /* LiveMessagesTableViewController.h */,
 				4C89E6B11D03335500D32E76 /* LiveMessagesTableViewController.m */,
+				013F0E99121E117800BEBEB1 /* MessagesTableViewController.xib */,
 				4C265D4B1BAE511800B1A244 /* HFRWebView.h */,
 				4C265D4C1BAE511800B1A244 /* HFRWebView.m */,
-				4CB133121B90E9530081B44D /* MessagesSearchTableViewController.h */,
-				4CB133131B90E9530081B44D /* MessagesSearchTableViewController.m */,
 				013F0E9D121E117900BEBEB1 /* ParseMessagesOperation.h */,
 				013F0E9E121E117900BEBEB1 /* ParseMessagesOperation.m */,
 				013F0E9A121E117800BEBEB1 /* MessageDetailViewController.h */,
@@ -4293,7 +4293,6 @@
 				CAF5DB7B19340741000B5215 /* FeedbackTableViewCell.m in Sources */,
 				CA7E260215A24A9B00721F6D /* SubCatTableViewController.m in Sources */,
 				CA5E109518AC2A4F00C481A9 /* PollTableViewController.m in Sources */,
-				4CB133141B90E9530081B44D /* MessagesSearchTableViewController.m in Sources */,
 				4C21E9831BA5CC1200691D65 /* HFRTextView.m in Sources */,
 				CA1070C915A5F408002E6C19 /* SettingsViewController.m in Sources */,
 				CAC4966915B77357009128BC /* HFRNavigationController.m in Sources */,
@@ -4323,6 +4322,7 @@
 				CA00C44717C2FF3F0067B457 /* HTMLNode.m in Sources */,
 				CA00C45917C300140067B457 /* RegexKitLite.m in Sources */,
 				4C3903561BCACEC200FD6F1F /* NSIndexPath+PSTCollectionViewAdditions.m in Sources */,
+				4CA169CA1D05F6C100BE27E5 /* BaseMessagesTableViewController.m in Sources */,
 				CA00C44417C2FF3F0067B457 /* ASIInputStream.m in Sources */,
 				4C3903C11BCAD0EC00FD6F1F /* SDWebImageDownloader.m in Sources */,
 				4CC814FD1BAC86ED00F8BB81 /* UIColor+Extension.m in Sources */,
@@ -4443,7 +4443,6 @@
 				CAF5DB7C19340741000B5215 /* FeedbackTableViewCell.m in Sources */,
 				CA7C7104185EF50E00B348BA /* SubCatTableViewController.m in Sources */,
 				CA5E109618AC2A4F00C481A9 /* PollTableViewController.m in Sources */,
-				4CB133151B90E9530081B44D /* MessagesSearchTableViewController.m in Sources */,
 				4C21E9841BA5CC1200691D65 /* HFRTextView.m in Sources */,
 				CA7C710E185EF50E00B348BA /* SettingsViewController.m in Sources */,
 				CA7C7110185EF50E00B348BA /* HFRNavigationController.m in Sources */,
@@ -4473,6 +4472,7 @@
 				CA7C70C8185EF50E00B348BA /* MBProgressHUD.m in Sources */,
 				CA7C70CF185EF50E00B348BA /* HTMLNode.m in Sources */,
 				CA7C70D4185EF50E00B348BA /* RegexKitLite.m in Sources */,
+				4CA169CB1D05F6C100BE27E5 /* BaseMessagesTableViewController.m in Sources */,
 				CA7C70DE185EF50E00B348BA /* MKStoreObserver.m in Sources */,
 				4C3903C21BCAD0EC00FD6F1F /* SDWebImageDownloader.m in Sources */,
 				4C3903571BCACEC200FD6F1F /* NSIndexPath+PSTCollectionViewAdditions.m in Sources */,

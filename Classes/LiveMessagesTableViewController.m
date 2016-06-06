@@ -9,12 +9,28 @@
 #import "LiveMessagesTableViewController.h"
 
 @implementation LiveMessagesTableViewController
+// Live
+@synthesize liveTimer;
+
+#pragma mark -
+#pragma mark Data lifecycle
+
+- (void)fetchContent:(int)from
+{
+    [self stopTimer];
+
+    [super fetchContent:from];
+}
+-(void)dealloc {
+    [self stopTimer];
+}
+
+#pragma mark -
+#pragma mark View lifecycle management
 
 - (void)viewDidLoad {
     NSLog(@"LvDid %@", self.topicName);
-    self.gestureEnabled = YES;
-    self.paginationEnabled = YES;
-    self.autoUpdate = YES;
+    self.gestureEnabled = NO;
 
     [super viewDidLoad];
 
@@ -34,6 +50,20 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appInForeground:) name:@"appInForeground" object:nil];
 
 }
+
+- (void)viewDidAppear:(BOOL)animated {
+    //NSLog(@"viewDidAppear");
+
+    [super viewDidAppear:animated];
+
+    if (!self.firstLoad) {
+
+        [self stopTimer];
+        [self setupTimer:2];
+    }
+
+}
+
 
 -(void)optionsLive:(id)sender {
     NSLog(@"cancelLive");
@@ -89,8 +119,6 @@
 -(void)newMessagesAutoAdded:(int)number {
     NSLog(@"newMessagesAutoAdded %d", number);
 
-    [super newMessagesAutoAdded:number];
-
     if (self.tabBarController.selectedIndex != 3) {
 
         [self stopTimer];
@@ -121,5 +149,47 @@
     [self setupTimer:10];
 }
 
+-(void)stopTimer {
+    NSLog(@"STOP TIMER");
+    [self.liveTimer invalidate];
+    self.liveTimer = nil;
+}
+
+-(void)setupTimer:(int)sec {
+    [self stopTimer];
+
+    NSLog(@"SETUP TIMER %d", sec);
+    self.liveTimer = [NSTimer scheduledTimerWithTimeInterval:sec
+                                                      target:self
+                                                    selector:@selector(liveTimerSelector)
+                                                    userInfo:nil
+                                                     repeats:YES];
+}
+
+- (void)liveTimerSelector
+{
+    //NSLog(@"liveTimer");
+
+    [self performSelectorInBackground:@selector(liveTimerSelectorBack) withObject:nil];
+}
+
+- (void)liveTimerSelectorBack
+{
+
+    @autoreleasepool {
+
+        [self stopTimer];
+
+        NSLog(@"liveTimerBack");
+
+        [self searchNewMessages:kNewMessageFromUpdate];
+        // If another same maintenance operation is already sceduled, cancel it so this new operation will be executed after other
+        // operations of the queue, so we can group more work together
+        //[periodicMaintenanceOperation cancel];
+        //self.periodicMaintenanceOperation = nil;
+        
+    }
+    
+}
 
 @end

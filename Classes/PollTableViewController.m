@@ -18,7 +18,7 @@
 #import "PollResultTableViewCell.h"
 
 #import "ASIHTTPRequest.h"
-#import "MessagesTableViewController.h"
+#import "BaseMessagesTableViewController.h"
 
 @interface PollTableViewController ()
 
