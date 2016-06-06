@@ -104,7 +104,7 @@
     BOOL paginationEnabled;
     BOOL autoUpdate;
     NSTimer *liveTimer;
-    BOOL isLive;
+
 }
 
 
@@ -128,7 +128,6 @@
 
 @property BOOL isViewed;
 @property BOOL isMP;
-@property BOOL isLive;
 
 //Live
 @property BOOL firstLoad;
@@ -221,7 +220,7 @@
 - (void)toggleSearch:(BOOL) active;
 - (IBAction)searchNext:(UITextField *)sender;
 
--(void)newMessageAutoAdded:(int)number;
+-(void)newMessagesAutoAdded:(int)number;
 -(void)stopTimer;
 -(void)setupTimer:(int)sec;
 

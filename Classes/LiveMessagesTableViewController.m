@@ -15,7 +15,6 @@
     self.gestureEnabled = YES;
     self.paginationEnabled = YES;
     self.autoUpdate = YES;
-    self.isLive = YES;
 
     [super viewDidLoad];
 
@@ -87,6 +86,29 @@
 
 }
 
+-(void)newMessagesAutoAdded:(int)number {
+    NSLog(@"newMessagesAutoAdded %d", number);
+
+    [super newMessagesAutoAdded:number];
+
+    if (self.tabBarController.selectedIndex != 3) {
+
+        [self stopTimer];
+
+        //  NSLog(@">> %@ < %@", self.tabBarItem, [NSString stringWithFormat:@"%d", [self.tabBarItem.badgeValue intValue] + number]);
+        dispatch_async(dispatch_get_main_queue(),
+                       ^{
+                           int curV = [[[[HFRplusAppDelegate sharedAppDelegate].rootController tabBar] items] objectAtIndex:3].badgeValue.intValue;
+                           [[[[[HFRplusAppDelegate sharedAppDelegate].rootController tabBar] items] objectAtIndex:3] setBadgeValue:[NSString stringWithFormat:@"%d", curV + number]];
+                       });
+
+    }
+    else {
+        [self setupTimer:5];
+        
+    }
+
+}
 
 -(void)appInBackground:(NSNotification *)notification {
     NSLog(@"appInBackground");

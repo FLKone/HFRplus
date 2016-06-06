@@ -55,7 +55,7 @@
 @synthesize firstDate;
 
 // Live
-@synthesize firstLoad, gestureEnabled, paginationEnabled, autoUpdate, isLive, liveTimer;
+@synthesize firstLoad, gestureEnabled, paginationEnabled, autoUpdate, liveTimer;
 
 - (void)setTopicName:(NSString *)n {
     _topicName = [n filterTU];
@@ -658,7 +658,6 @@
         self.paginationEnabled = YES;
         self.autoUpdate = NO;
         self.isMP = NO;
-        self.isLive = NO;
 	}
 	return self;
 }
@@ -1652,26 +1651,7 @@
 }
 -(void)newMessagesAutoAdded:(int)number {
 
-
-    //NSLog(@"MTVC newMessagesAutoAdded %d", number);
-
-    if (self.isLive && self.tabBarController.selectedIndex != 3) {
-
-        [self stopTimer];
-
-      //  NSLog(@">> %@ < %@", self.tabBarItem, [NSString stringWithFormat:@"%d", [self.tabBarItem.badgeValue intValue] + number]);
-        dispatch_async(dispatch_get_main_queue(),
-                       ^{
-                           int curV = [[[[HFRplusAppDelegate sharedAppDelegate].rootController tabBar] items] objectAtIndex:3].badgeValue.intValue;
-                           [[[[[HFRplusAppDelegate sharedAppDelegate].rootController tabBar] items] objectAtIndex:3] setBadgeValue:[NSString stringWithFormat:@"%d", curV + number]];
-                       });
-
-    }
-    else if (self.isLive) {
-        [self setupTimer:5];
-
-    }
-
+    NSLog(@"MTVC newMessagesAutoAdded %d", number);
 
 }
 
