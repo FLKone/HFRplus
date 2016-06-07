@@ -1231,13 +1231,7 @@
             NSIndexPath *indexPath = pressedIndexPath;
             Topic *tmpTopic = [[[self.arrayData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
 
-
-
-
             LiveMessagesTableViewController *aView = [[LiveMessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[tmpTopic aURL]];
-
-
-            //setup the URL
             aView.topicName = [tmpTopic aTitle];
             aView.isViewed = [tmpTopic isViewed];
 
@@ -1254,9 +1248,9 @@
                 HFRNavigationController *nc = [[HFRNavigationController alloc] initWithRootViewController:aView];
 
                 NSMutableArray *currCtrls = [NSMutableArray arrayWithArray:[HFRplusAppDelegate sharedAppDelegate].rootController.viewControllers];
-                NSLog(@"currCtrls a %@", [currCtrls description]);
+                //NSLog(@"currCtrls a %@", [currCtrls description]);
                 [currCtrls insertObject:nc atIndex:3];
-                NSLog(@"currCtrls b %@", [currCtrls description]);
+                //NSLog(@"currCtrls b %@", [currCtrls description]);
 
                 [[HFRplusAppDelegate sharedAppDelegate].rootController setViewControllers:currCtrls animated:YES];
 

@@ -84,7 +84,7 @@
         if (![self isCancelled])
         {
 
-            NSLog(@"Contents of the dictionary: %@", self.workingArray);
+            //NSLog(@"Contents of the dictionary: %@", self.workingArray);
 
 
             [self.delegate didFinishParsing:self.workingArray];
@@ -136,7 +136,7 @@
 	//NSLog(@"%f message %d", [thenT timeIntervalSinceNow] * -1000.0, [messagesNodes count]);
 	
 	for (HTMLNode * messageNode2 in messagesNodes) { //Loop through all the tags
-		
+
 		//NSAutoreleasePool * pool2 = [[NSAutoreleasePool alloc] init];
 		
 		HTMLNode * messageNode = [messageNode2 firstChild];

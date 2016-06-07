@@ -330,6 +330,14 @@ table.code *, table.fixed * {
 
 }
 
+#actualiserlbl {
+    padding: 20px 0 !important;
+    text-align: center;
+    font-size: 13px;
+    color: grey;
+    border-top: 1px solid lightgrey;
+}
+
 #actualiserbtn.loading {
 	background-image: url(loadinfo.gif);
 	background-repeat: no-repeat;

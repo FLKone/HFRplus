@@ -10,116 +10,16 @@
 
 @implementation LiveMessagesTableViewController
 
-- (void)viewDidLoad {
-    NSLog(@"LvDid %@", self.topicName);
-    self.gestureEnabled = YES;
-    self.paginationEnabled = YES;
-    self.autoUpdate = YES;
-
-    [super viewDidLoad];
-
-    self.navigationItem.rightBarButtonItems = nil;
-
-    self.title = @"Live";
-    self.tabBarItem.title = @"Live";
-
-    UIBarButtonItem *optionsBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(optionsLive:)];
-    optionsBarItem.enabled = NO;
-
-    NSMutableArray *myButtonArray = [[NSMutableArray alloc] initWithObjects:optionsBarItem, nil];
-
-    self.navigationItem.rightBarButtonItems = myButtonArray;
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appInBackground:) name:@"appInBackground" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appInForeground:) name:@"appInForeground" object:nil];
-
-}
-
--(void)optionsLive:(id)sender {
-    NSLog(@"cancelLive");
-
-
-    [self.arrayActionsMessages removeAllObjects];
-
-    [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Mettre fin au Live", @"stopLive", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
-
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && ![self.parentViewController isMemberOfClass:[UINavigationController class]]) {
-        // olol
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andUrl:(NSString *)theTopicUrl {
+    if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil andUrl:(NSString *)theTopicUrl])) {
+        // Custom initialization
+        NSLog(@"init %@", theTopicUrl);
+        self.isLive = YES;
+        self.gestureEnabled = NO;
+        self.paginationEnabled = NO;
+        self.autoUpdate = YES;
     }
-
-    if ([styleAlert isVisible]) {
-        [styleAlert dismissWithClickedButtonIndex:styleAlert.numberOfButtons-1 animated:YES];
-        return;
-    }
-    else {
-        styleAlert = [[UIActionSheet alloc] init];
-    }
-
-    styleAlert.delegate = self;
-
-    styleAlert.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
-
-    for( NSDictionary *dico in arrayActionsMessages)
-        [styleAlert addButtonWithTitle:[dico valueForKey:@"title"]];
-
-    [styleAlert addButtonWithTitle:@"Annuler"];
-    styleAlert.cancelButtonIndex = styleAlert.numberOfButtons-1;
-
-    // use the same style as the nav bar
-    styleAlert.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
-
-    [styleAlert showFromBarButtonItem:sender animated:YES];
-
+    return self;
 }
-
--(void)stopLive {
-    NSLog(@"stop Live");
-
-    [self stopTimer];
-
-    NSMutableArray *currCtrls = [NSMutableArray arrayWithArray:[HFRplusAppDelegate sharedAppDelegate].rootController.viewControllers];
-
-    [currCtrls removeObjectAtIndex:3];
-
-    [[HFRplusAppDelegate sharedAppDelegate].rootController setViewControllers:currCtrls animated:YES];
-    [[HFRplusAppDelegate sharedAppDelegate].rootController setSelectedIndex:1];
-
-}
-
--(void)newMessagesAutoAdded:(int)number {
-    NSLog(@"newMessagesAutoAdded %d", number);
-
-    [super newMessagesAutoAdded:number];
-
-    if (self.tabBarController.selectedIndex != 3) {
-
-        [self stopTimer];
-
-        //  NSLog(@">> %@ < %@", self.tabBarItem, [NSString stringWithFormat:@"%d", [self.tabBarItem.badgeValue intValue] + number]);
-        dispatch_async(dispatch_get_main_queue(),
-                       ^{
-                           int curV = [[[[HFRplusAppDelegate sharedAppDelegate].rootController tabBar] items] objectAtIndex:3].badgeValue.intValue;
-                           [[[[[HFRplusAppDelegate sharedAppDelegate].rootController tabBar] items] objectAtIndex:3] setBadgeValue:[NSString stringWithFormat:@"%d", curV + number]];
-                       });
-
-    }
-    else {
-        [self setupTimer:5];
-        
-    }
-
-}
-
--(void)appInBackground:(NSNotification *)notification {
-    NSLog(@"appInBackground");
-    [self stopTimer];
-}
-
--(void)appInForeground:(NSNotification *)notification {
-    NSLog(@"appInForeground");
-
-    [self setupTimer:10];
-}
-
 
 @end

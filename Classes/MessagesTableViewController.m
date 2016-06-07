@@ -48,11 +48,11 @@
 @synthesize arrayInputData;
 @synthesize aToolbar, styleAlert;
 
-@synthesize isFavoritesOrRead, isRedFlagged, isUnreadable, isAnimating, isViewed, isMP;
+@synthesize isFavoritesOrRead, isRedFlagged, isUnreadable, isAnimating, isViewed, isMP, isLive;
 
 @synthesize request, arrayAction, curPostID;
 
-@synthesize firstDate;
+@synthesize lastAutoUpDate, scrollCheckTimer, shouldAutoUpdate;
 
 // Live
 @synthesize firstLoad, gestureEnabled, paginationEnabled, autoUpdate, liveTimer;
@@ -85,9 +85,9 @@
 
 - (void)fetchContent:(int)from
 {
+    self.isLoading = YES;
     [self stopTimer];
 
-    //self.firstDate = [NSDate date];
     self.errorReported = NO;
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMaxi];
     //self.currentUrl = @"/forum2.php?config=hfr.inc&cat=25&post=1711&page=301&p=1&sondage=0&owntopic=1&trash=0&trash_post=0&print=0&numreponse=0&quote_only=0&new=0&nojs=0#t530526";
@@ -99,7 +99,7 @@
     
     //NSLog(@"URL %@", [self currentUrl]);
     
-    //NSLog(@"[self currentUrl] %@", [self currentUrl]);
+    NSLog(@"[self currentUrl] %@", [self currentUrl]);
     //NSLog(@"[self stringFlagTopic] %@", [self stringFlagTopic]);
     
 	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]]]];
@@ -167,7 +167,8 @@
 - (void)fetchContentComplete:(ASIHTTPRequest *)theRequest
 {
 	//NSLog(@"fetchContentComplete");
-	
+    self.lastAutoUpDate = [NSDate date];
+
 	// create the queue to run our ParseOperation
     self.queue = [[NSOperationQueue alloc] init];
 
@@ -194,7 +195,9 @@
 
 - (void)fetchContentFailed:(ASIHTTPRequest *)theRequest
 {
-	
+    self.lastAutoUpDate = [NSDate date];
+
+	self.isLoading = NO;
 	[self.loadingView setHidden:YES];
 	
     //NSLog(@"theRequest.error %@", theRequest.error);
@@ -646,6 +649,10 @@
         self.paginationEnabled = YES;
         self.autoUpdate = NO;
         self.isMP = NO;
+        self.isLive = NO;
+        self.shouldAutoUpdate = NO;
+
+        self.isLoading = NO; //check if autoupdate triggered
 	}
 	return self;
 }
@@ -656,7 +663,10 @@
     [super viewWillDisappear:animated];
 	self.isAnimating = YES;
     
-    
+    if (self.autoUpdate) {
+        [self stopScrollTimer];
+        [self setupTimer:10];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -668,7 +678,14 @@
     if (!self.firstLoad && self.autoUpdate) {
 
         [self stopTimer];
-        [self setupTimer:2];
+        NSLog(@"Timer Appear");
+        //[self setupTimer:2];
+    }
+
+    if (self.autoUpdate) {
+        NSLog(@"TimerScroll Appear");
+
+        [self setupScrollTimer];
     }
     
 }
@@ -893,9 +910,24 @@
     
 
 	[(ShakeView*)self.view setShakeDelegate:self];
-	
-    
-    
+
+    if (self.isLive) {
+        self.navigationItem.rightBarButtonItems = nil;
+
+        self.title = @"Live";
+        self.tabBarItem.title = @"Live";
+
+        UIBarButtonItem *optionsBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(optionsLive:)];
+        optionsBarItem.enabled = NO;
+
+        NSMutableArray *myButtonArray = [[NSMutableArray alloc] initWithObjects:optionsBarItem, nil];
+
+        self.navigationItem.rightBarButtonItems = myButtonArray;
+
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appInBackground:) name:@"appInBackground" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appInForeground:) name:@"appInForeground" object:nil];
+    }
+
     
 	self.arrayAction = [[NSMutableArray alloc] init];
 	self.arrayActionsMessages = [[NSMutableArray alloc] init];
@@ -924,7 +956,15 @@
     [self editMenuHidden:nil];
     [self forceButtonMenu];
     //self.messagesWebView.controll = self;
+
+    if (self.autoUpdate) {
+        //on lance le timer de check du scroll pour mettre à jour shouldAutoUpdate
+        NSLog(@"TimerScroll vdl");
+
+        [self setupScrollTimer];
+    }
 }
+
 
 -(void)fullScreen {
     [self fullScreen:nil];
@@ -1419,11 +1459,25 @@
 #pragma mark searchNewMessages
 
 -(void)searchNewMessages:(int)from {
-    
+
+    NSLog(@"lastAutoUpdate %@", self.lastAutoUpDate);
+    NSDate *curDate = [NSDate date];
+
+    NSTimeInterval secs = [curDate timeIntervalSinceDate:self.lastAutoUpDate];
+    NSLog(@"diff secs %f", secs);
+
+    if (self.autoUpdate && secs <= 10) {
+        NSLog(@"Trop rapide mec, on stop");
+        return;
+    }
+
+
 	if (![self.messagesWebView isLoading]) {
         dispatch_async(dispatch_get_main_queue(),
            ^{
                 [self.messagesWebView stringByEvaluatingJavaScriptFromString:@"$('#actualiserbtn').addClass('loading');"];
+               [self.messagesWebView stringByEvaluatingJavaScriptFromString:@"$('#actualiserlbl').text('actualisation en cours...');"];
+
            });
 
 		[self performSelectorInBackground:@selector(fetchContentinBackground:) withObject:[NSNumber numberWithInt:from]];
@@ -1469,8 +1523,8 @@
 -(void) shakeHappened:(ShakeView*)view
 {
     //NSLog(@"shake");
-	if (![request inProgress] && !self.isLoading) {
-        //NSLog(@"shake OK");
+	if (![request inProgress]) {
+        NSLog(@"shake OK");
 		[self searchNewMessages:kNewMessageFromShake];
 	}
     else {
@@ -1616,6 +1670,27 @@
     }
     
 }
+
+-(void)stopScrollTimer {
+    NSLog(@"STOP TIMER");
+    [self.scrollCheckTimer invalidate];
+    self.scrollCheckTimer = nil;
+}
+
+-(void)setupScrollTimer {
+    [self stopScrollTimer];
+
+    NSLog(@"SETUP Scroll TIMER");
+    self.scrollCheckTimer = [NSTimer scheduledTimerWithTimeInterval:0.5
+                                                      target:self
+                                                    selector:@selector(scrollTimerSelector)
+                                                    userInfo:nil
+                                                     repeats:YES];
+
+    //[[NSRunLoop mainRunLoop] addTimer:self.scrollCheckTimer forMode:NSRunLoopCommonModes];
+
+}
+
 -(void)stopTimer {
     NSLog(@"STOP TIMER");
     [self.liveTimer invalidate];
@@ -1626,21 +1701,48 @@
     [self stopTimer];
 
     NSLog(@"SETUP TIMER %d", sec);
-    self.liveTimer = [NSTimer scheduledTimerWithTimeInterval:sec
+    self.liveTimer = [NSTimer timerWithTimeInterval:sec
                                                  target:self
                                                selector:@selector(liveTimerSelector)
                                                userInfo:nil
-                                                repeats:YES];
-}
--(void)newMessagesAutoAdded:(int)number {
+                                                repeats:NO];
 
+    [[NSRunLoop mainRunLoop] addTimer:self.liveTimer forMode:NSRunLoopCommonModes];
+
+}
+
+-(void)newMessagesAutoAdded:(int)number {
     NSLog(@"MTVC newMessagesAutoAdded %d", number);
 
+
+    if (self.tabBarController.selectedIndex != 3) {
+
+        [self stopTimer];
+
+        //  NSLog(@">> %@ < %@", self.tabBarItem, [NSString stringWithFormat:@"%d", [self.tabBarItem.badgeValue intValue] + number]);
+        dispatch_async(dispatch_get_main_queue(),
+                       ^{
+                           int curV = [[[[HFRplusAppDelegate sharedAppDelegate].rootController tabBar] items] objectAtIndex:3].badgeValue.intValue;
+                           [[[[[HFRplusAppDelegate sharedAppDelegate].rootController tabBar] items] objectAtIndex:3] setBadgeValue:[NSString stringWithFormat:@"%d", curV + number]];
+                       });
+
+    }
+    else {
+        NSLog(@"Timer newMessagesAutoAdded");
+
+        [self setupTimer:5];
+        
+    }
+    
 }
 
 - (NSString*)generateHTMLToolbar {
 
     NSString *tooBar = @"";
+
+    if (self.isLive) {
+        return tooBar;
+    }
 
     //Toolbar;
     if (self.aToolbar && !self.isSearchInstra) {
@@ -1691,26 +1793,26 @@
 
 - (void)handleLoadedApps:(OrderedDictionary *)loadedItems
 {
-
+    self.isLoading = NO;
     int i;
     NSString *tmpHTML = @"";
+
+
 
    if (!self.firstLoad) {
        int nbAdded = 0;
 
         for (i = 0; i < [loadedItems count]; i++) { //Loop through all the tags
 
-            if (self.arrayData.count > i) {
-                NSLog(@"postID new: %@ | old: %@", [[loadedItems objectAtIndex:i] postID], [[self.arrayData objectAtIndex:i] postID]);
-            }
-            else {
-                NSLog(@"postID new: %@ | old: -----", [[loadedItems objectAtIndex:i] postID]);
+            if ([self.arrayData indexForKey:[loadedItems keyAtIndex:i]] == NSNotFound) {
+                //NSLog(@"postID new: %@ | old: -----", [[loadedItems objectAtIndex:i] postID]);
                 tmpHTML = [tmpHTML stringByAppendingString:[[loadedItems objectAtIndex:i] toHTML]];
                 [self.arrayData insertObject:[loadedItems objectAtIndex:i] forKey:[loadedItems keyAtIndex:i] atIndex:i];
                 nbAdded = nbAdded + 1;
                 // Live test
                 //if(nbAdded >= 2) break;
             }
+
 
         }
 
@@ -1736,8 +1838,12 @@
            //NSLog(@"jsQuery %@", jsQuery);
 
 
+           dispatch_async(dispatch_get_main_queue(),
+                          ^{
+                              NSLog(@"Messages Added %d", nbAdded);
 
            [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsQuery];
+                          });
 
            NSString *jsString = [NSString stringWithFormat:@"$('.message').addSwipeEvents().bind('doubletap', function(evt, touch) { window.location = 'oijlkajsdoihjlkjasdodetails://'+this.id; });"];
            [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString];
@@ -1750,27 +1856,32 @@
        else {
            if (self.autoUpdate) {
 
+               NSLog(@"Timer handleApps");
+
                [self setupTimer:10];
 
            }
        }
 
-       if (self.autoUpdate && [(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:4] isEnabled]) {
-           // page suivante dispo, stop autoupdate
-           [self stopTimer];
+       if (self.autoUpdate) {
+           [self updateLastUpdateDate];
 
            dispatch_async(dispatch_get_main_queue(),
                           ^{
-                              [self.messagesWebView stringByEvaluatingJavaScriptFromString:@"$('#actualiserbtn').remove()"];
+                              [self.messagesWebView stringByEvaluatingJavaScriptFromString:@"$('#actualiserbtn').removeClass('loading');"];
                           });
        }
-       else {
-       dispatch_async(dispatch_get_main_queue(),
-                      ^{
-                          [self.messagesWebView stringByEvaluatingJavaScriptFromString:@"$('#actualiserbtn').removeClass('loading');"];
-                      });
+       else if ([(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:4] isEnabled]) {
+           NSLog(@"Remove Actualiser BTN");
+           // page suivante dispo, hide actualiser button
+           [self stopTimer];
 
+           dispatch_async(dispatch_get_main_queue(),
+                        ^{
+                          [self.messagesWebView stringByEvaluatingJavaScriptFromString:@"$('#actualiserbtn').remove()"];
+                        });
        }
+
        NSString *tooBar = [self generateHTMLToolbar];
        NSString *jsQuery2 = [NSString stringWithFormat:@"var new_div2 = $('%@');\
                              var old_div = $('#toolbarpage');\
@@ -1857,9 +1968,12 @@
 
         
         NSString *refreshBtn = @"";
-        
+
         //on ajoute le bouton actualiser si besoin
-        if (([self pageNumber] == [self lastPageNumber]) || ([self lastPageNumber] == 0)) {
+        if (self.autoUpdate) {
+            refreshBtn = @"<div id=\"actualiserlbl\"><p class=\"first\">actualisé il y a moins d'une seconde</p></div>";
+        }
+        else if (([self pageNumber] == [self lastPageNumber]) || ([self lastPageNumber] == 0)) {
             //NSLog(@"premiere et unique ou dernier");
             //'before'
             refreshBtn = @"<div id=\"actualiserbtn\" onClick=\"window.location = 'oijlkajsdoihjlkjasdorefresh://data'; return false;\">Actualiser</div>";
@@ -1942,6 +2056,12 @@
         [self.messagesWebView loadHTMLString:HTMLString baseURL:baseURL];
         
         [self.messagesWebView setUserInteractionEnabled:YES];
+
+        if (self.autoUpdate && [(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:4] isEnabled]) {
+            // page suivante = on change la currentURL
+            NSLog(@"Live, page suivante dispo, on change ! %@", self.nextPageUrl);
+            self.currentUrl = self.nextPageUrl;
+        }
     }
  
 
@@ -1996,7 +2116,7 @@
 
         //if (SYSTEM_VERSION_LESS_THAN(@"9")) {
         NSString* jsString2 = @"window.location.hash='#bas';";
-        NSString* jsString3 = [NSString stringWithFormat:@"window.location.hash='%@';", ![self.stringFlagTopic isEqualToString:@""] ? [NSString stringWithFormat:@"anch%@", self.stringFlagTopic] : @"#top"];
+        NSString* jsString3 = [NSString stringWithFormat:@"window.location.hash='%@';", ![self.stringFlagTopic isEqualToString:@""] ? [NSString stringWithFormat:@"%@", self.stringFlagTopic] : @"#top"];
         NSLog(@"jsString3 %@", jsString3);
 
         NSString* result = [self.messagesWebView stringByEvaluatingJavaScriptFromString:[jsString2 stringByAppendingString:jsString3]];
@@ -2021,7 +2141,9 @@
 
         if (self.autoUpdate) {
 
-            [self setupTimer:5];
+            NSLog(@"Timer FirstLoad");
+
+            //[self setupTimer:5];
 
         }
         NSString *jsString = @"";
@@ -2034,9 +2156,56 @@
     
 }
 
+-(void)updateLastUpdateDate {
+    NSDate *curDate = [NSDate date];
+
+    NSTimeInterval secs = [curDate timeIntervalSinceDate:self.lastAutoUpDate];
+    //NSLog(@"%f %d %d", secs, (int)secs, (int)ceil(secs));
+    if ((int)ceil(secs) > 1)
+    {
+        dispatch_async(dispatch_get_main_queue(),
+                       ^{
+                           [self.messagesWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"$('#actualiserlbl').text('actualisé il y a %d secondes');", (int)ceil(secs)]];
+
+                       });
+    }
+    else {
+        dispatch_async(dispatch_get_main_queue(),
+                       ^{
+                           [self.messagesWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"$('#actualiserlbl').text('actualisé il y a moins d\\'une seconde');"]];
+
+                       });
+    }
+}
+
+- (void)scrollTimerSelector {
+
+
+    [self updateLastUpdateDate];
+
+    if ([request inProgress]) {
+        NSLog(@"Update en cours, osef");
+        return;
+    }
+
+    if (self.isLoading) {
+        NSLog(@"Update#2 en cours, osef");
+        return;
+    }
+
+    CGFloat offset = self.messagesWebView.scrollView.contentOffset.y;
+    CGFloat height = self.messagesWebView.scrollView.contentSize.height;
+    CGFloat vheight = self.messagesWebView.scrollView.bounds.size.height;
+    //NSLog(@"of:%f | hei:%f | dif:%f | vh:%f", offset, height, height-offset, vheight);
+
+    if (height-offset < 1200) {
+        NSLog(@"schedule update");
+        [self setupTimer:0];
+    }
+}
 - (void)liveTimerSelector
 {
-    //NSLog(@"liveTimer");
+    NSLog(@"liveTimer");
 
     [self performSelectorInBackground:@selector(liveTimerSelectorBack) withObject:nil];
 }
@@ -2195,6 +2364,11 @@
                     [[UIMenuController sharedMenuController] setMenuVisible:NO animated:YES];
                 }
             }
+
+            //check la position du scroll pour l'autoupdate
+            CGFloat offset = self.messagesWebView.scrollView.contentOffset.y;
+            CGFloat height = self.messagesWebView.scrollView.contentSize.height;
+            NSLog(@"o: %f h: %f", offset, height);
 			return NO;
 		}
         else if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdopreloaded"]) {
@@ -2887,7 +3061,8 @@
 	self.arrayData = nil;
 
     [self stopTimer];
-	
+    [self stopScrollTimer];
+
 }
 
 #pragma mark -
@@ -3118,4 +3293,72 @@
     }
     return [pairs componentsJoinedByString:@"&"];
 }
+
+#pragma mark -
+#pragma mark Live Lifecycle
+
+-(void)optionsLive:(id)sender {
+    NSLog(@"cancelLive");
+
+
+    [self.arrayActionsMessages removeAllObjects];
+
+    [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Mettre fin au Live", @"stopLive", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && ![self.parentViewController isMemberOfClass:[UINavigationController class]]) {
+        // olol
+    }
+
+    if ([styleAlert isVisible]) {
+        [styleAlert dismissWithClickedButtonIndex:styleAlert.numberOfButtons-1 animated:YES];
+        return;
+    }
+    else {
+        styleAlert = [[UIActionSheet alloc] init];
+    }
+
+    styleAlert.delegate = self;
+
+    styleAlert.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+
+    for( NSDictionary *dico in arrayActionsMessages)
+        [styleAlert addButtonWithTitle:[dico valueForKey:@"title"]];
+
+    [styleAlert addButtonWithTitle:@"Annuler"];
+    styleAlert.cancelButtonIndex = styleAlert.numberOfButtons-1;
+
+    // use the same style as the nav bar
+    styleAlert.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+
+    [styleAlert showFromBarButtonItem:sender animated:YES];
+
+}
+
+-(void)stopLive {
+    NSLog(@"stop Live");
+
+    [self stopTimer];
+
+    NSMutableArray *currCtrls = [NSMutableArray arrayWithArray:[HFRplusAppDelegate sharedAppDelegate].rootController.viewControllers];
+
+    [currCtrls removeObjectAtIndex:3];
+
+    [[HFRplusAppDelegate sharedAppDelegate].rootController setViewControllers:currCtrls animated:YES];
+    [[HFRplusAppDelegate sharedAppDelegate].rootController setSelectedIndex:1];
+
+}
+
+
+
+-(void)appInBackground:(NSNotification *)notification {
+    NSLog(@"appInBackground");
+    [self stopTimer];
+}
+
+-(void)appInForeground:(NSNotification *)notification {
+    NSLog(@"appInForeground");
+    
+    //[self setupTimer:10];
+}
+
 @end

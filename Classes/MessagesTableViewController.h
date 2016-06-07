@@ -50,6 +50,7 @@
 
 	BOOL isViewed; //to check if isViewed (bold & +1)
     BOOL isMP;
+    BOOL isLive;
 
 	OrderedDictionary *arrayData;
 
@@ -79,8 +80,7 @@
 
 	BOOL isAnimating; //to check is an animation is ON
 
-	NSDate *firstDate;
-    
+
     UIActionSheet *styleAlert;
     
     //Poll
@@ -104,6 +104,9 @@
     BOOL paginationEnabled;
     BOOL autoUpdate;
     NSTimer *liveTimer;
+    NSTimer *scrollCheckTimer;
+    BOOL shouldAutoUpdate;
+    NSDate *lastAutoUpDate;
 
 }
 
@@ -116,7 +119,6 @@
 @property (nonatomic, strong) NSString *topicAnswerUrl;
 @property (nonatomic, strong, setter=setTopicName:) NSString *_topicName;
 
-@property (nonatomic, strong) NSDate *firstDate;
 
 @property BOOL errorReported;
 
@@ -128,14 +130,18 @@
 
 @property BOOL isViewed;
 @property BOOL isMP;
+@property BOOL isLive;
 
 //Live
 @property BOOL firstLoad;
 @property BOOL gestureEnabled;
 @property BOOL paginationEnabled;
 @property BOOL autoUpdate;
+@property BOOL shouldAutoUpdate;
+@property (nonatomic, strong) NSDate *lastAutoUpDate;
 
 @property (nonatomic, strong) NSTimer *liveTimer;
+@property (nonatomic, strong) NSTimer *scrollCheckTimer;
 
 @property (nonatomic, strong) OrderedDictionary *arrayData;
 
