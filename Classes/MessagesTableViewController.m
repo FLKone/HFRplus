@@ -86,6 +86,7 @@
 - (void)fetchContent:(int)from
 {
     self.isLoading = YES;
+    NSLog(@"stopTimer from fetchContent");
     [self stopTimer];
 
     self.errorReported = NO;
@@ -664,7 +665,9 @@
 	self.isAnimating = YES;
     
     if (self.autoUpdate) {
+        NSLog(@"stopScrollTimer viewWillDisappear");
         [self stopScrollTimer];
+        NSLog(@"setupTimer viewWillDisappear");
         [self setupTimer:10];
     }
 }
@@ -676,15 +679,12 @@
 	self.isAnimating = NO;
 
     if (!self.firstLoad && self.autoUpdate) {
-
+        NSLog(@"stopTimer viewDidAppear");
         [self stopTimer];
-        NSLog(@"Timer Appear");
-        //[self setupTimer:2];
     }
 
     if (self.autoUpdate) {
-        NSLog(@"TimerScroll Appear");
-
+        NSLog(@"setupScrollTimer from viewDidAppear");
         [self setupScrollTimer];
     }
     
@@ -757,7 +757,7 @@
 }
 
 - (void)editMenuHidden:(id)sender {
-    NSLog(@"editMenuHidden %@ NOMBRE %lu", sender, [UIMenuController sharedMenuController].menuItems.count);
+    //NSLog(@"editMenuHidden %@ NOMBRE %lu", sender, [UIMenuController sharedMenuController].menuItems.count);
     
     UIImage *menuImgQuote = [UIImage imageNamed:@"ReplyArrowFilled-20"];
     UIImage *menuImgQuoteB = [UIImage imageNamed:@"BoldFilled-20"];
@@ -957,12 +957,6 @@
     [self forceButtonMenu];
     //self.messagesWebView.controll = self;
 
-    if (self.autoUpdate) {
-        //on lance le timer de check du scroll pour mettre à jour shouldAutoUpdate
-        NSLog(@"TimerScroll vdl");
-
-        [self setupScrollTimer];
-    }
 }
 
 
@@ -1461,10 +1455,11 @@
 -(void)searchNewMessages:(int)from {
 
     NSLog(@"lastAutoUpdate %@", self.lastAutoUpDate);
+
     NSDate *curDate = [NSDate date];
 
     NSTimeInterval secs = [curDate timeIntervalSinceDate:self.lastAutoUpDate];
-    NSLog(@"diff secs %f", secs);
+    //NSLog(@"diff secs %f", secs);
 
     if (self.autoUpdate && secs <= 10) {
         NSLog(@"Trop rapide mec, on stop");
@@ -1672,7 +1667,7 @@
 }
 
 -(void)stopScrollTimer {
-    NSLog(@"STOP TIMER");
+    NSLog(@">> stopScrollTimer");
     [self.scrollCheckTimer invalidate];
     self.scrollCheckTimer = nil;
 }
@@ -1680,7 +1675,7 @@
 -(void)setupScrollTimer {
     [self stopScrollTimer];
 
-    NSLog(@"SETUP Scroll TIMER");
+    NSLog(@">> GO scrollCheckTimer setupScrollTimer");
     self.scrollCheckTimer = [NSTimer scheduledTimerWithTimeInterval:0.5
                                                       target:self
                                                     selector:@selector(scrollTimerSelector)
@@ -1692,32 +1687,34 @@
 }
 
 -(void)stopTimer {
-    NSLog(@"STOP TIMER");
+    NSLog(@">> stopTimer");
     [self.liveTimer invalidate];
     self.liveTimer = nil;
 }
 
 -(void)setupTimer:(int)sec {
+    NSLog(@"stopTimer setupTimer %d", sec);
     [self stopTimer];
 
-    NSLog(@"SETUP TIMER %d", sec);
+    NSLog(@">> GO liveTimer setupTimer");
+
+    BOOL rep = NO;
+    if (sec > 0) rep = YES;
+
     self.liveTimer = [NSTimer timerWithTimeInterval:sec
                                                  target:self
                                                selector:@selector(liveTimerSelector)
                                                userInfo:nil
-                                                repeats:NO];
+                                                repeats:rep];
 
     [[NSRunLoop mainRunLoop] addTimer:self.liveTimer forMode:NSRunLoopCommonModes];
 
 }
 
 -(void)newMessagesAutoAdded:(int)number {
-    NSLog(@"MTVC newMessagesAutoAdded %d", number);
-
+    NSLog(@"newMessagesAutoAdded %d", number);
 
     if (self.tabBarController.selectedIndex != 3) {
-
-        [self stopTimer];
 
         //  NSLog(@">> %@ < %@", self.tabBarItem, [NSString stringWithFormat:@"%d", [self.tabBarItem.badgeValue intValue] + number]);
         dispatch_async(dispatch_get_main_queue(),
@@ -1725,12 +1722,14 @@
                            int curV = [[[[HFRplusAppDelegate sharedAppDelegate].rootController tabBar] items] objectAtIndex:3].badgeValue.intValue;
                            [[[[[HFRplusAppDelegate sharedAppDelegate].rootController tabBar] items] objectAtIndex:3] setBadgeValue:[NSString stringWithFormat:@"%d", curV + number]];
                        });
+        NSLog(@"setupTimer newMessagesAutoAdded");
+
+        [self setupTimer:5];
 
     }
     else {
-        NSLog(@"Timer newMessagesAutoAdded");
-
-        [self setupTimer:5];
+        NSLog(@"stopTimer #2 newMessagesAutoAdded");
+        [self stopTimer];
         
     }
     
@@ -1842,7 +1841,7 @@
                           ^{
                               NSLog(@"Messages Added %d", nbAdded);
 
-           [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsQuery];
+                              [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsQuery];
                           });
 
            NSString *jsString = [NSString stringWithFormat:@"$('.message').addSwipeEvents().bind('doubletap', function(evt, touch) { window.location = 'oijlkajsdoihjlkjasdodetails://'+this.id; });"];
@@ -1856,7 +1855,7 @@
        else {
            if (self.autoUpdate) {
 
-               NSLog(@"Timer handleApps");
+               NSLog(@"setupTimer handleApps");
 
                [self setupTimer:10];
 
@@ -1872,7 +1871,7 @@
                           });
        }
        else if ([(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:4] isEnabled]) {
-           NSLog(@"Remove Actualiser BTN");
+           NSLog(@"stopTimer loadedApps actualiser BTN");
            // page suivante dispo, hide actualiser button
            [self stopTimer];
 
@@ -1892,181 +1891,187 @@
 
        [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsQuery2];
 
-       return;
+       if (self.autoUpdate && [(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:4] isEnabled]) {
+           // page suivante = on change la currentURL
+           NSLog(@"Live, page suivante dispo, on change ! %@", self.nextPageUrl);
+           self.currentUrl = self.nextPageUrl;
+       }
+
     }
+   else {
 
-	[self.arrayData removeAllObjects];
-	self.arrayData = loadedItems;
+       [self.arrayData removeAllObjects];
+       self.arrayData = loadedItems;
 
 
 
-    
-    NSLog(@"COUNT = %lu", (unsigned long)[self.arrayData count]);
 
-    if (self.isSearchInstra && self.arrayData.count == 0) {
-        NSLog(@"BZAAAAA %@", self.currentUrl);
-        [self.loadingView setHidden:YES];
-        [self.messagesWebView setHidden:YES];
-        [self.errorLabelView setText:@"Désolé aucune réponse n'a été trouvée"];
-        [self.errorLabelView setHidden:NO];
-        [self toggleSearch:YES];
+       //NSLog(@"COUNT = %lu", (unsigned long)[self.arrayData count]);
+
+       if (self.isSearchInstra && self.arrayData.count == 0) {
+           //NSLog(@"BZAAAAA %@", self.currentUrl);
+           [self.loadingView setHidden:YES];
+           [self.messagesWebView setHidden:YES];
+           [self.errorLabelView setText:@"Désolé aucune réponse n'a été trouvée"];
+           [self.errorLabelView setHidden:NO];
+           [self toggleSearch:YES];
+       }
+       else {
+
+           //NSLog(@"OLD %@", self.stringFlagTopic);
+
+           NSCharacterSet* nonDigits = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+           int currentFlagValue = [[self.stringFlagTopic stringByTrimmingCharactersInSet:nonDigits] intValue];
+           bool ifCurrentFlag = NO;
+           int closePostID = 0;
+
+           if(!currentFlagValue) { //si pas de value on cherche soit le premier message (pas de flag) soit le dernier (#bas)
+               //NSLog(@"!currentFlagValue");
+
+               ifCurrentFlag = YES;
+           }
+
+           //NSLog(@"Looking for %d", currentFlagValue);
+           //NSLog(@"==============");
+
+           for (i = 0; i < [self.arrayData count]; i++) { //Loop through all the tags
+               tmpHTML = [tmpHTML stringByAppendingString:[[self.arrayData objectAtIndex:i] toHTML]];
+
+               if (!ifCurrentFlag) {
+
+                   int tmpFlagValue = [[[[self.arrayData objectAtIndex:i] postID] stringByTrimmingCharactersInSet:nonDigits] intValue];
+
+                   if (tmpFlagValue == currentFlagValue) {
+                       //NSLog(@"TROUVE");
+                       ifCurrentFlag = YES;
+                       closePostID = tmpFlagValue;
+                   }
+
+                   //NSLog(@"pas encore trouvé");
+
+                   if (closePostID && currentFlagValue && tmpFlagValue >= currentFlagValue) {
+                       //NSLog(@"On a trouvé plus grand, on set");
+                       closePostID = tmpFlagValue;
+                       ifCurrentFlag = YES;
+                   }
+                   else {
+                       //NSLog(@"0, on set le premier");
+                       closePostID = tmpFlagValue;
+                   }
+
+                   //NSLog(@"-- curFlagID = %d", tmpFlagValue);
+               }
+
+           }
+
+           if (closePostID) {
+               //NSLog(@"On remplace au plus proche");
+               self.stringFlagTopic = [NSString stringWithFormat:@"#t%d", closePostID];
+           }
+
+           //NSLog(@"NEW %@", self.stringFlagTopic);
+
+
+           NSString *refreshBtn = @"";
+
+           //on ajoute le bouton actualiser si besoin
+           if (self.autoUpdate) {
+               refreshBtn = @"<div id=\"actualiserlbl\"><p class=\"first\">actualisé il y a moins d'une seconde</p></div>";
+           }
+           else if (([self pageNumber] == [self lastPageNumber]) || ([self lastPageNumber] == 0)) {
+               //NSLog(@"premiere et unique ou dernier");
+               //'before'
+               refreshBtn = @"<div id=\"actualiserbtn\" onClick=\"window.location = 'oijlkajsdoihjlkjasdorefresh://data'; return false;\">Actualiser</div>";
+
+           }
+           else {
+               //NSLog(@"autre");
+           }
+
+           NSString *tooBar = [self generateHTMLToolbar];
+
+           NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+           NSString *display_sig = [defaults stringForKey:@"display_sig"];
+
+           NSString *display_sig_css = @"nosig";
+
+           if ([display_sig isEqualToString:@"yes"]) {
+               display_sig_css = @"";
+           }
+
+           NSString *customFontSize = [self userTextSizeDidChange];
+
+           NSString *HTMLString = [NSString
+                                   stringWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
+                                   <html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"fr\" lang=\"fr\">\
+                                   <head>\
+                                   <script type='text/javascript' src='jquery-2.1.1.min.js'></script>\
+                                   <script type='text/javascript' src='jquery.doubletap.js'></script>\
+                                   <script type='text/javascript' src='jquery.base64.js'></script>\
+                                   <meta name='viewport' content='initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no' />\
+                                   <link type='text/css' rel='stylesheet' href='style-liste.css'/>\
+                                   <link type='text/css' rel='stylesheet' href='style-liste-retina.css' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\
+                                   <style type='text/css'>\
+                                   %@\
+                                   </style>\
+                                   </head><body class='iosversion'><a name='top'></a>\
+                                   <div class='bunselected %@' id='qsdoiqjsdkjhqkjhqsdqdilkjqsd2'>\
+                                   %@\
+                                   </div>\
+                                   %@\
+                                   %@\
+                                   <div id='endofpage'></div>\
+                                   <div id='endofpagetoolbar'></div>\
+                                   <a name='bas'></a>\
+                                   <script type='text/javascript'>\
+                                   document.addEventListener('DOMContentLoaded', loadedML);\
+                                   document.addEventListener('touchstart', touchstart);\
+                                   function loadedML() { setTimeout(function() {document.location.href = 'oijlkajsdoihjlkjasdoloaded://loaded';},700); };\
+                                   function HLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bselected'; }\
+                                   function UHLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bunselected'; }\
+                                   function swap_spoiler_states(obj){var div=obj.getElementsByTagName('div');if(div[0]){if(div[0].style.visibility==\"visible\"){div[0].style.visibility='hidden';}else if(div[0].style.visibility==\"hidden\"||!div[0].style.visibility){div[0].style.visibility='visible';}}}\
+                                   $('img').error(function(){ $(this).attr('src', 'photoDefaultfailmini.png');});\
+                                   function touchstart() { document.location.href = 'oijlkajsdoihjlkjasdotouch://touchstart'};\
+                                   </script>\
+                                   </body></html>", customFontSize, display_sig_css, tmpHTML, refreshBtn, tooBar];
+
+
+           if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+               if (self.isSearchInstra) {
+                   HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"iosversion" withString:@"ios7 searchintra"];
+               }
+               else {
+                   HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"iosversion" withString:@"ios7"];
+               }
+           }
+           //  HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"hfrplusiosversion" withString:@""];
+
+
+           NSString *path = [[NSBundle mainBundle] bundlePath];
+           NSURL *baseURL = [NSURL fileURLWithPath:path];
+           //NSLog(@"baseURL %@", baseURL);
+
+           //NSLog(@"======================================================================================================");
+           //NSLog(@"HTMLString %@", HTMLString);
+           //NSLog(@"======================================================================================================");
+           //NSLog(@"baseURL %@", baseURL);
+           //NSLog(@"======================================================================================================");
+           
+           self.loaded = NO;
+           [self.messagesWebView loadHTMLString:HTMLString baseURL:baseURL];
+           
+           [self.messagesWebView setUserInteractionEnabled:YES];
+           
+           
+       }
+
+   }
+
+    if (self.autoUpdate && [(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:4] isEnabled]) {
+        // page suivante = on change la currentURL
+        NSLog(@"Live, page suivante dispo, on change ! %@", self.nextPageUrl);
+        self.currentUrl = self.nextPageUrl;
     }
-    else {
-
-        NSLog(@"OLD %@", self.stringFlagTopic);
-
-        NSCharacterSet* nonDigits = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
-        int currentFlagValue = [[self.stringFlagTopic stringByTrimmingCharactersInSet:nonDigits] intValue];
-        bool ifCurrentFlag = NO;
-        int closePostID = 0;
-        
-        if(!currentFlagValue) { //si pas de value on cherche soit le premier message (pas de flag) soit le dernier (#bas)
-            NSLog(@"!currentFlagValue");
-            
-            ifCurrentFlag = YES;
-        }
-
-        NSLog(@"Looking for %d", currentFlagValue);
-        //NSLog(@"==============");
-
-        for (i = 0; i < [self.arrayData count]; i++) { //Loop through all the tags
-            tmpHTML = [tmpHTML stringByAppendingString:[[self.arrayData objectAtIndex:i] toHTML]];
-            
-            if (!ifCurrentFlag) {
-
-                int tmpFlagValue = [[[[self.arrayData objectAtIndex:i] postID] stringByTrimmingCharactersInSet:nonDigits] intValue];
-
-                if (tmpFlagValue == currentFlagValue) {
-                    //NSLog(@"TROUVE");
-                    ifCurrentFlag = YES;
-                    closePostID = tmpFlagValue;
-                }
-
-                //NSLog(@"pas encore trouvé");
-                
-                if (closePostID && currentFlagValue && tmpFlagValue >= currentFlagValue) {
-                    //NSLog(@"On a trouvé plus grand, on set");
-                    closePostID = tmpFlagValue;
-                    ifCurrentFlag = YES;
-                }
-                else {
-                    //NSLog(@"0, on set le premier");
-                    closePostID = tmpFlagValue;
-                }
-                
-                //NSLog(@"-- curFlagID = %d", tmpFlagValue);
-            }
-
-        }
-        
-        if (closePostID) {
-            //NSLog(@"On remplace au plus proche");
-            self.stringFlagTopic = [NSString stringWithFormat:@"#t%d", closePostID];
-        }
-        
-        NSLog(@"NEW %@", self.stringFlagTopic);
-
-        
-        NSString *refreshBtn = @"";
-
-        //on ajoute le bouton actualiser si besoin
-        if (self.autoUpdate) {
-            refreshBtn = @"<div id=\"actualiserlbl\"><p class=\"first\">actualisé il y a moins d'une seconde</p></div>";
-        }
-        else if (([self pageNumber] == [self lastPageNumber]) || ([self lastPageNumber] == 0)) {
-            //NSLog(@"premiere et unique ou dernier");
-            //'before'
-            refreshBtn = @"<div id=\"actualiserbtn\" onClick=\"window.location = 'oijlkajsdoihjlkjasdorefresh://data'; return false;\">Actualiser</div>";
-
-        }
-        else {
-            //NSLog(@"autre");
-        }
-
-        NSString *tooBar = [self generateHTMLToolbar];
-
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSString *display_sig = [defaults stringForKey:@"display_sig"];
-        
-        NSString *display_sig_css = @"nosig";
-        
-        if ([display_sig isEqualToString:@"yes"]) {
-            display_sig_css = @"";
-        }
-        
-        NSString *customFontSize = [self userTextSizeDidChange];
-        
-        NSString *HTMLString = [NSString
-                                stringWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
-                                <html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"fr\" lang=\"fr\">\
-                                <head>\
-                                <script type='text/javascript' src='jquery-2.1.1.min.js'></script>\
-                                <script type='text/javascript' src='jquery.doubletap.js'></script>\
-                                <script type='text/javascript' src='jquery.base64.js'></script>\
-                                <meta name='viewport' content='initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no' />\
-                                <link type='text/css' rel='stylesheet' href='style-liste.css'/>\
-                                <link type='text/css' rel='stylesheet' href='style-liste-retina.css' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\
-                                <style type='text/css'>\
-                                %@\
-                                </style>\
-                                </head><body class='iosversion'><a name='top'></a>\
-                                <div class='bunselected %@' id='qsdoiqjsdkjhqkjhqsdqdilkjqsd2'>\
-                                %@\
-                                </div>\
-                                %@\
-                                %@\
-                                <div id='endofpage'></div>\
-                                <div id='endofpagetoolbar'></div>\
-                                <a name='bas'></a>\
-                                <script type='text/javascript'>\
-                                document.addEventListener('DOMContentLoaded', loadedML);\
-                                document.addEventListener('touchstart', touchstart);\
-                                function loadedML() { setTimeout(function() {document.location.href = 'oijlkajsdoihjlkjasdoloaded://loaded';},700); };\
-                                function HLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bselected'; }\
-                                function UHLtxt() { var el = document.getElementById('qsdoiqjsdkjhqkjhqsdqdilkjqsd');el.className='bunselected'; }\
-                                function swap_spoiler_states(obj){var div=obj.getElementsByTagName('div');if(div[0]){if(div[0].style.visibility==\"visible\"){div[0].style.visibility='hidden';}else if(div[0].style.visibility==\"hidden\"||!div[0].style.visibility){div[0].style.visibility='visible';}}}\
-                                $('img').error(function(){ $(this).attr('src', 'photoDefaultfailmini.png');});\
-                                function touchstart() { document.location.href = 'oijlkajsdoihjlkjasdotouch://touchstart'};\
-                                </script>\
-                                </body></html>", customFontSize, display_sig_css, tmpHTML, refreshBtn, tooBar];
-
-
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-            if (self.isSearchInstra) {
-                HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"iosversion" withString:@"ios7 searchintra"];
-            }
-            else {
-                HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"iosversion" withString:@"ios7"];
-            }
-        }
-        //  HTMLString = [HTMLString stringByReplacingOccurrencesOfString:@"hfrplusiosversion" withString:@""];
-        
-        
-        NSString *path = [[NSBundle mainBundle] bundlePath];
-        NSURL *baseURL = [NSURL fileURLWithPath:path];
-        //NSLog(@"baseURL %@", baseURL);
-        
-        //NSLog(@"======================================================================================================");
-        //NSLog(@"HTMLString %@", HTMLString);
-        //NSLog(@"======================================================================================================");
-        //NSLog(@"baseURL %@", baseURL);
-        //NSLog(@"======================================================================================================");
-        
-        self.loaded = NO;
-        [self.messagesWebView loadHTMLString:HTMLString baseURL:baseURL];
-        
-        [self.messagesWebView setUserInteractionEnabled:YES];
-
-        if (self.autoUpdate && [(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:4] isEnabled]) {
-            // page suivante = on change la currentURL
-            NSLog(@"Live, page suivante dispo, on change ! %@", self.nextPageUrl);
-            self.currentUrl = self.nextPageUrl;
-        }
-    }
- 
-
-	//[HTMLString release];
-	//[tmpHTML release];
 
 }
 - (void)handleLoadedParser:(HTMLParser *)myParser
@@ -2157,6 +2162,7 @@
 }
 
 -(void)updateLastUpdateDate {
+    NSLog(@"========= updateLastUpdateDate ===========");
     NSDate *curDate = [NSDate date];
 
     NSTimeInterval secs = [curDate timeIntervalSinceDate:self.lastAutoUpDate];
@@ -2180,7 +2186,6 @@
 
 - (void)scrollTimerSelector {
 
-
     [self updateLastUpdateDate];
 
     if ([request inProgress]) {
@@ -2196,10 +2201,10 @@
     CGFloat offset = self.messagesWebView.scrollView.contentOffset.y;
     CGFloat height = self.messagesWebView.scrollView.contentSize.height;
     CGFloat vheight = self.messagesWebView.scrollView.bounds.size.height;
-    //NSLog(@"of:%f | hei:%f | dif:%f | vh:%f", offset, height, height-offset, vheight);
+    NSLog(@"of:%f | hei:%f | dif:%f | vh:%f", offset, height, height-offset, vheight);
 
     if (height-offset < 1200) {
-        NSLog(@"schedule update");
+        NSLog(@"setupTimer schedule update");
         [self setupTimer:0];
     }
 }
@@ -2215,9 +2220,10 @@
 
     @autoreleasepool {
 
+        NSLog(@"stopTimer liveTimerSelectorBack");
+
         [self stopTimer];
 
-        NSLog(@"liveTimerBack");
 
         [self searchNewMessages:kNewMessageFromUpdate];
         // If another same maintenance operation is already sceduled, cancel it so this new operation will be executed after other
@@ -2365,10 +2371,6 @@
                 }
             }
 
-            //check la position du scroll pour l'autoupdate
-            CGFloat offset = self.messagesWebView.scrollView.contentOffset.y;
-            CGFloat height = self.messagesWebView.scrollView.contentSize.height;
-            NSLog(@"o: %f h: %f", offset, height);
 			return NO;
 		}
         else if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdopreloaded"]) {
@@ -2720,7 +2722,7 @@
 }
 -(void)actionLink:(NSString *)selectedPostID {
 
-    NSLog("actionLink URL = %@%@#%@", kForumURL, self.currentUrl, [[arrayData objectForKey:selectedPostID] postID]);
+    NSLog(@"actionLink URL = %@%@#%@", kForumURL, self.currentUrl, [[arrayData objectForKey:selectedPostID] postID]);
     
     
     //Topic *tmpTopic = [[[self.arrayData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
@@ -3351,14 +3353,14 @@
 
 
 -(void)appInBackground:(NSNotification *)notification {
-    NSLog(@"appInBackground");
+    NSLog(@"stopTimer appInBackground");
     [self stopTimer];
 }
 
 -(void)appInForeground:(NSNotification *)notification {
-    NSLog(@"appInForeground");
+    NSLog(@"setupTimer: appInForeground");
     
-    //[self setupTimer:10];
+    [self setupTimer:0];
 }
 
 @end
