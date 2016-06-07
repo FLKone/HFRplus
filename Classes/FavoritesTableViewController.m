@@ -1228,8 +1228,6 @@
         case 4:
         {
             NSLog(@"goto live");
-
-            
             NSIndexPath *indexPath = pressedIndexPath;
             Topic *tmpTopic = [[[self.arrayData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
 

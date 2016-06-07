@@ -8,14 +8,6 @@
 
 #import "MessagesTableViewController.h"
 
-@interface LiveMessagesTableViewController : BaseMessagesTableViewController
-{
-        NSTimer *liveTimer;
-}
-
-@property (nonatomic, strong) NSTimer *liveTimer;
-
--(void)stopTimer;
--(void)setupTimer:(int)sec;
+@interface LiveMessagesTableViewController : MessagesTableViewController
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class BaseMessagesTableViewController;
+@class MessagesTableViewController;
 @class ASIHTTPRequest;
 @class HTMLNode;
 @class HTMLParser;
@@ -31,7 +31,7 @@
     NSString *stringQuestion;
     NSString *stringFooter;
     
-    BaseMessagesTableViewController *delegate;
+    MessagesTableViewController *delegate;
     ASIHTTPRequest *request;
     
     int intNombreChoix;
@@ -51,7 +51,7 @@
 @property (nonatomic, strong) NSString *stringQuestion;
 @property (nonatomic, strong) NSString *stringFooter;
 
-@property (nonatomic, strong) BaseMessagesTableViewController *delegate;
+@property (nonatomic, strong) MessagesTableViewController *delegate;
 @property (nonatomic, strong) ASIHTTPRequest *request;
 @property STATUS status;
 

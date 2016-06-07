@@ -569,7 +569,7 @@
 		
 	}
     
-    if (![self.parent isSearchIntra]) {
+    if (![self.parent isSearchInstra]) {
         [self.arrayAction addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Copier le lien", @"actionLink:", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
     }
     
