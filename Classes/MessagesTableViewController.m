@@ -2192,7 +2192,7 @@
     CGFloat vheight = self.messagesWebView.scrollView.bounds.size.height;
     //NSLog(@"of:%f | hei:%f | dif:%f | vh:%f", offset, height, height-offset, vheight);
 
-    if (height-offset < 1200) {
+    if (height-offset < vheight*2*95/100) {
         //NSLog(@"===== shouldAutoUpdate = YES");
         self.shouldAutoUpdate = YES;
         [self scheduleUpdateIn:0 repeat:NO];
