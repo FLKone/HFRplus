@@ -1707,14 +1707,11 @@
                            int curV = [[[[HFRplusAppDelegate sharedAppDelegate].rootController tabBar] items] objectAtIndex:3].badgeValue.intValue;
                            int new = curV + number;
 
-                           if (new > 20) {
+                           if (self.tabBarController.selectedIndex != 3 && new > 20) {
                                [[[[[HFRplusAppDelegate sharedAppDelegate].rootController tabBar] items] objectAtIndex:3] setBadgeValue:[NSString stringWithFormat:@"%d+", curV + number]];
                                NSLog(@"newMessagesAutoAdded shouldAutoUpdate set TO NO");
 
-                               if (self.tabBarController.selectedIndex != 3) {
-
-                                   self.shouldAutoUpdate = NO;
-                               }
+                               self.shouldAutoUpdate = NO;
                            }
                            else {
                                [[[[[HFRplusAppDelegate sharedAppDelegate].rootController tabBar] items] objectAtIndex:3] setBadgeValue:[NSString stringWithFormat:@"%d", curV + number]];
