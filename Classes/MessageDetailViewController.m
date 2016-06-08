@@ -122,7 +122,9 @@
     if ([[[self arrayData] objectForKey:self.currentPostID] editedTime ]) {
         myRawContent = [myRawContent stringByAppendingString:[NSString stringWithFormat:@"<br/><p class=\"editedhfrlink\">édité par %@</p>", [[[self arrayData] objectForKey:self.currentPostID] editedTime]]];
     }
-    
+
+    myRawContent = [myRawContent stringByReplacingOccurrencesOfString:@"---------------" withString:@""];
+
     NSString *customFontSize = [self userTextSizeDidChange];
 
     
@@ -160,7 +162,8 @@
 	NSString *regEx4 = @"\\|NATIVE-([^-]+)-98787687687697\\|";			
 	HTMLString = [HTMLString stringByReplacingOccurrencesOfRegex:regEx4
 														  withString:@"<img src='$1' />"];
-	
+
+
 	//NSLog(@"HTMLString: %@", HTMLString);
 	
 	NSString *path = [[NSBundle mainBundle] bundlePath];
