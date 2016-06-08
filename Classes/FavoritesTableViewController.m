@@ -1237,6 +1237,7 @@
 
             UITabBarItem *thirdTab = [[HFRplusAppDelegate sharedAppDelegate].rootController.tabBar.items objectAtIndex:3];
             if ([thirdTab.title isEqual: @"Live"]) {
+                thirdTab.badgeValue = nil;
                 // Deja Live
                 HFRNavigationController *nc = [[HFRplusAppDelegate sharedAppDelegate].rootController.viewControllers objectAtIndex:3];
                 [nc popToRootViewControllerAnimated:NO];
@@ -1249,7 +1250,6 @@
             else {
                 // New Live
                 HFRNavigationController *nc = [[HFRNavigationController alloc] initWithRootViewController:aView];
-
                 NSMutableArray *currCtrls = [NSMutableArray arrayWithArray:[HFRplusAppDelegate sharedAppDelegate].rootController.viewControllers];
                 //NSLog(@"currCtrls a %@", [currCtrls description]);
                 [currCtrls insertObject:nc atIndex:3];
