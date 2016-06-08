@@ -1801,7 +1801,7 @@
             if ([self.arrayData indexForKey:[loadedItems keyAtIndex:i]] == NSNotFound) {
                 //NSLog(@"postID new: %@ | old: -----", [[loadedItems objectAtIndex:i] postID]);
                 tmpHTML = [tmpHTML stringByAppendingString:[[loadedItems objectAtIndex:i] toHTML]];
-                [self.arrayData insertObject:[loadedItems objectAtIndex:i] forKey:[loadedItems keyAtIndex:i] atIndex:i];
+                [self.arrayData setObject:[loadedItems objectAtIndex:i] forKey:[loadedItems keyAtIndex:i]];
                 nbAdded = nbAdded + 1;
                 // Live test
                 //if(nbAdded >= 2) break;
