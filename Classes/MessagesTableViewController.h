@@ -103,11 +103,11 @@
     BOOL gestureEnabled;
     BOOL paginationEnabled;
     BOOL autoUpdate;
-    NSTimer *liveTimer;
+    NSTimer *updateTimer;
     NSTimer *scrollCheckTimer;
-    BOOL shouldAutoUpdate;
+    BOOL shouldAutoUpdate; // set to YES if scroll is at the end of the page
     NSDate *lastAutoUpDate;
-    BOOL isVisible;
+    BOOL isVisible; // check is view is Visible
 }
 
 
@@ -141,7 +141,7 @@
 @property (nonatomic, strong) NSDate *lastAutoUpDate;
 @property BOOL isVisible;
 
-@property (nonatomic, strong) NSTimer *liveTimer;
+@property (nonatomic, strong) NSTimer *updateTimer;
 @property (nonatomic, strong) NSTimer *scrollCheckTimer;
 
 @property (nonatomic, strong) OrderedDictionary *arrayData;
@@ -226,8 +226,7 @@
 - (void)toggleSearch:(BOOL) active;
 - (IBAction)searchNext:(UITextField *)sender;
 
--(void)newMessagesAutoAdded:(int)number;
--(void)stopTimer;
--(void)setupTimer:(int)sec;
+-(void)setVisibility:(BOOL)visible;
+-(void)prepareForDealloc;
 
 @end

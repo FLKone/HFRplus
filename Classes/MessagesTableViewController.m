@@ -5,6 +5,8 @@
 //  Created by FLK on 07/07/10.
 //
 
+#define kDefaultAutoUpdateTimer		2
+
 #import <unistd.h>
 
 #import "MessagesTableViewController.h"
@@ -55,7 +57,7 @@
 @synthesize lastAutoUpDate, scrollCheckTimer, shouldAutoUpdate;
 
 // Live
-@synthesize firstLoad, gestureEnabled, paginationEnabled, autoUpdate, liveTimer, isVisible;
+@synthesize firstLoad, gestureEnabled, paginationEnabled, autoUpdate, updateTimer, isVisible;
 
 - (void)setTopicName:(NSString *)n {
     _topicName = [n filterTU];
@@ -86,8 +88,6 @@
 - (void)fetchContent:(int)from
 {
     self.isLoading = YES;
-    NSLog(@"stopTimer from fetchContent");
-    [self stopTimer];
 
     self.errorReported = NO;
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMaxi];
@@ -100,7 +100,7 @@
     
     //NSLog(@"URL %@", [self currentUrl]);
     
-    NSLog(@"[self currentUrl] %@", [self currentUrl]);
+    NSLog(@"[self currentUrl] %@ = %@", self, [self currentUrl]);
     //NSLog(@"[self stringFlagTopic] %@", [self stringFlagTopic]);
     
 	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]]]];
@@ -652,42 +652,55 @@
         self.isMP = NO;
         self.isLive = NO;
         self.shouldAutoUpdate = NO;
-
+        self.isVisible = NO;
         self.isLoading = NO; //check if autoupdate triggered
 	}
 	return self;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-	//NSLog(@"viewWillDisappear");
+	NSLog(@"========== viewWillDisappear");
 	
     [super viewWillDisappear:animated];
 	self.isAnimating = YES;
-    
-    if (self.autoUpdate) {
-        NSLog(@"stopScrollTimer viewWillDisappear");
-        [self stopScrollTimer];
-        NSLog(@"setupTimer viewWillDisappear");
-        [self setupTimer:10];
-    }
+
+    [self setVisibility:NO];
+
+}
+- (void)viewDidDisappear:(BOOL)animated {
+    NSLog(@"========== viewDidDisappear");
+
+    [super viewDidDisappear:animated];
+
 }
 
+
+- (void)viewWillAppear:(BOOL)animated {
+    NSLog(@"========== viewWillAppear");
+
+    [super viewWillAppear:animated];
+
+    if(self.detailViewController) self.detailViewController = nil;
+    if(self.messagesTableViewController) self.messagesTableViewController = nil;
+
+}
 - (void)viewDidAppear:(BOOL)animated {
-    //NSLog(@"viewDidAppear");
-    
-	[super viewDidAppear:animated];
-	self.isAnimating = NO;
+    NSLog(@"========== viewDidAppear");
 
-    if (!self.firstLoad && self.autoUpdate) {
-        NSLog(@"stopTimer viewDidAppear");
-        [self stopTimer];
-    }
+    [super viewDidAppear:animated];
+    self.isAnimating = NO;
 
-    if (self.autoUpdate) {
-        NSLog(@"setupScrollTimer from viewDidAppear");
-        [self setupScrollTimer];
-    }
-    
+    [self setVisibility:YES];
+
+}
+
+-(void)setVisibility:(BOOL)visible {
+    NSLog(@"setVisibility = %d", visible);
+
+    self.isVisible = visible;
+    [self scheduleScrollCheckTimer];
+    [self scheduleUpdateIn:kDefaultAutoUpdateTimer repeat:YES];
+
 }
 
 - (void)VisibilityChanged:(NSNotification *)notification {
@@ -944,7 +957,7 @@
 	self.curPostID = @"";
 	
     if (!self.searchInputData) {
-        NSLog(@"NO searchInputData");
+        //NSLog(@"NO searchInputData");
         self.searchInputData = [[NSMutableDictionary alloc] init];
     }
 
@@ -1265,20 +1278,6 @@
     
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-	
-	if(self.detailViewController) self.detailViewController = nil;
-	if(self.messagesTableViewController) self.messagesTableViewController = nil;
- 
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-	//NSLog(@"viewDidDisappear");
-
-    [super viewDidDisappear:animated];
-}
-
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
@@ -1454,7 +1453,6 @@
 
 -(void)searchNewMessages:(int)from {
 
-    NSLog(@"lastAutoUpdate %@", self.lastAutoUpDate);
 
     NSDate *curDate = [NSDate date];
 
@@ -1462,9 +1460,11 @@
     //NSLog(@"diff secs %f", secs);
 
     if (self.autoUpdate && secs <= 10) {
-        NSLog(@"Trop rapide mec, on stop");
+        NSLog(@"searchNewMessages: Trop rapide mec, on stop | %f", secs);
         return;
     }
+    NSLog(@"searchNewMessages: OK, last was %f", secs);
+    //NSLog(@"lastAutoUpdate %@", self.lastAutoUpDate);
 
 
 	if (![self.messagesWebView isLoading]) {
@@ -1666,51 +1666,6 @@
     
 }
 
--(void)stopScrollTimer {
-    NSLog(@">> stopScrollTimer");
-    [self.scrollCheckTimer invalidate];
-    self.scrollCheckTimer = nil;
-}
-
--(void)setupScrollTimer {
-    [self stopScrollTimer];
-
-    NSLog(@">> GO scrollCheckTimer setupScrollTimer");
-    self.scrollCheckTimer = [NSTimer scheduledTimerWithTimeInterval:0.5
-                                                      target:self
-                                                    selector:@selector(scrollTimerSelector)
-                                                    userInfo:nil
-                                                     repeats:YES];
-
-    //[[NSRunLoop mainRunLoop] addTimer:self.scrollCheckTimer forMode:NSRunLoopCommonModes];
-
-}
-
--(void)stopTimer {
-    NSLog(@">> stopTimer");
-    [self.liveTimer invalidate];
-    self.liveTimer = nil;
-}
-
--(void)setupTimer:(int)sec {
-    NSLog(@"stopTimer setupTimer %d", sec);
-    [self stopTimer];
-
-    NSLog(@">> GO liveTimer setupTimer");
-
-    BOOL rep = NO;
-    if (sec > 0) rep = YES;
-
-    self.liveTimer = [NSTimer timerWithTimeInterval:sec
-                                                 target:self
-                                               selector:@selector(liveTimerSelector)
-                                               userInfo:nil
-                                                repeats:rep];
-
-    [[NSRunLoop mainRunLoop] addTimer:self.liveTimer forMode:NSRunLoopCommonModes];
-
-}
-
 -(void)newMessagesAutoAdded:(int)number {
     NSLog(@"newMessagesAutoAdded %d", number);
 
@@ -1720,19 +1675,31 @@
         dispatch_async(dispatch_get_main_queue(),
                        ^{
                            int curV = [[[[HFRplusAppDelegate sharedAppDelegate].rootController tabBar] items] objectAtIndex:3].badgeValue.intValue;
-                           [[[[[HFRplusAppDelegate sharedAppDelegate].rootController tabBar] items] objectAtIndex:3] setBadgeValue:[NSString stringWithFormat:@"%d", curV + number]];
-                       });
-        NSLog(@"setupTimer newMessagesAutoAdded");
+                           int new = curV + number;
 
-        [self setupTimer:5];
+                           if (new > 20) {
+                               [[[[[HFRplusAppDelegate sharedAppDelegate].rootController tabBar] items] objectAtIndex:3] setBadgeValue:[NSString stringWithFormat:@"%d+", curV + number]];
+                               NSLog(@"newMessagesAutoAdded shouldAutoUpdate set TO NO");
+
+                               self.shouldAutoUpdate = NO;
+                           }
+                           else {
+
+                           }
+                           [[[[[HFRplusAppDelegate sharedAppDelegate].rootController tabBar] items] objectAtIndex:3] setBadgeValue:[NSString stringWithFormat:@"%d", curV + number]];
+
+
+
+                       });
+
 
     }
     else {
         NSLog(@"stopTimer #2 newMessagesAutoAdded");
-        [self stopTimer];
-        
+
     }
-    
+
+
 }
 
 - (NSString*)generateHTMLToolbar {
@@ -1839,8 +1806,6 @@
 
            dispatch_async(dispatch_get_main_queue(),
                           ^{
-                              NSLog(@"Messages Added %d", nbAdded);
-
                               [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsQuery];
                           });
 
@@ -1857,7 +1822,7 @@
 
                NSLog(@"setupTimer handleApps");
 
-               [self setupTimer:10];
+               //[self setupTimer:10];
 
            }
        }
@@ -1873,7 +1838,7 @@
        else if ([(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:4] isEnabled]) {
            NSLog(@"stopTimer loadedApps actualiser BTN");
            // page suivante dispo, hide actualiser button
-           [self stopTimer];
+           //[self stopTimer];
 
            dispatch_async(dispatch_get_main_queue(),
                         ^{
@@ -1891,13 +1856,8 @@
 
        [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsQuery2];
 
-       if (self.autoUpdate && [(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:4] isEnabled]) {
-           // page suivante = on change la currentURL
-           NSLog(@"Live, page suivante dispo, on change ! %@", self.nextPageUrl);
-           self.currentUrl = self.nextPageUrl;
-       }
 
-    }
+   }
    else {
 
        [self.arrayData removeAllObjects];
@@ -2144,13 +2104,6 @@
 
         self.firstLoad = NO;
 
-        if (self.autoUpdate) {
-
-            NSLog(@"Timer FirstLoad");
-
-            //[self setupTimer:5];
-
-        }
         NSString *jsString = @"";
 
         jsString = [jsString stringByAppendingString:@"$('.message').addSwipeEvents().bind('doubletap', function(evt, touch) { window.location = 'oijlkajsdoihjlkjasdodetails://'+this.id; });"];
@@ -2162,7 +2115,7 @@
 }
 
 -(void)updateLastUpdateDate {
-    NSLog(@"========= updateLastUpdateDate ===========");
+    //NSLog(@"========= updateLastUpdateDate ===========");
     NSDate *curDate = [NSDate date];
 
     NSTimeInterval secs = [curDate timeIntervalSinceDate:self.lastAutoUpDate];
@@ -2185,6 +2138,7 @@
 }
 
 - (void)scrollTimerSelector {
+    NSLog(@"TICK scrollTimerSelector");
 
     [self updateLastUpdateDate];
 
@@ -2198,21 +2152,37 @@
         return;
     }
 
+    if (!self.loaded) {
+        NSLog(@"Update#3 en cours, osef");
+        return;
+    }
+
     CGFloat offset = self.messagesWebView.scrollView.contentOffset.y;
     CGFloat height = self.messagesWebView.scrollView.contentSize.height;
     CGFloat vheight = self.messagesWebView.scrollView.bounds.size.height;
-    NSLog(@"of:%f | hei:%f | dif:%f | vh:%f", offset, height, height-offset, vheight);
+    //NSLog(@"of:%f | hei:%f | dif:%f | vh:%f", offset, height, height-offset, vheight);
 
     if (height-offset < 1200) {
-        NSLog(@"setupTimer schedule update");
-        [self setupTimer:0];
+        NSLog(@"===== shouldAutoUpdate = YES");
+        self.shouldAutoUpdate = YES;
+        [self scheduleUpdateIn:0 repeat:NO];
+    }
+    else {
+        NSLog(@"===== shouldAutoUpdate = NO");
+        self.shouldAutoUpdate = NO;
     }
 }
 - (void)liveTimerSelector
 {
-    NSLog(@"liveTimer");
+    NSLog(@"TACK liveTimerSelector");
 
-    [self performSelectorInBackground:@selector(liveTimerSelectorBack) withObject:nil];
+    if (!self.shouldAutoUpdate) {
+        NSLog(@"!shouldAutoUpdate >> KO");
+    }
+    else {
+        [self performSelectorInBackground:@selector(liveTimerSelectorBack) withObject:nil];
+    }
+
 }
 
 - (void)liveTimerSelectorBack
@@ -2220,16 +2190,11 @@
 
     @autoreleasepool {
 
-        NSLog(@"stopTimer liveTimerSelectorBack");
+        //NSLog(@"liveTimerSelectorBack");
 
-        [self stopTimer];
-
+        //[self stopTimer];
 
         [self searchNewMessages:kNewMessageFromUpdate];
-        // If another same maintenance operation is already sceduled, cancel it so this new operation will be executed after other
-        // operations of the queue, so we can group more work together
-        //[periodicMaintenanceOperation cancel];
-        //self.periodicMaintenanceOperation = nil;
 
     }
     
@@ -3036,8 +3001,13 @@
 }
 
 - (void)dealloc {
-	NSLog(@"dealloc Messages Table View");
-	
+    NSLog(@"dealloc >> Stop both timers");
+    NSLog(@"dealloc >> Stop both timers");
+    NSLog(@"dealloc >> Stop both timers");
+    NSLog(@"dealloc >> Stop both timers");
+    NSLog(@"dealloc >> Stop both timers");
+    NSLog(@"dealloc >> Stop both timers");
+
 	[self viewDidUnload];
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -3062,8 +3032,9 @@
 	//[self.arrayData removeAllObjects];
 	self.arrayData = nil;
 
-    [self stopTimer];
-    [self stopScrollTimer];
+    NSLog(@"dealloc >> Stop both timers");
+    [self stopUpdateTimer];
+    [self stopScrollCheckTimer];
 
 }
 
@@ -3336,11 +3307,17 @@
 
 }
 
+-(void)prepareForDealloc {
+    self.autoUpdate = NO;
+    [self stopUpdateTimer];
+    [self stopScrollCheckTimer];
+}
+
 -(void)stopLive {
-    NSLog(@"stop Live");
+    NSLog(@"stopLive TIMERS");
 
-    [self stopTimer];
-
+    [self prepareForDealloc];
+    
     NSMutableArray *currCtrls = [NSMutableArray arrayWithArray:[HFRplusAppDelegate sharedAppDelegate].rootController.viewControllers];
 
     [currCtrls removeObjectAtIndex:3];
@@ -3350,17 +3327,85 @@
 
 }
 
+-(void)stopScrollCheckTimer {
+    NSLog(@"11- stopScrollCheckTimer");
+    [self.scrollCheckTimer invalidate];
+    self.scrollCheckTimer = nil;
+}
+-(void)scheduleScrollCheckTimer {
+    NSLog(@"11* scheduleScrollCheckTimer");
 
+    //Stop current timer before anything
+    [self stopScrollCheckTimer];
+
+    if (!self.autoUpdate) {
+        NSLog(@"11| scheduleScrollCheckTimer >> noAutoUpdate = KO");
+        return;
+    }
+
+    if (self.isVisible) {
+        NSLog(@"11+ scheduleScrollCheckTimer >> isVisible = YES = GO");
+
+        self.scrollCheckTimer = [NSTimer scheduledTimerWithTimeInterval:0.5
+                                                                 target:self
+                                                               selector:@selector(scrollTimerSelector)
+                                                               userInfo:nil
+                                                                repeats:YES];
+
+        //[[NSRunLoop mainRunLoop] addTimer:self.scrollCheckTimer forMode:NSRunLoopCommonModes];
+
+    }
+    else {
+        NSLog(@"11| scheduleScrollCheckTimer >> isVisible = NO = KO");
+    }
+
+}
+
+-(void)stopUpdateTimer {
+    NSLog(@"22-  stopUpdateTimer");
+    [self.updateTimer invalidate];
+    self.updateTimer = nil;
+}
+-(void)scheduleUpdateIn:(int)sec repeat:(BOOL)repeat {
+    NSLog(@"22* scheduleUpdateIn %d repeat=%d", sec, repeat);
+
+    //Stop current timer before anything
+    [self stopUpdateTimer];
+
+    if (!self.autoUpdate) {
+        NSLog(@"22- scheduleUpdateIn >> noAutoUpdate = KO");
+    }
+    else {
+        NSLog(@"22+ scheduleUpdateIn = GO");
+
+        self.updateTimer = [NSTimer timerWithTimeInterval:sec
+                                                   target:self
+                                                 selector:@selector(liveTimerSelector)
+                                                 userInfo:nil
+                                                  repeats:repeat];
+
+        [[NSRunLoop mainRunLoop] addTimer:self.updateTimer forMode:NSRunLoopCommonModes];
+
+    }
+
+}
+-(void)scheduleUpdateIn:(int)sec {
+    [self scheduleUpdateIn:sec repeat:NO];
+}
 
 -(void)appInBackground:(NSNotification *)notification {
-    NSLog(@"stopTimer appInBackground");
-    [self stopTimer];
+    //NSLog(@"appInBackground: notification, stop both timers");
+    [self stopScrollCheckTimer];
+    [self stopUpdateTimer];
 }
 
 -(void)appInForeground:(NSNotification *)notification {
-    NSLog(@"setupTimer: appInForeground");
-    
-    [self setupTimer:0];
+    //NSLog(@"appInForeground: notification, schedule update/force and scrollcheck");
+
+    [self scheduleUpdateIn:kDefaultAutoUpdateTimer repeat:YES];
+    [self scheduleScrollCheckTimer];
+
 }
+
 
 @end

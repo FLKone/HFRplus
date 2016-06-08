@@ -1239,7 +1239,10 @@
             if ([thirdTab.title isEqual: @"Live"]) {
                 // Deja Live
                 HFRNavigationController *nc = [[HFRplusAppDelegate sharedAppDelegate].rootController.viewControllers objectAtIndex:3];
-                //[nc setViewControllers:nil animated:YES];
+                [nc popToRootViewControllerAnimated:NO];
+                LiveMessagesTableViewController *currentLive = (LiveMessagesTableViewController*)nc.visibleViewController;
+                [currentLive prepareForDealloc];
+
                 [nc setViewControllers:[NSArray arrayWithObject:aView] animated:YES];
 
             }
