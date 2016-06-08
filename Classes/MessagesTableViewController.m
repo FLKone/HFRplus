@@ -87,6 +87,10 @@
 
 - (void)fetchContent:(int)from
 {
+    if (self.request.inProgress) {
+        NSLog(@"IN PROGRESS !!!!!!!!!!!");
+        return;
+    }
     self.isLoading = YES;
 
     self.errorReported = NO;
