@@ -88,7 +88,7 @@
 - (void)fetchContent:(int)from
 {
     if (self.request.inProgress) {
-        NSLog(@"IN PROGRESS !!!!!!!!!!!");
+        //NSLog(@"IN PROGRESS !!!!!!!!!!!");
         return;
     }
     self.isLoading = YES;
@@ -104,7 +104,7 @@
     
     //NSLog(@"URL %@", [self currentUrl]);
     
-    NSLog(@"[self currentUrl] %@ = %@", self, [self currentUrl]);
+    //NSLog(@"[self currentUrl] %@ = %@", self, [self currentUrl]);
     //NSLog(@"[self stringFlagTopic] %@", [self stringFlagTopic]);
     
 	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]]]];
@@ -114,7 +114,7 @@
 	//[request setCachePolicy:ASIReloadIfDifferentCachePolicy];
 	//[request setDownloadCache:[ASIDownloadCache sharedCache]];
 	
-    [request setDownloadProgressDelegate:self];
+    //[request setDownloadProgressDelegate:self];
     
 	[request setDidStartSelector:@selector(fetchContentStarted:)];
 	[request setDidFinishSelector:@selector(fetchContentComplete:)];
@@ -124,7 +124,7 @@
     if (self.swipeRightRecognizer) [self.view removeGestureRecognizer:self.swipeRightRecognizer];
 
     if (self.autoUpdate && !self.firstLoad) {
-        NSLog(@"onférienmec");
+        //NSLog(@"onférienmec");
     }
     else {
         if ([NSThread isMainThread]) {
