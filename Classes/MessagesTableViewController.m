@@ -1681,7 +1681,6 @@
 -(void)newMessagesAutoAdded:(int)number {
     NSLog(@"newMessagesAutoAdded %d", number);
 
-    if (self.tabBarController.selectedIndex != 3) {
 
         //  NSLog(@">> %@ < %@", self.tabBarItem, [NSString stringWithFormat:@"%d", [self.tabBarItem.badgeValue intValue] + number]);
         dispatch_async(dispatch_get_main_queue(),
@@ -1693,7 +1692,10 @@
                                [[[[[HFRplusAppDelegate sharedAppDelegate].rootController tabBar] items] objectAtIndex:3] setBadgeValue:[NSString stringWithFormat:@"%d+", curV + number]];
                                NSLog(@"newMessagesAutoAdded shouldAutoUpdate set TO NO");
 
-                               self.shouldAutoUpdate = NO;
+                               if (self.tabBarController.selectedIndex != 3) {
+
+                                   self.shouldAutoUpdate = NO;
+                               }
                            }
                            else {
                                [[[[[HFRplusAppDelegate sharedAppDelegate].rootController tabBar] items] objectAtIndex:3] setBadgeValue:[NSString stringWithFormat:@"%d", curV + number]];
@@ -1703,12 +1705,6 @@
 
                        });
 
-
-    }
-    else {
-        NSLog(@"stopTimer #2 newMessagesAutoAdded");
-
-    }
 
 
 }
@@ -2349,6 +2345,13 @@
                 }
             }
 
+            // reinit la puce
+            if (self.autoUpdate) {
+                dispatch_async(dispatch_get_main_queue(),
+                               ^{
+                                   [[[[[HFRplusAppDelegate sharedAppDelegate].rootController tabBar] items] objectAtIndex:3] setBadgeValue:nil];
+                               });
+            }
 			return NO;
 		}
         else if ([[aRequest.URL scheme] isEqualToString:@"oijlkajsdoihjlkjasdopreloaded"]) {
