@@ -118,32 +118,38 @@
     
 	if (self.swipeLeftRecognizer) [self.view removeGestureRecognizer:self.swipeLeftRecognizer];
     if (self.swipeRightRecognizer) [self.view removeGestureRecognizer:self.swipeRightRecognizer];
-	
-	if ([NSThread isMainThread]) {
-        [self.messagesWebView setHidden:YES];
+
+    if (self.autoUpdate && !self.firstLoad) {
+        NSLog(@"onférienmec");
+    }
+    else {
+        if ([NSThread isMainThread]) {
+            [self.messagesWebView setHidden:YES];
+        }
+
+        //NSLog(@"from %d", from);
+
+        [self.errorLabelView setHidden:YES];
+
+        if(from == kNewMessageFromNext) self.stringFlagTopic = @"#bas";
+        if(from != kNewMessageFromUpdate) self.firstLoad = YES;
+
+        switch (from) {
+            case kNewMessageFromShake:
+            case kNewMessageFromUpdate:
+            case kNewMessageFromEditor:
+                //NSLog(@"hidden");
+                [self.loadingView setHidden:YES];
+                break;
+            default:
+                //NSLog(@"not hidden");
+                [self.loadingView setHidden:NO];
+                [self.messagesWebView stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML = \"\";"];
+                break;
+        }
+
     }
 
-    //NSLog(@"from %d", from);
-    
-    [self.errorLabelView setHidden:YES];
-
-    if(from == kNewMessageFromNext) self.stringFlagTopic = @"#bas";
-    if(from != kNewMessageFromUpdate) self.firstLoad = YES;
-
-    switch (from) {
-        case kNewMessageFromShake:
-        case kNewMessageFromUpdate:
-        case kNewMessageFromEditor:
-            //NSLog(@"hidden");
-            [self.loadingView setHidden:YES];
-            break;
-        default:
-            //NSLog(@"not hidden");
-            [self.loadingView setHidden:NO];
-            [self.messagesWebView stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML = \"\";"];
-            break;
-    }
-    
 	[request startAsynchronous];
 }
 
@@ -816,6 +822,7 @@
 	self.isAnimating = NO;
 
 	self.title = self.topicName;
+    self.navigationController.navigationBar.translucent = NO;
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(VisibilityChanged:) name:@"VisibilityChanged" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editMenuHidden:) name:UIMenuControllerDidHideMenuNotification object:nil];
@@ -1453,6 +1460,11 @@
 
 -(void)searchNewMessages:(int)from {
 
+
+    if (from == kNewMessageFromEditor) {
+        NSLog(@"On vient de l'éditeur, on force le refresh");
+        self.lastAutoUpDate = nil;
+    }
 
     NSDate *curDate = [NSDate date];
 
@@ -3275,6 +3287,9 @@
 
 
     [self.arrayActionsMessages removeAllObjects];
+
+    if(self.topicAnswerUrl.length > 0)
+        [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Répondre", @"answerTopic", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
 
     [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Mettre fin au Live", @"stopLive", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
 
