@@ -13,7 +13,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andUrl:(NSString *)theTopicUrl {
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil andUrl:(NSString *)theTopicUrl])) {
         // Custom initialization
-        NSLog(@"init %@", theTopicUrl);
+        NSLog(@"init LIVE", theTopicUrl);
         self.isLive = YES;
         self.gestureEnabled = NO;
         self.paginationEnabled = NO;
