@@ -104,7 +104,7 @@
 
 - (void)fetchContent
 {
-    NSLog(@"fetchContent");
+    //NSLog(@"fetchContent");
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSInteger vos_sujets = [defaults integerForKey:@"vos_sujets"];
@@ -139,7 +139,7 @@
 
 - (void)fetchContentStarted:(ASIHTTPRequest *)theRequest
 {
-    NSLog(@"fetchContentStarted");
+    //NSLog(@"fetchContentStarted");
 	//Bouton Stop
 
 	self.navigationItem.rightBarButtonItem = nil;	
@@ -157,7 +157,7 @@
 
 - (void)fetchContentComplete:(ASIHTTPRequest *)theRequest
 {
-    NSLog(@"fetchContentComplete");
+    //NSLog(@"fetchContentComplete");
 
 	//Bouton Reload
 	self.navigationItem.rightBarButtonItem = nil;
@@ -209,7 +209,7 @@
 
 - (void)fetchContentFailed:(ASIHTTPRequest *)theRequest
 {
-    NSLog(@"fetchContentFailed");
+    //NSLog(@"fetchContentFailed");
 
 	//Bouton Reload
 	self.navigationItem.rightBarButtonItem = nil;
@@ -317,7 +317,7 @@
 	//[self.arrayNewData removeAllObjects];
 	[self.arrayCategories removeAllObjects];
 	
-    NSLog(@"loadDataInTableView");
+    //NSLog(@"loadDataInTableView");
 
 	HTMLParser * myParser = [[HTMLParser alloc] initWithData:contentData error:NULL];
 	HTMLNode * bodyNode = [myParser body];
@@ -367,7 +367,7 @@
     
 	if (temporaryTopicsArray.count == 0) {
 
-        NSLog(@"kNoResults");
+        //NSLog(@"kNoResults");
         
         NSDictionary *notif = [NSDictionary dictionaryWithObjectsAndKeys:   [NSNumber numberWithInt:kNoResults], @"status",
                  @"Aucun nouveau message", @"message", nil];
@@ -387,7 +387,7 @@
     
     BOOL first = YES;
     Favorite *aFavorite;
-    NSLog(@"run");
+    //NSLog(@"run");
     for (HTMLNode * trNode in temporaryFavoriteArray) { //Loop through all the tags
         
         
@@ -415,7 +415,7 @@
             //NSLog(@"ELSE");
         }
     }
-    NSLog(@"run2");
+    //NSLog(@"run2");
     if (!first) {
         if (aFavorite.topics.count > 0) {
             [self.arrayNewData addObject:aFavorite];
@@ -539,7 +539,7 @@
     }
     
     if (self.status == kComplete || self.status == kIdle) {
-        NSLog(@"COMPLETE %d", self.childViewControllers.count);
+        //NSLog(@"COMPLETE %d", self.childViewControllers.count);
 
     }
     else
@@ -555,7 +555,7 @@
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
-    NSLog(@"initWithNibName");
+    //NSLog(@"initWithNibName");
     
     
     self = [super initWithCoder:aDecoder];
