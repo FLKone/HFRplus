@@ -1144,7 +1144,7 @@
 		self.topicActionSheet = [[UIActionSheet alloc] initWithTitle:@"Aller à..."
 																delegate:self cancelButtonTitle:@"Annuler"
 												  destructiveButtonTitle:nil
-													   otherButtonTitles:	@"la dernière page", @"la dernière réponse", @"la page numéro...", @"Copier le lien", @"Beta: LIVE",
+													   otherButtonTitles:	@"la dernière page", @"la dernière réponse", @"la page numéro...", @"Copier le lien", @"LIVE",
 									 nil,
 									 nil];
 		
@@ -1258,8 +1258,15 @@
                 [[HFRplusAppDelegate sharedAppDelegate].rootController setViewControllers:currCtrls animated:YES];
 
                 UITabBarItem *liveItem = [[HFRplusAppDelegate sharedAppDelegate].rootController.tabBar.items objectAtIndex:3];
-                liveItem.selectedImage = [[UIImage imageNamed:@"live_on"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate ];
-                liveItem.image = [[UIImage imageNamed:@"live"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate ];
+                if (SYSTEM_VERSION_LESS_THAN(@"7")) {
+                    [liveItem setImage:[UIImage imageNamed:@"02-redo"]];
+
+                }
+                else {
+                    liveItem.selectedImage = [[UIImage imageNamed:@"live_on"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate ];
+                    liveItem.image = [[UIImage imageNamed:@"live"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate ];
+
+                }
                 liveItem.title = @"Live";
 
             }

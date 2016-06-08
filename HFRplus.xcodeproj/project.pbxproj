@@ -331,6 +331,10 @@
 		4C444AF51BB0DE0D000EF444 /* LaunchLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C444AF11BB0DE0D000EF444 /* LaunchLogo@2x.png */; };
 		4C5334B61CF1FDF000C353DC /* Crittercism.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C5334B51CF1FDF000C353DC /* Crittercism.framework */; };
 		4C5334B71CF1FDF000C353DC /* Crittercism.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C5334B51CF1FDF000C353DC /* Crittercism.framework */; };
+		4C571B481D087CD200193E07 /* 02-redo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C571B461D087CD200193E07 /* 02-redo.png */; };
+		4C571B491D087CD200193E07 /* 02-redo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C571B461D087CD200193E07 /* 02-redo.png */; };
+		4C571B4A1D087CD200193E07 /* 02-redo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C571B471D087CD200193E07 /* 02-redo@2x.png */; };
+		4C571B4B1D087CD200193E07 /* 02-redo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C571B471D087CD200193E07 /* 02-redo@2x.png */; };
 		4C80A4F81CF1B0E60093CF9B /* ResistorFilled-40@x2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C80A4F61CF1B0E60093CF9B /* ResistorFilled-40@x2.png */; };
 		4C80A4F91CF1B0E60093CF9B /* ResistorFilled-40@x2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C80A4F61CF1B0E60093CF9B /* ResistorFilled-40@x2.png */; };
 		4C80A4FA1CF1B0E60093CF9B /* ResistorFilled-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C80A4F71CF1B0E60093CF9B /* ResistorFilled-40.png */; };
@@ -1460,6 +1464,8 @@
 		4C444AF01BB0DE0D000EF444 /* LaunchLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchLogo.png; sourceTree = "<group>"; };
 		4C444AF11BB0DE0D000EF444 /* LaunchLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LaunchLogo@2x.png"; sourceTree = "<group>"; };
 		4C5334B51CF1FDF000C353DC /* Crittercism.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crittercism.framework; sourceTree = "<group>"; };
+		4C571B461D087CD200193E07 /* 02-redo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "02-redo.png"; sourceTree = "<group>"; };
+		4C571B471D087CD200193E07 /* 02-redo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "02-redo@2x.png"; sourceTree = "<group>"; };
 		4C80A4F61CF1B0E60093CF9B /* ResistorFilled-40@x2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ResistorFilled-40@x2.png"; sourceTree = "<group>"; };
 		4C80A4F71CF1B0E60093CF9B /* ResistorFilled-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ResistorFilled-40.png"; sourceTree = "<group>"; };
 		4C80A4FC1CF1B2610093CF9B /* CircuitFilled-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CircuitFilled-40@2x.png"; sourceTree = "<group>"; };
@@ -2954,6 +2960,8 @@
 				CA00C5B317C30C370067B457 /* 18-envelope@2x.png */,
 				CA00C5B417C30C370067B457 /* 19-gear.png */,
 				CA00C5B517C30C370067B457 /* 19-gear@2x.png */,
+				4C571B461D087CD200193E07 /* 02-redo.png */,
+				4C571B471D087CD200193E07 /* 02-redo@2x.png */,
 				CA00C5B617C30C370067B457 /* 20-gear2.png */,
 				CA00C5B717C30C370067B457 /* 20-gear2@2x.png */,
 				CA00C5B817C30C370067B457 /* 28-star.png */,
@@ -3357,6 +3365,7 @@
 				4CD6B8831B9796F5007FC29E /* CancelFilled-20.png in Resources */,
 				CA7472F017E15FE300B45E15 /* ToolBarPrevious_off.png in Resources */,
 				CA00C69A17C30C370067B457 /* arrowR.png in Resources */,
+				4C571B481D087CD200193E07 /* 02-redo.png in Resources */,
 				CA2E4C0E17E5095000E95622 /* all_categories_land.png in Resources */,
 				4C9C2B841BAE801700511853 /* AboutFilled-25@2x.png in Resources */,
 				CA00C63117C30C370067B457 /* hap.gif in Resources */,
@@ -3579,6 +3588,7 @@
 				CA00C69D17C30C370067B457 /* avatar_male_gray_on_light_48x48.png in Resources */,
 				CA00C64A17C30C370067B457 /* sleep.gif in Resources */,
 				4C0B8DE81BA4522900D329BA /* KeyboardFilled-40.png in Resources */,
+				4C571B4A1D087CD200193E07 /* 02-redo@2x.png in Resources */,
 				4C21E9771BA5C70400691D65 /* StrikethroughFilled-20@2x.png in Resources */,
 				CA00C6DD17C30C370067B457 /* img.png in Resources */,
 				CA00C53317C3082F0067B457 /* TopicsTableViewController.xib in Resources */,
@@ -3799,6 +3809,7 @@
 				4CD6B8841B9796F5007FC29E /* CancelFilled-20.png in Resources */,
 				CA7C6FB1185EF50E00B348BA /* arrowR.png in Resources */,
 				CA7C6FB2185EF50E00B348BA /* all_categories_land.png in Resources */,
+				4C571B491D087CD200193E07 /* 02-redo.png in Resources */,
 				CA7C6FB3185EF50E00B348BA /* hap.gif in Resources */,
 				4C9C2B851BAE801700511853 /* AboutFilled-25@2x.png in Resources */,
 				CA7C6FB4185EF50E00B348BA /* CreditsViewController.xib in Resources */,
@@ -4021,6 +4032,7 @@
 				CA7C7042185EF50E00B348BA /* sleep.gif in Resources */,
 				CA7C7043185EF50E00B348BA /* img.png in Resources */,
 				4C0B8DE91BA4522900D329BA /* KeyboardFilled-40.png in Resources */,
+				4C571B4B1D087CD200193E07 /* 02-redo@2x.png in Resources */,
 				4C21E9781BA5C70400691D65 /* StrikethroughFilled-20@2x.png in Resources */,
 				CA7C7044185EF50E00B348BA /* TopicsTableViewController.xib in Resources */,
 				CA7C7045185EF50E00B348BA /* na.gif in Resources */,
