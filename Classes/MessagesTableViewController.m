@@ -169,6 +169,14 @@
         self.currentUrl = [theRequest.url.absoluteString stringByReplacingOccurrencesOfString:kForumURL withString:@""];
     }
 
+
+    if (self.autoUpdate) {
+        // on affiche un message dans la toolbar
+        dispatch_async(dispatch_get_main_queue(),
+                       ^{
+                           [self.messagesWebView stringByEvaluatingJavaScriptFromString:@"$('#actualiserlbl #secondlbl').text('');"];
+                       });
+    }
 }
 
 - (void)fetchContentComplete:(ASIHTTPRequest *)theRequest
@@ -198,6 +206,7 @@
 	
     [queue addOperation:parser]; // this will start the "ParseOperation"
     [self cancelFetchContent];
+
 }
 
 - (void)fetchContentFailed:(ASIHTTPRequest *)theRequest
@@ -206,21 +215,31 @@
 
 	self.isLoading = NO;
 	[self.loadingView setHidden:YES];
-	
-    //NSLog(@"theRequest.error %@", theRequest.error);
-    //NSLog(@"theRequest.url %@", theRequest.url);
-	
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[theRequest.error localizedDescription]
-												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
 
-    if (self.firstLoad) {
-        [alert setTag:667];
+    if (self.autoUpdate) {
+        // on affiche un message dans la toolbar
+        dispatch_async(dispatch_get_main_queue(),
+                       ^{
+                           [self.messagesWebView stringByEvaluatingJavaScriptFromString:@"$('#actualiserlbl #secondlbl').text('un problème est survenu lors de la dernière actualisation');"];
+                       });
     }
     else {
-        [alert setTag:6677];
+        //NSLog(@"theRequest.error %@", theRequest.error);
+        //NSLog(@"theRequest.url %@", theRequest.url);
+
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[theRequest.error localizedDescription]
+                                                       delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
+
+        if (self.firstLoad) {
+            [alert setTag:667];
+        }
+        else {
+            [alert setTag:6677];
+        }
+        
+        [alert show];
     }
 
-	[alert show];
     
     [self cancelFetchContent];
 }
@@ -1483,7 +1502,7 @@
         dispatch_async(dispatch_get_main_queue(),
            ^{
                 [self.messagesWebView stringByEvaluatingJavaScriptFromString:@"$('#actualiserbtn').addClass('loading');"];
-               [self.messagesWebView stringByEvaluatingJavaScriptFromString:@"$('#actualiserlbl').text('actualisation en cours...');"];
+               [self.messagesWebView stringByEvaluatingJavaScriptFromString:@"$('#actualiserlbl #firstlbl').text('actualisation en cours...');"];
 
            });
 
@@ -1945,7 +1964,7 @@
 
            //on ajoute le bouton actualiser si besoin
            if (self.autoUpdate) {
-               refreshBtn = @"<div id=\"actualiserlbl\"><p class=\"first\">actualisé il y a moins d'une seconde</p></div>";
+               refreshBtn = @"<div id=\"actualiserlbl\"><p id=\"firstlbl\">actualisé il y a moins d'une seconde</p><p id=\"secondlbl\"></p></div>";
            }
            else if (([self pageNumber] == [self lastPageNumber]) || ([self lastPageNumber] == 0)) {
                //NSLog(@"premiere et unique ou dernier");
@@ -2133,14 +2152,14 @@
     {
         dispatch_async(dispatch_get_main_queue(),
                        ^{
-                           [self.messagesWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"$('#actualiserlbl').text('actualisé il y a %d secondes');", (int)ceil(secs)]];
+                           [self.messagesWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"$('#actualiserlbl #firstlbl').text('actualisé il y a %d secondes');", (int)ceil(secs)]];
 
                        });
     }
     else {
         dispatch_async(dispatch_get_main_queue(),
                        ^{
-                           [self.messagesWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"$('#actualiserlbl').text('actualisé il y a moins d\\'une seconde');"]];
+                           [self.messagesWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"$('#actualiserlbl #firstlbl').text('actualisé il y a moins d\\'une seconde');"]];
 
                        });
     }

@@ -338,6 +338,12 @@ table.code *, table.fixed * {
     border-top: 1px solid lightgrey;
 }
 
+#actualiserlbl #secondlbl {
+    font-style: italic;
+    font-size: 11px;
+    color: darkgray;
+}
+
 #actualiserbtn.loading {
 	background-image: url(loadinfo.gif);
 	background-repeat: no-repeat;
