@@ -10,13 +10,13 @@
 #import "NSDictionary+Merging.h"
 #import "HFRNavigationController.h"
 #import "UIColor+Extension.h"
-/*
+
 #ifdef CONFIGURATION_Release
 #define NSLog(__FORMAT__, ...)
 #else
 #define NSLog(__FORMAT__, ...) NSLog((@"%s [Line %d] " __FORMAT__), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 #endif
-*/
+
 static const NSInteger kDispatchPeriodSeconds = 20;
 
 typedef enum {

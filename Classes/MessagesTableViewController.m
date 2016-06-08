@@ -173,7 +173,7 @@
 
 - (void)fetchContentComplete:(ASIHTTPRequest *)theRequest
 {
-	//NSLog(@"fetchContentComplete");
+	NSLog(@"fetchContentComplete");
     self.lastAutoUpDate = [NSDate date];
 
 	// create the queue to run our ParseOperation
@@ -1780,6 +1780,8 @@
    if (!self.firstLoad) {
        int nbAdded = 0;
 
+       NSLog(@"!firstLoad");
+
         for (i = 0; i < [loadedItems count]; i++) { //Loop through all the tags
 
             if ([self.arrayData indexForKey:[loadedItems keyAtIndex:i]] == NSNotFound) {
@@ -1839,13 +1841,13 @@
            }
        }
 
+       dispatch_async(dispatch_get_main_queue(),
+                      ^{
+                          [self.messagesWebView stringByEvaluatingJavaScriptFromString:@"$('#actualiserbtn').removeClass('loading');"];
+                      });
+
        if (self.autoUpdate) {
            [self updateLastUpdateDate];
-
-           dispatch_async(dispatch_get_main_queue(),
-                          ^{
-                              [self.messagesWebView stringByEvaluatingJavaScriptFromString:@"$('#actualiserbtn').removeClass('loading');"];
-                          });
        }
        else if ([(UIBarButtonItem *)[self.aToolbar.items objectAtIndex:4] isEnabled]) {
            NSLog(@"stopTimer loadedApps actualiser BTN");
@@ -2150,7 +2152,7 @@
 }
 
 - (void)scrollTimerSelector {
-    NSLog(@"TICK scrollTimerSelector");
+    //NSLog(@"TICK scrollTimerSelector");
 
     [self updateLastUpdateDate];
 
@@ -2175,21 +2177,21 @@
     //NSLog(@"of:%f | hei:%f | dif:%f | vh:%f", offset, height, height-offset, vheight);
 
     if (height-offset < 1200) {
-        NSLog(@"===== shouldAutoUpdate = YES");
+        //NSLog(@"===== shouldAutoUpdate = YES");
         self.shouldAutoUpdate = YES;
         [self scheduleUpdateIn:0 repeat:NO];
     }
     else {
-        NSLog(@"===== shouldAutoUpdate = NO");
+        //NSLog(@"===== shouldAutoUpdate = NO");
         self.shouldAutoUpdate = NO;
     }
 }
 - (void)liveTimerSelector
 {
-    NSLog(@"TACK liveTimerSelector");
+    //NSLog(@"TACK liveTimerSelector");
 
     if (!self.shouldAutoUpdate) {
-        NSLog(@"!shouldAutoUpdate >> KO");
+        //NSLog(@"!shouldAutoUpdate >> KO");
     }
     else {
         [self performSelectorInBackground:@selector(liveTimerSelectorBack) withObject:nil];
@@ -3329,7 +3331,7 @@
 }
 
 -(void)stopLive {
-    NSLog(@"stopLive TIMERS");
+    //NSLog(@"stopLive TIMERS");
 
     [self prepareForDealloc];
     
@@ -3343,23 +3345,23 @@
 }
 
 -(void)stopScrollCheckTimer {
-    NSLog(@"11- stopScrollCheckTimer");
+    //NSLog(@"11- stopScrollCheckTimer");
     [self.scrollCheckTimer invalidate];
     self.scrollCheckTimer = nil;
 }
 -(void)scheduleScrollCheckTimer {
-    NSLog(@"11* scheduleScrollCheckTimer");
+   // NSLog(@"11* scheduleScrollCheckTimer");
 
     //Stop current timer before anything
     [self stopScrollCheckTimer];
 
     if (!self.autoUpdate) {
-        NSLog(@"11| scheduleScrollCheckTimer >> noAutoUpdate = KO");
+       // NSLog(@"11| scheduleScrollCheckTimer >> noAutoUpdate = KO");
         return;
     }
 
     if (self.isVisible) {
-        NSLog(@"11+ scheduleScrollCheckTimer >> isVisible = YES = GO");
+        //NSLog(@"11+ scheduleScrollCheckTimer >> isVisible = YES = GO");
 
         self.scrollCheckTimer = [NSTimer scheduledTimerWithTimeInterval:0.5
                                                                  target:self
@@ -3371,27 +3373,27 @@
 
     }
     else {
-        NSLog(@"11| scheduleScrollCheckTimer >> isVisible = NO = KO");
+       // NSLog(@"11| scheduleScrollCheckTimer >> isVisible = NO = KO");
     }
 
 }
 
 -(void)stopUpdateTimer {
-    NSLog(@"22-  stopUpdateTimer");
+    //NSLog(@"22-  stopUpdateTimer");
     [self.updateTimer invalidate];
     self.updateTimer = nil;
 }
 -(void)scheduleUpdateIn:(int)sec repeat:(BOOL)repeat {
-    NSLog(@"22* scheduleUpdateIn %d repeat=%d", sec, repeat);
+    //NSLog(@"22* scheduleUpdateIn %d repeat=%d", sec, repeat);
 
     //Stop current timer before anything
     [self stopUpdateTimer];
 
     if (!self.autoUpdate) {
-        NSLog(@"22- scheduleUpdateIn >> noAutoUpdate = KO");
+        //NSLog(@"22- scheduleUpdateIn >> noAutoUpdate = KO");
     }
     else {
-        NSLog(@"22+ scheduleUpdateIn = GO");
+        //NSLog(@"22+ scheduleUpdateIn = GO");
 
         self.updateTimer = [NSTimer timerWithTimeInterval:sec
                                                    target:self
