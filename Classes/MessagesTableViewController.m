@@ -3311,8 +3311,14 @@
 
     [self.arrayActionsMessages removeAllObjects];
 
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
     if(self.topicAnswerUrl.length > 0)
         [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Répondre", @"answerTopic", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
+
+    BOOL actionsmesages_poll  = [defaults boolForKey:@"actionsmesages_poll"];
+    if(actionsmesages_poll && self.pollNode)
+        [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Sondage", @"showPoll", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
 
     [self.arrayActionsMessages addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Mettre fin au Live", @"stopLive", nil] forKeys:[NSArray arrayWithObjects:@"title", @"code", nil]]];
 
