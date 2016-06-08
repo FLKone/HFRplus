@@ -107,7 +107,7 @@
     NSTimer *scrollCheckTimer;
     BOOL shouldAutoUpdate;
     NSDate *lastAutoUpDate;
-
+    BOOL isVisible;
 }
 
 
@@ -139,6 +139,7 @@
 @property BOOL autoUpdate;
 @property BOOL shouldAutoUpdate;
 @property (nonatomic, strong) NSDate *lastAutoUpDate;
+@property BOOL isVisible;
 
 @property (nonatomic, strong) NSTimer *liveTimer;
 @property (nonatomic, strong) NSTimer *scrollCheckTimer;

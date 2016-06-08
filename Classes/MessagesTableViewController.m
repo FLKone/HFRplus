@@ -55,7 +55,7 @@
 @synthesize lastAutoUpDate, scrollCheckTimer, shouldAutoUpdate;
 
 // Live
-@synthesize firstLoad, gestureEnabled, paginationEnabled, autoUpdate, liveTimer;
+@synthesize firstLoad, gestureEnabled, paginationEnabled, autoUpdate, liveTimer, isVisible;
 
 - (void)setTopicName:(NSString *)n {
     _topicName = [n filterTU];
