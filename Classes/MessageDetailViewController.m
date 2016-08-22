@@ -122,6 +122,8 @@
         myRawContent = [myRawContent stringByAppendingString:[NSString stringWithFormat:@"<br/><p class=\"editedhfrlink\">édité par %@</p>", [[arrayData objectAtIndex:curMsg] editedTime]]];
     }
     
+    myRawContent = [myRawContent stringByReplacingOccurrencesOfString:@"---------------" withString:@""];
+    
     NSString *customFontSize = [self userTextSizeDidChange];
 
     
