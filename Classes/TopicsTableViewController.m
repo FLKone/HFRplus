@@ -374,7 +374,20 @@
                 tmptoolbar.opaque = NO;
                 tmptoolbar.translucent = YES;
                 
-                [[tmptoolbar.subviews objectAtIndex:1] setHidden:YES];
+                if (tmptoolbar.subviews.count > 1)
+                {
+                    [[tmptoolbar.subviews objectAtIndex:1] setHidden:YES];
+                }
+                
+                if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"10.0")) {                    
+                    [tmptoolbar setBackgroundImage:[UIImage new]
+                                forToolbarPosition:UIBarPositionAny
+                                        barMetrics:UIBarMetricsDefault];
+                    [tmptoolbar setShadowImage:[UIImage new]
+                            forToolbarPosition:UIBarPositionAny];
+                    
+                }
+                
                 
             }
             
