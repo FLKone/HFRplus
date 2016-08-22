@@ -1,7 +1,7 @@
 <table>
 <tr>
-<td><img src="https://raw.githubusercontent.com/FLKone/HFRplus/1.9/HFRplus/Images.xcassets/AppIcon.appiconset/appicon-Small%403x.png" alt="HFR+" title="HFR+" style="display:block; margin: 10px auto 30px auto;" class="center"></td>
-<td><img src="https://raw.githubusercontent.com/FLKone/HFRplus/1.9/HFRplus/Images.xcassets/AppIcon%20RE.appiconset/appicon-Small%403x.png" alt="HFR+" title="HFR+REDFACE" style="display:block; margin: 10px auto 30px auto;" class="center"></td>
+<td><img src="https://raw.githubusercontent.com/FLKone/HFRplus/devel-1.10/HFRplus/Images.xcassets/AppIcon.appiconset/Icon-Small-40.png" alt="HFR+" title="HFR+" style="display:block; margin: 10px auto 30px auto;" class="center"></td>
+<td><img src="https://raw.githubusercontent.com/FLKone/HFRplus/devel-1.10/HFRplus/Images.xcassets/AppIcon%20RE.appiconset/Icon-Small-40.png" alt="HFR+" title="HFR+REDFACE" style="display:block; margin: 10px auto 30px auto;" class="center"></td>
 </tr>   
 
 <tr>   
