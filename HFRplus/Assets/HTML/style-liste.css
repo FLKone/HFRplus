@@ -49,6 +49,11 @@ span.signature * {
     /*color: rgb(140, 140, 140) !important;*/
 }
 
+.message .content .right span.signature {
+    font-size: 0.85em !important;
+}
+
+
 span.signature > br:first-child {
     display: none;
 }
