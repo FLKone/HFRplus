@@ -4563,7 +4563,7 @@
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_BUNDLE_IDENTIFIER = hfrplus;
 				PRODUCT_NAME = HFRplus;
-				PROVISIONING_PROFILE = "10f37dd6-c2f9-48d2-bed6-88283f8faa24";
+				PROVISIONING_PROFILE = "b5501fd0-496c-447a-9589-4dcf55d960f6";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -4595,7 +4595,7 @@
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_BUNDLE_IDENTIFIER = hfrplus;
 				PRODUCT_NAME = HFRplus;
-				PROVISIONING_PROFILE = "3d603229-3b29-4f38-a7e7-bec16732daa8";
+				PROVISIONING_PROFILE = "cca932b4-f070-49d4-9ed7-f6f20408b73c";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
