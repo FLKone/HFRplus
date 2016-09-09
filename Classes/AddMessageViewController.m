@@ -242,7 +242,7 @@
     //	[self.smileView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"smileybase" ofType:@"html"] isDirectory:NO]]];
     //==
     
-    self.formSubmit = [NSString stringWithFormat:@"%@/bddpost.php", kForumURL];
+    self.formSubmit = [NSString stringWithFormat:@"%@/bddpost.php", [k ForumURL]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(smileyReceived:) name:@"smileyReceived" object:nil];
     
@@ -1331,7 +1331,7 @@
              $('#container_ajax img').addSwipeEvents().bind('tap', function(evt, touch) { $(this).addClass('selected'); window.location = 'oijlkajsdoihjlkjasdosmile://'+$.base64.encode(this.alt); });\
              }\
              \
-             });", kForumURL, self.textFieldSmileys.text]];
+             });", [k ForumURL], self.textFieldSmileys.text]];
              */
         }
     }
@@ -1418,7 +1418,7 @@
                                                                                                      (CFStringRef)@"!*'();:@&=+$,/?%#[]",
                                                                                                      kCFStringEncodingUTF8 ));
     
-    [self setRequestSmile:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/message-smi-mp-aj.php?config=hfr.inc&findsmilies=%@", kForumURL, encodedString]]]];
+    [self setRequestSmile:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/message-smi-mp-aj.php?config=hfr.inc&findsmilies=%@", [k ForumURL], encodedString]]]];
     [requestSmile setDelegate:self];
     
     [requestSmile setDidStartSelector:@selector(fetchSmileContentStarted:)];

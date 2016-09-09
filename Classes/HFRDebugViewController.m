@@ -47,6 +47,9 @@
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
+    
+    [self.textView setText:[k ForumURL]];
+
 }
 
 - (void)viewDidUnload

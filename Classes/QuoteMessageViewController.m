@@ -621,7 +621,7 @@
 	
 	//NSLog(@"self.formSubmit %@", self.formSubmit);
 
-	NSString *newSubmitForm = [[NSString alloc] initWithFormat:@"%@%@", kForumURL, [fastAnswerNode getAttributeNamed:@"action"]];
+	NSString *newSubmitForm = [[NSString alloc] initWithFormat:@"%@%@", [k ForumURL], [fastAnswerNode getAttributeNamed:@"action"]];
 	[self setFormSubmit:newSubmitForm];
 	
     if(!isLogged) {

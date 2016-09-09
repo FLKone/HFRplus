@@ -122,7 +122,7 @@
     
 	//NSLog(@"connexion");
 	ASIFormDataRequest  *request =  
-	[[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, @"/login_validation.php?config=hfr.inc"]]];
+	[[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [k ForumURL], @"/login_validation.php?config=hfr.inc"]]];
     [request setPostValue:pseudoField.text forKey:@"pseudo"];
     [request setPostValue:passField.text forKey:@"password"];
     [request setPostValue:@"send" forKey:@"action"];

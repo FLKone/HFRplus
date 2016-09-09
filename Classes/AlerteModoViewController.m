@@ -155,7 +155,7 @@
             }
         }
         
-        NSString *newSubmitForm = [[NSString alloc] initWithFormat:@"%@/user/%@", kForumURL, [fastAnswerNode getAttributeNamed:@"action"]];
+        NSString *newSubmitForm = [[NSString alloc] initWithFormat:@"%@/user/%@", [k ForumURL], [fastAnswerNode getAttributeNamed:@"action"]];
         [self setFormSubmit:newSubmitForm];
     }
 }

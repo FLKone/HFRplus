@@ -250,11 +250,11 @@
 
 - (void)fetchContent
 {
-	//NSLog(@"fetchContent %@", [NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]);
+	//NSLog(@"fetchContent %@", [NSString stringWithFormat:@"%@%@", [k ForumURL], [self currentUrl]]);
 	self.status = kIdle;
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];
     
-	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [self.delegate currentUrl]]]]];
+	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [k ForumURL], [self.delegate currentUrl]]]]];
 	[request setShouldRedirect:NO];
     
 	[request setDelegate:self];
@@ -462,7 +462,7 @@
 
     
     ASIFormDataRequest  *arequest =
-    [[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/user/vote.php?config=hfr.inc", kForumURL]]];
+    [[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/user/vote.php?config=hfr.inc", [k ForumURL]]]];
     
     for (NSString *key in self.arrayInputData) {
         [arequest setPostValue:[self.arrayInputData objectForKey:key] forKey:key];

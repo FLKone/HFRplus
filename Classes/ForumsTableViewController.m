@@ -91,7 +91,7 @@
 	self.status = kIdle;	
 
     [ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];
-    [self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:kForumURL]]];
+    [self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[k ForumURL]]]];
     [request setDelegate:self];
 
     [request setDidStartSelector:@selector(fetchContentStarted:)];

@@ -245,6 +245,8 @@
 		4C21E9801BA5C70400691D65 /* XlargeIconsFilled-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C21E94C1BA5C70400691D65 /* XlargeIconsFilled-20@2x.png */; };
 		4C21E9831BA5CC1200691D65 /* HFRTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C21E9821BA5CC1200691D65 /* HFRTextView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		4C21E9841BA5CC1200691D65 /* HFRTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C21E9821BA5CC1200691D65 /* HFRTextView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		4C25E3D61D82CECD0031A2F2 /* k.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C25E3D51D82CECD0031A2F2 /* k.m */; };
+		4C25E3D71D82CECD0031A2F2 /* k.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C25E3D51D82CECD0031A2F2 /* k.m */; };
 		4C265D4D1BAE511800B1A244 /* HFRWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C265D4C1BAE511800B1A244 /* HFRWebView.m */; };
 		4C265D4E1BAE511800B1A244 /* HFRWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C265D4C1BAE511800B1A244 /* HFRWebView.m */; };
 		4C3903371BCACE4D00FD6F1F /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3903361BCACE4D00FD6F1F /* DACircularProgressView.m */; };
@@ -1368,6 +1370,8 @@
 		4C21E94C1BA5C70400691D65 /* XlargeIconsFilled-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "XlargeIconsFilled-20@2x.png"; path = "Editor/XlargeIconsFilled-20@2x.png"; sourceTree = "<group>"; };
 		4C21E9811BA5CC1200691D65 /* HFRTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFRTextView.h; sourceTree = "<group>"; };
 		4C21E9821BA5CC1200691D65 /* HFRTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFRTextView.m; sourceTree = "<group>"; };
+		4C25E3D41D82CECD0031A2F2 /* k.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = k.h; sourceTree = "<group>"; };
+		4C25E3D51D82CECD0031A2F2 /* k.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = k.m; sourceTree = "<group>"; };
 		4C265D4B1BAE511800B1A244 /* HFRWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFRWebView.h; sourceTree = "<group>"; };
 		4C265D4C1BAE511800B1A244 /* HFRWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFRWebView.m; sourceTree = "<group>"; };
 		4C3903351BCACE4D00FD6F1F /* DACircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DACircularProgressView.h; sourceTree = "<group>"; };
@@ -1563,7 +1567,7 @@
 		4CC3C74E1B99BB6F001B8632 /* DeleteMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeleteMessageViewController.h; sourceTree = "<group>"; };
 		4CC3C74F1B99BB6F001B8632 /* DeleteMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeleteMessageViewController.m; sourceTree = "<group>"; };
 		4CC3C7561B99BC18001B8632 /* AlerteModoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlerteModoViewController.h; sourceTree = "<group>"; };
-		4CC3C7571B99BC18001B8632 /* AlerteModoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlerteModoViewController.m; sourceTree = "<group>"; };
+		4CC3C7571B99BC18001B8632 /* AlerteModoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AlerteModoViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4CC3C7581B99BC18001B8632 /* AlerteModoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlerteModoViewController.xib; sourceTree = "<group>"; };
 		4CC3C7641B9A1513001B8632 /* UITextView+Placeholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+Placeholder.h"; sourceTree = "<group>"; };
 		4CC3C7651B9A1513001B8632 /* UITextView+Placeholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+Placeholder.m"; sourceTree = "<group>"; };
@@ -1863,7 +1867,7 @@
 		CA4CE81415B185CA0039FC3B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		CA4CE89115B1B30B0039FC3B /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		CA5E109218AC2A4F00C481A9 /* PollTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PollTableViewController.h; sourceTree = "<group>"; };
-		CA5E109318AC2A4F00C481A9 /* PollTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PollTableViewController.m; sourceTree = "<group>"; };
+		CA5E109318AC2A4F00C481A9 /* PollTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PollTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CA5E109418AC2A4F00C481A9 /* PollTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PollTableViewController.xib; sourceTree = "<group>"; };
 		CA63F387185E09B20092E9F9 /* RehostImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RehostImage.h; sourceTree = "<group>"; };
 		CA63F388185E09B20092E9F9 /* RehostImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RehostImage.m; sourceTree = "<group>"; };
@@ -1911,7 +1915,7 @@
 		CAA1F68F17E5DFA20006E785 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
 		CAA1F69017E5DFA20006E785 /* plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus@2x.png"; sourceTree = "<group>"; };
 		CAADF6C41929681300ECA4C1 /* ProfilViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilViewController.h; sourceTree = "<group>"; };
-		CAADF6C51929681300ECA4C1 /* ProfilViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilViewController.m; sourceTree = "<group>"; };
+		CAADF6C51929681300ECA4C1 /* ProfilViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ProfilViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		CAADF6C61929681300ECA4C1 /* ProfilViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfilViewController.xib; sourceTree = "<group>"; };
 		CAAFAFDA125E2A58001B90EC /* NewMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewMessageViewController.h; sourceTree = "<group>"; };
 		CAAFAFDB125E2A58001B90EC /* NewMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewMessageViewController.m; sourceTree = "<group>"; };
@@ -2128,6 +2132,8 @@
 				01BF8C4A121DBB09007624B6 /* UIAlertViewURL.h */,
 				01BF8C4B121DBB09007624B6 /* UIAlertViewURL.m */,
 				01BF8A3A121D7785007624B6 /* Constants.h */,
+				4C25E3D41D82CECD0031A2F2 /* k.h */,
+				4C25E3D51D82CECD0031A2F2 /* k.m */,
 				CA7E25EF15A1F4AA00721F6D /* DetailNavigationViewController.h */,
 				CA7E25F015A1F4AA00721F6D /* DetailNavigationViewController.m */,
 				CA7E25E115A1D17500721F6D /* SplitViewController.h */,
@@ -4276,6 +4282,7 @@
 				4CB133141B90E9530081B44D /* MessagesSearchTableViewController.m in Sources */,
 				4C21E9831BA5CC1200691D65 /* HFRTextView.m in Sources */,
 				CA1070C915A5F408002E6C19 /* SettingsViewController.m in Sources */,
+				4C25E3D61D82CECD0031A2F2 /* k.m in Sources */,
 				CAC4966915B77357009128BC /* HFRNavigationController.m in Sources */,
 				4C3903C31BCAD0EC00FD6F1F /* SDWebImageDownloaderOperation.m in Sources */,
 				CAFD004315B9B665003CA3FC /* HFRDebugViewController.m in Sources */,
@@ -4424,6 +4431,7 @@
 				4CB133151B90E9530081B44D /* MessagesSearchTableViewController.m in Sources */,
 				4C21E9841BA5CC1200691D65 /* HFRTextView.m in Sources */,
 				CA7C710E185EF50E00B348BA /* SettingsViewController.m in Sources */,
+				4C25E3D71D82CECD0031A2F2 /* k.m in Sources */,
 				CA7C7110185EF50E00B348BA /* HFRNavigationController.m in Sources */,
 				4C3903C41BCAD0EC00FD6F1F /* SDWebImageDownloaderOperation.m in Sources */,
 				CA7C7111185EF50E00B348BA /* HFRDebugViewController.m in Sources */,

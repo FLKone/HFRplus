@@ -68,11 +68,11 @@
 - (void)fetchContentTrigger
 {
 
-	//NSLog(@"fetchContent %@", [NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]);
+	//NSLog(@"fetchContent %@", [NSString stringWithFormat:@"%@%@", [k ForumURL], [self currentUrl]]);
 	self.status = kIdle;
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];
 
-	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]]]];
+	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [k ForumURL], [self currentUrl]]]]];
 	[request setShouldRedirect:NO];
 
 	[request setDelegate:self];
@@ -768,7 +768,7 @@
 	NewMessageViewController *editMessageViewController = [[NewMessageViewController alloc]
 															initWithNibName:@"AddMessageViewController" bundle:nil];
 	editMessageViewController.delegate = self;
-	[editMessageViewController setUrlQuote:[NSString stringWithFormat:@"%@%@", kForumURL, forumNewTopicUrl]];
+	[editMessageViewController setUrlQuote:[NSString stringWithFormat:@"%@%@", [k ForumURL], forumNewTopicUrl]];
 	editMessageViewController.title = [self newTopicTitle];
 	// Create the navigation controller and present it modally.
 	HFRNavigationController *navigationController = [[HFRNavigationController alloc]
@@ -1714,7 +1714,7 @@
 			NSLog(@"copier lien page 1");
 
             UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-            pasteboard.string = [NSString stringWithFormat:@"%@%@", kForumURL, [[arrayData objectAtIndex:pressedIndexPath.row] aURL]];
+            pasteboard.string = [NSString stringWithFormat:@"%@%@", [k RealForumURL], [[arrayData objectAtIndex:pressedIndexPath.row] aURL]];
             
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Lien copié dans le presse-papiers"
                                                            delegate:self cancelButtonTitle:nil otherButtonTitles: nil];

@@ -446,7 +446,7 @@
             
             NSLog(@"%@", aRequest.URL);
             
-            MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[aRequest.URL absoluteString] stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@", kForumURL] withString:@""]];
+            MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[aRequest.URL absoluteString] stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@", [k ForumURL]] withString:@""]];
             self.messagesTableViewController = aView;
             
             self.navigationItem.backBarButtonItem =
@@ -519,13 +519,13 @@
 
 -(void)QuoteMessage
 {
-	[parent quoteMessage:[NSString stringWithFormat:@"%@%@", kForumURL, [[[arrayData objectAtIndex:curMsg] urlQuote] decodeSpanUrlFromString] ]];
+	[parent quoteMessage:[NSString stringWithFormat:@"%@%@", [k ForumURL], [[[arrayData objectAtIndex:curMsg] urlQuote] decodeSpanUrlFromString] ]];
 }
 
 -(void)EditMessage
 {
 	[parent setEditFlagTopic:[[arrayData objectAtIndex:curMsg] postID]];
-	[parent editMessage:[NSString stringWithFormat:@"%@%@", kForumURL, [[[arrayData objectAtIndex:curMsg] urlEdit] decodeSpanUrlFromString] ]];
+	[parent editMessage:[NSString stringWithFormat:@"%@%@", [k ForumURL], [[[arrayData objectAtIndex:curMsg] urlEdit] decodeSpanUrlFromString] ]];
 
 }
 

@@ -47,11 +47,13 @@ typedef enum {
     kAllCat
 } BARBTNTYPE;
 
+
+
 #define kStatusChangedNotification  @"kStatusChangedNotification"
 #define kLoginChangedNotification  @"kLoginChangedNotification"
 
-#define kForumURL                   @"http://forum.hardware.fr"
-#define kCatTemplateURL				@"/forum1.php?config=hfr.inc&cat=$1&page=1&subcat=$2&owntopic=$3" 
+//#define kForumURL                   @"http://forum.hardware.fr"
+#define kCatTemplateURL				@"/forum1.php?config=hfr.inc&cat=$1&page=1&subcat=$2&owntopic=$3"
 // $1 cat not 0 - $2 subcat 0 - $3 flag : 0=all, 1=flag+fav, 2=fav, 3=red
 
 #define kTimeoutMini		30

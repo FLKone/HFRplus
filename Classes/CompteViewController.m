@@ -32,7 +32,7 @@
 
 - (void)checkLogin {
 	//NSLog(@"checkLogin");
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/editprofil.php?config=hfr.inc", kForumURL]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/user/editprofil.php?config=hfr.inc", [k ForumURL]]];
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
 	[request setDelegate:self];
 	[request setUseCookiePersistence:YES];
@@ -137,7 +137,7 @@
 }
 
 - (IBAction)goToProfil {
-	[[HFRplusAppDelegate sharedAppDelegate] openURL:[NSString stringWithString:[NSString stringWithFormat:@"%@/user/editprofil.php", kForumURL]]];
+	[[HFRplusAppDelegate sharedAppDelegate] openURL:[NSString stringWithString:[NSString stringWithFormat:@"%@/user/editprofil.php", [k ForumURL]]]];
 }
 
 - (void)viewDidUnload {

@@ -97,7 +97,7 @@
     //NSLog(@"[self currentUrl] %@", [self currentUrl]);
     //NSLog(@"[self stringFlagTopic] %@", [self stringFlagTopic]);
     
-	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]]]];
+	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [k ForumURL], [self currentUrl]]]]];
 	[request setDelegate:self];
     [request setShowAccurateProgress:YES];
     
@@ -151,9 +151,9 @@
 	//--
 	//NSLog(@"fetchContentStarted");
     
-    if (![self.currentUrl isEqualToString:[theRequest.url.absoluteString stringByReplacingOccurrencesOfString:kForumURL withString:@""]]) {
+    if (![self.currentUrl isEqualToString:[theRequest.url.absoluteString stringByReplacingOccurrencesOfString:[k ForumURL] withString:@""]]) {
         //NSLog(@"not equal ==");
-        self.currentUrl = [theRequest.url.absoluteString stringByReplacingOccurrencesOfString:kForumURL withString:@""];
+        self.currentUrl = [theRequest.url.absoluteString stringByReplacingOccurrencesOfString:[k ForumURL] withString:@""];
     }
 
 }
@@ -695,7 +695,7 @@
     
     //int curMsg = [[NSNumber numberWithInt:curPostID] intValue];
         
-    [self quoteMessage:[NSString stringWithFormat:@"%@%@", kForumURL, [[[arrayData objectAtIndex:curMsg] urlQuote] decodeSpanUrlFromString]] andSelectedText:theSelectedText];
+    [self quoteMessage:[NSString stringWithFormat:@"%@%@", [k ForumURL], [[[arrayData objectAtIndex:curMsg] urlQuote] decodeSpanUrlFromString]] andSelectedText:theSelectedText];
 }
 
 -(void)textQuoteBold:(id)sender {
@@ -715,7 +715,7 @@
     
     //int curMsg = [[NSNumber numberWithInt:curPostID] intValue];
     
-    [self quoteMessage:[NSString stringWithFormat:@"%@%@", kForumURL, [[[arrayData objectAtIndex:curMsg] urlQuote] decodeSpanUrlFromString]] andSelectedText:theSelectedText withBold:YES];
+    [self quoteMessage:[NSString stringWithFormat:@"%@%@", [k ForumURL], [[[arrayData objectAtIndex:curMsg] urlQuote] decodeSpanUrlFromString]] andSelectedText:theSelectedText withBold:YES];
     
 
 }
@@ -1057,7 +1057,7 @@
 
 -(void)markUnread {
     ASIHTTPRequest  *delrequest =  
-    [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, self.isFavoritesOrRead]]];
+    [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [k ForumURL], self.isFavoritesOrRead]]];
     //delete
     
     [delrequest startSynchronous];
@@ -1117,7 +1117,7 @@
         NewMessageViewController *addMessageViewController = [[NewMessageViewController alloc]
                                                               initWithNibName:@"AddMessageViewController" bundle:nil];
         addMessageViewController.delegate = self;
-        [addMessageViewController setUrlQuote:[NSString stringWithFormat:@"%@%@", kForumURL, topicAnswerUrl]];
+        [addMessageViewController setUrlQuote:[NSString stringWithFormat:@"%@%@", [k ForumURL], topicAnswerUrl]];
         addMessageViewController.title = @"Nouv. Réponse";
 
         navigationController = [[HFRNavigationController alloc]
@@ -1979,7 +1979,7 @@
             
             //NSLog(@"%@", aRequest.URL);
             
-            MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[aRequest.URL absoluteString] stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@", kForumURL] withString:@""]];
+            MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[aRequest.URL absoluteString] stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@", [k ForumURL]] withString:@""]];
             self.messagesTableViewController = aView;
             
             //setup the URL
@@ -2304,7 +2304,7 @@
 	//NSLog(@"actionFavoris %@", [[arrayData objectAtIndex:curMsg] addFlagUrl]);
 	
 	ASIHTTPRequest  *aRequest =  
-	[[ASIHTTPRequest  alloc]  initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [[arrayData objectAtIndex:curMsg] addFlagUrl]]]];
+	[[ASIHTTPRequest  alloc]  initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [k ForumURL], [[arrayData objectAtIndex:curMsg] addFlagUrl]]]];
     
     
     [aRequest setStartedBlock:^{
@@ -2378,13 +2378,13 @@
     int curMsg = [curMsgN intValue];
     
     //NSLog("actionLink ID = %@", [[arrayData objectAtIndex:curMsg] postID]);
-    NSLog("actionLink URL = %@%@#%@", kForumURL, self.currentUrl, [[arrayData objectAtIndex:curMsg] postID]);
+    NSLog("actionLink URL = %@%@#%@", [k ForumURL], self.currentUrl, [[arrayData objectAtIndex:curMsg] postID]);
     
     
     //Topic *tmpTopic = [[[self.arrayData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
     
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-    pasteboard.string = [NSString stringWithFormat:@"actionLink URL = %@%@#%@", kForumURL, self.currentUrl, [[arrayData objectAtIndex:curMsg] postID]];
+    pasteboard.string = [NSString stringWithFormat:@"actionLink URL = %@%@#%@", [k RealForumURL], self.currentUrl, [[arrayData objectAtIndex:curMsg] postID]];
     
 
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Lien copié dans le presse-papiers"
@@ -2404,7 +2404,7 @@
     
     int curMsg = [curMsgN intValue];
     
-    NSString *alertUrl = [NSString stringWithFormat:@"%@%@", kForumURL, [[arrayData objectAtIndex:curMsg] urlAlert]];
+    NSString *alertUrl = [NSString stringWithFormat:@"%@%@", [k ForumURL], [[arrayData objectAtIndex:curMsg] urlAlert]];
     
     AlerteModoViewController *alerteMessageViewController = [[AlerteModoViewController alloc]
                                                              initWithNibName:@"AlerteModoViewController" bundle:nil];
@@ -2428,7 +2428,7 @@
 
     int curMsg = [curMsgN intValue];
     
-    NSString *editUrl = [NSString stringWithFormat:@"%@%@", kForumURL, [[[arrayData objectAtIndex:curMsg] urlEdit] decodeSpanUrlFromString]];
+    NSString *editUrl = [NSString stringWithFormat:@"%@%@", [k ForumURL], [[[arrayData objectAtIndex:curMsg] urlEdit] decodeSpanUrlFromString]];
     NSLog(@"DEL editUrl = %@", editUrl);
     
     DeleteMessageViewController *delMessageViewController = [[DeleteMessageViewController alloc]
@@ -2481,7 +2481,7 @@
 	NewMessageViewController *editMessageViewController = [[NewMessageViewController alloc]
 														   initWithNibName:@"AddMessageViewController" bundle:nil];
 	editMessageViewController.delegate = self;
-	[editMessageViewController setUrlQuote:[NSString stringWithFormat:@"%@%@", kForumURL, [[arrayData objectAtIndex:curMsg] MPUrl]]];
+	[editMessageViewController setUrlQuote:[NSString stringWithFormat:@"%@%@", [k ForumURL], [[arrayData objectAtIndex:curMsg] MPUrl]]];
 	editMessageViewController.title = @"Nouv. Message";
 	// Create the navigation controller and present it modally.
 	HFRNavigationController *navigationController = [[HFRNavigationController alloc]
@@ -2601,14 +2601,14 @@
 	int curMsg = [curMsgN intValue];
 	
 	[self setEditFlagTopic:[[arrayData objectAtIndex:curMsg] postID]];
-	[self editMessage:[NSString stringWithFormat:@"%@%@", kForumURL, [[[arrayData objectAtIndex:curMsg] urlEdit] decodeSpanUrlFromString]]];
+	[self editMessage:[NSString stringWithFormat:@"%@%@", [k ForumURL], [[[arrayData objectAtIndex:curMsg] urlEdit] decodeSpanUrlFromString]]];
 	
 }
 
 -(void)QuoteMessage:(NSNumber *)curMsgN {
 	int curMsg = [curMsgN intValue];
 	
-	[self quoteMessage:[NSString stringWithFormat:@"%@%@", kForumURL, [[[arrayData objectAtIndex:curMsg] urlQuote] decodeSpanUrlFromString]]];
+	[self quoteMessage:[NSString stringWithFormat:@"%@%@", [k ForumURL], [[[arrayData objectAtIndex:curMsg] urlQuote] decodeSpanUrlFromString]]];
 }
 
 -(void)actionFavoris {
@@ -2862,7 +2862,7 @@
     
     //NSString *baseURL = [NSString stringWithFormat:@"/forum2.php?%@", [self serializeParams:self.searchInputData]];
 
-    ASIFormDataRequest  *arequest = [[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/transsearch.php", kForumURL]]];
+    ASIFormDataRequest  *arequest = [[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/transsearch.php", [k ForumURL]]]];
     
     for (NSString *key in self.searchInputData) {
         [arequest setPostValue:[self.searchInputData objectForKey:key] forKey:key];

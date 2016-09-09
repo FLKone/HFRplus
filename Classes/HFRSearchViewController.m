@@ -318,7 +318,7 @@
 		[item setObject:[[currentTitle stringByReplacingOccurrencesOfString:@"amp;" withString:@""] stringByReplacingOccurrencesOfRegex:pattern withString:@""] forKey:@"title"];
 		//[item setObject:currentTitle forKey:@"title"];
 		
-		[item setObject:[currentLink stringByReplacingOccurrencesOfString:kForumURL withString:@""] forKey:@"link"];
+		[item setObject:[currentLink stringByReplacingOccurrencesOfString:[k RealForumURL] withString:@""] forKey:@"link"];
 
 		currentSummary = (NSMutableString *)[currentSummary stringByDecodingXMLEntities];
 		[item setObject:[[currentSummary stringByReplacingOccurrencesOfString:@"amp;" withString:@""] stringByReplacingOccurrencesOfRegex:pattern withString:@""] forKey:@"summary"];
@@ -563,7 +563,7 @@
 			NSLog(@"copier lien page 1 %@", [[stories objectAtIndex: pressedIndexPath.row] objectForKey: @"link"]);
             
             UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-            pasteboard.string = [NSString stringWithFormat:@"%@%@", kForumURL, [[stories objectAtIndex: pressedIndexPath.row] objectForKey: @"link"]];
+            pasteboard.string = [NSString stringWithFormat:@"%@%@", [k RealForumURL], [[stories objectAtIndex: pressedIndexPath.row] objectForKey: @"link"]];
             
 			break;
 			
