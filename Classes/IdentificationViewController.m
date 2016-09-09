@@ -122,9 +122,9 @@
     
 	//NSLog(@"connexion");
 	ASIFormDataRequest  *request =  
-	[[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:@"http://www.hardware.fr/membres/popupLogin.php"]];
+	[[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, @"/login_validation.php?config=hfr.inc"]]];
     [request setPostValue:pseudoField.text forKey:@"pseudo"];
-    [request setPostValue:passField.text forKey:@"pwd"];
+    [request setPostValue:passField.text forKey:@"password"];
     [request setPostValue:@"send" forKey:@"action"];
     
     [request setPostValue:@"Se connecter" forKey:@"login"];
@@ -137,22 +137,27 @@
 			//NSLog(@"localizedDescription %@", [[request error] localizedDescription]);
 			//NSLog(@"responseString %@", [request responseString]);
 		} else if ([request responseString]) {
-			//NSLog(@"responseString %@", [request responseString]);
+            //NSLog(@"responseString %@", [request responseString]);
+            //NSLog(@"responseString %@", [request responseHeaders]);
             
-			if ([[request responseString] length] == 0) {
-				//KO
-				//NSLog(@"connexion KO");
+            NSArray * urlArray = [[request responseString] arrayOfCaptureComponentsMatchedByRegex:@"<meta http-equiv=\"Refresh\" content=\"1; url=login_redirection.php([^\"]*)\" />"];
+            
+            //NSLog(@"%d", urlArray.count);
+            if (urlArray.count > 0) {
+                //NSLog(@"connexion OK");
                 
-				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Le pseudo que vous avez saisi n'a pas été trouvé ou votre mot de passe est incorrect.\nVeuillez réessayer."
-															   delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-				[alert show];	
-			}
-			else {
-				//NSLog(@"connexion OK");
+                [self finishOK];
+            }
+            else {
+                //NSLog(@"connexion KO");
                 
-				[self finishOK];
-			}
-		}
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Le pseudo que vous avez saisi n'a pas été trouvé ou votre mot de passe est incorrect.\nVeuillez réessayer."
+                                                               delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                [alert show];	
+                
+            }
+
+        }
 	}	
 }
 

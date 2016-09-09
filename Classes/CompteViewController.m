@@ -81,31 +81,22 @@
 
 - (IBAction)logout {
 	//NSLog(@"logout");
-	
-	NSURL *url = [NSURL URLWithString:@"http://www.hardware.fr/membres/?logout=1"];
-	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-	[request setUseCookiePersistence:YES];
-	[request startSynchronous];
-	
-	if (request) {
-		
-		NSHTTPCookieStorage *cookShared = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-		NSArray *cookies = [cookShared cookies];
-		
-		for (NSHTTPCookie *aCookie in cookies) {
-			//NSLog(@"%@", aCookie);
-			
-			[cookShared deleteCookie:aCookie];
-		}
-		
-		//NSLog(@"logout: %@", [request responseString]);
-		[self.compteView setHidden:YES];
-		[self.loginView setHidden:NO];
-
-		[[HFRplusAppDelegate sharedAppDelegate] logout];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kLoginChangedNotification object:nil];
-
-	}
+    
+    NSHTTPCookieStorage *cookShared = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    NSArray *cookies = [cookShared cookies];
+    
+    for (NSHTTPCookie *aCookie in cookies) {
+        //NSLog(@"%@", aCookie);
+        
+        [cookShared deleteCookie:aCookie];
+    }
+    
+    //NSLog(@"logout: %@", [request responseString]);
+    [self.compteView setHidden:YES];
+    [self.loginView setHidden:NO];
+    
+    [[HFRplusAppDelegate sharedAppDelegate] logout];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kLoginChangedNotification object:nil];
 }
 
 - (IBAction)login {
