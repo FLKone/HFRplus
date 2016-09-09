@@ -15,10 +15,12 @@
     NSDate * now = [NSDate date];
     
     NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
-    fmt.dateFormat = @"LLL d, yyyy - HH:mm:ss zzz";
-    NSDate *testedDate = [fmt dateFromString:@"September 13, 2016 - 00:00:01 UTC"];
+    fmt.dateFormat = @"dd-MM-yyyy HH:mm:ss zzz";
+    NSDate *testedDate = [fmt dateFromString:@"12-09-2016 00:00:01 UTC"];
     
-    if ([testedDate timeIntervalSinceDate:now] > 0) {
+    NSLog(@"tested %@ == now %@ || int: %f", testedDate, now, [testedDate timeIntervalSinceDate:now]);
+    
+    if (testedDate && [testedDate timeIntervalSinceDate:now] > 0) {
         NSLog(@"Proxy");
         return @"https://hfr.sideload.it";
         
