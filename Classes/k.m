@@ -16,7 +16,7 @@
     
     NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
     fmt.dateFormat = @"dd-MM-yyyy HH:mm:ss zzz";
-    NSDate *testedDate = [fmt dateFromString:@"12-09-2016 00:00:01 UTC"];
+    NSDate *testedDate = [fmt dateFromString:@"13-09-2016 00:00:01 UTC"];
     
     NSLog(@"tested %@ == now %@ || int: %f", testedDate, now, [testedDate timeIntervalSinceDate:now]);
     
