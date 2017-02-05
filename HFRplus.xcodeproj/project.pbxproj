@@ -3399,6 +3399,7 @@
 				);
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = HFRplusRED;
+				PROVISIONING_PROFILE = "52ec4848-1845-464a-9fdb-b6241d978c6a";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
