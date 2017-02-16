@@ -51,6 +51,7 @@ typedef enum {
 
 #define kStatusChangedNotification  @"kStatusChangedNotification"
 #define kLoginChangedNotification  @"kLoginChangedNotification"
+#define kThemeChangedNotification  @"kThemeChangedNotification"
 
 //#define kForumURL                   @"http://forum.hardware.fr"
 #define kCatTemplateURL				@"/forum1.php?config=hfr.inc&cat=$1&page=1&subcat=$2&owntopic=$3"

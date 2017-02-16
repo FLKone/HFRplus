@@ -14,6 +14,7 @@
 
 	IBOutlet UITextField *pseudoField;
 	IBOutlet UITextField *passField;
+    IBOutlet UILabel *titleLabel;
 }
 @property (nonatomic, weak) id <IdentificationViewControllerDelegate> delegate;
 

@@ -114,7 +114,7 @@
 	[self.view removeGestureRecognizer:swipeRightRecognizer];
 	
 	if ([NSThread isMainThread]) {
-        [self.messagesWebView setHidden:YES];
+        //[self.messagesWebView setHidden:YES];
     }
 
     //NSLog(@"from %d", from);
@@ -1403,7 +1403,8 @@
     
 	if (![self.messagesWebView isLoading]) {	
 		[self.messagesWebView stringByEvaluatingJavaScriptFromString:@"$('#actualiserbtn').addClass('loading');"];
-		[self performSelectorInBackground:@selector(fetchContentinBackground:) withObject:[NSNumber numberWithInt:from]];
+        [self fetchContentinBackground:[NSNumber numberWithInt:from]];
+		//[self performSelectorInBackground:@selector(fetchContentinBackground:) withObject:];
 	}    
 }
 
@@ -1417,7 +1418,6 @@
     
     
     
-    @autoreleasepool {
         int intfrom = [from intValue];
         
         switch (intfrom) {
@@ -1437,7 +1437,6 @@
         
         [self fetchContent:intfrom];
 	
-	}
 }
 
 #pragma mark -

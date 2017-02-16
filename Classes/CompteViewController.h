@@ -16,6 +16,8 @@
 
 @property (nonatomic, strong) IBOutlet UIView* compteView;
 @property (nonatomic, strong) IBOutlet UIView* loginView;
+@property (nonatomic, strong) IBOutlet UILabel* loadingLabel;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView* loadingIndicator;
 @property (nonatomic, strong) IBOutlet UIButton* profilBtn;
 
 - (void)checkLogin;

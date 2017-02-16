@@ -8,6 +8,7 @@
 #import "CreditsViewController.h"
 #import "HFRplusAppDelegate.h"
 #import "UIWebView+Tools.h"
+#import "ThemeColors.h"
 
 
 @implementation CreditsViewController
@@ -22,6 +23,7 @@
 }
 */
 
+NSString *_theme;
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
@@ -34,6 +36,24 @@
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
         [self.myWebView setBackgroundColor:[UIColor colorWithRed:239/255.0f green:239/255.0f blue:244/255.0f alpha:1.0f]];
     }
+    
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated   {
+    [super viewWillAppear:animated];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [self setThemeColors:[defaults stringForKey:@"theme"]];
+}
+
+-(void)setThemeColors:(NSString *)theme{
+    if(!theme){
+        theme = @"0";
+    }
+    _theme = theme;
+    [self.view setBackgroundColor:[ThemeColors greyBackgroundColor:theme]];
+     [self.myWebView setBackgroundColor:[ThemeColors greyBackgroundColor:theme]];
+    [self.myWebView setOpaque:NO];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -55,7 +75,11 @@
     }
     htmlString = [htmlString stringByReplacingOccurrencesOfString:@"%%iosversion%%" withString:@""];
 
-	[myWebView loadHTMLString:htmlString baseURL:baseURL];
+    NSString *cssString = [ThemeColors creditsCss:_theme];
+    //NSString *javascriptString = @"var style = document.createElement('style'); style.innerHTML = '%@'; document.head.appendChild(style)"; // 2
+   // NSString *javascriptWithCSSString = [NSString stringWithFormat:javascriptString, cssString]; // 3
+    htmlString =[htmlString stringByReplacingOccurrencesOfString:@"</head>" withString:[NSString stringWithFormat:@"<style>%@</style></head>", cssString]];
+    [myWebView loadHTMLString:htmlString baseURL:baseURL];
 	
 }
 
@@ -108,4 +132,11 @@
 	return YES;
 }
 
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    
+    NSString *cssString = [ThemeColors creditsCss:_theme];
+    NSString *javascriptString = @"var style = document.createElement('style'); style.innerHTML = '%@'; document.head.appendChild(style)"; // 2
+    NSString *javascriptWithCSSString = [NSString stringWithFormat:javascriptString, cssString]; // 3
+    [webView stringByEvaluatingJavaScriptFromString:javascriptWithCSSString]; // 4
+}
 @end

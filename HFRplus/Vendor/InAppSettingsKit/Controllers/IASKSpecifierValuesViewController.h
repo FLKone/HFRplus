@@ -29,5 +29,7 @@
 
 @property (nonatomic, retain) UITableView *tableView;
 @property (nonatomic, retain) IASKSpecifier *currentSpecifier;
+@property (nonatomic, strong) NSString *theme;
+
 
 @end

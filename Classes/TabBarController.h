@@ -12,5 +12,6 @@
 
 }
 
+@property (nonatomic, strong) UIImageView *bgView;
 -(void)popAllToRoot:(BOOL)includingSelectedIndex;
 @end

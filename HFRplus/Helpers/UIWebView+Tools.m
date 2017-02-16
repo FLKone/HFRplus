@@ -12,6 +12,7 @@
 
 - (void) hideGradientBackground
 {
+    self.backgroundColor = [UIColor redColor];
     for (UIView* subview in self.subviews)
     {
         if ([subview isKindOfClass:[UIImageView class]])

@@ -34,7 +34,6 @@ p {
 }
 
 body.ios7  {
-    background:#efeff4;
     padding:0 0 38px 0;
 }
 
@@ -44,13 +43,11 @@ body.ios7  {
 
 .ios7 h1 {
     text-transform:uppercase;
-    background:#efeff4;
     font-family:HelveticaNeue;
     font-weight: normal; 
     font-style: normal; 
     font-size: 14.00px;
     padding:0 0 0 15px;
-    color: rgba(109, 109, 114, 1);
     letter-spacing:0px;
     height:37px;
     line-height: 45px;
@@ -60,8 +57,7 @@ body.ios7  {
     margin:0;
     font-size:12px;
     list-style:disc outside none;
-    padding:10px;    
-    background:#fff;
+    padding:10px;
     padding-left: 20px
 }
 
@@ -74,5 +70,4 @@ body.ios7  {
     margin:0;
     font-size:12px;
     padding:10px;
-    background:#fff;
 }

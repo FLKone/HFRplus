@@ -10,12 +10,16 @@
 #import "BlackListTableViewController.h"
 #import "BlackList.h"
 #import "InsetLabel.h"
+#import "ThemeColors.h"
+#import "Constants.h"
 @interface BlackListTableViewController ()
 
 @end
 
 @implementation BlackListTableViewController
 @synthesize blackListDict;
+NSString* _theme;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
@@ -54,8 +58,19 @@ NSInteger Sort_BL_Comparer(id id1, id id2, void *context)
 -(void)viewWillAppear:(BOOL)animated {
     NSLog(@"vwa");
     [super viewWillAppear:animated];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [self setThemeColors:[defaults stringForKey:@"theme"]];
     [self reloadData];
 }
+
+-(void)setThemeColors:(NSString *)theme{
+    if(!theme){
+        theme = @"0";
+    }
+    self.view.backgroundColor = [ThemeColors greyBackgroundColor:theme];
+    _theme = theme;
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -99,12 +114,14 @@ NSInteger Sort_BL_Comparer(id id1, id id2, void *context)
         
         if ([NSTextAttachment class]) {
             NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"Pour ajouter quelqu'un, selectionnez son pseudo, puis "];
+
             
+
             // creates a text attachment with an image
             
             NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
             
-            attachment.image = [UIImage imageNamed:@"ThorHammerBlack-20"];
+            attachment.image = [ThemeColors thorHammer:_theme];
             
             NSAttributedString *imageAttrString = [NSAttributedString attributedStringWithAttachment:attachment];
             
@@ -123,6 +140,8 @@ NSInteger Sort_BL_Comparer(id id1, id id2, void *context)
         messageLabel.textAlignment = NSTextAlignmentCenter;
         //messageLabel.font = [UIFont systemFontOfSize:15.0f];
         [messageLabel sizeToFit];
+        messageLabel.textColor = [ThemeColors cellTextColor:_theme];
+        messageLabel.tintColor = [ThemeColors cellIconColor:_theme];
         
         self.tableView.backgroundView = messageLabel;
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -153,6 +172,15 @@ NSInteger Sort_BL_Comparer(id id1, id id2, void *context)
     
     cell.textLabel.text = [[self.blackListDict objectAtIndex:indexPath.row] valueForKey:@"word"];
     cell.detailTextLabel.text = [[self.blackListDict objectAtIndex:indexPath.row] valueForKey:@"mode"];
+    
+    cell.backgroundColor = [ThemeColors cellBackgroundColor:_theme];
+    cell.textLabel.textColor = [ThemeColors cellTextColor:_theme];
+    cell.tintColor = [ThemeColors tintColor:_theme];
+    UIImage *img =[cell.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    cell.imageView.image = img;
+    cell.imageView.tintColor = [ThemeColors cellIconColor:_theme];
+    cell.selectionStyle = [ThemeColors cellSelectionStyle:_theme];
+    
     return cell;
 }
 

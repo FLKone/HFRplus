@@ -15,6 +15,8 @@
 #import "MKStoreManager.h"
 #import "BrowserViewController.h"
 
+#import "ThemeColors.h"
+
 #import <SafariServices/SafariServices.h>
 
 #import <Crittercism/Crittercism.h>
@@ -58,6 +60,7 @@
 	//self.hash_check = [[NSString alloc] init];
 	
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:YES];
+
 
 #ifdef CONFIGURATION_Release
     NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
@@ -128,9 +131,35 @@
 															   selector:@selector(periodicMaintenance)
 															   userInfo:nil
 																repeats:YES];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kThemeChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(setThemeFromNotification:) //note the ":" - should take an NSNotification as parameter
+                                                 name:kThemeChangedNotification
+                                               object:nil];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [self setTheme:[defaults stringForKey:@"theme"]];
+
 	
     return YES;
 }
+
+-(void)setThemeFromNotification:(NSNotification *)notification{
+    [self setTheme:[notification object]];
+}
+
+-(void)setTheme:(NSString *)theme{
+    [[UITabBar appearance] setTranslucent:YES];
+    
+    if(!theme){
+        theme = @"0";
+    }
+    
+    self.window.tintColor = [ThemeColors tintColor:theme];
+    [[UINavigationBar appearance] setBackgroundImage:[ThemeColors imageFromColor:[ThemeColors navBackgroundColor:theme]] forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [ThemeColors textColor:theme]}];
+}
+
 
 - (void)registerDefaultsFromSettingsBundle {
     

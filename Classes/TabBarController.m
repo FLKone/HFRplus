@@ -11,6 +11,9 @@
 #import "HFRMPViewController.h"
 #import "ForumsTableViewController.h"
 #import "HFRTabBar.h"
+#import "ThemeColors.h"
+
+
 
 @implementation TabBarController
 
@@ -73,10 +76,48 @@
 }
 
 
+-(void)setThemeFromNotification:(NSNotification *)notification{
+    [self setTheme:[notification object]];
+}
+
+-(void)setTheme:(NSString *)theme{
+    [[UITabBar appearance] setTranslucent:YES];
+    
+    if(!theme){
+        theme = @"0";
+    }
+    
+    if(!self.bgView){
+        self.bgView = [[UIImageView alloc] initWithImage:[ThemeColors imageFromColor:[UIColor redColor]]];
+        self.bgView.frame = CGRectMake(0, 0, self.tabBar.frame.size.width, self.tabBar.frame.size.height);
+        [self.bgView setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
+        [self.tabBar addSubview:self.bgView];
+        [self.tabBar sendSubviewToBack:self.bgView];
+
+    }
+    
+    self.bgView.image =[ThemeColors imageFromColor:[ThemeColors tabBackgroundColor:theme]];
+    self.tabBar.tintColor = [ThemeColors tintColor:theme];
+    
+    if([self.childViewControllers count] > 0){
+        for (int i=0; i<[self.childViewControllers count]; i++) {
+            UINavigationController *nvc = (UINavigationController *)[self.childViewControllers objectAtIndex:i];
+            nvc.navigationBar.barStyle = [ThemeColors barStyle:theme];
+        }
+    }
+    
+}
+
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-
-
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kThemeChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(setThemeFromNotification:) //note the ":" - should take an NSNotification as parameter
+                                                 name:kThemeChangedNotification
+                                               object:nil];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [self setTheme:[defaults stringForKey:@"theme"]];
+    
 }
 
 - (BOOL)tabBarController:(UITabBarController * _Nonnull)tabBarController shouldSelectViewController:(UIViewController * _Nonnull)viewController {
