@@ -25,7 +25,10 @@
 - (void)awakeFromNib {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingDidChange:) name:kIASKAppSettingChanged object:nil];
     BOOL enabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"menu_debug"];
-    ((IASKAppSettingsViewController *)((UINavigationController *)[[HFRplusAppDelegate sharedAppDelegate] rootController].viewControllers[3]).viewControllers[0]).hiddenKeys = enabled ? nil : [NSSet setWithObjects:@"menu_debug_entry", nil];
+    IASKAppSettingsViewController *settingsVC = ((IASKAppSettingsViewController *)((UINavigationController *)[[HFRplusAppDelegate sharedAppDelegate] rootController].viewControllers[3]).viewControllers[0]);
+    
+    settingsVC.hiddenKeys = enabled ? nil : [NSSet setWithObjects:@"menu_debug_entry", nil];
+    settingsVC.neverShowPrivacySettings = YES;
     NSLog(@"awakeFromNib");
     
     self.delegate = self;
