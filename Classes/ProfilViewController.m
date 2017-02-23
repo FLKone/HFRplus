@@ -1460,8 +1460,8 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     Theme theme = [[ThemeManager sharedManager] theme];
-    self.view.backgroundColor = self.loadingView.backgroundColor =  [ThemeColors greyBackgroundColor:theme];
-    self.loadingLabel.textColor = self.maintenanceView.textColor = [ThemeColors cellTextColor:theme];
+    self.view.backgroundColor = self.loadingView.backgroundColor = self.textView.backgroundColor = [ThemeColors greyBackgroundColor:theme];
+    self.loadingLabel.textColor = self.maintenanceView.textColor = self.textView.textColor = [ThemeColors cellTextColor:theme];
     self.loadingLabel.shadowColor = self.maintenanceView.shadowColor = [UIColor clearColor];
     [self.loadingIndicator setColor:[ThemeColors cellTextColor:theme]];
 }
