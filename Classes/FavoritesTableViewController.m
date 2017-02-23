@@ -614,15 +614,15 @@
     Theme theme = [[ThemeManager sharedManager] theme];
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
     
-        UIImage *buttonImage2 = [ThemeColors tintImage:[UIImage imageNamed:@"all_categories_land"] withTheme:theme]; ;
+        UIImage *buttonImage2 = [UIImage imageNamed:@"all_categories_land"]; ;
         UIButton *aButton2 = [UIButton buttonWithType:UIButtonTypeCustom];
         [aButton2 setAdjustsImageWhenHighlighted:NO];
         
         [aButton2 setImage:buttonImage2 forState:UIControlStateNormal];
         [aButton2 setImage:buttonImage2 forState:UIControlStateSelected];
         [aButton2 setImage:buttonImage2 forState:UIControlStateHighlighted];
-        [aButton2 setBackgroundImage:[ThemeColors tintImage:[UIImage imageNamed:@"lightBlue.png"] withTheme:theme] forState:UIControlStateSelected];
-        [aButton2 setBackgroundImage:[ThemeColors tintImage:[UIImage imageNamed:@"lightBlue.png"] withTheme:theme] forState:UIControlStateHighlighted];
+        [aButton2 setBackgroundImage:[UIImage imageNamed:@"lightBlue.png"] forState:UIControlStateSelected];
+        [aButton2 setBackgroundImage:[UIImage imageNamed:@"lightBlue.png"] forState:UIControlStateHighlighted];
         //[aButton setBackgroundImage:[UIImage imageNamed:@"lightBlue.png"] forState:UIControlStateNormal];
         
         
@@ -635,15 +635,15 @@
         
         
         
-        UIImage *buttonImage = [ThemeColors tintImage:[UIImage imageNamed:@"all_categories"] withTheme:theme];
+        UIImage *buttonImage = [UIImage imageNamed:@"all_categories"];
         UIButton *aButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [aButton setAdjustsImageWhenHighlighted:NO];
         
         [aButton setImage:buttonImage forState:UIControlStateNormal];
         [aButton setImage:buttonImage forState:UIControlStateSelected];
         [aButton setImage:buttonImage forState:UIControlStateHighlighted];
-        [aButton setBackgroundImage:[ThemeColors tintImage:[UIImage imageNamed:@"lightBlue.png"] withTheme:theme] forState:UIControlStateSelected];
-        [aButton setBackgroundImage:[ThemeColors tintImage:[UIImage imageNamed:@"lightBlue.png"] withTheme:theme] forState:UIControlStateHighlighted];
+        [aButton setBackgroundImage:[UIImage imageNamed:@"lightBlue.png"] forState:UIControlStateSelected];
+        [aButton setBackgroundImage:[UIImage imageNamed:@"lightBlue.png"] forState:UIControlStateHighlighted];
         //[aButton setBackgroundImage:[UIImage imageNamed:@"lightBlue.png"] forState:UIControlStateNormal];
         
         
@@ -754,6 +754,35 @@
     self.favoritesTableView.pullToRefreshView.arrowColor = [ThemeColors cellTextColor:theme];
     self.favoritesTableView.pullToRefreshView.textColor = [ThemeColors cellTextColor:theme];
     self.favoritesTableView.pullToRefreshView.activityIndicatorViewStyle = [ThemeColors activityIndicatorViewStyle:theme];
+    
+    UIButton *btn = (UIButton *)[self.navigationController.navigationBar viewWithTag:237];
+    UIButton *btn2 = (UIButton *)[self.navigationController.navigationBar viewWithTag:238];
+    
+    if(btn){
+        UIImage *img = btn.imageView.image;
+        UIImage *bg = [UIImage imageNamed:@"lightBlue.png"];
+        UIImage *timg = [ThemeColors tintImage:img withTheme:theme];
+        UIImage *tbg = [ThemeColors tintImage:bg withColor:[ThemeColors tintLightColor:theme]];
+
+        [btn setImage:timg forState:UIControlStateNormal];
+        [btn setImage:timg forState:UIControlStateSelected];
+        [btn setImage:timg forState:UIControlStateHighlighted];
+        [btn setBackgroundImage:tbg forState:UIControlStateSelected];
+        [btn setBackgroundImage:tbg forState:UIControlStateHighlighted];
+    }
+    
+    if(btn2){
+        UIImage *img = btn2.imageView.image;
+        UIImage *bg = [UIImage imageNamed:@"lightBlue.png"];
+        UIImage *timg = [ThemeColors tintImage:img withTheme:theme];
+        UIImage *tbg = [ThemeColors tintImage:bg withColor:[ThemeColors tintLightColor:theme]];
+        
+        [btn2 setImage:timg forState:UIControlStateNormal];
+        [btn2 setImage:timg forState:UIControlStateSelected];
+        [btn2 setImage:timg forState:UIControlStateHighlighted];
+        [btn2 setBackgroundImage:tbg forState:UIControlStateSelected];
+        [btn2 setBackgroundImage:tbg forState:UIControlStateHighlighted];
+    }
 
 	if (self.messagesTableViewController) {
 		//NSLog(@"viewWillAppear Favorites Table View Dealloc MTV");

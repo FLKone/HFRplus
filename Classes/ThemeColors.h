@@ -28,6 +28,7 @@
 + (UIColor *)lightTextColor:(Theme)theme;
 + (UIColor *)topicMsgTextColor:(Theme)theme;
 + (UIColor *)tintColor:(Theme)theme;
++ (UIColor *)tintLightColor:(Theme)theme;
 + (UIColor *)tintWhiteColor:(Theme)theme;
 + (UIColor *)overlayColor:(Theme)theme;
 + (UIColor *)toolbarColor:(Theme)theme;

@@ -211,6 +211,18 @@
     }
 }
 
++ (UIColor *)tintLightColor:(Theme)theme{
+    switch (theme) {
+        case ThemeLight:
+            return [UIColor colorWithRed:229.0/255.0 green:242.0/255.0 blue:255.0/255.0 alpha:1.0];
+        case ThemeDark:
+            return [UIColor colorWithRed:85.0/255.0 green:67.0/255.0 blue:52.0/255.0 alpha:1.0];
+        default:
+            return [UIColor colorWithRed:229.0/255.0 green:242.0/255.0 blue:255.0/255.0 alpha:1.0];
+            
+    }
+}
+
 + (UIColor *)tintWhiteColor:(Theme)theme{
     switch (theme) {
         case ThemeLight:
@@ -375,16 +387,7 @@
 }
 
 + (UIImage *)tintImage:(UIImage *)image withTheme:(Theme)theme{
-    switch (theme) {
-        case ThemeLight:
-            return image;
-        case ThemeDark:
-        {
-            return [self tintImage:image withColor:[self tintColor:theme]];
-        }
-        default:
-            return image;
-    }
+    return [self tintImage:image withColor:[self tintColor:theme]];
 }
 
 
