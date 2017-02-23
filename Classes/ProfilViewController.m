@@ -955,8 +955,9 @@
                 tmptoolbar.opaque = NO;
                 tmptoolbar.translucent = YES;
                 
-                [[tmptoolbar.subviews objectAtIndex:1] setHidden:YES];
-                
+                if([tmptoolbar.subviews count] > 1){
+                     [[tmptoolbar.subviews objectAtIndex:1] setHidden:YES];
+                }
             }
             
 			[tmptoolbar sizeToFit];
