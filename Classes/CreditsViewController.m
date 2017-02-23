@@ -9,6 +9,7 @@
 #import "HFRplusAppDelegate.h"
 #import "UIWebView+Tools.h"
 #import "ThemeColors.h"
+#import "ThemeManager.h"
 
 
 @implementation CreditsViewController
@@ -22,8 +23,6 @@
     return self;
 }
 */
-
-NSString *_theme;
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
@@ -42,17 +41,12 @@ NSString *_theme;
 
 -(void)viewWillAppear:(BOOL)animated   {
     [super viewWillAppear:animated];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [self setThemeColors:[defaults stringForKey:@"theme"]];
+    [self setThemeColors:[[ThemeManager sharedManager] theme]];
 }
 
--(void)setThemeColors:(NSString *)theme{
-    if(!theme){
-        theme = @"0";
-    }
-    _theme = theme;
+-(void)setThemeColors:(Theme)theme{
     [self.view setBackgroundColor:[ThemeColors greyBackgroundColor:theme]];
-     [self.myWebView setBackgroundColor:[ThemeColors greyBackgroundColor:theme]];
+    [self.myWebView setBackgroundColor:[ThemeColors greyBackgroundColor:theme]];
     [self.myWebView setOpaque:NO];
 }
 
@@ -75,7 +69,7 @@ NSString *_theme;
     }
     htmlString = [htmlString stringByReplacingOccurrencesOfString:@"%%iosversion%%" withString:@""];
 
-    NSString *cssString = [ThemeColors creditsCss:_theme];
+    NSString *cssString = [ThemeColors creditsCss:[[ThemeManager sharedManager] theme]];
     //NSString *javascriptString = @"var style = document.createElement('style'); style.innerHTML = '%@'; document.head.appendChild(style)"; // 2
    // NSString *javascriptWithCSSString = [NSString stringWithFormat:javascriptString, cssString]; // 3
     htmlString =[htmlString stringByReplacingOccurrencesOfString:@"</head>" withString:[NSString stringWithFormat:@"<style>%@</style></head>", cssString]];
@@ -134,7 +128,7 @@ NSString *_theme;
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     
-    NSString *cssString = [ThemeColors creditsCss:_theme];
+    NSString *cssString = [ThemeColors creditsCss:[[ThemeManager sharedManager] theme]];
     NSString *javascriptString = @"var style = document.createElement('style'); style.innerHTML = '%@'; document.head.appendChild(style)"; // 2
     NSString *javascriptWithCSSString = [NSString stringWithFormat:javascriptString, cssString]; // 3
     [webView stringByEvaluatingJavaScriptFromString:javascriptWithCSSString]; // 4

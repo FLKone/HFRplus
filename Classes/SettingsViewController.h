@@ -12,6 +12,4 @@
     
 }
 
-@property (nonatomic, strong) NSString *theme;
-
 @end

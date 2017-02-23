@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "PageViewController.h"
+#import "ThemeColors.h"
+#import "ThemeManager.h"
 
 @class ASIHTTPRequest;
 
@@ -15,6 +17,8 @@
     /* View */
     IBOutlet UITableView *profilTableView;
 	IBOutlet UIView *loadingView;
+    IBOutlet UILabel *loadingLabel;
+    IBOutlet UIActivityIndicatorView *loadingIndicator;
     
     STATUS status;
 	NSString *statusMessage;
@@ -30,6 +34,8 @@
 
 @property (nonatomic, strong) IBOutlet UITableView *profilTableView;
 @property (nonatomic, strong) IBOutlet UIView *loadingView;
+@property (nonatomic, strong) IBOutlet UILabel *loadingLabel;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *loadingIndicator;
 
 @property STATUS status;
 @property (nonatomic, strong) NSString *statusMessage;
@@ -49,6 +55,9 @@
     IBOutlet UITableView *feedTableView;
 
     IBOutlet UIView *loadingView;
+    IBOutlet UILabel* loadingLabel;
+    IBOutlet UIActivityIndicatorView* loadingIndicator;
+    
     NSString *statusMessage;
 	IBOutlet UILabel *maintenanceView;
     STATUS status;
@@ -62,6 +71,8 @@
 @property (nonatomic, strong) IBOutlet UITableView *feedTableView;
 
 @property (nonatomic, strong) IBOutlet UIView *loadingView;
+@property (nonatomic, strong) IBOutlet UILabel *loadingLabel;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *loadingIndicator;
 @property (nonatomic, strong) NSString *statusMessage;
 @property (nonatomic, strong) IBOutlet UILabel *maintenanceView;
 
@@ -90,6 +101,8 @@
     IBOutlet UITextView *textView;
     
     IBOutlet UIView *loadingView;
+    IBOutlet UILabel *loadingLabel;
+    IBOutlet UIActivityIndicatorView *loadingIndicator;
     NSString *statusMessage;
 	IBOutlet UILabel *maintenanceView;
     STATUS status;
@@ -102,6 +115,9 @@
 @property (nonatomic, strong) IBOutlet UITextView *textView;
 
 @property (nonatomic, strong) IBOutlet UIView *loadingView;
+@property (nonatomic, strong) IBOutlet UILabel *loadingLabel;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *loadingIndicator;
+
 @property (nonatomic, strong) NSString *statusMessage;
 @property (nonatomic, strong) IBOutlet UILabel *maintenanceView;
 

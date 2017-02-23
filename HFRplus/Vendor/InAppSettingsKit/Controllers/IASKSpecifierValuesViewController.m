@@ -19,6 +19,7 @@
 #import "IASKSettingsReader.h"
 #import "IASKMultipleValueSelection.h"
 #import "ThemeColors.h"
+#import "ThemeManager.h"
 #import "Constants.h"
 
 #define kCellValue      @"kCellValue"
@@ -75,20 +76,15 @@
                                              selector:@selector(setThemeFromNotification:) //note the ":" - should take an NSNotification as parameter
                                                  name:kThemeChangedNotification
                                                object:nil];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [self setThemeColors:[defaults stringForKey:@"theme"]];
+    [self setThemeColors:[[ThemeManager sharedManager] theme]];
 }
 
 
 -(void)setThemeFromNotification:(NSNotification *)notification{
-    [self setThemeColors:[notification object]];
+    [self setThemeColors:[[ThemeManager sharedManager] theme]];
 }
 
--(void)setThemeColors:(NSString *)theme{
-    if(!theme){
-        theme = @"0";
-    }
-    self.theme = theme;
+-(void)setThemeColors:(Theme)theme{
     self.tableView.backgroundColor = [ThemeColors greyBackgroundColor:theme];
     self.tableView.separatorColor = [ThemeColors cellBorderColor:theme];
     [_tableView reloadData];
@@ -150,14 +146,7 @@
     cell.textLabel.font = [UIFont systemFontOfSize:14.0f];
     cell.detailTextLabel.font = [UIFont systemFontOfSize:14.0f];
     
-    cell.backgroundColor = [ThemeColors cellBackgroundColor:self.theme];
-    cell.textLabel.textColor = [ThemeColors cellTextColor:self.theme];
-    cell.tintColor = [ThemeColors tintColor:self.theme];
-    UIImage *img =[cell.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    cell.imageView.image = img;
-    cell.imageView.tintColor = [ThemeColors cellIconColor:self.theme];
-    cell.selectionStyle = [ThemeColors cellSelectionStyle:self.theme];
-    
+    [[ThemeManager sharedManager] applyThemeToCell:cell];
     return cell;
 }
 

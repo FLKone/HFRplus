@@ -12,6 +12,7 @@
 #import "ForumsTableViewController.h"
 #import "HFRTabBar.h"
 #import "ThemeColors.h"
+#import "ThemeManager.h"
 
 
 
@@ -77,16 +78,13 @@
 
 
 -(void)setThemeFromNotification:(NSNotification *)notification{
-    [self setTheme:[notification object]];
+    [self setTheme:[[ThemeManager sharedManager] theme]];
 }
 
--(void)setTheme:(NSString *)theme{
+-(void)setTheme:(Theme)theme{
     [[UITabBar appearance] setTranslucent:YES];
     
-    if(!theme){
-        theme = @"0";
-    }
-    
+
     if(!self.bgView){
         self.bgView = [[UIImageView alloc] initWithImage:[ThemeColors imageFromColor:[UIColor redColor]]];
         self.bgView.frame = CGRectMake(0, 0, self.tabBar.frame.size.width, self.tabBar.frame.size.height);
@@ -112,12 +110,10 @@
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kThemeChangedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(setThemeFromNotification:) //note the ":" - should take an NSNotification as parameter
-                                                 name:kThemeChangedNotification
+                                             selector:@selector(setThemeFromNotification:)
+                                            name:kThemeChangedNotification
                                                object:nil];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [self setTheme:[defaults stringForKey:@"theme"]];
-    
+    [self setTheme:[[ThemeManager sharedManager] theme]];
 }
 
 - (BOOL)tabBarController:(UITabBarController * _Nonnull)tabBarController shouldSelectViewController:(UIViewController * _Nonnull)viewController {

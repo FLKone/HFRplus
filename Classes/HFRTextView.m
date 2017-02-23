@@ -9,6 +9,8 @@
 #import "HFRTextView.h"
 #import "UIMenuItem+CXAImageSupport.h"
 #import "HFRplusAppDelegate.h"
+#import "ThemeColors.h"
+#import "ThemeManager.h"
 
 @implementation HFRTextView
 
@@ -73,6 +75,8 @@
     [[UIMenuController sharedMenuController] setMenuItems:[NSArray arrayWithObjects:textCutItem, textCopyItem, textPasteItem,
                                                            textBoldItem, textItalicItem, textUnderlineItem, textStrikeItem,
                                                            textSpoilerItem, textQuoteItem, textLinkItem, textImgItem, textFixeItem, nil]];
+    
+    self.keyboardAppearance = [ThemeColors keyboardAppearance:[[ThemeManager sharedManager] theme]];
     
 }
 

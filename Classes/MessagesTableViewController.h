@@ -33,6 +33,8 @@
     
 	UIWebView *messagesWebView;
     UIView *loadingView;
+    UILabel *loadingViewLabel;
+    UIActivityIndicatorView *loadingViewIndicator;
     UILabel *errorLabelView;
 	UIView *overview;
 	
@@ -91,6 +93,11 @@
     UIView *searchBg;
     UIView *searchBox;
     
+    UIToolbar *searchToolbar;
+    UIBarButtonItem *searchBtnItem;
+    UIBarButtonItem *searchFilterBtnItem;
+    UILabel *searchLabel;
+    
     UITextField *searchKeyword;
     UITextField *searchPseudo;
     UISwitch *searchFilter;
@@ -102,6 +109,8 @@
 
 @property (nonatomic, strong) IBOutlet UIWebView *messagesWebView;
 @property (nonatomic, strong) IBOutlet UIView *loadingView;
+@property (nonatomic, strong) IBOutlet UILabel *loadingViewLabel;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *loadingViewIndicator;
 @property (nonatomic, strong) IBOutlet UILabel *errorLabelView;
 @property (nonatomic, strong) IBOutlet UIView *overview;
 
@@ -152,6 +161,11 @@
 
 @property (nonatomic, strong) IBOutlet UIView *searchBg;
 @property (nonatomic, strong) IBOutlet UIView *searchBox;
+
+@property (nonatomic, strong) IBOutlet UIToolbar *searchToolbar;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *searchBtnItem;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *searchFilterBtnItem;
+@property (nonatomic, strong) IBOutlet UILabel *searchLabel;
 
 @property (nonatomic, strong) IBOutlet UITextField *searchKeyword;
 @property (nonatomic, strong) IBOutlet UITextField *searchPseudo;

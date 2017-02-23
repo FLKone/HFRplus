@@ -7,6 +7,8 @@
 
 #import "FavoriteCell.h"
 #import "Constants.h"
+#import "ThemeColors.h"
+#import "ThemeManager.h"
 
 
 @implementation FavoriteCell
@@ -17,62 +19,77 @@
         // Initialization code
 		//Titre Topic
 		
-		UILabel *labelTitle = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 300, 22)];
-		labelTitle.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+		self.labelTitle = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 300, 22)];
+		self.labelTitle.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
-		[labelTitle setFont:[UIFont boldSystemFontOfSize:14.0]];
-		[labelTitle setAdjustsFontSizeToFitWidth:NO];
-		[labelTitle setLineBreakMode:NSLineBreakByTruncatingTail];
+		[self.labelTitle setFont:[UIFont boldSystemFontOfSize:14.0]];
+		[self.labelTitle setAdjustsFontSizeToFitWidth:NO];
+		[self.labelTitle setLineBreakMode:NSLineBreakByTruncatingTail];
 		//[labelTitle setBackgroundColor:[UIColor blueColor]];
-		[labelTitle setTextAlignment:NSTextAlignmentLeft];
+		[self.labelTitle setTextAlignment:NSTextAlignmentLeft];
         if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
-            [labelTitle setHighlightedTextColor:[UIColor whiteColor]];
+            [self.labelTitle setHighlightedTextColor:[UIColor whiteColor]];
         }
-		[labelTitle setTag:999];
-		[labelTitle setTextColor:[UIColor blackColor]];
-		[labelTitle setNumberOfLines:0];
+		[self.labelTitle setTag:999];
+		[self.labelTitle setTextColor:[UIColor blackColor]];
+		[self.labelTitle setNumberOfLines:0];
 		//[label setOpaque:YES];
 		
-		[self.contentView insertSubview:labelTitle atIndex:1];
+		[self.contentView insertSubview:self.labelTitle atIndex:1];
 		
-		UILabel *labelMsg = [[UILabel alloc] initWithFrame:CGRectMake(10, 27, 128, 18)];
-		labelMsg.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+		self.labelMsg = [[UILabel alloc] initWithFrame:CGRectMake(10, 27, 128, 18)];
+		self.labelMsg.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		
-		[labelMsg setFont:[UIFont systemFontOfSize:13.0]];
-		[labelMsg setAdjustsFontSizeToFitWidth:NO];
-		[labelMsg setLineBreakMode:NSLineBreakByTruncatingTail];
+		[self.labelMsg setFont:[UIFont systemFontOfSize:13.0]];
+		[self.labelMsg setAdjustsFontSizeToFitWidth:NO];
+		[self.labelMsg setLineBreakMode:NSLineBreakByTruncatingTail];
 		//[labelMsg setBackgroundColor:[UIColor blueColor]];
-		[labelMsg setTextAlignment:NSTextAlignmentLeft];
+		[self.labelMsg setTextAlignment:NSTextAlignmentLeft];
         if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
-            [labelMsg setHighlightedTextColor:[UIColor whiteColor]];
+            [self.labelMsg setHighlightedTextColor:[UIColor whiteColor]];
         }
-		[labelMsg setTag:998];
-		[labelMsg setTextColor:[UIColor grayColor]];
-		[labelMsg setNumberOfLines:0];
+		[self.labelMsg setTag:998];
+		[self.labelMsg setTextColor:[UIColor grayColor]];
+		[self.labelMsg setNumberOfLines:0];
 		//[label setOpaque:YES];
 		
-		[self.contentView insertSubview:labelMsg atIndex:2];
+		[self.contentView insertSubview:self.labelMsg atIndex:2];
 		
-		UILabel *labelDate = [[UILabel alloc] initWithFrame:CGRectMake(140, 27, 170, 18)];
-		labelDate.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+		self.labelDate = [[UILabel alloc] initWithFrame:CGRectMake(140, 27, 170, 18)];
+		self.labelDate.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
 		
-		[labelDate setFont:[UIFont systemFontOfSize:11.0]];
-		[labelDate setAdjustsFontSizeToFitWidth:NO];
-		[labelDate setLineBreakMode:NSLineBreakByTruncatingTail];
+		[self.labelDate setFont:[UIFont systemFontOfSize:11.0]];
+		[self.labelDate setAdjustsFontSizeToFitWidth:NO];
+		[self.labelDate setLineBreakMode:NSLineBreakByTruncatingTail];
 		//[labelDate setBackgroundColor:[UIColor redColor]];
-		[labelDate setTextAlignment:NSTextAlignmentRight];
+		[self.labelDate setTextAlignment:NSTextAlignmentRight];
         if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
-            [labelDate setHighlightedTextColor:[UIColor whiteColor]];
+            [self.labelDate setHighlightedTextColor:[UIColor whiteColor]];
         }
-		[labelDate setTag:997];
-		[labelDate setTextColor:[UIColor colorWithRed:42/255.f green:116/255.f blue:217/255.f alpha:1.00]];
-		[labelDate setNumberOfLines:0];
+		[self.labelDate setTag:997];
+		[self.labelDate setTextColor:[UIColor colorWithRed:42/255.f green:116/255.f blue:217/255.f alpha:1.00]];
+		[self.labelDate setNumberOfLines:0];
 		//[label setOpaque:YES];
 		
-		[self.contentView insertSubview:labelDate atIndex:3];		
+		[self.contentView insertSubview:self.labelDate atIndex:3];
 				
     }
     return self;
+}
+
+-(void)layoutSubviews {
+    [super layoutSubviews];
+    [self applyTheme];
+}
+
+-(void)applyTheme {
+    Theme theme = [[ThemeManager sharedManager] theme];
+    self.backgroundColor = [ThemeColors cellBackgroundColor:theme];
+    self.contentView.superview.backgroundColor =[ThemeColors cellBackgroundColor:theme];
+    [self.labelTitle setTextColor:[ThemeColors textColor:theme]];
+    [self.labelMsg setTextColor:[ThemeColors topicMsgTextColor:theme]];
+    [self.labelDate setTextColor:[ThemeColors tintColor:theme]];
+    self.selectionStyle = [ThemeColors cellSelectionStyle:theme];
 }
 
 

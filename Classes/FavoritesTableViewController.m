@@ -32,6 +32,9 @@
 #import "UIScrollView+SVPullToRefresh.h"
 #import "PullToRefreshErrorViewController.h"
 
+#import "ThemeManager.h"
+#import "ThemeColors.h"
+
 @implementation FavoritesTableViewController
 @synthesize pressedIndexPath, favoritesTableView, loadingView, showAll;
 @synthesize arrayData, arrayNewData, arrayCategories; //v2 remplace arrayData, arrayDataID, arrayDataID2, arraySection
@@ -608,18 +611,18 @@
 	self.navigationItem.leftBarButtonItem = segmentBarItem2;
     [segmentBarItem2 release];
    */
-    
+    Theme theme = [[ThemeManager sharedManager] theme];
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
     
-        UIImage *buttonImage2 = [UIImage imageNamed:@"all_categories_land"];
+        UIImage *buttonImage2 = [ThemeColors tintImage:[UIImage imageNamed:@"all_categories_land"] withTheme:theme]; ;
         UIButton *aButton2 = [UIButton buttonWithType:UIButtonTypeCustom];
         [aButton2 setAdjustsImageWhenHighlighted:NO];
         
         [aButton2 setImage:buttonImage2 forState:UIControlStateNormal];
         [aButton2 setImage:buttonImage2 forState:UIControlStateSelected];
         [aButton2 setImage:buttonImage2 forState:UIControlStateHighlighted];
-        [aButton2 setBackgroundImage:[UIImage imageNamed:@"lightBlue.png"] forState:UIControlStateSelected];
-        [aButton2 setBackgroundImage:[UIImage imageNamed:@"lightBlue.png"] forState:UIControlStateHighlighted];
+        [aButton2 setBackgroundImage:[ThemeColors tintImage:[UIImage imageNamed:@"lightBlue.png"] withTheme:theme] forState:UIControlStateSelected];
+        [aButton2 setBackgroundImage:[ThemeColors tintImage:[UIImage imageNamed:@"lightBlue.png"] withTheme:theme] forState:UIControlStateHighlighted];
         //[aButton setBackgroundImage:[UIImage imageNamed:@"lightBlue.png"] forState:UIControlStateNormal];
         
         
@@ -632,15 +635,15 @@
         
         
         
-        UIImage *buttonImage = [UIImage imageNamed:@"all_categories"];
+        UIImage *buttonImage = [ThemeColors tintImage:[UIImage imageNamed:@"all_categories"] withTheme:theme];
         UIButton *aButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [aButton setAdjustsImageWhenHighlighted:NO];
         
         [aButton setImage:buttonImage forState:UIControlStateNormal];
         [aButton setImage:buttonImage forState:UIControlStateSelected];
         [aButton setImage:buttonImage forState:UIControlStateHighlighted];
-        [aButton setBackgroundImage:[UIImage imageNamed:@"lightBlue.png"] forState:UIControlStateSelected];
-        [aButton setBackgroundImage:[UIImage imageNamed:@"lightBlue.png"] forState:UIControlStateHighlighted];
+        [aButton setBackgroundImage:[ThemeColors tintImage:[UIImage imageNamed:@"lightBlue.png"] withTheme:theme] forState:UIControlStateSelected];
+        [aButton setBackgroundImage:[ThemeColors tintImage:[UIImage imageNamed:@"lightBlue.png"] withTheme:theme] forState:UIControlStateHighlighted];
         //[aButton setBackgroundImage:[UIImage imageNamed:@"lightBlue.png"] forState:UIControlStateNormal];
         
         
@@ -691,7 +694,7 @@
         segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
         [segmentedControl addTarget:self action:@selector(showAll:) forControlEvents:UIControlEventValueChanged];
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-            segmentedControl.tintColor = [UIColor colorWithRed:156/255.f green:161/255.f blue:167/255.f alpha:1.00];
+            segmentedControl.tintColor = [ThemeColors tintColor:theme];
         }
         
         UIBarButtonItem * segmentBarItem2 = [[UIBarButtonItem alloc] initWithCustomView: segmentedControl];
@@ -744,6 +747,13 @@
 {
     [super viewWillAppear:animated];
 	//[self.view becomeFirstResponder];
+    
+    Theme theme = [[ThemeManager sharedManager] theme];
+    self.view.backgroundColor = self.favoritesTableView.backgroundColor = self.maintenanceView.backgroundColor = self.loadingView.backgroundColor = self.favoritesTableView.pullToRefreshView.backgroundColor = [ThemeColors greyBackgroundColor:theme];
+    self.favoritesTableView.separatorColor = [ThemeColors cellBorderColor:theme];
+    self.favoritesTableView.pullToRefreshView.arrowColor = [ThemeColors cellTextColor:theme];
+    self.favoritesTableView.pullToRefreshView.textColor = [ThemeColors cellTextColor:theme];
+    self.favoritesTableView.pullToRefreshView.activityIndicatorViewStyle = [ThemeColors activityIndicatorViewStyle:theme];
 
 	if (self.messagesTableViewController) {
 		//NSLog(@"viewWillAppear Favorites Table View Dealloc MTV");
@@ -782,6 +792,10 @@
         [self reload];
         self.reloadOnAppear = NO;
     }
+    
+    [self.favoritesTableView reloadData];
+    
+    
 }
 - (void)viewWillDisappear:(BOOL)animated {
     
@@ -895,7 +909,8 @@
     
     //UIView globale
 	UIView* customView = [[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,HEIGHT_FOR_HEADER_IN_SECTION)];
-    customView.backgroundColor = [UIColor colorWithRed:239/255.0f green:239/255.0f blue:244/255.0f alpha:0.7];
+    Theme theme = [[ThemeManager sharedManager] theme];
+    customView.backgroundColor = [ThemeColors headSectionBackgroundColor:theme];
 	customView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
 	//UIImageView de fond
@@ -928,7 +943,7 @@
     [button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-        [button setTitleColor:[UIColor colorWithRed:109/255.0f green:109/255.0f blue:114/255.0f alpha:1] forState:UIControlStateNormal];
+        [button setTitleColor:[ThemeColors headSectionTextColor:theme] forState:UIControlStateNormal];
         [button setTitle:[[tmpForum aTitle] uppercaseString] forState:UIControlStateNormal];
         [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
         [button setTitleEdgeInsets:UIEdgeInsetsMake(10, 10, 0, 0)];

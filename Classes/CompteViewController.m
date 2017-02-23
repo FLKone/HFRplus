@@ -12,11 +12,11 @@
 #import "HFRplusAppDelegate.h"
 #import "RangeOfCharacters.h"
 #import "ThemeColors.h"
+#import "ThemeManager.h"
 #import "Constants.h"
 
 @implementation CompteViewController
 @synthesize compteView, profilBtn, loginView;
-NSString* _theme;
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
@@ -34,20 +34,15 @@ NSString* _theme;
 
 -(void)viewWillAppear:(BOOL)animated   {
     [super viewWillAppear:animated];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [self setThemeColors:[defaults stringForKey:@"theme"]];
+    [self setThemeColors:[[ThemeManager sharedManager] theme]];
 }
 
--(void)setThemeColors:(NSString *)theme{
-    if(!theme){
-        theme = @"0";
-    }
+-(void)setThemeColors:(Theme)theme{
     self.view.backgroundColor = [ThemeColors greyBackgroundColor:theme];
     self.loginView.backgroundColor = [ThemeColors greyBackgroundColor:theme];
     self.compteView.backgroundColor = [ThemeColors greyBackgroundColor:theme];
     self.loadingLabel.textColor = [ThemeColors cellTextColor:theme];
     [self.loadingIndicator setColor:[ThemeColors cellTextColor:theme]];
-    _theme = theme;
 }
 
 
@@ -129,7 +124,7 @@ NSString* _theme;
     IdentificationViewController *identificationController = [[IdentificationViewController alloc]
                                                               initWithNibName:@"IdentificationViewController" bundle:nil];
     identificationController.delegate = self;
-    identificationController.view.backgroundColor = [ThemeColors greyBackgroundColor:_theme];
+    identificationController.view.backgroundColor = [ThemeColors greyBackgroundColor:[[ThemeManager sharedManager] theme]];
     
     // Create the navigation controller and present it modally.
     UINavigationController *navigationController = [[UINavigationController alloc]

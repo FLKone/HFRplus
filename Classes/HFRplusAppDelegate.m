@@ -16,6 +16,7 @@
 #import "BrowserViewController.h"
 
 #import "ThemeColors.h"
+#import "ThemeManager.h"
 
 #import <SafariServices/SafariServices.h>
 
@@ -137,24 +138,18 @@
                                              selector:@selector(setThemeFromNotification:) //note the ":" - should take an NSNotification as parameter
                                                  name:kThemeChangedNotification
                                                object:nil];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [self setTheme:[defaults stringForKey:@"theme"]];
+    [self setTheme:[[ThemeManager sharedManager] theme]];
 
 	
     return YES;
 }
 
 -(void)setThemeFromNotification:(NSNotification *)notification{
-    [self setTheme:[notification object]];
+    [self setTheme:[[ThemeManager sharedManager] theme]];
 }
 
--(void)setTheme:(NSString *)theme{
+-(void)setTheme:(Theme)theme{
     [[UITabBar appearance] setTranslucent:YES];
-    
-    if(!theme){
-        theme = @"0";
-    }
-    
     self.window.tintColor = [ThemeColors tintColor:theme];
     [[UINavigationBar appearance] setBackgroundImage:[ThemeColors imageFromColor:[ThemeColors navBackgroundColor:theme]] forBarMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [ThemeColors textColor:theme]}];

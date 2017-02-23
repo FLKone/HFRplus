@@ -8,6 +8,8 @@
 #import "HFRplusAppDelegate.h"
 #import "PageViewController.h"
 #import "MessagesTableViewController.h"
+#import "ThemeColors.h"
+#import "ThemeManager.h"
 
 @implementation PageViewController
 @synthesize previousPageUrl, nextPageUrl;
@@ -34,6 +36,18 @@
     // Return YES for supported orientations
 	return YES;
 	//    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+-(void)viewWillAppear:(BOOL)animated   {
+    [super viewWillAppear:animated];
+    [self setThemeColors:[[ThemeManager sharedManager] theme]];
+}
+
+-(void)setThemeColors:(Theme)theme{
+    UILabel *titleView = (UILabel *)[self navigationItem].titleView;
+    if([titleView respondsToSelector:@selector(setTextColor:)]){
+        [titleView setTextColor:[ThemeColors textColor:theme]];
+    }
 }
 
 -(void)fetchContent{

@@ -11,12 +11,12 @@
 #import "RegexKitLite.h"
 #import "Constants.h"
 #import "ThemeColors.h"
+#import "ThemeManager.h"
 
 
 @implementation IdentificationViewController
 @synthesize delegate;
 @synthesize pseudoField, passField;
-NSString* _theme;
 
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -46,16 +46,19 @@ NSString* _theme;
     self.navigationItem.rightBarButtonItem = segmentBarItem;
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self setThemeColors:[[ThemeManager sharedManager] theme]];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     
     [super viewDidAppear:animated];
     [pseudoField becomeFirstResponder];
 }
 
--(void)setThemeColors:(NSString *)theme{
-    if(!theme){
-        theme = @"0";
-    }
+-(void)setThemeColors:(Theme)theme{
+    
     self.view.backgroundColor = [ThemeColors greyBackgroundColor:theme];
     pseudoField.backgroundColor = [ThemeColors cellBackgroundColor:theme];
     pseudoField.textColor = [ThemeColors textColor:theme];
@@ -68,7 +71,6 @@ NSString* _theme;
     passField.layer.borderWidth = 1.0f;
     passField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Mot de passe" attributes:@{NSForegroundColorAttributeName:[ThemeColors cellBorderColor:theme]}];
     titleLabel.textColor = [ThemeColors cellTextColor:theme];
-    _theme = theme;
 }
 
 

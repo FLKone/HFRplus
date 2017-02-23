@@ -37,6 +37,9 @@
 #import "UIMenuItem+CXAImageSupport.h"
 #import "BlackList.h"
 
+#import "ThemeManager.h"
+#import "ThemeColors.h"
+
 @implementation MessagesTableViewController
 @synthesize loaded, isLoading, _topicName, topicAnswerUrl, loadingView, errorLabelView, messagesWebView, arrayData, updatedArrayData, detailViewController, messagesTableViewController, pollNode, pollParser;
 @synthesize swipeLeftRecognizer, swipeRightRecognizer, overview, arrayActionsMessages, lastStringFlagTopic;
@@ -1007,7 +1010,6 @@
     
     // use the same style as the nav bar
     styleAlert.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
-    
     [styleAlert showFromBarButtonItem:sender animated:YES];
     
     //[styleAlert showInView:[[[HFRplusAppDelegate sharedAppDelegate] rootController] view]];
@@ -1215,7 +1217,19 @@
 	
 	if(self.detailViewController) self.detailViewController = nil;
 	if(self.messagesTableViewController) self.messagesTableViewController = nil;
- 
+    
+    Theme theme = [[ThemeManager sharedManager] theme];
+    self.view.backgroundColor = self.messagesTableViewController.view.backgroundColor = self.messagesWebView.backgroundColor = self.loadingView.backgroundColor = self.loadingViewLabel.backgroundColor = self.loadingViewIndicator.backgroundColor = self.searchBox.backgroundColor = [ThemeColors greyBackgroundColor:theme];
+    self.loadingViewIndicator.activityIndicatorViewStyle = [ThemeColors activityIndicatorViewStyle:theme];
+    self.loadingViewLabel.textColor = [ThemeColors cellTextColor:theme];
+    self.loadingViewLabel.shadowColor = nil;
+    [[ThemeManager sharedManager] applyThemeToTextField:self.searchPseudo];
+    [[ThemeManager sharedManager] applyThemeToTextField:self.searchKeyword];
+    self.searchPseudo.textColor = self.searchKeyword.textColor = [ThemeColors textColor:theme];
+    self.searchToolbar.barTintColor = [ThemeColors toolbarColor:theme];
+    self.searchBtnItem.tintColor = self.searchFilterBtnItem.tintColor = [ThemeColors tintColor:theme];
+    self.searchBg.backgroundColor = [ThemeColors overlayColor:theme];
+    self.searchLabel.textColor = [ThemeColors textColor:theme];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -1282,6 +1296,7 @@
             else {
                 [label setFont:[UIFont boldSystemFontOfSize:17.0]];
             }
+            [label setTextColor:[ThemeColors textColor:[[ThemeManager sharedManager] theme]]];
         }
         else
         {
@@ -1743,7 +1758,8 @@
         }
         
         NSString *customFontSize = [self userTextSizeDidChange];
-        
+        Theme theme = [[ThemeManager sharedManager] theme];
+
         NSString *HTMLString = [NSString
                                 stringWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
                                 <html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"fr\" lang=\"fr\">\
@@ -1752,8 +1768,8 @@
                                 <script type='text/javascript' src='jquery.doubletap.js'></script>\
                                 <script type='text/javascript' src='jquery.base64.js'></script>\
                                 <meta name='viewport' content='initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no' />\
-                                <link type='text/css' rel='stylesheet' href='style-liste.css'/>\
-                                <link type='text/css' rel='stylesheet' href='style-liste-retina.css' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\
+                                <link type='text/css' rel='stylesheet' href='%@'/>\
+                                <link type='text/css' rel='stylesheet' href='%@' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\
                                 <style type='text/css'>\
                                 %@\
                                 </style>\
@@ -1776,7 +1792,7 @@
                                 $('img').error(function(){ $(this).attr('src', 'photoDefaultfailmini.png');});\
                                 function touchstart() { document.location.href = 'oijlkajsdoihjlkjasdotouch://touchstart'};\
                                 </script>\
-                                </body></html>", customFontSize, display_sig_css, tmpHTML, refreshBtn, tooBar];
+                                </body></html>", [ThemeColors messagesCssPath:theme], [ThemeColors messagesRetinaCssPath:theme], customFontSize, display_sig_css, tmpHTML, refreshBtn, tooBar];
         
         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
             if (self.isSearchInstra) {

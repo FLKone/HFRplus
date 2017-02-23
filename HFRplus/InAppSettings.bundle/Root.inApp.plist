@@ -74,7 +74,7 @@
 				<string>2</string>
 			</array>
 		</dict>
-        <dict>
+		<dict>
 			<key>DefaultValue</key>
 			<string>0</string>
 			<key>FooterText</key>
@@ -98,26 +98,26 @@
 				<string>1</string>
 			</array>
 		</dict>
-        <dict>
-            <key>DefaultValue</key>
-            <string>0</string>
-            <key>Key</key>
-            <string>theme</string>
-            <key>Title</key>
-            <string>Thème</string>
-            <key>Titles</key>
-            <array>
-                <string>☀ Normal</string>
-                <string>☾ Nuit</string>
-            </array>
-            <key>Type</key>
-            <string>PSMultiValueSpecifier</string>
-            <key>Values</key>
-            <array>
-                <string>0</string>
-                <string>1</string>
-            </array>
-        </dict>
+		<dict>
+			<key>DefaultValue</key>
+			<string>0</string>
+			<key>Key</key>
+			<string>theme</string>
+			<key>Title</key>
+			<string>Thème</string>
+			<key>Titles</key>
+			<array>
+				<string>☀ Normal</string>
+				<string>☾ Nuit</string>
+			</array>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Values</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+			</array>
+		</dict>
 		<dict>
 			<key>Title</key>
 			<string>Sujets</string>

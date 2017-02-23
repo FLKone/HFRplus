@@ -12,6 +12,8 @@
 #import "Forum.h"
 #import "SubCatTableViewController.h"
 #import "RegexKitLite.h"
+#import "ThemeColors.h"
+#import "ThemeManager.h"
 
 
 @implementation QuoteMessageViewController
@@ -115,6 +117,11 @@
                                              selector:@selector(loadSubCat) name:@"CatSelected" object:nil];
     
 	[self fetchContent];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [[ThemeManager sharedManager] applyThemeToTextField:self.textFieldSmileys];
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -337,7 +344,7 @@
 	if (self.haveTo) {
 		UITextField *titleLabel = [[UITextField alloc] initWithFrame:CGRectMake(8, originY, 25, 43)];
 		titleLabel.text = @"À :";
-		titleLabel.backgroundColor = [UIColor whiteColor];
+		titleLabel.backgroundColor = [UIColor clearColor];
 		titleLabel.textColor = [UIColor colorWithWhite:0.5 alpha:1];
 		titleLabel.font = [UIFont systemFontOfSize:15];
 		titleLabel.userInteractionEnabled = NO;
@@ -345,21 +352,21 @@
 		
 		textFieldTo = [[UITextField alloc] initWithFrame:CGRectMake(38, originY, frameWidth - 55, 43)];
         textFieldTo.tag = 1;
-		textFieldTo.backgroundColor = [UIColor whiteColor];
+		textFieldTo.backgroundColor = [UIColor clearColor];
 		textFieldTo.font = [UIFont systemFontOfSize:15];
 		textFieldTo.delegate = self;
 		textFieldTo.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-		textFieldTo.keyboardAppearance = UIKeyboardAppearanceDefault;
 		textFieldTo.returnKeyType = UIReturnKeyNext;
 		[textFieldTo setText:[self.arrayInputData valueForKey:@"dest"]];
 		textFieldTo.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         textFieldTo.keyboardType = UIKeyboardTypeASCIICapable;
+        textFieldTo.textColor = [ThemeColors textColor:[[ThemeManager sharedManager] theme]];
         
         
 		originY += textFieldTo.frame.size.height;
 		
 		UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(0, originY, frameWidth, 1)];
-		separator.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
+		separator.backgroundColor = [ThemeColors cellBorderColor:[[ThemeManager sharedManager] theme]];
 		separator.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		
 		originY += separator.frame.size.height;
@@ -375,7 +382,7 @@
 	if (self.haveTitle) {
 		UITextField *titleLabel = [[UITextField alloc] initWithFrame:CGRectMake(8, originY, 45, 43)];
 		titleLabel.text = @"Sujet :";
-		titleLabel.backgroundColor = [UIColor whiteColor];
+		titleLabel.backgroundColor = [UIColor clearColor];
 		titleLabel.textColor = [UIColor colorWithWhite:0.5 alpha:1];
 		titleLabel.font = [UIFont systemFontOfSize:15];
 		titleLabel.userInteractionEnabled = NO;
@@ -383,22 +390,22 @@
 		
 		textFieldTitle = [[UITextField alloc] initWithFrame:CGRectMake(58, originY, frameWidth - 75, 43)];
         textFieldTitle.tag = 2;
-		textFieldTitle.backgroundColor = [UIColor whiteColor];
+		textFieldTitle.backgroundColor = [UIColor clearColor];
 		textFieldTitle.font = [UIFont systemFontOfSize:15];
 		textFieldTitle.delegate = self;
 		textFieldTitle.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-        textFieldTitle.keyboardAppearance = UIKeyboardAppearanceDefault;
 		textFieldTitle.returnKeyType = UIReturnKeyNext;
 		[textFieldTitle setText:[self.arrayInputData valueForKey:@"sujet"]];
 		textFieldTitle.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         textFieldTitle.keyboardType = UIKeyboardTypeASCIICapable;
+        textFieldTitle.textColor = [ThemeColors textColor:[[ThemeManager sharedManager] theme]];
 
 		//[textFieldTitle setText:[[fastAnswerNode findChildWithAttribute:@"name" matchingName:@"sujet" allowPartial:NO] getAttributeNamed:@"value"]];
 
 		originY += textFieldTitle.frame.size.height;
 		
 		UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(0, originY, frameWidth, 1)];
-		separator.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
+		separator.backgroundColor = [ThemeColors cellBorderColor:[[ThemeManager sharedManager] theme]];
 		separator.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		
 		originY += separator.frame.size.height;
@@ -417,7 +424,7 @@
 	if (self.haveCategory) {
 		UITextField *titleLabel = [[UITextField alloc] initWithFrame:CGRectMake(8, originY, 75, 43)];
 		titleLabel.text = @"Catégorie :";
-		titleLabel.backgroundColor = [UIColor whiteColor];
+		titleLabel.backgroundColor = [UIColor clearColor];
 		titleLabel.textColor = [UIColor colorWithWhite:0.5 alpha:1];
 		titleLabel.font = [UIFont systemFontOfSize:15];
         NSLog(@"font %@", titleLabel.font);
@@ -447,7 +454,7 @@
         
 		
 		textFieldCat = [[UITextField alloc] initWithFrame:CGRectMake(88, originY, 215, 43)];
-		textFieldCat.backgroundColor = [UIColor whiteColor];
+		textFieldCat.backgroundColor = [UIColor clearColor];
 		textFieldCat.font = [UIFont systemFontOfSize:15];
 		textFieldCat.delegate = self;
 		textFieldCat.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
@@ -464,7 +471,7 @@
 		originY += textFieldCat.frame.size.height;
 		
 		UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(0, originY, frameWidth, 1)];
-		separator.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
+		separator.backgroundColor = [ThemeColors cellBorderColor:[[ThemeManager sharedManager] theme]];
 		separator.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		
 		originY += separator.frame.size.height;
@@ -775,6 +782,7 @@
         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8")) {
             subCatTableViewController.modalPresentationStyle = UIModalPresentationPopover;
             UIPopoverPresentationController *pc = [subCatTableViewController popoverPresentationController];
+            //pc.backgroundColor = [ThemeColors greyBackgroundColor:[[ThemeManager sharedManager] theme]];
             pc.permittedArrowDirections = UIPopoverArrowDirectionUp;
             pc.delegate = self;
             pc.sourceView = (UIButton *)sender;
@@ -785,6 +793,7 @@
         else {
             self.popover = nil;
             self.popover = [[UIPopoverController alloc] initWithContentViewController:subCatTableViewController];
+            //[(UIPopoverController *)self.popover setBackgroundColor:[ThemeColors greyBackgroundColor:[[ThemeManager sharedManager] theme]]];
             [_popover presentPopoverFromRect:[(UIButton *)sender frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
 
         }

@@ -27,6 +27,9 @@
 
 #import "AideViewController.h"
 
+#import "ThemeColors.h"
+#import "ThemeManager.h"
+
 @implementation TopicsTableViewController
 @synthesize forumNewTopicUrl, forumName, loadingView, topicsTableView, arrayData, arrayNewData;
 @synthesize messagesTableViewController;
@@ -380,7 +383,7 @@
                 }
                 
                 if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"10.0")) {                    
-                    [tmptoolbar setBackgroundImage:[UIImage new]
+                    [tmptoolbar setBackgroundImage:[ThemeColors imageFromColor:[ThemeColors toolbarPageBackgroundColor:[[ThemeManager sharedManager] theme]]]
                                 forToolbarPosition:UIBarPositionAny
                                         barMetrics:UIBarMetricsDefault];
                     [tmptoolbar setShadowImage:[UIImage new]
@@ -457,7 +460,7 @@
             }
             else
             {
-                [labelBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                [labelBtn setTitleColor:[ThemeColors cellIconColor:[[ThemeManager sharedManager] theme]] forState:UIControlStateNormal];
             }
 			UIBarButtonItem *systemItem3 = [[UIBarButtonItem alloc] initWithCustomView:labelBtn];
 			
@@ -490,11 +493,11 @@
                         frame.origin.y = -frame.size.height;
                         UIView* grayView = [[UIView alloc] initWithFrame:frame];
                         grayView.tag = 666777;
-                        grayView.backgroundColor = [UIColor whiteColor];
+                        grayView.backgroundColor = [ThemeColors addMessageBackgroundColor:[[ThemeManager sharedManager] theme]];
                         [self.topicsTableView insertSubview:grayView atIndex:0];
                     }
 
-                    [self.topicsTableView setBackgroundColor:[UIColor colorWithRed:239/255.0f green:239/255.0f blue:244/255.0f alpha:1.0f]];
+                    [self.topicsTableView setBackgroundColor:[ThemeColors addMessageBackgroundColor:[[ThemeManager sharedManager] theme]]];
                 }
                 
 				self.topicsTableView.tableFooterView = tmptoolbar;
@@ -1213,6 +1216,13 @@
 {
     [super viewWillAppear:animated];
 	[self.view becomeFirstResponder];
+    Theme theme = [[ThemeManager sharedManager] theme];
+    self.view.backgroundColor = self.topicsTableView.backgroundColor = self.maintenanceView.backgroundColor = self.loadingView.backgroundColor = self.topicsTableView.pullToRefreshView.backgroundColor = [ThemeColors greyBackgroundColor:theme];
+    self.topicsTableView.separatorColor = [ThemeColors cellBorderColor:theme];
+    self.topicsTableView.pullToRefreshView.arrowColor = [ThemeColors cellTextColor:theme];
+    self.topicsTableView.pullToRefreshView.textColor = [ThemeColors cellTextColor:theme];
+    self.topicsTableView.pullToRefreshView.activityIndicatorViewStyle = [ThemeColors activityIndicatorViewStyle:theme];
+    
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(loadSubCat) name:@"SubCatSelected" object:nil];
@@ -1226,7 +1236,9 @@
     if (self.pressedIndexPath) 
     {
 		self.pressedIndexPath = nil;
-    }    
+    }
+    
+    [self.topicsTableView reloadData];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -1306,8 +1318,9 @@
     
     //UIView globale
 	UIView* customView = [[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,HEIGHT_FOR_HEADER_IN_SECTION)];
-    customView.backgroundColor = [UIColor colorWithRed:239/255.0f green:239/255.0f blue:244/255.0f alpha:0.7];
-	customView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    Theme theme = [[ThemeManager sharedManager] theme];
+    customView.backgroundColor = [ThemeColors headSectionBackgroundColor:theme];
+    customView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     
 	//UIImageView de fond
     if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
@@ -1340,7 +1353,7 @@
     NSString *title = [self tableView:tableView titleForHeaderInSection:section];
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-        [button setTitleColor:[UIColor colorWithRed:109/255.0f green:109/255.0f blue:114/255.0f alpha:1] forState:UIControlStateNormal];
+        [button setTitleColor:[ThemeColors headSectionTextColor:theme] forState:UIControlStateNormal];
         [button setTitle:[title uppercaseString] forState:UIControlStateNormal];
         [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
         [button.titleLabel setMinimumFontSize:10];
@@ -1352,6 +1365,7 @@
     }
     else
     {
+        [button setTitleColor:[ThemeColors headSectionTextColor:theme] forState:UIControlStateNormal];
         [button setTitleEdgeInsets:UIEdgeInsetsMake(0, 8, 0, 0)];
         [button setTitle:title forState:UIControlStateNormal];
         [button.titleLabel setFont:[UIFont boldSystemFontOfSize:15]];
@@ -1470,6 +1484,7 @@
 		 
 
 	Topic *aTopic = [arrayData objectAtIndex:indexPath.row];
+    cell.topicViewed = [aTopic isViewed];
 
 	/*
 	[(UILabel *)[cell.contentView viewWithTag:999] setText:[aTopic aTitle]];
@@ -1603,9 +1618,8 @@
 		cell.accessoryView = button;
 		
 	}
-	//Flag	
-    
-	return cell;
+	//Flag
+    return cell;
 	
 }
 

@@ -7,6 +7,8 @@
 
 #import "HFRNavigationController.h"
 #import "HFRplusAppDelegate.h"
+#import "ThemeColors.h"
+#import "ThemeManager.h"
 
 @interface HFRNavigationController ()
 
@@ -27,6 +29,10 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle{
+    return [ThemeColors statusBarStyle:[[ThemeManager sharedManager] theme]];
 }
 
 - (void)didReceiveMemoryWarning

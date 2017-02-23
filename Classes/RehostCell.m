@@ -11,6 +11,8 @@
 #import "UIImageView+WebCache.h"
 #import <QuartzCore/QuartzCore.h>
 #import "Constants.h"
+#import "ThemeManager.h"
+#import "ThemeColors.h"
 
 @implementation RehostCell
 @synthesize previewImage, rehostImage;
@@ -48,7 +50,15 @@
 
     }
         
+    [self applyTheme];
 }
+
+-(void)applyTheme {
+    Theme theme = [[ThemeManager sharedManager] theme];
+    self.backgroundColor = [ThemeColors cellBackgroundColor:theme];
+    self.contentView.superview.backgroundColor =[ThemeColors cellBackgroundColor:theme];
+}
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {

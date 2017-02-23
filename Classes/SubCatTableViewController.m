@@ -8,6 +8,8 @@
 #import "SubCatTableViewController.h"
 #import "Constants.h"
 #import "Forum.h"
+#import "ThemeManager.h"
+#import "ThemeColors.h"
 
 @interface SubCatTableViewController ()
 
@@ -68,6 +70,11 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+-(void) viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.view.backgroundColor = self.tableView.backgroundColor = [ThemeColors cellBackgroundColor:[[ThemeManager sharedManager] theme]];
+}
+
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -112,12 +119,10 @@
     }
     else
         cell.textLabel.text = [NSString stringWithFormat:@"- %@", [(Forum *)[arrayData objectAtIndex:indexPath.row] aTitle]];
-    cell.backgroundColor = [UIColor clearColor];
     cell.textLabel.font = [UIFont boldSystemFontOfSize:15.0];
     
-    UIView * selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
-    [selectedBackgroundView setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.6]]; // set color here
-    [cell setSelectedBackgroundView:selectedBackgroundView];
+    [[ThemeManager sharedManager] applyThemeToCell:cell];
+    
     
     return cell;
 }

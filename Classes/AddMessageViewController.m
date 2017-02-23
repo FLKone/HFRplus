@@ -17,6 +17,9 @@
 #import "RehostImage.h"
 #import "RehostCell.h"
 #import "UIMenuItem+CXAImageSupport.h"
+#import "ThemeManager.h"
+#import "ThemeColors.h"
+#import "HFRUIImagePickerController.h"
 
 #import "EditMessageViewController.h"
 
@@ -227,7 +230,6 @@
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"iosversion" withString:@"ios7"];
-        [self.smileView setBackgroundColor:[UIColor colorWithRed:187/255.f green:194/255.f blue:201/255.f alpha:1.00]];
     }
     else {
         [self.smileView setBackgroundColor:[UIColor colorWithRed:46/255.f green:46/255.f blue:46/255.f alpha:1.00]];
@@ -238,6 +240,7 @@
     [self.smileView loadHTMLString:[tempHTML stringByReplacingOccurrencesOfString:@"%SMILEYCUSTOM%"
                                                                        withString:[NSString stringWithFormat:@"<div id='smileperso'>%@</div>",
                                                                                    self.smileyCustom]] baseURL:baseURL];
+    
     
     //	[self.smileView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"smileybase" ofType:@"html"] isDirectory:NO]]];
     //==
@@ -251,7 +254,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageReceived:) name:@"imageReceived" object:nil];
     
     UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 40)];
-    v.backgroundColor = [UIColor whiteColor];
+    v.backgroundColor = [ThemeColors addMessageBackgroundColor:[[ThemeManager sharedManager] theme]];
     [self.commonTableView setTableFooterView:v];
     [self.rehostTableView setTableFooterView:v];
     
@@ -261,6 +264,8 @@
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, headerWidth, 50)];
     
     //    NSLog(@"mew cell %@", NSStringFromCGRect(self.view.frame));
+    
+    Theme theme = [[ThemeManager sharedManager] theme];
     
     UIButton* newPhotoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [newPhotoBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10)];
@@ -281,31 +286,31 @@
     UIView *borderT = [[UIView alloc] initWithFrame:CGRectMake(0, 0, headerWidth, 1.0f)];
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-        [oldPhotoBtn setImage:[UIImage imageNamed:@"Folder-32"] forState:UIControlStateNormal];
-        [oldPhotoBtn setImage:[UIImage imageNamed:@"Folder-32"] forState:UIControlStateHighlighted];
+        [oldPhotoBtn setImage:[ThemeColors tintImage:[UIImage imageNamed:@"Folder-32"] withTheme:theme] forState:UIControlStateNormal];
+        [oldPhotoBtn setImage:[ThemeColors tintImage:[UIImage imageNamed:@"Folder-32"] withTheme:theme] forState:UIControlStateHighlighted];
         
-        [newPhotoBtn setImage:[UIImage imageNamed:@"Camera-32"] forState:UIControlStateNormal];
-        [newPhotoBtn setImage:[UIImage imageNamed:@"Camera-32"] forState:UIControlStateHighlighted];
+        [newPhotoBtn setImage:[ThemeColors tintImage:[UIImage imageNamed:@"Camera-32"] withTheme:theme] forState:UIControlStateNormal];
+        [newPhotoBtn setImage:[ThemeColors tintImage:[UIImage imageNamed:@"Camera-32"] withTheme:theme] forState:UIControlStateHighlighted];
         
-        [newPhotoBtn setTitleColor:[UIColor colorWithRed:0/255.0f green:122/255.0f blue:255/255.0f alpha:1.0] forState:UIControlStateNormal];
-        [newPhotoBtn setTitleColor:[UIColor colorWithRed:0/255.0f green:122/255.0f blue:255/255.0f alpha:1.0] forState:UIControlStateHighlighted];
+        [newPhotoBtn setTitleColor:[ThemeColors tintColor:theme] forState:UIControlStateNormal];
+        [newPhotoBtn setTitleColor:[ThemeColors tintColor:theme] forState:UIControlStateHighlighted];
         
-        [oldPhotoBtn setTitleColor:[UIColor colorWithRed:0/255.0f green:122/255.0f blue:255/255.0f alpha:1.0] forState:UIControlStateNormal];
-        [oldPhotoBtn setTitleColor:[UIColor colorWithRed:0/255.0f green:122/255.0f blue:255/255.0f alpha:1.0] forState:UIControlStateHighlighted];
+        [oldPhotoBtn setTitleColor:[ThemeColors tintColor:theme] forState:UIControlStateNormal];
+        [oldPhotoBtn setTitleColor:[ThemeColors tintColor:theme] forState:UIControlStateHighlighted];
     }
     else
     {
-        [oldPhotoBtn setImage:[UIImage imageNamed:@"6-Folder-32"] forState:UIControlStateNormal];
-        [oldPhotoBtn setImage:[UIImage imageNamed:@"6-Folder-32"] forState:UIControlStateHighlighted];
+        [oldPhotoBtn setImage:[ThemeColors tintImage:[UIImage imageNamed:@"6-Folder-32"] withTheme:theme] forState:UIControlStateNormal];
+        [oldPhotoBtn setImage:[ThemeColors tintImage:[UIImage imageNamed:@"6-Folder-32"] withTheme:theme] forState:UIControlStateHighlighted];
         
-        [newPhotoBtn setImage:[UIImage imageNamed:@"6-Camera-32"] forState:UIControlStateNormal];
-        [newPhotoBtn setImage:[UIImage imageNamed:@"6-Camera-32"] forState:UIControlStateHighlighted];
+        [newPhotoBtn setImage:[ThemeColors tintImage:[UIImage imageNamed:@"6-Camera-32"] withTheme:theme] forState:UIControlStateNormal];
+        [newPhotoBtn setImage:[ThemeColors tintImage:[UIImage imageNamed:@"6-Camera-32"] withTheme:theme] forState:UIControlStateHighlighted];
         
-        [newPhotoBtn setTitleColor:[UIColor colorWithRed:56/255.0f green:84/255.0f blue:135/255.0f alpha:1.0] forState:UIControlStateNormal];
-        [newPhotoBtn setTitleColor:[UIColor colorWithRed:56/255.0f green:84/255.0f blue:135/255.0f alpha:1.0] forState:UIControlStateHighlighted];
+        [newPhotoBtn setTitleColor:[ThemeColors tintColor:theme] forState:UIControlStateNormal];
+        [newPhotoBtn setTitleColor:[ThemeColors tintColor:theme] forState:UIControlStateHighlighted];
         
-        [oldPhotoBtn setTitleColor:[UIColor colorWithRed:56/255.0f green:84/255.0f blue:135/255.0f alpha:1.0] forState:UIControlStateNormal];
-        [oldPhotoBtn setTitleColor:[UIColor colorWithRed:56/255.0f green:84/255.0f blue:135/255.0f alpha:1.0] forState:UIControlStateHighlighted];
+        [oldPhotoBtn setTitleColor:[ThemeColors tintColor:theme] forState:UIControlStateNormal];
+        [oldPhotoBtn setTitleColor:[ThemeColors tintColor:theme] forState:UIControlStateHighlighted];
     }
     
     newPhotoBtn.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin);
@@ -317,9 +322,9 @@
     [headerView addSubview:newPhotoBtn];
     [headerView addSubview:oldPhotoBtn];
     
-    [border setBackgroundColor:[UIColor colorWithRed:227/255.0f green:227/255.0f blue:229/255.0f alpha:1.0]];
-    [borderB setBackgroundColor:[UIColor colorWithRed:227/255.0f green:227/255.0f blue:229/255.0f alpha:1.0]];
-    [borderT setBackgroundColor:[UIColor colorWithRed:227/255.0f green:227/255.0f blue:229/255.0f alpha:1.0]];
+    [border setBackgroundColor:[ThemeColors cellBorderColor:theme]];
+    [borderB setBackgroundColor:[ThemeColors cellBorderColor:theme]];
+    [borderT setBackgroundColor:[ThemeColors cellBorderColor:theme]];
     
     [headerView addSubview:border];
     [headerView addSubview:borderB];
@@ -381,6 +386,7 @@
     [segmentControler setEnabled:YES forSegmentAtIndex:0];
     [segmentControler setEnabled:YES forSegmentAtIndex:1];
     
+
 }
 
 #pragma mark -
@@ -505,16 +511,35 @@
         self.textView.selectedRange = lastSelectedRange;
     }
     
+    self.view.backgroundColor = self.loadingView.backgroundColor = self.accessoryView.backgroundColor = self.textView.backgroundColor = self.commonTableView.backgroundColor = self.rehostTableView.backgroundColor = [ThemeColors addMessageBackgroundColor:[[ThemeManager sharedManager] theme]];
+    [[ThemeManager sharedManager] applyThemeToTextField:self.textFieldSmileys];
+    self.loadingViewLabel.textColor = [ThemeColors cellTextColor:[[ThemeManager sharedManager] theme]];
+    self.loadingViewIndicator.activityIndicatorViewStyle = [ThemeColors activityIndicatorViewStyle:[[ThemeManager sharedManager] theme]];
+    self.textView.textColor = [ThemeColors textColor:[[ThemeManager sharedManager] theme]];
+
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    self.textView.keyboardAppearance = [ThemeColors keyboardAppearance:[[ThemeManager sharedManager] theme]];
+    self.textFieldTitle.keyboardAppearance = [ThemeColors keyboardAppearance:[[ThemeManager sharedManager] theme]];
+    self.textFieldTo.keyboardAppearance = [ThemeColors keyboardAppearance:[[ThemeManager sharedManager] theme]];
+    self.textFieldCat.keyboardAppearance = [ThemeColors keyboardAppearance:[[ThemeManager sharedManager] theme]];
+    
+
 }
 
 -(void)setupResponder {
     if (self.haveTo && ![[textFieldTo text] length]) {
+        self.textFieldTo.keyboardAppearance = [ThemeColors keyboardAppearance:[[ThemeManager sharedManager] theme]];
         [self.textFieldTo becomeFirstResponder];
     }
     else if (self.haveTitle) {
+        self.textFieldTitle.keyboardAppearance = [ThemeColors keyboardAppearance:[[ThemeManager sharedManager] theme]];
         [self.textFieldTitle becomeFirstResponder];
     }
     else {
+        self.textView.keyboardAppearance = [ThemeColors keyboardAppearance:[[ThemeManager sharedManager] theme]];
         [self.textView becomeFirstResponder];
     }
 }
@@ -528,6 +553,7 @@
 }
 
 /* for iOS6 support */
+
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
     if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"landscape_mode"] isEqualToString:@"all"]) {
@@ -841,8 +867,7 @@
 
 -(void)segmentToBlue {
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7,0")) {
-        self.segmentControler.tintColor = [UIColor colorWithRed:0 green:122/255.0f blue:255/255.0f alpha:1.0f];
-        self.segmentControlerPage.tintColor = [UIColor colorWithRed:0 green:122/255.0f blue:255/255.0f alpha:1.0f];
+        self.segmentControler.tintColor = self.segmentControlerPage.tintColor = [ThemeColors tintColor:[[ThemeManager sharedManager] theme]];
     }
 }
 
@@ -859,6 +884,9 @@
             case 0:
             {
                 if (self.smileView.alpha == 0.0) {
+                    [self.smileView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"\
+                                                                            $('head link[rel=\"stylesheet\"]').last().after('<style>%@</style>');\
+                                                                            ", [ThemeColors smileysCss:[[ThemeManager sharedManager] theme]]]];
                     self.loaded = NO;
                     [textView resignFirstResponder];
                     [textFieldSmileys resignFirstResponder];
@@ -1612,6 +1640,7 @@
     
     //NSLog(@"showSmileResults");
     
+    
     [self.smileView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"\
                                                             $('#container').hide();\
                                                             $('#container_ajax').show();\
@@ -1626,7 +1655,8 @@
                                                             window.location = 'oijlkajsdoihjlkjasdosmile://internal?query='+encodeURIComponent(this.alt).replace(/\\(/g, '%%28').replace(/\\)/g, '%%29');\
                                                             }\
                                                             });\
-                                                            ", tmpHTML]];
+                                                            $('head link[rel=\"stylesheet\"]').last().after('<style>%@</style>');\
+                                                            ", tmpHTML, [ThemeColors smileysCss:[[ThemeManager sharedManager] theme]]]];
     
     
 }
@@ -1688,6 +1718,7 @@
         }
         
         cell.textLabel.text = [self.usedSearchSortedArray objectAtIndex:indexPath.row];
+        [[ThemeManager sharedManager] applyThemeToCell:cell];
         return cell;
         
     }
@@ -1710,6 +1741,7 @@
         }
         
         [cell configureWithRehostImage:[rehostImagesSortedArray objectAtIndex:indexPath.row]];
+        [[ThemeManager sharedManager] applyThemeToCell:cell];
         
         return cell;
         
@@ -1799,6 +1831,8 @@
             progressFrame.size.width = progressFloat * globalFrame.size.width;
             
             progressView.frame = progressFrame;
+            progressView.superview.backgroundColor = [ThemeColors addMessageBackgroundColor:[[ThemeManager sharedManager] theme]];
+            progressView.backgroundColor = [ThemeColors tintColor:[[ThemeManager sharedManager] theme]];
             
             if (progressFloat == 1) {
                 [UIView beginAnimations:nil context:nil];
@@ -1842,10 +1876,12 @@
 {
     if ([UIImagePickerController isSourceTypeAvailable:sourceType])
     {
-        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        HFRUIImagePickerController *picker = [[HFRUIImagePickerController alloc] init];
         picker.delegate = self;
         picker.allowsEditing = NO;
         picker.sourceType = sourceType;
+        picker.modalPresentationStyle = UIModalPresentationFullScreen;
+
         
         if ([self respondsToSelector:@selector(traitCollection)] && [HFRplusAppDelegate sharedAppDelegate].window.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact){
             

@@ -68,6 +68,9 @@
 }
 
 @property (nonatomic, strong) IBOutlet UIView *loadingView;
+@property (nonatomic, strong) IBOutlet UILabel *loadingViewLabel;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *loadingViewIndicator;
+
 @property (nonatomic, weak) id <AddMessageViewControllerDelegate> delegate;
 
 @property (strong, nonatomic) ASIHTTPRequest *request;

@@ -14,6 +14,8 @@
 #include <unistd.h>
 
 #import "ASIHTTPRequest.h"
+#import "ThemeColors.h"
+#import "ThemeManager.h"
 
 #define kBenchUrlForum   @"http://forum.hardware.fr"
 #define kBenchUrlCategorie   @"http://forum.hardware.fr/hfr/Hardware/liste_sujet-1.htm"
@@ -49,6 +51,8 @@
     }
     
     [self.textView setText:[k ForumURL]];
+    self.textView.keyboardAppearance = [ThemeColors keyboardAppearance:[[ThemeManager sharedManager] theme]];
+
 
 }
 

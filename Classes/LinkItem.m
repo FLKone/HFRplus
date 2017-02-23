@@ -8,6 +8,8 @@
 #import "LinkItem.h"
 #import "RegexKitLite.h"
 #import "HFRplusAppDelegate.h"
+#import "ThemeColors.h"
+#import "ThemeManager.h"
 
 @implementation LinkItem
 
@@ -92,17 +94,19 @@
     
     myRawContent = [myRawContent stringByReplacingOccurrencesOfString:@"hfr-rehost.net" withString:@"reho.st"]; // changement de domaine hfr-rehost
     
+    NSString *landscape = [ThemeColors landscapePath:[[ThemeManager sharedManager] theme]];
+    
 	if ([display isEqualToString:@"no"]) {
         
 		//Replacing Links with IMG with custom IMG
 		NSString *regEx3 = @"<a rel=\"nofollow\" href=\"([^\"]+)\" target=\"_blank\" class=\"cLink\"><img src=\"([^\"]+)\" alt=\"[^\"]+\" title=\"[^\"]+\" onload=\"[^\"]+\" style=\"[^\"]+\"></a>";			
 		myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx3
-															  withString:@"<img onClick=\"window.location = 'oijlkajsdoihjlkjasdoimbrows://'+this.title+'/'+encodeURIComponent(this.alt); return false;\" class=\"hfrplusimg\" title=\"%%ID%%\" src=\"121-landscapebig.png\" alt=\"$2\" longdesc=\"$1\">"];
+															  withString:[NSString stringWithFormat:@"<img onClick=\"window.location = 'oijlkajsdoihjlkjasdoimbrows://'+this.title+'/'+encodeURIComponent(this.alt); return false;\" class=\"hfrplusimg\" title=\"%%ID%%\" src=\"%@\" alt=\"$2\" longdesc=\"$1\">",landscape]];
 		
 		//External Images			
 		NSString *regEx = @"<img src=\"([^\"]+)\" alt=\"[^\"]+\" title=\"[^\"]+\" onload=\"[^\"]+\" style=\"[^\"]+\">";			
 		myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx
-															  withString:@"<img onClick=\"window.location = 'oijlkajsdoihjlkjasdoimbrows://'+this.title+'/'+encodeURIComponent(this.alt); return false;\" class=\"hfrplusimg\" title=\"%%ID%%\" src=\"121-landscapebig.png\" alt=\"$1\" longdesc=\"\">"];
+															  withString:[NSString stringWithFormat:@"<img onClick=\"window.location = 'oijlkajsdoihjlkjasdoimbrows://'+this.title+'/'+encodeURIComponent(this.alt); return false;\" class=\"hfrplusimg\" title=\"%%ID%%\" src=\"%@\" alt=\"$1\" longdesc=\"\">",landscape]];
 		
 		
 	} else if ([display isEqualToString:@"yes"]) {
@@ -126,12 +130,12 @@
                 //Replacing Links with IMG with custom IMG
                 NSString *regEx3 = @"<a rel=\"nofollow\" href=\"([^\"]+)\" target=\"_blank\" class=\"cLink\"><img src=\"([^\"]+)\" alt=\"[^\"]+\" title=\"[^\"]+\" onload=\"[^\"]+\" style=\"[^\"]+\"></a>";			
                 myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx3
-                                                                      withString:@"<img onClick=\"window.location = 'oijlkajsdoihjlkjasdoimbrows://'+this.title+'/'+encodeURIComponent(this.alt); return false;\" class=\"hfrplusimg\" title=\"%%ID%%\" src=\"121-landscapebig.png\" alt=\"$2\" longdesc=\"$1\">"];
+                                                                      withString:[NSString stringWithFormat:@"<img onClick=\"window.location = 'oijlkajsdoihjlkjasdoimbrows://'+this.title+'/'+encodeURIComponent(this.alt); return false;\" class=\"hfrplusimg\" title=\"%%ID%%\" src=\"%@\" alt=\"$2\" longdesc=\"$1\">",landscape]];
                 
                 //External Images			
                 NSString *regEx = @"<img src=\"([^\"]+)\" alt=\"[^\"]+\" title=\"[^\"]+\" onload=\"[^\"]+\" style=\"[^\"]+\">";			
                 myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx
-                                                                      withString:@"<img onClick=\"window.location = 'oijlkajsdoihjlkjasdoimbrows://'+this.title+'/'+encodeURIComponent(this.alt); return false;\" class=\"hfrplusimg\" title=\"%%ID%%\" src=\"121-landscapebig.png\" alt=\"$1\" longdesc=\"\">"];
+                                                                      withString:[NSString stringWithFormat:@"<img onClick=\"window.location = 'oijlkajsdoihjlkjasdoimbrows://'+this.title+'/'+encodeURIComponent(this.alt); return false;\" class=\"hfrplusimg\" title=\"%%ID%%\" src=\"%@\" alt=\"$1\" longdesc=\"\">",landscape]];
                 break;
             }
             case ReachableViaWiFi:

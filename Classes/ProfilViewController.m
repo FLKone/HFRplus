@@ -17,13 +17,15 @@
 #import "FeedbackTableViewCell.h"
 #import "UIImageView+WebCache.h"
 #import "AvatarTableViewCell.h"
+#import "ThemeColors.h"
+#import "ThemeManager.h"
 
 @interface ProfilViewController ()
 
 @end
 
 @implementation ProfilViewController
-@synthesize profilTableView, loadingView, maintenanceView, status, statusMessage;
+@synthesize profilTableView, loadingView, loadingIndicator, loadingLabel, maintenanceView, status, statusMessage;
 @synthesize currentUrl, request;
 @synthesize arrayData;
 
@@ -329,6 +331,16 @@
     [self fetchContent];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    Theme theme = [[ThemeManager sharedManager] theme];
+    self.view.backgroundColor = self.profilTableView.backgroundColor = self.loadingView.backgroundColor =  [ThemeColors greyBackgroundColor:theme];
+    self.profilTableView.separatorColor = [ThemeColors cellBorderColor:theme];
+    self.loadingLabel.textColor = self.maintenanceView.textColor = [ThemeColors cellTextColor:theme];
+    self.loadingLabel.shadowColor = self.maintenanceView.shadowColor = [UIColor clearColor];
+    [self.loadingIndicator setColor:[ThemeColors cellTextColor:theme]];
+}
+
 
 - (void)doneButtonPressed:(id)sender {
     [self dismissModalViewControllerAnimated:YES];
@@ -379,7 +391,7 @@
     
     //UIView globale
 	UIView* customView = [[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,HEIGHT_FOR_HEADER_IN_SECTION)];
-    customView.backgroundColor = [UIColor colorWithRed:239/255.0f green:239/255.0f blue:244/255.0f alpha:0.7];
+    customView.backgroundColor = [ThemeColors headSectionBackgroundColor:[[ThemeManager sharedManager] theme]];
 	customView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     
 	//UIImageView de fond
@@ -411,7 +423,7 @@
     [button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-        [button setTitleColor:[UIColor colorWithRed:109/255.0f green:109/255.0f blue:114/255.0f alpha:1] forState:UIControlStateNormal];
+        [button setTitleColor:[ThemeColors headSectionTextColor:[[ThemeManager sharedManager] theme]] forState:UIControlStateNormal];
         [button setTitle:[title uppercaseString] forState:UIControlStateNormal];
         [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
         [button setTitleEdgeInsets:UIEdgeInsetsMake(10, 16, 0, 0)];
@@ -426,6 +438,7 @@
     }
     
     [customView addSubview:button];
+
 	
 	return customView;
 	
@@ -477,6 +490,7 @@
         cell.clipsToBounds = YES;
         
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        [[ThemeManager sharedManager] applyThemeToCell:cell];
         return cell;
     }
     else if ([type isEqualToString:@"config"]) {
@@ -495,6 +509,7 @@
         cell.clipsToBounds = YES;
         
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        [[ThemeManager sharedManager] applyThemeToCell:cell];
         return cell;
     }
     else if ([type isEqualToString:@"link"]) {
@@ -513,6 +528,7 @@
         cell.clipsToBounds = YES;
         
         cell.accessoryType = UITableViewCellAccessoryNone;
+        [[ThemeManager sharedManager] applyThemeToCell:cell];
         return cell;
     }
     else if ([type isEqualToString:@"avatar"]) {
@@ -548,6 +564,7 @@
         }];
         
         cell.accessoryType = UITableViewCellAccessoryNone;
+        [[ThemeManager sharedManager] applyThemeToCell:cell];
     
         return cell;
     }
@@ -580,6 +597,7 @@
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
 
+        [[ThemeManager sharedManager] applyThemeToCell:cell];
         return cell;
 
     }
@@ -711,7 +729,7 @@
 @end
 
 @implementation FeedbackViewController
-@synthesize feedTableView, loadingView, maintenanceView, statusMessage, request, status, arrayData;
+@synthesize feedTableView, loadingView, loadingLabel, loadingIndicator, maintenanceView, statusMessage, request, status, arrayData;
 
 #pragma mark -
 #pragma mark Data lifecycle
@@ -825,7 +843,7 @@
 	HTMLParser * myParser = [[HTMLParser alloc] initWithData:contentData error:NULL];
 	HTMLNode * bodyNode = [myParser body];
     
-	//NSLog(@"rawContentsOfNode %@", rawContentsOfNode([bodyNode _node], [myParser _doc]));
+	NSLog(@"rawContentsOfNode %@", rawContentsOfNode([bodyNode _node], [myParser _doc]));
 	
 	if (![bodyNode findChildrenWithAttribute:@"id" matchingName:@"mesdiscussions" allowPartial:NO]) {
 		if ([[[bodyNode firstChild] tagName] isEqualToString:@"p"]) {
@@ -1007,7 +1025,7 @@
             }
             else
             {
-                [labelBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                [labelBtn setTitleColor:[ThemeColors textColor:[[ThemeManager sharedManager] theme]] forState:UIControlStateNormal];
             }
 			UIBarButtonItem *systemItem3 = [[UIBarButtonItem alloc] initWithCustomView:labelBtn];
 			
@@ -1159,6 +1177,17 @@
     
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    Theme theme = [[ThemeManager sharedManager] theme];
+    self.feedTableView.separatorColor = [ThemeColors cellBorderColor:theme];
+    self.view.backgroundColor = self.loadingView.backgroundColor = self.feedTableView.backgroundColor = [ThemeColors greyBackgroundColor:theme];
+    self.loadingLabel.textColor = self.maintenanceView.textColor =  [ThemeColors cellTextColor:theme];
+    self.loadingLabel.shadowColor = self.maintenanceView.shadowColor = [UIColor clearColor];
+    [self.loadingIndicator setColor:[ThemeColors cellTextColor:theme]];
+}
+
+
 #pragma mark -
 #pragma mark Table view data source
 
@@ -1273,6 +1302,12 @@
     [self.webView loadRequest:[NSURLRequest requestWithURL:self.url]];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    Theme theme = [[ThemeManager sharedManager] theme];
+    self.view.backgroundColor = self.webView.backgroundColor =  [ThemeColors greyBackgroundColor:theme];
+}
+
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -1292,7 +1327,7 @@
 @end
 
 @implementation ConfigurationViewController
-@synthesize textView, loadingView, maintenanceView, statusMessage, request, status,  url;
+@synthesize textView, loadingView, loadingIndicator, loadingLabel, maintenanceView, statusMessage, request, status,  url;
 
 #pragma mark -
 #pragma mark Data lifecycle
@@ -1416,8 +1451,18 @@
 {
     [super viewDidLoad];
     self.title = @"Config";
+    self.textView.keyboardAppearance = [ThemeColors keyboardAppearance:[[ThemeManager sharedManager] theme]];
     
     [self fetchContent];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    Theme theme = [[ThemeManager sharedManager] theme];
+    self.view.backgroundColor = self.loadingView.backgroundColor =  [ThemeColors greyBackgroundColor:theme];
+    self.loadingLabel.textColor = self.maintenanceView.textColor = [ThemeColors cellTextColor:theme];
+    self.loadingLabel.shadowColor = self.maintenanceView.shadowColor = [UIColor clearColor];
+    [self.loadingIndicator setColor:[ThemeColors cellTextColor:theme]];
 }
 
 - (void)viewDidUnload {

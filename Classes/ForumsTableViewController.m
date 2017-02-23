@@ -25,6 +25,9 @@
 #import "ProfilViewController.h" //test
 #import "ForumCellView.h"
 
+#import "ThemeColors.h"
+#import "ThemeManager.h"
+
 @implementation ForumsTableViewController
 @synthesize request;
 @synthesize forumsTableView, loadingView, arrayData, arrayNewData, topicsTableViewController;
@@ -939,6 +942,14 @@
         [self reload];
         self.reloadOnAppear = NO;
     }
+    Theme theme = [[ThemeManager sharedManager] theme];
+    self.view.backgroundColor = self.forumsTableView.backgroundColor = self.maintenanceView.backgroundColor = self.loadingView.backgroundColor = self.forumsTableView.pullToRefreshView.backgroundColor = [ThemeColors greyBackgroundColor:theme];
+    self.forumsTableView.separatorColor = [ThemeColors cellBorderColor:theme];
+    self.forumsTableView.pullToRefreshView.arrowColor = [ThemeColors cellTextColor:theme];
+    self.forumsTableView.pullToRefreshView.textColor = [ThemeColors cellTextColor:theme];
+    self.forumsTableView.pullToRefreshView.activityIndicatorViewStyle = [ThemeColors activityIndicatorViewStyle:theme];
+
+    [self.forumsTableView reloadData];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -1014,7 +1025,7 @@
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-    
+        
     return cell;
 }
 
