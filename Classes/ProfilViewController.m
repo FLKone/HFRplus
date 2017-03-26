@@ -955,6 +955,8 @@
                 tmptoolbar.opaque = NO;
                 tmptoolbar.translucent = YES;
                 
+                
+                
                 if([tmptoolbar.subviews count] > 1){
                      [[tmptoolbar.subviews objectAtIndex:1] setHidden:YES];
                 }
@@ -1122,12 +1124,23 @@
         //Commentaire
         HTMLNode * commsNode = [nodes objectAtIndex:4];
 
-        
+        NSString *commentString = [commsNode allContents];
+        NSRange pipeRange = [commentString rangeOfString:@"|" options:NSBackwardsSearch];
+            
+//        NSLog(@"Text: %@ | Range: %@", commentString, NSStringFromRange(pipeRange));
+    
+        if (pipeRange.location != NSNotFound) {
+            commentString = [commentString stringByReplacingCharactersInRange:NSMakeRange(pipeRange.location, commentString.length - pipeRange.location) withString:@""];
+        }
+            
+//        NSLog(@"TextFinal: %@", commentString);
+            
+            
         NSDictionary *feedDic = [NSDictionary dictionaryWithObjectsAndKeys: [pseudoNode allContents], @"pseudo",
                                                                             [statusNode allContents], @"status",
                                                                             [[avisNode className] stringByReplacingOccurrencesOfString:@"col3 " withString:@""], @"avis",
                                                                             [dateNode allContents], @"date",
-                                                                            [commsNode allContents], @"comm", nil];
+                                                                            commentString, @"comm", nil];
         
 		[self.arrayData addObject:feedDic];
         
