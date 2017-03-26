@@ -8,6 +8,7 @@
 #import <UIKit/UIKit.h>
 
 #import "ASIHTTPRequest.h"
+#import "HFRTextView.h"
 
 @protocol AddMessageViewControllerDelegate;
 
@@ -15,7 +16,7 @@
     id <AddMessageViewControllerDelegate> __weak delegate;
     
     //bb
-    UITextView *textView;
+    HFRTextView *textView;
     
     NSMutableDictionary *arrayInputData;
     NSString *formSubmit;

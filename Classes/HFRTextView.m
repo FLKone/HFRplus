@@ -116,7 +116,7 @@
     NSMutableString *localtext = [self.text mutableCopy];
     
     NSRange localSelectedRange = self.selectedRange;
-    NSLog(@"selectRng %lu %lu", (unsigned long)localSelectedRange.location, (unsigned long)localSelectedRange.length);
+    //NSLog(@"3 selectRng %lu %lu", (unsigned long)localSelectedRange.location, (unsigned long)localSelectedRange.length);
     
     //NSLog(@"selectedRange %d %d", selectedRange.location, selectedRange.location);
     
@@ -144,6 +144,7 @@
     
     self.text = localtext;
     self.selectedRange = localSelectedRange;
+    [self.delegate textViewDidChange:self];
     
     if ([UIPasteboard generalPasteboard].string.length) {
         
@@ -180,7 +181,7 @@
     
     if ((buttonIndex == 1 && alertView.tag == 666) || (buttonIndex == 2 && alertView.tag == 667)) {
         NSRange localSelectedRange = self.selectedRange;
-        NSLog(@"selectRng %lu %lu", (unsigned long)localSelectedRange.location, (unsigned long)localSelectedRange.length);
+        //NSLog(@"1 selectRng %lu %lu", (unsigned long)localSelectedRange.location, (unsigned long)localSelectedRange.length);
         
         NSMutableString *localtext = [self.text mutableCopy];
         
@@ -189,6 +190,9 @@
         localSelectedRange.location += [UIPasteboard generalPasteboard].string.length;
         localSelectedRange.length = 0;
         self.selectedRange =  localSelectedRange;
+        
+        [self.delegate textViewDidChange:self];
+        
     }
     else if (alertView.tag == 667 || alertView.tag == 668) {
         
@@ -196,7 +200,7 @@
 
             
             NSRange localSelectedRange = self.selectedRange;
-            //NSLog(@"selectRng %lu %lu", (unsigned long)localSelectedRange.location, (unsigned long)localSelectedRange.length);
+            //NSLog(@"2 selectRng %lu %lu", (unsigned long)localSelectedRange.location, (unsigned long)localSelectedRange.length);
             NSMutableString *localtext = [self.text mutableCopy];
 
             //On cherche [url] backward
@@ -212,6 +216,8 @@
             
             self.text = localtext;
             self.selectedRange =  localSelectedRange;
+            
+            [self.delegate textViewDidChange:self];
         }
     }
 }
