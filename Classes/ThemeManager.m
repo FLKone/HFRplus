@@ -55,7 +55,7 @@
 }
                                       
 - (Theme)theme{
-    NSLog(@"%lu",(unsigned long)theme);
+    //NSLog(@"%lu",(unsigned long)theme);
     return theme;
 }
 
