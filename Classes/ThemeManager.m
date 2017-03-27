@@ -2,7 +2,7 @@
 //  ThemeManager.m
 //  HFRplus
 //
-//  Created by Aynolor on 17.02.17.
+//  Created by Aynolor on 17/02/17.
 //
 //
 
