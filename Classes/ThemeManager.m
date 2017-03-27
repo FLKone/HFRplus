@@ -62,11 +62,16 @@
 - (void)applyThemeToCell:(UITableViewCell *)cell{
     cell.backgroundColor = [ThemeColors cellBackgroundColor:theme];
     cell.textLabel.textColor = [ThemeColors cellTextColor:theme];
-    cell.tintColor = [ThemeColors tintColor:theme];
+    if ([cell respondsToSelector:@selector(setTintColor:)]) {
+        cell.tintColor = [ThemeColors tintColor:theme];
+    }
+
     if(![cell isKindOfClass:[AvatarTableViewCell class]]){
-        UIImage *img =[cell.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-        cell.imageView.image = img;
-        cell.imageView.tintColor = [ThemeColors cellIconColor:theme];
+        if ([cell.imageView respondsToSelector:@selector(setTintColor:)]) {
+            UIImage *img =[cell.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            cell.imageView.image = img;
+            cell.imageView.tintColor = [ThemeColors cellIconColor:theme];
+        }
     }
     cell.selectionStyle = [ThemeColors cellSelectionStyle:theme];
 }
@@ -76,7 +81,9 @@
         
         textfield.backgroundColor = [ThemeColors cellHighlightBackgroundColor:[[ThemeManager sharedManager] theme]];
         textfield.textColor = [ThemeColors cellTextColor:[[ThemeManager sharedManager] theme]];
-        textfield.tintColor = [ThemeColors cellTextColor:[[ThemeManager sharedManager] theme]];
+        if ([textfield.tintColor respondsToSelector:@selector(setTintColor:)]) {
+            textfield.tintColor = [ThemeColors cellTextColor:[[ThemeManager sharedManager] theme]];
+        }
         
         UIButton *btnClear = [textfield valueForKey:@"_clearButton"];
         UIImage *imageNormal = [btnClear imageForState:UIControlStateNormal];

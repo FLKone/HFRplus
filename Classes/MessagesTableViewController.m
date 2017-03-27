@@ -1226,7 +1226,11 @@
     [[ThemeManager sharedManager] applyThemeToTextField:self.searchPseudo];
     [[ThemeManager sharedManager] applyThemeToTextField:self.searchKeyword];
     self.searchPseudo.textColor = self.searchKeyword.textColor = [ThemeColors textColor:theme];
-    self.searchToolbar.barTintColor = [ThemeColors toolbarColor:theme];
+    
+    if ([self.searchToolbar respondsToSelector:@selector(setBarTintColor:)]) {
+        self.searchToolbar.barTintColor = [ThemeColors toolbarColor:theme];
+    }
+    
     self.searchBtnItem.tintColor = self.searchFilterBtnItem.tintColor = [ThemeColors tintColor:theme];
     self.searchBg.backgroundColor = [ThemeColors overlayColor:theme];
     self.searchLabel.textColor = [ThemeColors textColor:theme];

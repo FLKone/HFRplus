@@ -149,11 +149,15 @@
 }
 
 -(void)setTheme:(Theme)theme{
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+    
+    if ([self.window respondsToSelector:@selector(setTintColor:)]) {
+        self.window.tintColor = [ThemeColors tintColor:theme];
+    }
+    
+    if ([[UITabBar appearance] respondsToSelector:@selector(setTranslucent:)]) {
         [[UITabBar appearance] setTranslucent:YES];
     }
     
-    self.window.tintColor = [ThemeColors tintColor:theme];
     [[UINavigationBar appearance] setBackgroundImage:[ThemeColors imageFromColor:[ThemeColors navBackgroundColor:theme]] forBarMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [ThemeColors textColor:theme]}];
 }

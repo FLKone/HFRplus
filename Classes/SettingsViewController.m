@@ -66,7 +66,11 @@
 
 -(void)setThemeColors:(Theme)theme{
     [self.navigationController.navigationBar setBackgroundImage:[ThemeColors imageFromColor:[ThemeColors navBackgroundColor:theme]] forBarMetrics:UIBarMetricsDefault];
-    [self.navigationController.navigationBar setTintColor:[ThemeColors tintColor:theme]];
+    
+    if ([self.navigationController.navigationBar respondsToSelector:@selector(setTintColor:)]) {
+        [self.navigationController.navigationBar setTintColor:[ThemeColors tintColor:theme]];
+    }
+
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [ThemeColors textColor:theme]}];
     [self.navigationController.navigationBar setNeedsDisplay];
     self.view.backgroundColor = [ThemeColors greyBackgroundColor:theme];
