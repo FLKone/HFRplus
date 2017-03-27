@@ -843,7 +843,7 @@
 	HTMLParser * myParser = [[HTMLParser alloc] initWithData:contentData error:NULL];
 	HTMLNode * bodyNode = [myParser body];
     
-	NSLog(@"rawContentsOfNode %@", rawContentsOfNode([bodyNode _node], [myParser _doc]));
+	//NSLog(@"rawContentsOfNode %@", rawContentsOfNode([bodyNode _node], [myParser _doc]));
 	
 	if (![bodyNode findChildrenWithAttribute:@"id" matchingName:@"mesdiscussions" allowPartial:NO]) {
 		if ([[[bodyNode firstChild] tagName] isEqualToString:@"p"]) {

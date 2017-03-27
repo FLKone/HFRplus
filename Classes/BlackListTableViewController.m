@@ -131,7 +131,9 @@ NSInteger Sort_BL_Comparer(id id1, id id2, void *context)
         //messageLabel.font = [UIFont systemFontOfSize:15.0f];
         [messageLabel sizeToFit];
         messageLabel.textColor = [ThemeColors cellTextColor:[[ThemeManager sharedManager] theme]];
-        messageLabel.tintColor = [ThemeColors cellIconColor:[[ThemeManager sharedManager] theme]];
+        if ([messageLabel respondsToSelector:@selector(setTintColor:)]) {
+            messageLabel.tintColor = [ThemeColors cellIconColor:[[ThemeManager sharedManager] theme]];
+        }
         
         self.tableView.backgroundView = messageLabel;
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;

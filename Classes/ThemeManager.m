@@ -32,7 +32,10 @@
         }
         
         // Apply theme to keyboard
-        [UITextField appearance].keyboardAppearance = [ThemeColors keyboardAppearance:theme];
+        if ([[UITextField appearance] respondsToSelector:@selector(setKeyboardAppearance:)]) {
+            [UITextField appearance].keyboardAppearance = [ThemeColors keyboardAppearance:theme];
+        }
+        
     }
     return self;
 }
@@ -49,8 +52,9 @@
     [[NSNotificationCenter defaultCenter] postNotification:myNotification];
     
     // Apply theme to keyboard
-    [UITextField appearance].keyboardAppearance = [ThemeColors keyboardAppearance:theme];
-    
+    if ([[UITextField appearance] respondsToSelector:@selector(setKeyboardAppearance:)]) {
+        [UITextField appearance].keyboardAppearance = [ThemeColors keyboardAppearance:theme];
+    }
     
 }
                                       
