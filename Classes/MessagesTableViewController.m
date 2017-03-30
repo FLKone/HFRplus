@@ -1111,19 +1111,26 @@
         //NSLog(@"isAnimating");
 		//return;
 	}
-    //NSLog(@"isOK");
+    NSLog(@"answerTopic isOK");
 
     HFRNavigationController *navigationController;
     
      {
         NewMessageViewController *addMessageViewController = [[NewMessageViewController alloc]
                                                               initWithNibName:@"AddMessageViewController" bundle:nil];
+         
+         NSLog(@"answerTopic isOK 2");
+
+         
         addMessageViewController.delegate = self;
         [addMessageViewController setUrlQuote:[NSString stringWithFormat:@"%@%@", [k ForumURL], topicAnswerUrl]];
         addMessageViewController.title = @"Nouv. Réponse";
 
         navigationController = [[HFRNavigationController alloc]
                                                          initWithRootViewController:addMessageViewController];
+         
+         NSLog(@"answerTopic isOK 3");
+
     }
 		
 	
@@ -1131,8 +1138,11 @@
 
     
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+    NSLog(@"answerTopic isOK 4");
+
 	[self presentModalViewController:navigationController animated:YES];
     
+
 	// The navigation controller is now owned by the current view controller
 	// and the root view controller is owned by the navigation controller,
 	// so both objects should be released to prevent over-retention.
@@ -1146,6 +1156,9 @@
 	[[mainDelegate rootController] setSelectedIndex:3];		
 	[[(BrowserViewController *)[[mainDelegate rootController] selectedViewController] webView] loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://forum.hardware.fr/%@", topicAnswerUrl]]]];		
  */
+    
+    NSLog(@"answerTopic isOK END");
+
 }
 
 
