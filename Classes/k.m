@@ -12,6 +12,11 @@
 
 + (NSString *)ForumURL
 {
+    return [self RealForumURL];
+    /*
+     Plus nécessaire, bug IPv6 corrigé
+     ======
+     
     NSDate * now = [NSDate date];
     
     NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
@@ -22,12 +27,12 @@
     
     if (testedDate && [testedDate timeIntervalSinceDate:now] > 0) {
         NSLog(@"Proxy");
-        return @"https://hfr.sideload.it";
+        return @"https://hfr";
         
     }
     NSLog(@"Noxy");
     return @"http://forum.hardware.fr";
-
+    */
 }
 
 + (NSString *)RealForumURL
