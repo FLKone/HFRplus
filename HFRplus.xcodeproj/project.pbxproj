@@ -1163,7 +1163,6 @@
 		D80DBD761E55BE730051B751 /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = D80DBD631E55BE730051B751 /* ASIInputStream.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D80DBD771E55BE730051B751 /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = D80DBD651E55BE730051B751 /* ASINetworkQueue.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D80DBD781E55BE730051B751 /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = D80DBD651E55BE730051B751 /* ASINetworkQueue.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		D80DBD791E55BE730051B751 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D80DBD681E55BE730051B751 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D826903F1E5856A5006971C3 /* HFRUIImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D826903E1E5856A5006971C3 /* HFRUIImagePickerController.m */; };
 		D82690401E5856A5006971C3 /* HFRUIImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D826903E1E5856A5006971C3 /* HFRUIImagePickerController.m */; };
 		D82690431E585CAC006971C3 /* style-liste-dark.css in Resources */ = {isa = PBXBuildFile; fileRef = D82690411E585CAC006971C3 /* style-liste-dark.css */; };
@@ -1981,8 +1980,6 @@
 		D80DBD641E55BE730051B751 /* ASINetworkQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASINetworkQueue.h; sourceTree = "<group>"; };
 		D80DBD651E55BE730051B751 /* ASINetworkQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASINetworkQueue.m; sourceTree = "<group>"; };
 		D80DBD661E55BE730051B751 /* ASIProgressDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIProgressDelegate.h; sourceTree = "<group>"; };
-		D80DBD671E55BE730051B751 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		D80DBD681E55BE730051B751 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		D826903D1E5856A5006971C3 /* HFRUIImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFRUIImagePickerController.h; sourceTree = "<group>"; };
 		D826903E1E5856A5006971C3 /* HFRUIImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFRUIImagePickerController.m; sourceTree = "<group>"; };
 		D82690411E585CAC006971C3 /* style-liste-dark.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "style-liste-dark.css"; sourceTree = "<group>"; };
@@ -3268,8 +3265,6 @@
 				D80DBD641E55BE730051B751 /* ASINetworkQueue.h */,
 				D80DBD651E55BE730051B751 /* ASINetworkQueue.m */,
 				D80DBD661E55BE730051B751 /* ASIProgressDelegate.h */,
-				D80DBD671E55BE730051B751 /* Reachability.h */,
-				D80DBD681E55BE730051B751 /* Reachability.m */,
 			);
 			path = ASIHTTPRequest;
 			sourceTree = "<group>";
@@ -4460,7 +4455,6 @@
 				D80DBD691E55BE730051B751 /* ASIAuthenticationDialog.m in Sources */,
 				4CC814FD1BAC86ED00F8BB81 /* UIColor+Extension.m in Sources */,
 				CA00C44F17C2FF4E0067B457 /* MKStoreObserver.m in Sources */,
-				D80DBD791E55BE730051B751 /* Reachability.m in Sources */,
 				CA00C44E17C2FF4E0067B457 /* MKStoreManager.m in Sources */,
 				D80DBD731E55BE730051B751 /* ASIHTTPRequest.m in Sources */,
 				4C39035A1BCACEC200FD6F1F /* PSTCollectionViewCell.m in Sources */,
