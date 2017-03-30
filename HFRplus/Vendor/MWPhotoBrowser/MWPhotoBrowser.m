@@ -651,6 +651,9 @@
         }
     }
     if (_photoCount == NSNotFound) _photoCount = 0;
+    
+    NSLog(@"numberOfPhotos %d", _photoCount);
+    
     return _photoCount;
 }
 
@@ -661,6 +664,7 @@
             if ([_delegate respondsToSelector:@selector(photoBrowser:photoAtIndex:)]) {
                 photo = [_delegate photoBrowser:self photoAtIndex:index];
             } else if (_depreciatedPhotoData && index < _depreciatedPhotoData.count) {
+                NSLog(@"DEPRECATED");
                 photo = [_depreciatedPhotoData objectAtIndex:index];
             }
             if (photo) [_photos replaceObjectAtIndex:index withObject:photo];
@@ -668,6 +672,9 @@
             photo = [_photos objectAtIndex:index];
         }
     }
+    
+    NSLog(@"photoAtIndex %d %@", index, photo);
+
     return photo;
 }
 
@@ -759,6 +766,7 @@
 #pragma mark - MWPhoto Loading Notification
 
 - (void)handleMWPhotoLoadingDidEndNotification:(NSNotification *)notification {
+    NSLog(@"handleMWPhotoLoadingDidEndNotification");
     id <MWPhoto> photo = [notification object];
     MWZoomingScrollView *page = [self pageDisplayingPhoto:photo];
     if (page) {
@@ -767,6 +775,7 @@
             [page displayImage];
             [self loadAdjacentPhotosIfNecessary:photo];
         } else {
+            NSLog(@"FAILED");
             // Failed to load
             [page displayImageFailure];
         }

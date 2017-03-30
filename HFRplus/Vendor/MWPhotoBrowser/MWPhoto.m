@@ -78,6 +78,7 @@
     if (_loadingInProgress) return;
     _loadingInProgress = YES;
     @try {
+        NSLog(@"loadUnderlyingImageAndNotify %@", self.photoURL);
         if (self.underlyingImage) {
             [self imageLoadingComplete];
         } else {
@@ -168,6 +169,8 @@
                                                           }
                                                          completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
                                                              if (error) {
+                                                                 NSLog(@"SDWebImage failed to download image: %@", error);
+
                                                                  MWLog(@"SDWebImage failed to download image: %@", error);
                                                              }
                                                              _webImageOperation = nil;
