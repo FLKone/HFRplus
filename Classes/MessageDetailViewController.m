@@ -675,6 +675,16 @@
     }
     [self.messageView stringByEvaluatingJavaScriptFromString:script];
     
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        self.actionBtn.tintColor = [ThemeColors tintWhiteColor:[[ThemeManager sharedManager] theme]];
+        self.quoteBtn.tintColor = [ThemeColors tintWhiteColor:[[ThemeManager sharedManager] theme]];
+        self.editBtn.tintColor = [ThemeColors tintWhiteColor:[[ThemeManager sharedManager] theme]];
+        
+        [(UILabel *)self.navigationItem.titleView setTextColor:[ThemeColors textColor:[[ThemeManager sharedManager] theme]]];
+
+    }
+
+    //[self.detailViewController.navigationItem setTitleView:label];
     return @"";
 }
 

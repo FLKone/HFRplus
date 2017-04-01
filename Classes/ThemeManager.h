@@ -18,5 +18,6 @@
 + (id)sharedManager;
 - (void)applyThemeToCell:(UITableViewCell *)cell;
 - (void)applyThemeToTextField:(UITextField *)textfield;
+- (void)switchTheme;
 
 @end

@@ -29,6 +29,48 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    NSLog(@"viewDidLoad HFR HFR NavControll.");
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(userThemeDidChange)
+                                                 name:kThemeChangedNotification
+                                               object:nil];
+    
+    UITapGestureRecognizer* tapRecon = [[UITapGestureRecognizer alloc]
+                                        initWithTarget:self action:@selector(navigationBarDoubleTap:)];
+    tapRecon.numberOfTapsRequired = 2;
+    [self.navigationBar addGestureRecognizer:tapRecon];
+    
+}
+
+- (NSString *) userThemeDidChange {
+    
+    NSLog(@"HFR userThemeDidChange");
+    
+    Theme theme = [[ThemeManager sharedManager] theme];
+
+    
+    [self.navigationBar setBackgroundImage:[ThemeColors imageFromColor:[ThemeColors navBackgroundColor:theme]] forBarMetrics:UIBarMetricsDefault];
+    
+    if ([self.navigationBar respondsToSelector:@selector(setTintColor:)]) {
+        [self.navigationBar setTintColor:[ThemeColors tintColor:theme]];
+    }
+    
+    [self.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [ThemeColors textColor:theme]}];
+    [self.navigationBar setNeedsDisplay];
+    
+    [self.topViewController viewWillAppear:NO];
+
+    return @"";
+}
+
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kThemeChangedNotification object:nil];
+}
+
+- (void)navigationBarDoubleTap:(UIGestureRecognizer*)recognizer {
+    NSLog(@"navigationBarDoubleTapnavigationBarDoubleTap");
+    [[ThemeManager sharedManager] switchTheme];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle{

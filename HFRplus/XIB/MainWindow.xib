@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1421" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="NO">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1421" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
         <development version="7000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UIApplication">
@@ -32,12 +32,12 @@
             <extendedEdge key="edgesForExtendedLayout"/>
             <nil key="simulatedBottomBarMetrics"/>
             <tabBar key="tabBar" contentMode="scaleToFill" selectedItem="74A-e7-Gdm" id="11">
-                <rect key="frame" x="0.0" y="519" width="320" height="49"/>
+                <rect key="frame" x="0.0" y="431" width="320" height="49"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
             </tabBar>
             <viewControllers>
-                <navigationController id="36">
+                <navigationController id="36" customClass="HFRNavigationController">
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <tabBarItem key="tabBarItem" title="Catégories" image="44-shoebox.png" id="37"/>
                     <toolbarItems/>
@@ -52,7 +52,7 @@
                         </viewController>
                     </viewControllers>
                 </navigationController>
-                <navigationController id="48">
+                <navigationController id="48" customClass="HFRNavigationController">
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <tabBarItem key="tabBarItem" title="Vos Sujets" image="28-star.png" id="49"/>
                     <toolbarItems/>
@@ -67,7 +67,7 @@
                         </viewController>
                     </viewControllers>
                 </navigationController>
-                <navigationController id="42">
+                <navigationController id="42" customClass="HFRNavigationController">
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <tabBarItem key="tabBarItem" title="Messages" image="18-envelope.png" id="43"/>
                     <toolbarItems/>
@@ -82,7 +82,7 @@
                         </viewController>
                     </viewControllers>
                 </navigationController>
-                <navigationController id="EgT-mU-RFn">
+                <navigationController id="EgT-mU-RFn" customClass="HFRNavigationController">
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <tabBarItem key="tabBarItem" title="Réglages" image="20-gear2.png" id="74A-e7-Gdm"/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translucent="NO" id="yZU-Qs-sTq">

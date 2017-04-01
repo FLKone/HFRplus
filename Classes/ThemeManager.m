@@ -63,6 +63,15 @@
     return theme;
 }
 
+- (void)switchTheme {
+    if (self.theme == ThemeLight) {
+        [self setTheme:ThemeDark];
+    }
+    else {
+        [self setTheme:ThemeLight];
+    }
+}
+
 - (void)applyThemeToCell:(UITableViewCell *)cell{
     cell.backgroundColor = [ThemeColors cellBackgroundColor:theme];
     cell.textLabel.textColor = [ThemeColors cellTextColor:theme];
