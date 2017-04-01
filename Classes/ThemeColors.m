@@ -331,6 +331,27 @@
     }
 }
 
++ (NSString *)isLightThemeAlternate:(Theme)theme{
+    switch (theme) {
+        case ThemeLight:
+            return @"";
+        case ThemeDark:
+            return @"alternate";
+        default:
+            return @"";
+    }
+}
++ (NSString *)isDarkThemeAlternate:(Theme)theme{
+    switch (theme) {
+        case ThemeLight:
+            return @"alternate";
+        case ThemeDark:
+            return @"";
+        default:
+            return @"alternate";
+    }
+}
+
 + (NSString *)messagesCssPath:(Theme)theme{
     switch (theme) {
         case ThemeLight:

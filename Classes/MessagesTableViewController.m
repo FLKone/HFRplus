@@ -773,6 +773,11 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(VisibilityChanged:) name:@"VisibilityChanged" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editMenuHidden:) name:UIMenuControllerDidHideMenuNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(userThemeDidChange)
+                                                 name:kThemeChangedNotification
+                                               object:nil];
+    
     if ([UIFontDescriptor respondsToSelector:@selector(preferredFontDescriptorWithTextStyle:)]) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userTextSizeDidChange) name:UIContentSizeCategoryDidChangeNotification object:nil];
     }
@@ -1776,7 +1781,7 @@
         
         NSString *customFontSize = [self userTextSizeDidChange];
         Theme theme = [[ThemeManager sharedManager] theme];
-
+        
         NSString *HTMLString = [NSString
                                 stringWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\
                                 <html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"fr\" lang=\"fr\">\
@@ -1785,8 +1790,10 @@
                                 <script type='text/javascript' src='jquery.doubletap.js'></script>\
                                 <script type='text/javascript' src='jquery.base64.js'></script>\
                                 <meta name='viewport' content='initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no' />\
-                                <link type='text/css' rel='stylesheet' href='%@'/>\
-                                <link type='text/css' rel='stylesheet' href='%@' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\
+                                <link type='text/css' rel='stylesheet %@' href='style-liste.css' id='light-styles'/>\
+                                <link type='text/css' rel='stylesheet %@' href='style-liste-retina.css' id='light-styles-retina' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\
+                                <link type='text/css' rel='stylesheet %@' href='style-liste-dark.css' id='dark-styles'/>\
+                                <link type='text/css' rel='stylesheet %@' href='style-liste-retina-dark.css' id='dark-styles-retina' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\
                                 <style type='text/css'>\
                                 %@\
                                 </style>\
@@ -1809,7 +1816,7 @@
                                 $('img').error(function(){ $(this).attr('src', 'photoDefaultfailmini.png');});\
                                 function touchstart() { document.location.href = 'oijlkajsdoihjlkjasdotouch://touchstart'};\
                                 </script>\
-                                </body></html>", [ThemeColors messagesCssPath:theme], [ThemeColors messagesRetinaCssPath:theme], customFontSize, display_sig_css, tmpHTML, refreshBtn, tooBar];
+                                </body></html>", [ThemeColors isLightThemeAlternate:theme], [ThemeColors isLightThemeAlternate:theme], [ThemeColors isDarkThemeAlternate:theme], [ThemeColors isDarkThemeAlternate:theme], customFontSize, display_sig_css, tmpHTML, refreshBtn, tooBar];
         
         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
             if (self.isSearchInstra) {
@@ -2706,6 +2713,29 @@
     
 }
 
+- (NSString *) userThemeDidChange {
+    
+    Theme theme = [[ThemeManager sharedManager] theme];
+    NSString *script = @"";
+    if (theme == ThemeLight) {
+        script = @"\
+        document.getElementById('dark-styles').rel = document.getElementById('dark-styles-retina').rel  = 'stylesheet';\
+        document.getElementById('light-styles').rel = document.getElementById('light-styles-retina').rel  = 'stylesheet';\
+        document.getElementById('dark-styles').disabled = document.getElementById('dark-styles-retina').disabled = true;\
+        document.getElementById('light-styles').disabled = document.getElementById('light-styles-retina').disabled = false;";
+    }
+    else {
+        script = @"\
+        document.getElementById('light-styles').rel = document.getElementById('light-styles-retina').rel  = 'stylesheet';\
+        document.getElementById('dark-styles').rel = document.getElementById('dark-styles-retina').rel  = 'stylesheet';\
+        document.getElementById('dark-styles').disabled = document.getElementById('dark-styles-retina').disabled = false;\
+        document.getElementById('light-styles').disabled = document.getElementById('light-styles-retina').disabled = true;";
+    }
+    [self.messagesWebView stringByEvaluatingJavaScriptFromString:script];
+    
+    return @"";
+}
+
 #pragma mark -
 #pragma mark Memory management
 - (void)didReceiveMemoryWarning {
@@ -2744,6 +2774,8 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIMenuControllerDidHideMenuNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"VisibilityChanged" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kThemeChangedNotification object:nil];
+
     
     if ([UIFontDescriptor respondsToSelector:@selector(preferredFontDescriptorWithTextStyle:)]) {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIContentSizeCategoryDidChangeNotification object:nil];

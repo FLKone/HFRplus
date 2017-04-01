@@ -37,6 +37,8 @@
 + (NSString *)smileysCss:(Theme)theme;
 + (NSString *)messagesRetinaCssPath:(Theme)theme;
 + (NSString *)messagesCssPath:(Theme)theme;
++ (NSString *)isLightThemeAlternate:(Theme)theme;
++ (NSString *)isDarkThemeAlternate:(Theme)theme;
 + (NSString *)landscapePath:(Theme)theme;
 + (UIImage *)imageFromColor:(UIColor *)color;
 + (UIBarStyle)barStyle:(Theme)theme;

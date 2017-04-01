@@ -182,6 +182,7 @@
 	tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"%%MESSAGE_CONTENT%%" withString:myRawContent];
 	
     //NSLog(@"%@", tempHTML);
+    tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"%%%%ID%%%%" withString:[NSString stringWithFormat:@"%d", index]];
 
 	tempHTML = [tempHTML stringByReplacingOccurrencesOfString:@"%%ID%%" withString:[NSString stringWithFormat:@"%d", index]];
 
