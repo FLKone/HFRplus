@@ -107,8 +107,8 @@
 			<string>Thème</string>
 			<key>Titles</key>
 			<array>
-				<string>☀ Normal</string>
-				<string>☾ Nuit</string>
+				<string>☀ Clair</string>
+				<string>☾ Sombre</string>
 			</array>
 			<key>Type</key>
 			<string>PSMultiValueSpecifier</string>
