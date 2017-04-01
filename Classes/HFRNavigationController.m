@@ -57,6 +57,16 @@
     }
     
     [self.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [ThemeColors textColor:theme]}];
+    
+    /*
+    if (theme == ThemeLight) {
+        [self.navigationBar setBarStyle:UIBarStyleDefault];
+    }
+    else {
+        [self.navigationBar setBarStyle:UIBarStyleBlack];
+    }
+    */
+    
     [self.navigationBar setNeedsDisplay];
     
     [self.topViewController viewWillAppear:NO];

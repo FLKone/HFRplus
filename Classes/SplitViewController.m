@@ -15,6 +15,7 @@
 #import "FavoritesTableViewController.h"
 #import "HFRMPViewController.h"
 #import "TabBarController.h"
+#import "ThemeManager.h"
 
 @interface SplitViewController ()
 
@@ -54,6 +55,16 @@
     
     [super viewDidUnload];
     // Release any retained subviews of the main view.
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    if ([[ThemeManager sharedManager] theme] == ThemeLight) {
+        return UIStatusBarStyleDefault;
+
+    }
+    else {
+        return UIStatusBarStyleLightContent;
+    }
 }
 
 #pragma mark Split Collapsing

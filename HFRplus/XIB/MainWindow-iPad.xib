@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1421" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" colorMatched="NO">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1421" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
         <development version="7000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UIApplication">
@@ -44,7 +44,7 @@
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
                 </tabBar>
                 <viewControllers>
-                    <navigationController id="269">
+                    <navigationController id="269" customClass="HFRNavigationController">
                         <extendedEdge key="edgesForExtendedLayout"/>
                         <tabBarItem key="tabBarItem" title="Catégories" image="44-shoebox.png" id="273"/>
                         <toolbarItems/>
@@ -59,7 +59,7 @@
                             </viewController>
                         </viewControllers>
                     </navigationController>
-                    <navigationController id="267">
+                    <navigationController id="267" customClass="HFRNavigationController">
                         <extendedEdge key="edgesForExtendedLayout"/>
                         <tabBarItem key="tabBarItem" title="Vos Sujets" image="28-star.png" id="281"/>
                         <toolbarItems/>
@@ -74,7 +74,7 @@
                             </viewController>
                         </viewControllers>
                     </navigationController>
-                    <navigationController id="268">
+                    <navigationController id="268" customClass="HFRNavigationController">
                         <extendedEdge key="edgesForExtendedLayout"/>
                         <tabBarItem key="tabBarItem" title="Messages" image="18-envelope.png" id="277"/>
                         <toolbarItems/>
@@ -89,7 +89,7 @@
                             </viewController>
                         </viewControllers>
                     </navigationController>
-                    <navigationController id="ppH-y9-zzy">
+                    <navigationController id="ppH-y9-zzy" customClass="HFRNavigationController">
                         <extendedEdge key="edgesForExtendedLayout"/>
                         <tabBarItem key="tabBarItem" title="Réglages" image="20-gear2.png" id="gGL-gv-S8i"/>
                         <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translucent="NO" id="hwn-oH-YNC">
@@ -99,7 +99,7 @@
                         <viewControllers>
                             <tableViewController title="Réglages" automaticallyAdjustsScrollViewInsets="NO" id="SII-b9-qTN" customClass="SettingsViewController">
                                 <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="hHi-PJ-hcs">
-                                    <rect key="frame" x="0.0" y="20" width="1024" height="719"/>
+                                    <rect key="frame" x="0.0" y="20" width="320" height="699"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <connections>

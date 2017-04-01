@@ -76,6 +76,8 @@
     self.view.backgroundColor = [ThemeColors greyBackgroundColor:theme];
     self.tableView.separatorColor = [ThemeColors cellBorderColor:theme];
 
+    [self.tableView reloadData];
+
 }
 
 

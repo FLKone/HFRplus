@@ -41,6 +41,10 @@
 }
 
 - (void)setTheme:(Theme)newTheme {
+    
+    
+    
+    
     theme = newTheme;
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:theme] forKey:@"theme"];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -50,6 +54,15 @@
     
     //Post it to the default notification center
     [[NSNotificationCenter defaultCenter] postNotification:myNotification];
+    
+    /*
+    if (newTheme == ThemeLight) {
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    }
+    else {
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    }
+    */
     
     // Apply theme to keyboard
     if ([[UITextField appearance] respondsToSelector:@selector(setKeyboardAppearance:)]) {
