@@ -440,6 +440,7 @@
 		4CB311F019FAFCAE0097D84D /* hammer.min.map in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311EE19FAFCAE0097D84D /* hammer.min.map */; };
 		4CB311F219FAFF2C0097D84D /* jquery.hammer.js in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311F119FAFF2C0097D84D /* jquery.hammer.js */; };
 		4CB311F319FAFF2C0097D84D /* jquery.hammer.js in Resources */ = {isa = PBXBuildFile; fileRef = 4CB311F119FAFF2C0097D84D /* jquery.hammer.js */; };
+		4CB8CEA91E91009100E5AA34 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D8F5CBAC1DF45C1100B029FC /* Reachability.m */; };
 		4CC3C7501B99BB6F001B8632 /* DeleteMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC3C74F1B99BB6F001B8632 /* DeleteMessageViewController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		4CC3C7511B99BB6F001B8632 /* DeleteMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC3C74F1B99BB6F001B8632 /* DeleteMessageViewController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		4CC3C7591B99BC18001B8632 /* AlerteModoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC3C7571B99BC18001B8632 /* AlerteModoViewController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
@@ -3365,7 +3366,7 @@
 				LastUpgradeCheck = 0820;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
-						DevelopmentTeam = NCJNK4ZZ54;
+						DevelopmentTeam = 4Z4VCUMET3;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 0;
@@ -4374,6 +4375,7 @@
 				01BF8A54121D7945007624B6 /* Forum.m in Sources */,
 				01BF8B70121DAEF3007624B6 /* Topic.m in Sources */,
 				4C39038E1BCAD0C700FD6F1F /* MWPhotoBrowser.m in Sources */,
+				4CB8CEA91E91009100E5AA34 /* Reachability.m in Sources */,
 				013F0EAB121E117900BEBEB1 /* LinkItem.m in Sources */,
 				D8835E831E5F13C70073398C /* MKAnnotationView+WebCache.m in Sources */,
 				013F0EB0121E117900BEBEB1 /* ParseMessagesOperation.m in Sources */,
@@ -4693,7 +4695,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				ASSETCATALOG_COMPILER_OPTIMIZATION = time;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Benjamin Schmitt (8LN2HE2BQ4)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: julien Alexandre (F5S3AE68QG)";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = NCJNK4ZZ54;
@@ -4716,9 +4718,9 @@
 					"$(PROJECT_DIR)/HFRplus/Vendor/CrittercismSDK",
 				);
 				OTHER_LDFLAGS = "-licucore";
-				PRODUCT_BUNDLE_IDENTIFIER = com.aynolor.HFRplus;
+				PRODUCT_BUNDLE_IDENTIFIER = hfrplus;
 				PRODUCT_NAME = HFRplus;
-				PROVISIONING_PROFILE = "595a6a17-4afa-41bf-a576-43407112819a";
+				PROVISIONING_PROFILE = "b5501fd0-496c-447a-9589-4dcf55d960f6";
 				PROVISIONING_PROFILE_SPECIFIER = "Aynolor HFRplus";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -4731,7 +4733,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				ASSETCATALOG_COMPILER_OPTIMIZATION = time;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Benjamin Schmitt (NCJNK4ZZ54)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: julien Alexandre (4Z4VCUMET3)";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = YES;
 				DEVELOPMENT_TEAM = NCJNK4ZZ54;
@@ -4752,9 +4754,9 @@
 					"$(PROJECT_DIR)/HFRplus/Vendor/CrittercismSDK",
 				);
 				OTHER_LDFLAGS = "-licucore";
-				PRODUCT_BUNDLE_IDENTIFIER = com.aynolor.HFRplus;
+				PRODUCT_BUNDLE_IDENTIFIER = hfrplus;
 				PRODUCT_NAME = HFRplus;
-				PROVISIONING_PROFILE = "09bdc3cf-7127-4712-98cc-19f0b1d6cf5b";
+				PROVISIONING_PROFILE = "cca932b4-f070-49d4-9ed7-f6f20408b73c";
 				PROVISIONING_PROFILE_SPECIFIER = "HFR+ App Store";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
