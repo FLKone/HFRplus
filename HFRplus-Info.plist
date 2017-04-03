@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>fr_FR</string>
 	<key>CFBundleDisplayName</key>
-	<string>debug :o</string>
+	<string>HFR+</string>
 	<key>CFBundleExecutable</key>
 	<string>HFRplus</string>
 	<key>CFBundleIdentifier</key>
@@ -39,13 +39,13 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>This app requires access to the photo camera.</string>
+	<string>Utilisé pour ajouter des photos aux messages.</string>
 	<key>NSMainNibFile</key>
 	<string>MainWindow</string>
 	<key>NSMainNibFile~ipad</key>
 	<string>MainWindow-iPad</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app requires access to the photo library.</string>
+	<string>Utilisé pour ajouter des photos aux messages.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>fontello.ttf</string>
