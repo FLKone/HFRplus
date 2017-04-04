@@ -25,18 +25,39 @@
 
 - (void)awakeFromNib {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingDidChange:) name:kIASKAppSettingChanged object:nil];
-    BOOL enabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"menu_debug"];
-    IASKAppSettingsViewController *settingsVC = ((IASKAppSettingsViewController *)((UINavigationController *)[[HFRplusAppDelegate sharedAppDelegate] rootController].viewControllers[3]).viewControllers[0]);
     
-    settingsVC.hiddenKeys = enabled ? nil : [NSSet setWithObjects:@"menu_debug_entry", nil];
+     IASKAppSettingsViewController *settingsVC = ((IASKAppSettingsViewController *)((UINavigationController *)[[HFRplusAppDelegate sharedAppDelegate] rootController].viewControllers[3]).viewControllers[0]);
     settingsVC.neverShowPrivacySettings = YES;
     NSLog(@"awakeFromNib");
     
     self.delegate = self;
 }
 
+-(void)viewDidLoad {
+    //NSLog(@"viewDidLoadviewDidLoadviewDidLoadviewDidLoad");
+    [super viewDidLoad];
+}
+
 -(void)viewWillAppear:(BOOL)animated   {
     [super viewWillAppear:animated];
+    
+    NSSet *hiddenKeys;
+    
+    // Désactivation de la configuration du thème pour iOS 5-6
+    if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        hiddenKeys = [NSSet setWithObjects:@"theme", nil];
+    }
+    
+    BOOL enabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"menu_debug"];
+    IASKAppSettingsViewController *settingsVC = ((IASKAppSettingsViewController *)((UINavigationController *)[[HFRplusAppDelegate sharedAppDelegate] rootController].viewControllers[3]).viewControllers[0]);
+    
+    if (!enabled) {
+        hiddenKeys = [hiddenKeys setByAddingObject:@"menu_debug_entry"];
+    }
+    
+    //NSLog(@"hiddenKeys %@", hiddenKeys);
+    
+    settingsVC.hiddenKeys = hiddenKeys;//enabled ? nil : [NSSet setWithObjects:@"menu_debug_entry", nil];
     [self setThemeColors:[[ThemeManager sharedManager] theme]];
 }
 
@@ -44,13 +65,30 @@
 
 #pragma mark kIASKAppSettingChanged notification
 - (void)settingDidChange:(NSNotification*)notification {
-    NSLog(@"settingDidChange %@", notification);
+    //NSLog(@"settingDidChange %@", notification);
 
     if ([notification.object isEqual:@"menu_debug"]) {
         //IASKAppSettingsViewController *activeController = self;
+        NSSet *hiddenKeys;
+        
+        // Désactivation de la configuration du thème pour iOS 5-6
+        if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            hiddenKeys = [NSSet setWithObjects:@"theme", nil];
+        }
+        
         BOOL enabled = (BOOL)[[notification.userInfo objectForKey:@"menu_debug"] intValue];
         
-        ((IASKAppSettingsViewController *)((UINavigationController *)[[HFRplusAppDelegate sharedAppDelegate] rootController].viewControllers[3]).viewControllers[0]).hiddenKeys = enabled ? nil : [NSSet setWithObjects:@"menu_debug_entry", nil];
+        IASKAppSettingsViewController *settingsVC = ((IASKAppSettingsViewController *)((UINavigationController *)[[HFRplusAppDelegate sharedAppDelegate] rootController].viewControllers[3]).viewControllers[0]);
+    
+        //((IASKAppSettingsViewController *)((UINavigationController *)[[HFRplusAppDelegate sharedAppDelegate] rootController].viewControllers[3]).viewControllers[0]).hiddenKeys = enabled ? nil : [NSSet setWithObjects:@"menu_debug_entry", nil];
+        
+        if (!enabled) {
+            hiddenKeys = [hiddenKeys setByAddingObject:@"menu_debug_entry"];
+        }
+        
+        //NSLog(@"hiddenKeys %@", hiddenKeys);
+        
+        settingsVC.hiddenKeys = hiddenKeys;//enabled ? nil : [NSSet setWithObjects:@"menu_debug_entry", nil];
         
         //[activeController setHiddenKeys:enabled ? nil : [NSSet setWithObjects:@"AutoConnectTest", nil] animated:YES];
         
@@ -98,7 +136,7 @@
 
 #pragma mark -
 - (void)settingsViewController:(IASKAppSettingsViewController*)sender buttonTappedForKey:(NSString*)key {
-    NSLog(@"settingsViewController");
+    //NSLog(@"settingsViewController");
     
     
     
