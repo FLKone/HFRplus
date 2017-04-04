@@ -88,7 +88,7 @@
     self.contentView.superview.backgroundColor =[ThemeColors cellBackgroundColor:theme];
     [self.labelTitle setTextColor:[ThemeColors textColor:theme]];
     [self.labelMsg setTextColor:[ThemeColors topicMsgTextColor:theme]];
-    [self.labelDate setTextColor:[ThemeColors tintColor:theme]];
+    [self.labelDate setTextColor:[ThemeColors cellTintColor:theme]];
     self.selectionStyle = [ThemeColors cellSelectionStyle:theme];
 }
 

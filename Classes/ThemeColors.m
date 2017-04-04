@@ -23,13 +23,18 @@
 }
 
 + (UIColor *)navBackgroundColor:(Theme)theme{
-    switch (theme) {
-        case ThemeLight:
-            return [UIColor colorWithRed:246.0/255.0 green:246.0/255.0 blue:246.0/255.0 alpha:1.0];
-        case ThemeDark:
-            return [UIColor colorWithRed:46.0/255.0 green:48.0/255.0 blue:51.0/255.0 alpha:1.0];
-        default:
-            return [UIColor colorWithRed:246.0/255.0 green:246.0/255.0 blue:246.0/255.0 alpha:1.0];
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        switch (theme) {
+            case ThemeLight:
+                return [UIColor colorWithRed:246.0/255.0 green:246.0/255.0 blue:246.0/255.0 alpha:1.0];
+            case ThemeDark:
+                return [UIColor colorWithRed:46.0/255.0 green:48.0/255.0 blue:51.0/255.0 alpha:1.0];
+            default:
+                return [UIColor colorWithRed:246.0/255.0 green:246.0/255.0 blue:246.0/255.0 alpha:1.0];
+        }
+    }
+    else {
+        return [UIColor colorWithRed:246.0/255.0 green:246.0/255.0 blue:246.0/255.0 alpha:1.0]; //OK
     }
 }
 
@@ -70,14 +75,20 @@
 }
 
 + (UIColor *)greyBackgroundColor:(Theme)theme{
-    switch (theme) {
-        case ThemeLight:
-            return [UIColor groupTableViewBackgroundColor];
-        case ThemeDark:
-            return [UIColor colorWithRed:30.0/255.0 green:31.0/255.0 blue:33.0/255.0 alpha:1.0];
-        default:
-            return [UIColor groupTableViewBackgroundColor];
-            
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+
+        switch (theme) {
+            case ThemeLight:
+                return [UIColor groupTableViewBackgroundColor];
+            case ThemeDark:
+                return [UIColor colorWithRed:30.0/255.0 green:31.0/255.0 blue:33.0/255.0 alpha:1.0];
+            default:
+                return [UIColor groupTableViewBackgroundColor];
+                
+        }
+    }
+    else {
+        return [UIColor whiteColor]; //OK
     }
 }
 
@@ -94,14 +105,20 @@
 }
 
 + (UIColor *)cellBackgroundColor:(Theme)theme{
-    switch (theme) {
-        case ThemeLight:
-            return [UIColor colorWithRed:246.0/255.0 green:246.0/255.0 blue:246.0/255.0 alpha:1.0];
-        case ThemeDark:
-            return [UIColor colorWithRed:36.0/255.0 green:37.0/255.0 blue:41.0/255.0 alpha:1.0];
-        default:
-            return [UIColor colorWithRed:246.0/255.0 green:246.0/255.0 blue:246.0/255.0 alpha:1.0];
-            
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+    
+        switch (theme) {
+            case ThemeLight:
+                return [UIColor colorWithRed:246.0/255.0 green:246.0/255.0 blue:246.0/255.0 alpha:1.0];
+            case ThemeDark:
+                return [UIColor colorWithRed:36.0/255.0 green:37.0/255.0 blue:41.0/255.0 alpha:1.0];
+            default:
+                return [UIColor colorWithRed:246.0/255.0 green:246.0/255.0 blue:246.0/255.0 alpha:1.0];
+                
+        }
+    }
+    else {
+        return [UIColor whiteColor]; //OK
     }
 }
 
@@ -153,6 +170,16 @@
     }
 }
 
++ (UIColor *)cellTintColor:(Theme)theme{
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        return [self tintColor:theme];
+    }
+    else {
+        return [UIColor colorWithRed:36/255.0 green:112/255.0 blue:216/255.0 alpha:1.0]; //OK
+    }
+}
+
+
 + (UIColor *)placeholderColor:(Theme)theme{
     switch (theme) {
         case ThemeLight:
@@ -177,37 +204,54 @@
 }
 
 + (UIColor *)headSectionTextColor:(Theme)theme{
-    switch (theme) {
-        case ThemeLight:
-            return [UIColor colorWithRed:109/255.0f green:109/255.0f blue:114/255.0f alpha:1];
-        case ThemeDark:
-            return [UIColor colorWithRed:146.0/255.0 green:147.0/255.0 blue:151.0/255.0 alpha:1.0];
-        default:
-            return [UIColor colorWithRed:109/255.0f green:109/255.0f blue:114/255.0f alpha:1];
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        
+        switch (theme) {
+            case ThemeLight:
+                return [UIColor colorWithRed:109/255.0f green:109/255.0f blue:114/255.0f alpha:1];
+            case ThemeDark:
+                return [UIColor colorWithRed:146.0/255.0 green:147.0/255.0 blue:151.0/255.0 alpha:1.0];
+            default:
+                return [UIColor colorWithRed:109/255.0f green:109/255.0f blue:114/255.0f alpha:1];
+        }
+    }
+    else {
+        return [UIColor whiteColor]; //OK
     }
 }
 
 + (UITableViewCellSelectionStyle)cellSelectionStyle:(Theme)theme{
-    switch (theme) {
-        case ThemeLight:
-            return UITableViewCellSelectionStyleDefault;
-        case ThemeDark:
-            return UITableViewCellSelectionStyleNone;
-        default:
-            return UITableViewCellSelectionStyleDefault;
-            
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+    
+        switch (theme) {
+            case ThemeLight:
+                return UITableViewCellSelectionStyleDefault;
+            case ThemeDark:
+                return UITableViewCellSelectionStyleNone;
+            default:
+                return UITableViewCellSelectionStyleDefault;
+                
+        }
+    }
+    else {
+        return UITableViewCellSelectionStyleBlue;
     }
 };
 
 + (UIColor *)tintColor:(Theme)theme{
-    switch (theme) {
-        case ThemeLight:
-            return [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
-        case ThemeDark:
-            return [UIColor colorWithRed:241.0/255.0 green:143.0/255.0 blue:24.0/255.0 alpha:1.0];
-        default:
-            return [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
-            
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        switch (theme) {
+            case ThemeLight:
+                return [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
+            case ThemeDark:
+                return [UIColor colorWithRed:241.0/255.0 green:143.0/255.0 blue:24.0/255.0 alpha:1.0];
+            default:
+                return [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
+                
+        }
+    }
+    else {
+        return [UIColor colorWithRed:0.0 green:0/255.0 blue:0.0 alpha:1.0];
     }
 }
 

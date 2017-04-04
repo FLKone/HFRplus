@@ -44,7 +44,7 @@
     self.contentView.superview.backgroundColor =[ThemeColors cellBackgroundColor:theme];
     [titleLabel setTextColor:[ThemeColors textColor:theme]];
     [msgLabel setTextColor:[ThemeColors topicMsgTextColor:theme]];
-    [timeLabel setTextColor:[ThemeColors tintColor:theme]];
+    [timeLabel setTextColor:[ThemeColors cellTintColor:theme]];
     self.selectionStyle = [ThemeColors cellSelectionStyle:theme];
     if(topicViewed){
         Theme theme = [[ThemeManager sharedManager] theme];
@@ -64,9 +64,9 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
     
-    UIView * selectedBackgroundView = [[UIView alloc] init];
-    [selectedBackgroundView setBackgroundColor:[ThemeColors cellHighlightBackgroundColor:[[ThemeManager sharedManager] theme]]]; // set color here
-    [self setSelectedBackgroundView:selectedBackgroundView];
+//    UIView * selectedBackgroundView = [[UIView alloc] init];
+//    [selectedBackgroundView setBackgroundColor:[ThemeColors cellHighlightBackgroundColor:[[ThemeManager sharedManager] theme]]]; // set color here
+//    [self setSelectedBackgroundView:selectedBackgroundView];
 
 }
 

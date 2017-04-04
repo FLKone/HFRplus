@@ -21,6 +21,7 @@
 + (UIColor *)cellIconColor:(Theme)theme;
 + (UIColor *)cellTextColor:(Theme)theme;
 + (UIColor *)cellBorderColor:(Theme)theme;
++ (UIColor *)cellTintColor:(Theme)theme;
 + (UIColor *)placeholderColor:(Theme)theme;
 + (UIColor *)headSectionBackgroundColor:(Theme)theme;
 + (UIColor *)headSectionTextColor:(Theme)theme;
