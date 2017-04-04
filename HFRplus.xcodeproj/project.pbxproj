@@ -191,6 +191,8 @@
 		4C0B8E051BA45B0100D329BA /* ForumCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0B8E021BA45B0100D329BA /* ForumCellView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		4C0B8E061BA45B0100D329BA /* ForumCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B8E031BA45B0100D329BA /* ForumCellView.xib */; };
 		4C0B8E071BA45B0100D329BA /* ForumCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B8E031BA45B0100D329BA /* ForumCellView.xib */; };
+		4C17938B1E93B78B007EA6CB /* UINavigationBar+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C17938A1E93B78B007EA6CB /* UINavigationBar+Helper.m */; };
+		4C17938C1E93B78B007EA6CB /* UINavigationBar+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C17938A1E93B78B007EA6CB /* UINavigationBar+Helper.m */; };
 		4C21E94D1BA5C70400691D65 /* BoldEFilled-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C21E9331BA5C70400691D65 /* BoldEFilled-20.png */; };
 		4C21E94E1BA5C70400691D65 /* BoldEFilled-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C21E9331BA5C70400691D65 /* BoldEFilled-20.png */; };
 		4C21E94F1BA5C70400691D65 /* BoldEFilled-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C21E9341BA5C70400691D65 /* BoldEFilled-20@2x.png */; };
@@ -1386,6 +1388,8 @@
 		4C0B8E011BA45B0100D329BA /* ForumCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForumCellView.h; sourceTree = "<group>"; };
 		4C0B8E021BA45B0100D329BA /* ForumCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForumCellView.m; sourceTree = "<group>"; };
 		4C0B8E031BA45B0100D329BA /* ForumCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ForumCellView.xib; sourceTree = "<group>"; };
+		4C1793891E93B78B007EA6CB /* UINavigationBar+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+Helper.h"; sourceTree = "<group>"; };
+		4C17938A1E93B78B007EA6CB /* UINavigationBar+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+Helper.m"; sourceTree = "<group>"; };
 		4C21E9331BA5C70400691D65 /* BoldEFilled-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BoldEFilled-20.png"; path = "Editor/BoldEFilled-20.png"; sourceTree = "<group>"; };
 		4C21E9341BA5C70400691D65 /* BoldEFilled-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BoldEFilled-20@2x.png"; path = "Editor/BoldEFilled-20@2x.png"; sourceTree = "<group>"; };
 		4C21E9351BA5C70400691D65 /* CopyFilled-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "CopyFilled-20.png"; path = "Editor/CopyFilled-20.png"; sourceTree = "<group>"; };
@@ -2782,6 +2786,8 @@
 				4CC3C7651B9A1513001B8632 /* UITextView+Placeholder.m */,
 				4CC814FB1BAC86ED00F8BB81 /* UIColor+Extension.h */,
 				4CC814FC1BAC86ED00F8BB81 /* UIColor+Extension.m */,
+				4C1793891E93B78B007EA6CB /* UINavigationBar+Helper.h */,
+				4C17938A1E93B78B007EA6CB /* UINavigationBar+Helper.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -4354,6 +4360,7 @@
 				CAF5DB8119341BBB000B5215 /* AvatarTableViewCell.m in Sources */,
 				CAADF6C71929681300ECA4C1 /* ProfilViewController.m in Sources */,
 				01BF8785121C4407007624B6 /* InfosViewController.m in Sources */,
+				4C17938B1E93B78B007EA6CB /* UINavigationBar+Helper.m in Sources */,
 				01BF8786121C4407007624B6 /* AideViewController.m in Sources */,
 				4C39036C1BCACEC200FD6F1F /* PSTGridLayoutRow.m in Sources */,
 				4C0B8DFC1BA455BF00D329BA /* InfoTableViewCell.m in Sources */,
@@ -4506,6 +4513,7 @@
 				CAF5DB8219341BBB000B5215 /* AvatarTableViewCell.m in Sources */,
 				CAADF6C81929681300ECA4C1 /* ProfilViewController.m in Sources */,
 				CA7C70BF185EF50E00B348BA /* InfosViewController.m in Sources */,
+				4C17938C1E93B78B007EA6CB /* UINavigationBar+Helper.m in Sources */,
 				CA7C70C0185EF50E00B348BA /* AideViewController.m in Sources */,
 				4C39036D1BCACEC200FD6F1F /* PSTGridLayoutRow.m in Sources */,
 				4C0B8DFD1BA455BF00D329BA /* InfoTableViewCell.m in Sources */,
