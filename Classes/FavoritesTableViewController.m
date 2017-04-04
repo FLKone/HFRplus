@@ -614,7 +614,7 @@
     Theme theme = [[ThemeManager sharedManager] theme];
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
     
-        UIImage *buttonImage2 = [UIImage imageNamed:@"all_categories_land"]; ;
+        UIImage *buttonImage2 = [UIImage imageNamed:@"all_categories_land"];
         UIButton *aButton2 = [UIButton buttonWithType:UIButtonTypeCustom];
         [aButton2 setAdjustsImageWhenHighlighted:NO];
         
@@ -1094,10 +1094,6 @@
                 [finalString appendAttributedString:aAttrString2C];
                 //NSLog(@"finalString1 %@", finalString);
             }
-            
-            
-            
-            
             
             [finalString appendAttributedString:aAttrString1];
             //NSLog(@"finalString3 %@", finalString);
