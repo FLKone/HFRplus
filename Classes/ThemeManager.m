@@ -103,9 +103,9 @@
 }
 
 - (void)applyThemeToTextField:(UITextField *)textfield{
-    if(theme == ThemeDark){
+    //if(theme == ThemeDark){
         
-        textfield.backgroundColor = [ThemeColors cellHighlightBackgroundColor:[[ThemeManager sharedManager] theme]];
+        textfield.backgroundColor = [ThemeColors textFieldBackgroundColor:[[ThemeManager sharedManager] theme]];
         textfield.textColor = [ThemeColors cellTextColor:[[ThemeManager sharedManager] theme]];
         if ([textfield.tintColor respondsToSelector:@selector(setTintColor:)]) {
             textfield.tintColor = [ThemeColors cellTextColor:[[ThemeManager sharedManager] theme]];
@@ -134,7 +134,7 @@
                                                      }
          ];
         
-    }
+    //}
 }
 
 @end

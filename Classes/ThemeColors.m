@@ -38,6 +38,18 @@
     }
 }
 
++ (UIColor *)textFieldBackgroundColor:(Theme)theme{
+    switch (theme) {
+        case ThemeLight:
+            return [UIColor whiteColor];
+        case ThemeDark:
+            return [UIColor colorWithRed:46.0/255.0 green:47.0/255.0 blue:51.0/255.0 alpha:1.0];
+        default:
+            return [UIColor whiteColor];
+            
+    }
+}
+
 + (UIColor *)textColor:(Theme)theme{
     switch (theme) {
         case ThemeLight:
