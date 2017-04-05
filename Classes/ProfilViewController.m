@@ -336,6 +336,7 @@
     Theme theme = [[ThemeManager sharedManager] theme];
     self.view.backgroundColor = self.profilTableView.backgroundColor = self.loadingView.backgroundColor =  [ThemeColors greyBackgroundColor:theme];
     self.profilTableView.separatorColor = [ThemeColors cellBorderColor:theme];
+    [self.profilTableView reloadData];
     self.loadingLabel.textColor = self.maintenanceView.textColor = [ThemeColors cellTextColor:theme];
     self.loadingLabel.shadowColor = self.maintenanceView.shadowColor = [UIColor clearColor];
     [self.loadingIndicator setColor:[ThemeColors cellTextColor:theme]];
