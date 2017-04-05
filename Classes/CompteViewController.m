@@ -131,7 +131,7 @@
     identificationController.view.backgroundColor = [ThemeColors greyBackgroundColor:[[ThemeManager sharedManager] theme]];
     
     // Create the navigation controller and present it modally.
-    UINavigationController *navigationController = [[UINavigationController alloc]
+    HFRNavigationController *navigationController = [[HFRNavigationController alloc]
                                                     initWithRootViewController:identificationController];
     
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
