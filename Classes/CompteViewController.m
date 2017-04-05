@@ -38,6 +38,10 @@
 }
 
 -(void)setThemeColors:(Theme)theme{
+    if ([self.view respondsToSelector:@selector(setTintColor:)]) {
+        self.view.tintColor = [ThemeColors tintColor:theme];
+    }
+    
     self.view.backgroundColor = [ThemeColors greyBackgroundColor:theme];
     self.loginView.backgroundColor = [ThemeColors greyBackgroundColor:theme];
     self.compteView.backgroundColor = [ThemeColors greyBackgroundColor:theme];
