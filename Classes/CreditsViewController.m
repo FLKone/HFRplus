@@ -42,6 +42,7 @@
 -(void)viewWillAppear:(BOOL)animated   {
     [super viewWillAppear:animated];
     [self setThemeColors:[[ThemeManager sharedManager] theme]];
+    [self loadPage];
 }
 
 -(void)setThemeColors:(Theme)theme{
@@ -58,9 +59,14 @@
     //v1
 	//[myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"credits" ofType:@"html"] isDirectory:NO]]];
     
+
+	
+}
+
+-(void)loadPage {
     //v2
     NSString *path = [[NSBundle mainBundle] bundlePath];
-	NSURL *baseURL = [NSURL fileURLWithPath:path];
+    NSURL *baseURL = [NSURL fileURLWithPath:path];
     
     NSString *htmlString = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"credits" ofType:@"html"] encoding:NSUTF8StringEncoding error:NULL];
     
@@ -68,13 +74,12 @@
         htmlString = [htmlString stringByReplacingOccurrencesOfString:@"%%iosversion%%" withString:@"ios7"];
     }
     htmlString = [htmlString stringByReplacingOccurrencesOfString:@"%%iosversion%%" withString:@""];
-
+    
     NSString *cssString = [ThemeColors creditsCss:[[ThemeManager sharedManager] theme]];
     //NSString *javascriptString = @"var style = document.createElement('style'); style.innerHTML = '%@'; document.head.appendChild(style)"; // 2
-   // NSString *javascriptWithCSSString = [NSString stringWithFormat:javascriptString, cssString]; // 3
+    // NSString *javascriptWithCSSString = [NSString stringWithFormat:javascriptString, cssString]; // 3
     htmlString =[htmlString stringByReplacingOccurrencesOfString:@"</head>" withString:[NSString stringWithFormat:@"<style>%@</style></head>", cssString]];
     [myWebView loadHTMLString:htmlString baseURL:baseURL];
-	
 }
 
 // Override to allow orientations other than the default portrait orientation.
