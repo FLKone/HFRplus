@@ -107,7 +107,7 @@
         
         textfield.backgroundColor = [ThemeColors textFieldBackgroundColor:[[ThemeManager sharedManager] theme]];
         textfield.textColor = [ThemeColors cellTextColor:[[ThemeManager sharedManager] theme]];
-        if ([textfield.tintColor respondsToSelector:@selector(setTintColor:)]) {
+        if ([textfield respondsToSelector:@selector(setTintColor:)]) {
             textfield.tintColor = [ThemeColors cellTextColor:[[ThemeManager sharedManager] theme]];
         }
         
