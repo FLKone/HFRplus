@@ -44,9 +44,10 @@
 }
 
 -(void)setThemeColors:(Theme)theme{
+    
     UILabel *titleView = (UILabel *)[self navigationItem].titleView;
     if([titleView respondsToSelector:@selector(setTextColor:)]){
-        [titleView setTextColor:[ThemeColors textColor:theme]];
+        [titleView setTextColor:[ThemeColors navItemTextColor:theme]];
     }
 }
 

@@ -26,6 +26,7 @@
 + (UIColor *)headSectionBackgroundColor:(Theme)theme;
 + (UIColor *)headSectionTextColor:(Theme)theme;
 + (UIColor *)textColor:(Theme)theme;
++ (UIColor *)navItemTextColor:(Theme)theme;
 + (UIColor *)textFieldBackgroundColor:(Theme)theme;
 + (UIColor *)lightTextColor:(Theme)theme;
 + (UIColor *)topicMsgTextColor:(Theme)theme;

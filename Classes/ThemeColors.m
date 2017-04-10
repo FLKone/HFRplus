@@ -62,6 +62,23 @@
     }
 }
 
++ (UIColor *)navItemTextColor:(Theme)theme{
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        switch (theme) {
+            case ThemeLight:
+                return [UIColor colorWithRed:0 green:0 blue:0 alpha:1.0];
+            case ThemeDark:
+                return [UIColor colorWithRed:206.0/255.0 green:206.0/255.0 blue:206.0/255.0 alpha:1.0];
+            default:
+                return [UIColor colorWithRed:0 green:0 blue:0 alpha:1.0];
+                
+        }
+    }
+    else {
+        return [UIColor colorWithRed:113/255.f green:120/255.f blue:128/255.f alpha:1.00];
+    }
+}
+
 + (UIColor *)lightTextColor:(Theme)theme{
     switch (theme) {
         case ThemeLight:
