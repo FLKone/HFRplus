@@ -99,7 +99,6 @@
 	
 	[self viewDidUnload];
 	
-    [super dealloc];
 }
 
 

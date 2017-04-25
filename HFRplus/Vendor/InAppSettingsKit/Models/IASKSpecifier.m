@@ -16,44 +16,50 @@
 
 #import "IASKSpecifier.h"
 #import "IASKSettingsReader.h"
+#import "IASKAppSettingsWebViewController.h"
 
 @interface IASKSpecifier ()
+
 @property (nonatomic, retain) NSDictionary  *multipleValuesDict;
-- (void)_reinterpretValues:(NSDictionary*)specifierDict;
+@property (nonatomic, copy) NSString *radioGroupValue;
+
 @end
 
 @implementation IASKSpecifier
 
-@synthesize specifierDict=_specifierDict;
-@synthesize multipleValuesDict=_multipleValuesDict;
-@synthesize settingsReader = _settingsReader;
-
 - (id)initWithSpecifier:(NSDictionary*)specifier {
     if ((self = [super init])) {
         [self setSpecifierDict:specifier];
-        
-        if ([[self type] isEqualToString:kIASKPSMultiValueSpecifier] ||
-			[[self type] isEqualToString:kIASKPSTitleValueSpecifier]) {
-            [self _reinterpretValues:[self specifierDict]];
+
+        if ([self isMultiValueSpecifierType]) {
+            [self updateMultiValuesDict];
         }
     }
     return self;
 }
 
-- (void)dealloc {
-    [_specifierDict release], _specifierDict = nil;
-    [_multipleValuesDict release], _multipleValuesDict = nil;
-	
-	_settingsReader = nil;
-
-    [super dealloc];
+- (BOOL)isMultiValueSpecifierType {
+    static NSArray *types = nil;
+    if (!types) {
+        types = @[kIASKPSMultiValueSpecifier, kIASKPSTitleValueSpecifier, kIASKPSRadioGroupSpecifier];
+    }
+    return [types containsObject:[self type]];
 }
 
-- (void)_reinterpretValues:(NSDictionary*)specifierDict {
+- (id)initWithSpecifier:(NSDictionary *)specifier
+        radioGroupValue:(NSString *)radioGroupValue {
+
+    self = [self initWithSpecifier:specifier];
+    if (self) {
+        self.radioGroupValue = radioGroupValue;
+    }
+    return self;
+}
+- (void)updateMultiValuesDict {
     NSArray *values = [_specifierDict objectForKey:kIASKValues];
     NSArray *titles = [_specifierDict objectForKey:kIASKTitles];
-    
-    NSMutableDictionary *multipleValuesDict = [[[NSMutableDictionary alloc] init] autorelease];
+    NSArray *shortTitles = [_specifierDict objectForKey:kIASKShortTitles];
+    NSMutableDictionary *multipleValuesDict = [NSMutableDictionary new];
     
     if (values) {
 		[multipleValuesDict setObject:values forKey:kIASKValues];
@@ -63,33 +69,137 @@
 		[multipleValuesDict setObject:titles forKey:kIASKTitles];
 	}
     
+    if (shortTitles.count) {
+		[multipleValuesDict setObject:shortTitles forKey:kIASKShortTitles];
+	}
+    
     [self setMultipleValuesDict:multipleValuesDict];
 }
+
+- (void)sortIfNeeded {
+    if (self.displaySortedByTitle) {
+        NSArray *values = [_specifierDict objectForKey:kIASKValues];
+        NSArray *titles = [_specifierDict objectForKey:kIASKTitles];
+        NSArray *shortTitles = [_specifierDict objectForKey:kIASKShortTitles];
+
+        NSAssert(values.count == titles.count, @"Malformed multi-value specifier found in settings bundle. Number of values and titles differ.");
+        NSAssert(shortTitles == nil || shortTitles.count == values.count, @"Malformed multi-value specifier found in settings bundle. Number of short titles and values differ.");
+
+        NSMutableDictionary *multipleValuesDict = [NSMutableDictionary new];
+
+        NSMutableArray *temporaryMappingsForSort = [NSMutableArray arrayWithCapacity:titles.count];
+
+        static NSString *const titleKey = @"title";
+        static NSString *const shortTitleKey = @"shortTitle";
+        static NSString *const localizedTitleKey = @"localizedTitle";
+        static NSString *const valueKey = @"value";
+        IASKSettingsReader *strongSettingsReader = self.settingsReader;
+        [titles enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSString *localizedTitle = [strongSettingsReader titleForStringId:obj];
+            [temporaryMappingsForSort addObject:@{titleKey : obj,
+                                                  valueKey : values[idx],
+                                                  localizedTitleKey : localizedTitle,
+                                                  shortTitleKey : (shortTitles[idx] ?: [NSNull null]),
+                                                  }];
+        }];
+        
+        NSArray *sortedTemporaryMappings = [temporaryMappingsForSort sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            NSString *localizedTitle1 = obj1[localizedTitleKey];
+            NSString *localizedTitle2 = obj2[localizedTitleKey];
+
+            if ([localizedTitle1 isKindOfClass:[NSString class]] && [localizedTitle2 isKindOfClass:[NSString class]]) {
+                return [localizedTitle1 localizedCompare:localizedTitle2];
+            } else {
+                return NSOrderedSame;
+            }
+        }];
+        
+        NSMutableArray *sortedTitles = [NSMutableArray arrayWithCapacity:sortedTemporaryMappings.count];
+        NSMutableArray *sortedShortTitles = [NSMutableArray arrayWithCapacity:sortedTemporaryMappings.count];
+        NSMutableArray *sortedValues = [NSMutableArray arrayWithCapacity:sortedTemporaryMappings.count];
+
+        [sortedTemporaryMappings enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSDictionary *mapping = obj;
+            sortedTitles[idx] = mapping[titleKey];
+            sortedValues[idx] = mapping[valueKey];
+            if (mapping[shortTitleKey] != [NSNull null]) {
+                sortedShortTitles[idx] = mapping[shortTitleKey];
+            }
+        }];
+        titles = [sortedTitles copy];
+        values = [sortedValues copy];
+        shortTitles = [sortedShortTitles copy];
+        
+        if (values) {
+            [multipleValuesDict setObject:values forKey:kIASKValues];
+        }
+        
+        if (titles) {
+            [multipleValuesDict setObject:titles forKey:kIASKTitles];
+        }
+        
+        if (shortTitles.count) {
+            [multipleValuesDict setObject:shortTitles forKey:kIASKShortTitles];
+        }
+        
+        [self setMultipleValuesDict:multipleValuesDict];
+    }
+}
+
+- (BOOL)displaySortedByTitle {
+    return [[_specifierDict objectForKey:kIASKDisplaySortedByTitle] boolValue];
+}
+
 - (NSString*)localizedObjectForKey:(NSString*)key {
-	return [self.settingsReader titleForStringId:[_specifierDict objectForKey:key]];
+	IASKSettingsReader *settingsReader = self.settingsReader;
+	return [settingsReader titleForStringId:[_specifierDict objectForKey:key]];
 }
 
 - (NSString*)title {
     return [self localizedObjectForKey:kIASKTitle];
 }
 
+- (NSString*)subtitle {
+	return [self localizedObjectForKey:kIASKSubtitle];
+}
+
 - (NSString*)footerText {
     return [self localizedObjectForKey:kIASKFooterText];
 }
 
--(Class) viewControllerClass {
-    return NSClassFromString([_specifierDict objectForKey:kIASKViewControllerClass]);
+- (Class)viewControllerClass {
+    [IASKAppSettingsWebViewController class]; // make sure this is linked into the binary/library
+    return [self classFromString:([_specifierDict objectForKey:kIASKViewControllerClass])];
 }
 
--(SEL) viewControllerSelector {
+- (Class)classFromString:(NSString *)className {
+    Class class = NSClassFromString(className);
+    if (!class) {
+        // if the class doesn't exist as a pure Obj-C class then try to retrieve it as a Swift class.
+        NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"];
+        NSString *classStringName = [NSString stringWithFormat:@"_TtC%lu%@%lu%@", (unsigned long)appName.length, appName, (unsigned long)className.length, className];
+        class = NSClassFromString(classStringName);
+    }
+    return class;
+}
+
+- (SEL)viewControllerSelector {
     return NSSelectorFromString([_specifierDict objectForKey:kIASKViewControllerSelector]);
 }
 
--(Class)buttonClass {
+- (NSString*)viewControllerStoryBoardFile {
+	return [_specifierDict objectForKey:kIASKViewControllerStoryBoardFile];
+}
+
+- (NSString*)viewControllerStoryBoardID {
+	return [_specifierDict objectForKey:kIASKViewControllerStoryBoardId];
+}
+
+- (Class)buttonClass {
     return NSClassFromString([_specifierDict objectForKey:kIASKButtonClass]);
 }
 
--(SEL)buttonAction {
+- (SEL)buttonAction {
     return NSSelectorFromString([_specifierDict objectForKey:kIASKButtonAction]);
 }
 
@@ -103,7 +213,10 @@
 
 - (NSString*)titleForCurrentValue:(id)currentValue {
 	NSArray *values = [self multipleValues];
-	NSArray *titles = [self multipleTitles];
+	NSArray *titles = [self multipleShortTitles];
+	if (!titles) {
+        titles = [self multipleTitles];
+	}
 	if (values.count != titles.count) {
 		return nil;
 	}
@@ -112,7 +225,8 @@
 		return nil;
 	}
 	@try {
-		return [self.settingsReader titleForStringId:[titles objectAtIndex:keyIndex]];
+		IASKSettingsReader *strongSettingsReader = self.settingsReader;
+		return [strongSettingsReader titleForStringId:[titles objectAtIndex:keyIndex]];
 	}
 	@catch (NSException * e) {}
 	return nil;
@@ -128,6 +242,10 @@
 
 - (NSArray*)multipleTitles {
     return [_multipleValuesDict objectForKey:kIASKTitles];
+}
+
+- (NSArray*)multipleShortTitles {
+    return [_multipleValuesDict objectForKey:kIASKShortTitles];
 }
 
 - (NSString*)file {
@@ -191,13 +309,17 @@
     else if ([[_specifierDict objectForKey:KIASKKeyboardType] isEqualToString:kIASKKeyboardNumberPad]) {
         return UIKeyboardTypeNumberPad;
     }
+    else if ([[_specifierDict objectForKey:KIASKKeyboardType] isEqualToString:kIASKKeyboardPhonePad]) {
+        return UIKeyboardTypePhonePad;
+    }
+    else if ([[_specifierDict objectForKey:KIASKKeyboardType] isEqualToString:kIASKKeyboardNamePhonePad]) {
+        return UIKeyboardTypeNamePhonePad;
+    }
+    else if ([[_specifierDict objectForKey:KIASKKeyboardType] isEqualToString:kIASKKeyboardASCIICapable]) {
+        return UIKeyboardTypeASCIICapable;
+    }
     else if ([[_specifierDict objectForKey:KIASKKeyboardType] isEqualToString:kIASKKeyboardDecimalPad]) {
-		if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iPhoneOS_4_1) {
-			return UIKeyboardTypeDecimalPad;
-		}
-		else {
-			return UIKeyboardTypeNumbersAndPunctuation;
-		}
+		return UIKeyboardTypeDecimalPad;
     }
     else if ([[_specifierDict objectForKey:KIASKKeyboardType] isEqualToString:KIASKKeyboardURL]) {
         return UIKeyboardTypeURL;
@@ -237,4 +359,63 @@
     return UITextAutocorrectionTypeDefault;
 }
 
+- (UIImage *)cellImage
+{
+    NSString *imageName = [_specifierDict objectForKey:kIASKCellImage];
+    if( imageName.length == 0 )
+        return nil;
+    
+    return [UIImage imageNamed:imageName];
+}
+
+- (UIImage *)highlightedCellImage
+{
+    NSString *imageName = [[_specifierDict objectForKey:kIASKCellImage ] stringByAppendingString:@"Highlighted"];
+    if( imageName.length == 0 )
+        return nil;
+
+    return [UIImage imageNamed:imageName];
+}
+
+- (BOOL)adjustsFontSizeToFitWidth {
+	NSNumber *boxedResult = [_specifierDict objectForKey:kIASKAdjustsFontSizeToFitWidth];
+	return !boxedResult || [boxedResult boolValue];
+}
+
+- (NSTextAlignment)textAlignment
+{
+    if (self.subtitle.length || [[_specifierDict objectForKey:kIASKTextLabelAlignment] isEqualToString:kIASKTextLabelAlignmentLeft]) {
+        return NSTextAlignmentLeft;
+    } else if ([[_specifierDict objectForKey:kIASKTextLabelAlignment] isEqualToString:kIASKTextLabelAlignmentCenter]) {
+        return NSTextAlignmentCenter;
+    } else if ([[_specifierDict objectForKey:kIASKTextLabelAlignment] isEqualToString:kIASKTextLabelAlignmentRight]) {
+        return NSTextAlignmentRight;
+    }
+    if ([self.type isEqualToString:kIASKButtonSpecifier] && !self.cellImage) {
+		return NSTextAlignmentCenter;
+	} else if ([self.type isEqualToString:kIASKPSMultiValueSpecifier] || [self.type isEqualToString:kIASKPSTitleValueSpecifier]) {
+		return NSTextAlignmentRight;
+	}
+	return NSTextAlignmentLeft;
+}
+
+- (NSArray *)userInterfaceIdioms {
+    NSArray *idiomStrings = _specifierDict[kIASKSupportedUserInterfaceIdioms];
+    if (idiomStrings.count == 0) {
+        return @[@(UIUserInterfaceIdiomPhone), @(UIUserInterfaceIdiomPad)];
+    }
+    NSMutableArray *idioms = [NSMutableArray new];
+    for (NSString *idiomString in idiomStrings) {
+        if ([idiomString isEqualToString:@"Phone"]) {
+            [idioms addObject:@(UIUserInterfaceIdiomPhone)];
+        } else if ([idiomString isEqualToString:@"Pad"]) {
+            [idioms addObject:@(UIUserInterfaceIdiomPad)];
+        }
+    }
+    return idioms;
+}
+
+- (id)valueForKey:(NSString *)key {
+	return [_specifierDict objectForKey:key];
+}
 @end

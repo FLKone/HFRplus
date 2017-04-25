@@ -18,6 +18,7 @@
 #import "ShakeView.h"
 
 #import "Topic.h"
+#import "Forum.h"
 #import "Catcounter.h"
 #import "FavoriteCell.h"
 
@@ -26,9 +27,13 @@
 
 #import "AKSingleSegmentedControl.h"
 #import "TopicsTableViewController.h"
+#import "ForumCellView.h"
 
 #import "UIScrollView+SVPullToRefresh.h"
 #import "PullToRefreshErrorViewController.h"
+
+#import "ThemeManager.h"
+#import "ThemeColors.h"
 
 @implementation FavoritesTableViewController
 @synthesize pressedIndexPath, favoritesTableView, loadingView, showAll;
@@ -37,7 +42,7 @@
 
 @synthesize request;
 
-@synthesize status, statusMessage, maintenanceView, topicActionSheet;
+@synthesize reloadOnAppear, status, statusMessage, maintenanceView, topicActionSheet;
 
 #pragma mark -
 #pragma mark Data lifecycle
@@ -114,13 +119,13 @@
     
     switch (vos_sujets) {
         case 0:
-            [self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/forum1f.php?owntopic=1", kForumURL]]]];
+            [self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/forum1f.php?owntopic=1", [k ForumURL]]]]];
             break;
         case 1:
-            [self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/forum1f.php?owntopic=3", kForumURL]]]];
+            [self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/forum1f.php?owntopic=3", [k ForumURL]]]]];
             break;
         default:
-            [self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/forum1f.php?owntopic=1", kForumURL]]]];
+            [self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/forum1f.php?owntopic=1", [k ForumURL]]]]];
             break;
     }
     
@@ -141,7 +146,6 @@
 	self.navigationItem.rightBarButtonItem = nil;	
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(cancelFetchContent)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];
 
     //[self.favoritesTableView.pullToRefreshView stopAnimating];
 
@@ -160,7 +164,6 @@
 	self.navigationItem.rightBarButtonItem = nil;
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];
 	
 	//[self.arrayNewData removeAllObjects];
     //[self.arrayCategories removeAllObjects];
@@ -213,7 +216,6 @@
 	self.navigationItem.rightBarButtonItem = nil;
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];
 	
     [self.maintenanceView setText:@"oops :o"];
     
@@ -227,7 +229,6 @@
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[theRequest.error localizedDescription]
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
 	[alert show];
-	[alert release];
     
 }
 
@@ -245,7 +246,7 @@
         //On remplace le numéro de page dans le titre
         int number = [[[alertView textFieldAtIndex:0] text] intValue];
         NSString *regexString  = @".*page=([^&]+).*";
-        NSRange   matchedRange = NSMakeRange(NSNotFound, 0UL);
+        NSRange   matchedRange;// = NSMakeRange(NSNotFound, 0UL);
         NSRange   searchRange = NSMakeRange(0, newUrl.length);
         NSError  *error2        = NULL;
         //int numPage;
@@ -272,7 +273,6 @@
         //if (self.messagesTableViewController == nil) {
 		MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:newUrl];
 		self.messagesTableViewController = aView;
-		[aView release];
         //}
         
         
@@ -340,7 +340,6 @@
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kStatusChangedNotification object:self userInfo:notif];
 
-		[myParser release];
 		return;		
 	}
 	
@@ -401,7 +400,6 @@
                     [self.arrayNewData addObject:aFavorite];
                 }
                 [self.arrayCategories addObject:aFavorite];
-                [aFavorite release];
             }
 
             aFavorite = [[Favorite alloc] init];
@@ -424,10 +422,8 @@
             [self.arrayNewData addObject:aFavorite];
         }
         [self.arrayCategories addObject:aFavorite];
-        [aFavorite release];
     }
     
-	[myParser release];
 	if (self.status != kNoResults) {
         
         NSDictionary *notif = [NSDictionary dictionaryWithObjectsAndKeys:   [NSNumber numberWithInt:kComplete], @"status", nil];
@@ -518,6 +514,12 @@
 //    [[[self.navigationController.navigationBar subviews] objectAtIndex:0] setFrame:CGRect]
 }
 
+-(void)LoginChanged:(NSNotification *)notification {
+    NSLog(@"loginChanged %@", notification);
+
+    self.reloadOnAppear = YES;
+}
+
 -(void)StatusChanged:(NSNotification *)notification {
     
     if ([[notification object] class] != [self class]) {
@@ -575,6 +577,9 @@
     self.showAll = NO;
     self.navigationController.navigationBar.translucent = NO;
     
+    UINib *nib = [UINib nibWithNibName:@"ForumCellView" bundle:nil];
+    [self.favoritesTableView registerNib:nib forCellReuseIdentifier:@"ForumCellID"];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(OrientationChanged)
                                                  name:UIApplicationDidChangeStatusBarOrientationNotification
@@ -585,11 +590,17 @@
                                                  name:kStatusChangedNotification
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(LoginChanged:)
+                                                 name:kLoginChangedNotification
+                                               object:nil];
+    
+    
+    
 	// reload
     UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
     //UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"categories"] style:UIBarButtonItemStyleBordered target:self action:@selector(reload)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];		
     
     // showAll
     /*
@@ -600,7 +611,7 @@
 	self.navigationItem.leftBarButtonItem = segmentBarItem2;
     [segmentBarItem2 release];
    */
-    
+    Theme theme = [[ThemeManager sharedManager] theme];
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
     
         UIImage *buttonImage2 = [UIImage imageNamed:@"all_categories_land"];
@@ -689,7 +700,6 @@
         UIBarButtonItem * segmentBarItem2 = [[UIBarButtonItem alloc] initWithCustomView: segmentedControl];
         self.navigationItem.leftBarButtonItem = segmentBarItem2;
         
-        [segmentBarItem2 release];
     }
 /*
 
@@ -720,9 +730,11 @@
 
     // setup pull-to-refresh
     
+    __weak FavoritesTableViewController *self_ = self;
+
     [self.favoritesTableView addPullToRefreshWithActionHandler:^{
         //NSLog(@"=== BEGIN");
-        [self fetchContent];
+        [self_ fetchContent];
         //NSLog(@"=== END");
     }];
     
@@ -735,6 +747,42 @@
 {
     [super viewWillAppear:animated];
 	//[self.view becomeFirstResponder];
+    
+    Theme theme = [[ThemeManager sharedManager] theme];
+    self.view.backgroundColor = self.favoritesTableView.backgroundColor = self.maintenanceView.backgroundColor = self.loadingView.backgroundColor = self.favoritesTableView.pullToRefreshView.backgroundColor = [ThemeColors greyBackgroundColor:theme];
+    self.favoritesTableView.separatorColor = [ThemeColors cellBorderColor:theme];
+    self.favoritesTableView.pullToRefreshView.arrowColor = [ThemeColors cellTextColor:theme];
+    self.favoritesTableView.pullToRefreshView.textColor = [ThemeColors cellTextColor:theme];
+    self.favoritesTableView.pullToRefreshView.activityIndicatorViewStyle = [ThemeColors activityIndicatorViewStyle:theme];
+    
+    UIButton *btn = (UIButton *)[self.navigationController.navigationBar viewWithTag:237];
+    UIButton *btn2 = (UIButton *)[self.navigationController.navigationBar viewWithTag:238];
+    
+    if(btn){
+        UIImage *img = btn.imageView.image;
+        UIImage *bg = [UIImage imageNamed:@"lightBlue.png"];
+        UIImage *timg = [ThemeColors tintImage:img withTheme:theme];
+        UIImage *tbg = [ThemeColors tintImage:bg withColor:[ThemeColors tintLightColor:theme]];
+
+        [btn setImage:timg forState:UIControlStateNormal];
+        [btn setImage:timg forState:UIControlStateSelected];
+        [btn setImage:timg forState:UIControlStateHighlighted];
+        [btn setBackgroundImage:tbg forState:UIControlStateSelected];
+        [btn setBackgroundImage:tbg forState:UIControlStateHighlighted];
+    }
+    
+    if(btn2){
+        UIImage *img = btn2.imageView.image;
+        UIImage *bg = [UIImage imageNamed:@"lightBlue.png"];
+        UIImage *timg = [ThemeColors tintImage:img withTheme:theme];
+        UIImage *tbg = [ThemeColors tintImage:bg withColor:[ThemeColors tintLightColor:theme]];
+        
+        [btn2 setImage:timg forState:UIControlStateNormal];
+        [btn2 setImage:timg forState:UIControlStateSelected];
+        [btn2 setImage:timg forState:UIControlStateHighlighted];
+        [btn2 setBackgroundImage:tbg forState:UIControlStateSelected];
+        [btn2 setBackgroundImage:tbg forState:UIControlStateHighlighted];
+    }
 
 	if (self.messagesTableViewController) {
 		//NSLog(@"viewWillAppear Favorites Table View Dealloc MTV");
@@ -767,6 +815,16 @@
     else {
         [[self.navigationController.navigationBar viewWithTag:237] setHidden:NO];
     }
+    
+    
+    if (self.reloadOnAppear) {
+        [self reload];
+        self.reloadOnAppear = NO;
+    }
+    
+    [self.favoritesTableView reloadData];
+    
+    
 }
 - (void)viewWillDisappear:(BOOL)animated {
     
@@ -879,14 +937,15 @@
     CGFloat curWidth = self.view.frame.size.width;
     
     //UIView globale
-	UIView* customView = [[[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,HEIGHT_FOR_HEADER_IN_SECTION)] autorelease];
-    customView.backgroundColor = [UIColor colorWithRed:239/255.0f green:239/255.0f blue:244/255.0f alpha:0.7];
+	UIView* customView = [[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,HEIGHT_FOR_HEADER_IN_SECTION)];
+    Theme theme = [[ThemeManager sharedManager] theme];
+    customView.backgroundColor = [ThemeColors headSectionBackgroundColor:theme];
 	customView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
 	//UIImageView de fond
     if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         UIImage *myImage = [UIImage imageNamed:@"bar2.png"];
-        UIImageView *imageView = [[[UIImageView alloc] initWithImage:myImage] autorelease];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:myImage];
         imageView.alpha = 0.9;
         imageView.frame = CGRectMake(0,0,curWidth,HEIGHT_FOR_HEADER_IN_SECTION);
         imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -895,12 +954,12 @@
     }
     else {
         //bordures/iOS7
-        UIView* borderView = [[[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,1/[[UIScreen mainScreen] scale])] autorelease];
+        UIView* borderView = [[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,1/[[UIScreen mainScreen] scale])];
         borderView.backgroundColor = [UIColor colorWithRed:158/255.0f green:158/255.0f blue:114/162.0f alpha:0.7];
         
         //[customView addSubview:borderView];
         
-        UIView* borderView2 = [[[UIView alloc] initWithFrame:CGRectMake(0,HEIGHT_FOR_HEADER_IN_SECTION-1/[[UIScreen mainScreen] scale],curWidth,1/[[UIScreen mainScreen] scale])] autorelease];
+        UIView* borderView2 = [[UIView alloc] initWithFrame:CGRectMake(0,HEIGHT_FOR_HEADER_IN_SECTION-1/[[UIScreen mainScreen] scale],curWidth,1/[[UIScreen mainScreen] scale])];
         borderView2.backgroundColor = [UIColor colorWithRed:158/255.0f green:158/255.0f blue:114/162.0f alpha:0.7];
         
         //[customView addSubview:borderView2];
@@ -913,7 +972,7 @@
     [button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-        [button setTitleColor:[UIColor colorWithRed:109/255.0f green:109/255.0f blue:114/255.0f alpha:1] forState:UIControlStateNormal];
+        [button setTitleColor:[ThemeColors headSectionTextColor:theme] forState:UIControlStateNormal];
         [button setTitle:[[tmpForum aTitle] uppercaseString] forState:UIControlStateNormal];
         [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
         [button setTitleEdgeInsets:UIEdgeInsetsMake(10, 10, 0, 0)];
@@ -975,18 +1034,22 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (self.showAll) {
-        static NSString *CellIdentifier = @"Cell";
+        static NSString *CellIdentifier = @"ForumCellID";
+
         
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (cell == nil) {
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-        }
+        ForumCellView *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+
         
         // Configure the cell...
-        cell.textLabel.text = [NSString stringWithFormat:@"%@", [[[arrayCategories objectAtIndex:indexPath.row] forum] aTitle]];
-        cell.textLabel.font = [UIFont boldSystemFontOfSize:17];
+        cell.titleLabel.text = [NSString stringWithFormat:@"%@", [[[arrayCategories objectAtIndex:indexPath.row] forum] aTitle]];
+        [cell.catImage setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@", [[[arrayCategories objectAtIndex:indexPath.row] forum] getImageFromID]]]];
+
+        cell.flagLabel.text = @"";
         
+        //cell.flagLabel.font = [UIFont boldSystemFontOfSize:17];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+
         return cell;
     }
     else {
@@ -998,18 +1061,66 @@
         
         
         if (cell == nil) {
-            cell = [[[FavoriteCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+            cell = [[FavoriteCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             
             UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc]
                                                                  initWithTarget:self action:@selector(handleLongPress:)];
             [cell addGestureRecognizer:longPressRecognizer];
-            [longPressRecognizer release];
         }
     	
         Topic *tmpTopic = [[[self.arrayData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
         
         // Configure the cell...
-        [(UILabel *)[cell.contentView viewWithTag:999] setText:[tmpTopic aTitle]];
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            UIFont *font1 = [UIFont boldSystemFontOfSize:13.0f];
+            if ([tmpTopic isViewed]) {
+                font1 = [UIFont systemFontOfSize:13.0f];
+            }
+            NSDictionary *arialDict = [NSDictionary dictionaryWithObject: font1 forKey:NSFontAttributeName];
+            NSMutableAttributedString *aAttrString1 = [[NSMutableAttributedString alloc] initWithString:[tmpTopic aTitle] attributes: arialDict];
+            
+            UIFont *font2 = [UIFont fontWithName:@"fontello" size:15];
+            
+            NSMutableAttributedString *finalString = [[NSMutableAttributedString alloc]initWithString:@""];
+            
+            if (tmpTopic.isClosed) {
+                //            UIColor *fontcC = [UIColor orangeColor];
+                UIColor *fontcC = [UIColor colorWithHex:@"#4A4A4A" alpha:1.0];
+                
+                
+                NSDictionary *arialDict2c = [NSDictionary dictionaryWithObjectsAndKeys:font2, NSFontAttributeName, fontcC, NSForegroundColorAttributeName, nil];
+                NSMutableAttributedString *aAttrString2C = [[NSMutableAttributedString alloc] initWithString:@" " attributes: arialDict2c];
+                
+                [finalString appendAttributedString:aAttrString2C];
+                //NSLog(@"finalString1 %@", finalString);
+            }
+            
+            [finalString appendAttributedString:aAttrString1];
+            //NSLog(@"finalString3 %@", finalString);
+            
+            
+            
+            [(UILabel *)[cell.contentView viewWithTag:999] setAttributedText:finalString];
+
+            
+            
+            
+        }
+        else {
+            [(UILabel *)[cell.contentView viewWithTag:999] setText:[tmpTopic aTitle]];
+            
+            if ([tmpTopic isViewed]) {
+                [(UILabel *)[cell.contentView viewWithTag:999] setFont:[UIFont systemFontOfSize:13]];
+            }
+            else {
+                [(UILabel *)[cell.contentView viewWithTag:999] setFont:[UIFont boldSystemFontOfSize:13]];
+                
+            }
+        }
+        
+        
+        
+        
         //[(UILabel *)[cell.contentView viewWithTag:998] setText:[NSString stringWithFormat:@"%d messages", ([[arrayData objectAtIndex:theRow] aRepCount] + 1)]];
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -1029,13 +1140,7 @@
         
         [(UILabel *)[cell.contentView viewWithTag:997] setText:[NSString stringWithFormat:@"%@ - %@", [tmpTopic aAuthorOfLastPost], [tmpTopic aDateOfLastPost]]];
         
-        if ([tmpTopic isViewed]) {
-            [(UILabel *)[cell.contentView viewWithTag:999] setFont:[UIFont systemFontOfSize:13]];
-        }
-        else {
-            [(UILabel *)[cell.contentView viewWithTag:999] setFont:[UIFont boldSystemFontOfSize:13]];
-            
-        }	
+
         
         return cell;
     }
@@ -1055,7 +1160,6 @@
         
         MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[aTopic aURL]];
         self.messagesTableViewController = aView;
-        [aView release];
         
         //setup the URL
         self.messagesTableViewController.topicName = [aTopic aTitle];
@@ -1064,8 +1168,6 @@
         [self pushTopic];
         
     }
-
-	
 }
 
 -(void)handleLongPress:(UILongPressGestureRecognizer*)longPressRecognizer {
@@ -1074,7 +1176,7 @@
 		self.pressedIndexPath = [[self.favoritesTableView indexPathForRowAtPoint:longPressLocation] copy];
 
         if (self.topicActionSheet != nil) {
-            [self.topicActionSheet release], self.topicActionSheet = nil;
+            self.topicActionSheet = nil;
         }
         
 		self.topicActionSheet = [[UIActionSheet alloc] initWithTitle:@"Aller à..."
@@ -1111,7 +1213,6 @@
             
 			MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[tmpTopic aURLOfLastPage]];
 			self.messagesTableViewController = aView;
-			[aView release];
 			
 			self.messagesTableViewController.topicName = [tmpTopic aTitle];	
 			
@@ -1127,7 +1228,6 @@
             
 			MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[tmpTopic aURLOfLastPost]];
 			self.messagesTableViewController = aView;
-			[aView release];
 			
 			self.messagesTableViewController.topicName = [tmpTopic aTitle];	
 
@@ -1151,8 +1251,15 @@
             Topic *tmpTopic = [[[self.arrayData objectAtIndex:[indexPath section]] topics] objectAtIndex:[indexPath row]];
             
             UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-            pasteboard.string = [NSString stringWithFormat:@"%@%@", kForumURL, [tmpTopic aURLOfFirstPage]];
+            pasteboard.string = [NSString stringWithFormat:@"%@%@", [k RealForumURL], [tmpTopic aURLOfFirstPage]];
 
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Lien copié dans le presse-papiers"
+                                                           delegate:self cancelButtonTitle:nil otherButtonTitles: nil];
+            alert.tag = kAlertPasteBoardOK;
+            
+            
+            [alert show];
+            
 			break;
 			
 		}
@@ -1169,7 +1276,9 @@
 
 - (void)pushTopic {
     
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone || [[HFRplusAppDelegate sharedAppDelegate].detailNavigationController.topViewController isMemberOfClass:[BrowserViewController class]]) {
+    if (([self respondsToSelector:@selector(traitCollection)] && [HFRplusAppDelegate sharedAppDelegate].window.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) ||
+        [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone ||
+        [[HFRplusAppDelegate sharedAppDelegate].detailNavigationController.topViewController isMemberOfClass:[BrowserViewController class]]) {
         
         self.navigationItem.backBarButtonItem =
         [[UIBarButtonItem alloc] initWithTitle:@"Retour"
@@ -1188,12 +1297,15 @@
         
         [[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] setViewControllers:[NSMutableArray arrayWithObjects:messagesTableViewController, nil] animated:YES];
         
-        //        [[HFRplusAppDelegate sharedAppDelegate] setDetailNavigationController:messagesTableViewController];
+        if ([messagesTableViewController.splitViewController respondsToSelector:@selector(displayModeButtonItem)]) {
+            NSLog(@"PUSH ADD BTN");
+            [[HFRplusAppDelegate sharedAppDelegate] detailNavigationController].viewControllers[0].navigationItem.leftBarButtonItem = messagesTableViewController.splitViewController.displayModeButtonItem;
+            [[HFRplusAppDelegate sharedAppDelegate] detailNavigationController].viewControllers[0].navigationItem.leftItemsSupplementBackButton = YES;
+        }
         
-    }    
+    }
     
     [self setTopicViewed];
-    
     
 }
 
@@ -1242,13 +1354,12 @@
     textField.textAlignment = NSTextAlignmentCenter;
     textField.delegate = self;
     [textField addTarget:self action:@selector(textFieldTopicDidChange:) forControlEvents:UIControlEventEditingChanged];
-    textField.keyboardAppearance = UIKeyboardAppearanceAlert;
+    textField.keyboardAppearance = UIKeyboardAppearanceDefault;
     textField.keyboardType = UIKeyboardTypeNumberPad;
     
 	[alert setTag:669];
 	[alert show];
     
-	[alert release];
 
 }
 
@@ -1298,6 +1409,11 @@
 	if (([alertView tag] == 669)) {
 
 	}
+    else if ([alertView tag] == kAlertPasteBoardOK) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [alertView dismissWithClickedButtonIndex:0 animated:YES];
+        });
+    }
 }
 
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
@@ -1324,7 +1440,7 @@
 	{
 		
 		ASIFormDataRequest  *arequest =  
-		[[[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/modo/manageaction.php?config=hfr.inc&cat=0&type_page=forum1f&moderation=0", kForumURL]]] autorelease];
+		[[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/modo/manageaction.php?config=hfr.inc&cat=0&type_page=forum1f&moderation=0", [k ForumURL]]]];
 		//delete
 
 		//NSLog(@"%@", [[HFRplusAppDelegate sharedAppDelegate] hash_check]);
@@ -1409,19 +1525,14 @@
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kStatusChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kLoginChangedNotification object:nil];
 
 	[request cancel];
 	[request setDelegate:nil];
-	self.request = nil;
 
-	self.statusMessage = nil;
 	
-    self.topicActionSheet = nil;
     
-	self.arrayNewData = nil;
-    self.arrayData = nil;
 
-    [super dealloc];
 }
 
 

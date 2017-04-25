@@ -6,11 +6,12 @@
 //
 
 #import "Topic.h"
+#import "RangeOfCharacters.h"
 
 
 @implementation Topic
 
-@synthesize aTitle;
+@synthesize _aTitle;
 @synthesize aURL;
 
 @synthesize aRepCount;
@@ -29,13 +30,13 @@
 
 @synthesize maxTopicPage, curTopicPage, aURLOfFirstPage;
 
-@synthesize postID, catID;
+@synthesize postID, catID, isSticky, isClosed;
 
 
 - (id)init {
 	self = [super init];
 	if (self) {
-        self.aTitle = [NSString string];
+        _aTitle = [NSString stringWithFormat:@""];
         self.aURL = [NSString string];
 
         self.aURLOfFirstPage = [NSString string];
@@ -50,7 +51,8 @@
         self.aAuthorOfLastPost = [NSString string];
         
         self.aAuthorOrInter = [NSString string];
-
+        self.isSticky = NO;
+        self.isClosed = NO;
 	}
 	return self;
 }
@@ -59,24 +61,17 @@
     return [NSString stringWithFormat:@"%d %@", self.postID, self.aTitle];
 }
 
--(void)dealloc {
-	self.aTitle	= nil;
-	self.aURL	= nil;
+- (void)setATitle:(NSString *)n {
+    _aTitle = [n filterTU];
 
-    self.aURLOfFirstPage		= nil;
 
-	self.aURLOfFlag		= nil;
-	self.aTypeOfFlag	= nil;
-	
-	self.aURLOfLastPost	= nil;
-	self.aURLOfLastPage	= nil;
-	
-	self.aDateOfLastPost	= nil;
-	self.aAuthorOfLastPost	= nil;	
-	self.aAuthorOrInter	= nil;	
-	
-	[super dealloc];
 }
+//Getter method
+- (NSString*) aTitle {
+    //NSLog(@"Returning name: %@", _aTitle);
+    return _aTitle;
+}
+
 
 @end
 

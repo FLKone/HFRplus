@@ -18,12 +18,12 @@
     RehostImage *rehostImage;
 }
 
-@property (nonatomic, retain) IBOutlet UIImageView *previewImage;
-@property (nonatomic, retain) IBOutlet UIButton *miniBtn;
-@property (nonatomic, retain) IBOutlet UIButton *previewBtn;
-@property (nonatomic, retain) IBOutlet UIButton *fullBtn;
-@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *spinner;
-@property (nonatomic, retain) RehostImage *rehostImage;
+@property (nonatomic, strong) IBOutlet UIImageView *previewImage;
+@property (nonatomic, strong) IBOutlet UIButton *miniBtn;
+@property (nonatomic, strong) IBOutlet UIButton *previewBtn;
+@property (nonatomic, strong) IBOutlet UIButton *fullBtn;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *spinner;
+@property (nonatomic, strong) RehostImage *rehostImage;
 
 -(IBAction)copyFull;
 -(IBAction)copyPreview;

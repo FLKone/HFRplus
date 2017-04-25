@@ -16,15 +16,16 @@
 #import <CommonCrypto/CommonDigest.h>
 
 #import "ASIHTTPRequest.h"
+#import "BlackList.h"
 
 @interface ParseMessagesOperation ()
-@property (nonatomic, assign) id <ParseMessagesOperationDelegate> delegate;
-@property (nonatomic, retain) NSData *dataToParse;
-@property (nonatomic, retain) NSMutableArray *workingArray;
-@property (nonatomic, retain) LinkItem *workingEntry;
+@property (nonatomic, weak) id <ParseMessagesOperationDelegate> delegate;
+@property (nonatomic, strong) NSData *dataToParse;
+@property (nonatomic, strong) NSMutableArray *workingArray;
+@property (nonatomic, strong) LinkItem *workingEntry;
 @property (nonatomic, assign) BOOL reverse;
 @property (nonatomic, assign) int index;
-@property (nonatomic, retain) NSOperationQueue *queue;
+@property (nonatomic, strong) NSOperationQueue *queue;
 @end
 
 @implementation ParseMessagesOperation
@@ -42,7 +43,7 @@
 		self.index = theIndex;
 		self.reverse = isReverse;
 
-        self.queue = [[[NSOperationQueue alloc] init] autorelease];
+        self.queue = [[NSOperationQueue alloc] init];
 
     }
     return self;
@@ -51,15 +52,6 @@
 // -------------------------------------------------------------------------------
 //	dealloc:
 // -------------------------------------------------------------------------------
-- (void)dealloc
-{
-
-    [dataToParse release];
-    [workingEntry release];
-    [workingArray release];
-    	
-    [super dealloc];
-}
 
 // -------------------------------------------------------------------------------
 //	main:
@@ -68,20 +60,20 @@
 - (void)main
 {
 
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
     
-	if ([self isCancelled])
-	{
-		//NSLog(@"main canceled");		
-	}	
-	self.workingArray = [NSMutableArray array];
+		if ([self isCancelled])
+		{
+			//NSLog(@"main canceled");		
+		}	
+		self.workingArray = [NSMutableArray array];
 
-	NSError * error = nil;
-	HTMLParser *myParser = [[HTMLParser alloc] initWithData:dataToParse error:&error];
-	
-	if (![self isCancelled])
-	{
-		[self.delegate didStartParsing:myParser];
+		NSError * error = nil;
+		HTMLParser *myParser = [[HTMLParser alloc] initWithData:dataToParse error:&error];
+		
+		if (![self isCancelled])
+		{
+			[self.delegate didStartParsing:myParser];
         
         
         [self parseData:myParser];
@@ -94,11 +86,11 @@
             
         }
         
-	}
+		}
     
-    [myParser release], myParser = nil;
+    myParser = nil;
 	
-	[pool release];
+	}
 	
 
 
@@ -116,7 +108,7 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-	NSString *diskCachePath = [[[paths objectAtIndex:0] stringByAppendingPathComponent:@"ImageCache"] retain];
+	NSString *diskCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"ImageCache"];
 	
 	if (![fileManager fileExistsAtPath:diskCachePath])
 	{
@@ -171,14 +163,34 @@
 			//fasTest.name = [[fasTest.name componentsSeparatedByCharactersInSet:[[NSCharacterSet letterCharacterSet] invertedSet]] componentsJoinedByString:@""];
 			
 			if ([fasTest.name isEqualToString:@"Publicité"]) {
-				[fasTest release];
 				//[pool2 drain];
 				continue;
 			}
-
+            
+            if ([[BlackList shared] isBL:fasTest.name]) {
+                [fasTest setIsBL:YES];
+            }
+            
 			HTMLNode * avatarNode = [messageNode findChildWithAttribute:@"class" matchingName:@"avatar_center" allowPartial:NO];
 			HTMLNode * contentNode = [messageNode findChildWithAttribute:@"id" matchingName:@"para" allowPartial:YES];
-
+            fasTest.dicoHTML = rawContentsOfNode([contentNode _node], [myParser _doc]);
+            
+            if (![fasTest isBL]) {
+                for (NSDictionary *dic in [[BlackList shared] getAll]) {
+                    if ([fasTest.dicoHTML rangeOfString:[dic objectForKey:@"word"] options:NSCaseInsensitiveSearch].location != NSNotFound) {
+                        [fasTest setIsBL:YES];
+                        break;
+                    }
+                }
+            }
+            
+            
+            //recherche
+            NSArray * nodesInMsg = [[messageNode findChildOfClass:@"messCase2"] children];
+            if (nodesInMsg.count >= 2 && [[[nodesInMsg objectAtIndex:1] tagName] isEqualToString:@"a"]) {
+                fasTest.dicoHTML = [rawContentsOfNode([[nodesInMsg objectAtIndex:1] _node], [myParser _doc]) stringByAppendingString:fasTest.dicoHTML];
+            }
+            
 			//NSDate *then1 = [NSDate date]; // Create a current date
 
 			/* OLD SLOW
@@ -198,6 +210,9 @@
 			HTMLNode * editNode = [[messageNode findChildWithAttribute:@"alt" matchingName:@"edit" allowPartial:NO] parent];
 			fasTest.urlEdit = [editNode className];
 
+            HTMLNode * alertNode = [messageNode findChildWithAttribute:@"href" matchingName:@"/user/modo.php" allowPartial:YES];
+            fasTest.urlAlert = [alertNode getAttributeNamed:@"href"];
+                        
 			HTMLNode * profilNode = [[messageNode findChildWithAttribute:@"alt" matchingName:@"profil" allowPartial:NO] parent];
 			fasTest.urlProfil = [profilNode getAttributeNamed:@"href"];
             
@@ -214,7 +229,9 @@
 			
 			//NSDate *then2 = [NSDate date]; // Create a current date
 
-			fasTest.dicoHTML = rawContentsOfNode([contentNode _node], [myParser _doc]);
+            // Message URL =
+            // http://forum.hardware.fr/forum2.php?config=hfr.inc&cat=_CATID_&subcat=_SUBCATID_&post=__TOPIC_ID&page=1&p=1&sondage=&owntopic=&trash=&trash_post=&print=
+            //          &numreponse=_POSTID_&quote_only=0&new=0&nojs=0#t_POSTID_
 
 			//NSDate *then3 = [NSDate date]; // Create a current date
 
@@ -283,9 +300,10 @@
 					//async dl 
                     
                     ASIHTTPRequest *operation = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:tmpURL]];
+                    __weak ASIHTTPRequest *operation_ = operation;
                     [operation setCompletionBlock:^{
                         //NSLog(@"setCompletionBlock");
-                        [fileManager createFileAtPath:key contents:[operation responseData] attributes:nil];
+                        [fileManager createFileAtPath:key contents:[operation_ responseData] attributes:nil];
                         fasTest.imageUI = key;
                     }];
                     [operation setFailedBlock:^{
@@ -301,12 +319,10 @@
             //== AVATAR BY NAME v2
             
 			if ([self isCancelled]) {
-				[fasTest release];
 				break;
 			}
 			
 			[self.workingArray addObject:fasTest];
-			[fasTest release];
 			
 			
 			
@@ -335,9 +351,7 @@
 
 	//NSLog(@"TOPICS Parse Time elapsed Total		: %f", [nowT timeIntervalSinceDate:thenT]);
 
-	[fileManager release];
 	
-	[diskCachePath release];
 
 }
 

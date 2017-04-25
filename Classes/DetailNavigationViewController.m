@@ -33,7 +33,7 @@
 
     
     [[self topViewController] setTitle:@"HFR+"];
-    
+
 }
 
 - (void)viewDidUnload
@@ -44,15 +44,17 @@
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-
     [[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] popOver] dismissPopoverAnimated:YES];
     
     if ([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortrait || [[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortraitUpsideDown) {
-
+        NSLog(@"WILL SHOW DETAIL");
         UINavigationItem *navItem = [[[[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] viewControllers] objectAtIndex:0] navigationItem];
         SplitViewController *mySplit = [[HFRplusAppDelegate sharedAppDelegate] splitViewController];
         
-        [navItem setLeftBarButtonItem:[mySplit mybarButtonItem] animated:YES];
+        if (![mySplit respondsToSelector:@selector(displayModeButtonItem)]) {
+            NSLog(@"SHOW DETAIL ADD BUTN");
+            [navItem setLeftBarButtonItem:[mySplit mybarButtonItem] animated:NO];
+        }
     }
 
     if ([viewController isKindOfClass:[MessagesTableViewController class]]) {

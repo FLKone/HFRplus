@@ -11,6 +11,8 @@
 #import "UIImageView+WebCache.h"
 #import <QuartzCore/QuartzCore.h>
 #import "Constants.h"
+#import "ThemeManager.h"
+#import "ThemeColors.h"
 
 @implementation RehostCell
 @synthesize previewImage, rehostImage;
@@ -48,7 +50,15 @@
 
     }
         
+    [self applyTheme];
 }
+
+-(void)applyTheme {
+    Theme theme = [[ThemeManager sharedManager] theme];
+    self.backgroundColor = [ThemeColors cellBackgroundColor:theme];
+    self.contentView.superview.backgroundColor =[ThemeColors cellBackgroundColor:theme];
+}
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
@@ -72,22 +82,24 @@
 	url = [url stringByReplacingOccurrencesOfString:@"[/img]" withString:@""];
 	url = [url stringByReplacingOccurrencesOfString:@"hfr-rehost.net" withString:@"reho.st"];
     //NSLog(@"url = %@", url);
-    [self.previewImage setImageWithURL:[NSURL URLWithString:url] success:^(UIImage *image) {
-        //sd
-       // NSLog(@"OK %@", image);
-        [self.previewImage setImage:image];
-        [self.previewImage setHidden:NO];
 
-        [self.miniBtn setHidden:NO];
-        [self.previewBtn setHidden:NO];
-        [self.fullBtn setHidden:NO];
-        [self.miniBtn setHidden:NO];
+    __weak RehostCell *self_ = self;
+
+    [self.previewImage sd_setImageWithURL:[NSURL URLWithString:url] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        //
+        if (image) {
+            [self_.previewImage setImage:image];
+            [self_.previewImage setHidden:NO];
+            
+            [self_.miniBtn setHidden:NO];
+            [self_.previewBtn setHidden:NO];
+            [self_.fullBtn setHidden:NO];
+            [self_.miniBtn setHidden:NO];
+        }
         
-        [self.spinner stopAnimating];
-
-    } failure:^(NSError *error) {
-        //sd
+        [self_.spinner stopAnimating];
     }];
+    
 }
 
 -(IBAction)copyFull {
@@ -96,7 +108,6 @@
 	
 	[alert setTag:111];
 	[alert show];
-	[alert release];
 }
 
 -(IBAction)copyPreview {
@@ -105,7 +116,6 @@
 	
 	[alert setTag:222];
 	[alert show];
-	[alert release];
 }
 
 -(IBAction)copyMini {
@@ -116,7 +126,6 @@
 	
 	[alert setTag:333];
 	[alert show];
-	[alert release];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

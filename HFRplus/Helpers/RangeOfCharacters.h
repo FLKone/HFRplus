@@ -36,6 +36,8 @@
 - (NSString*)removeEmoji;
 - (NSString *)stripHTML;
 
+
+- (NSString *)filterTU;
 @end
 
 @interface UILabel (MultiLineAutoSize)

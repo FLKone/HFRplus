@@ -24,6 +24,7 @@
 
 	ASIHTTPRequest *request;
 	
+    bool reloadOnAppear;
 	STATUS status;
 	NSString *statusMessage;
 	IBOutlet UILabel *maintenanceView;	
@@ -33,28 +34,29 @@
     BOOL showAll;
 }
 
-@property (nonatomic, retain) IBOutlet UITableView *favoritesTableView;
-@property (nonatomic, retain) IBOutlet UIView *loadingView;
+@property (nonatomic, strong) IBOutlet UITableView *favoritesTableView;
+@property (nonatomic, strong) IBOutlet UIView *loadingView;
 
-@property (nonatomic, retain) UIActionSheet *topicActionSheet;
+@property (nonatomic, strong) UIActionSheet *topicActionSheet;
 
-@property (nonatomic, retain) NSMutableArray *arrayData;
-@property (nonatomic, retain) NSMutableArray *arrayNewData;
-@property (nonatomic, retain) NSMutableArray *arrayCategories;
+@property (nonatomic, strong) NSMutableArray *arrayData;
+@property (nonatomic, strong) NSMutableArray *arrayNewData;
+@property (nonatomic, strong) NSMutableArray *arrayCategories;
 
-@property (nonatomic, retain) MessagesTableViewController *messagesTableViewController;
+@property (nonatomic, strong) MessagesTableViewController *messagesTableViewController;
 
 @property BOOL showAll;
 
+@property bool reloadOnAppear;
 @property STATUS status;
-@property (nonatomic, retain) NSString *statusMessage;
-@property (nonatomic, retain) IBOutlet UILabel *maintenanceView;
+@property (nonatomic, strong) NSString *statusMessage;
+@property (nonatomic, strong) IBOutlet UILabel *maintenanceView;
 
 -(NSString*)wordAfterString:(NSString*)searchString inString:(NSString*)selfString;
 
-@property (nonatomic, retain) NSIndexPath *pressedIndexPath;
+@property (nonatomic, strong) NSIndexPath *pressedIndexPath;
 
-@property (retain, nonatomic) ASIHTTPRequest *request;
+@property (strong, nonatomic) ASIHTTPRequest *request;
 
 -(void)loadDataInTableView:(NSData*)contentData;
 -(void)reset;

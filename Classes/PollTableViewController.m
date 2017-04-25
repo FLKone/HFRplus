@@ -28,25 +28,27 @@
 
 @synthesize arrayInputData, arraySubmitBtn, arrayOptions, arrayResults, stringQuestion, stringFooter, intNombreChoix, arraySelectedRows, delegate, tableViewPoll, loadingView, maintenanceView, statusMessage, request, status;
 
-- (id)initWithPollNode:(NSString *)aPollNodeString;
+- (id)initWithPollNode:(HTMLNode *)aPollNode andParser:(HTMLParser *)aPollParser;
 {
     self = [super init];
     if (self) {
 
         
         // Custom initialization
-        [self setupFromPollString:aPollNodeString];
+        [self setupFromPollNode:aPollNode andParser:aPollParser];
         
     }
     return self;
 }
 
-- (void)setupFromPollString:(NSString *)aPollNodeString {
-    //SONDAGE PARSE
-    HTMLParser * myParser = [[HTMLParser alloc] initWithString:aPollNodeString error:NULL];
-    HTMLNode * aPollNode = [myParser body]; //Find the body tag
-    aPollNode = [aPollNode findChildWithAttribute:@"class" matchingName:@"sondage" allowPartial:NO];
+
+- (void)setupFromPollNode:(HTMLNode *)aPollNode andParser:(HTMLParser *)myParser {
     
+    //SONDAGE PARSE
+    //HTMLNode * aPollNode = [myParser body]; //Find the body tag
+    //aPollNode = [aPollNode findChildWithAttribute:@"class" matchingName:@"sondage" allowPartial:NO];
+    
+    NSString *aPollNodeString = rawContentsOfNode([aPollNode _node], [myParser _doc]);
     //NSLog(@"aPollNode %@", rawContentsOfNode([aPollNode _node], [myParser _doc]));
     
     //INIT
@@ -59,7 +61,10 @@
     
     //LA Question
     HTMLNode *titleNode = [aPollNode findChildWithAttribute:@"class" matchingName:@"s2" allowPartial:NO];
-    self.stringQuestion = [titleNode allContents];
+   
+    
+    
+    self.stringQuestion =  [self fixedString:[titleNode allContents]];
     
     //Header infos
     NSString *regularExpressionString = @".*</b>(.*)<ol type=\"1\">.*";
@@ -95,8 +100,9 @@
     //NSLog(@"intNombreChoix %d", self.intNombreChoix);
     
     //Footer infos
-    self.stringFooter = rawContentsOfNode([[[aPollNode children] objectAtIndex:[aPollNode children].count-2] _node], [myParser _doc]);
+    self.stringFooter = rawContentsOfNode([[[aPollNode children] objectAtIndex:[aPollNode children].count-1] _node], [myParser _doc]);
     self.stringFooter = [[[self.stringFooter stringByReplacingOccurrencesOfString:@"<br>" withString:@"\r"] stripHTML] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    self.stringFooter = [self fixedString:self.stringFooter];
     
     
     NSArray *temporaryAllInputArray = [aPollNode findChildTags:@"input"];
@@ -136,8 +142,10 @@
             //                                    [[inputallRadio findChildTag:@"input"] getAttributeNamed:@"value"],
             //                                    [[inputallRadio findChildTag:@"input"] getAttributeNamed:@"type"]);
             //NSLog(@"text %@", [[inputallRadio findChildTag:@"label"] allContents]);
+
+
             
-            [self.arrayOptions addObject:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d. %@", nbO, [[inputallRadio findChildTag:@"label"] allContents]], [[inputallRadio findChildTag:@"input"] getAttributeNamed:@"name"], nil]];
+            [self.arrayOptions addObject:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d. %@", nbO, [self fixedString:[[inputallRadio findChildTag:@"label"] allContents]]], [[inputallRadio findChildTag:@"input"] getAttributeNamed:@"name"], nil]];
             
             //setObject:[[[inputallRadio children] objectAtIndex:1] allContents] forKey:[[[inputallRadio children] objectAtIndex:0] getAttributeNamed:@"name"]];
             nbO++;
@@ -156,7 +164,7 @@
         
         for (HTMLNode * inputResult in temporaryAllResultsArray) { //Loop through all the tags
             
-            //NSLog(@"inputResult %@", rawContentsOfNode([inputResult _node], [myParser _doc]));
+    
             
             
             if (![arrayResults objectAtIndex:i]) {
@@ -165,13 +173,19 @@
             
             if ([[inputResult getAttributeNamed:@"class"] isEqualToString:@"sondageLeft"]) {
                 //
-                [(NSMutableDictionary *)[arrayResults objectAtIndex:i] setObject:[NSNumber numberWithInt:[[[[inputResult children] objectAtIndex:3] allContents] integerValue]] forKey:@"pcVote"];
-                [(NSMutableDictionary *)[arrayResults objectAtIndex:i] setObject:[NSNumber numberWithInt:[[[[inputResult children] objectAtIndex:5] allContents] integerValue]] forKey:@"nbVote"];
+                
+                
+                [(NSMutableDictionary *)[arrayResults objectAtIndex:i] setObject:[NSNumber numberWithInt:[[self fixedString:[[[inputResult children] objectAtIndex:1] allContents]] integerValue]] forKey:@"pcVote"];
+                [(NSMutableDictionary *)[arrayResults objectAtIndex:i] setObject:[NSNumber numberWithInt:[[self fixedString:[[[inputResult children] objectAtIndex:2] allContents]] integerValue]] forKey:@"nbVote"];
                 continue;
             }
             else if ([[inputResult getAttributeNamed:@"class"] isEqualToString:@"sondageRight"]) {
                 //
-                [(NSMutableDictionary *)[arrayResults objectAtIndex:i] setObject:[[inputResult allContents] stringByReplacingOccurrencesOfString:@"\u00a0" withString:@""] forKey:@"labelVote"];
+
+                [(NSMutableDictionary *)[arrayResults objectAtIndex:i] setObject:[([self fixedString:[inputResult allContents]] ? [self fixedString:[inputResult allContents]] : @"") stringByReplacingOccurrencesOfString:@"  " withString:@" "] forKey:@"labelVote"];
+
+                
+                
                 continue;
             }
             else if ([[inputResult getAttributeNamed:@"class"] isEqualToString:@"spacer"]) {
@@ -222,6 +236,10 @@
 
 }
 
+-(NSString *)fixedString:(NSString *)orig {
+    return orig;
+}
+
 #pragma mark -
 #pragma mark Data lifecycle
 
@@ -232,11 +250,11 @@
 
 - (void)fetchContent
 {
-	//NSLog(@"fetchContent %@", [NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]);
+	//NSLog(@"fetchContent %@", [NSString stringWithFormat:@"%@%@", [k ForumURL], [self currentUrl]]);
 	self.status = kIdle;
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];
     
-	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [self.delegate currentUrl]]]]];
+	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [k ForumURL], [self.delegate currentUrl]]]]];
 	[request setShouldRedirect:NO];
     
 	[request setDelegate:self];
@@ -265,13 +283,14 @@
     HTMLParser * myParser = [[HTMLParser alloc] initWithString:[request responseString] error:NULL];
 	HTMLNode * bodyNode = [myParser body]; //Find the body tag
     NSLog(@"setupPoll");
-	HTMLNode * tmpPollNode = [[bodyNode findChildWithAttribute:@"class" matchingName:@"sondage" allowPartial:NO] retain];
+	HTMLNode * tmpPollNode = [bodyNode findChildWithAttribute:@"class" matchingName:@"sondage" allowPartial:NO];
 	if(tmpPollNode)
     {
-        NSString *pollNode = rawContentsOfNode([tmpPollNode _node], [myParser _doc]);
-        [self setupFromPollString:pollNode];
+        //NSString *pollNode = rawContentsOfNode([tmpPollNode _node], [myParser _doc]);
+        [self setupFromPollNode:tmpPollNode andParser:myParser];
         [self setupHeaders];
-        [self.delegate setPollNode:pollNode];
+        [self.delegate setPollNode:tmpPollNode];
+        [self.delegate setPollParser:myParser];
     }
     
 	//[self.arrayData removeAllObjects];
@@ -319,7 +338,6 @@
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
 	[alert setTag:667];
 	[alert show];
-	[alert release];	
 }
 
 
@@ -349,10 +367,10 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(doneButtonPressed:)] autorelease];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(doneButtonPressed:)];
     self.navigationItem.leftBarButtonItem = doneButton;
     
-    UIBarButtonItem *voteButton = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Vote", nil) style:UIBarButtonItemStyleDone target:self action:@selector(voteButtonPressed:)] autorelease];
+    UIBarButtonItem *voteButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Vote", nil) style:UIBarButtonItemStyleDone target:self action:@selector(voteButtonPressed:)];
     self.navigationItem.rightBarButtonItem = voteButton;
     [self.navigationItem.rightBarButtonItem setEnabled:NO];
     
@@ -380,7 +398,7 @@
     v.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     v.backgroundColor = [UIColor clearColor];
     
-    UILabel* titleLabel = [[[UILabel alloc] initWithFrame:CGRectMake(15, 0, self.view.frame.size.width - 30, height)] autorelease];
+    UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, self.view.frame.size.width - 30, height)];
     [titleLabel setText:text];
     [titleLabel setNumberOfLines:0];
     [titleLabel setFont:[UIFont boldSystemFontOfSize:11]];
@@ -391,7 +409,6 @@
     
     [self.tableViewPoll setTableFooterView:v];
     //[self.tableView setTableHeaderView:v];
-    [v release];
     
     // Get the text so we can measure it
     NSString *text2 = self.stringQuestion;
@@ -411,7 +428,7 @@
     v2.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     //    v2.backgroundColor = [UIColor clearColor];
     
-    UILabel* titleLabel2 = [[[UILabel alloc] initWithFrame:CGRectMake(15, 0, self.view.frame.size.width - 30, height2)] autorelease];
+    UILabel* titleLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, self.view.frame.size.width - 30, height2)];
     [titleLabel2 setText:text2];
     [titleLabel2 setNumberOfLines:0];
     [titleLabel2 setFont:[UIFont boldSystemFontOfSize:13]];
@@ -422,7 +439,6 @@
     
     [self.tableViewPoll setTableHeaderView:v2];
     //[self.tableView setTableHeaderView:v];
-    [v2 release];
     
 
 }
@@ -446,7 +462,7 @@
 
     
     ASIFormDataRequest  *arequest =
-    [[[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/user/vote.php?config=hfr.inc", kForumURL]]] autorelease];
+    [[ASIFormDataRequest  alloc]  initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/user/vote.php?config=hfr.inc", [k ForumURL]]]];
     
     for (NSString *key in self.arrayInputData) {
         [arequest setPostValue:[self.arrayInputData objectForKey:key] forKey:key];
@@ -470,9 +486,8 @@
             //NSLog(@"error: %@", [[arequest error] localizedDescription]);
             
             UIAlertView *alertKO = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[[arequest error] localizedDescription]
-                                                             delegate:self cancelButtonTitle:@"Retour" otherButtonTitles: nil];
+                                                             delegate:nil cancelButtonTitle:@"Retour" otherButtonTitles: nil];
             [alertKO show];
-            [alertKO release];
         }
         else if ([arequest responseString])
         {
@@ -490,15 +505,13 @@
                 UIAlertView *alertKKO = [[UIAlertView alloc] initWithTitle:nil message:[[messagesNode contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
                                                                   delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
                 [alertKKO show];
-                [alertKKO release];
             }
             else {
                 UIAlertView *alertOK = [[UIAlertView alloc] initWithTitle:@"Hooray !" message:[[messagesNode contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
-                                                                 delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-
+                                                                 delegate:self cancelButtonTitle:nil otherButtonTitles: nil];
+                [alertOK setTag:kAlertSondageOK];
                 [alertOK show];
 
-                [alertOK release];
                 
                 
                 //NSLog(@"responseString %@", [arequest responseString]);
@@ -525,7 +538,6 @@
             }
             
             
-            [myParser release];
         }
     }
 }
@@ -534,6 +546,30 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - AlertView Delegate
+
+- (void)didPresentAlertView:(UIAlertView *)alertView
+{
+    NSLog(@"didPresentAlertView PT %@", alertView);
+    
+    if ([alertView tag] == kAlertSondageOK) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [alertView dismissWithClickedButtonIndex:0 animated:YES];
+        });
+    }
+    
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"clickedButtonAtIndex PT %@ index : %ld", alertView, (long)buttonIndex);
+    
+    if (buttonIndex == 1 && alertView.tag == 667) {
+        [self fetchContent];
+    }
 }
 
 #pragma mark - Table view data source
@@ -609,7 +645,7 @@
         
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             [cell.textLabel setBackgroundColor:[UIColor redColor]];
             cell.textLabel.numberOfLines = 0;
         }

@@ -15,8 +15,8 @@
 	int lengthB4;
 }
 
-@property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) NSNumber *id;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSNumber *id;
 
 @property int length;
 @property int lengthB4;

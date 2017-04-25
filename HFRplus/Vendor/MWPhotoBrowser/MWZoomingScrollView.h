@@ -14,22 +14,13 @@
 @class MWPhotoBrowser, MWPhoto, MWCaptionView;
 
 @interface MWZoomingScrollView : UIScrollView <UIScrollViewDelegate, MWTapDetectingImageViewDelegate, MWTapDetectingViewDelegate> {
-	
-	MWPhotoBrowser *_photoBrowser;
-    id<MWPhoto> _photo;
-	
-    // This view references the related caption view for simplified
-    // handling in photo browser
-    MWCaptionView *_captionView;
-    
-	MWTapDetectingView *_tapView; // for background taps
-	MWTapDetectingImageView *_photoImageView;
-	UIActivityIndicatorView *_spinner;
-	
+
 }
 
-@property (nonatomic, retain) MWCaptionView *captionView;
-@property (nonatomic, retain) id<MWPhoto> photo;
+@property () NSUInteger index;
+@property (nonatomic) id <MWPhoto> photo;
+@property (nonatomic, weak) MWCaptionView *captionView;
+@property (nonatomic, weak) UIButton *selectedButton;
 
 - (id)initWithPhotoBrowser:(MWPhotoBrowser *)browser;
 - (void)displayImage;

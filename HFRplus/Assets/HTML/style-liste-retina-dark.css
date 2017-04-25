@@ -1,0 +1,105 @@
+#actualiserbtn.loading {
+	background-image: url(loadinfo-white@2x.gif);
+}
+
+#toolbarpage .button {
+	background-size: 100% 100%;	
+}
+
+
+#toolbarpage .button.begin {
+	background-image:url(buttonbeginoff@2x.png);
+}
+#toolbarpage .button.begin.active {
+	background-image:url(buttonbeginon@2x.png);
+}
+#toolbarpage .button.begin.hover {
+	background-image:url(buttonbeginhover@2x.png);
+}
+
+#toolbarpage .button.end {
+	background-image:url(buttonendoff@2x.png);
+}
+#toolbarpage .button.end.active {
+	background-image:url(buttonendon@2x.png);
+}
+#toolbarpage .button.end.hover {
+	background-image:url(buttonendhover@2x.png);
+}
+
+#toolbarpage {
+	border-top:1px solid #000;
+	background-image: url(toolbar3@2x.png);
+	background-size: 50% 100%;	
+}
+
+#toolbarpage .button2 {
+	background-size: 100% 100%;	
+}
+
+#toolbarpage .button2.begin {
+	background-image:url(buttonpreviousoff@2x.png);
+}
+#toolbarpage .button2.begin.active {
+	background-image:url(buttonpreviouson@2x.png);
+}
+#toolbarpage .button2.begin.hover {
+	background-image:url(buttonprevioushover@2x.png);
+}
+#toolbarpage .button2.end {
+	background-image:url(buttonnextoff@2x.png);
+}
+#toolbarpage .button2.end.active {
+	background-image:url(buttonnexton@2x.png);
+}
+#toolbarpage .button2.end.hover {
+	background-image:url(buttonnexthover@2x.png);
+}
+
+.message .content .right a.quotedhfrlink {
+	background-image:url(08-chat@2x.png) !important; 
+    background-size: 24px 22px;	
+}
+
+.message .header .left2.noavatar {
+        background-image:url('avatar_male_gray_on_dark_48x48@2x.png');
+
+}
+
+.message .content .right>a.cLink {
+    background-image: url(unselectedrow@2x.png);
+    background-size: 45px 50px;
+}
+
+.ios7 .message .header .right {
+    background-size: 100%;
+    background-image:url(plus-tinted@2x.png);
+}
+
+.ios7 #toolbarpage .button.begin {
+	background-image:url(ToolBarFastRewind_off@2x.png);
+}
+.ios7 #toolbarpage .button.begin.active {
+	background-image:url(ToolBarFastRewind_on_tinted@2x.png);
+}
+
+.ios7 #toolbarpage .button.end {
+	background-image:url(ToolBarFastForward_off@2x.png);
+}
+.ios7 #toolbarpage .button.end.active {
+	background-image:url(ToolBarFastForward_on_tinted@2x.png);
+}
+
+.ios7 #toolbarpage .button2.begin {
+	background-image:url(ToolBarPrevious_off@2x.png);
+}
+.ios7 #toolbarpage .button2.begin.active {
+	background-image:url(ToolBarPrevious_on_tinted@2x.png);
+}
+
+.ios7 #toolbarpage .button2.end {
+	background-image:url(ToolBarPlay_off@2x.png);
+}
+.ios7 #toolbarpage .button2.end.active {
+	background-image:url(ToolBarPlay_on_tinted@2x.png);
+}

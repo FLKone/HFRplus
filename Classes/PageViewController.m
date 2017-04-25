@@ -8,6 +8,8 @@
 #import "HFRplusAppDelegate.h"
 #import "PageViewController.h"
 #import "MessagesTableViewController.h"
+#import "ThemeColors.h"
+#import "ThemeManager.h"
 
 @implementation PageViewController
 @synthesize previousPageUrl, nextPageUrl;
@@ -36,6 +38,19 @@
 	//    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+-(void)viewWillAppear:(BOOL)animated   {
+    [super viewWillAppear:animated];
+    [self setThemeColors:[[ThemeManager sharedManager] theme]];
+}
+
+-(void)setThemeColors:(Theme)theme{
+    
+    UILabel *titleView = (UILabel *)[self navigationItem].titleView;
+    if([titleView respondsToSelector:@selector(setTextColor:)]){
+        [titleView setTextColor:[ThemeColors navItemTextColor:theme]];
+    }
+}
+
 -(void)fetchContent{
 	
 }
@@ -43,25 +58,66 @@
 -(void)choosePage {
 	//NSLog(@"choosePage");
 	
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Aller à la page" message:nil
-												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"OK", nil];
-	
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     
-    UITextField *textField = [alert textFieldAtIndex:0];
-    textField.placeholder = [NSString stringWithFormat:@"(numéro entre %d et %d)", [self firstPageNumber], [self lastPageNumber]];
-    textField.textAlignment = NSTextAlignmentCenter;
-    textField.delegate = self;
-    [textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-    textField.keyboardAppearance = UIKeyboardAppearanceAlert;
-    textField.keyboardType = UIKeyboardTypeNumberPad;
     
-	[alert setTag:668];
-	[alert show];
+    if ([UIAlertController class]) {
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Aller à la page"
+                                                                       message:nil
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        
+        
+        [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.placeholder = [NSString stringWithFormat:@"(numéro entre %d et %d)", [self firstPageNumber], [self lastPageNumber]];
+            textField.textAlignment = NSTextAlignmentCenter;
+            [textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+            textField.keyboardAppearance = UIKeyboardAppearanceDefault;
+            textField.keyboardType = UIKeyboardTypeNumberPad;
+            textField.delegate = self;
+        }];
+        
+        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Annuler" style:UIAlertActionStyleCancel
+                                                             handler:^(UIAlertAction * action) {
+                                                                 
+                                                             }];
+        
+        [alert addAction:cancelAction];
+        
+        
+        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction * action) {
+                                                                  [self gotoPageNumber:[[alert.textFields[0] text] intValue]];
+                                                              }];
+        
+        [alert addAction:defaultAction];
+        [self presentViewController:alert animated:YES completion:^{
+            
+        }];
+        
+        
+        
+    } else {
+    
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Aller à la page" message:nil
+                                                       delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"OK", nil];
+        
+        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+        
+        UITextField *textField = [alert textFieldAtIndex:0];
+        textField.placeholder = [NSString stringWithFormat:@"(numéro entre %d et %d)", [self firstPageNumber], [self lastPageNumber]];
+        textField.textAlignment = NSTextAlignmentCenter;
+        textField.delegate = self;
+        [textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        textField.keyboardAppearance = UIKeyboardAppearanceDefault;
+        textField.keyboardType = UIKeyboardTypeNumberPad;
+        
+        [alert setTag:668];
+        [alert show];
 
-	[alert release];
-	
+    }
 }
+
+
+
 
 - (void)goToPage:(NSString *)pageType;
 {
@@ -82,8 +138,14 @@
 	}	
 	else if ([pageType isEqualToString:@"choose"]) {
 		[self choosePage];
-	}	
-	
+	}
+    else if ([pageType isEqualToString:@"submitsearch"]) {
+        if ([self respondsToSelector:@selector(searchSubmit:)]) {
+            [self searchSubmit:nil];
+        }
+
+    }
+
 }
 
 -(void)gotoPageNumber:(int)number{
@@ -102,7 +164,7 @@
 	
 	//On remplace le numéro de page dans le titre
 	NSString *regexString  = @".*page=([^&]+).*";
-	NSRange   matchedRange = NSMakeRange(NSNotFound, 0UL);
+	NSRange   matchedRange;// = NSMakeRange(NSNotFound, 0UL);
 	NSRange   searchRange = NSMakeRange(0, self.currentUrl.length);
 	NSError  *error2        = NULL;
 	//int numPage;
@@ -184,6 +246,14 @@
     
     
 }
+- (IBAction)searchSubmit:(UIBarButtonItem *)sender {
+    
+}
+
+- (void)fetchContent:(int)from {
+    
+}
+
 -(void)firstPage {
     [self firstPage:nil];
 }
@@ -206,34 +276,29 @@
 	[self fetchContent];	
 }
 
-- (void)dealloc {
-	
-	self.currentUrl = nil;
-	
-	self.nextPageUrl = nil;
-	self.previousPageUrl = nil;
-
-	self.firstPageUrl = nil;
-	self.lastPageUrl = nil;
-	
-	
-    [super dealloc];
-	
-
-}
 
 - (void)didPresentAlertView:(UIAlertView *)alertView
 {
-	//NSLog(@"didPresentAlertView PT %@", alertView);
+	NSLog(@"didPresentAlertView PT %@", alertView);
 	
 	if (([alertView tag] == 666)) {
-        dispatch_after(200000, dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
             [alertView dismissWithClickedButtonIndex:0 animated:YES];
         });
     }
 	else if (([alertView tag] == 668)) {
 		//NSLog(@"keud");
 	}
+    else if (([alertView tag] == 6666) || ([alertView tag] == kAlertBlackListOK)) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [alertView dismissWithClickedButtonIndex:0 animated:YES];
+        });
+    }
+    else if ([alertView tag] == kAlertPasteBoardOK) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [alertView dismissWithClickedButtonIndex:0 animated:YES];
+        });
+    }
 	
 	
 }
@@ -249,14 +314,26 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-	//NSLog(@"clickedButtonAtIndex PT %@ index : %d", alertView, buttonIndex);
+	NSLog(@"clickedButtonAtIndex PT %@ index : %ld", alertView, (long)buttonIndex);
     
 	if (buttonIndex == 1 && alertView.tag == 667) {
 		[self fetchContent];
 	}
 	else if (buttonIndex == 1 && alertView.tag == 668) {
 		[self gotoPageNumber:[[[alertView textFieldAtIndex:0] text] intValue]];
-	}
+    }
+    else if (buttonIndex == 0 && alertView.tag == 770) {
+        NSLog(@"BIM");
+        //[self.navigationController popViewControllerAnimated:YES];
+        //[self gotoPageNumber:[[[alertView textFieldAtIndex:0] text] intValue]];
+    }
+    else if (buttonIndex == 1 && alertView.tag == 770) {
+        NSLog(@"BAM");
+        if ([self isKindOfClass:[MessagesTableViewController class]]) {
+            [(MessagesTableViewController *)self.navigationController.topViewController toggleSearch:YES];
+        }
+        //[self gotoPageNumber:[[[alertView textFieldAtIndex:0] text] intValue]];
+    }
 }
 
 @end

@@ -11,10 +11,6 @@
 @implementation UIAlertViewURL
 @synthesize stringURL;
 
-- (void)dealloc {
-	self.stringURL = nil;
-    [super dealloc];
-}
 
 
 @end

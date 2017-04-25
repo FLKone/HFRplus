@@ -19,26 +19,30 @@
 #import "QuoteMessageViewController.h"
 #import "EditMessageViewController.h"
 #import "NewMessageViewController.h"
+#import "DeleteMessageViewController.h"
+#import "AlerteModoViewController.h"
 
-#import "PhotoViewController.h"
 #import "MWPhotoBrowser.h"
 
 @class HTMLNode;
 @class MessageDetailViewController;
 @class ASIHTTPRequest;
 
-#import "MessageWebView.h"
 
-@interface MessagesTableViewController : PageViewController <UIActionSheetDelegate, ParseMessagesOperationDelegate, AddMessageViewControllerDelegate, PhotoViewControllerDelegate, UIScrollViewDelegate> {
+@interface MessagesTableViewController : PageViewController <UIActionSheetDelegate, ParseMessagesOperationDelegate, AddMessageViewControllerDelegate, UIScrollViewDelegate, AlerteModoViewControllerDelegate> {
     
-	MessageWebView *messagesWebView;
-	UIView *loadingView;
+	UIWebView *messagesWebView;
+    UIView *loadingView;
+    UILabel *loadingViewLabel;
+    UIActivityIndicatorView *loadingViewIndicator;
+    UILabel *errorLabelView;
 	UIView *overview;
 	
-	NSString *topicName;
+
 	
 	NSString *topicAnswerUrl;
-	
+	BOOL errorReported;
+    
 	BOOL loaded; //to load data only once
 	BOOL isLoading; //to check is refresh ON
 	BOOL isRedFlagged; //to check is refresh ON
@@ -82,59 +86,95 @@
     UIActionSheet *styleAlert;
     
     //Poll
-    NSString *pollNode;
+    HTMLNode *pollNode;
+    HTMLParser *pollParser;
+    
+    //Search
+    UIView *searchBg;
+    UIView *searchBox;
+    
+    UIToolbar *searchToolbar;
+    UIBarButtonItem *searchBtnItem;
+    UIBarButtonItem *searchFilterBtnItem;
+    UILabel *searchLabel;
+    
+    UITextField *searchKeyword;
+    UITextField *searchPseudo;
+    UISwitch *searchFilter;
+    UISwitch *searchFromFP;
+    NSMutableDictionary *searchInputData;
+    BOOL isSearchInstra;
 }
 
 
-@property (nonatomic, retain) IBOutlet MessageWebView *messagesWebView;
-@property (nonatomic, retain) IBOutlet UIView *loadingView;
-@property (nonatomic, retain) IBOutlet UIView *overview;
+@property (nonatomic, strong) IBOutlet UIWebView *messagesWebView;
+@property (nonatomic, strong) IBOutlet UIView *loadingView;
+@property (nonatomic, strong) IBOutlet UILabel *loadingViewLabel;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *loadingViewIndicator;
+@property (nonatomic, strong) IBOutlet UILabel *errorLabelView;
+@property (nonatomic, strong) IBOutlet UIView *overview;
 
-@property (nonatomic, retain) NSString *topicAnswerUrl;
-@property (nonatomic, retain) NSString *topicName;
+@property (nonatomic, strong) NSString *topicAnswerUrl;
+@property (nonatomic, strong, setter=setTopicName:) NSString *_topicName;
 
-@property (nonatomic, retain) NSDate *firstDate;
+@property (nonatomic, strong) NSDate *firstDate;
+
+@property BOOL errorReported;
 
 @property BOOL loaded;
 @property BOOL isLoading;
 @property BOOL isRedFlagged;
 @property BOOL isUnreadable;
-@property (nonatomic, retain) NSString *isFavoritesOrRead;
+@property (nonatomic, strong) NSString *isFavoritesOrRead;
 
 @property BOOL isViewed;
 
-@property (nonatomic, retain) NSMutableArray *arrayData;
-@property (nonatomic, retain) NSMutableArray *updatedArrayData;
+@property (nonatomic, strong) NSMutableArray *arrayData;
+@property (nonatomic, strong) NSMutableArray *updatedArrayData;
 
-@property (nonatomic, retain) MessageDetailViewController *detailViewController;
-@property (nonatomic, retain) MessagesTableViewController *messagesTableViewController;
+@property (nonatomic, strong) MessageDetailViewController *detailViewController;
+@property (nonatomic, strong) MessagesTableViewController *messagesTableViewController;
 
-@property (nonatomic, retain) UISwipeGestureRecognizer *swipeLeftRecognizer;
-@property (nonatomic, retain) UISwipeGestureRecognizer *swipeRightRecognizer;
+@property (nonatomic, strong) UISwipeGestureRecognizer *swipeLeftRecognizer;
+@property (nonatomic, strong) UISwipeGestureRecognizer *swipeRightRecognizer;
 
-@property (nonatomic, retain) UIActionSheet *styleAlert;
+@property (nonatomic, strong) UIActionSheet *styleAlert;
 
-@property (nonatomic, retain) NSOperationQueue *queue; //v3
+@property (nonatomic, strong) NSOperationQueue *queue; //v3
 
-@property (nonatomic, retain) NSString *lastStringFlagTopic;
-@property (nonatomic, retain) NSString *stringFlagTopic;
-@property (nonatomic, retain) NSString *editFlagTopic;
+@property (nonatomic, strong) NSString *lastStringFlagTopic;
+@property (nonatomic, strong) NSString *stringFlagTopic;
+@property (nonatomic, strong) NSString *editFlagTopic;
 
-@property (nonatomic, retain) NSMutableDictionary *arrayInputData;
-@property (nonatomic, retain) UIToolbar *aToolbar;
+@property (nonatomic, strong) NSMutableDictionary *arrayInputData;
+@property (nonatomic, strong) UIToolbar *aToolbar;
 
-@property (retain, nonatomic) ASIHTTPRequest *request;
+@property (strong, nonatomic) ASIHTTPRequest *request;
 
-@property (retain, nonatomic) NSMutableArray *arrayAction;
+@property (strong, nonatomic) NSMutableArray *arrayAction;
 @property int curPostID;
 
 @property BOOL isAnimating;
 
-@property (nonatomic, retain) NSString *pollNode;
+@property (nonatomic, strong) HTMLNode *pollNode;
+@property (nonatomic, strong) HTMLParser *pollParser;
 
+@property (nonatomic, strong) IBOutlet UIView *searchBg;
+@property (nonatomic, strong) IBOutlet UIView *searchBox;
 
-@property (retain, nonatomic) NSMutableArray *arrayActionsMessages;
+@property (nonatomic, strong) IBOutlet UIToolbar *searchToolbar;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *searchBtnItem;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *searchFilterBtnItem;
+@property (nonatomic, strong) IBOutlet UILabel *searchLabel;
 
+@property (nonatomic, strong) IBOutlet UITextField *searchKeyword;
+@property (nonatomic, strong) IBOutlet UITextField *searchPseudo;
+@property (nonatomic, strong) IBOutlet UISwitch *searchFilter;
+@property (strong, nonatomic) IBOutlet UISwitch *searchFromFP;
+@property (nonatomic, strong) NSMutableDictionary *searchInputData;
+@property BOOL isSearchInstra;
+
+@property (strong, nonatomic) NSMutableArray *arrayActionsMessages;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andUrl:(NSString *)theTopicUrl;
 - (void)optionsTopic:(id)sender;
@@ -156,12 +196,24 @@
 -(void)searchNewMessages:(int)from;
 -(void)searchNewMessages;
 -(void)fetchContentinBackground:(id)from;
+-(void)forceButtonMenu;
 
 -(void)webViewDidFinishLoadDOM;
 
 -(BOOL) canBeFavorite;
 -(void) EcrireCookie:(NSString *)nom withVal:(NSString *)valeur;
 -(NSString *) LireCookie:(NSString *)nom;
--(void)  EffaceCookie:(NSString *)nom;
+-(void) EffaceCookie:(NSString *)nom;
+
+-(void)textQuote:(id)sender;
+-(void)textQuoteBold:(id)sender;
+
+- (IBAction)searchFilterChanged:(UISwitch *)sender;
+- (IBAction)searchFromFPChanged:(UISwitch *)sender;
+- (IBAction)searchPseudoChanged:(UITextField *)sender;
+- (IBAction)searchKeywordChanged:(UITextField *)sender;
+- (void)toggleSearch:(BOOL) active;
+- (IBAction)searchNext:(UITextField *)sender;
+
 
 @end

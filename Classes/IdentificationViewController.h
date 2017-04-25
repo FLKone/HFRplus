@@ -10,15 +10,16 @@
 @protocol IdentificationViewControllerDelegate;
 
 @interface IdentificationViewController : UIViewController {
-	id <IdentificationViewControllerDelegate> delegate;
+	id <IdentificationViewControllerDelegate> __weak delegate;
 
 	IBOutlet UITextField *pseudoField;
 	IBOutlet UITextField *passField;
+    IBOutlet UILabel *titleLabel;
 }
-@property (nonatomic, assign) id <IdentificationViewControllerDelegate> delegate;
+@property (nonatomic, weak) id <IdentificationViewControllerDelegate> delegate;
 
-@property (nonatomic, retain) UITextField* pseudoField;
-@property (nonatomic, retain) UITextField* passField;
+@property (nonatomic, strong) UITextField* pseudoField;
+@property (nonatomic, strong) UITextField* passField;
 
 -(IBAction) done:(id)sender;
 

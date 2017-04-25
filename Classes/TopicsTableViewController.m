@@ -27,6 +27,9 @@
 
 #import "AideViewController.h"
 
+#import "ThemeColors.h"
+#import "ThemeManager.h"
+
 @implementation TopicsTableViewController
 @synthesize forumNewTopicUrl, forumName, loadingView, topicsTableView, arrayData, arrayNewData;
 @synthesize messagesTableViewController;
@@ -55,7 +58,8 @@
 
 - (void)cancelFetchContent
 {
-	[request cancel];
+    [self.request cancel];
+    [self setRequest:nil];
 }
 
 - (void)fetchContent
@@ -66,11 +70,12 @@
 
 - (void)fetchContentTrigger
 {
-	//NSLog(@"fetchContent %@", [NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]);
+
+	//NSLog(@"fetchContent %@", [NSString stringWithFormat:@"%@%@", [k ForumURL], [self currentUrl]]);
 	self.status = kIdle;
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];
 
-	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]]]];
+	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [k ForumURL], [self currentUrl]]]]];
 	[request setShouldRedirect:NO];
 
 	[request setDelegate:self];
@@ -139,11 +144,12 @@
     */
 	
 	[(UISegmentedControl *)[self.navigationItem.titleView.subviews objectAtIndex:0] setUserInteractionEnabled:YES];
+    [self cancelFetchContent];
 }
 
 - (void)fetchContentFailed:(ASIHTTPRequest *)theRequest
 {
-
+    NSLog(@"fetchContentFailed");
     [self.maintenanceView setText:@"oops :o"];
     
     //[self.loadingView setHidden:YES];
@@ -158,7 +164,8 @@
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
 	[alert setTag:667];
 	[alert show];
-	[alert release];	
+    
+    [self cancelFetchContent];
 }
 
 
@@ -216,7 +223,6 @@
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kStatusChangedNotification object:self userInfo:notif];
         
-		[myParser release];
 		return;
 	}
 
@@ -243,7 +249,7 @@
 
 	//On remplace le numéro de page dans le titre
 	NSString *regexString  = @".*page=([^&]+).*";
-	NSRange   matchedRange = NSMakeRange(NSNotFound, 0UL);
+    NSRange   matchedRange;// = NSMakeRange(NSNotFound, 0UL);
 	NSRange   searchRange = NSMakeRange(0, self.currentUrl.length);
 	NSError  *error2        = NULL;
 	//int numPage;
@@ -265,7 +271,7 @@
 	
 	//New Topic URL
 	HTMLNode * forumNewTopicNode = [bodyNode findChildWithAttribute:@"id" matchingName:@"md_btn_new_topic" allowPartial:NO];
-	forumNewTopicUrl = [[forumNewTopicNode getAttributeNamed:@"href"] retain];
+	forumNewTopicUrl = [forumNewTopicNode getAttributeNamed:@"href"];
 
 	if(forumNewTopicUrl.length > 0) self.navigationItem.rightBarButtonItem.enabled = YES;
 	//-
@@ -321,7 +327,6 @@
 			if ([self pageNumber] == [self firstPageNumber]) {
 				NSString *newFirstPageUrl = [[NSString alloc] initWithString:[self currentUrl]];
 				[self setFirstPageUrl:newFirstPageUrl];
-				[newFirstPageUrl release];
 			}
 			else {
 				NSString *newFirstPageUrl;
@@ -334,7 +339,6 @@
 				}
 				
 				[self setFirstPageUrl:newFirstPageUrl];
-				[newFirstPageUrl release];
 			}
 			
 			[self setLastPageNumber:[[[temporaryNumPagesArray lastObject] contents] intValue]];
@@ -342,7 +346,6 @@
 			if ([self pageNumber] == [self lastPageNumber]) {
 				NSString *newLastPageUrl = [[NSString alloc] initWithString:[self currentUrl]];
 				[self setLastPageUrl:newLastPageUrl];
-				[newLastPageUrl release];
 			}
 			else {
 				NSString *newLastPageUrl;
@@ -355,7 +358,6 @@
 				}
 				
 				[self setLastPageUrl:newLastPageUrl];
-				[newLastPageUrl release];
 			}
 			
 			/*
@@ -375,7 +377,20 @@
                 tmptoolbar.opaque = NO;
                 tmptoolbar.translucent = YES;
                 
-                [[tmptoolbar.subviews objectAtIndex:1] setHidden:YES];
+                if (tmptoolbar.subviews.count > 1)
+                {
+                    [[tmptoolbar.subviews objectAtIndex:1] setHidden:YES];
+                }
+                
+                if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"10.0")) {                    
+                    [tmptoolbar setBackgroundImage:[ThemeColors imageFromColor:[ThemeColors toolbarPageBackgroundColor:[[ThemeManager sharedManager] theme]]]
+                                forToolbarPosition:UIBarPositionAny
+                                        barMetrics:UIBarMetricsDefault];
+                    [tmptoolbar setShadowImage:[UIImage new]
+                            forToolbarPosition:UIBarPositionAny];
+                    
+                }
+                
                 
             }
             
@@ -445,7 +460,7 @@
             }
             else
             {
-                [labelBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                [labelBtn setTitleColor:[ThemeColors cellIconColor:[[ThemeManager sharedManager] theme]] forState:UIControlStateNormal];
             }
 			UIBarButtonItem *systemItem3 = [[UIBarButtonItem alloc] initWithCustomView:labelBtn];
 			
@@ -462,15 +477,8 @@
 			NSArray *items = [NSArray arrayWithObjects: systemItem1, fixItem, systemItemPrevious, flexItem, systemItem3, flexItem, systemItemNext, fixItem, systemItem2, nil];
 			
 			//release buttons
-			[systemItem1 release];
-			[systemItem2 release];
-			[systemItem3 release];
-			[systemItemNext release];
-			[systemItemPrevious release];
 			
-			[flexItem release];
 			
-			[fixItem release];	
 
 			//add array of buttons to toolbar
 			[tmptoolbar setItems:items animated:NO];
@@ -485,12 +493,11 @@
                         frame.origin.y = -frame.size.height;
                         UIView* grayView = [[UIView alloc] initWithFrame:frame];
                         grayView.tag = 666777;
-                        grayView.backgroundColor = [UIColor whiteColor];
+                        grayView.backgroundColor = [ThemeColors addMessageBackgroundColor:[[ThemeManager sharedManager] theme]];
                         [self.topicsTableView insertSubview:grayView atIndex:0];
-                        [grayView release];
                     }
 
-                    [self.topicsTableView setBackgroundColor:[UIColor colorWithRed:239/255.0f green:239/255.0f blue:244/255.0f alpha:1.0f]];
+                    [self.topicsTableView setBackgroundColor:[ThemeColors addMessageBackgroundColor:[[ThemeManager sharedManager] theme]]];
                 }
                 
 				self.topicsTableView.tableFooterView = tmptoolbar;
@@ -500,7 +507,6 @@
 			}
 
 			//self.aToolbar = tmptoolbar;
-			[tmptoolbar release];
 			
 		}
 		else {
@@ -561,7 +567,6 @@
                                @"Aucun message", @"message", nil];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kStatusChangedNotification object:self userInfo:notif];
-		[myParser release];
 		return;
 	}
 	
@@ -577,151 +582,147 @@
 
 	for (HTMLNode * topicNode in temporaryTopicsArray) { //Loop through all the tags
         
-		NSAutoreleasePool * pool2 = [[NSAutoreleasePool alloc] init];
+		@autoreleasepool {
 
-		Topic *aTopic = [[Topic alloc] init];
-		
-		//Title & URL
-		HTMLNode * topicTitleNode = [topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase3" allowPartial:NO];
+			Topic *aTopic = [[Topic alloc] init];
+			
+			//Title & URL
+			HTMLNode * topicTitleNode = [topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase3" allowPartial:NO];
 
         NSString *aTopicAffix = [NSString string];
         NSString *aTopicSuffix = [NSString string];
 
-		
-		if ([[topicNode className] rangeOfString:@"ligne_sticky"].location != NSNotFound) {
-			aTopicAffix = [aTopicAffix stringByAppendingString:@""];//➫ ➥▶✚
-		}
-		if ([topicTitleNode findChildWithAttribute:@"alt" matchingName:@"closed" allowPartial:NO]) {
-			aTopicAffix = [aTopicAffix stringByAppendingString:@""];
-		}
-		
-		if (aTopicAffix.length > 0) {
-			aTopicAffix = [aTopicAffix stringByAppendingString:@" "];
-		}
-
-		NSString *aTopicTitle = [[NSString alloc] initWithFormat:@"%@%@%@", aTopicAffix, [[topicTitleNode allContents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]], aTopicSuffix];
-		[aTopic setATitle:aTopicTitle];
-		[aTopicTitle release];
-
-		NSString *aTopicURL = [[NSString alloc] initWithString:[[topicTitleNode findChildTag:@"a"] getAttributeNamed:@"href"]];
-		[aTopic setAURL:aTopicURL];
-		[aTopicURL release];
-
-		//Answer Count
-		HTMLNode * numRepNode = [topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase7" allowPartial:NO];
-		[aTopic setARepCount:[[numRepNode contents] intValue]];
-
-
-		//Setup of Flag		
-		HTMLNode * topicFlagNode = [topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase5" allowPartial:NO];
-		HTMLNode * topicFlagLinkNode = [topicFlagNode findChildTag:@"a"];
-		if (topicFlagLinkNode) {
-			HTMLNode * topicFlagImgNode = [topicFlagLinkNode firstChild];
-
-			NSString *aURLOfFlag = [[NSString alloc] initWithString:[topicFlagLinkNode getAttributeNamed:@"href"]];
-			[aTopic setAURLOfFlag:aURLOfFlag];
-			[aURLOfFlag release];
 			
-			NSString *imgFlagSrc = [[NSString alloc] initWithString:[topicFlagImgNode getAttributeNamed:@"src"]];
+			if ([[topicNode className] rangeOfString:@"ligne_sticky"].location != NSNotFound) {
+				aTopicAffix = [aTopicAffix stringByAppendingString:@""];//➫ ➥▶✚
+                aTopic.isSticky = YES;
+			}
+			if ([topicTitleNode findChildWithAttribute:@"alt" matchingName:@"closed" allowPartial:NO]) {
+				aTopicAffix = [aTopicAffix stringByAppendingString:@""];
+                aTopic.isClosed = YES;
+			}
 			
-			if (!([imgFlagSrc rangeOfString:@"flag0.gif"].location == NSNotFound)) {
-				[aTopic setATypeOfFlag:@"red"];
-			}
-			else if (!([imgFlagSrc rangeOfString:@"flag1.gif"].location == NSNotFound)) {
-				[aTopic setATypeOfFlag:@"blue"];
-			}
-			else if (!([imgFlagSrc rangeOfString:@"favoris.gif"].location == NSNotFound)) {
-				[aTopic setATypeOfFlag:@"yellow"];
-			}
-		
-			[imgFlagSrc release];
-		}
-		else {
-			[aTopic setAURLOfFlag:@""];
-			[aTopic setATypeOfFlag:@""];
-		}
-
-		//Viewed?
-		[aTopic setIsViewed:YES];
-		HTMLNode * viewedNode = [topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase1" allowPartial:YES];
-		HTMLNode * viewedFlagNode = [viewedNode findChildTag:@"img"];
-		if (viewedFlagNode) {
-			NSString *viewedFlagAlt = [viewedFlagNode getAttributeNamed:@"alt"];
-		
-			if ([viewedFlagAlt isEqualToString:@"On"]) {
-				[aTopic setIsViewed:NO];
-				countViewed++;
+			if (aTopicAffix.length > 0) {
+				aTopicAffix = [aTopicAffix stringByAppendingString:@" "];
 			}
 
-		}
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            aTopicAffix = @"";
+        }
+        
+			NSString *aTopicTitle = [[NSString alloc] initWithFormat:@"%@%@%@", aTopicAffix, [[topicTitleNode allContents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]], aTopicSuffix];
+			[aTopic setATitle:aTopicTitle];
+
+			NSString *aTopicURL = [[NSString alloc] initWithString:[[topicTitleNode findChildTag:@"a"] getAttributeNamed:@"href"]];
+			[aTopic setAURL:aTopicURL];
+
+			//Answer Count
+			HTMLNode * numRepNode = [topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase7" allowPartial:NO];
+			[aTopic setARepCount:[[numRepNode contents] intValue]];
 
 
-		//aAuthorOrInter
-		HTMLNode * interNode = [topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase6" allowPartial:YES];	
+			//Setup of Flag		
+			HTMLNode * topicFlagNode = [topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase5" allowPartial:NO];
+			HTMLNode * topicFlagLinkNode = [topicFlagNode findChildTag:@"a"];
+			if (topicFlagLinkNode) {
+				HTMLNode * topicFlagImgNode = [topicFlagLinkNode firstChild];
+
+				NSString *aURLOfFlag = [[NSString alloc] initWithString:[topicFlagLinkNode getAttributeNamed:@"href"]];
+				[aTopic setAURLOfFlag:aURLOfFlag];
+				
+				NSString *imgFlagSrc = [[NSString alloc] initWithString:[topicFlagImgNode getAttributeNamed:@"src"]];
+				
+				if (!([imgFlagSrc rangeOfString:@"flag0.gif"].location == NSNotFound)) {
+					[aTopic setATypeOfFlag:@"red"];
+				}
+				else if (!([imgFlagSrc rangeOfString:@"flag1.gif"].location == NSNotFound)) {
+					[aTopic setATypeOfFlag:@"blue"];
+				}
+				else if (!([imgFlagSrc rangeOfString:@"favoris.gif"].location == NSNotFound)) {
+					[aTopic setATypeOfFlag:@"yellow"];
+				}
+			
+			}
+			else {
+				[aTopic setAURLOfFlag:@""];
+				[aTopic setATypeOfFlag:@""];
+			}
+
+			//Viewed?
+			[aTopic setIsViewed:YES];
+			HTMLNode * viewedNode = [topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase1" allowPartial:YES];
+			HTMLNode * viewedFlagNode = [viewedNode findChildTag:@"img"];
+			if (viewedFlagNode) {
+				NSString *viewedFlagAlt = [viewedFlagNode getAttributeNamed:@"alt"];
+			
+				if ([viewedFlagAlt isEqualToString:@"On"]) {
+					[aTopic setIsViewed:NO];
+					countViewed++;
+				}
+
+			}
+
+
+			//aAuthorOrInter
+			HTMLNode * interNode = [topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase6" allowPartial:YES];	
                 
-		if ([[interNode findChildTag:@"a"] contents]) {
-			NSString *aAuthorOrInter = [[NSString alloc] initWithFormat:@"%@", [[interNode findChildTag:@"a"] contents]];
+			if ([[interNode findChildTag:@"a"] contents]) {
+				NSString *aAuthorOrInter = [[NSString alloc] initWithFormat:@"%@", [[interNode findChildTag:@"a"] contents]];
             [aTopic setAAuthorOrInter:aAuthorOrInter];
-			[aAuthorOrInter release];
-		}
-		else if ([[interNode findChildTag:@"span"] contents]) {
-			NSString *aAuthorOrInter = [[NSString alloc] initWithFormat:@"%@", [[interNode findChildTag:@"span"] contents]];
-			[aTopic setAAuthorOrInter:aAuthorOrInter];
-			[aAuthorOrInter release];
-		}
-		else {
-			[aTopic setAAuthorOrInter:@""];
-		}
+			}
+			else if ([[interNode findChildTag:@"span"] contents]) {
+				NSString *aAuthorOrInter = [[NSString alloc] initWithFormat:@"%@", [[interNode findChildTag:@"span"] contents]];
+				[aTopic setAAuthorOrInter:aAuthorOrInter];
+			}
+			else {
+				[aTopic setAAuthorOrInter:@""];
+			}
 
 
 
-		//Author & Url of Last Post & Date
-		HTMLNode * lastRepNode = [topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase9" allowPartial:YES];		
-		HTMLNode * linkLastRepNode = [lastRepNode firstChild];
+			//Author & Url of Last Post & Date
+			HTMLNode * lastRepNode = [topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase9" allowPartial:YES];		
+			HTMLNode * linkLastRepNode = [lastRepNode firstChild];
         
         if ([[linkLastRepNode findChildTag:@"b"] contents]) {
             NSString *aAuthorOfLastPost = [[NSString alloc] initWithFormat:@"%@", [[linkLastRepNode findChildTag:@"b"] contents]];
             [aTopic setAAuthorOfLastPost:aAuthorOfLastPost];
-            [aAuthorOfLastPost release];
         }
-		else {
-			[aTopic setAAuthorOfLastPost:@""];
-		}
-		
-		NSString *aURLOfLastPost = [[NSString alloc] initWithString:[linkLastRepNode getAttributeNamed:@"href"]];
-		[aTopic setAURLOfLastPost:aURLOfLastPost];
-		[aURLOfLastPost release];
-		
+			else {
+				[aTopic setAAuthorOfLastPost:@""];
+			}
+			
+			NSString *aURLOfLastPost = [[NSString alloc] initWithString:[linkLastRepNode getAttributeNamed:@"href"]];
+			[aTopic setAURLOfLastPost:aURLOfLastPost];
+			
 
-		NSString *maDate = [linkLastRepNode contents];
-		if ([theDate isEqual:[maDate substringToIndex:10]]) {
-			[aTopic setADateOfLastPost:[maDate substringFromIndex:13]];
-		}
-		else {
-			[aTopic setADateOfLastPost:[NSString stringWithFormat:@"%@/%@/%@", [maDate substringWithRange:NSMakeRange(0, 2)]
-								  , [maDate substringWithRange:NSMakeRange(3, 2)]
-								  , [maDate substringWithRange:NSMakeRange(8, 2)]]];
-		}
+			NSString *maDate = [linkLastRepNode contents];
+			if ([theDate isEqual:[maDate substringToIndex:10]]) {
+				[aTopic setADateOfLastPost:[maDate substringFromIndex:13]];
+			}
+			else {
+				[aTopic setADateOfLastPost:[NSString stringWithFormat:@"%@/%@/%@", [maDate substringWithRange:NSMakeRange(0, 2)]
+									  , [maDate substringWithRange:NSMakeRange(3, 2)]
+									  , [maDate substringWithRange:NSMakeRange(8, 2)]]];
+			}
 
-		//URL of Last Page & maxPage
-		HTMLNode * topicLastPageNode = [[topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase4" allowPartial:NO] findChildTag:@"a"];
-		if (topicLastPageNode) {
-			NSString *aURLOfLastPage = [[NSString alloc] initWithString:[topicLastPageNode getAttributeNamed:@"href"]];
-			[aTopic setAURLOfLastPage:aURLOfLastPage];
-			[aURLOfLastPage release];
+			//URL of Last Page & maxPage
+			HTMLNode * topicLastPageNode = [[topicNode findChildWithAttribute:@"class" matchingName:@"sujetCase4" allowPartial:NO] findChildTag:@"a"];
+			if (topicLastPageNode) {
+				NSString *aURLOfLastPage = [[NSString alloc] initWithString:[topicLastPageNode getAttributeNamed:@"href"]];
+				[aTopic setAURLOfLastPage:aURLOfLastPage];
             [aTopic setMaxTopicPage:[[topicLastPageNode contents] intValue]];
 
-		}
-		else {
-			[aTopic setAURLOfLastPage:[aTopic aURL]];
+			}
+			else {
+				[aTopic setAURLOfLastPage:[aTopic aURL]];
             [aTopic setMaxTopicPage:1];
             
-		}
+			}
         
-		[self.arrayNewData addObject:aTopic];
+			[self.arrayNewData addObject:aTopic];
 
-		[aTopic release];		
-		[pool2 drain];
+		}
 		
 	}
 	
@@ -730,9 +731,6 @@
 		[[HFRplusAppDelegate sharedAppDelegate] updateMPBadgeWithString:[NSString stringWithFormat:@"%d", countViewed]];
 	}
 	
-	[dateFormat release];
-	[nowTopic release];
-	[myParser release];
 	
 	//NSDate *now = [NSDate date]; // Create a current date
 	
@@ -773,7 +771,7 @@
 	NewMessageViewController *editMessageViewController = [[NewMessageViewController alloc]
 															initWithNibName:@"AddMessageViewController" bundle:nil];
 	editMessageViewController.delegate = self;
-	[editMessageViewController setUrlQuote:[NSString stringWithFormat:@"%@%@", kForumURL, forumNewTopicUrl]];
+	[editMessageViewController setUrlQuote:[NSString stringWithFormat:@"%@%@", [k ForumURL], forumNewTopicUrl]];
 	editMessageViewController.title = [self newTopicTitle];
 	// Create the navigation controller and present it modally.
 	HFRNavigationController *navigationController = [[HFRNavigationController alloc]
@@ -785,8 +783,6 @@
 	// The navigation controller is now owned by the current view controller
 	// and the root view controller is owned by the navigation controller,
 	// so both objects should be released to prevent over-retention.
-	[navigationController release];
-	[editMessageViewController release];
 
 }
 
@@ -903,7 +899,6 @@
 	[self.view addGestureRecognizer:swipeRightRecognizer];
 	
 	self.swipeRightRecognizer = (UISwipeGestureRecognizer *)recognizer;
-	[recognizer release];	
 	
 	//De Droite à gauche
 	recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeToLeft:)];
@@ -913,7 +908,6 @@
 	[self.view addGestureRecognizer:swipeLeftRecognizer];
 	
 	self.swipeLeftRecognizer = (UISwipeGestureRecognizer *)recognizer;
-	[recognizer release];
 	//-- Gesture
 
 	//Filtres
@@ -945,10 +939,10 @@
                                                  @"Lus",
                                                  nil]];
         
-        [segmentedControl setWidth:40.0f forSegmentAtIndex:0];
-        [segmentedControl setWidth:45.0f forSegmentAtIndex:1];
-        [segmentedControl setWidth:40.0f forSegmentAtIndex:2];
-        [segmentedControl setWidth:35.0f forSegmentAtIndex:3];
+        [segmentedControl setWidth:38.0f forSegmentAtIndex:0];
+        [segmentedControl setWidth:44.0f forSegmentAtIndex:1];
+        [segmentedControl setWidth:38.0f forSegmentAtIndex:2];
+        [segmentedControl setWidth:32.0f forSegmentAtIndex:3];
         
         
         
@@ -1012,6 +1006,12 @@
         segmentedControl.frame = CGRectMake(5, 0, segmentedControl.frame.size.width, segmentedControl.frame.size.height);
 
 
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            CGRect oldSegFrame = segmentedControl2.frame;
+            oldSegFrame.size.width -= 10;
+            segmentedControl2.frame = oldSegFrame;
+        }
+        
         [self.navigationItem.titleView insertSubview:segmentedControl2 atIndex:1];
         self.navigationItem.titleView.frame = CGRectMake(0, 0, segmentedControl.frame.size.width + 20 + segmentedControl2.frame.size.width, segmentedControl.frame.size.height);
 
@@ -1021,7 +1021,6 @@
         
         self.subCatSegmentedControl = segmentedControl2;
         
-        [segmentedControl2 release];
             
     }
     else
@@ -1034,14 +1033,12 @@
     }
 
 	
-	[segmentedControl release];
 
 	
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(newTopic)];
     segmentBarItem.enabled = NO;
 	
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];	
 
 	[(ShakeView*)self.view setShakeDelegate:self];
 
@@ -1054,16 +1051,25 @@
 	self.imageForUnselectedRow = [UIImage imageNamed:@"selectedrow"];
 	self.imageForSelectedRow = [UIImage imageNamed:@"unselectedrow"];
 	
-	self.imageForRedFlag = [UIImage imageNamed:@"flagred"];
-	self.imageForYellowFlag = [UIImage imageNamed:@"flagyellow"];
-	self.imageForBlueFlag = [UIImage imageNamed:@"flagblue2"];
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        self.imageForRedFlag = [UIImage imageNamed:@"Flat-RedFlag-25"];
+        self.imageForYellowFlag = [UIImage imageNamed:@"Flat-YellowFlag-25"];
+        self.imageForBlueFlag = [UIImage imageNamed:@"Flat-CyanFlag-25"];
+    }
+    else
+    {
+        self.imageForRedFlag = [UIImage imageNamed:@"flagred"];
+        self.imageForYellowFlag = [UIImage imageNamed:@"flagyellow"];
+        self.imageForBlueFlag = [UIImage imageNamed:@"flagblue2"];
+    }
+
 	
 	
 	//self.forumBaseURL = self.currentUrl;
     UIView *v = [[UIView alloc] initWithFrame:CGRectZero];
     v.backgroundColor = [UIColor clearColor];
     [self.topicsTableView setTableFooterView:v];
-    [v release];
 
 	self.topicsTableView.contentOffset = CGPointMake(0, self.searchDisplayController.searchBar.frame.size.height);
 	
@@ -1072,7 +1078,13 @@
     
     if (self.pickerViewArray.count) {
         actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:nil cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
-        [actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+        
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+            [actionSheet setBackgroundColor:[UIColor whiteColor]];
+        }
+        else {
+            [actionSheet setActionSheetStyle:UIActionSheetStyleDefault];
+        }
         
         myPickerView = [[UIPickerView alloc] initWithFrame:CGRectZero];
         //myPickerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -1081,7 +1093,11 @@
         myPickerView.showsSelectionIndicator = YES;
         myPickerView.dataSource = self;
         myPickerView.delegate = self;
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+            [myPickerView setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.03]];
+        }
         
+
         [actionSheet addSubview:myPickerView];
         
         UISegmentedControl *closeButton = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:@"Retour"]];
@@ -1091,7 +1107,6 @@
         closeButton.tintColor = [UIColor blackColor];
         [closeButton addTarget:self action:@selector(dismissActionSheet) forControlEvents:UIControlEventValueChanged];
         [actionSheet addSubview:closeButton];
-        [closeButton release];
         
         UISegmentedControl *confirmButton = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:@"Valider"]];
         confirmButton.momentary = YES; 
@@ -1101,7 +1116,6 @@
         confirmButton.tintColor = [UIColor colorWithRed:60/255.f green:136/255.f blue:230/255.f alpha:1.00];
         [confirmButton addTarget:self action:@selector(loadSubCat) forControlEvents:UIControlEventValueChanged];
         [actionSheet addSubview:confirmButton];
-        [confirmButton release];
         
     }
 
@@ -1139,9 +1153,11 @@
     
     // setup pull-to-refresh
     
+    __weak TopicsTableViewController *self_ = self;
+
     [self.topicsTableView addPullToRefreshWithActionHandler:^{
         //NSLog(@"=== BEGIN");
-        [self fetchContentTrigger];
+        [self_ fetchContentTrigger];
         //NSLog(@"=== END");
     }];
     
@@ -1200,6 +1216,13 @@
 {
     [super viewWillAppear:animated];
 	[self.view becomeFirstResponder];
+    Theme theme = [[ThemeManager sharedManager] theme];
+    self.view.backgroundColor = self.topicsTableView.backgroundColor = self.maintenanceView.backgroundColor = self.loadingView.backgroundColor = self.topicsTableView.pullToRefreshView.backgroundColor = [ThemeColors greyBackgroundColor:theme];
+    self.topicsTableView.separatorColor = [ThemeColors cellBorderColor:theme];
+    self.topicsTableView.pullToRefreshView.arrowColor = [ThemeColors cellTextColor:theme];
+    self.topicsTableView.pullToRefreshView.textColor = [ThemeColors cellTextColor:theme];
+    self.topicsTableView.pullToRefreshView.activityIndicatorViewStyle = [ThemeColors activityIndicatorViewStyle:theme];
+    
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(loadSubCat) name:@"SubCatSelected" object:nil];
@@ -1213,7 +1236,9 @@
     if (self.pressedIndexPath) 
     {
 		self.pressedIndexPath = nil;
-    }    
+    }
+    
+    [self.topicsTableView reloadData];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -1292,14 +1317,15 @@
     CGFloat curWidth = self.view.frame.size.width;
     
     //UIView globale
-	UIView* customView = [[[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,HEIGHT_FOR_HEADER_IN_SECTION)] autorelease];
-    customView.backgroundColor = [UIColor colorWithRed:239/255.0f green:239/255.0f blue:244/255.0f alpha:0.7];
-	customView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+	UIView* customView = [[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,HEIGHT_FOR_HEADER_IN_SECTION)];
+    Theme theme = [[ThemeManager sharedManager] theme];
+    customView.backgroundColor = [ThemeColors headSectionBackgroundColor:theme];
+    customView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     
 	//UIImageView de fond
     if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         UIImage *myImage = [UIImage imageNamed:@"bar2.png"];
-        UIImageView *imageView = [[[UIImageView alloc] initWithImage:myImage] autorelease];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:myImage];
         imageView.alpha = 0.9;
         imageView.frame = CGRectMake(0,0,curWidth,HEIGHT_FOR_HEADER_IN_SECTION);
         imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -1308,12 +1334,12 @@
     }
     else {
         //bordures/iOS7
-        UIView* borderView = [[[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,1/[[UIScreen mainScreen] scale])] autorelease];
+        UIView* borderView = [[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,1/[[UIScreen mainScreen] scale])];
         borderView.backgroundColor = [UIColor colorWithRed:158/255.0f green:158/255.0f blue:114/162.0f alpha:0.7];
         
         //[customView addSubview:borderView];
         
-        UIView* borderView2 = [[[UIView alloc] initWithFrame:CGRectMake(0,HEIGHT_FOR_HEADER_IN_SECTION-1/[[UIScreen mainScreen] scale],curWidth,1/[[UIScreen mainScreen] scale])] autorelease];
+        UIView* borderView2 = [[UIView alloc] initWithFrame:CGRectMake(0,HEIGHT_FOR_HEADER_IN_SECTION-1/[[UIScreen mainScreen] scale],curWidth,1/[[UIScreen mainScreen] scale])];
         borderView2.backgroundColor = [UIColor colorWithRed:158/255.0f green:158/255.0f blue:114/162.0f alpha:0.7];
         
         //[customView addSubview:borderView2];
@@ -1327,7 +1353,7 @@
     NSString *title = [self tableView:tableView titleForHeaderInSection:section];
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-        [button setTitleColor:[UIColor colorWithRed:109/255.0f green:109/255.0f blue:114/255.0f alpha:1] forState:UIControlStateNormal];
+        [button setTitleColor:[ThemeColors headSectionTextColor:theme] forState:UIControlStateNormal];
         [button setTitle:[title uppercaseString] forState:UIControlStateNormal];
         [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
         [button.titleLabel setMinimumFontSize:10];
@@ -1339,6 +1365,7 @@
     }
     else
     {
+        [button setTitleColor:[ThemeColors headSectionTextColor:theme] forState:UIControlStateNormal];
         [button setTitleEdgeInsets:UIEdgeInsetsMake(0, 8, 0, 0)];
         [button setTitle:title forState:UIControlStateNormal];
         [button.titleLabel setFont:[UIFont boldSystemFontOfSize:15]];
@@ -1444,13 +1471,12 @@
 
         [[NSBundle mainBundle] loadNibNamed:@"TopicCellView" owner:self options:nil];
         cell = tmpCell;
-		cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		cell.selectionStyle = UITableViewCellSelectionStyleBlue;	
 
 		UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc] 
 															 initWithTarget:self action:@selector(handleLongPress:)];
 		[cell addGestureRecognizer:longPressRecognizer];
-		[longPressRecognizer release];	
 		
         self.tmpCell = nil;
 		
@@ -1458,6 +1484,7 @@
 		 
 
 	Topic *aTopic = [arrayData objectAtIndex:indexPath.row];
+    cell.topicViewed = [aTopic isViewed];
 
 	/*
 	[(UILabel *)[cell.contentView viewWithTag:999] setText:[aTopic aTitle]];
@@ -1474,8 +1501,67 @@
 	//NSLog(@"Cell Size %f %f", cell.contentView.frame.size.width, cell.contentView.frame.size.height);
 	
 
-	
-	[cell.titleLabel setText:[aTopic aTitle]];
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        UIFont *font1 = [UIFont boldSystemFontOfSize:13.0f];
+        if ([aTopic isViewed]) {
+            font1 = [UIFont systemFontOfSize:13.0f];
+        }
+        NSDictionary *arialDict = [NSDictionary dictionaryWithObject: font1 forKey:NSFontAttributeName];
+        NSMutableAttributedString *aAttrString1 = [[NSMutableAttributedString alloc] initWithString:[aTopic aTitle] attributes: arialDict];
+        
+        UIFont *font2 = [UIFont fontWithName:@"fontello" size:15];
+
+        NSMutableAttributedString *finalString = [[NSMutableAttributedString alloc]initWithString:@""];
+        
+        if (aTopic.isSticky) {
+//            UIColor *fontsC = [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
+            UIColor *fontsC = [UIColor colorWithHex:@"#e74c3c" alpha:1.0];
+            
+
+            NSDictionary *arialDict2S = [NSDictionary dictionaryWithObjectsAndKeys:font2, NSFontAttributeName, fontsC, NSForegroundColorAttributeName, nil];
+            NSMutableAttributedString *aAttrString2S = [[NSMutableAttributedString alloc] initWithString:@" " attributes: arialDict2S];
+            
+            [finalString appendAttributedString:aAttrString2S];
+            //NSLog(@"finalString2 %@", finalString);
+            
+        }
+        
+        if (aTopic.isClosed) {
+//            UIColor *fontcC = [UIColor orangeColor];
+            UIColor *fontcC = [UIColor colorWithHex:@"#4A4A4A" alpha:1.0];
+
+
+            NSDictionary *arialDict2c = [NSDictionary dictionaryWithObjectsAndKeys:font2, NSFontAttributeName, fontcC, NSForegroundColorAttributeName, nil];
+            NSMutableAttributedString *aAttrString2C = [[NSMutableAttributedString alloc] initWithString:@" " attributes: arialDict2c];
+            
+            [finalString appendAttributedString:aAttrString2C];
+            //NSLog(@"finalString1 %@", finalString);
+        }
+        
+        
+
+
+        
+        [finalString appendAttributedString:aAttrString1];
+        //NSLog(@"finalString3 %@", finalString);
+
+        
+        
+        cell.titleLabel.attributedText = finalString;
+        
+        
+//        [ setText:[aTopic aTitle]];
+    }
+    else {
+        [cell.titleLabel setText:[aTopic aTitle]];
+        
+        if ([aTopic isViewed]) {
+            [[cell titleLabel] setFont:[UIFont systemFontOfSize:13]];
+        }
+        else {
+            [[cell titleLabel] setFont:[UIFont boldSystemFontOfSize:13]];
+        }
+    }
 	 
 	if (aTopic.aRepCount == 0) {
 	 [cell.msgLabel setText:[NSString stringWithFormat:@"↺ %d", (aTopic.aRepCount + 1)]];
@@ -1486,13 +1572,7 @@
 	
 	[cell.timeLabel setText:[NSString stringWithFormat:@"%@ - %@", [aTopic aAuthorOfLastPost], [aTopic aDateOfLastPost]]];
 
-    if ([aTopic isViewed]) {
-        [[cell titleLabel] setFont:[UIFont systemFontOfSize:13]];
-    }
-    else {
-        [[cell titleLabel] setFont:[UIFont boldSystemFontOfSize:13]];
-        
-    }
+
 
 	//Flag
 	if ([aTopic aTypeOfFlag].length > 0) {
@@ -1517,8 +1597,10 @@
         
 		// set the button's target to this table view controller so we can interpret touch events and map that to a NSIndexSet
 		[button addTarget:self action:@selector(accessoryButtonTapped:withEvent:) forControlEvents:UIControlEventTouchUpInside];
+
+        //[button setBackgroundColor:[UIColor greenColor]];
 		
-		cell.accessoryView = button;
+        cell.accessoryView = button;
 	}
 	else {
 		
@@ -1531,13 +1613,13 @@
 		[button setBackgroundImage:imageForSelectedRow forState:UIControlStateNormal];
 		[button setBackgroundImage:imageForUnselectedRow forState:UIControlStateHighlighted];
 		[button setUserInteractionEnabled:NO];
-		
+        //[button setBackgroundColor:[UIColor blueColor]];
+
 		cell.accessoryView = button;
 		
 	}
-	//Flag	
-    
-	return cell;
+	//Flag
+    return cell;
 	
 }
 
@@ -1548,7 +1630,7 @@
     if ( indexPath == nil )
         return;
 	else {
-		[self setPressedIndexPath:[indexPath retain]];
+		[self setPressedIndexPath:indexPath];
 		//self.pressedIndexPath = [indexPath autorelease];
 	}
 
@@ -1559,7 +1641,6 @@
 	//if (self.messagesTableViewController == nil) {
 	MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[arrayData objectAtIndex:indexPath.row] aURLOfFlag]];
 	self.messagesTableViewController = aView;
-	[aView release];
 	//}
 	
 	//setup the URL
@@ -1579,7 +1660,7 @@
 		self.pressedIndexPath = [[self.topicsTableView indexPathForRowAtPoint:longPressLocation] copy];
 				
         if (self.topicActionSheet != nil) {
-            [self.topicActionSheet release], self.topicActionSheet = nil;
+            self.topicActionSheet = nil;
         }
         
 		self.topicActionSheet = [[UIActionSheet alloc] initWithTitle:@"Aller à..."
@@ -1613,7 +1694,6 @@
 		{
 			MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[arrayData objectAtIndex:pressedIndexPath.row] aURLOfLastPage]];
 			self.messagesTableViewController = aView;
-			[aView release];
 			
 			self.messagesTableViewController.topicName = [[arrayData objectAtIndex:pressedIndexPath.row] aTitle];	
 			self.messagesTableViewController.isViewed = [[arrayData objectAtIndex:pressedIndexPath.row] isViewed];	
@@ -1627,7 +1707,6 @@
 		{
 			MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[arrayData objectAtIndex:pressedIndexPath.row] aURLOfLastPost]];
 			self.messagesTableViewController = aView;
-			[aView release];
 			
 			self.messagesTableViewController.topicName = [[arrayData objectAtIndex:pressedIndexPath.row] aTitle];	
 			self.messagesTableViewController.isViewed = [[arrayData objectAtIndex:pressedIndexPath.row] isViewed];	
@@ -1649,8 +1728,14 @@
 			NSLog(@"copier lien page 1");
 
             UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-            pasteboard.string = [NSString stringWithFormat:@"%@%@", kForumURL, [[arrayData objectAtIndex:pressedIndexPath.row] aURL]];
+            pasteboard.string = [NSString stringWithFormat:@"%@%@", [k RealForumURL], [[arrayData objectAtIndex:pressedIndexPath.row] aURL]];
             
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Lien copié dans le presse-papiers"
+                                                           delegate:self cancelButtonTitle:nil otherButtonTitles: nil];
+            alert.tag = kAlertPasteBoardOK;
+            
+            
+            [alert show];
 			break;
 			
 		}
@@ -1676,50 +1761,46 @@
 }
 
 - (void)pushTopic {
-    
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone || [[HFRplusAppDelegate sharedAppDelegate].detailNavigationController.topViewController isMemberOfClass:[BrowserViewController class]]) {
-        
 
+
+    if (([self respondsToSelector:@selector(traitCollection)] && [HFRplusAppDelegate sharedAppDelegate].window.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) ||
+        [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone ||
+        [[HFRplusAppDelegate sharedAppDelegate].detailNavigationController.topViewController isMemberOfClass:[BrowserViewController class]]) {
+        
+        
         
         [self.navigationController pushViewController:messagesTableViewController animated:YES];
     }
     else {
         [[[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] viewControllers] objectAtIndex:1] popToRootViewControllerAnimated:NO];
-        
+
         [[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] setViewControllers:[NSMutableArray arrayWithObjects:messagesTableViewController, nil] animated:YES];
         
-//        [[HFRplusAppDelegate sharedAppDelegate] setDetailNavigationController:messagesTableViewController];
-        
-    }   
+        if ([messagesTableViewController.splitViewController respondsToSelector:@selector(displayModeButtonItem)]) {
+            NSLog(@"PUSH ADD BTN");
+            [[HFRplusAppDelegate sharedAppDelegate] detailNavigationController].viewControllers[0].navigationItem.leftBarButtonItem = messagesTableViewController.splitViewController.displayModeButtonItem;
+            [[HFRplusAppDelegate sharedAppDelegate] detailNavigationController].viewControllers[0].navigationItem.leftItemsSupplementBackButton = YES;
+        }
+    }
     
     [self setTopicViewed];
     
 }
 
 -(void)setTopicViewed {
-    //NSLog(@"setTopicViewed");
 
-	if (self.pressedIndexPath && self.arrayData.count > 0) {
-		//NSLog(@"TT pressedIndexPath");
-		
+	if (self.pressedIndexPath && self.arrayData.count > 0 && [self.pressedIndexPath row] <= self.arrayData.count) {
 		[[self.arrayData objectAtIndex:[self.pressedIndexPath row]] setIsViewed:YES];
         
-        //NSArray* rowsToReload = [NSArray arrayWithObjects:self.pressedIndexPath, nil];
-        //[self.topicsTableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
-        
-        [self.topicsTableView reloadData];
+        NSArray* rowsToReload = [NSArray arrayWithObjects:self.pressedIndexPath, nil];
+        [self.topicsTableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
 	}
-	else if (self.topicsTableView.indexPathForSelectedRow && self.arrayData.count > 0) {
-		//NSLog(@"TT indexPathForSelectedRow");
-        
+	else if (self.topicsTableView.indexPathForSelectedRow && self.arrayData.count > 0 && [self.topicsTableView.indexPathForSelectedRow row] <= self.arrayData.count) {
 		[[self.arrayData objectAtIndex:[self.topicsTableView.indexPathForSelectedRow row]] setIsViewed:YES];
         
-        //NSArray* rowsToReload = [NSArray arrayWithObjects:self.topicsTableView.indexPathForSelectedRow, nil];
-        //[self.topicsTableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
-        
-		[self.topicsTableView reloadData];
+        NSArray* rowsToReload = [NSArray arrayWithObjects:self.topicsTableView.indexPathForSelectedRow, nil];
+        [self.topicsTableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
 	}
-    
 }
 
 #pragma mark -
@@ -1738,13 +1819,12 @@
     textField.textAlignment = NSTextAlignmentCenter;
     textField.delegate = self;
     [textField addTarget:self action:@selector(textFieldTopicDidChange:) forControlEvents:UIControlEventEditingChanged];
-    textField.keyboardAppearance = UIKeyboardAppearanceAlert;
+    textField.keyboardAppearance = UIKeyboardAppearanceDefault;
     textField.keyboardType = UIKeyboardTypeNumberPad;
     
 	[alert setTag:669];
 	[alert show];
     
-	[alert release];
     
 }
 
@@ -1827,7 +1907,6 @@
         //if (self.messagesTableViewController == nil) {
 		MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:newUrl];
 		self.messagesTableViewController = aView;
-		[aView release];
         //}
         
         
@@ -1852,12 +1931,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Navigation logic may go here. Create and push another view controller.
 
-	//NSLog(@"did Select row Topics table views: %d", indexPath.row);
+    //NSLog(@"did Select row Topics table views: %d", indexPath.row);
 
 	//if (self.messagesTableViewController == nil) {
 		MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[arrayData objectAtIndex:indexPath.row] aURL]];
 		self.messagesTableViewController = aView;
-		[aView release];
 	//}
 	
 	//NSLog(@"%@", self.navigationController.navigationBar);
@@ -1977,7 +2055,7 @@
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad || SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8")) {
         //NSLog(@"TT %@", [[pickerViewArray objectAtIndex:[myPickerView selectedRowInComponent:0]] aTitle]);
         
-        SubCatTableViewController *subCatTableViewController = [[[SubCatTableViewController alloc] initWithStyle:UITableViewStylePlain] autorelease];
+        SubCatTableViewController *subCatTableViewController = [[SubCatTableViewController alloc] initWithStyle:UITableViewStylePlain];
         subCatTableViewController.suPicker = myPickerView;
         subCatTableViewController.arrayData = pickerViewArray;
         subCatTableViewController.notification = @"SubCatSelected";
@@ -1994,7 +2072,7 @@
         }
         else {
             self.popover = nil;
-            self.popover = [[[UIPopoverController alloc] initWithContentViewController:subCatTableViewController] autorelease];
+            self.popover = [[UIPopoverController alloc] initWithContentViewController:subCatTableViewController];
             CGRect origFrame = [(UISegmentedControl *)sender frame];
             [_popover presentPopoverFromRect:origFrame inView:self.navigationItem.titleView permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
         }
@@ -2014,8 +2092,8 @@
         [UIView beginAnimations:nil context:nil];
         
         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
-            [actionSheet setFrame:CGRectMake(0, self.view.frame.size.height - myPickerView.frame.size.height + 20,
-                                             self.view.frame.size.width, myPickerView.frame.size.height + 44)];
+            [actionSheet setFrame:CGRectMake(0, self.view.frame.size.height - myPickerView.frame.size.height + 34,
+                                             self.view.frame.size.width, myPickerView.frame.size.height + 34)];
         }
         else
         {
@@ -2048,7 +2126,7 @@
 - (void)viewDidUnload {
     // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
     // For example: self.myOutlet = nil;
-	//NSLog(@"viewDidUnload");
+	NSLog(@"viewDidUnload");
 		
 	self.loadingView = nil;
 	self.topicsTableView = nil;
@@ -2060,7 +2138,7 @@
 }
 
 - (void)dealloc {
-	//NSLog(@"dealloc Topics Table View");
+	NSLog(@"dealloc Topics Table View");
 	
 	[self viewDidUnload];
     
@@ -2070,44 +2148,20 @@
 
 	[request cancel];
 	[request setDelegate:nil];
-	self.request = nil;
 
 	//NSLog(@"dealloc Topics Table View 2");
 
-	self.forumName = nil;
 
-	self.forumNewTopicUrl = nil;
+	
+	
 
-	self.forumBaseURL = nil;
-	self.forumFavorisURL = nil;
-	self.forumFlag1URL = nil;
-	self.forumFlag0URL = nil;
-	
-	[self.arrayData release];
-	[self.arrayNewData release];
-	
-	if(self.messagesTableViewController) self.messagesTableViewController = nil;
-	
-	self.pressedIndexPath = nil;
-
-	self.imageForUnselectedRow = nil;
-	self.imageForSelectedRow = nil;
 
 	//Gesture
-	[swipeLeftRecognizer release];
-	[swipeRightRecognizer release];
 	
 	//Picker
-	self.myPickerView = nil;
-	self.actionSheet = nil;
-	self.pickerViewArray = nil;
-    self.subCatSegmentedControl = nil;
     
-    self.topicActionSheet = nil;
     
-	self.statusMessage = nil;
 	
-	[super dealloc];
 
 }
 

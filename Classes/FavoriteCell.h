@@ -12,4 +12,8 @@
 
 }
 
+@property (nonatomic, strong) UILabel *labelTitle;
+@property (nonatomic, strong) UILabel *labelMsg;
+@property (nonatomic, strong) UILabel *labelDate;
+
 @end

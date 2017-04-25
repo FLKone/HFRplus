@@ -5,6 +5,26 @@
 	<key>PreferenceSpecifiers</key>
 	<array>
 		<dict>
+			<key>IASKCellImage</key>
+			<string>CircledUserMaleFilled-25</string>
+			<key>IASKViewControllerClass</key>
+			<string>CompteViewController</string>
+			<key>Title</key>
+			<string>Mon Compte</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>IASKCellImage</key>
+			<string>AboutFilled-25</string>
+			<key>IASKViewControllerClass</key>
+			<string>CreditsViewController</string>
+			<key>Title</key>
+			<string>Crédits</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
 			<key>Title</key>
 			<string>Général</string>
 			<key>Type</key>
@@ -38,7 +58,7 @@
 			<key>Key</key>
 			<string>default_tab</string>
 			<key>Title</key>
-			<string>Onglet par defaut</string>
+			<string>Onglet par défaut</string>
 			<key>Titles</key>
 			<array>
 				<string>Catégories</string>
@@ -58,7 +78,9 @@
 			<key>DefaultValue</key>
 			<string>0</string>
 			<key>FooterText</key>
-			<string>&quot;Drapeaux &amp; Favoris&quot; affiche uniquement les sujets que vous suivez (⚑ + ★) qui disposent de nouvelles réponses. C&apos;est l&apos;affichage classique.  &quot;Favoris&quot; affiche tous les sujets que vous avez placé en favoris (★), qu&apos;une nouvelle réponse soit disponible ou pas. Dans ce cas, les sujets avec de nouvelles réponses sont en gras dans la liste.</string>
+			<string>&quot;Drapeaux &amp; Favoris&quot; affiche uniquement les sujets que vous suivez (⚑ + ★) qui disposent de nouvelles réponses. C&apos;est l&apos;affichage classique.
+
+&quot;Favoris&quot; affiche tous les sujets que vous avez placé en favoris (★), qu&apos;une nouvelle réponse soit disponible ou pas. Dans ce cas, les sujets avec de nouvelles réponses sont en gras dans la liste.</string>
 			<key>Key</key>
 			<string>vos_sujets</string>
 			<key>Title</key>
@@ -77,10 +99,40 @@
 			</array>
 		</dict>
 		<dict>
+			<key>DefaultValue</key>
+			<string>0</string>
+			<key>Key</key>
+			<string>theme</string>
 			<key>Title</key>
-			<string>Liste des messages</string>
+			<string>Thème</string>
+			<key>Titles</key>
+			<array>
+				<string>☀ Clair</string>
+				<string>☾ Sombre</string>
+			</array>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Values</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+			</array>
+		</dict>
+		<dict>
+			<key>Title</key>
+			<string>Sujets</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>IASKCellImage</key>
+			<string>ThorHammerFilled-25</string>
+			<key>IASKViewControllerClass</key>
+			<string>BlackListTableViewController</string>
+			<key>Title</key>
+			<string>Liste noire</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
 		</dict>
 		<dict>
 			<key>File</key>
@@ -136,6 +188,26 @@
 		</dict>
 		<dict>
 			<key>DefaultValue</key>
+			<string>no</string>
+			<key>Key</key>
+			<string>display_sig</string>
+			<key>Title</key>
+			<string>Afficher les signatures</string>
+			<key>Titles</key>
+			<array>
+				<string>Oui</string>
+				<string>Non</string>
+			</array>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Values</key>
+			<array>
+				<string>yes</string>
+				<string>no</string>
+			</array>
+		</dict>
+		<dict>
+			<key>DefaultValue</key>
 			<string>http</string>
 			<key>Key</key>
 			<string>default_web</string>
@@ -172,7 +244,7 @@
 		</dict>
 		<dict>
 			<key>Title</key>
-			<string>Debug</string>
+			<string>Activation du Menu debug = 1 TT offert !</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
@@ -185,6 +257,28 @@
 			<string>menu_debug</string>
 			<key>DefaultValue</key>
 			<false/>
+		</dict>
+		<dict>
+			<key>IASKCellImage</key>
+			<string>BugFilled-25</string>
+			<key>IASKViewControllerClass</key>
+			<string>HFRDebugViewController</string>
+			<key>Title</key>
+			<string>Debug</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+			<key>Key</key>
+			<string>menu_debug_entry</string>
+		</dict>
+		<dict>
+			<key>DefaultValue</key>
+			<string>1.0</string>
+			<key>Key</key>
+			<string>version</string>
+			<key>Title</key>
+			<string>Version</string>
+			<key>Type</key>
+			<string>PSTitleValueSpecifier</string>
 		</dict>
 	</array>
 </dict>

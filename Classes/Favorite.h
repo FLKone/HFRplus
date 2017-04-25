@@ -15,8 +15,8 @@
     NSMutableArray *topics;
 }
 
-@property (nonatomic, retain) Forum *forum;
-@property (nonatomic, retain) NSMutableArray *topics;
+@property (nonatomic, strong) Forum *forum;
+@property (nonatomic, strong) NSMutableArray *topics;
 
 -(void)parseNode:(HTMLNode *)node;
 -(id)addTopicWithNode:(HTMLNode *)node;

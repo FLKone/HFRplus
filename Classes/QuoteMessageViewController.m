@@ -11,14 +11,18 @@
 #import "HTMLParser.h"
 #import "Forum.h"
 #import "SubCatTableViewController.h"
+#import "RegexKitLite.h"
+#import "ThemeColors.h"
+#import "ThemeManager.h"
 
 
 @implementation QuoteMessageViewController
 @synthesize urlQuote;
-@synthesize myPickerView, pickerViewArray, actionSheet, catButton;
+@synthesize myPickerView, pickerViewArray, actionSheet, catButton, textQuote, boldQuote;
 - (void)cancelFetchContent
 {
-	[request cancel];
+	[self.request cancel];
+    [self setRequest:nil];
 }
 
 - (void)fetchContent
@@ -56,6 +60,7 @@
 	
 	[self setupResponder];
 	//NSLog(@"======== fetchContentComplete");
+    [self cancelFetchContent];
 	
 }
 
@@ -67,7 +72,8 @@
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
 	[alert setTag:777];
 	[alert show];
-	[alert release];	
+    
+    [self cancelFetchContent];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -113,6 +119,11 @@
 	[self fetchContent];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [[ThemeManager sharedManager] applyThemeToTextField:self.textFieldSmileys];
+}
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 -(void)loadDataInTableView:(NSData *)contentData {
 	//[NSURL URLWithString:[self.urlQuote lowercaseString]]
@@ -126,6 +137,26 @@
 
 	HTMLNode * bodyNode = [myParser body]; //Find the body tag
 		
+    // check if user is logged in
+    BOOL isLogged = false;
+    HTMLNode * hashCheckNode = [bodyNode findChildWithAttribute:@"name" matchingName:@"hash_check" allowPartial:NO];
+    if (hashCheckNode && ![[hashCheckNode getAttributeNamed:@"value"] isEqualToString:@""]) {
+        //hash = logginé :o
+        isLogged = true;
+    }
+    //username
+    NSString *username = @"";
+    HTMLNode *usernameNode = [bodyNode findChildWithAttribute:@"name" matchingName:@"pseudo" allowPartial:NO];
+    if (usernameNode && ![[usernameNode getAttributeNamed:@"value"] isEqualToString:@""]) {
+        //hash = logginé :o
+        username = [usernameNode getAttributeNamed:@"value"];
+    }
+    //-- check if user is logged in
+    
+    //NSLog(@"FORM login = %d", isLogged);
+    //NSLog(@"FORM username = %@", username);
+    
+    
     // SMILEY PERSO
     HTMLNode * smileyNode = [bodyNode findChildWithAttribute:@"id" matchingName:@"dynamic_smilies" allowPartial:NO];
 
@@ -133,15 +164,53 @@
 	
     self.smileyCustom = [[NSString alloc] init];
     
-	//Traitement des smileys (to Array)
-	[self.smileyArray removeAllObjects]; //RaZ
-	
-	for (HTMLNode * imgNode in tmpImageArray) { //Loop through all the tags
-		self.smileyCustom = [self.smileyCustom stringByAppendingFormat:@"<img class=\"smile\" src=\"%@\" alt=\"%@\"/>", [imgNode getAttributeNamed:@"src"], [imgNode getAttributeNamed:@"alt"]];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *diskCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"SmileCache"];
+
+    if (![[NSFileManager defaultManager] fileExistsAtPath:diskCachePath])
+    {
+        //NSLog(@"createDirectoryAtPath");
+        [[NSFileManager defaultManager] createDirectoryAtPath:diskCachePath
+                                  withIntermediateDirectories:YES
+                                                   attributes:nil
+                                                        error:NULL];
+    }
+    else {
+        //NSLog(@"pas createDirectoryAtPath");
+    }
+    
+    NSFileManager *fileManager = [[NSFileManager alloc] init];
+
+    //Traitement des smileys (to Array)
+    [self.smileyArray removeAllObjects]; //RaZ
+    
+    for (HTMLNode * imgNode in tmpImageArray) { //Loop through all the tags
+        
+        NSString *filename = [[imgNode getAttributeNamed:@"src"] stringByReplacingOccurrencesOfString:@"http://forum-images.hardware.fr/" withString:@""];
+        filename = [filename stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
+        filename = [filename stringByReplacingOccurrencesOfString:@" " withString:@"-"];
+        
+        NSString *key = [diskCachePath stringByAppendingPathComponent:filename];
+        
+        //NSLog(@"url %@", [imgNode getAttributeNamed:@"src"]);
+        //NSLog(@"key %@", key);
+        
+        if (![fileManager fileExistsAtPath:key])
+        {
+            //NSLog(@"dl %@", key);
+            
+            [fileManager createFileAtPath:key contents:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [[imgNode getAttributeNamed:@"src"] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]]]] attributes:nil];
+        }
+        
+        
+        self.smileyCustom = [self.smileyCustom stringByAppendingFormat:@"<img class=\"smile\" src=\"%@\" alt=\"%@\"/>", key, [imgNode getAttributeNamed:@"alt"]];
+        
+        
+        
+        //self.smileyCustom = [self.smileyCustom stringByAppendingFormat:@"<img class=\"smile\" src=\"%@\" alt=\"%@\"/>", [imgNode getAttributeNamed:@"src"], [imgNode getAttributeNamed:@"alt"]];
         //[self.smileyArray addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[imgNode getAttributeNamed:@"src"], [imgNode getAttributeNamed:@"alt"], nil] forKeys:[NSArray arrayWithObjects:@"source", @"code", nil]]];
         
-	}
-    
+    }
 
     //NSLog(@"smileyNode %@", rawContentsOfNode([smileyNode _node], [myParser _doc]));
     //NSLog(@"smileyCustom %@", self.smileyCustom);
@@ -213,16 +282,13 @@
 					//Title
 					NSString *aForumTitle = [[NSString alloc] initWithString:[[catNode allContents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
 					[aForum setATitle:aForumTitle];
-					[aForumTitle release];
 
 					//ID
 					NSString *aForumID = [[NSString alloc] initWithString:[[catNode getAttributeNamed:@"value"] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
 					[aForum setAID:aForumID];
-					[aForumID release];
 					
 					[pickerViewArray addObject:aForum];
 					
-					[aForum release];
 				}
 			}
 			
@@ -264,16 +330,9 @@
 	
 
 	//EDITOR
-	float offsetforiPad = 0;
-    
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) { 
-        offsetforiPad += 220;
-    }
-    
     float frameWidth = self.view.frame.size.width;
     
     //NSLog(@"self %f", self.view.frame.size.width);
-    //NSLog(@"hard %f", 320 + offsetforiPad);
     
 	float originY = 0;
 	
@@ -285,7 +344,7 @@
 	if (self.haveTo) {
 		UITextField *titleLabel = [[UITextField alloc] initWithFrame:CGRectMake(8, originY, 25, 43)];
 		titleLabel.text = @"À :";
-		titleLabel.backgroundColor = [UIColor whiteColor];
+		titleLabel.backgroundColor = [UIColor clearColor];
 		titleLabel.textColor = [UIColor colorWithWhite:0.5 alpha:1];
 		titleLabel.font = [UIFont systemFontOfSize:15];
 		titleLabel.userInteractionEnabled = NO;
@@ -293,21 +352,21 @@
 		
 		textFieldTo = [[UITextField alloc] initWithFrame:CGRectMake(38, originY, frameWidth - 55, 43)];
         textFieldTo.tag = 1;
-		textFieldTo.backgroundColor = [UIColor whiteColor];
+		textFieldTo.backgroundColor = [UIColor clearColor];
 		textFieldTo.font = [UIFont systemFontOfSize:15];
 		textFieldTo.delegate = self;
 		textFieldTo.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-		textFieldTo.keyboardAppearance = UIKeyboardAppearanceAlert;
 		textFieldTo.returnKeyType = UIReturnKeyNext;
 		[textFieldTo setText:[self.arrayInputData valueForKey:@"dest"]];
 		textFieldTo.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         textFieldTo.keyboardType = UIKeyboardTypeASCIICapable;
+        textFieldTo.textColor = [ThemeColors textColor:[[ThemeManager sharedManager] theme]];
         
         
 		originY += textFieldTo.frame.size.height;
 		
-		UIView* separator = [[[UIView alloc] initWithFrame:CGRectMake(0, originY, frameWidth, 1)] autorelease];
-		separator.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
+		UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(0, originY, frameWidth, 1)];
+		separator.backgroundColor = [ThemeColors cellBorderColor:[[ThemeManager sharedManager] theme]];
 		separator.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		
 		originY += separator.frame.size.height;
@@ -316,7 +375,6 @@
 		[headerView addSubview:textFieldTo];
 		[headerView addSubview:separator];
 		
-		[titleLabel release];
 		
 		headerView.frame = CGRectMake(headerView.frame.origin.x, headerView.frame.origin.x, headerView.frame.size.width, originY);	
 	}
@@ -324,7 +382,7 @@
 	if (self.haveTitle) {
 		UITextField *titleLabel = [[UITextField alloc] initWithFrame:CGRectMake(8, originY, 45, 43)];
 		titleLabel.text = @"Sujet :";
-		titleLabel.backgroundColor = [UIColor whiteColor];
+		titleLabel.backgroundColor = [UIColor clearColor];
 		titleLabel.textColor = [UIColor colorWithWhite:0.5 alpha:1];
 		titleLabel.font = [UIFont systemFontOfSize:15];
 		titleLabel.userInteractionEnabled = NO;
@@ -332,22 +390,22 @@
 		
 		textFieldTitle = [[UITextField alloc] initWithFrame:CGRectMake(58, originY, frameWidth - 75, 43)];
         textFieldTitle.tag = 2;
-		textFieldTitle.backgroundColor = [UIColor whiteColor];
+		textFieldTitle.backgroundColor = [UIColor clearColor];
 		textFieldTitle.font = [UIFont systemFontOfSize:15];
 		textFieldTitle.delegate = self;
 		textFieldTitle.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-		textFieldTitle.keyboardAppearance = UIKeyboardAppearanceAlert;
 		textFieldTitle.returnKeyType = UIReturnKeyNext;
 		[textFieldTitle setText:[self.arrayInputData valueForKey:@"sujet"]];
 		textFieldTitle.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         textFieldTitle.keyboardType = UIKeyboardTypeASCIICapable;
+        textFieldTitle.textColor = [ThemeColors textColor:[[ThemeManager sharedManager] theme]];
 
 		//[textFieldTitle setText:[[fastAnswerNode findChildWithAttribute:@"name" matchingName:@"sujet" allowPartial:NO] getAttributeNamed:@"value"]];
 
 		originY += textFieldTitle.frame.size.height;
 		
-		UIView* separator = [[[UIView alloc] initWithFrame:CGRectMake(0, originY, frameWidth, 1)] autorelease];
-		separator.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
+		UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(0, originY, frameWidth, 1)];
+		separator.backgroundColor = [ThemeColors cellBorderColor:[[ThemeManager sharedManager] theme]];
 		separator.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		
 		originY += separator.frame.size.height;
@@ -356,7 +414,6 @@
 		[headerView addSubview:textFieldTitle];
 		[headerView addSubview:separator];
 		
-		[titleLabel release];
 
 		headerView.frame = CGRectMake(headerView.frame.origin.x, headerView.frame.origin.x, headerView.frame.size.width, originY);
 		
@@ -367,7 +424,7 @@
 	if (self.haveCategory) {
 		UITextField *titleLabel = [[UITextField alloc] initWithFrame:CGRectMake(8, originY, 75, 43)];
 		titleLabel.text = @"Catégorie :";
-		titleLabel.backgroundColor = [UIColor whiteColor];
+		titleLabel.backgroundColor = [UIColor clearColor];
 		titleLabel.textColor = [UIColor colorWithWhite:0.5 alpha:1];
 		titleLabel.font = [UIFont systemFontOfSize:15];
         NSLog(@"font %@", titleLabel.font);
@@ -397,7 +454,7 @@
         
 		
 		textFieldCat = [[UITextField alloc] initWithFrame:CGRectMake(88, originY, 215, 43)];
-		textFieldCat.backgroundColor = [UIColor whiteColor];
+		textFieldCat.backgroundColor = [UIColor clearColor];
 		textFieldCat.font = [UIFont systemFontOfSize:15];
 		textFieldCat.delegate = self;
 		textFieldCat.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
@@ -413,8 +470,8 @@
         
 		originY += textFieldCat.frame.size.height;
 		
-		UIView* separator = [[[UIView alloc] initWithFrame:CGRectMake(0, originY, frameWidth, 1)] autorelease];
-		separator.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
+		UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(0, originY, frameWidth, 1)];
+		separator.backgroundColor = [ThemeColors cellBorderColor:[[ThemeManager sharedManager] theme]];
 		separator.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		
 		originY += separator.frame.size.height;
@@ -424,7 +481,6 @@
 		[headerView addSubview:catButton];
 		[headerView addSubview:separator];
 		
-		[titleLabel release];
 
 		headerView.frame = CGRectMake(headerView.frame.origin.x, headerView.frame.origin.x, headerView.frame.size.width, originY);
 
@@ -453,7 +509,6 @@
 		closeButton.tintColor = [UIColor blackColor];
 		[closeButton addTarget:self action:@selector(dismissActionSheet) forControlEvents:UIControlEventValueChanged];
 		[actionSheet addSubview:closeButton];
-		[closeButton release];
 		
 		UISegmentedControl *confirmButton = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:@"Valider"]];
 		confirmButton.momentary = YES; 
@@ -463,7 +518,6 @@
 		confirmButton.tintColor = [UIColor colorWithRed:60/255.f green:136/255.f blue:230/255.f alpha:1.00];
 		[confirmButton addTarget:self action:@selector(loadSubCat) forControlEvents:UIControlEventValueChanged];
 		[actionSheet addSubview:confirmButton];
-		[confirmButton release];
 		//-- PICKER
 		
 	}
@@ -475,7 +529,6 @@
 	[self.textView addSubview:headerView];
     textView.tag = 3;        
 
-	[headerView release];
 	
 
 	self.offsetY = originY * -1.0f;
@@ -490,9 +543,83 @@
 	//}	
 	//-----
 
-	
+
 	NSString* txtTW = [[fastAnswerNode findChildWithAttribute:@"id" matchingName:@"content_form" allowPartial:NO] contents];
     txtTW = [txtTW stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"];
+
+    NSLog(@"txtTW %@", txtTW);
+    
+    if (self.textQuote.length) {
+        NSLog(@"textQuote %@", self.textQuote);
+        self.textQuote = [self.textQuote stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        //Test multiQUOTEMSG
+        
+        NSString *pattern = @"\\[quotemsg=([0-9]+),([0-9]+),([0-9]+)\\](?s)((|.*?)+)\\[\\/quotemsg\\]";
+        NSError *error = NULL;
+        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern
+                                                                               options:NSRegularExpressionDotMatchesLineSeparators
+                                                                                 error:&error];
+        
+        NSLog(@"error %@", error);
+        
+        NSArray  *capturesArray = NULL;
+        NSRange range = NSMakeRange(0, txtTW.length);
+
+        capturesArray = [regex matchesInString:txtTW options:0 range:range];
+        NSLog(@"capturesArray: %@", capturesArray);
+        
+        //NSLog(@"TXT BEFORE==== %@", txtTW);
+        
+        if (capturesArray.count > 1) {
+            NSLog(@"Plusieurs quotemsg, il faut trouver le bon !");
+            
+            for (NSTextCheckingResult *quoteA in capturesArray) {
+                
+                NSString *quoteTxt = [txtTW substringWithRange:[quoteA rangeAtIndex:0]];
+                NSLog(@"Txt de la quote %@", quoteTxt);
+                
+                if ([quoteTxt rangeOfString:self.textQuote options:NSCaseInsensitiveSearch].location != NSNotFound) {
+                    NSLog(@"Selec trouvée");
+                    
+                    //case BOLD
+                    if (self.boldQuote) {
+                        //on laisse le txt du qtemsg et on bold
+                        txtTW = [NSString stringWithFormat:@"%@\n", quoteTxt];
+                        txtTW = [txtTW stringByReplacingOccurrencesOfString:self.textQuote withString:[NSString stringWithFormat:@"[b]%@[/b]", self.textQuote]];
+                    }
+                    else {
+                        //case EXCLU
+                        txtTW = [NSString stringWithFormat:@"[quotemsg=%d,%d,%d]%@[/quotemsg]\n", [[txtTW substringWithRange:[quoteA rangeAtIndex:1]] intValue], [[txtTW substringWithRange:[quoteA rangeAtIndex:2]] intValue], [[txtTW substringWithRange:[quoteA rangeAtIndex:3]] intValue], self.textQuote];
+                        //recup le quotemsg et y inserer le msg
+                    }
+                    break;
+                    
+                }
+                else {
+                    NSLog(@"select pas trouvée");
+                }
+            }
+        }
+        else if (capturesArray.count == 1) {
+            if (self.boldQuote) {
+                //on laisse le txt et on bold
+                txtTW = [txtTW stringByReplacingOccurrencesOfString:self.textQuote withString:[NSString stringWithFormat:@"[b]%@[/b]", self.textQuote]];
+            }
+            else {
+                //recup le quotemsg et y inserer le msg
+                txtTW = [NSString stringWithFormat:@"[quotemsg=%d,%d,%d]%@[/quotemsg]\n", [[txtTW substringWithRange:[capturesArray[0] rangeAtIndex:1]] intValue], [[txtTW substringWithRange:[capturesArray[0] rangeAtIndex:2]] intValue], [[txtTW substringWithRange:[capturesArray[0] rangeAtIndex:3]] intValue], self.textQuote];
+            }
+        }
+        else {
+            NSLog(@"On touche RIEN MEC");
+        }
+        
+        //NSLog(@"TXT AFTER=== %@", txtTW);
+        
+        //DEBUG
+        
+    }
+    //NSLog(@"txtTWB %@", txtTW);
     
 	[self.textView setText:txtTW];
 	//textView.contentOffset = CGPointMake(0, 0);
@@ -501,13 +628,19 @@
 	
 	//NSLog(@"self.formSubmit %@", self.formSubmit);
 
-	NSString *newSubmitForm = [[NSString alloc] initWithFormat:@"%@%@", kForumURL, [fastAnswerNode getAttributeNamed:@"action"]];
+	NSString *newSubmitForm = [[NSString alloc] initWithFormat:@"%@%@", [k ForumURL], [fastAnswerNode getAttributeNamed:@"action"]];
 	[self setFormSubmit:newSubmitForm];
-	[newSubmitForm release];
 	
+    if(!isLogged) {
+        [self.textFieldSmileys setHidden:TRUE];
+    }
+    
+    if([username caseInsensitiveCompare:@"applereview"] == NSOrderedSame) {
+        [self.textFieldSmileys setHidden:TRUE];
+    }
+    
 	//self.formSubmit = [NSString stringWithFormat:@"http://forum.hardware.fr/%@", [fastAnswerNode getAttributeNamed:@"action"]];
 	//NSLog(@"self.formSubmit2 %@", self.formSubmit);
-	[myParser release];
 	
 
 	//NSDate *nowT = [NSDate date]; // Create a current date
@@ -641,7 +774,7 @@
         
         //NSLog(@"TT %@", [[pickerViewArray objectAtIndex:[myPickerView selectedRowInComponent:0]] aTitle]);
         
-        SubCatTableViewController *subCatTableViewController = [[[SubCatTableViewController alloc] initWithStyle:UITableViewStylePlain] autorelease];
+        SubCatTableViewController *subCatTableViewController = [[SubCatTableViewController alloc] initWithStyle:UITableViewStylePlain];
         subCatTableViewController.suPicker = myPickerView;
         subCatTableViewController.arrayData = pickerViewArray;
         subCatTableViewController.notification = @"CatSelected";
@@ -649,6 +782,7 @@
         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8")) {
             subCatTableViewController.modalPresentationStyle = UIModalPresentationPopover;
             UIPopoverPresentationController *pc = [subCatTableViewController popoverPresentationController];
+            //pc.backgroundColor = [ThemeColors greyBackgroundColor:[[ThemeManager sharedManager] theme]];
             pc.permittedArrowDirections = UIPopoverArrowDirectionUp;
             pc.delegate = self;
             pc.sourceView = (UIButton *)sender;
@@ -658,7 +792,8 @@
         }
         else {
             self.popover = nil;
-            self.popover = [[[UIPopoverController alloc] initWithContentViewController:subCatTableViewController] autorelease];
+            self.popover = [[UIPopoverController alloc] initWithContentViewController:subCatTableViewController];
+            //[(UIPopoverController *)self.popover setBackgroundColor:[ThemeColors greyBackgroundColor:[[ThemeManager sharedManager] theme]]];
             [_popover presentPopoverFromRect:[(UIButton *)sender frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
 
         }
@@ -707,17 +842,11 @@
 
 
 - (void)dealloc {
-	self.urlQuote = nil;
-	
+    NSLog(@"dealloc Quote");
 	//Picker
-	self.myPickerView = nil;
-	self.actionSheet = nil;
-	self.pickerViewArray = nil;
 	
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CatSelected" object:nil];
-
     
-    [super dealloc];
 }
 
 @end

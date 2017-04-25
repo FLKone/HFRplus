@@ -20,17 +20,15 @@
 @class IASKSpecifier;
 @class IASKSettingsReader;
 
-@interface IASKSpecifierValuesViewController : UIViewController<IASKViewController> {
+@interface IASKSpecifierValuesViewController : UIViewController<IASKViewController,UITableViewDelegate,UITableViewDataSource> {
     UITableView				*_tableView;
     
     IASKSpecifier			*_currentSpecifier;
-    NSIndexPath             *_checkedItem;
 	IASKSettingsReader		*_settingsReader;
-    id<IASKSettingsStore>	_settingsStore;
 }
 
-@property (nonatomic, retain) IBOutlet UITableView *tableView;
-@property (nonatomic, retain) NSIndexPath *checkedItem;
+@property (nonatomic, retain) UITableView *tableView;
 @property (nonatomic, retain) IASKSpecifier *currentSpecifier;
+
 
 @end

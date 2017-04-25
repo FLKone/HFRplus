@@ -1,10 +1,23 @@
-<img src="http://a252.phobos.apple.com/us/r1000/119/Purple/v4/d1/89/07/d18907cd-3fd2-a828-cbcd-1c9ffeb4e6d0/mza_7454098853510851857.170x170-75.png" alt="HFR+" title="HFR+" style="display:block; margin: 10px auto 30px auto;" class="center">
+<table>
+<tr>
+<td><img src="https://raw.githubusercontent.com/FLKone/HFRplus/devel-1.10/HFRplus/Images.xcassets/AppIcon.appiconset/Icon-Small-40.png" alt="HFR+" title="HFR+" style="display:block; margin: 10px auto 30px auto;" class="center"></td>
+<td><img src="https://raw.githubusercontent.com/FLKone/HFRplus/devel-1.10/HFRplus/Images.xcassets/AppIcon%20RE.appiconset/Icon-Small-40.png" alt="HFR+" title="HFR+REDFACE" style="display:block; margin: 10px auto 30px auto;" class="center"></td>
+</tr>   
 
-HFR+
+<tr>   
+<td>HFR+</td>
+<td>HFR+REDFACE</td>
+</tr>   
+<tr>   
+<td> <a href="https://itunes.apple.com/app/hfr/id384464712">AppStore</a></td>
+<td> <a href="https://itunes.apple.com/app/hfr+redface/id781621952">AppStore</a></td>
+</tr>   
+</table>
+
+
+HFR+ v1 - Compatible iOS 5 - 10
 =========================
-Application iOS (iPhone, iPod Touch et iPad) pour le forum hardware.fr
-
-<a href="https://itunes.apple.com/app/hfr/id384464712?mt=8" target="_blank"><img src="http://apps.flkone.com/hfrplus/appstore.svg" alt="AppStore" title="AppStore"></a>
+Application iOS (iPhone, iPod Touch et iPad) pour le forum hardware.fr :o
 
 
 Roadmap
@@ -15,10 +28,7 @@ Roadmap
     <th>Version</th><th>Type</th><th>Sortie</th>
   </tr>
 <tr>
-    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=16&page=1&sort=created&state=open">1.7.2</a></td><td>Fonctionnalités</td><td>early-2014</td>
-  </tr>
-<tr>
-    <td><a href="https://github.com/FLKone/HFRplus/issues?milestone=17&page=1&sort=created&state=open">x.0</a></td><td>Fonctionnalités avancées</td><td>TBD</td>
+    <td><a href="https://github.com/FLKone/HFRplus/tree/devel">2.0</a></td><td>Nouvelle version. <a href="https://github.com/FLKone/HFRplus/tree/devel">cf ~devel</a></td><td>TBD</td>
   </tr>   
 </table>
 
@@ -56,11 +66,5 @@ Crédits
 * [MWPhotoBrowser](https://github.com/mwaterfall/MWPhotoBrowser)
 * [SDWebImage](https://github.com/rs/SDWebImage)
 * [RegexKitLite](http://regexkit.sourceforge.net/RegexKitLite/)
-
-
-
-Soutenir le développement
--------------------------
-
-<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4EBPMFBQ8M6HN" target="_blank"><img src="https://www.paypalobjects.com/fr_FR/FR/i/btn/btn_donate_LG.gif" alt="PayPal - la solution de paiement en ligne la plus simple et la plus sécurisée !"></a>
-<span style="color:#bebebe; font-size:11px;">(commission Paypal: 3,4% + 0,25€)</span>
+* [UIMenuItem+CXAImageSupport](https://github.com/cxa/UIMenuItem-CXAImageSupport)
+* Icônes/Picto [icons8](https://icons8.com/)

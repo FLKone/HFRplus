@@ -9,8 +9,13 @@
 #import "UITableViewController+Ext.h"
 #import "NSDictionary+Merging.h"
 #import "HFRNavigationController.h"
+#import "UIColor+Extension.h"
 
+#ifdef CONFIGURATION_Release
+#define NSLog(__FORMAT__, ...)
+#else
 #define NSLog(__FORMAT__, ...) NSLog((@"%s [Line %d] " __FORMAT__), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+#endif
 
 static const NSInteger kDispatchPeriodSeconds = 20;
 
@@ -22,9 +27,40 @@ typedef enum {
 	kComplete
 } STATUS;
 
-#define kStatusChangedNotification  @"kStatusChangedNotification"
+typedef enum {
+    kTerminator,
+    kPoussin
+} BLMOD;
 
-#define kForumURL				@"http://forum.hardware.fr"
+typedef enum {
+    kALL,
+    kFav,
+    kFlag,
+    kRed
+} FLAGTYPE;
+
+typedef enum {
+    kSync, //pour repositionner les boutons en fonction du mode Main Gauche
+    kReload,
+    kCancel,
+    kNewTopic,
+    kAllCat
+} BARBTNTYPE;
+
+typedef enum Theme : int {
+    ThemeLight = 0,
+    ThemeDark = 1
+} Theme;
+
+
+
+#define kStatusChangedNotification  @"kStatusChangedNotification"
+#define kLoginChangedNotification  @"kLoginChangedNotification"
+#define kThemeChangedNotification  @"kThemeChangedNotification"
+
+//#define kForumURL                   @"http://forum.hardware.fr"
+#define kCatTemplateURL				@"/forum1.php?config=hfr.inc&cat=$1&page=1&subcat=$2&owntopic=$3"
+// $1 cat not 0 - $2 subcat 0 - $3 flag : 0=all, 1=flag+fav, 2=fav, 3=red
 
 #define kTimeoutMini		30
 #define kTimeoutMaxi		60
@@ -38,9 +74,16 @@ typedef enum {
 	#define DEBUG_LOGS 0
 #endif
 
+//Alerts Tags 100 + ####
+#define kAlertBlackListOK       1000001
+#define kAlertSondageOK         1000002
+#define kAlertPasteBoardOK      1000003
+
 #define REHOST_IMAGE_FILE @"rehostImages.plist"
 #define USED_SMILEYS_FILE @"usedSmilieys.plist"
-
+#define BLACKLIST_FILE @"blackList.plist"
+#define FORUMSMETA_FILE @"forumsMeta.plist"
+#define FORUMS_CACHE_FILE @"forumsCache.plist"
 
 #define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
 #define SYSTEM_VERSION_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)

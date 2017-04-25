@@ -14,7 +14,7 @@
 #import "TopicCellView.h"
 
 @implementation HFRMPViewController
-
+@synthesize reloadOnAppear, actionButton, reloadButton;
 
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
@@ -44,14 +44,13 @@
     self.navigationItem.titleView = nil;
     //if([self isKindOfClass:[HFRMPViewController class]]) 
     
-	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(newTopic)];
-	self.navigationItem.leftBarButtonItem = segmentBarItem;
-    [segmentBarItem release];	
-	
-	segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(fetchContent)];
-	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];		
-	
+    [self showBarButton:kNewTopic];
+    [self showBarButton:kReload];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(LoginChanged:)
+                                                 name:kLoginChangedNotification
+                                               object:nil];
 }
 
 /*
@@ -69,6 +68,28 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+-(void)LoginChanged:(NSNotification *)notification {
+    NSLog(@"loginChanged %@", notification);
+    
+    self.reloadOnAppear = YES;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    //NSLog(@"viewWillAppear Forums Table View");
+    
+    
+    [super viewWillAppear:animated];
+
+    if (self.reloadOnAppear) {
+        [self fetchContent];
+        self.reloadOnAppear = NO;
+    }
+    
+    //On repositionne les boutons
+    [self showBarButton:kSync];
+}
+
+
 - (void)viewDidUnload {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
@@ -77,8 +98,16 @@
 
 
 - (void)dealloc {
-    [super dealloc];
+    //NSLog(@"dealloc Forums Table View");
+    [self viewDidUnload];
+
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kLoginChangedNotification object:nil];
+ 
+    
 }
+
+
 
 
 // Customize the appearance of table view cells.
@@ -86,16 +115,6 @@
 	UITableViewCell *cell;
 	
     if ((cell = [super tableView:tableView cellForRowAtIndexPath:indexPath])) {
-        // Custom initialization
-		
-		if ([(Topic *)[arrayData objectAtIndex:indexPath.row] isViewed]) {
-			[[(TopicCellView *)cell titleLabel] setFont:[UIFont systemFontOfSize:14]];
-		}
-		else {
-			[[(TopicCellView *)cell titleLabel] setFont:[UIFont boldSystemFontOfSize:14]];
-
-		}
-
 		
 		if ([[(TopicCellView *)cell titleLabel] numberOfLines] > 0) {
 			[[(TopicCellView *)cell titleLabel] setNumberOfLines:0];
@@ -131,7 +150,6 @@
 
 	MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[arrayData objectAtIndex:indexPath.row] aURLOfLastPost]];
 	self.messagesTableViewController = aView;
-	[aView release];
 
 	
 	//setup the URL
@@ -154,7 +172,7 @@
 		self.pressedIndexPath = [[self.topicsTableView indexPathForRowAtPoint:longPressLocation] copy];
 		
         if (self.topicActionSheet != nil) {
-            [self.topicActionSheet release], self.topicActionSheet = nil;
+            self.topicActionSheet = nil;
         }
         
 		self.topicActionSheet = [[UIActionSheet alloc] initWithTitle:@"Aller à..."
@@ -189,13 +207,15 @@
 	//[self.maintenanceView setHidden:YES];	
 	//[self.loadingView setHidden:YES];	
 	
-	[self.navigationItem.leftBarButtonItem setEnabled:NO];
+
+    [self statusBarButton:kNewTopic enable:NO];
 }
 
 
 -(void)loadDataInTableView:(NSData *)contentData {
 	[super loadDataInTableView:contentData];
-	[self.navigationItem.leftBarButtonItem setEnabled:YES];
+    [self statusBarButton:kNewTopic enable:NO];
+
 }
 
 - (void)actionSheet:(UIActionSheet *)modalView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -208,7 +228,6 @@
 			
 			MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[arrayData objectAtIndex:pressedIndexPath.row] aURLOfLastPage]];
 			self.messagesTableViewController = aView;
-			[aView release];
 			
 			self.messagesTableViewController.topicName = [[arrayData objectAtIndex:pressedIndexPath.row] aTitle];	
 			self.messagesTableViewController.isViewed = [[arrayData objectAtIndex:pressedIndexPath.row] isViewed];	
@@ -224,7 +243,6 @@
 			
 			MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:[[arrayData objectAtIndex:pressedIndexPath.row] aURL]];
 			self.messagesTableViewController = aView;
-			[aView release];
 			
 			self.messagesTableViewController.topicName = [[arrayData objectAtIndex:pressedIndexPath.row] aTitle];	
 			self.messagesTableViewController.isViewed = [[arrayData objectAtIndex:pressedIndexPath.row] isViewed];	
@@ -249,21 +267,17 @@
 - (void)fetchContentStarted:(ASIHTTPRequest *)theRequest
 {
 	//Bouton Stop
-	self.navigationItem.rightBarButtonItem = nil;	
-	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(cancelFetchContent)];
-	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];	
-	
+    [self showBarButton:kCancel];
+    [self statusBarButton:kNewTopic enable:NO];
+
 	[super fetchContentStarted:theRequest];
 }
 
 - (void)fetchContentComplete:(ASIHTTPRequest *)theRequest
 {
+
 	//Bouton Reload
-	self.navigationItem.rightBarButtonItem = nil;
-	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(fetchContent)];
-	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];
+    [self showBarButton:kReload];
 	
 	[super fetchContentComplete:theRequest];
 
@@ -272,22 +286,20 @@
 	switch (self.status) {
 		case kMaintenance:
 		case kNoAuth:
-			[self.navigationItem.leftBarButtonItem setEnabled:NO];	
+            [self statusBarButton:kNewTopic enable:NO];
 			break;
 		case kNoResults:            
-		default:	
-			[self.navigationItem.leftBarButtonItem setEnabled:YES];	
+		default:
+            [self statusBarButton:kNewTopic enable:YES];
 			break;
 	}
 }
 
 - (void)fetchContentFailed:(ASIHTTPRequest *)theRequest
 {
+    NSLog(@"fetchContentFailed");
 	//Bouton Reload
-	self.navigationItem.rightBarButtonItem = nil;
-	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(fetchContent)];
-	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];
+    [self showBarButton:kReload];
 	
 	[super fetchContentFailed:theRequest];
 }
@@ -295,6 +307,144 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	return 50;
+}
+
+-(void)statusBarButton:(BARBTNTYPE)type enable:(bool)enable {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSInteger vos_sujets = [defaults integerForKey:@"main_gaucheWIP"];
+
+    
+    
+    if ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && [self respondsToSelector:@selector(traitCollection)] && [HFRplusAppDelegate sharedAppDelegate].window.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) ||
+        vos_sujets == 0) {
+        NSLog(@"à droite");
+        
+        switch (type) {
+            case kNewTopic:
+            default:
+            {
+                NSLog(@"NEW TOPIC");
+                [self.navigationItem.leftBarButtonItem setEnabled:enable];
+                [self.actionButton setEnabled:enable];
+            }
+                break;
+
+        }
+    }
+    else {
+        NSLog(@"à gauche");
+        
+        switch (type) {
+            case kNewTopic:
+            default:
+                
+            {
+                NSLog(@"NEW TOPIC");
+                [self.navigationItem.rightBarButtonItem setEnabled:enable];
+                [self.actionButton setEnabled:enable];
+
+            }
+                break;
+
+        }
+        
+        
+    }
+}
+
+-(void)showBarButton:(BARBTNTYPE)type {
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSInteger vos_sujets = [defaults integerForKey:@"main_gaucheWIP"];
+    //NSLog(@"maingauche %d", (vos_sujets == 0));
+    //NSLog(@"maingauche %d", ([self respondsToSelector:@selector(traitCollection)] && [HFRplusAppDelegate sharedAppDelegate].window.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact));
+    
+    if (type == kSync) {
+        //On inverse les boutons
+        if ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && [self respondsToSelector:@selector(traitCollection)] && [HFRplusAppDelegate sharedAppDelegate].window.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) ||
+            vos_sujets == 0) {
+            //NSLog(@"DROITE ");
+            if (!(self.navigationItem.leftBarButtonItem.action == @selector(newTopic))) {
+                self.navigationItem.rightBarButtonItem = self.navigationItem.leftBarButtonItem;
+                self.navigationItem.leftBarButtonItem = self.actionButton;
+            }
+
+            
+        }
+        else {
+            //NSLog(@"GAUCHE");
+            
+            if ((self.navigationItem.leftBarButtonItem.action == @selector(newTopic))) {
+                //NSLog(@"IN GAUCHE");
+                self.navigationItem.leftBarButtonItem = self.navigationItem.rightBarButtonItem;
+                self.navigationItem.rightBarButtonItem = self.actionButton;
+            }
+            
+
+        }
+        
+        return;
+    }
+    
+    
+    
+    
+    
+    if ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && [self respondsToSelector:@selector(traitCollection)] && [HFRplusAppDelegate sharedAppDelegate].window.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) ||
+        vos_sujets == 0) {
+        //NSLog(@"à droite");
+        
+        switch (type) {
+            case kNewTopic:
+            {
+                //NSLog(@"NEW TOPIC");
+                self.actionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(newTopic)];
+                self.navigationItem.leftBarButtonItem = self.actionButton;
+            }
+                break;
+            case kCancel:
+            {
+                //NSLog(@"CANCEL");
+                self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(cancelFetchContent)];
+            }
+                break;
+            case kReload:
+            default:
+            {
+                //NSLog(@"RELOAD");
+                self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(fetchContent)];
+            }
+                break;
+        }
+    }
+    else {
+        //NSLog(@"à gauche");
+        
+        switch (type) {
+            case kNewTopic:
+            {
+               //NSLog(@"NEW TOPIC");
+                self.actionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(newTopic)];
+                self.navigationItem.rightBarButtonItem = self.actionButton;
+            }
+                break;
+            case kCancel:
+            {
+                //NSLog(@"CANCEL");
+                self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(cancelFetchContent)];
+            }
+                break;
+            case kReload:
+            default:
+            {
+                //NSLog(@"RELOAD");
+                self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(fetchContent)];
+            }
+                break;
+        }
+        
+        
+    }
 }
 
 -(NSString *)newTopicTitle

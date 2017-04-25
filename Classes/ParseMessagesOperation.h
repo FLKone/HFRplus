@@ -13,7 +13,7 @@
 @interface ParseMessagesOperation : NSOperation
 {
 @private
-    id <ParseMessagesOperationDelegate> delegate;
+    id <ParseMessagesOperationDelegate> __weak delegate;
     
     NSData          *dataToParse;
     

@@ -14,6 +14,8 @@
 #include <unistd.h>
 
 #import "ASIHTTPRequest.h"
+#import "ThemeColors.h"
+#import "ThemeManager.h"
 
 #define kBenchUrlForum   @"http://forum.hardware.fr"
 #define kBenchUrlCategorie   @"http://forum.hardware.fr/hfr/Hardware/liste_sujet-1.htm"
@@ -47,6 +49,11 @@
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
+    
+    [self.textView setText:[k ForumURL]];
+    self.textView.keyboardAppearance = [ThemeColors keyboardAppearance:[[ThemeManager sharedManager] theme]];
+
+
 }
 
 - (void)viewDidUnload
@@ -100,6 +107,13 @@
 #pragma mark -
 #pragma mark network_base
 
+- (IBAction)MakeItRain:(id)sender {
+    //[self crash];
+    
+    [[HFRplusAppDelegate sharedAppDelegate] openURL:@"hfr://test"];
+
+}
+
 -(IBAction) network_base {
 
     // Create the request.
@@ -131,7 +145,6 @@
 
 
     // release the connection, and the data object
-    [connection release];
 
     
     // inform the user
@@ -145,7 +158,6 @@
     [self addText:@"connectionDidFinishLoading"];
     
     // release the connection, and the data object
-    [connection release];
 }
 
 #pragma mark -
@@ -223,8 +235,4 @@
 }
 
 
-- (void)dealloc {
-    [choixURL release];
-    [super dealloc];
-}
 @end

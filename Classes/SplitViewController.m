@@ -11,6 +11,12 @@
 
 #import "AideViewController.h"
 
+#import "TopicsTableViewController.h"
+#import "FavoritesTableViewController.h"
+#import "HFRMPViewController.h"
+#import "TabBarController.h"
+#import "ThemeManager.h"
+
 @interface SplitViewController ()
 
 @end
@@ -23,9 +29,9 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        
+        //NSLog(@"initWithNibNameinitWithNibNameinitWithNibNameinitWithNibName");
         self.mybarButtonItem = [[UIBarButtonItem alloc] init];
-
+        self.delegate = self;
     }
     return self;
 }
@@ -38,10 +44,10 @@
     
     
     if ([self respondsToSelector:@selector(setPresentsWithGesture:)]) {
-        [self setPresentsWithGesture:NO];
+        //[self setPresentsWithGesture:NO];
     }
 
-    
+//    [self setPreferredDisplayMode:UISpli];
 }
 
 - (void)viewDidUnload
@@ -51,6 +57,166 @@
     // Release any retained subviews of the main view.
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    if ([[ThemeManager sharedManager] theme] == ThemeLight) {
+        return UIStatusBarStyleDefault;
+
+    }
+    else {
+        return UIStatusBarStyleLightContent;
+    }
+}
+
+#pragma mark Split Collapsing
+
+- (void)splitViewController:(UISplitViewController *)svc
+    willChangeToDisplayMode:(UISplitViewControllerDisplayMode)displayMode {
+    
+    //NSLog(@"displayMode %ld", (long)displayMode);
+    return;
+        if (displayMode == UISplitViewControllerDisplayModePrimaryHidden || displayMode == UISplitViewControllerDisplayModePrimaryOverlay) {
+            //NSLog(@"IN");
+            UINavigationItem *navItem = [[[[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] viewControllers] objectAtIndex:0] navigationItem];
+
+            navItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStylePlain target:self.displayModeButtonItem.target action:self.displayModeButtonItem.action];
+        } else {
+            self.navigationItem.leftBarButtonItem = nil;
+        }
+
+    
+}
+- (BOOL)splitViewController:(UISplitViewController *)splitViewController collapseSecondaryViewController:(UIViewController *)secondaryViewController ontoPrimaryViewController:(UIViewController *)primaryViewController {
+    //NSLog(@"collapseSecondaryViewController");
+
+    
+    //NSLog(@"secondaryViewController %@", secondaryViewController);
+    //NSLog(@"primaryViewController %@", primaryViewController);
+
+    
+    if ([secondaryViewController isKindOfClass:[DetailNavigationViewController class]]
+        && [(UINavigationController *)secondaryViewController viewControllers].count > 0
+        && [[(UINavigationController *)secondaryViewController viewControllers][0] isKindOfClass:[MessagesTableViewController class]]) {
+        
+        //NSLog(@"top VC %@", [(UINavigationController *)secondaryViewController topViewController]);
+        
+        for (UIViewController *vc in [(UINavigationController *)secondaryViewController viewControllers]) {
+            //NSLog(@"vc");
+            [(UINavigationController *)[[HFRplusAppDelegate sharedAppDelegate].rootController selectedViewController] pushViewController:vc animated:NO];
+
+        }
+        DetailNavigationViewController *navigationController = [[DetailNavigationViewController alloc] initWithRootViewController:[[UIViewController alloc] init]];
+        navigationController.delegate = navigationController;
+
+        [[HFRplusAppDelegate sharedAppDelegate] setDetailNavigationController:navigationController];
+
+        // If the detail controller doesn't have an item, display the primary view controller instead
+        
+        return YES;
+    }
+    
+    return NO;
+    
+}
+
+- (UIViewController*)splitViewController:(UISplitViewController *)splitViewController separateSecondaryViewControllerFromPrimaryViewController:(UIViewController *)primaryViewController
+{
+    //NSLog(@"separateSecondaryViewControllerFromPrimaryViewController");
+
+    UITabBarController *masterVC = splitViewController.viewControllers[0];
+    
+    if ([(UINavigationController*)masterVC.selectedViewController viewControllers].count > 1) {
+//        if ([((UINavigationController*)masterVC.selectedViewController).topViewController isKindOfClass:[MessagesTableViewController class]]) {
+
+            NSMutableArray *arrVC = [NSMutableArray array];
+
+
+            NSUInteger counti = [(UINavigationController *)masterVC.selectedViewController viewControllers].count;
+            
+            for (int i = 0; i < counti; i++) {
+                //NSLog(@"intloop");
+                if (![[(UINavigationController*)masterVC.selectedViewController topViewController] isKindOfClass:[TopicsTableViewController class]]
+                    && ![[(UINavigationController*)masterVC.selectedViewController topViewController] isKindOfClass:[FavoritesTableViewController class]]) {
+                    UIViewController *tmpVCC = [(UINavigationController*)masterVC.selectedViewController popViewControllerAnimated:NO];
+                    
+                    if (tmpVCC) {
+                        [arrVC addObject:tmpVCC];
+                    }
+                    
+                    //NSLog(@"class %@", [tmpVCC class]);
+
+                }
+                else {
+                    //NSLog(@"intloop break");
+                    break;
+                }
+            }
+        
+            if (arrVC.count == 0) {
+                //NSLog(@"rien a separer");
+                return nil;
+            }
+            DetailNavigationViewController *navigationController = [[DetailNavigationViewController alloc] initWithRootViewController:[[UIViewController alloc] init]];
+            navigationController.delegate = navigationController;
+        
+            //NSLog(@"arrVC %@", arrVC);
+            [navigationController setViewControllers:[[arrVC reverseObjectEnumerator] allObjects]];
+            //NSLog(@"vc.count %lu", (unsigned long)navigationController.viewControllers.count);
+
+            navigationController.viewControllers[0].navigationItem.leftBarButtonItem = self.displayModeButtonItem;
+            navigationController.viewControllers[0].navigationItem.leftItemsSupplementBackButton = YES;
+            navigationController.navigationBar.translucent = NO;
+            [[[HFRplusAppDelegate sharedAppDelegate] rootController] popAllToRoot:NO];
+            [[HFRplusAppDelegate sharedAppDelegate] setDetailNavigationController:navigationController];
+            
+            return navigationController;
+//        }
+//        else {
+//            NSLog(@"NIL 00");
+//            return nil; // Use the default implementation
+//        }
+    }
+    else {
+        //NSLog(@"NIL");
+        return nil; // Use the default implementation
+    }
+}
+
+/*
+- (UIViewController *)splitViewController:(UISplitViewController *)splitViewController
+separateSecondaryViewControllerFromPrimaryViewController:(UIViewController *)primaryViewController{
+    
+    NSLog(@"separateSecondaryViewControllerFromPrimaryViewController primaryViewController %@", primaryViewController);
+    return nil;
+}
+ */
+ /*
+- (UIViewController *)splitViewController:(UISplitViewController *)splitViewController
+separateSecondaryViewControllerFromPrimaryViewController:(UIViewController *)primaryViewController{
+   
+    if ([primaryViewController isKindOfClass:[UINavigationController class]]) {
+        for (UIViewController *controller in [(UINavigationController *)primaryViewController viewControllers]) {
+            if ([controller isKindOfClass:[UINavigationController class]] && [[(UINavigationController *)controller visibleViewController] isKindOfClass:[NoteViewController class]]) {
+                return controller;
+            }
+        }
+    }
+    
+    // No detail view present
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UINavigationController *detailView = [storyboard instantiateViewControllerWithIdentifier:@"detailView"];
+    
+    // Ensure back button is enabled
+    UIViewController *controller = [detailView visibleViewController];
+    controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
+    controller.navigationItem.leftItemsSupplementBackButton = YES;
+    
+    return detailView;
+    
+}
+*/
+
+#pragma mark Nav+
+
 -(void)MoveLeftToRight {
     
     //Les deux controllers
@@ -59,8 +225,8 @@
     
     [rightNavController popToRootViewControllerAnimated:YES];
     
-    [rightNavController setViewControllers:nil];
-    UIViewController * uivc = [[[UIViewController alloc] init] autorelease];
+    [rightNavController setViewControllers:[NSArray array]];
+    UIViewController * uivc = [[UIViewController alloc] init];
     uivc.title = @"HFR+";
     [rightNavController setViewControllers:[NSMutableArray arrayWithObjects:uivc, nil]];
 
@@ -92,7 +258,6 @@
         
         MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:theUrl];
         [rightNavController setViewControllers:[NSMutableArray arrayWithObjects:aView, nil] animated:YES];
-        [aView release];
 
     }
 
@@ -101,7 +266,11 @@
 
 -(void)NavPlus:(NSString *)url {
     //Les deux controllers
-    TabBarController *leftTabBarController = [self.viewControllers objectAtIndex:0];
+    //TabBarController *leftTabBarController = [self.viewControllers objectAtIndex:0];
+    if (self.viewControllers.count < 2) {
+        return;
+    }
+    
     UINavigationController *rightNavController = [self.viewControllers objectAtIndex:1];
     
     //Première tab > navController
@@ -127,10 +296,9 @@
         [browserViewController setFullBrowser:YES];
         
         [rightNavController popToRootViewControllerAnimated:NO];
-        [rightNavController setViewControllers:nil animated:NO];
+        [rightNavController setViewControllers:[NSArray array] animated:NO];
         [rightNavController setViewControllers:[NSMutableArray arrayWithObjects:browserViewController, nil] animated:NO];
         
-        [browserViewController release];
     }
     
 }
@@ -177,16 +345,14 @@
     
     MessagesTableViewController *aView = [[MessagesTableViewController alloc] initWithNibName:@"MessagesTableViewController" bundle:nil andUrl:theUrl];
     [leftNavController pushViewController:aView animated:YES];
-    [aView release];
     
     BrowserViewController *browserViewController = [[BrowserViewController alloc] initWithURL:url];
     [browserViewController setFullBrowser:YES];
     
     [rightNavController popToRootViewControllerAnimated:NO];
-    [rightNavController setViewControllers:nil animated:NO];
+    [rightNavController setViewControllers:[NSArray array] animated:NO];
     [rightNavController setViewControllers:[NSMutableArray arrayWithObjects:browserViewController, nil] animated:NO];
     
-    [browserViewController release];
     NSLog(@"END MoveRightToLeft");
 }
 
@@ -195,7 +361,7 @@
 }
 
 /* for iOS6 support */
-- (NSUInteger)supportedInterfaceOrientations
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
 	if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"landscape_mode"] isEqualToString:@"all"]) {
         //NSLog(@"All");
@@ -232,9 +398,11 @@
 
 -(void)splitViewController:(UISplitViewController *)svc popoverController:(UIPopoverController *)pc willPresentViewController:(UITabBarController *)aViewController
 {
+    NSLog(@"willPresentViewController");
+    
     if (aViewController.view.frame.size.width > 320) {
         
-        aViewController.view.frame = CGRectMake(0, 0, 320, self.view.frame.size.height);
+        //aViewController.view.frame = CGRectMake(0, 0, 320, self.view.frame.size.height);
         
         NSInteger selected = [aViewController selectedIndex];
         
@@ -247,29 +415,48 @@
 
 - (void)splitViewController: (SplitViewController *)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem*)barButtonItem forPopoverController: (UIPopoverController*)pc {
     
+    NSLog(@"willHideViewController");
+
     barButtonItem.title = @"Menu";
     
-    NSLog(@"%@", [[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] viewControllers]);
+    //NSLog(@"%@", [[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] viewControllers]);
 
-    
-    UINavigationItem *navItem = [[[[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] viewControllers] objectAtIndex:0] navigationItem];
+    if (![self respondsToSelector:@selector(displayModeButtonItem)]) {
+        NSLog(@"iOS6 iOS6 iOS6 ");
 
-    [navItem setLeftBarButtonItem:barButtonItem animated:YES];
-    
-    svc.popOver = pc;
-    [svc setMybarButtonItem:barButtonItem];
+        UINavigationItem *navItem = [[[[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] viewControllers] objectAtIndex:0] navigationItem];
+        
+        [navItem setLeftBarButtonItem:barButtonItem animated:YES];
+        [navItem setLeftItemsSupplementBackButton:YES];
+        
+        svc.popOver = pc;
+        [svc setMybarButtonItem:barButtonItem];
+
+    }
+    else {
+        
+        svc.popOver = pc;
+
+        [[HFRplusAppDelegate sharedAppDelegate] detailNavigationController].viewControllers[0].navigationItem.leftBarButtonItem = self.displayModeButtonItem;
+        [[HFRplusAppDelegate sharedAppDelegate] detailNavigationController].viewControllers[0].navigationItem.leftItemsSupplementBackButton = YES;
+
+    }
 
 }
 
 - (void)splitViewController: (SplitViewController *)svc willShowViewController:(UIViewController *)aViewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem {
    
-    NSLog(@"%@", [[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] viewControllers]);
+    NSLog(@"willShowViewController");
+
+    //NSLog(@"%@", [[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] viewControllers]);
     
-    UINavigationItem *navItem = [[[[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] viewControllers] objectAtIndex:0] navigationItem];
-    [navItem setLeftBarButtonItem:nil animated:YES];
-    
-    svc.popOver = nil;
-    
+    if (![self respondsToSelector:@selector(displayModeButtonItem)]) {
+        NSLog(@"iOS6 iOS6 iOS6 ");
+        UINavigationItem *navItem = [[[[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] viewControllers] objectAtIndex:0] navigationItem];
+        [navItem setLeftBarButtonItem:nil animated:YES];
+        
+        svc.popOver = nil;
+    }
 }
 
 @end

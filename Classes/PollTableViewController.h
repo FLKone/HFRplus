@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 @class MessagesTableViewController;
 @class ASIHTTPRequest;
+@class HTMLNode;
+@class HTMLParser;
 
-@interface PollTableViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+@interface PollTableViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate> {
     
     IBOutlet UITableView *tableViewPoll;
 	IBOutlet UIView *loadingView;
@@ -35,26 +37,26 @@
     int intNombreChoix;
 }
 
-@property (nonatomic, retain) IBOutlet UITableView *tableViewPoll;
-@property (nonatomic, retain) IBOutlet UIView *loadingView;
-@property (nonatomic, retain) NSString *statusMessage;
-@property (nonatomic, retain) IBOutlet UILabel *maintenanceView;
+@property (nonatomic, strong) IBOutlet UITableView *tableViewPoll;
+@property (nonatomic, strong) IBOutlet UIView *loadingView;
+@property (nonatomic, strong) NSString *statusMessage;
+@property (nonatomic, strong) IBOutlet UILabel *maintenanceView;
 
-@property (nonatomic, retain) NSMutableDictionary *arrayInputData;
-@property (nonatomic, retain) NSMutableDictionary *arraySubmitBtn;
-@property (nonatomic, retain) NSMutableArray *arrayOptions;
-@property (nonatomic, retain) NSMutableArray *arrayResults;
-@property (nonatomic, retain) NSMutableArray *arraySelectedRows;
+@property (nonatomic, strong) NSMutableDictionary *arrayInputData;
+@property (nonatomic, strong) NSMutableDictionary *arraySubmitBtn;
+@property (nonatomic, strong) NSMutableArray *arrayOptions;
+@property (nonatomic, strong) NSMutableArray *arrayResults;
+@property (nonatomic, strong) NSMutableArray *arraySelectedRows;
 
-@property (nonatomic, retain) NSString *stringQuestion;
-@property (nonatomic, retain) NSString *stringFooter;
+@property (nonatomic, strong) NSString *stringQuestion;
+@property (nonatomic, strong) NSString *stringFooter;
 
-@property (nonatomic, retain) MessagesTableViewController *delegate;
-@property (nonatomic, retain) ASIHTTPRequest *request;
+@property (nonatomic, strong) MessagesTableViewController *delegate;
+@property (nonatomic, strong) ASIHTTPRequest *request;
 @property STATUS status;
 
 @property int intNombreChoix;
 
-- (id)initWithPollNode:(NSString *)aPollNode;
+- (id)initWithPollNode:(HTMLNode *)aPollNode andParser:(HTMLParser *)aPollParser;
 
 @end

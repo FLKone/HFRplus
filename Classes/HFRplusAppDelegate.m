@@ -15,6 +15,13 @@
 #import "MKStoreManager.h"
 #import "BrowserViewController.h"
 
+#import "ThemeColors.h"
+#import "ThemeManager.h"
+
+#import <SafariServices/SafariServices.h>
+
+#import <Crittercism/Crittercism.h>
+
 @implementation HFRplusAppDelegate
 
 @synthesize window;
@@ -53,8 +60,12 @@
         
 	//self.hash_check = [[NSString alloc] init];
 	
-    
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:YES];
+
+
+#ifdef CONFIGURATION_Release
     NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+    
     if ([bundleIdentifier isEqualToString:@"hfrplus.red"]) {
         [Crittercism enableWithAppID:kTestFlightAPIRE];
         
@@ -62,13 +73,29 @@
     }
     else
     {
+        [Crittercism enableWithAppID:kTestFlightAPI];
+
         //[TestFlight takeOff:kTestFlightAPI];
-        [MKStoreManager sharedManager];
+        //[MKStoreManager sharedManager];
 
     }
-	   
+#else
+    //NSLog(@"DEBUUUUUGGGGG");
+#endif
+    
     [self registerDefaultsFromSettingsBundle];
     
+    
+    NSString *version = [NSString stringWithFormat:@"HFR+ %@ (%@)", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+
+    NSDictionary *appDefaults =  [NSDictionary dictionaryWithObjectsAndKeys:
+                                  version, @"version", nil];
+    
+    [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+        
+        
     //UserAgent
     /*
     NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:
@@ -82,7 +109,7 @@
 	    
     [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(reachabilityChanged:) name: kReachabilityChangedNotification object: nil];
 
-    internetReach = [[Reachability reachabilityForInternetConnection] retain];
+    internetReach = [Reachability reachabilityForInternetConnection];
 	[internetReach startNotifier];
     
 	rootController.customizableViewControllers = nil;
@@ -100,14 +127,41 @@
     	
     [window makeKeyAndVisible];
 
-	periodicMaintenanceTimer = [[NSTimer scheduledTimerWithTimeInterval:60*10
+	periodicMaintenanceTimer = [NSTimer scheduledTimerWithTimeInterval:60*10
 																 target:self
 															   selector:@selector(periodicMaintenance)
 															   userInfo:nil
-																repeats:YES] retain];
+																repeats:YES];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kThemeChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(setThemeFromNotification:) //note the ":" - should take an NSNotification as parameter
+                                                 name:kThemeChangedNotification
+                                               object:nil];
+    [self setTheme:[[ThemeManager sharedManager] theme]];
+
 	
     return YES;
 }
+
+-(void)setThemeFromNotification:(NSNotification *)notification{
+    [self setTheme:[[ThemeManager sharedManager] theme]];
+}
+
+-(void)setTheme:(Theme)theme{
+    
+    if ([self.window respondsToSelector:@selector(setTintColor:)]) {
+        self.window.tintColor = [ThemeColors tintColor:theme];
+    }
+    
+    if ([[UITabBar appearance] respondsToSelector:@selector(setTranslucent:)]) {
+        [[UITabBar appearance] setTranslucent:YES];
+    }
+    
+    [[UINavigationBar appearance] setBackgroundImage:[ThemeColors imageFromColor:[ThemeColors navBackgroundColor:theme]] forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [ThemeColors textColor:theme]}];
+}
+
 
 - (void)registerDefaultsFromSettingsBundle {
     
@@ -126,6 +180,7 @@
         NSString *key = [prefSpecification objectForKey:@"Key"];
         
         if(key && [prefSpecification objectForKey:@"DefaultValue"]) {
+            //NSLog(@"Reg %@ = %@", key, [prefSpecification objectForKey:@"DefaultValue"]);
             [defaultsToRegister setObject:[prefSpecification objectForKey:@"DefaultValue"] forKey:key];
         }
     }
@@ -142,7 +197,6 @@
     }	
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultsToRegister];    
-    [defaultsToRegister release];
 }
 
 
@@ -166,7 +220,7 @@
      */
 	NSLog(@"applicationDidEnterBackground");
     [periodicMaintenanceTimer invalidate];
-    [periodicMaintenanceTimer release], periodicMaintenanceTimer = nil;	
+    periodicMaintenanceTimer = nil;	
 }
 
 
@@ -176,11 +230,11 @@
      */
 	NSLog(@"applicationWillEnterForeground");
 
-	periodicMaintenanceTimer = [[NSTimer scheduledTimerWithTimeInterval:60*10
+	periodicMaintenanceTimer = [NSTimer scheduledTimerWithTimeInterval:60*10
 																 target:self
 															   selector:@selector(periodicMaintenance)
 															   userInfo:nil
-																repeats:YES] retain];	
+																repeats:YES];	
 }
 
 - (void)periodicMaintenance
@@ -197,9 +251,8 @@
 
 - (void)periodicMaintenanceBack
 {
-	NSAutoreleasePool * pool2;
     
-    pool2 = [[NSAutoreleasePool alloc] init];
+    @autoreleasepool {
 	
 	//NSLog(@"periodicMaintenanceBack");
 
@@ -208,97 +261,96 @@
     //[periodicMaintenanceOperation cancel];
     //self.periodicMaintenanceOperation = nil;
 
-	NSFileManager *fileManager = [NSFileManager defaultManager];
+		NSFileManager *fileManager = [NSFileManager defaultManager];
 
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-	NSString *diskCachePath = [[[paths objectAtIndex:0] stringByAppendingPathComponent:@"ImageCache"] retain];
+		NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+		NSString *diskCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"ImageCache"];
 
-	/*NSError *error = nil;
-	NSFileManager *fileManager = [NSFileManager defaultManager];
-	NSArray *URLResources = [NSArray arrayWithObject:@"NSURLCreationDateKey"];
-	
-	
-	
-	//NSArray *crashReportFiles = [[NSFileManager defaultManager] contentsOfDirectoryAtURL:[[[NSFileManager defaultManager] userLibraryURL] URLByAppendingPathComponent:@"ImageCache"] includingPropertiesForKeys:URLResources options:(NSDirectoryEnumerationSkipsHiddenFiles | NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsSubdirectoryDescendants) error:&error];
-
-	
-	*/
-	
-	if (![fileManager fileExistsAtPath:diskCachePath])
-	{
-		//NSLog(@"createDirectoryAtPath");
-		[fileManager createDirectoryAtPath:diskCachePath
-								  withIntermediateDirectories:YES
-												   attributes:nil
-														error:NULL];
-	}
-	else {
-		//NSLog(@"pas createDirectoryAtPath");
+		/*NSError *error = nil;
+		NSFileManager *fileManager = [NSFileManager defaultManager];
+		NSArray *URLResources = [NSArray arrayWithObject:@"NSURLCreationDateKey"];
 		
 		
-		NSString *directoryPath = diskCachePath;
-		NSDirectoryEnumerator *directoryEnumerator = [fileManager enumeratorAtPath:directoryPath];
 		
-		NSDate *yesterday = [NSDate dateWithTimeIntervalSinceNow:(-60*60*24*25)];
-		//NSLog(@"yesterday %@", yesterday);
+		//NSArray *crashReportFiles = [[NSFileManager defaultManager] contentsOfDirectoryAtURL:[[[NSFileManager defaultManager] userLibraryURL] URLByAppendingPathComponent:@"ImageCache"] includingPropertiesForKeys:URLResources options:(NSDirectoryEnumerationSkipsHiddenFiles | NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsSubdirectoryDescendants) error:&error];
+
 		
-		for (NSString *path in directoryEnumerator) {
+		*/
+		
+		if (![fileManager fileExistsAtPath:diskCachePath])
+		{
+			//NSLog(@"createDirectoryAtPath");
+			[fileManager createDirectoryAtPath:diskCachePath
+									  withIntermediateDirectories:YES
+													   attributes:nil
+															error:NULL];
+		}
+		else {
+			//NSLog(@"pas createDirectoryAtPath");
+			
+			
+			NSString *directoryPath = diskCachePath;
+			NSDirectoryEnumerator *directoryEnumerator = [fileManager enumeratorAtPath:directoryPath];
+			
+			NSDate *yesterday = [NSDate dateWithTimeIntervalSinceNow:(-60*60*24*25)];
+			//NSLog(@"yesterday %@", yesterday);
+			
+			for (NSString *path in directoryEnumerator) {
 
-			if ([[path pathExtension] isEqualToString:@"rtfd"]) {
-				// Don't enumerate this directory.
-				[directoryEnumerator skipDescendents];
-			}
-			else {
-				
-				NSDictionary *attributes = [directoryEnumerator fileAttributes];
-				NSDate *CreatedDate = [attributes objectForKey:NSFileCreationDate];
-
-				if ([yesterday earlierDate:CreatedDate] == CreatedDate) {
-					//NSLog(@"%@ was created %@", path, CreatedDate);
-					
-					NSError *error = nil;
-					if (![fileManager removeItemAtURL:[NSURL fileURLWithPath:[diskCachePath stringByAppendingPathComponent:path]] error:&error]) {
-						// Handle the error.
-						//NSLog(@"error %@ %@", path, error);
-					}
-					
+				if ([[path pathExtension] isEqualToString:@"rtfd"]) {
+					// Don't enumerate this directory.
+					[directoryEnumerator skipDescendents];
 				}
 				else {
-					//NSLog(@"%@ was created == %@", path, CreatedDate);
+					
+					NSDictionary *attributes = [directoryEnumerator fileAttributes];
+					NSDate *CreatedDate = [attributes objectForKey:NSFileCreationDate];
 
+					if ([yesterday earlierDate:CreatedDate] == CreatedDate) {
+						//NSLog(@"%@ was created %@", path, CreatedDate);
+						
+						NSError *error = nil;
+						if (![fileManager removeItemAtURL:[NSURL fileURLWithPath:[diskCachePath stringByAppendingPathComponent:path]] error:&error]) {
+							// Handle the error.
+							//NSLog(@"error %@ %@", path, error);
+						}
+						
+					}
+					else {
+						//NSLog(@"%@ was created == %@", path, CreatedDate);
+
+					}
 				}
+				
 			}
 			
+			/*
+			NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager]
+												 enumeratorAtURL:directoryURL
+												 includingPropertiesForKeys:keys
+												 options:(NSDirectoryEnumerationSkipsPackageDescendants |
+														  NSDirectoryEnumerationSkipsHiddenFiles)
+												 errorHandler:^(NSURL *url, NSError *error) {
+													 // Handle the error.
+													 // Return YES if the enumeration should continue after the error.
+													 return YES;
+												 }];
+			
+			for (NSURL *url in enumerator) {
+			}
+			 */
 		}
 		
-		/*
-		NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager]
-											 enumeratorAtURL:directoryURL
-											 includingPropertiesForKeys:keys
-											 options:(NSDirectoryEnumerationSkipsPackageDescendants |
-													  NSDirectoryEnumerationSkipsHiddenFiles)
-											 errorHandler:^(NSURL *url, NSError *error) {
-												 // Handle the error.
-												 // Return YES if the enumeration should continue after the error.
-												 return YES;
-											 }];
-		
-		for (NSURL *url in enumerator) {
-		}
-		 */
-	}
-	
 
-	
+		
     // If disk usage outrich capacity, run the cache eviction operation and if cacheInfo dictionnary is dirty, save it in an operation
-	/* if (diskCacheUsage > self.diskCapacity)
+		/* if (diskCacheUsage > self.diskCapacity)
     {
         self.periodicMaintenanceOperation = [[[NSInvocationOperation alloc] initWithTarget:self selector:@selector(balanceDiskUsage) object:nil] autorelease];
         [ioQueue addOperation:periodicMaintenanceOperation];
     }*/
-	//NSLog(@"end");
-    [diskCachePath release];
-	[pool2 drain];
+		//NSLog(@"end");
+	}
 
 }
 
@@ -361,31 +413,116 @@
 	
     //NSLog(@"display %@", display);
     
-	if ([web isEqualToString:@"internal"]) {
+    
+    //Check Youtube/AppStore.
+    //- http://itunes.apple.com/fr/app/idXXXXXXXX
+    //- http://appstore.com/apple/keynote
+
+    
+    if ([web isEqualToString:@"internal"]) {
         if ([self.detailNavigationController.topViewController isMemberOfClass:[BrowserViewController class]]) {
             //on load
             [((BrowserViewController *)self.detailNavigationController.topViewController).myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:stringUrl]]];
         }
         else
         {
-        
-            BrowserViewController *browserViewController = [[BrowserViewController alloc] initWithURL:stringUrl];
-            
-            HFRNavigationController *nc = [[HFRNavigationController alloc] initWithRootViewController:browserViewController];
-            
-            
-            nc.modalPresentationStyle = UIModalPresentationFormSheet;
-            
-            [self.rootController presentModalViewController:nc animated:YES];
-            [nc release];
-            
-            // The navigation controller is now owned by the current view controller
-            // and the root view controller is owned by the navigation controller,
-            // so both objects should be released to prevent over-retention.
-            [browserViewController release];
+            if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0")) {
+                
+
+                 NSURL *tmpURL = [NSURL URLWithString:stringUrl];
+                 NSArray *imtsHost = [NSArray arrayWithObjects: @"itunes.apple.com", nil];
+                 NSArray *youtubeHost = [NSArray arrayWithObjects:@"youtu.be", @"www.youtube.com", @"m.youtube.com", nil];
+                 
+                 if ([imtsHost indexOfObject:tmpURL.host] != NSNotFound) {
+                     NSRange rangeOfScheme = [[tmpURL absoluteString] rangeOfString:[tmpURL scheme]];
+                     tmpURL = [NSURL URLWithString:[[tmpURL absoluteString] stringByReplacingCharactersInRange:rangeOfScheme withString:@"itms-apps"]];
+                     
+                     
+                     if ([[UIApplication sharedApplication] canOpenURL:tmpURL]) {
+                        [[UIApplication sharedApplication] openURL:tmpURL];
+                         return;
+                     }
+                     
+                }
+                else if ([youtubeHost indexOfObject:tmpURL.host] != NSNotFound) {
+                    NSRange rangeOfScheme = [[tmpURL absoluteString] rangeOfString:[tmpURL scheme]];
+                    tmpURL = [NSURL URLWithString:[[tmpURL absoluteString] stringByReplacingCharactersInRange:rangeOfScheme withString:@"youtube"]];
+
+
+                    if ([[UIApplication sharedApplication] canOpenURL:tmpURL]) {
+                        [[UIApplication sharedApplication] openURL:tmpURL];
+                        return;
+                    }
+                 
+                 }
+
+
+                
+                SFSafariViewController *svc = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:stringUrl]];
+                
+                [self.rootController presentModalViewController:svc animated:YES];
+            }
+            else {
+                BrowserViewController *browserViewController = [[BrowserViewController alloc] initWithURL:stringUrl];
+                
+                HFRNavigationController *nc = [[HFRNavigationController alloc] initWithRootViewController:browserViewController];
+                
+                
+                nc.modalPresentationStyle = UIModalPresentationFullScreen;
+                
+                [self.rootController presentModalViewController:nc animated:YES];
+            }
         }
     }
     else {
+        //iOS9 + Phone || Pad+Compact = pas de confirm
+        NSLog(@"alerte");
+        
+        if ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0")) ||
+            (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad   && SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0") &&
+             [[HFRplusAppDelegate sharedAppDelegate].window respondsToSelector:@selector(traitCollection)] && [HFRplusAppDelegate sharedAppDelegate].window.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact))
+        {
+            
+            NSLog(@"compact ios 9");
+
+            NSURL *tmpURL2 = [NSURL URLWithString:stringUrl];
+            NSURL *tURL = [NSURL URLWithString:stringUrl];
+
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            NSString *web = [defaults stringForKey:@"default_web"];
+            
+            if ([web isEqualToString:@"googlechrome"]) {
+                NSRange rangeOfScheme = [[tmpURL2 absoluteString] rangeOfString:[tmpURL2 scheme]];
+                tURL = [NSURL URLWithString:[[tmpURL2 absoluteString] stringByReplacingCharactersInRange:rangeOfScheme withString:web]];
+                NSLog(@"new url for GChrome URL %@", tURL);
+            }
+            
+            if ([[UIApplication sharedApplication] canOpenURL:tURL]) {
+                NSLog(@"YES YOU CAN GChrome%@", tURL);
+                [[UIApplication sharedApplication] openURL:tURL];
+                return;
+
+            }
+            else {
+                NSLog(@"NO YOU CANT GChrome %@", tURL);
+                
+                if ([[UIApplication sharedApplication] canOpenURL:tmpURL2]) {
+                    NSLog(@"YES YOU CAN %@", tmpURL2);
+                    [[UIApplication sharedApplication] openURL:tmpURL2];
+                    return;
+                }
+                else {
+                    NSLog(@"NO YOU CANT %@", tmpURL2);
+                }
+            }
+            
+            
+                
+
+        }
+        
+        //iOS9 + Pad + FullScreen = confirme (Nav+)
+
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
             NSString *msg = [NSString stringWithFormat:@"Vous allez quitter HFR+ et être redirigé vers :\n %@\n", stringUrl];
             
@@ -394,7 +531,6 @@
             [alert setStringURL:stringUrl];
             
             [alert show];
-            [alert release];
         }
         else
         {
@@ -405,8 +541,8 @@
             [alert setStringURL:stringUrl];
             
             [alert show];
-            [alert release];
         }
+
     }
     
 
@@ -425,12 +561,16 @@
         if ([web isEqualToString:@"googlechrome"]) {
             NSRange rangeOfScheme = [[tURLbase absoluteString] rangeOfString:[tURLbase scheme]];
             tURL = [NSURL URLWithString:[[tURLbase absoluteString] stringByReplacingCharactersInRange:rangeOfScheme withString:web]];
+            NSLog(@"tURL %@", tURL);
         }
         
         if ([[UIApplication sharedApplication] canOpenURL:tURL]) {
+            NSLog(@"YES YOU CAN %@", tURL);
             [[UIApplication sharedApplication] openURL:tURL];
         }
         else {
+            NSLog(@"NO YOU CANT %@", tURL);
+
             [[UIApplication sharedApplication] openURL:tURLbase];
         }
 		
@@ -486,7 +626,7 @@
     
     //[[[[[HFRplusAppDelegate sharedAppDelegate] splitViewController] viewControllers] objectAtIndex:1] popToRootViewControllerAnimated:NO];
     
-    UIViewController * uivc = [[[UIViewController alloc] init] autorelease];
+    UIViewController * uivc = [[UIViewController alloc] init];
     uivc.title = @"HFR+";
     
     [[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] setViewControllers:[NSMutableArray arrayWithObjects: uivc, nil] animated:NO];
@@ -512,21 +652,13 @@
 
 - (void)dealloc {
     [periodicMaintenanceTimer invalidate];
-    [periodicMaintenanceTimer release], periodicMaintenanceTimer = nil;
+    periodicMaintenanceTimer = nil;
     //[periodicMaintenanceOperation release], periodicMaintenanceOperation = nil;
 	//[ioQueue release], ioQueue = nil;
     
-	[rootController release];
-    self.splitViewController = nil;
     
-	[forumsNavController release];
-	[favoritesNavController release];
-	[messagesNavController release];
 	
-	self.hash_check = nil;
 	
-    [window release];
-    [super dealloc];
 }
 
 

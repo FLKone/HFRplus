@@ -12,24 +12,21 @@
 #import "CreditsViewController.h"
 #import "HFRplusAppDelegate.h"
 #import "HFRDebugViewController.h"
-
+#import "AlerteModoViewController.h"
+#import "InfoTableViewCell.h"
 
 @implementation InfosViewController
 
-@synthesize menuList, lastViewController;
+@synthesize menuList, lastViewController, tmpCell;
 
-- (void)dealloc
-{
-	[menuList release];
-	if(lastViewController) [lastViewController release];
-	
-	[super dealloc];
-}
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
+    
 	self.title = [NSString stringWithFormat:@"HFR+ %@ (%@)", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
-	
+    self.navigationController.navigationBar.translucent = NO;
+
     /*
 	// Make the title of this page the same as the title of this app
 	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 400, 44)];
@@ -56,30 +53,41 @@
 	*/
     
     [self hideEmptySeparators];
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        [self.tableView setBackgroundColor:[UIColor colorWithRed:239/255.0f green:239/255.0f blue:244/255.0f alpha:1.0f]];
+    }
     
-	self.menuList = [NSMutableArray array];
+    self.menuList = [NSMutableArray array];
+    self.menuList[0] = [NSMutableArray array];
+    self.menuList[1] = [NSMutableArray array];
 	
-    [self.menuList addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Mon Compte", @"CompteViewController", @"CompteViewController", @"111-user", nil]
-                                                                forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];
-                        
-    [self.menuList addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Aide", @"AideViewController", @"AideViewController", @"113-navigation", nil]
+    [self.menuList[0] addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Mon Compte", @"CompteViewController", @"CompteViewController", @"CircledUserMaleFilled-40", nil]
                                                                 forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];
     
-    [self.menuList addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Crédits", @"CreditsViewController", @"CreditsViewController", @"122-stats", nil]
+    
+    
+    [self.menuList[1] addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Aide", @"AideViewController", @"AideViewController", @"QuestionsFilled-40", nil]
+                                                                forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];
+    
+    [self.menuList[1] addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Crédits", @"CreditsViewController", @"CreditsViewController", @"AboutFilled-40", nil]
                                                                 forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];
     
     NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
     if (![bundleIdentifier isEqualToString:@"hfrplus.red"]) {
-        [self.menuList addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Faire un don", @"PayViewController", @"PayViewController", @"119-piggy-bank", nil]
+        [self.menuList[1] addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Faire un don", @"PayViewController", @"PayViewController", @"MoneyBoxFilled-40", nil]
                                                                     forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];
     }
     
-    [self.menuList addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Réglages", @"SettingsViewController", @"IASKAppSettingsView", @"20-gear2", nil]
+    [self.menuList[0] addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Réglages", @"SettingsViewController", @"IASKAppSettingsView", @"Settings3Filled-40", nil]
                                                                 forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];   
 
-    [self.menuList addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Debug", @"HFRDebugViewController", @"HFRDebugViewController", @"19-gear", nil]
-                                                                forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];   
-        
+    
+    [self.menuList[0] addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Liste noire", @"BlackListTableViewController", @"BlackListTableViewController", @"ThorHammerFilled-40", nil]
+                                                                forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];
+
+    [self.menuList[0] addObject:[NSMutableDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"Debug", @"HFRDebugViewController", @"HFRDebugViewController", @"BugFilled-40", nil]
+                                                                forKeys:[NSArray arrayWithObjects:kTitleKey, kViewControllerKey, kXibKey, kImageKey, nil]]];
+
     
 }
 
@@ -93,12 +101,10 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-	
 	[super viewWillAppear:animated];
 	
 	[self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:NO];
 
-	if(lastViewController) [lastViewController release];
 	[self setLastViewController:nil];
 
     [self.tableView reloadData];
@@ -123,39 +129,86 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	BOOL debug = [defaults boolForKey:@"menu_debug"];
-	
-    //NSLog(@"display %@", display);
-    
-	if (!debug) { 
-        return menuList.count - 1;
+    if (section == 0) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        BOOL debug = [defaults boolForKey:@"menu_debug"];
         
+        if (!debug)
+            return ((NSMutableArray *)menuList[section]).count - 1;
+    }
+    return ((NSMutableArray *)menuList[section]).count;
+}
+
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return menuList.count;
+}
+/*
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {    
+    return HEIGHT_FOR_HEADER_IN_SECTION;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    
+    //On récupère la section (forum)
+    CGFloat curWidth = self.view.frame.size.width;
+    
+    //UIView globale
+    UIView* customView = [[[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,HEIGHT_FOR_HEADER_IN_SECTION)] autorelease];
+    customView.backgroundColor = [UIColor colorWithRed:239/255.0f green:239/255.0f blue:244/255.0f alpha:0.7];
+    customView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    
+    //UIImageView de fond
+    if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        UIImage *myImage = [UIImage imageNamed:@"bar2.png"];
+        UIImageView *imageView = [[[UIImageView alloc] initWithImage:myImage] autorelease];
+        imageView.alpha = 0.9;
+        imageView.frame = CGRectMake(0,0,curWidth,HEIGHT_FOR_HEADER_IN_SECTION);
+        imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        
+        [customView addSubview:imageView];
     }
     else {
-        return menuList.count;
-
+        //bordures/iOS7
+        UIView* borderView = [[[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,1/[[UIScreen mainScreen] scale])] autorelease];
+        borderView.backgroundColor = [UIColor colorWithRed:158/255.0f green:158/255.0f blue:114/162.0f alpha:0.7];
+        
+        //[customView addSubview:borderView];
+        
+        UIView* borderView2 = [[[UIView alloc] initWithFrame:CGRectMake(0,HEIGHT_FOR_HEADER_IN_SECTION-1/[[UIScreen mainScreen] scale],curWidth,1/[[UIScreen mainScreen] scale])] autorelease];
+        borderView2.backgroundColor = [UIColor colorWithRed:158/255.0f green:158/255.0f blue:114/162.0f alpha:0.7];
+        
+        //[customView addSubview:borderView2];
+        
     }
+    
+    return customView;
+    
 }
+*/
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	static NSString *CellIdentifier = @"cellID";
+	static NSString *CellIdentifier = @"InfoCell";
 	
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-	if (!cell)
-	{
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+    InfoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if (cell == nil) {
+        [[NSBundle mainBundle] loadNibNamed:@"InfoTableViewCell" owner:self options:nil];
+        cell = tmpCell;
         
-		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+        
+        self.tmpCell = nil;
     }
     
 	// get the view controller's info dictionary based on the indexPath's row
-    NSDictionary *dataDictionary = [menuList objectAtIndex:indexPath.row];
-    cell.textLabel.text = [dataDictionary valueForKey:kTitleKey];
+    NSDictionary *dataDictionary = [menuList[indexPath.section] objectAtIndex:indexPath.row];
+    cell.titleLabel.text = [dataDictionary valueForKey:kTitleKey];
     
     UIImage* theImage = [UIImage imageNamed:[dataDictionary valueForKey:kImageKey]];
-    cell.imageView.image = theImage;
+    cell.infoImage.image = theImage;
     
 	return cell;
     
@@ -190,7 +243,7 @@
         self.navigationItem.backBarButtonItem.title = @" ";
     }
     
-    NSMutableDictionary *rowData = [self.menuList objectAtIndex:indexPath.row];
+    NSMutableDictionary *rowData = [self.menuList[indexPath.section] objectAtIndex:indexPath.row];
 
     UIViewController *targetViewController = [[NSClassFromString([rowData valueForKey:kViewControllerKey]) alloc] initWithNibName:[rowData valueForKey:kXibKey] bundle:nil];
     [targetViewController awakeFromNib];

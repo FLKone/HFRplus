@@ -14,9 +14,9 @@
     IBOutlet UILabel *timeLabel;
 }
 
-@property (nonatomic, retain) IBOutlet UILabel *titleLabel;
-@property (nonatomic, retain) IBOutlet UILabel *msgLabel;
-@property (nonatomic, retain) IBOutlet UILabel *timeLabel;
+@property (nonatomic, strong) IBOutlet UILabel *titleLabel;
+@property (nonatomic, strong) IBOutlet UILabel *msgLabel;
+@property (nonatomic, strong) IBOutlet UILabel *timeLabel;
 
 
 @end

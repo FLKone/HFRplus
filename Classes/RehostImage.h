@@ -21,15 +21,15 @@
     BOOL deleted;
 }
 
-@property (nonatomic, retain) NSString *link_full;
-@property (nonatomic, retain) NSString *link_miniature;
-@property (nonatomic, retain) NSString *link_preview;
+@property (nonatomic, strong) NSString *link_full;
+@property (nonatomic, strong) NSString *link_miniature;
+@property (nonatomic, strong) NSString *link_preview;
 
-@property (nonatomic, retain) NSString *nolink_full;
-@property (nonatomic, retain) NSString *nolink_miniature;
-@property (nonatomic, retain) NSString *nolink_preview;
+@property (nonatomic, strong) NSString *nolink_full;
+@property (nonatomic, strong) NSString *nolink_miniature;
+@property (nonatomic, strong) NSString *nolink_preview;
 
-@property (nonatomic, retain) NSDate *timeStamp;
+@property (nonatomic, strong) NSDate *timeStamp;
 
 @property int version;
 @property BOOL deleted;

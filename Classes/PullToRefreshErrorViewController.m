@@ -9,6 +9,8 @@
 
 #import "PullToRefreshErrorViewController.h"
 #import "HFRplusAppDelegate.h"
+#import "ThemeColors.h"
+#import "ThemeManager.h"
 
 @interface PullToRefreshErrorViewController ()
 
@@ -200,6 +202,15 @@
                                                  name:UIApplicationDidChangeStatusBarOrientationNotification
                                                object:nil];
     // Do any additional setup after loading the view.
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    Theme theme = [[ThemeManager sharedManager] theme];
+    self.view.backgroundColor = [ThemeColors addMessageBackgroundColor:theme];
+    UIImage *tintedImage = [ThemeColors tintImage:self.image.image withColor:[ThemeColors cellTextColor:theme]];
+    self.image.image = tintedImage;
+    self.label.textColor = [ThemeColors cellTextColor:theme];
 }
 
 - (void)didReceiveMemoryWarning

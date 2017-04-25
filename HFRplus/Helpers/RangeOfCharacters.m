@@ -253,7 +253,7 @@ finish:
 -(NSString*)stringByRemovingAnchor {
     
     NSString *regexString  = @".*#([^&]+).*";
-    NSRange   matchedRange = NSMakeRange(NSNotFound, 0UL);
+    NSRange   matchedRange;// = NSMakeRange(NSNotFound, 0UL);
     NSRange   searchRange = NSMakeRange(0, self.length);
     NSError  *error2        = NULL;
     //int numPage;
@@ -327,6 +327,21 @@ finish:
     return temp;
 }
 
+- (NSString *)filterTU {
+    
+    self = [self stringByReplacingOccurrencesOfString:@"topic unique" withString:@"TU" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [self length])];
+    self = [self stringByReplacingOccurrencesOfString:@"T.U." withString:@"TU" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [self length])];
+    self = [self stringByReplacingOccurrencesOfString:@"topik unique" withString:@"TU" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [self length])];
+    self = [self stringByReplacingOccurrencesOfString:@"toupik ounik" withString:@"TU" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [self length])];
+    self = [self stringByReplacingOccurrencesOfString:@"topique unique" withString:@"TU" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [self length])];
+    self = [self stringByReplacingOccurrencesOfString:@"topic unik" withString:@"TU" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [self length])];
+    self = [self stringByReplacingOccurrencesOfString:@"topik unik" withString:@"TU" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [self length])];
+    self = [self stringByReplacingOccurrencesOfString:@"topic officiel" withString:@"TU" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [self length])];
+    self = [self stringByReplacingOccurrencesOfString:@"TOPIKUNIK" withString:@"TU" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [self length])];
+
+    return self;
+}
+
 - (NSString *)stripHTML
 {
     NSRange range;
@@ -335,6 +350,8 @@ finish:
         str = [str stringByReplacingCharactersInRange:range withString:@""];
     return str;
 }
+
+
 
 @end
 

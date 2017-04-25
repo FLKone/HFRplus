@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1421" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <development version="7000" identifier="xcode"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UIApplication">
@@ -21,7 +22,6 @@
             </connections>
         </customObject>
         <customObject id="112" customClass="TabBarController"/>
-        <customObject id="189" customClass="SettingsViewController"/>
         <window opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="2">
             <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -31,13 +31,13 @@
         <tabBarController id="10" customClass="TabBarController">
             <extendedEdge key="edgesForExtendedLayout"/>
             <nil key="simulatedBottomBarMetrics"/>
-            <tabBar key="tabBar" contentMode="scaleToFill" id="11">
+            <tabBar key="tabBar" contentMode="scaleToFill" selectedItem="74A-e7-Gdm" id="11">
                 <rect key="frame" x="0.0" y="431" width="320" height="49"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
             </tabBar>
             <viewControllers>
-                <navigationController id="36">
+                <navigationController id="36" customClass="HFRNavigationController">
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <tabBarItem key="tabBarItem" title="Catégories" image="44-shoebox.png" id="37"/>
                     <toolbarItems/>
@@ -52,7 +52,7 @@
                         </viewController>
                     </viewControllers>
                 </navigationController>
-                <navigationController id="48">
+                <navigationController id="48" customClass="HFRNavigationController">
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <tabBarItem key="tabBarItem" title="Vos Sujets" image="28-star.png" id="49"/>
                     <toolbarItems/>
@@ -67,7 +67,7 @@
                         </viewController>
                     </viewControllers>
                 </navigationController>
-                <navigationController id="42">
+                <navigationController id="42" customClass="HFRNavigationController">
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <tabBarItem key="tabBarItem" title="Messages" image="18-envelope.png" id="43"/>
                     <toolbarItems/>
@@ -82,19 +82,27 @@
                         </viewController>
                     </viewControllers>
                 </navigationController>
-                <navigationController id="191">
+                <navigationController id="EgT-mU-RFn" customClass="HFRNavigationController">
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <tabBarItem key="tabBarItem" systemItem="more" id="194"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="192">
+                    <tabBarItem key="tabBarItem" title="Réglages" image="20-gear2.png" id="74A-e7-Gdm"/>
+                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translucent="NO" id="yZU-Qs-sTq">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <viewControllers>
-                        <viewController id="193" customClass="InfosViewController">
-                            <toolbarItems/>
-                            <navigationItem key="navigationItem" title="Item" id="195"/>
-                        </viewController>
+                        <tableViewController title="Réglages" automaticallyAdjustsScrollViewInsets="NO" id="GVX-YK-j2V" customClass="SettingsViewController">
+                            <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="uDi-uo-5iE">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="431"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="GVX-YK-j2V" id="Ssx-lA-TfJ"/>
+                                    <outlet property="delegate" destination="GVX-YK-j2V" id="hjX-kw-Iyy"/>
+                                </connections>
+                            </tableView>
+                            <extendedEdge key="edgesForExtendedLayout"/>
+                            <navigationItem key="navigationItem" title="Réglages" id="WB3-fg-zCe"/>
+                        </tableViewController>
                     </viewControllers>
                 </navigationController>
             </viewControllers>
@@ -105,12 +113,13 @@
     </objects>
     <resources>
         <image name="18-envelope.png" width="24" height="16"/>
+        <image name="20-gear2.png" width="26" height="28"/>
         <image name="28-star.png" width="26" height="26"/>
         <image name="44-shoebox.png" width="24" height="22"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
+        <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
 </document>

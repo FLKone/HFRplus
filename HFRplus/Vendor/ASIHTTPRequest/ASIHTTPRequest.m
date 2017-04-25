@@ -393,7 +393,7 @@ static NSOperationQueue *sharedQueue = nil;
 	[requestID release];
 	[dataDecompressor release];
 	[userAgent release];
-
+    [delegate release];
 	#if NS_BLOCKS_AVAILABLE
 	[self releaseBlocksOnMainThread];
 	#endif
@@ -667,7 +667,8 @@ static NSOperationQueue *sharedQueue = nil;
 - (void)setDelegate:(id)newDelegate
 {
 	[[self cancelledLock] lock];
-	delegate = newDelegate;
+    [delegate release];
+    delegate = [newDelegate retain];
 	[[self cancelledLock] unlock];
 }
 

@@ -13,8 +13,8 @@
     UIBarButtonItem *mybarButtonItem;
 }
 
-@property (nonatomic, retain) UIPopoverController *popOver;
-@property (nonatomic, retain) UIBarButtonItem *mybarButtonItem;
+@property (nonatomic, strong) UIPopoverController *popOver;
+@property (nonatomic, strong) UIBarButtonItem *mybarButtonItem;
 
 -(void)MoveRightToLeft;
 -(void)MoveRightToLeft:(NSString *)url;

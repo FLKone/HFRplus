@@ -1,5 +1,5 @@
 #actualiserbtn.loading {
-	background-image: url(loadinfo.gif);
+	background-image: url(loadinfo@2x.gif);
 }
 
 #toolbarpage .button {
@@ -64,6 +64,11 @@
 .message .header .left2.noavatar {
         background-image:url('avatar_male_gray_on_light_48x48@2x.png');
 
+}
+
+.message .content .right>a.cLink {
+    background-image: url(unselectedrow@2x.png);
+    background-size: 45px 50px;
 }
 
 .ios7 .message .header .right {

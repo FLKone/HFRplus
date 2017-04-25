@@ -17,73 +17,93 @@
 #import "IASKSpecifierValuesViewController.h"
 #import "IASKSpecifier.h"
 #import "IASKSettingsReader.h"
-#import "IASKSettingsStoreUserDefaults.h"
+#import "IASKMultipleValueSelection.h"
+#import "ThemeColors.h"
+#import "ThemeManager.h"
+#import "Constants.h"
 
 #define kCellValue      @"kCellValue"
 
 @interface IASKSpecifierValuesViewController()
-- (void)userDefaultsDidChange;
+
+@property (nonatomic, strong, readonly) IASKMultipleValueSelection *selection;
+
 @end
 
 @implementation IASKSpecifierValuesViewController
 
 @synthesize tableView=_tableView;
 @synthesize currentSpecifier=_currentSpecifier;
-@synthesize checkedItem=_checkedItem;
 @synthesize settingsReader = _settingsReader;
 @synthesize settingsStore = _settingsStore;
 
-- (void) updateCheckedItem {
-    NSInteger index;
-	
-	// Find the currently checked item
-    if([self.settingsStore objectForKey:[_currentSpecifier key]]) {
-      index = [[_currentSpecifier multipleValues] indexOfObject:[self.settingsStore objectForKey:[_currentSpecifier key]]];
-    } else {
-      index = [[_currentSpecifier multipleValues] indexOfObject:[_currentSpecifier defaultValue]];
-    }
-	[self setCheckedItem:[NSIndexPath indexPathForRow:index inSection:0]];
+- (void)setSettingsStore:(id <IASKSettingsStore>)settingsStore {
+    _settingsStore = settingsStore;
+    _selection.settingsStore = settingsStore;
 }
 
-- (id<IASKSettingsStore>)settingsStore {
-    if(_settingsStore == nil) {
-        _settingsStore = [[IASKSettingsStoreUserDefaults alloc] init];
-    }
-    return _settingsStore;
+- (void)loadView
+{
+    _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+    _tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth |
+    UIViewAutoresizingFlexibleHeight;
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    
+    self.view = _tableView;
+
+    _selection = [IASKMultipleValueSelection new];
+    _selection.tableView = _tableView;
+    _selection.settingsStore = _settingsStore;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     if (_currentSpecifier) {
         [self setTitle:[_currentSpecifier title]];
-        [self updateCheckedItem];
+        _selection.specifier = _currentSpecifier;
     }
     
     if (_tableView) {
         [_tableView reloadData];
 
 		// Make sure the currently checked item is visible
-        [_tableView scrollToRowAtIndexPath:[self checkedItem] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+        [_tableView scrollToRowAtIndexPath:_selection.checkedItem
+                          atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
     }
 	[super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kThemeChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(setThemeFromNotification:) //note the ":" - should take an NSNotification as parameter
+                                                 name:kThemeChangedNotification
+                                               object:nil];
+    [self setThemeColors:[[ThemeManager sharedManager] theme]];
+}
+
+
+-(void)setThemeFromNotification:(NSNotification *)notification{
+    [self setThemeColors:[[ThemeManager sharedManager] theme]];
+}
+
+-(void)setThemeColors:(Theme)theme{
+    self.tableView.backgroundColor = [ThemeColors greyBackgroundColor:theme];
+    self.tableView.separatorColor = [ThemeColors cellBorderColor:theme];
+    [_tableView reloadData];
+
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
 	[_tableView flashScrollIndicators];
 	[super viewDidAppear:animated];
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(userDefaultsDidChange)
-												 name:NSUserDefaultsDidChangeNotification
-											   object:[NSUserDefaults standardUserDefaults]];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:NSUserDefaultsDidChangeNotification object:nil];
 	[super viewDidDisappear:animated];
+    //_selection.tableView = nil;
 }
 
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	return YES;
+- (void)dealloc {
+    NSLog(@"deallocdeallocdeallocdealloc");
 }
 
 - (void)didReceiveMemoryWarning {
@@ -92,23 +112,6 @@
 	
 	// Release any cached data, images, etc that aren't in use.
 }
-
-- (void)viewDidUnload {
-	// Release any retained subviews of the main view.
-	// e.g. self.myOutlet = nil;
-	self.tableView = nil;
-}
-
-
-- (void)dealloc {
-    [_currentSpecifier release], _currentSpecifier = nil;
-	[_checkedItem release], _checkedItem = nil;
-	[_settingsReader release], _settingsReader = nil;
-    [_settingsStore release], _settingsStore = nil;
-	[_tableView release], _tableView = nil;
-    [super dealloc];
-}
-
 
 #pragma mark -
 #pragma mark UITableView delegates
@@ -121,16 +124,6 @@
     return [_currentSpecifier multipleValuesCount];
 }
 
-- (void)selectCell:(UITableViewCell *)cell {
-	[cell setAccessoryType:UITableViewCellAccessoryCheckmark];
-	[[cell textLabel] setTextColor:kIASKgrayBlueColor];
-}
-
-- (void)deselectCell:(UITableViewCell *)cell {
-	[cell setAccessoryType:UITableViewCellAccessoryNone];
-	[[cell textLabel] setTextColor:[UIColor darkTextColor]];
-}
-
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     return [_currentSpecifier footerText];
 }
@@ -140,56 +133,29 @@
     NSArray *titles         = [_currentSpecifier multipleTitles];
 	
     if (!cell) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellValue] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellValue];
     }
-	
-	if ([indexPath isEqual:[self checkedItem]]) {
-		[self selectCell:cell];
-    } else {
-        [self deselectCell:cell];
-    }
-	
-	@try {
+
+    [_selection updateSelectionInCell:cell indexPath:indexPath];
+
+    @try {
 		[[cell textLabel] setText:[self.settingsReader titleForStringId:[titles objectAtIndex:indexPath.row]]];
 	}
 	@catch (NSException * e) {}
+    
+    cell.textLabel.font = [UIFont systemFontOfSize:14.0f];
+    cell.detailTextLabel.font = [UIFont systemFontOfSize:14.0f];
+    
+    [[ThemeManager sharedManager] applyThemeToCell:cell];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	
-    if (indexPath == [self checkedItem]) {
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        return;
-    }
-    
-    NSArray *values         = [_currentSpecifier multipleValues];
-    
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self deselectCell:[tableView cellForRowAtIndexPath:[self checkedItem]]];
-    [self selectCell:[tableView cellForRowAtIndexPath:indexPath]];
-    [self setCheckedItem:indexPath];
-	
-    [self.settingsStore setObject:[values objectAtIndex:indexPath.row] forKey:[_currentSpecifier key]];
-	[self.settingsStore synchronize];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kIASKAppSettingChanged
-                                                        object:[_currentSpecifier key]
-                                                      userInfo:[NSDictionary dictionaryWithObject:[values objectAtIndex:indexPath.row]
-                                                                                           forKey:[_currentSpecifier key]]];
+    [_selection selectRowAtIndexPath:indexPath];
 }
 
-#pragma mark Notifications
-
-- (void)userDefaultsDidChange {
-	NSIndexPath *oldCheckedItem = [[self.checkedItem retain] autorelease];
-	if(_currentSpecifier) {
-		[self updateCheckedItem];
-	}
-	
-	// only reload the table if it had changed; prevents animation cancellation
-	if (![self.checkedItem isEqual:oldCheckedItem]) {
-		[_tableView reloadData];
-	}
+- (CGSize)contentSizeForViewInPopover {
+    return [[self view] sizeThatFits:CGSizeMake(320, 2000)];
 }
 
 @end

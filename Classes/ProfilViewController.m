@@ -17,13 +17,15 @@
 #import "FeedbackTableViewCell.h"
 #import "UIImageView+WebCache.h"
 #import "AvatarTableViewCell.h"
+#import "ThemeColors.h"
+#import "ThemeManager.h"
 
 @interface ProfilViewController ()
 
 @end
 
 @implementation ProfilViewController
-@synthesize profilTableView, loadingView, maintenanceView, status, statusMessage;
+@synthesize profilTableView, loadingView, loadingIndicator, loadingLabel, maintenanceView, status, statusMessage;
 @synthesize currentUrl, request;
 @synthesize arrayData;
 
@@ -43,7 +45,7 @@
     
     [ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];
     
-    [self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, self.currentUrl]]]];
+    [self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [k ForumURL], self.currentUrl]]]];
     [request setDelegate:self];
     [request setDidStartSelector:@selector(fetchContentStarted:)];
     [request setDidFinishSelector:@selector(fetchContentComplete:)];
@@ -61,7 +63,6 @@
 	self.navigationItem.rightBarButtonItem = nil;
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(cancelFetchContent)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];
     
     [self.arrayData removeAllObjects];
 	[self.profilTableView reloadData];
@@ -79,7 +80,6 @@
 	self.navigationItem.rightBarButtonItem = nil;
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];
     
     [self.loadingView setHidden:YES];
     [self.maintenanceView setHidden:YES];
@@ -99,7 +99,6 @@
 	self.navigationItem.rightBarButtonItem = nil;
 	UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];
 	
     [self.maintenanceView setText:@"oops :o"];
     
@@ -110,7 +109,6 @@
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ooops !" message:[theRequest.error localizedDescription]
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
 	[alert show];
-	[alert release];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -134,7 +132,6 @@
 	if ([[[bodyNode firstChild] tagName] isEqualToString:@"p"]) {
 		self.status = kMaintenance;
 		self.statusMessage = [[[bodyNode firstChild] contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-		[myParser release];
         
         
         [self.maintenanceView setText:self.statusMessage];
@@ -193,14 +190,14 @@
                 }
                 case 3:
                 {
-                    NSString *rowData = [[profilNode findChildWithAttribute:@"class" matchingName:@"profilCase3" allowPartial:NO] allContents];
-                    rowData = [[rowData stringByDecodingXMLEntities] stringByReplacingOccurrencesOfString:@"\u00a0: " withString:@""];
+                    //NSString *rowData = [[profilNode findChildWithAttribute:@"class" matchingName:@"profilCase3" allowPartial:NO] allContents];
+                    //rowData = [[rowData stringByDecodingXMLEntities] stringByReplacingOccurrencesOfString:@"\u00a0: " withString:@""];
                     
-                    NSString *rowType = @"link";
+                    //NSString *rowType = @"link";
                     
-                    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:    @"", @"title",
-                                          rowData, @"data",
-                                          rowType, @"type", nil];
+                    //NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:    @"", @"title",
+                    //                      rowData, @"data",
+                    //                      rowType, @"type", nil];
                     
                     //NSLog(@"dict %@", dict);
                     
@@ -298,7 +295,6 @@
     [self.arrayData addObjectsFromArray:parsedDataArray];
     //NSLog(@"arrayData %@", self.arrayData);
     //NSLog(@"parsedDataArray %@", parsedDataArray);
-	[myParser release];
 }
 
 #pragma mark -
@@ -321,20 +317,29 @@
     self.title = @"Profil";
     
     // close
-    UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(doneButtonPressed:)] autorelease];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(doneButtonPressed:)];
     self.navigationItem.leftBarButtonItem = doneButton;
     
 	// reload
     UIBarButtonItem *segmentBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
 	self.navigationItem.rightBarButtonItem = segmentBarItem;
-    [segmentBarItem release];
     
     UIView *v = [[UIView alloc] initWithFrame:CGRectZero];
     v.backgroundColor = [UIColor clearColor];
     [self.profilTableView setTableFooterView:v];
-    [v release];
     
     [self fetchContent];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    Theme theme = [[ThemeManager sharedManager] theme];
+    self.view.backgroundColor = self.profilTableView.backgroundColor = self.loadingView.backgroundColor =  [ThemeColors greyBackgroundColor:theme];
+    self.profilTableView.separatorColor = [ThemeColors cellBorderColor:theme];
+    [self.profilTableView reloadData];
+    self.loadingLabel.textColor = self.maintenanceView.textColor = [ThemeColors cellTextColor:theme];
+    self.loadingLabel.shadowColor = self.maintenanceView.shadowColor = [UIColor clearColor];
+    [self.loadingIndicator setColor:[ThemeColors cellTextColor:theme]];
 }
 
 
@@ -386,14 +391,14 @@
     CGFloat curWidth = self.view.frame.size.width;
     
     //UIView globale
-	UIView* customView = [[[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,HEIGHT_FOR_HEADER_IN_SECTION)] autorelease];
-    customView.backgroundColor = [UIColor colorWithRed:239/255.0f green:239/255.0f blue:244/255.0f alpha:0.7];
+	UIView* customView = [[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,HEIGHT_FOR_HEADER_IN_SECTION)];
+    customView.backgroundColor = [ThemeColors headSectionBackgroundColor:[[ThemeManager sharedManager] theme]];
 	customView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     
 	//UIImageView de fond
     if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         UIImage *myImage = [UIImage imageNamed:@"bar2.png"];
-        UIImageView *imageView = [[[UIImageView alloc] initWithImage:myImage] autorelease];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:myImage];
         imageView.alpha = 0.9;
         imageView.frame = CGRectMake(0,0,curWidth,HEIGHT_FOR_HEADER_IN_SECTION);
         imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -402,12 +407,12 @@
     }
     else {
         //bordures/iOS7
-        UIView* borderView = [[[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,1/[[UIScreen mainScreen] scale])] autorelease];
+        UIView* borderView = [[UIView alloc] initWithFrame:CGRectMake(0,0,curWidth,1/[[UIScreen mainScreen] scale])];
         borderView.backgroundColor = [UIColor colorWithRed:158/255.0f green:158/255.0f blue:114/162.0f alpha:0.7];
         
         //[customView addSubview:borderView];
         
-        UIView* borderView2 = [[[UIView alloc] initWithFrame:CGRectMake(0,HEIGHT_FOR_HEADER_IN_SECTION-1/[[UIScreen mainScreen] scale],curWidth,1/[[UIScreen mainScreen] scale])] autorelease];
+        UIView* borderView2 = [[UIView alloc] initWithFrame:CGRectMake(0,HEIGHT_FOR_HEADER_IN_SECTION-1/[[UIScreen mainScreen] scale],curWidth,1/[[UIScreen mainScreen] scale])];
         borderView2.backgroundColor = [UIColor colorWithRed:158/255.0f green:158/255.0f blue:114/162.0f alpha:0.7];
         
         //[customView addSubview:borderView2];
@@ -419,7 +424,7 @@
     [button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-        [button setTitleColor:[UIColor colorWithRed:109/255.0f green:109/255.0f blue:114/255.0f alpha:1] forState:UIControlStateNormal];
+        [button setTitleColor:[ThemeColors headSectionTextColor:[[ThemeManager sharedManager] theme]] forState:UIControlStateNormal];
         [button setTitle:[title uppercaseString] forState:UIControlStateNormal];
         [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
         [button setTitleEdgeInsets:UIEdgeInsetsMake(10, 16, 0, 0)];
@@ -434,6 +439,7 @@
     }
     
     [customView addSubview:button];
+
 	
 	return customView;
 	
@@ -475,7 +481,7 @@
         
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
         
         // Configure the cell...
@@ -485,6 +491,7 @@
         cell.clipsToBounds = YES;
         
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        [[ThemeManager sharedManager] applyThemeToCell:cell];
         return cell;
     }
     else if ([type isEqualToString:@"config"]) {
@@ -493,7 +500,7 @@
         
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
         
         // Configure the cell...
@@ -503,6 +510,7 @@
         cell.clipsToBounds = YES;
         
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        [[ThemeManager sharedManager] applyThemeToCell:cell];
         return cell;
     }
     else if ([type isEqualToString:@"link"]) {
@@ -511,7 +519,7 @@
         
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
         
         // Configure the cell...
@@ -521,6 +529,7 @@
         cell.clipsToBounds = YES;
         
         cell.accessoryType = UITableViewCellAccessoryNone;
+        [[ThemeManager sharedManager] applyThemeToCell:cell];
         return cell;
     }
     else if ([type isEqualToString:@"avatar"]) {
@@ -528,34 +537,35 @@
         
         AvatarTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
-            cell = [[[AvatarTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+            cell = [[AvatarTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
         
         cell.textLabel.text = [theRow objectForKey:@"data"];
         //NSLog(@"theRow %@", theRow);
 
+        __weak AvatarTableViewCell *cell_ = cell;
         
-        [cell.imageView setImageWithURL:[theRow objectForKey:@"url"] placeholderImage:[UIImage imageNamed:@"avatar_male_gray_on_light_48x48"] success:^(UIImage *image) {
-
-            //NSLog(@"frame base %@", NSStringFromCGRect(cell.imageView.frame));
-            //NSLog(@"image base %@", NSStringFromCGSize(image.size));
+        [cell.imageView sd_setImageWithURL:[theRow objectForKey:@"url"] placeholderImage:[UIImage imageNamed:@"avatar_male_gray_on_light_48x48"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             
-            float newW = image.size.width / ( image.size.height / cell.imageView.frame.size.height );
-            CGRect oldFrame = cell.imageView.frame;
-
-            oldFrame.size.width = newW;
-            cell.imageView.frame = oldFrame;
-
-            [cell layoutSubviews];
+            if (image) {
+                //NSLog(@"frame base %@", NSStringFromCGRect(cell.imageView.frame));
+                //NSLog(@"image base %@", NSStringFromCGSize(image.size));
+                
+                float newW = image.size.width / ( image.size.height / cell.imageView.frame.size.height );
+                CGRect oldFrame = cell_.imageView.frame;
+                //__weak
+                oldFrame.size.width = newW;
+                cell_.imageView.frame = oldFrame;
+                
+                [cell_ layoutSubviews];
+                
+                //NSLog(@"frame base %@", NSStringFromCGRect(cell.imageView.frame));
+            }
             
-            //NSLog(@"frame base %@", NSStringFromCGRect(cell.imageView.frame));
-
-
-        } failure:^(NSError *error) {
-            //NSLog(@"err");
         }];
         
         cell.accessoryType = UITableViewCellAccessoryNone;
+        [[ThemeManager sharedManager] applyThemeToCell:cell];
     
         return cell;
     }
@@ -565,7 +575,7 @@
         
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
-            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         }
         
         // Configure the cell...
@@ -588,6 +598,7 @@
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
 
+        [[ThemeManager sharedManager] applyThemeToCell:cell];
         return cell;
 
     }
@@ -645,7 +656,6 @@
         
         [self.navigationController pushViewController:cVC animated:YES];
         
-        [cVC release];
     }
     else if ([type isEqualToString:@"config"]) {
         self.navigationItem.backBarButtonItem =
@@ -664,7 +674,6 @@
         
         [self.navigationController pushViewController:cVC animated:YES];
         
-        [cVC release];
     }
     else if ([type isEqualToString:@"feedback"]) {
         self.navigationItem.backBarButtonItem =
@@ -683,7 +692,6 @@
         
         [self.navigationController pushViewController:cVC animated:YES];
         
-        [cVC release];
     }
 
 }
@@ -713,12 +721,8 @@
     
 	[request cancel];
 	[request setDelegate:nil];
-	self.request = nil;
-    self.currentUrl = nil;
     
-	self.statusMessage = nil;
     
-    [super dealloc];
 }
 
 
@@ -726,7 +730,7 @@
 @end
 
 @implementation FeedbackViewController
-@synthesize feedTableView, loadingView, maintenanceView, statusMessage, request, status, arrayData;
+@synthesize feedTableView, loadingView, loadingLabel, loadingIndicator, maintenanceView, statusMessage, request, status, arrayData;
 
 #pragma mark -
 #pragma mark Data lifecycle
@@ -738,11 +742,11 @@
 
 - (void)fetchContent
 {
-	//NSLog(@"fetchContent %@", [NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]);
+	//NSLog(@"fetchContent %@", [NSString stringWithFormat:@"%@%@", [k ForumURL], [self currentUrl]]);
 	self.status = kIdle;
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];
     
-	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]]]];
+	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [k ForumURL], [self currentUrl]]]]];
 	[request setShouldRedirect:NO];
     
 	[request setDelegate:self];
@@ -831,7 +835,6 @@
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
 	[alert setTag:667];
 	[alert show];
-	[alert release];
 }
 
 -(void)loadDataInTableView:(NSData *)contentData
@@ -849,20 +852,18 @@
             
 			self.status = kMaintenance;
 			self.statusMessage = [[[bodyNode firstChild] contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-			[myParser release];
             return;
 		}
         
 		NSLog(@"id");
 		self.status = kNoAuth;
 		self.statusMessage = [[[bodyNode findChildWithAttribute:@"class" matchingName:@"hop" allowPartial:NO] contents] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-		[myParser release];
 		return;		
 	}
 	   
 	//On remplace le numéro de page dans le titre
 	NSString *regexString  = @".*page=([^&]+).*";
-	NSRange   matchedRange = NSMakeRange(NSNotFound, 0UL);
+    NSRange   matchedRange;// = NSMakeRange(NSNotFound, 0UL);
 	NSRange   searchRange = NSMakeRange(0, self.currentUrl.length);
 	NSError  *error2        = NULL;
 	//int numPage;
@@ -903,7 +904,6 @@
 			if ([self pageNumber] == [self firstPageNumber]) {
 				NSString *newFirstPageUrl = [[NSString alloc] initWithString:[self currentUrl]];
 				[self setFirstPageUrl:newFirstPageUrl];
-				[newFirstPageUrl release];
 			}
 			else {
 				NSString *newFirstPageUrl;
@@ -916,7 +916,6 @@
 				}
 				
 				[self setFirstPageUrl:newFirstPageUrl];
-				[newFirstPageUrl release];
 			}
 			
             //NSLog(@"setFirstPageNumber %d", [[[temporaryNumPagesArray lastObject] contents] intValue]);
@@ -926,7 +925,6 @@
 			if ([self pageNumber] == [self lastPageNumber]) {
 				NSString *newLastPageUrl = [[NSString alloc] initWithString:[self currentUrl]];
 				[self setLastPageUrl:newLastPageUrl];
-				[newLastPageUrl release];
 			}
 			else {
 				NSString *newLastPageUrl;
@@ -939,7 +937,6 @@
 				}
 				
 				[self setLastPageUrl:newLastPageUrl];
-				[newLastPageUrl release];
 			}
 			
 			/*
@@ -959,8 +956,11 @@
                 tmptoolbar.opaque = NO;
                 tmptoolbar.translucent = YES;
                 
-                [[tmptoolbar.subviews objectAtIndex:1] setHidden:YES];
                 
+                
+                if([tmptoolbar.subviews count] > 1){
+                     [[tmptoolbar.subviews objectAtIndex:1] setHidden:YES];
+                }
             }
             
 			[tmptoolbar sizeToFit];
@@ -1029,7 +1029,7 @@
             }
             else
             {
-                [labelBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                [labelBtn setTitleColor:[ThemeColors textColor:[[ThemeManager sharedManager] theme]] forState:UIControlStateNormal];
             }
 			UIBarButtonItem *systemItem3 = [[UIBarButtonItem alloc] initWithCustomView:labelBtn];
 			
@@ -1048,15 +1048,8 @@
 			NSArray *items = [NSArray arrayWithObjects: systemItem1, fixItem, systemItemPrevious, flexItem, systemItem3, flexItem, systemItemNext, fixItem, systemItem2, nil];
 			
 			//release buttons
-			[systemItem1 release];
-			[systemItem2 release];
-			[systemItem3 release];
-			[systemItemNext release];
-			[systemItemPrevious release];
 			
-			[flexItem release];
 			
-			[fixItem release];
 			
 			//add array of buttons to toolbar
 			[tmptoolbar setItems:items animated:NO];
@@ -1069,7 +1062,6 @@
 			}
             
 			//self.aToolbar = tmptoolbar;
-			[tmptoolbar release];
 			
 		}
 		else {
@@ -1112,7 +1104,7 @@
             continue;
         }
         
-		NSAutoreleasePool * pool2 = [[NSAutoreleasePool alloc] init];
+		@autoreleasepool {
         
 		
         NSArray *nodes = [topicNode children];
@@ -1133,16 +1125,27 @@
         //Commentaire
         HTMLNode * commsNode = [nodes objectAtIndex:4];
 
-        
+        NSString *commentString = [commsNode allContents];
+        NSRange pipeRange = [commentString rangeOfString:@"|" options:NSBackwardsSearch];
+            
+//        NSLog(@"Text: %@ | Range: %@", commentString, NSStringFromRange(pipeRange));
+    
+        if (pipeRange.location != NSNotFound) {
+            commentString = [commentString stringByReplacingCharactersInRange:NSMakeRange(pipeRange.location, commentString.length - pipeRange.location) withString:@""];
+        }
+            
+//        NSLog(@"TextFinal: %@", commentString);
+            
+            
         NSDictionary *feedDic = [NSDictionary dictionaryWithObjectsAndKeys: [pseudoNode allContents], @"pseudo",
                                                                             [statusNode allContents], @"status",
                                                                             [[avisNode className] stringByReplacingOccurrencesOfString:@"col3 " withString:@""], @"avis",
                                                                             [dateNode allContents], @"date",
-                                                                            [commsNode allContents], @"comm", nil];
+                                                                            commentString, @"comm", nil];
         
 		[self.arrayData addObject:feedDic];
         
-		[pool2 drain];
+		}
 		
 	}
 	
@@ -1150,7 +1153,6 @@
     //NSLog(@"self.arrayData %@", self.arrayData);
     
 
-	[myParser release];
 	
 	//NSDate *now = [NSDate date]; // Create a current date
 	
@@ -1189,6 +1191,17 @@
     
     
 }
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    Theme theme = [[ThemeManager sharedManager] theme];
+    self.feedTableView.separatorColor = [ThemeColors cellBorderColor:theme];
+    self.view.backgroundColor = self.loadingView.backgroundColor = self.feedTableView.backgroundColor = [ThemeColors greyBackgroundColor:theme];
+    self.loadingLabel.textColor = self.maintenanceView.textColor =  [ThemeColors cellTextColor:theme];
+    self.loadingLabel.shadowColor = self.maintenanceView.shadowColor = [UIColor clearColor];
+    [self.loadingIndicator setColor:[ThemeColors cellTextColor:theme]];
+}
+
 
 #pragma mark -
 #pragma mark Table view data source
@@ -1304,6 +1317,12 @@
     [self.webView loadRequest:[NSURLRequest requestWithURL:self.url]];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    Theme theme = [[ThemeManager sharedManager] theme];
+    self.view.backgroundColor = self.webView.backgroundColor =  [ThemeColors greyBackgroundColor:theme];
+}
+
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -1323,7 +1342,7 @@
 @end
 
 @implementation ConfigurationViewController
-@synthesize textView, loadingView, maintenanceView, statusMessage, request, status,  url;
+@synthesize textView, loadingView, loadingIndicator, loadingLabel, maintenanceView, statusMessage, request, status,  url;
 
 #pragma mark -
 #pragma mark Data lifecycle
@@ -1335,11 +1354,11 @@
 
 - (void)fetchContent
 {
-	//NSLog(@"fetchContent %@", [NSString stringWithFormat:@"%@%@", kForumURL, [self currentUrl]]);
+	//NSLog(@"fetchContent %@", [NSString stringWithFormat:@"%@%@", [k ForumURL], [self currentUrl]]);
 	self.status = kIdle;
 	[ASIHTTPRequest setDefaultTimeOutSeconds:kTimeoutMini];
     
-	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kForumURL, [self url]]]]];
+	[self setRequest:[ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [k ForumURL], [self url]]]]];
 	[request setShouldRedirect:NO];
     
 	[request setDelegate:self];
@@ -1429,7 +1448,6 @@
 												   delegate:self cancelButtonTitle:@"Annuler" otherButtonTitles:@"Réessayer", nil];
 	[alert setTag:667];
 	[alert show];
-	[alert release];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andUrl:(NSString *)theURL
@@ -1448,8 +1466,18 @@
 {
     [super viewDidLoad];
     self.title = @"Config";
+    self.textView.keyboardAppearance = [ThemeColors keyboardAppearance:[[ThemeManager sharedManager] theme]];
     
     [self fetchContent];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    Theme theme = [[ThemeManager sharedManager] theme];
+    self.view.backgroundColor = self.loadingView.backgroundColor = self.textView.backgroundColor = [ThemeColors greyBackgroundColor:theme];
+    self.loadingLabel.textColor = self.maintenanceView.textColor = self.textView.textColor = [ThemeColors cellTextColor:theme];
+    self.loadingLabel.shadowColor = self.maintenanceView.shadowColor = [UIColor clearColor];
+    [self.loadingIndicator setColor:[ThemeColors cellTextColor:theme]];
 }
 
 - (void)viewDidUnload {

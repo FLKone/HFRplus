@@ -26,22 +26,24 @@
 	NSString *previousPageUrl;
 }
 
-@property (nonatomic, retain) NSString *currentUrl;
+@property (nonatomic, strong) NSString *currentUrl;
 @property int pageNumber;
 
 @property int firstPageNumber;
 @property int lastPageNumber;
-@property (nonatomic, retain) NSString *firstPageUrl;
-@property (nonatomic, retain) NSString *lastPageUrl;
+@property (nonatomic, strong) NSString *firstPageUrl;
+@property (nonatomic, strong) NSString *lastPageUrl;
 
-@property (nonatomic, retain) NSString *nextPageUrl;
-@property (nonatomic, retain) NSString *previousPageUrl;
+@property (nonatomic, strong) NSString *nextPageUrl;
+@property (nonatomic, strong) NSString *previousPageUrl;
 
 
 -(void)choosePage;
 -(void)goToPage:(NSString *)pageType;
 -(void)gotoPageNumber:(int)number;
 -(void)fetchContent;
+-(IBAction)searchSubmit:(UIBarButtonItem *)sender;
+-(void)fetchContent:(int)from;
 
 -(void)nextPage:(id)sender;
 -(void)previousPage:(id)sender;

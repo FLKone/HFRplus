@@ -7,7 +7,10 @@
 
 #import "HFRNavigationController.h"
 #import "HFRplusAppDelegate.h"
-
+#import "ThemeColors.h"
+#import "ThemeManager.h"
+#import "UINavigationBar+Helper.h"
+#import "MWPhotoBrowser.h"
 @interface HFRNavigationController ()
 
 @end
@@ -27,6 +30,77 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    NSLog(@"viewDidLoad HFR HFR NavControll.");
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(userThemeDidChange)
+                                                 name:kThemeChangedNotification
+                                               object:nil];
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        UITapGestureRecognizer* tapRecon = [[UITapGestureRecognizer alloc]
+                                            initWithTarget:self action:@selector(navigationBarDoubleTap:)];
+        tapRecon.numberOfTapsRequired = 2;
+        [self.navigationBar addGestureRecognizer:tapRecon];
+
+    }
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        if (![self.topViewController isKindOfClass:[MWPhotoBrowser class]]) {
+            [self.navigationBar setBottomBorderColor:[UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0] height:1];
+        }
+  
+    }
+
+}
+
+- (NSString *) userThemeDidChange {
+    
+    NSLog(@"HFR userThemeDidChange");
+    
+    Theme theme = [[ThemeManager sharedManager] theme];
+
+    
+    [self.navigationBar setBackgroundImage:[ThemeColors imageFromColor:[ThemeColors navBackgroundColor:theme]] forBarMetrics:UIBarMetricsDefault];
+    
+    if ([self.navigationBar respondsToSelector:@selector(setTintColor:)]) {
+        [self.navigationBar setTintColor:[ThemeColors tintColor:theme]];
+    }
+    
+    [self.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [ThemeColors textColor:theme]}];
+    
+    /*
+    if (theme == ThemeLight) {
+        [self.navigationBar setBarStyle:UIBarStyleDefault];
+    }
+    else {
+        [self.navigationBar setBarStyle:UIBarStyleBlack];
+    }
+    */
+    
+    [self.navigationBar setNeedsDisplay];
+    
+    [self.topViewController viewWillAppear:NO];
+
+    return @"";
+}
+
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kThemeChangedNotification object:nil];
+}
+
+- (void)navigationBarDoubleTap:(UIGestureRecognizer*)recognizer {
+    NSLog(@"navigationBarDoubleTapnavigationBarDoubleTap");
+    [[ThemeManager sharedManager] switchTheme];
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle{
+    return [ThemeColors statusBarStyle:[[ThemeManager sharedManager] theme]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -49,7 +123,7 @@
 }
 
 /* for iOS6 support */
-- (NSUInteger)supportedInterfaceOrientations
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
     //NSLog(@"supportedInterfaceOrientations");
     

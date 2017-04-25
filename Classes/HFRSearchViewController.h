@@ -24,7 +24,7 @@
 	NSString *statusMessage;
 	
 	MessagesTableViewController *messagesTableViewController;
-	TopicSearchCellView *tmpCell;
+	TopicSearchCellView *__weak tmpCell;
 
 	NSIndexPath *pressedIndexPath;
 	UIActionSheet		*topicActionSheet;
@@ -44,24 +44,24 @@
 	NSMutableString * currentTitle, * currentDate, * currentSummary, * currentLink;	
 }
 
-@property(retain) NSMutableArray *stories;
-@property(retain) UIView *disableViewOverlay;
+@property(strong) NSMutableArray *stories;
+@property(strong) UIView *disableViewOverlay;
 
-@property (nonatomic, retain) IBOutlet UITableView *theTableView;
-@property (nonatomic, retain) IBOutlet UISearchBar *theSearchBar;
+@property (nonatomic, strong) IBOutlet UITableView *theTableView;
+@property (nonatomic, strong) IBOutlet UISearchBar *theSearchBar;
 
-@property (nonatomic, retain) IBOutlet UIView *loadingView;
-@property (nonatomic, retain) IBOutlet UILabel *maintenanceView;
+@property (nonatomic, strong) IBOutlet UIView *loadingView;
+@property (nonatomic, strong) IBOutlet UILabel *maintenanceView;
 
-@property (retain, nonatomic) ASIFormDataRequest *request;
+@property (strong, nonatomic) ASIFormDataRequest *request;
 @property STATUS status;
-@property (nonatomic, retain) NSString *statusMessage;
+@property (nonatomic, strong) NSString *statusMessage;
 
-@property (nonatomic, retain) NSIndexPath *pressedIndexPath;
-@property (nonatomic, retain) UIActionSheet *topicActionSheet;
+@property (nonatomic, strong) NSIndexPath *pressedIndexPath;
+@property (nonatomic, strong) UIActionSheet *topicActionSheet;
 
-@property (nonatomic, retain) MessagesTableViewController *messagesTableViewController;
-@property (nonatomic, assign) IBOutlet TopicSearchCellView *tmpCell;
+@property (nonatomic, strong) MessagesTableViewController *messagesTableViewController;
+@property (nonatomic, weak) IBOutlet TopicSearchCellView *tmpCell;
 
 - (void)searchBar:(UISearchBar *)searchBar activate:(BOOL) active;
 
