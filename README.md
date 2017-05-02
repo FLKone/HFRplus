@@ -1,7 +1,7 @@
 <table>
 <tr>
-<td><img src="https://raw.githubusercontent.com/FLKone/HFRplus/devel-1.10/HFRplus/Images.xcassets/AppIcon.appiconset/Icon-Small-40.png" alt="HFR+" title="HFR+" style="display:block; margin: 10px auto 30px auto;" class="center"></td>
-<td><img src="https://raw.githubusercontent.com/FLKone/HFRplus/devel-1.10/HFRplus/Images.xcassets/AppIcon%20RE.appiconset/Icon-Small-40.png" alt="HFR+" title="HFR+REDFACE" style="display:block; margin: 10px auto 30px auto;" class="center"></td>
+<td><img src="https://raw.githubusercontent.com/FLKone/HFRplus/master/HFRplus/Images.xcassets/AppIcon.appiconset/Icon-Small-40.png" alt="HFR+" title="HFR+" style="display:block; margin: 10px auto 30px auto;" class="center"></td>
+<td><img src="https://raw.githubusercontent.com/FLKone/HFRplus/master/HFRplus/Images.xcassets/AppIcon%20RE.appiconset/Icon-Small-40.png" alt="HFR+" title="HFR+REDFACE" style="display:block; margin: 10px auto 30px auto;" class="center"></td>
 </tr>   
 
 <tr>   
@@ -28,7 +28,7 @@ Roadmap
     <th>Version</th><th>Type</th><th>Sortie</th>
   </tr>
 <tr>
-    <td><a href="https://github.com/FLKone/HFRplus/tree/devel">2.0</a></td><td>Nouvelle version. <a href="https://github.com/FLKone/HFRplus/tree/devel">cf ~devel</a></td><td>TBD</td>
+    <td>2.0</td><td>Nouvelle version</td><td>TBD</td>
   </tr>   
 </table>
 
