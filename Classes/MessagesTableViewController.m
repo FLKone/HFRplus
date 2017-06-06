@@ -1797,7 +1797,7 @@
             <style type='text/css'>\
             %@\
             </style>\
-            </head><body class='iosversion'><a name='top'></a>\
+            </head><body class='iosversion'><a name='top' id='top'></a>\
             <div class='bunselected %@' id='qsdoiqjsdkjhqkjhqsdqdilkjqsd2'>\
             %@\
             </div>\
@@ -1895,15 +1895,22 @@
         NSLog(@"== First DOM");
         self.loaded = YES;
 
-        //if (SYSTEM_VERSION_LESS_THAN(@"9")) {
-        NSString* jsString2 = @"window.location.hash='#bas';";
-        NSString* jsString3 = [NSString stringWithFormat:@"window.location.hash='%@';", ![self.stringFlagTopic isEqualToString:@""] ? self.stringFlagTopic : @"#top"];
+        NSString* jsString2 = @"";
+        NSString* jsString3 = @"";
+
+        if (SYSTEM_VERSION_LESS_THAN(@"11")) {
+            jsString2 = @"window.location.hash='#bas';";
+            jsString3 = [NSString stringWithFormat:@"window.location.hash='%@';", ![self.stringFlagTopic isEqualToString:@""] ? self.stringFlagTopic : @"#top"];
         
-        NSString* result = [self.messagesWebView stringByEvaluatingJavaScriptFromString:[jsString2 stringByAppendingString:jsString3]];
-        //        [self.messagesWebView stringByEvaluatingJavaScriptFromString:jsString3];
-        //}
+        }
+        else {
+            jsString2 = @"document.getElementById('endofpagetoolbar').scrollIntoView(true);";
+            jsString3 = [NSString stringWithFormat:@"document.getElementById('%@').scrollIntoView(true);", ![self.stringFlagTopic isEqualToString:@""] ? [self.stringFlagTopic stringByReplacingOccurrencesOfString:@"#" withString:@""] : @"top"];
+
+        }
         //Position du Flag
         
+        NSString* result = [self.messagesWebView stringByEvaluatingJavaScriptFromString:[jsString2 stringByAppendingString:jsString3]];
 
 
         NSLog(@"jsString2 %@", jsString2);

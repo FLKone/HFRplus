@@ -115,8 +115,14 @@
 		
 	}
     
+    if (SYSTEM_VERSION_LESS_THAN(@"11")) {
+        [[self.parent messagesWebView] stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"window.location.hash='%@';", [[arrayData objectAtIndex:curMsg] postID]]];
 
-	[[self.parent messagesWebView] stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"window.location.hash='%@';", [[arrayData objectAtIndex:curMsg] postID]]];
+    }
+    else {
+        [[self.parent messagesWebView] stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.getElementById('%@').scrollIntoView(true);", [[arrayData objectAtIndex:curMsg] postID]]];
+
+    }
 
     NSString *myRawContent = [[arrayData objectAtIndex:curMsg] dicoHTML];
     
