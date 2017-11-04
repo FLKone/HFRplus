@@ -36,7 +36,7 @@
                                              selector:@selector(userThemeDidChange)
                                                  name:kThemeChangedNotification
                                                object:nil];
-    
+    /*
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         UITapGestureRecognizer* tapRecon = [[UITapGestureRecognizer alloc]
                                             initWithTarget:self action:@selector(navigationBarDoubleTap:)];
@@ -44,6 +44,7 @@
         [self.navigationBar addGestureRecognizer:tapRecon];
 
     }
+     */
     
 }
 
