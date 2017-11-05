@@ -20,8 +20,6 @@
 
 #import <SafariServices/SafariServices.h>
 
-#import <Crittercism/Crittercism.h>
-
 @implementation HFRplusAppDelegate
 
 @synthesize window;
