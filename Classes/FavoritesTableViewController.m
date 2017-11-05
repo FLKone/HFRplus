@@ -556,7 +556,7 @@
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
-    NSLog(@"initWithNibName");
+    //NSLog(@"initWithNibName");
     
     
     self = [super initWithCoder:aDecoder];

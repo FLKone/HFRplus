@@ -28,7 +28,7 @@
     
      IASKAppSettingsViewController *settingsVC = ((IASKAppSettingsViewController *)((UINavigationController *)[[HFRplusAppDelegate sharedAppDelegate] rootController].viewControllers[3]).viewControllers[0]);
     settingsVC.neverShowPrivacySettings = YES;
-    NSLog(@"awakeFromNib");
+    //NSLog(@"awakeFromNib");
     
     self.delegate = self;
 }

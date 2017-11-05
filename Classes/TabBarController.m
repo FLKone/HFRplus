@@ -10,7 +10,6 @@
 #import "FavoritesTableViewController.h"
 #import "HFRMPViewController.h"
 #import "ForumsTableViewController.h"
-#import "HFRTabBar.h"
 #import "ThemeColors.h"
 #import "ThemeManager.h"
 

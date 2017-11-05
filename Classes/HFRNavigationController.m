@@ -30,7 +30,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    NSLog(@"viewDidLoad HFR HFR NavControll.");
+   // NSLog(@"viewDidLoad HFR HFR NavControll.");
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(userThemeDidChange)
