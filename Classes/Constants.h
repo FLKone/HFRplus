@@ -20,6 +20,16 @@
 static const NSInteger kDispatchPeriodSeconds = 20;
 
 typedef enum {
+    kFromLegacy,
+    kFromModern
+} MIGVERSION;
+
+typedef enum {
+    kForClassic,
+    kForRedface
+} MIGAPP;
+
+typedef enum {
 	kIdle,
 	kMaintenance,
 	kNoResults,

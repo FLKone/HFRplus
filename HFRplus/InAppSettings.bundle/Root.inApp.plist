@@ -271,6 +271,16 @@
 			<string>menu_debug_entry</string>
 		</dict>
 		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Annonce Migration</string>
+			<key>Key</key>
+			<string>menu_migration</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
 			<key>DefaultValue</key>
 			<string>1.0</string>
 			<key>Key</key>

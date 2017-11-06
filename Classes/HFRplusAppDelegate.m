@@ -11,6 +11,7 @@
 
 #import "HFRMPViewController.h"
 #import "FavoritesTableViewController.h"
+#import "MigrationViewController.h"
 
 #import "MKStoreManager.h"
 #import "BrowserViewController.h"
@@ -60,27 +61,6 @@
 	
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:YES];
 
-
-#ifdef CONFIGURATION_Release
-    NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
-    
-    if ([bundleIdentifier isEqualToString:@"hfrplus.red"]) {
-        //[Crittercism enableWithAppID:kTestFlightAPIRE];
-        
-        //[TestFlight takeOff:kTestFlightAPIRE];
-    }
-    else
-    {
-        //[Crittercism enableWithAppID:kTestFlightAPI];
-
-        //[TestFlight takeOff:kTestFlightAPI];
-        //[MKStoreManager sharedManager];
-
-    }
-#else
-    //NSLog(@"DEBUUUUUGGGGG");
-#endif
-    
     [self registerDefaultsFromSettingsBundle];
     
     
@@ -137,6 +117,73 @@
                                                  name:kThemeChangedNotification
                                                object:nil];
     [self setTheme:[[ThemeManager sharedManager] theme]];
+
+
+    // Phasing out "hfrplus" bundle
+    // - to HFR+ if iOS11-
+    // - to Super HFR+ if iOS11+
+
+    // Redirecting Users to Super HFR+ on iOS 11+
+    // Test canOpen "hfr://" to test if Super HFR+ is already installed to remove prompt
+
+
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL mig = [defaults boolForKey:@"menu_migration"];
+
+    if (mig) {
+        NSLog(@"menu_migration = YES");
+    } else {
+        NSLog(@"menu_migration = NO");
+        return YES;
+    }
+
+    BOOL shouldPresentMigrationController = NO;
+    MIGVERSION migrationVersion;
+    MIGAPP migrationApp;
+
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"11")) {
+        migrationVersion = kFromModern;
+    } else {
+        migrationVersion = kFromLegacy;
+    }
+
+    NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+
+    if ([bundleIdentifier isEqualToString:@"hfrplus.red"]) {
+        migrationApp = kForRedface;
+
+        if (migrationVersion == kFromModern) {
+            shouldPresentMigrationController = YES;
+        }
+
+        //NSLog(@"... ... if Super HFR not Installed > Prompt");
+        //NSLog(@"... ... if installed, do nothing");
+    } else {
+        migrationApp = kForClassic;
+
+        shouldPresentMigrationController = YES;
+    }
+
+    if (shouldPresentMigrationController) {
+        NSLog(@"Prompting for migration a=%d v=%d", migrationApp, migrationVersion);
+
+        MigrationViewController *migrationVC = [[MigrationViewController alloc] initWithNibName:@"MigrationViewController" bundle:nil];
+        migrationVC.forApp = migrationApp;
+        migrationVC.fromVersion = migrationVersion;
+
+        migrationVC.view.backgroundColor = [ThemeColors greyBackgroundColor:[[ThemeManager sharedManager] theme]];
+
+        // Create the navigation controller and present it modally.
+        HFRNavigationController *navigationController = [[HFRNavigationController alloc]
+                                                         initWithRootViewController:migrationVC];
+
+        navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+        [self.window.rootViewController presentModalViewController:navigationController animated:YES];
+    } else {
+        NSLog(@"Not prompting for migration");
+    }
+
+    //-- Phasing out "hfrplus" bundle
 
 	
     return YES;
@@ -520,6 +567,21 @@
         }
         
         //iOS9 + Pad + FullScreen = confirme (Nav+)
+
+        NSURL *tmpURL = [NSURL URLWithString:stringUrl];
+        NSArray *imtsHost = [NSArray arrayWithObjects: @"itunes.apple.com", nil];
+
+        if ([imtsHost indexOfObject:tmpURL.host] != NSNotFound) {
+            NSRange rangeOfScheme = [[tmpURL absoluteString] rangeOfString:[tmpURL scheme]];
+            tmpURL = [NSURL URLWithString:[[tmpURL absoluteString] stringByReplacingCharactersInRange:rangeOfScheme withString:@"itms-apps"]];
+
+
+            if ([[UIApplication sharedApplication] canOpenURL:tmpURL]) {
+                [[UIApplication sharedApplication] openURL:tmpURL];
+                return;
+            }
+
+        }
 
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
             NSString *msg = [NSString stringWithFormat:@"Vous allez quitter HFR+ et être redirigé vers :\n %@\n", stringUrl];

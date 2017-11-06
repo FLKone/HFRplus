@@ -303,6 +303,10 @@
 		4C68D3B81FAF2F5B00C5D32F /* MigrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C68D3B51FAF2F5B00C5D32F /* MigrationViewController.m */; };
 		4C68D3B91FAF2F5B00C5D32F /* MigrationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C68D3B61FAF2F5B00C5D32F /* MigrationViewController.xib */; };
 		4C68D3BA1FAF2F5B00C5D32F /* MigrationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C68D3B61FAF2F5B00C5D32F /* MigrationViewController.xib */; };
+		4C7E127C1FAF426C008FD92A /* migration.classic.html in Resources */ = {isa = PBXBuildFile; fileRef = 4C7E127B1FAF426C008FD92A /* migration.classic.html */; };
+		4C7E127D1FAF426C008FD92A /* migration.classic.html in Resources */ = {isa = PBXBuildFile; fileRef = 4C7E127B1FAF426C008FD92A /* migration.classic.html */; };
+		4C7E127F1FAF42B3008FD92A /* migration.redface.html in Resources */ = {isa = PBXBuildFile; fileRef = 4C7E127E1FAF42B3008FD92A /* migration.redface.html */; };
+		4C7E12801FAF42B3008FD92A /* migration.redface.html in Resources */ = {isa = PBXBuildFile; fileRef = 4C7E127E1FAF42B3008FD92A /* migration.redface.html */; };
 		4C80A4F81CF1B0E60093CF9B /* ResistorFilled-40@x2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C80A4F61CF1B0E60093CF9B /* ResistorFilled-40@x2.png */; };
 		4C80A4F91CF1B0E60093CF9B /* ResistorFilled-40@x2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C80A4F61CF1B0E60093CF9B /* ResistorFilled-40@x2.png */; };
 		4C80A4FA1CF1B0E60093CF9B /* ResistorFilled-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C80A4F71CF1B0E60093CF9B /* ResistorFilled-40.png */; };
@@ -1475,6 +1479,8 @@
 		4C68D3B41FAF2F5B00C5D32F /* MigrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MigrationViewController.h; sourceTree = "<group>"; };
 		4C68D3B51FAF2F5B00C5D32F /* MigrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MigrationViewController.m; sourceTree = "<group>"; };
 		4C68D3B61FAF2F5B00C5D32F /* MigrationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MigrationViewController.xib; sourceTree = "<group>"; };
+		4C7E127B1FAF426C008FD92A /* migration.classic.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = migration.classic.html; sourceTree = "<group>"; };
+		4C7E127E1FAF42B3008FD92A /* migration.redface.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = migration.redface.html; sourceTree = "<group>"; };
 		4C80A4F61CF1B0E60093CF9B /* ResistorFilled-40@x2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ResistorFilled-40@x2.png"; sourceTree = "<group>"; };
 		4C80A4F71CF1B0E60093CF9B /* ResistorFilled-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ResistorFilled-40.png"; sourceTree = "<group>"; };
 		4C80A4FC1CF1B2610093CF9B /* CircuitFilled-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CircuitFilled-40@2x.png"; sourceTree = "<group>"; };
@@ -2154,10 +2160,10 @@
 				01BF8776121C4407007624B6 /* InfosViewController.h */,
 				01BF8777121C4407007624B6 /* InfosViewController.m */,
 				4CB132A21B9068250081B44D /* InfosViewController.xib */,
-				01BF8779121C4407007624B6 /* AideViewController.m */,
 				01BF877A121C4407007624B6 /* CreditsViewController.h */,
 				01BF877B121C4407007624B6 /* CreditsViewController.m */,
 				01BF8778121C4407007624B6 /* AideViewController.h */,
+				01BF8779121C4407007624B6 /* AideViewController.m */,
 				01BF877C121C4407007624B6 /* AideViewController.xib */,
 				01BF877D121C4407007624B6 /* CreditsViewController.xib */,
 				CA34781112EB56DC00D1BA2A /* inApp */,
@@ -2873,6 +2879,8 @@
 			children = (
 				CA00C58017C30C370067B457 /* aide.html */,
 				CA00C58117C30C370067B457 /* credits.html */,
+				4C7E127B1FAF426C008FD92A /* migration.classic.html */,
+				4C7E127E1FAF42B3008FD92A /* migration.redface.html */,
 				4C052DF21BA8537E00B61952 /* fontello.ttf */,
 				CA24233D17C3C898002888D3 /* jquery-2.0.3.min.js */,
 				CA019F1619CD77D500F67C47 /* jquery-2.1.1.min.js */,
@@ -3484,6 +3492,7 @@
 				CA00C64C17C30C370067B457 /* sol.gif in Resources */,
 				CA00C69B17C30C370067B457 /* arrowR@2x.png in Resources */,
 				CA7472F317E15FE300B45E15 /* ToolBarPrevious_on@2x.png in Resources */,
+				4C7E127F1FAF42B3008FD92A /* migration.redface.html in Resources */,
 				CA00C6DE17C30C370067B457 /* link.png in Resources */,
 				4CB132ED1B909D710081B44D /* ReplyAllArrow-20@2x.png in Resources */,
 				4C0B8DAE1BA4522900D329BA /* VOIPGatewayFilled-40.png in Resources */,
@@ -3523,6 +3532,7 @@
 				4C21E9791BA5C70400691D65 /* UnderlineFilled-20.png in Resources */,
 				CA00C6E517C30C370067B457 /* previousIcon.png in Resources */,
 				4CC3C75B1B99BC18001B8632 /* AlerteModoViewController.xib in Resources */,
+				4C7E127C1FAF426C008FD92A /* migration.classic.html in Resources */,
 				CA00C6B817C30C370067B457 /* buttonbeginoff.png in Resources */,
 				4C9C2B241BAE744800511853 /* Launch Screen RE.storyboard in Resources */,
 				CA00C45D17C301650067B457 /* MainWindow-iPad.xib in Resources */,
@@ -3946,6 +3956,7 @@
 				CA7C6FD3185EF50E00B348BA /* arrowR@2x.png in Resources */,
 				CA7C6FD5185EF50E00B348BA /* ToolBarPrevious_on@2x.png in Resources */,
 				CA7C6FD6185EF50E00B348BA /* link.png in Resources */,
+				4C7E12801FAF42B3008FD92A /* migration.redface.html in Resources */,
 				CA7C6FD7185EF50E00B348BA /* ouimaitre.gif in Resources */,
 				4CB132EE1B909D710081B44D /* ReplyAllArrow-20@2x.png in Resources */,
 				4C0B8DAF1BA4522900D329BA /* VOIPGatewayFilled-40.png in Resources */,
@@ -3985,6 +3996,7 @@
 				4C21E97A1BA5C70400691D65 /* UnderlineFilled-20.png in Resources */,
 				CA7C6FEE185EF50E00B348BA /* buttonbeginoff.png in Resources */,
 				4CC3C75C1B99BC18001B8632 /* AlerteModoViewController.xib in Resources */,
+				4C7E127D1FAF426C008FD92A /* migration.classic.html in Resources */,
 				CA7C6FEF185EF50E00B348BA /* MainWindow-iPad.xib in Resources */,
 				4C9C2B251BAE744800511853 /* Launch Screen RE.storyboard in Resources */,
 				CAF5DB911936D013000B5215 /* 71-compass@2x.png in Resources */,

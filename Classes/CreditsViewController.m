@@ -29,7 +29,10 @@
 	self.title = @"Crédits";
 
     [super viewDidLoad];
-    
+    NSString *path = [[NSBundle mainBundle] bundlePath];
+    NSURL *baseURL = [NSURL fileURLWithPath:path];
+    [myWebView loadHTMLString:@"" baseURL:baseURL];
+
 	[self.myWebView hideGradientBackground];
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {

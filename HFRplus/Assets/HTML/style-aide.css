@@ -71,3 +71,30 @@ body.ios7  {
     font-size:12px;
     padding:10px;
 }
+
+a.migration_button {
+    border-radius: 10px;
+    background-color: #2a74d9;
+    color: white;
+    padding: 15px;
+    /* display: table-cell; */
+    /* vertical-align: middle; */
+    /* width: 100%; */
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a.migration_button .smaller {
+    font-size: 0.8em;
+}
+
+.modern .hfrplus {
+    display:none;
+
+}
+
+.legacy .superhfrplus {
+    display:none;
+}
