@@ -517,15 +517,26 @@
     self.loadingViewIndicator.activityIndicatorViewStyle = [ThemeColors activityIndicatorViewStyle:[[ThemeManager sharedManager] theme]];
     self.textView.textColor = [ThemeColors textColor:[[ThemeManager sharedManager] theme]];
 
-}
+    [self.rehostTableView reloadData];
+    [self.commonTableView reloadData];
 
--(void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
+    if (self.segmentControler.tintColor == [UIColor whiteColor]) {
+
+    } else {
+        [self segmentToBlue];
+    }
+
+    [self.view endEditing:YES];
     self.textView.keyboardAppearance = [ThemeColors keyboardAppearance:[[ThemeManager sharedManager] theme]];
     self.textFieldTitle.keyboardAppearance = [ThemeColors keyboardAppearance:[[ThemeManager sharedManager] theme]];
     self.textFieldTo.keyboardAppearance = [ThemeColors keyboardAppearance:[[ThemeManager sharedManager] theme]];
     self.textFieldCat.keyboardAppearance = [ThemeColors keyboardAppearance:[[ThemeManager sharedManager] theme]];
-    
+    self.textFieldSmileys.keyboardAppearance = [ThemeColors keyboardAppearance:[[ThemeManager sharedManager] theme]];
+
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
 
 }
 

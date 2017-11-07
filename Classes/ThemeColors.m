@@ -138,11 +138,11 @@
     
         switch (theme) {
             case ThemeLight:
-                return [UIColor colorWithRed:246.0/255.0 green:246.0/255.0 blue:246.0/255.0 alpha:1.0];
+                return [UIColor whiteColor];//[UIColor colorWithRed:246.0/255.0 green:246.0/255.0 blue:246.0/255.0 alpha:1.0];
             case ThemeDark:
                 return [UIColor colorWithRed:36.0/255.0 green:37.0/255.0 blue:41.0/255.0 alpha:1.0];
             default:
-                return [UIColor colorWithRed:246.0/255.0 green:246.0/255.0 blue:246.0/255.0 alpha:1.0];
+                return [UIColor whiteColor];//[UIColor colorWithRed:246.0/255.0 green:246.0/255.0 blue:246.0/255.0 alpha:1.0];
                 
         }
     }
@@ -204,10 +204,9 @@
         return [self tintColor:theme];
     }
     else {
-        return [UIColor colorWithRed:36/255.0 green:112/255.0 blue:216/255.0 alpha:1.0]; //OK
+        return [UIColor colorWithRed:42/255.0 green:116/255.0 blue:217/255.0 alpha:1.0]; //OK
     }
 }
-
 
 + (UIColor *)placeholderColor:(Theme)theme{
     switch (theme) {
