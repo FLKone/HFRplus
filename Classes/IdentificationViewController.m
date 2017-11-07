@@ -139,6 +139,16 @@
 }
 
 -(IBAction)connexion {
+    // remove cookie before auth
+    NSHTTPCookieStorage *cookShared = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    NSArray *cookies = [cookShared cookies];
+
+    for (NSHTTPCookie *aCookie in cookies) {
+        //NSLog(@"%@", aCookie);
+
+        [cookShared deleteCookie:aCookie];
+    }
+
     [pseudoField resignFirstResponder];
     [passField resignFirstResponder];
     
