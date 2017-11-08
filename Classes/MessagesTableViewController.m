@@ -844,10 +844,6 @@
         [self.messagesWebView setBackgroundColor:[UIColor whiteColor]];
     }
 
-    NSString *path = [[NSBundle mainBundle] bundlePath];
-    NSURL *baseURL = [NSURL fileURLWithPath:path];
-    [self.messagesWebView loadHTMLString:@"" baseURL:baseURL];
-
 	//Gesture
 	UIGestureRecognizer *recognizer;
 

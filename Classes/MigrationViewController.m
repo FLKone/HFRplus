@@ -29,9 +29,6 @@
     self.title = @"Annonce";
 
     [super viewDidLoad];
-    NSString *path = [[NSBundle mainBundle] bundlePath];
-    NSURL *baseURL = [NSURL fileURLWithPath:path];
-    [myWebView loadHTMLString:@"" baseURL:baseURL];
 
     [self.myWebView hideGradientBackground];
 
