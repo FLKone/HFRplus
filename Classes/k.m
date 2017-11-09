@@ -14,6 +14,7 @@
 {
     return [self RealForumURL];
     /*
+     
      Plus nécessaire, bug IPv6 corrigé
      ======
      
