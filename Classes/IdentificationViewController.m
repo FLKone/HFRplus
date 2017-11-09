@@ -64,12 +64,22 @@
     pseudoField.textColor = [ThemeColors textColor:theme];
     pseudoField.layer.borderColor = [[ThemeColors cellBorderColor:theme] CGColor];
     pseudoField.layer.borderWidth = 1.0f;
-    pseudoField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Pseudo" attributes:@{NSForegroundColorAttributeName:[ThemeColors cellBorderColor:theme]}];
+    if ([pseudoField respondsToSelector:@selector(setAttributedPlaceholder:)]) {
+        pseudoField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Pseudo"
+                                                                            attributes:@{NSForegroundColorAttributeName:[ThemeColors placeholderColor:theme]}];
+    } else {
+        pseudoField.placeholder = @"Pseudo";
+    }
     passField.backgroundColor = [ThemeColors cellBackgroundColor:theme];
     passField.textColor = [ThemeColors textColor:theme];
     passField.layer.borderColor = [[ThemeColors cellBorderColor:theme] CGColor];
     passField.layer.borderWidth = 1.0f;
-    passField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Mot de passe" attributes:@{NSForegroundColorAttributeName:[ThemeColors cellBorderColor:theme]}];
+    if ([passField respondsToSelector:@selector(setAttributedPlaceholder:)]) {
+        passField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Mot de passe"
+                                                                          attributes:@{NSForegroundColorAttributeName:[ThemeColors placeholderColor:theme]}];
+    } else {
+        passField.placeholder = @"Mot de passe";
+    }
     titleLabel.textColor = [ThemeColors cellTextColor:theme];
 }
 

@@ -109,7 +109,9 @@
         [self.navigationController.navigationBar setTintColor:[ThemeColors tintColor:theme]];
     }
 
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [ThemeColors textColor:theme]}];
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0")) {
+        [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [ThemeColors textColor:theme]}];
+    }
     [self.navigationController.navigationBar setNeedsDisplay];
     self.view.backgroundColor = [ThemeColors greyBackgroundColor:theme];
     self.tableView.separatorColor = [ThemeColors cellBorderColor:theme];

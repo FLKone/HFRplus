@@ -72,9 +72,11 @@
     if ([self.navigationBar respondsToSelector:@selector(setTintColor:)]) {
         [self.navigationBar setTintColor:[ThemeColors tintColor:theme]];
     }
-    
-    [self.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [ThemeColors textColor:theme]}];
-    
+
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0")) {
+       [self.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [ThemeColors textColor:theme]}];
+    }
+
     /*
     if (theme == ThemeLight) {
         [self.navigationBar setBarStyle:UIBarStyleDefault];

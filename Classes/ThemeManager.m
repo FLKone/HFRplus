@@ -103,38 +103,39 @@
 }
 
 - (void)applyThemeToTextField:(UITextField *)textfield{
-    //if(theme == ThemeDark){
-        
-        textfield.backgroundColor = [ThemeColors textFieldBackgroundColor:[[ThemeManager sharedManager] theme]];
-        textfield.textColor = [ThemeColors cellTextColor:[[ThemeManager sharedManager] theme]];
-        if ([textfield respondsToSelector:@selector(setTintColor:)]) {
-            textfield.tintColor = [ThemeColors cellTextColor:[[ThemeManager sharedManager] theme]];
-        }
-        
-        UIButton *btnClear = [textfield valueForKey:@"_clearButton"];
-        UIImage *imageNormal = [btnClear imageForState:UIControlStateNormal];
-        UIGraphicsBeginImageContextWithOptions(imageNormal.size, NO, 0.0);
-        CGContextRef context = UIGraphicsGetCurrentContext();
-        
-        CGRect rect = (CGRect){ CGPointZero, imageNormal.size };
-        CGContextSetBlendMode(context, kCGBlendModeNormal);
-        [imageNormal drawInRect:rect];
-        
-        CGContextSetBlendMode(context, kCGBlendModeSourceIn);
-        [[UIColor whiteColor] setFill];
-        CGContextFillRect(context, rect);
-        
-        UIImage *imageTinted  = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        [btnClear setImage:imageTinted forState:UIControlStateNormal];
-        
+
+    textfield.backgroundColor = [ThemeColors textFieldBackgroundColor:[[ThemeManager sharedManager] theme]];
+    textfield.textColor = [ThemeColors cellTextColor:[[ThemeManager sharedManager] theme]];
+    if ([textfield respondsToSelector:@selector(setTintColor:)]) {
+        textfield.tintColor = [ThemeColors cellTextColor:[[ThemeManager sharedManager] theme]];
+    }
+
+    UIButton *btnClear = [textfield valueForKey:@"_clearButton"];
+    UIImage *imageNormal = [btnClear imageForState:UIControlStateNormal];
+    UIGraphicsBeginImageContextWithOptions(imageNormal.size, NO, 0.0);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+
+    CGRect rect = (CGRect){ CGPointZero, imageNormal.size };
+    CGContextSetBlendMode(context, kCGBlendModeNormal);
+    [imageNormal drawInRect:rect];
+
+    CGContextSetBlendMode(context, kCGBlendModeSourceIn);
+    [[UIColor whiteColor] setFill];
+    CGContextFillRect(context, rect);
+
+    UIImage *imageTinted  = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    [btnClear setImage:imageTinted forState:UIControlStateNormal];
+
+    if ([textfield respondsToSelector:@selector(setAttributedPlaceholder:)]) {
         textfield.attributedPlaceholder = [[NSAttributedString alloc] initWithString:textfield.attributedPlaceholder.string
-                                        attributes:@{
-                                                     NSForegroundColorAttributeName: [ThemeColors placeholderColor:theme]
-                                                     }
-         ];
-        
-    //}
+                                                                          attributes:@{NSForegroundColorAttributeName: [ThemeColors placeholderColor:theme]}];
+
+    } else {
+        textfield.placeholder = textfield.placeholder;
+    }
+
+
 }
 
 @end
