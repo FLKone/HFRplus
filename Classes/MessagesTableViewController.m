@@ -749,10 +749,10 @@
 
 -(void)forceButtonMenu {
     if ([self.splitViewController respondsToSelector:@selector(displayModeButtonItem)]) {
-
+#ifdef ___IPHONE_6_0
         [[HFRplusAppDelegate sharedAppDelegate] detailNavigationController].viewControllers[0].navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
         [[HFRplusAppDelegate sharedAppDelegate] detailNavigationController].viewControllers[0].navigationItem.leftItemsSupplementBackButton = YES;
- 
+#endif
     }
     else {
         UINavigationItem *navItem = [[[[[HFRplusAppDelegate sharedAppDelegate] detailNavigationController] viewControllers] objectAtIndex:0] navigationItem];

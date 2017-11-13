@@ -1299,8 +1299,10 @@
         
         if ([messagesTableViewController.splitViewController respondsToSelector:@selector(displayModeButtonItem)]) {
             NSLog(@"PUSH ADD BTN");
+            #ifdef ___IPHONE_6_0
             [[HFRplusAppDelegate sharedAppDelegate] detailNavigationController].viewControllers[0].navigationItem.leftBarButtonItem = messagesTableViewController.splitViewController.displayModeButtonItem;
             [[HFRplusAppDelegate sharedAppDelegate] detailNavigationController].viewControllers[0].navigationItem.leftItemsSupplementBackButton = YES;
+#endif
         }
         
     }

@@ -505,10 +505,11 @@
                  }
 
 
-                
+                #ifdef ___IPHONE_9_0
                 SFSafariViewController *svc = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:stringUrl]];
                 
                 [self.rootController presentModalViewController:svc animated:YES];
+#endif
             }
             else {
                 BrowserViewController *browserViewController = [[BrowserViewController alloc] initWithURL:stringUrl];

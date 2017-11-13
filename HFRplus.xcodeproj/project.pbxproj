@@ -67,8 +67,6 @@
 		4C052E1F1BA86C9400B61952 /* Flat-CyanFlag-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C052E131BA86C9400B61952 /* Flat-CyanFlag-25.png */; };
 		4C061D721BD275410034CD0A /* smileyloading.html in Resources */ = {isa = PBXBuildFile; fileRef = 4C061D711BD275410034CD0A /* smileyloading.html */; };
 		4C061D731BD275410034CD0A /* smileyloading.html in Resources */ = {isa = PBXBuildFile; fileRef = 4C061D711BD275410034CD0A /* smileyloading.html */; };
-		4C0B2DA51B9F2DF40026A582 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B2DA41B9F2DF40026A582 /* Launch Screen.storyboard */; };
-		4C0B2DA61B9F2DF40026A582 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B2DA41B9F2DF40026A582 /* Launch Screen.storyboard */; };
 		4C0B8D861BA4522900D329BA /* BugFilled-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B8D501BA4522900D329BA /* BugFilled-40.png */; };
 		4C0B8D871BA4522900D329BA /* BugFilled-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B8D501BA4522900D329BA /* BugFilled-40.png */; };
 		4C0B8D881BA4522900D329BA /* BugFilled-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0B8D511BA4522900D329BA /* BugFilled-40@2x.png */; };
@@ -321,8 +319,6 @@
 		4C9C2B201BAE66EB00511853 /* ThorHammerBlack-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B1D1BAE66EB00511853 /* ThorHammerBlack-20@2x.png */; };
 		4C9C2B211BAE66EB00511853 /* ThorHammerBlack-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B1E1BAE66EB00511853 /* ThorHammerBlack-20.png */; };
 		4C9C2B221BAE66EB00511853 /* ThorHammerBlack-20.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B1E1BAE66EB00511853 /* ThorHammerBlack-20.png */; };
-		4C9C2B241BAE744800511853 /* Launch Screen RE.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B231BAE744800511853 /* Launch Screen RE.storyboard */; };
-		4C9C2B251BAE744800511853 /* Launch Screen RE.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C2B231BAE744800511853 /* Launch Screen RE.storyboard */; };
 		4C9C2B581BAE77ED00511853 /* IASKAppSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9C2B291BAE77EC00511853 /* IASKAppSettingsViewController.m */; };
 		4C9C2B591BAE77ED00511853 /* IASKAppSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9C2B291BAE77EC00511853 /* IASKAppSettingsViewController.m */; };
 		4C9C2B5A1BAE77ED00511853 /* IASKAppSettingsWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9C2B2B1BAE77EC00511853 /* IASKAppSettingsWebViewController.m */; };
@@ -1327,7 +1323,6 @@
 		4C052E121BA86C9400B61952 /* Flat-CyanFlag-25@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Flat-CyanFlag-25@2x.png"; sourceTree = "<group>"; };
 		4C052E131BA86C9400B61952 /* Flat-CyanFlag-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Flat-CyanFlag-25.png"; sourceTree = "<group>"; };
 		4C061D711BD275410034CD0A /* smileyloading.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = smileyloading.html; sourceTree = "<group>"; };
-		4C0B2DA41B9F2DF40026A582 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		4C0B8D501BA4522900D329BA /* BugFilled-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BugFilled-40.png"; sourceTree = "<group>"; };
 		4C0B8D511BA4522900D329BA /* BugFilled-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BugFilled-40@2x.png"; sourceTree = "<group>"; };
 		4C0B8D521BA4522900D329BA /* MoneyBoxFilled-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MoneyBoxFilled-40@2x.png"; sourceTree = "<group>"; };
@@ -1489,7 +1484,6 @@
 		4C9C2B1A1BAE62C500511853 /* InsetLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InsetLabel.m; sourceTree = "<group>"; };
 		4C9C2B1D1BAE66EB00511853 /* ThorHammerBlack-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ThorHammerBlack-20@2x.png"; sourceTree = "<group>"; };
 		4C9C2B1E1BAE66EB00511853 /* ThorHammerBlack-20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ThorHammerBlack-20.png"; sourceTree = "<group>"; };
-		4C9C2B231BAE744800511853 /* Launch Screen RE.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen RE.storyboard"; sourceTree = "<group>"; };
 		4C9C2B281BAE77EC00511853 /* IASKAppSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKAppSettingsViewController.h; sourceTree = "<group>"; };
 		4C9C2B291BAE77EC00511853 /* IASKAppSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKAppSettingsViewController.m; sourceTree = "<group>"; };
 		4C9C2B2A1BAE77EC00511853 /* IASKAppSettingsWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKAppSettingsWebViewController.h; sourceTree = "<group>"; };
@@ -1600,7 +1594,6 @@
 		4CD6B8B71B97AEF5007FC29E /* 6-Camera-32@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "6-Camera-32@2x.png"; sourceTree = "<group>"; };
 		4CD6B8B81B97AEF5007FC29E /* 6-Camera-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "6-Camera-32.png"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* HFRplus-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HFRplus-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
-		CA00C3A217C2FD1F0067B457 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		CA00C3E417C2FE1B0067B457 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		CA00C3E517C2FE1B0067B457 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		CA00C43A17C2FF3F0067B457 /* HTMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLNode.h; sourceTree = "<group>"; };
@@ -2648,7 +2641,6 @@
 				CA00C35717C2FC620067B457 /* Vendor */,
 				CA00C45A17C301650067B457 /* XIB */,
 				CA00C6EA17C310E90067B457 /* commonsmile.plist */,
-				CA00C3A217C2FD1F0067B457 /* config.h */,
 				CA00C6E817C310B50067B457 /* InAppSettings.bundle */,
 				CA2E4C0917E21EC700E95622 /* Images.xcassets */,
 			);
@@ -2751,8 +2743,6 @@
 			children = (
 				CA00C45B17C301650067B457 /* MainWindow-iPad.xib */,
 				CA00C45C17C301650067B457 /* MainWindow.xib */,
-				4C0B2DA41B9F2DF40026A582 /* Launch Screen.storyboard */,
-				4C9C2B231BAE744800511853 /* Launch Screen RE.storyboard */,
 			);
 			path = XIB;
 			sourceTree = "<group>";
@@ -3485,7 +3475,6 @@
 				CA00C64617C30C370067B457 /* pouah.gif in Resources */,
 				CA00C6DB17C30C370067B457 /* icon_text_align_justify.png in Resources */,
 				CABC727817E6077A003E722E /* upsmall7@2x.png in Resources */,
-				4C0B2DA51B9F2DF40026A582 /* Launch Screen.storyboard in Resources */,
 				CA00C66817C30C370067B457 /* templatev2.htm in Resources */,
 				CA00C62517C30C370067B457 /* ddr555.gif in Resources */,
 				0140AAAB121DF603001C35C4 /* HFRMPViewController.xib in Resources */,
@@ -3534,7 +3523,6 @@
 				4CC3C75B1B99BC18001B8632 /* AlerteModoViewController.xib in Resources */,
 				4C7E127C1FAF426C008FD92A /* migration.classic.html in Resources */,
 				CA00C6B817C30C370067B457 /* buttonbeginoff.png in Resources */,
-				4C9C2B241BAE744800511853 /* Launch Screen RE.storyboard in Resources */,
 				CA00C45D17C301650067B457 /* MainWindow-iPad.xib in Resources */,
 				CAF5DB901936D013000B5215 /* 71-compass@2x.png in Resources */,
 				4C21E95B1BA5C70400691D65 /* CutFilled-20@2x.png in Resources */,
@@ -3949,7 +3937,6 @@
 				CA7C6FCD185EF50E00B348BA /* icon_text_align_justify.png in Resources */,
 				CA7C6FCE185EF50E00B348BA /* upsmall7@2x.png in Resources */,
 				CA7C6FCF185EF50E00B348BA /* templatev2.htm in Resources */,
-				4C0B2DA61B9F2DF40026A582 /* Launch Screen.storyboard in Resources */,
 				CA7C6FD0185EF50E00B348BA /* ddr555.gif in Resources */,
 				CA7C6FD1185EF50E00B348BA /* HFRMPViewController.xib in Resources */,
 				CA7C6FD2185EF50E00B348BA /* sol.gif in Resources */,
@@ -3998,7 +3985,6 @@
 				4CC3C75C1B99BC18001B8632 /* AlerteModoViewController.xib in Resources */,
 				4C7E127D1FAF426C008FD92A /* migration.classic.html in Resources */,
 				CA7C6FEF185EF50E00B348BA /* MainWindow-iPad.xib in Resources */,
-				4C9C2B251BAE744800511853 /* Launch Screen RE.storyboard in Resources */,
 				CAF5DB911936D013000B5215 /* 71-compass@2x.png in Resources */,
 				CA7C6FF1185EF50E00B348BA /* vomi.gif in Resources */,
 				4C21E95C1BA5C70400691D65 /* CutFilled-20@2x.png in Resources */,

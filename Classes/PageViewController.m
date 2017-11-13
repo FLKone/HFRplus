@@ -66,7 +66,7 @@
                                                                 preferredStyle:UIAlertControllerStyleAlert];
         
         
-        [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        [alert addTextFieldWithConfigurationHandler:^(UITextField * textField) {
             textField.placeholder = [NSString stringWithFormat:@"(numéro entre %d et %d)", [self firstPageNumber], [self lastPageNumber]];
             textField.textAlignment = NSTextAlignmentCenter;
             [textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];

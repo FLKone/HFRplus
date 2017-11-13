@@ -76,7 +76,7 @@
 	NSString *result = (NSString *) CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)fakeString, NULL, CFSTR(":/?#[]@!$&’()*+,;="), kCFStringEncodingUTF8));
 
 	
-    NSURL *xmlURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.google.com/cse?cx=%@&client=google-csbe&output=xml_no_dtd&num=20&q=%@", kGoogleCSEAPI, result]];
+    NSURL *xmlURL = @"";//[NSURL URLWithString:[NSString stringWithFormat:@"http://www.google.com/cse?cx=%@&client=google-csbe&output=xml_no_dtd&num=20&q=%@", kGoogleCSEAPI, result]];
 
 	//NSLog(@"xmlURL %@", xmlURL);
 

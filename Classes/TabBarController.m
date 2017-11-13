@@ -116,7 +116,7 @@
     [self setTheme:[[ThemeManager sharedManager] theme]];
 }
 
-- (BOOL)tabBarController:(UITabBarController * _Nonnull)tabBarController shouldSelectViewController:(UIViewController * _Nonnull)viewController {
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
 
     if ([viewController isKindOfClass:[UINavigationController class]]) {
         UINavigationController *nv = (UINavigationController *)viewController;

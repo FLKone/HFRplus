@@ -45,7 +45,7 @@ NSInteger Sort_BL_Comparer(id id1, id id2, void *context)
 -(void)reloadData {
     //NSLog(@"list: %@", [[BlackList shared] description]);
     
-    NSArray *sortedArray = [[[BlackList shared] getAll] sortedArrayUsingFunction:Sort_BL_Comparer context:(__bridge void * _Nullable)(self)];
+    NSArray *sortedArray = [[[BlackList shared] getAll] sortedArrayUsingFunction:Sort_BL_Comparer context:(__bridge void *)(self)];
 
     
     self.blackListDict = (NSMutableArray *)sortedArray;//[[[BlackList shared] getAll] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {

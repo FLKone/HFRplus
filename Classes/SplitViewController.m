@@ -162,12 +162,13 @@
             [navigationController setViewControllers:[[arrVC reverseObjectEnumerator] allObjects]];
             //NSLog(@"vc.count %lu", (unsigned long)navigationController.viewControllers.count);
 
-            navigationController.viewControllers[0].navigationItem.leftBarButtonItem = self.displayModeButtonItem;
+        #ifdef ___IPHONE_6_0
+        navigationController.viewControllers[0].navigationItem.leftBarButtonItem = self.displayModeButtonItem;
             navigationController.viewControllers[0].navigationItem.leftItemsSupplementBackButton = YES;
             navigationController.navigationBar.translucent = NO;
             [[[HFRplusAppDelegate sharedAppDelegate] rootController] popAllToRoot:NO];
             [[HFRplusAppDelegate sharedAppDelegate] setDetailNavigationController:navigationController];
-            
+#endif
             return navigationController;
 //        }
 //        else {
@@ -436,10 +437,10 @@ separateSecondaryViewControllerFromPrimaryViewController:(UIViewController *)pri
     else {
         
         svc.popOver = pc;
-
+#ifdef ___IPHONE_6_0
         [[HFRplusAppDelegate sharedAppDelegate] detailNavigationController].viewControllers[0].navigationItem.leftBarButtonItem = self.displayModeButtonItem;
         [[HFRplusAppDelegate sharedAppDelegate] detailNavigationController].viewControllers[0].navigationItem.leftItemsSupplementBackButton = YES;
-
+#endif
     }
 
 }

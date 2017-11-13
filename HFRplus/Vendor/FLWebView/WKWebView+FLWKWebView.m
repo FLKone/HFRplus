@@ -57,16 +57,18 @@
     NSString *diskCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"SmileCache"];
     NSURL* baseURL = [NSURL fileURLWithPath:diskCachePath];
     
+    #ifdef ___IPHONE_6_0
     [self loadFileURL:[NSURL URLWithString: urlNameAsString] allowingReadAccessToURL:baseURL];
-
+    #endif
 //    [self loadRequest: [NSURLRequest requestWithURL:[NSURL URLWithString: urlNameAsString]]];
 }
 
 - (void) loadFromString: (NSURL *) htmlURL baseURL:(NSURL *) baseURL;
 {
     NSLog(@"WKWKWKWKWWEBVIEW v1");
-
+#ifdef ___IPHONE_6_0
     [self loadFileURL:htmlURL allowingReadAccessToURL:baseURL];
+#endif
 }
 
 - (void) loadFromString: (NSString *) htmlString;
