@@ -1792,8 +1792,6 @@
             <meta name='viewport' content='initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no' />\
             <link type='text/css' rel='stylesheet %@' href='style-liste.css' id='light-styles'/>\
             <link type='text/css' rel='stylesheet %@' href='style-liste-retina.css' id='light-styles-retina' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\
-            <link type='text/css' rel='stylesheet %@' href='style-liste-dark.css' id='dark-styles'/>\
-            <link type='text/css' rel='stylesheet %@' href='style-liste-retina-dark.css' id='dark-styles-retina' media='all and (-webkit-min-device-pixel-ratio: 2)'/>\
             <style type='text/css'>\
             %@\
             </style>\
@@ -1816,7 +1814,7 @@
             $('img').error(function(){ $(this).attr('src', 'photoDefaultfailmini.png');});\
             function touchstart() { document.location.href = 'oijlkajsdoihjlkjasdotouch://touchstart'};\
             </script>\
-            </body></html>", [ThemeColors isLightThemeAlternate:theme], [ThemeColors isLightThemeAlternate:theme], [ThemeColors isDarkThemeAlternate:theme], [ThemeColors isDarkThemeAlternate:theme], customFontSize, display_sig_css, tmpHTML, refreshBtn, tooBar];
+            </body></html>", [ThemeColors isLightThemeAlternate:theme], [ThemeColors isLightThemeAlternate:theme], customFontSize, display_sig_css, tmpHTML, refreshBtn, tooBar];
         
         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
             if (self.isSearchInstra) {
