@@ -69,13 +69,20 @@
 	//Custom Internal Images
 	NSString *regEx2 = @"<img src=\"http://forum-images.hardware.fr/([^\"]+)\" alt=\"\\[[^\"]+\" title=\"[^\"]+\">";			
 	myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx2
-														withString:@"<img class=\"smileycustom\" src=\"http://forum-images.hardware.fr/$1\" />"]; //
-	
+														withString:@"<img class=\"smileycustom\" src=\"https://forum-images.hardware.fr/$1\" />"]; //
+
+    NSString *regEx22 = @"<img src=\"https://forum-images.hardware.fr/([^\"]+)\" alt=\"\\[[^\"]+\" title=\"[^\"]+\">";
+    myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx22
+                                                          withString:@"<img class=\"smileycustom\" src=\"https://forum-images.hardware.fr/$1\" />"]; //
+
 	//Native Internal Images
 	NSString *regEx0 = @"<img src=\"http://forum-images.hardware.fr/[^\"]+/([^/]+)\" alt=\"[^\"]+\" title=\"[^\"]+\">";			
 	myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx0
 														  withString:@"|NATIVE-$1-98787687687697|"];
-	
+
+    NSString *regEx02 = @"<img src=\"https://forum-images.hardware.fr/[^\"]+/([^/]+)\" alt=\"[^\"]+\" title=\"[^\"]+\">";
+    myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx02
+                                                          withString:@"|NATIVE-$1-98787687687697|"];
 	//Replacing Links by HREF
 	//NSString *regEx3 = @"<a rel=\"nofollow\" href=\"([^\"]+)\" target=\"_blank\" class=\"cLink\">[^<]+</a>";			
 	//myRawContent = [myRawContent stringByReplacingOccurrencesOfRegex:regEx3

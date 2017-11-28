@@ -1954,7 +1954,7 @@
 }
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
-    NSLog(@"MTV %@ nbS=%lu", NSStringFromSelector(action), [UIMenuController sharedMenuController].menuItems.count);
+    //NSLog(@"MTV %@ nbS=%lu", NSStringFromSelector(action), [UIMenuController sharedMenuController].menuItems.count);
     
     BOOL returnA;
     
@@ -1964,7 +1964,7 @@
         returnA = [super canPerformAction:action withSender:sender];
     }
 
-    NSLog(@"MTV returnA %d", returnA);
+    //NSLog(@"MTV returnA %d", returnA);
     return returnA;
 }
 

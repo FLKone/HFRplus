@@ -151,7 +151,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
@@ -1594,6 +1594,8 @@
         
         for (i = firstSmile; i < lastSmile; i++) { //Loop through all the tags
             NSString *filename = [[[localsmileyArray objectAtIndex:i] objectForKey:@"source"] stringByReplacingOccurrencesOfString:@"http://forum-images.hardware.fr/" withString:@""];
+            filename = [filename stringByReplacingOccurrencesOfString:@"https://forum-images.hardware.fr/" withString:@"-"];
+
             filename = [filename stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
             filename = [filename stringByReplacingOccurrencesOfString:@" " withString:@"-"];
             

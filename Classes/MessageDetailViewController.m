@@ -163,12 +163,20 @@
 	//Custom Internal Images
 	NSString *regEx2 = @"<img src=\"http://forum-images.hardware.fr/([^\"]+)\" alt=\"\\[[^\"]+\" title=\"[^\"]+\">";			
 	HTMLString = [HTMLString stringByReplacingOccurrencesOfRegex:regEx2
-														  withString:@"<img class=\"smileycustom\" src=\"http://forum-images.hardware.fr/$1\" />"];
-	
+														  withString:@"<img class=\"smileycustom\" src=\"https://forum-images.hardware.fr/$1\" />"];
+
+    NSString *regEx22 = @"<img src=\"https://forum-images.hardware.fr/([^\"]+)\" alt=\"\\[[^\"]+\" title=\"[^\"]+\">";
+    HTMLString = [HTMLString stringByReplacingOccurrencesOfRegex:regEx22
+                                                      withString:@"<img class=\"smileycustom\" src=\"https://forum-images.hardware.fr/$1\" />"];
+
 	//Native Internal Images
 	NSString *regEx0 = @"<img src=\"http://forum-images.hardware.fr/[^\"]+/([^/]+)\" alt=\"[^\"]+\" title=\"[^\"]+\">";			
 	HTMLString = [HTMLString stringByReplacingOccurrencesOfRegex:regEx0
 														  withString:@"|NATIVE-$1-98787687687697|"];
+
+    NSString *regEx02 = @"<img src=\"https://forum-images.hardware.fr/[^\"]+/([^/]+)\" alt=\"[^\"]+\" title=\"[^\"]+\">";
+    HTMLString = [HTMLString stringByReplacingOccurrencesOfRegex:regEx02
+                                                      withString:@"|NATIVE-$1-98787687687697|"];
 
 	//Replace Internal Images with Bundle://
 	NSString *regEx4 = @"\\|NATIVE-([^-]+)-98787687687697\\|";			

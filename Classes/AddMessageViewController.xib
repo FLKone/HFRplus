@@ -111,10 +111,10 @@
                                 <action selector="segmentFilterAction:" destination="-1" eventType="valueChanged" id="73"/>
                             </connections>
                         </segmentedControl>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Chercher un smiley" adjustsFontSizeToFit="NO" minimumFontSize="17" clearButtonMode="always" id="69">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Chercher un smiley" adjustsFontSizeToFit="NO" minimumFontSize="10" clearButtonMode="always" id="69">
                             <rect key="frame" x="5" y="445" width="155" height="31"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="search"/>
                             <connections>
                                 <action selector="textFieldSmileChange:" destination="-1" eventType="valueChanged" id="79"/>

@@ -38,7 +38,7 @@
 
 + (NSString *)RealForumURL
 {
-    return @"http://forum.hardware.fr";
+    return @"https://forum.hardware.fr";
 }
 
 

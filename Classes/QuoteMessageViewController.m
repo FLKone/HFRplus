@@ -115,7 +115,6 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(loadSubCat) name:@"CatSelected" object:nil];
-    
 	[self fetchContent];
 }
 
@@ -187,6 +186,8 @@
     for (HTMLNode * imgNode in tmpImageArray) { //Loop through all the tags
         
         NSString *filename = [[imgNode getAttributeNamed:@"src"] stringByReplacingOccurrencesOfString:@"http://forum-images.hardware.fr/" withString:@""];
+        filename = [filename stringByReplacingOccurrencesOfString:@"https://forum-images.hardware.fr/" withString:@"-"];
+
         filename = [filename stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
         filename = [filename stringByReplacingOccurrencesOfString:@" " withString:@"-"];
         
