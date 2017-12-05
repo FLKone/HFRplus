@@ -243,44 +243,6 @@
 			<string>EmptyCacheButton</string>
 		</dict>
 		<dict>
-			<key>Title</key>
-			<string>Activation du Menu debug = 1 TT offert !</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-			<key>Title</key>
-			<string>Menu debug</string>
-			<key>Key</key>
-			<string>menu_debug</string>
-			<key>DefaultValue</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>IASKCellImage</key>
-			<string>BugFilled-25</string>
-			<key>IASKViewControllerClass</key>
-			<string>HFRDebugViewController</string>
-			<key>Title</key>
-			<string>Debug</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-			<key>Key</key>
-			<string>menu_debug_entry</string>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-			<key>Title</key>
-			<string>Annonce Migration</string>
-			<key>Key</key>
-			<string>menu_migration</string>
-			<key>DefaultValue</key>
-			<true/>
-		</dict>
-		<dict>
 			<key>DefaultValue</key>
 			<string>1.0</string>
 			<key>Key</key>
@@ -289,6 +251,22 @@
 			<string>Version</string>
 			<key>Type</key>
 			<string>PSTitleValueSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
+			<string></string>
+			<key>Title</key>
+			<string></string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>Advanced</string>
+			<key>Title</key>
+			<string>Avancés</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
 		</dict>
 	</array>
 </dict>
