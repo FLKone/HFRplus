@@ -152,7 +152,7 @@
     
 	
 	ASIFormDataRequest* request = [ASIFormDataRequest requestWithURL:
-                               [NSURL URLWithString:@"http://reho.st/upload"]];
+                               [NSURL URLWithString:@"https://reho.st/upload"]];
     //[NSURL URLWithString:@"http://apps.flkone.com/hfrplus/api/upload.processor.php"]];
 	
     
